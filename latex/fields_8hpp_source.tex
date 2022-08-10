@@ -1,0 +1,182 @@
+\hypertarget{fields_8hpp_source}{}\doxysection{fields.\+hpp}
+\label{fields_8hpp_source}\index{include/fields.hpp@{include/fields.hpp}}
+\mbox{\hyperlink{fields_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{typedefs_8hpp}{util/typedefs.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_a035bfe4ec217f729c26b3de1c555cd36}{FieldGauge}} \{}
+\DoxyCodeLine{33     \mbox{\hyperlink{namespaceChronusQ_a035bfe4ec217f729c26b3de1c555cd36aa50fac9e83e02f576a6f1a11ae26b70a}{Length}},}
+\DoxyCodeLine{34     \mbox{\hyperlink{namespaceChronusQ_a035bfe4ec217f729c26b3de1c555cd36aa08bc185dc5940ac0bf9b10b7b144cbd}{Velocity}}}
+\DoxyCodeLine{35   \};}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMFieldTyp}} \{}
+\DoxyCodeLine{38     \mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9affb099f0286d43119e7134902486543e}{Electric}},}
+\DoxyCodeLine{39     \mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9a79930d8d7bb5d90a171f83bdb0a2451f}{Magnetic}}}
+\DoxyCodeLine{40   \};}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1EMFieldBase}{EMFieldBase}} \{}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keywordtype}{size\_t}     \mbox{\hyperlink{structChronusQ_1_1EMFieldBase_a696d4688b0304886565bfaf244450567}{size}};}
+\DoxyCodeLine{46     \mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMFieldTyp}} \mbox{\hyperlink{structChronusQ_1_1EMFieldBase_adc56e3e63eaca310c375168a7ded1ed0}{emFieldTyp}};}
+\DoxyCodeLine{47     \mbox{\hyperlink{namespaceChronusQ_a035bfe4ec217f729c26b3de1c555cd36}{FieldGauge}} \mbox{\hyperlink{structChronusQ_1_1EMFieldBase_ae0672f395f1629b942ef703c6ce33bb3}{fieldGauge}};}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \mbox{\hyperlink{structChronusQ_1_1EMFieldBase_a03baf070c994d68b547ba004766fb5ca}{EMFieldBase}}(\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMFieldTyp}} em = \mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9affb099f0286d43119e7134902486543e}{Electric}}, \mbox{\hyperlink{namespaceChronusQ_a035bfe4ec217f729c26b3de1c555cd36}{FieldGauge}} fg = \mbox{\hyperlink{namespaceChronusQ_a035bfe4ec217f729c26b3de1c555cd36aa50fac9e83e02f576a6f1a11ae26b70a}{Length}},}
+\DoxyCodeLine{50         \textcolor{keywordtype}{size\_t} sz = 3): \mbox{\hyperlink{structChronusQ_1_1EMFieldBase_ae0672f395f1629b942ef703c6ce33bb3}{fieldGauge}}(fg), \mbox{\hyperlink{structChronusQ_1_1EMFieldBase_adc56e3e63eaca310c375168a7ded1ed0}{emFieldTyp}}(em), \mbox{\hyperlink{structChronusQ_1_1EMFieldBase_a696d4688b0304886565bfaf244450567}{size}}(sz) \{ \};}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{keyword}{virtual} std::valarray<double> \mbox{\hyperlink{structChronusQ_1_1EMFieldBase_ae4aebcd7a6a34e33bc61349fd7ff6f3f}{getAmp}}() = 0;}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54   \};}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{67   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_VecTyp>}
+\DoxyCodeLine{68   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1EMField}{EMField}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{structChronusQ_1_1EMFieldBase}{EMFieldBase}} \{}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     \_VecTyp \mbox{\hyperlink{structChronusQ_1_1EMField_a774acd9ee315ea048a8d8c5895bb389c}{ampVec}};}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \mbox{\hyperlink{structChronusQ_1_1EMField_a6970470359e192a71b6b7f7be002197b}{EMField}}()                 = \textcolor{keyword}{delete};}
+\DoxyCodeLine{73     \mbox{\hyperlink{structChronusQ_1_1EMField_a81d7967f36807e187a4d89cbda483cbc}{EMField}}( \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1EMField}{EMField}}\& ) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{74     \mbox{\hyperlink{structChronusQ_1_1EMField_a91a78340ea9c071a0870f5df6fd3ca17}{EMField}}( \mbox{\hyperlink{structChronusQ_1_1EMField}{EMField}}\&\& )      = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \mbox{\hyperlink{structChronusQ_1_1EMField_adcf02367bfcab08a93cccf62f1caa1fa}{EMField}}(\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMFieldTyp}} em, \mbox{\hyperlink{namespaceChronusQ_a035bfe4ec217f729c26b3de1c555cd36}{FieldGauge}} fg,}
+\DoxyCodeLine{77       \textcolor{keyword}{const} \_VecTyp \&x): \mbox{\hyperlink{structChronusQ_1_1EMField_a774acd9ee315ea048a8d8c5895bb389c}{ampVec}}(x), \mbox{\hyperlink{structChronusQ_1_1EMFieldBase}{EMFieldBase}}\{em,fg, x.\mbox{\hyperlink{structChronusQ_1_1EMFieldBase_a696d4688b0304886565bfaf244450567}{size}}()\}\{ \};}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \mbox{\hyperlink{structChronusQ_1_1EMField_a233726a6e1afa8ab7d801496972012ea}{EMField}}(\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMFieldTyp}} em, \textcolor{keyword}{const} \_VecTyp \&x): }
+\DoxyCodeLine{80       \mbox{\hyperlink{structChronusQ_1_1EMField_a774acd9ee315ea048a8d8c5895bb389c}{ampVec}}(x), \mbox{\hyperlink{structChronusQ_1_1EMFieldBase}{EMFieldBase}}\{em,\mbox{\hyperlink{namespaceChronusQ_a035bfe4ec217f729c26b3de1c555cd36aa50fac9e83e02f576a6f1a11ae26b70a}{Length}}, x.\mbox{\hyperlink{structChronusQ_1_1EMFieldBase_a696d4688b0304886565bfaf244450567}{size}}()\}\{ \};}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82     \mbox{\hyperlink{structChronusQ_1_1EMField_a2ed36866b93b6b3b3ef60710482534a9}{EMField}}(\textcolor{keyword}{const} \_VecTyp \&x): \mbox{\hyperlink{structChronusQ_1_1EMField}{EMField}}(\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9affb099f0286d43119e7134902486543e}{Electric}},\mbox{\hyperlink{namespaceChronusQ_a035bfe4ec217f729c26b3de1c555cd36aa50fac9e83e02f576a6f1a11ae26b70a}{Length}},x)\{ \};}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     std::valarray<double> \mbox{\hyperlink{structChronusQ_1_1EMField_a7d0f6bc94dad74e958d3cc448a96f5ca}{getAmp}}() \{}
+\DoxyCodeLine{85       \textcolor{keywordflow}{return} std::valarray<double>(\mbox{\hyperlink{structChronusQ_1_1EMField_a774acd9ee315ea048a8d8c5895bb389c}{ampVec}}.begin(),\mbox{\hyperlink{structChronusQ_1_1EMField_a774acd9ee315ea048a8d8c5895bb389c}{ampVec}}.size());}
+\DoxyCodeLine{86     \}}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88   \};}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91   \textcolor{comment}{// Useful aliases}}
+\DoxyCodeLine{92   \textcolor{keyword}{using }\mbox{\hyperlink{structChronusQ_1_1EMField}{DipoleField}}     = \mbox{\hyperlink{structChronusQ_1_1EMField}{EMField<std::array<double,3>}}>;}
+\DoxyCodeLine{93   \textcolor{keyword}{using }\mbox{\hyperlink{structChronusQ_1_1EMField}{QuadrupoleField}} = \mbox{\hyperlink{structChronusQ_1_1EMField}{EMField<std::array<double,6>}}>;}
+\DoxyCodeLine{94   \textcolor{keyword}{using }\mbox{\hyperlink{structChronusQ_1_1EMField}{OctupoleField}}   = \mbox{\hyperlink{structChronusQ_1_1EMField}{EMField<std::array<double,10>}}>;}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102 }
+\DoxyCodeLine{112   \textcolor{keyword}{template} < \textcolor{keyword}{typename} \_UnitVector >}
+\DoxyCodeLine{113   std::shared\_ptr<EMFieldBase> }
+\DoxyCodeLine{114     \mbox{\hyperlink{namespaceChronusQ_ac66d059f0d92f18dcdbc56eb3f9b77b0}{cast}}(std::shared\_ptr<\mbox{\hyperlink{structChronusQ_1_1EMField}{EMField<\_UnitVector>}}> x) \{}
+\DoxyCodeLine{115     \textcolor{keywordflow}{return} std::dynamic\_pointer\_cast<}
+\DoxyCodeLine{116              \mbox{\hyperlink{structChronusQ_1_1EMFieldBase}{EMFieldBase}},\mbox{\hyperlink{structChronusQ_1_1EMField}{EMField<\_UnitVector>}}>(x);}
+\DoxyCodeLine{117   \};}
+\DoxyCodeLine{118   }
+\DoxyCodeLine{124   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \{}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126     std::vector<}
+\DoxyCodeLine{127       std::shared\_ptr<EMFieldBase>}
+\DoxyCodeLine{128         > \mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a334b7e02e9a15019cff48f1dc70b1bfd}{fields}}; }
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130 }
+\DoxyCodeLine{136     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1EMPerturbation_ac42c25249b86643a07ca9893fea22200}{addField}}(std::shared\_ptr<EMFieldBase> f) \{}
+\DoxyCodeLine{137       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a334b7e02e9a15019cff48f1dc70b1bfd}{fields}}.push\_back(f);}
+\DoxyCodeLine{138     \};}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140     \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_Field>}
+\DoxyCodeLine{141     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a63d33a213ac5478fb9c205ceadc52c5a}{addField}}(std::shared\_ptr<\_Field> f)\{ \mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a63d33a213ac5478fb9c205ceadc52c5a}{addField}}(\mbox{\hyperlink{namespaceChronusQ_ac66d059f0d92f18dcdbc56eb3f9b77b0}{cast}}(f)); \};}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143     \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_Field>}
+\DoxyCodeLine{144     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a6d2dde2758e4c4c87743ef73ae101e9c}{addField}}(\_Field f)\{ \mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a6d2dde2758e4c4c87743ef73ae101e9c}{addField}}(std::make\_shared<\_Field>(f)); \}}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146     \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_UV>}
+\DoxyCodeLine{147     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1EMPerturbation_aa95434102b2b44f46559972f9b712a85}{addField}}(\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMFieldTyp}} em, \mbox{\hyperlink{namespaceChronusQ_a035bfe4ec217f729c26b3de1c555cd36}{FieldGauge}} fg, \textcolor{keyword}{const} \_UV \&uv) \{}
+\DoxyCodeLine{148       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation_ac42c25249b86643a07ca9893fea22200}{addField}}(\mbox{\hyperlink{structChronusQ_1_1EMField}{EMField<\_UV>}}(em,fg,uv));    }
+\DoxyCodeLine{149     \}}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151     \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_UV>}
+\DoxyCodeLine{152     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1EMPerturbation_ad8d879a7a0b65c4db5a4a57138f7d726}{addField}}(\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMFieldTyp}} em, \textcolor{keyword}{const} \_UV \&uv) \{}
+\DoxyCodeLine{153       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation_ac42c25249b86643a07ca9893fea22200}{addField}}(\mbox{\hyperlink{structChronusQ_1_1EMField}{EMField<\_UV>}}(em,uv));    }
+\DoxyCodeLine{154     \}}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158     \textcolor{keyword}{template} <\textcolor{keywordtype}{size\_t} N>}
+\DoxyCodeLine{159     \textcolor{keyword}{inline} std::array<double, N> \mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a1b4ef4723946a0ddc18b8f19423daf10}{getNAmp}}(\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMFieldTyp}} TYPE) \{}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161       std::array<double, N> amp = \{0., 0., 0.\};}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&field : \mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a334b7e02e9a15019cff48f1dc70b1bfd}{fields}}) \{}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166         \textcolor{keywordflow}{if}( field-\/>emFieldTyp == TYPE  and field-\/>size == N ) \{}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168           \textcolor{keyword}{auto} tmp\_amp = field-\/>getAmp();}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170           \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} k = 0; k < N; k++) amp[k] += tmp\_amp[k];}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172         \}}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174       \}}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176       \textcolor{keywordflow}{return} amp;}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178     \}}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181     \textcolor{keyword}{inline} std::array<double, 3> \mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a074c4e7a01eb60481943b4c96a9c9749}{getDipoleAmp}}(\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMFieldTyp}} TYPE) \{}
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183       \textcolor{keywordflow}{return} getNAmp<3>( TYPE );}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185     \};}
+\DoxyCodeLine{186     }
+\DoxyCodeLine{187   \}; \textcolor{comment}{// struct EMPerturbation}}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191   \textcolor{comment}{// Helper functions}}
+\DoxyCodeLine{192   \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespaceChronusQ_a0f814f3c29fcd820aea53f9d3e317e42}{pert\_has\_type}}( \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert, }
+\DoxyCodeLine{193       \textcolor{keyword}{const} \mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMFieldTyp}} typ ) \{}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195     \textcolor{keywordflow}{return} std::any\_of(pert.\mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a334b7e02e9a15019cff48f1dc70b1bfd}{fields}}.begin(), pert.\mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a334b7e02e9a15019cff48f1dc70b1bfd}{fields}}.end(),}
+\DoxyCodeLine{196         [\&](std::shared\_ptr<EMFieldBase> x) \{}
+\DoxyCodeLine{197           return x-\/>emFieldTyp == typ;}
+\DoxyCodeLine{198         \});}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200   \}}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203   \textcolor{comment}{// Instantiations of Amplitude getters}}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205 \};}
+\DoxyCodeLine{206 }
+
+\end{DoxyCode}

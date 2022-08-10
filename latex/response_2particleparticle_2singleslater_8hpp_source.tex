@@ -1,0 +1,1345 @@
+\hypertarget{response_2particleparticle_2singleslater_8hpp_source}{}\doxysection{singleslater.\+hpp}
+\label{response_2particleparticle_2singleslater_8hpp_source}\index{include/response/particleparticle/singleslater.hpp@{include/response/particleparticle/singleslater.hpp}}
+\mbox{\hyperlink{response_2particleparticle_2singleslater_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{particleparticle_8hpp}{response/particleparticle.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{factorization_8hpp}{cqlinalg/factorization.hpp}}>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{threads_8hpp}{util/threads.hpp}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{37   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator<SingleSlater<MatsT,IntsT>}}>::configOptions() \{}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keywordtype}{bool} isRoot = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(this-\/>comm\_) == 0;}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     std::cout << \textcolor{stringliteral}{"{}  * PROPAGATOR = ParticleParticlePropagator"{}} <<}
+\DoxyCodeLine{43       std::endl << std::endl;}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keywordflow}{if}( this-\/>genSettings.printLevel > 1  and isRoot )}
+\DoxyCodeLine{46     std::cout << }
+\DoxyCodeLine{47       \textcolor{stringliteral}{"{}  * PERFORMING RESPONSE OPTION CONFIGURATION FOR SINGLE SLATER "{}}}
+\DoxyCodeLine{48               << \textcolor{stringliteral}{"{}WAVE FUNCTION\(\backslash\)n"{}};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO\_t  = getNO1(\textcolor{keyword}{false}); }
+\DoxyCodeLine{52     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO2\_t = getNO2(\textcolor{keyword}{false}); }
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     starOrb.first  = spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca2253031b1d4b07be614989c4da2bddc9}{PP\_BB}} ? -\/NO\_t  : NO\_t  ;}
+\DoxyCodeLine{55     starOrb.second = spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca0e97952af46f16e5ca2214d7b55680bd}{PP\_AA}} ?  NO2\_t : -\/NO2\_t;}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     \textcolor{comment}{// Determine if actually TDA}}
+\DoxyCodeLine{59     \textcolor{keyword}{auto}\& ss = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&\textcolor{keyword}{>}(*this-\/>ref\_);}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV  = getNV1(doStarRef); }
+\DoxyCodeLine{62     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV2 = getNV2(doStarRef);}
+\DoxyCodeLine{63     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO  = getNO1(doStarRef); }
+\DoxyCodeLine{64     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO2 = getNO2(doStarRef); }
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \textcolor{keywordtype}{bool} shouldBeATDA = NO < 2;}
+\DoxyCodeLine{68     \textcolor{keywordtype}{bool} shouldBeCTDA = NV < 2;}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     \textcolor{keywordflow}{if}( shouldBeATDA and shouldBeCTDA )}
+\DoxyCodeLine{71       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}System Not Suitable for ParticleParticlePropagator: NO < 2 and NV < 2"{}});}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{keywordflow}{if}( shouldBeATDA ) \{}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75       std::cout << \textcolor{stringliteral}{"{}  * Switching to pp-\/TDA: NO < 2"{}} << std::endl;}
+\DoxyCodeLine{76       this-\/>genSettings.doTDA = \textcolor{keyword}{true};}
+\DoxyCodeLine{77       tdaOp = \mbox{\hyperlink{namespaceChronusQ_aa3c047a596017ff0bdd05339a36555bca9895cbc6ee4d70c385b9a006ab30d93c}{PP\_A}};}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \}}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82     \textcolor{keywordflow}{if}( shouldBeCTDA ) \{}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84       std::cout << \textcolor{stringliteral}{"{}  * Switching to hh-\/TDA: NV < 2"{}} << std::endl;}
+\DoxyCodeLine{85       this-\/>genSettings.doTDA = \textcolor{keyword}{true};}
+\DoxyCodeLine{86       tdaOp = \mbox{\hyperlink{namespaceChronusQ_aa3c047a596017ff0bdd05339a36555bcaade866f1f15def92d54f789e54e847b6}{PP\_C}};}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88     \}}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \textcolor{comment}{// Set the internal NSingleDim and aux dimension}}
+\DoxyCodeLine{94     this-\/>nSingleDim\_ = getNSingleDim(this-\/>genSettings.doTDA);}
+\DoxyCodeLine{95     aDim\_       = getADim();}
+\DoxyCodeLine{96     cDim\_       = getCDim();}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     doVir\_ = tdaOp == \mbox{\hyperlink{namespaceChronusQ_aa3c047a596017ff0bdd05339a36555bca9895cbc6ee4d70c385b9a006ab30d93c}{PP\_A}} or not this-\/>genSettings.doTDA;}
+\DoxyCodeLine{99     doOcc\_ = tdaOp == \mbox{\hyperlink{namespaceChronusQ_aa3c047a596017ff0bdd05339a36555bcaade866f1f15def92d54f789e54e847b6}{PP\_C}} or not this-\/>genSettings.doTDA;}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104     \textcolor{comment}{// Turn off property evaluation (FIXME: for now)}}
+\DoxyCodeLine{105     this-\/>genSettings.evalProp = \textcolor{keyword}{false};}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     \textcolor{comment}{// No such thing as FDR for PPRPA/TDA FIXME: techinically yes, but NYI}}
+\DoxyCodeLine{108     this-\/>genSettings.jobType = \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616a63c476c3263a43d31f0b25a0a52471ae}{RESIDUE}};}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110     \textcolor{comment}{// TDA -\/> Hermetian}}
+\DoxyCodeLine{111     this-\/>genSettings.matIsHer = this-\/>genSettings.doTDA;}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115     \textcolor{comment}{// Direct logic}}
+\DoxyCodeLine{116     \textcolor{keywordflow}{if}( not this-\/>genSettings.formFullMat ) \{}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118       \textcolor{comment}{// Turn off distribution}}
+\DoxyCodeLine{119       this-\/>genSettings.formMatDist     = \textcolor{keyword}{false};}
+\DoxyCodeLine{120       this-\/>genSettings.distMatFromRoot = \textcolor{keyword}{false};}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122     \}}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125     \textcolor{comment}{// Logic for full RESIDUE problem}}
+\DoxyCodeLine{126     \textcolor{keywordflow}{if}( this-\/>genSettings.doFull and this-\/>genSettings.jobType == \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616a63c476c3263a43d31f0b25a0a52471ae}{RESIDUE}} ) \{}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128       \textcolor{keywordflow}{if}( this-\/>genSettings.printLevel > 0 and isRoot)}
+\DoxyCodeLine{129         std::cout << \textcolor{stringliteral}{"{}  * SETTING NROOTS = NSINGLEDIM\(\backslash\)n"{}};}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131       \textcolor{comment}{// Nroots = NSingleDim}}
+\DoxyCodeLine{132       this-\/>resSettings.nRoots = this-\/>nSingleDim\_;}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134     \}}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     \textcolor{comment}{// Compute MU}}
+\DoxyCodeLine{137     \textcolor{keywordflow}{if}( ss.nC == 1 and not ss.iCS ) \{}
+\DoxyCodeLine{138   }
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140       \textcolor{keywordtype}{double} HOMO = -\/std::numeric\_limits<double>::infinity();}
+\DoxyCodeLine{141       \textcolor{keywordflow}{if}( ss.nOA > 0 ) HOMO = ss.eps1[ss.nOA -\/ 1];}
+\DoxyCodeLine{142       \textcolor{keywordflow}{if}( ss.nOB > 0 ) HOMO = std::max(HOMO,ss.eps2[ss.nOB -\/ 1]);}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144       \textcolor{keywordtype}{double} LUMO = std::min(ss.eps1[ss.nOA],ss.eps2[ss.nOB]);}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146       mu = 0.5 * ( HOMO + LUMO );}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148     \} \textcolor{keywordflow}{else} }
+\DoxyCodeLine{149       mu = 0.5 * (ss.eps1[NO] + ss.eps1[NO-\/1]);}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151     std::cout << \textcolor{stringliteral}{"{}  * ParticleParticlePropagator has chosen MU = "{}} }
+\DoxyCodeLine{152               << mu << std::endl;}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154     \textcolor{comment}{// Output matrix beging diagonalized}}
+\DoxyCodeLine{155     \textcolor{keywordflow}{if}( ss.nC == 1 ) \{}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157       std::cout << \textcolor{stringliteral}{"{}  * PPSPINMAT = "{}};}
+\DoxyCodeLine{158       \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca0e97952af46f16e5ca2214d7b55680bd}{PP\_AA}} )       std::cout << \textcolor{stringliteral}{"{}AA"{}};}
+\DoxyCodeLine{159       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca94718c14794ad2bce34245f1ac9e6f38}{PP\_AB}} )  std::cout << \textcolor{stringliteral}{"{}AB"{}};}
+\DoxyCodeLine{160       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca2253031b1d4b07be614989c4da2bddc9}{PP\_BB}} )  std::cout << \textcolor{stringliteral}{"{}BB"{}};}
+\DoxyCodeLine{161       std::cout << std::endl;}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163     \}}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165     \textcolor{comment}{// Ouput TDA matrix}}
+\DoxyCodeLine{166     \textcolor{keywordflow}{if}( this-\/>genSettings.doTDA ) \{}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169       std::cout << \textcolor{stringliteral}{"{}  * DOING TDA!"{}} << std::endl;}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171       std::cout << \textcolor{stringliteral}{"{}  * PPTDAMAT = "{}};}
+\DoxyCodeLine{172       \textcolor{keywordflow}{if}( doVir\_ )       std::cout << \textcolor{stringliteral}{"{}A"{}};}
+\DoxyCodeLine{173       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( doOcc\_ )  std::cout << \textcolor{stringliteral}{"{}C"{}};}
+\DoxyCodeLine{174       std::cout << std::endl;}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176     \}}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178     std::cout << std::endl << std::endl;}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181     \textcolor{keywordflow}{if}( this-\/>genSettings.printLevel > 0 and isRoot ) \{}
+\DoxyCodeLine{182       \textcolor{keywordflow}{if}( not this-\/>genSettings.formFullMat )}
+\DoxyCodeLine{183         std::cout << \textcolor{stringliteral}{"{}  * TENSOR CONTRACTIONS WILL BE FORMED DIRECTLY"{}} }
+\DoxyCodeLine{184           << std::endl;}
+\DoxyCodeLine{185     \}}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187   \};}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{191   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator<SingleSlater<MatsT,IntsT>}}>::constructShifts() \{}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}FDR Not Implemented for ParticleParticlePropagator: no shifts!"{}});}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195   \};}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{198   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator<SingleSlater<MatsT,IntsT>}}>::postLinearSolve() \{}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}FDR Not Implemented for ParticleParticlePropagator: no postLinearSolve!"{}});}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202   \};}
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{205   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{206   std::vector< std::pair< std::pair<int,int>, U > >}
+\DoxyCodeLine{207     \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator<SingleSlater<MatsT,IntsT>}}>::getMOContributions(U *V, }
+\DoxyCodeLine{208         \textcolor{keywordtype}{double} tol) \{}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210     std::vector< std::pair< std::pair<int,int>, U > > moCont;}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212     \textcolor{keyword}{auto}\& ss = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&\textcolor{keyword}{>}(*this-\/>ref\_);}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214 }
+\DoxyCodeLine{215     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV  = getNV1(doStarRef); }
+\DoxyCodeLine{216     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV2 = getNV2(doStarRef);}
+\DoxyCodeLine{217     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO  = getNO1(doStarRef); }
+\DoxyCodeLine{218     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO2 = getNO2(doStarRef); }
+\DoxyCodeLine{219 }
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223     \textcolor{keywordtype}{bool} doLT = (ss.nC == 2) or (spinSepProp != \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca94718c14794ad2bce34245f1ac9e6f38}{PP\_AB}});}
+\DoxyCodeLine{224 }
+\DoxyCodeLine{225     \textcolor{keywordtype}{size\_t} hhSt = this-\/>genSettings.doTDA ? 0 : aDim\_;}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227     \textcolor{keyword}{auto} bmax = [\&](\textcolor{keywordtype}{size\_t} a)\{ \textcolor{keywordflow}{return} doLT ? a : NV2; \};}
+\DoxyCodeLine{228     \textcolor{keyword}{auto} jmax = [\&](\textcolor{keywordtype}{size\_t} i)\{ \textcolor{keywordflow}{return} doLT ? i : NO2; \};}
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230     \textcolor{keywordflow}{if}( doVir\_ )}
+\DoxyCodeLine{231     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} a = 0ul, ab = 0ul; a < NV;      a++      )}
+\DoxyCodeLine{232     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} b = 0ul;           b < bmax(a); b++, ab++) \{}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234       \textcolor{keywordflow}{if}( std::abs(V[ab]) > tol ) }
+\DoxyCodeLine{235         moCont.push\_back( \{ \{a+NO, b+NO2\}, V[ab] \} );}
+\DoxyCodeLine{236 }
+\DoxyCodeLine{237     \}}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239 }
+\DoxyCodeLine{240     \textcolor{keywordflow}{if}( doOcc\_ ) }
+\DoxyCodeLine{241     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul, ij = hhSt; i < NO;      i++      )}
+\DoxyCodeLine{242     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0ul;            j < jmax(i); j++, ij++) \{}
+\DoxyCodeLine{243 }
+\DoxyCodeLine{244       \textcolor{keywordflow}{if}( std::abs(V[ij]) > tol ) }
+\DoxyCodeLine{245         moCont.push\_back( \{ \{-\/i, -\/j\}, V[ij] \} );}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{247     \}}
+\DoxyCodeLine{248 }
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250     \textcolor{keywordflow}{return} moCont;}
+\DoxyCodeLine{251 }
+\DoxyCodeLine{252   \};}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{256   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{257   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator<SingleSlater<MatsT,IntsT>}}>::printResMO\_impl(}
+\DoxyCodeLine{258     std::ostream \&out, \textcolor{keywordtype}{size\_t} nRoots, \textcolor{keywordtype}{double} *W\_print,}
+\DoxyCodeLine{259     std::vector<std::pair<std::string,double *>> data, U* VL, U* VR) \{}
+\DoxyCodeLine{260 }
+\DoxyCodeLine{261     this-\/>nSingleDim\_ = getNSingleDim(this-\/>genSettings.doTDA);}
+\DoxyCodeLine{262 }
+\DoxyCodeLine{263     out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n\(\backslash\)n* RESIDUE EIGENMODES\(\backslash\)n\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{264 }
+\DoxyCodeLine{265     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iRt = 0; iRt < nRoots; iRt++) \{}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267       out << \textcolor{stringliteral}{"{}  Root "{}} << std::setw(7) << std::right << iRt+1 << \textcolor{stringliteral}{"{}:"{}};}
+\DoxyCodeLine{268 }
+\DoxyCodeLine{269       \textcolor{comment}{// Energy eigenvalues in various unit systems}}
+\DoxyCodeLine{270       out << std::setw(15) << std::right << \textcolor{stringliteral}{"{}W(Eh) = "{}} }
+\DoxyCodeLine{271           << std::setprecision(8) << std::fixed << W\_print[iRt];}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273       out << std::setw(15) << std::right << \textcolor{stringliteral}{"{}W(eV) = "{}} }
+\DoxyCodeLine{274           << std::setprecision(8) << std::fixed }
+\DoxyCodeLine{275           << W\_print[iRt]*\mbox{\hyperlink{namespaceChronusQ_ad886cd941f1239c3db41e3b9df6e68b6}{EVPerHartree}};}
+\DoxyCodeLine{276 }
+\DoxyCodeLine{277       out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{278 }
+\DoxyCodeLine{279 }
+\DoxyCodeLine{280       \textcolor{keywordflow}{if}( this-\/>genSettings.evalProp ) \{}
+\DoxyCodeLine{281         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&d : data) \{}
+\DoxyCodeLine{282         out << \textcolor{stringliteral}{"{}       "{}} << std::setw(7) << \textcolor{stringliteral}{"{} "{}} << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{283         out << std::setw(15) << std::right << d.first }
+\DoxyCodeLine{284             << std::setprecision(8) << std::fixed }
+\DoxyCodeLine{285             << d.second[iRt];}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287         out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{288         \}}
+\DoxyCodeLine{289       \}}
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291       \textcolor{keyword}{auto} vCont = getMOContributions(VR+iRt*this-\/>nSingleDim\_,1e-\/1);}
+\DoxyCodeLine{292 }
+\DoxyCodeLine{293       \textcolor{comment}{// MO contributions}}
+\DoxyCodeLine{294       out << \textcolor{stringliteral}{"{}    MO Contributions:\(\backslash\)n"{}};}
+\DoxyCodeLine{295       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&c : vCont) \{}
+\DoxyCodeLine{296 }
+\DoxyCodeLine{297         std::string exLabel = (c.first.first > 0) ? \textcolor{stringliteral}{"{}(++)"{}} : \textcolor{stringliteral}{"{}(-\/-\/)"{}};}
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299         \textcolor{keywordtype}{char} spinLabel1 = (this-\/>ref\_-\/>nC == 2)  ? \textcolor{charliteral}{' '} :}
+\DoxyCodeLine{300                           (spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca2253031b1d4b07be614989c4da2bddc9}{PP\_BB}}) ? \textcolor{charliteral}{'B'} : \textcolor{charliteral}{'A'};}
+\DoxyCodeLine{301         \textcolor{keywordtype}{char} spinLabel2 = (this-\/>ref\_-\/>nC == 2)  ? \textcolor{charliteral}{' '} :}
+\DoxyCodeLine{302                           (spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca0e97952af46f16e5ca2214d7b55680bd}{PP\_AA}}) ? \textcolor{charliteral}{'A'} : \textcolor{charliteral}{'B'};}
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304       }
+\DoxyCodeLine{305         out << \textcolor{stringliteral}{"{}      "{}} << exLabel;}
+\DoxyCodeLine{306         out << std::setw(4) << std::right }
+\DoxyCodeLine{307             << std::abs(c.first.first) + 1 << spinLabel1 << \textcolor{stringliteral}{"{} ; "{}};}
+\DoxyCodeLine{308         out << std::setw(4) << std::right }
+\DoxyCodeLine{309             << std::abs(c.first.second) + 1  << spinLabel2;}
+\DoxyCodeLine{310 }
+\DoxyCodeLine{311         \textcolor{keywordflow}{if}(std::is\_same<U,double>::value)}
+\DoxyCodeLine{312           out << \textcolor{stringliteral}{"{}  "{}} << std::fixed << std::setprecision(5) }
+\DoxyCodeLine{313                       << std::setw(10) << std::right << c.second << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{314         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{315           out << \textcolor{stringliteral}{"{}  "{}} << std::fixed << std::setprecision(5) }
+\DoxyCodeLine{316                       << std::setw(10) << std::right << std::abs(c.second);}
+\DoxyCodeLine{317           out << \textcolor{stringliteral}{"{}  "{}} << std::fixed << std::setprecision(5) }
+\DoxyCodeLine{318                       << std::setw(10) << std::right << std::arg(c.second) }
+\DoxyCodeLine{319                       << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{320         \}}
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322 }
+\DoxyCodeLine{323 }
+\DoxyCodeLine{324       \}}
+\DoxyCodeLine{325 }
+\DoxyCodeLine{326 }
+\DoxyCodeLine{327       out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}} << std::endl;}
+\DoxyCodeLine{328 }
+\DoxyCodeLine{329     \}}
+\DoxyCodeLine{330 }
+\DoxyCodeLine{331   \}}
+\DoxyCodeLine{332   }
+\DoxyCodeLine{333 }
+\DoxyCodeLine{334   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{335   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator<SingleSlater<MatsT,IntsT>}}>::eigVecNorm() \{}
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337     \textcolor{keywordflow}{if}(this-\/>genSettings.doTDA) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{338 }
+\DoxyCodeLine{339     \textcolor{keyword}{auto} N  = this-\/>nSingleDim\_;}
+\DoxyCodeLine{340     \textcolor{keywordtype}{size\_t} nRoots = this-\/>resSettings.nRoots;}
+\DoxyCodeLine{341 }
+\DoxyCodeLine{342     MatsT* V = this-\/>resResults.VR;}
+\DoxyCodeLine{343 }
+\DoxyCodeLine{344     \textcolor{comment}{// Fixme does not propery orthonormalize Y vectors}}
+\DoxyCodeLine{345     \textcolor{keyword}{auto} tdInner = [\&](MatsT* Vc) \{ }
+\DoxyCodeLine{346         MatsT inX = \mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(aDim\_,Vc,1,Vc,1);}
+\DoxyCodeLine{347         MatsT inY = \mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(cDim\_,Vc+aDim\_,1,Vc+aDim\_,1) ;}
+\DoxyCodeLine{348 }
+\DoxyCodeLine{349         \textcolor{keywordtype}{bool} sign = std::signbit(std::abs(inX) -\/ std::abs(inY));}
+\DoxyCodeLine{350 }
+\DoxyCodeLine{351         \textcolor{keywordtype}{int} fact = sign ? 1 : -\/1;}
+\DoxyCodeLine{352 }
+\DoxyCodeLine{353         \textcolor{keywordflow}{return} fact * std::sqrt(std::abs(inX -\/ inY));}
+\DoxyCodeLine{354       \};}
+\DoxyCodeLine{355 }
+\DoxyCodeLine{356 }
+\DoxyCodeLine{357 }
+\DoxyCodeLine{358 }
+\DoxyCodeLine{359     \textcolor{keyword}{auto} tdMatInner = [\&](\textcolor{keywordtype}{size\_t} i, \textcolor{keywordtype}{size\_t} j, MatsT* Vi, \textcolor{keywordtype}{size\_t} LDVi,}
+\DoxyCodeLine{360           MatsT* Vj, \textcolor{keywordtype}{size\_t} LDVj, MatsT* inner)\{ }
+\DoxyCodeLine{361 }
+\DoxyCodeLine{362           MatsT    *Xi = Vi,            *Xj = Vj;}
+\DoxyCodeLine{363           MatsT    *Yi = Vi + aDim\_,    *Yj = Vj + aDim\_;}
+\DoxyCodeLine{364 }
+\DoxyCodeLine{365           blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,i,j,aDim\_,MatsT(1.) ,Xi,LDVi,Xj,LDVj,MatsT(0.),inner,i);}
+\DoxyCodeLine{366           blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,i,j,cDim\_,MatsT(-\/1.),Yi,LDVi,Yj,LDVj,MatsT(1.),inner,i);}
+\DoxyCodeLine{367 }
+\DoxyCodeLine{368         \};}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370 }
+\DoxyCodeLine{371     \textcolor{comment}{/*}}
+\DoxyCodeLine{372 \textcolor{comment}{    MatsT* inner = this-\/>memManager\_.template malloc<MatsT>(nRoots*nRoots);}}
+\DoxyCodeLine{373 \textcolor{comment}{}}
+\DoxyCodeLine{374 \textcolor{comment}{    tdMatInner(N,N,V,N,V,N,inner);}}
+\DoxyCodeLine{375 \textcolor{comment}{    prettyPrintSmart(std::cout,"{}BEFORE"{},inner,N,N,N);}}
+\DoxyCodeLine{376 \textcolor{comment}{    */}}
+\DoxyCodeLine{377 }
+\DoxyCodeLine{378     \mbox{\hyperlink{namespaceChronusQ_a297df8c15de632b2649710f25e104d51}{GramSchmidt}}(N,0,nRoots,V,N,tdInner,tdMatInner,this-\/>memManager\_,1);}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380     \textcolor{comment}{/*}}
+\DoxyCodeLine{381 \textcolor{comment}{    tdMatInner(N,N,V,N,V,N,inner);}}
+\DoxyCodeLine{382 \textcolor{comment}{    prettyPrintSmart(std::cout,"{}AFTER"{},inner,N,N,N);}}
+\DoxyCodeLine{383 \textcolor{comment}{    */}}
+\DoxyCodeLine{384 }
+\DoxyCodeLine{385 }
+\DoxyCodeLine{386   \};}
+\DoxyCodeLine{387 }
+\DoxyCodeLine{388 }
+\DoxyCodeLine{389 }
+\DoxyCodeLine{390   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{391   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{392   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator< SingleSlater<MatsT, IntsT>}} >::formLinearTrans\_incore\_impl( }
+\DoxyCodeLine{393     std::vector<\mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION}{RESPONSE\_CONTRACTION<U>}}> cList)\{ }
+\DoxyCodeLine{394   }
+\DoxyCodeLine{395     \textcolor{keywordtype}{bool} isDist = this-\/>genSettings.isDist(); }
+\DoxyCodeLine{396 }
+\DoxyCodeLine{397     \textcolor{comment}{/*}}
+\DoxyCodeLine{398 \textcolor{comment}{    // FIXME MPI : This is ad hoc logic, assumes that if the cases when}}
+\DoxyCodeLine{399 \textcolor{comment}{    // matrix is not distributed that only the root process will be}}
+\DoxyCodeLine{400 \textcolor{comment}{    // calling this function}}
+\DoxyCodeLine{401 \textcolor{comment}{    bool needFullMat = not bool(this-\/>fullMatrix\_);}}
+\DoxyCodeLine{402 \textcolor{comment}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{403 \textcolor{comment}{    if( this-\/>genSettings.isDist() ) MPIBCast(\&needFullMat,1,0,this-\/>comm\_);}}
+\DoxyCodeLine{404 \textcolor{comment}{\#endif}}
+\DoxyCodeLine{405 \textcolor{comment}{    if(needFullMat) formFullMatrix(); }}
+\DoxyCodeLine{406 \textcolor{comment}{    */}}
+\DoxyCodeLine{407 }
+\DoxyCodeLine{408     \textcolor{keywordtype}{size\_t} N = this-\/>nSingleDim\_;}
+\DoxyCodeLine{409 }
+\DoxyCodeLine{410 }
+\DoxyCodeLine{411     \textcolor{keywordtype}{size\_t} maxNVec = }
+\DoxyCodeLine{412       std::max\_element(cList.begin(),cList.end(),}
+\DoxyCodeLine{413         [](\mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION}{RESPONSE\_CONTRACTION<U>}} l, \mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION}{RESPONSE\_CONTRACTION<U>}} r) \{}
+\DoxyCodeLine{414           return l.nVec < r.nVec;}
+\DoxyCodeLine{415         \}}
+\DoxyCodeLine{416       )-\/>nVec;}
+\DoxyCodeLine{417 }
+\DoxyCodeLine{418 }
+\DoxyCodeLine{419     \textcolor{comment}{// (Local) Dims}}
+\DoxyCodeLine{420     \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} MLoc(N) , NLoc(N);}
+\DoxyCodeLine{421 }
+\DoxyCodeLine{422 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{423     \textcolor{keywordflow}{if}( isDist )}
+\DoxyCodeLine{424       std::tie(MLoc,NLoc) = this-\/>fullMatGrid\_-\/>getLocalDims(MLoc,NLoc);}
+\DoxyCodeLine{425 }
+\DoxyCodeLine{426 }
+\DoxyCodeLine{427     \textcolor{comment}{// ScaLAPACK DESC}}
+\DoxyCodeLine{428     CXXBLACS::ScaLAPACK\_Desc\_t descMem;}
+\DoxyCodeLine{429     \textcolor{keywordflow}{if}( isDist ) descMem = this-\/>fullMatGrid\_-\/>descInit(N,N,0,0,MLoc);}
+\DoxyCodeLine{430 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{431 }
+\DoxyCodeLine{432     }
+\DoxyCodeLine{433 }
+\DoxyCodeLine{434 }
+\DoxyCodeLine{435 }
+\DoxyCodeLine{436     \textcolor{comment}{// FIXME MPI: Because there doesn't exist a PDZGEMM, make a copy of the}}
+\DoxyCodeLine{437     \textcolor{comment}{// matrix if the contractions are complex... This is horrifying!}}
+\DoxyCodeLine{438     U* FM = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{439 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{440     \textcolor{keywordflow}{if}( isDist ) \{}
+\DoxyCodeLine{441 }
+\DoxyCodeLine{442       \textcolor{keywordflow}{if}( std::is\_same<U,MatsT>::value ) }
+\DoxyCodeLine{443         FM = \textcolor{keyword}{reinterpret\_cast<}U*\textcolor{keyword}{>}(this-\/>fullMatrix\_);}
+\DoxyCodeLine{444       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{445         FM = this-\/>memManager\_.template malloc<U>(MLoc*NLoc);}
+\DoxyCodeLine{446         std::copy\_n(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{double}*\textcolor{keyword}{>}(this-\/>fullMatrix\_),MLoc*NLoc,FM);}
+\DoxyCodeLine{447       \}}
+\DoxyCodeLine{448 }
+\DoxyCodeLine{449     \}}
+\DoxyCodeLine{450 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{451 }
+\DoxyCodeLine{452     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&mat : cList) \{}
+\DoxyCodeLine{453 }
+\DoxyCodeLine{454       \textcolor{keywordtype}{size\_t} nVec = mat.nVec;}
+\DoxyCodeLine{455       \textcolor{keyword}{auto} * \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}    = mat.X;}
+\DoxyCodeLine{456       \textcolor{keyword}{auto} *AX    = mat.AX;}
+\DoxyCodeLine{457 }
+\DoxyCodeLine{458 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{459       CXXBLACS::ScaLAPACK\_Desc\_t DescAX = mat.DescAX;}
+\DoxyCodeLine{460 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{461 }
+\DoxyCodeLine{462 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{463       \textcolor{keywordflow}{if}( isDist )}
+\DoxyCodeLine{464         Gemm\_MPI(\textcolor{charliteral}{'N'},\textcolor{charliteral}{'N'},N,nVec,N,U(1.),FM,1,1,descMem,\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}},1,1,mat.DescX,}
+\DoxyCodeLine{465           U(0.),AX,1,1,DescAX);}
+\DoxyCodeLine{466       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{467 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{468         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,N,nVec,N,U(1.),this-\/>fullMatrix\_,N,\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}},N,U(0.),AX,N);}
+\DoxyCodeLine{469 }
+\DoxyCodeLine{470       \textcolor{comment}{//if( not this-\/>genSettings.matIsHer ) \{}}
+\DoxyCodeLine{471       \textcolor{comment}{//  if( isDist )}}
+\DoxyCodeLine{472       \textcolor{comment}{//    CXXBLACS::PLASCL('F',-\/1.,1.,CDIM,nVec,AX,ADIM+1,1,DescAX);}}
+\DoxyCodeLine{473       \textcolor{comment}{//  else}}
+\DoxyCodeLine{474       \textcolor{comment}{//    SetMat('N',CDIM,nVec,U(-\/1.),AX + ADIM,N,AX + ADIM,N);}}
+\DoxyCodeLine{475       \textcolor{comment}{//\}}}
+\DoxyCodeLine{476 }
+\DoxyCodeLine{477 }
+\DoxyCodeLine{478 }
+\DoxyCodeLine{479     \}}
+\DoxyCodeLine{480   }
+\DoxyCodeLine{481     \textcolor{keywordflow}{if}( FM and (\textcolor{keyword}{reinterpret\_cast<}MatsT*\textcolor{keyword}{>}(FM) != this-\/>fullMatrix\_) ) }
+\DoxyCodeLine{482       this-\/>memManager\_.free(FM);}
+\DoxyCodeLine{483   }
+\DoxyCodeLine{484   \};}
+\DoxyCodeLine{485 }
+\DoxyCodeLine{486   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{487   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator< SingleSlater<double,double>}} >::formLinearTrans\_incore( }
+\DoxyCodeLine{488     std::vector<\mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION}{RESPONSE\_CONTRACTION<double>}}> cList)\{ }
+\DoxyCodeLine{489 }
+\DoxyCodeLine{490     formLinearTrans\_incore\_impl(cList);}
+\DoxyCodeLine{491 }
+\DoxyCodeLine{492   \}}
+\DoxyCodeLine{493 }
+\DoxyCodeLine{494   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{495   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator<SingleSlater<dcomplex,double>}}>::formLinearTrans\_incore( }
+\DoxyCodeLine{496     std::vector<\mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION}{RESPONSE\_CONTRACTION<double>}}> cList)\{ }
+\DoxyCodeLine{497 }
+\DoxyCodeLine{498     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}SOMETHING HAS GONE HORRIBLY WRONG formLinearTrans\_incore"{}});}
+\DoxyCodeLine{499 }
+\DoxyCodeLine{500   \}}
+\DoxyCodeLine{501 }
+\DoxyCodeLine{502   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{503   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator<SingleSlater<dcomplex,dcomplex>}}>::formLinearTrans\_incore( }
+\DoxyCodeLine{504     std::vector<\mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION}{RESPONSE\_CONTRACTION<double>}}> cList)\{ }
+\DoxyCodeLine{505 }
+\DoxyCodeLine{506     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}SOMETHING HAS GONE HORRIBLY WRONG formLinearTrans\_incore"{}});}
+\DoxyCodeLine{507 }
+\DoxyCodeLine{508   \}}
+\DoxyCodeLine{509 }
+\DoxyCodeLine{510 }
+\DoxyCodeLine{511 }
+\DoxyCodeLine{512 }
+\DoxyCodeLine{513   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{514   MatsT * \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator<SingleSlater<MatsT, IntsT>}}>::formFullMatrix() \{}
+\DoxyCodeLine{515   }
+\DoxyCodeLine{516     \textcolor{keywordtype}{bool} isRoot = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(this-\/>comm\_) == 0;}
+\DoxyCodeLine{517     }
+\DoxyCodeLine{518     \textcolor{keywordflow}{if}( isRoot ) std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n  * FORMING FULL MATRIX\(\backslash\)n"{}};}
+\DoxyCodeLine{519     }
+\DoxyCodeLine{520     \textcolor{keyword}{auto} topFull = \mbox{\hyperlink{namespaceChronusQ_a715f671201f0f6e77216fcf1f72adbaf}{tick}}();}
+\DoxyCodeLine{521 }
+\DoxyCodeLine{522     this-\/>nSingleDim\_ = this-\/>getNSingleDim(this-\/>genSettings.doTDA);}
+\DoxyCodeLine{523     \textcolor{keywordtype}{size\_t} N = this-\/>nSingleDim\_;}
+\DoxyCodeLine{524 }
+\DoxyCodeLine{525     \textcolor{keywordtype}{size\_t} nForm  = N;}
+\DoxyCodeLine{526     \textcolor{keywordtype}{size\_t} nStore = nForm;}
+\DoxyCodeLine{527     \textcolor{keywordtype}{size\_t} nFormP = nForm;   \textcolor{comment}{// Persistant for matrix distribution}}
+\DoxyCodeLine{528     \textcolor{keywordtype}{size\_t} nStoreP = nStore; \textcolor{comment}{// Persistant for matrix distribution}}
+\DoxyCodeLine{529 }
+\DoxyCodeLine{530     \textcolor{comment}{// Determine if we want to distribute the matrix at all}}
+\DoxyCodeLine{531     \textcolor{keywordtype}{bool} isDist = this-\/>genSettings.isDist(); }
+\DoxyCodeLine{532 }
+\DoxyCodeLine{533     \textcolor{comment}{// MPI Communicator for matrix formation}}
+\DoxyCodeLine{534     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} matComm = this-\/>comm\_;}
+\DoxyCodeLine{535 }
+\DoxyCodeLine{536 }
+\DoxyCodeLine{537 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{538     std::shared\_ptr<CXXBLACS::BlacsGrid> formGrid;}
+\DoxyCodeLine{539     \textcolor{comment}{// Divide up the work if forming the matrix distributed}}
+\DoxyCodeLine{540     \textcolor{keywordflow}{if}( this-\/>genSettings.formMatDist ) \{ }
+\DoxyCodeLine{541 }
+\DoxyCodeLine{542       \textcolor{keywordflow}{if}( isRoot )}
+\DoxyCodeLine{543       std::cout << \textcolor{stringliteral}{"{}    * FORMING THE MATRIX DISTRIBUTED\(\backslash\)n"{}};}
+\DoxyCodeLine{544 }
+\DoxyCodeLine{545       \textcolor{comment}{// Split the communicator}}
+\DoxyCodeLine{546       \textcolor{keywordtype}{int} color = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(this-\/>comm\_);}
+\DoxyCodeLine{547       matComm = \mbox{\hyperlink{namespaceChronusQ_a25b765abdb845e0ca3adb846155b3878}{MPICommSplit}}(this-\/>comm\_,color,0);}
+\DoxyCodeLine{548       }
+\DoxyCodeLine{549 }
+\DoxyCodeLine{550       \textcolor{comment}{// Create a temorary grid to form the matrix in}}
+\DoxyCodeLine{551       \textcolor{comment}{// columns}}
+\DoxyCodeLine{552       formGrid = std::make\_shared<CXXBLACS::BlacsGrid>(}
+\DoxyCodeLine{553           this-\/>comm\_,N,nForm / \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(this-\/>comm\_), 0, 0, \textcolor{stringliteral}{"{}linear"{}});}
+\DoxyCodeLine{554       std::tie(N,nForm) = formGrid-\/>getLocalDims(N,nForm);}
+\DoxyCodeLine{555       nStore = nForm;}
+\DoxyCodeLine{556 }
+\DoxyCodeLine{557     \}}
+\DoxyCodeLine{558 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{559 }
+\DoxyCodeLine{560     \textcolor{comment}{// Print memory requirements (ish)}}
+\DoxyCodeLine{561     \textcolor{keywordflow}{if}( isRoot ) \{}
+\DoxyCodeLine{562       \textcolor{keywordtype}{size\_t} NB = this-\/>ref\_-\/>nAlphaOrbital();}
+\DoxyCodeLine{563       \textcolor{keywordtype}{size\_t} vcSize = N*(nForm + nStore)*\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double});}
+\DoxyCodeLine{564       \textcolor{keywordtype}{size\_t} aoSize = NB*NB*(nForm + nStore)*\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double});}
+\DoxyCodeLine{565       \textcolor{keywordtype}{size\_t} parSize = nForm*NB*NB*\textcolor{keyword}{sizeof}(double)*(\mbox{\hyperlink{namespaceChronusQ_a3320ee560c87921c8d84885db82e9917}{GetNumThreads}}()-\/1);}
+\DoxyCodeLine{566       std::cout << \textcolor{stringliteral}{"{}    * TOTAL VECTOR STORAGE REQUIREMENT             "{}}}
+\DoxyCodeLine{567         << double(vcSize) / 1e9 << \textcolor{stringliteral}{"{} GB\(\backslash\)n"{}};}
+\DoxyCodeLine{568       std::cout << \textcolor{stringliteral}{"{}    * TOTAL AO SCRATCH STORAGE REQUIREMENT         "{}}}
+\DoxyCodeLine{569         << double(aoSize) / 1e9 << \textcolor{stringliteral}{"{} GB\(\backslash\)n"{}};}
+\DoxyCodeLine{570       \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a3320ee560c87921c8d84885db82e9917}{GetNumThreads}}() -\/ 1 )}
+\DoxyCodeLine{571         std::cout << \textcolor{stringliteral}{"{}    * TOTAL PARALLEL SCRATCH STORAGE REQUIREMENT "{}}}
+\DoxyCodeLine{572           << double(parSize) / 1e9 << \textcolor{stringliteral}{"{} GB\(\backslash\)n"{}};}
+\DoxyCodeLine{573       std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n"{}} << std::flush;}
+\DoxyCodeLine{574 }
+\DoxyCodeLine{575     \}}
+\DoxyCodeLine{576 }
+\DoxyCodeLine{577     \textcolor{keywordtype}{bool} isRootMatComm = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(matComm) == 0;}
+\DoxyCodeLine{578 }
+\DoxyCodeLine{579 }
+\DoxyCodeLine{580     \textcolor{comment}{// Allocate space for identity for contraction}}
+\DoxyCodeLine{581     MatsT* V  = this-\/>memManager\_.template malloc<MatsT>(N*nForm);}
+\DoxyCodeLine{582     std::fill\_n(V ,N*nForm ,0.);}
+\DoxyCodeLine{583     }
+\DoxyCodeLine{584     \textcolor{comment}{// Form the identity in V}}
+\DoxyCodeLine{585 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{586     \textcolor{keywordflow}{if}( this-\/>genSettings.formMatDist )\{ }
+\DoxyCodeLine{587       \textcolor{keywordtype}{size\_t} j = 0;}
+\DoxyCodeLine{588       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul; i < nFormP; i++)\{ }
+\DoxyCodeLine{589 }
+\DoxyCodeLine{590         \textcolor{keyword}{auto} lc = formGrid-\/>localFromGlobal(0,i);}
+\DoxyCodeLine{591         \textcolor{keywordflow}{if}( lc.procRowOwn == formGrid-\/>iProcRow() and}
+\DoxyCodeLine{592             lc.procColOwn == formGrid-\/>iProcCol() ) \{}
+\DoxyCodeLine{593           V[i + j*N] = 1.0; }
+\DoxyCodeLine{594           j++;}
+\DoxyCodeLine{595         \}}
+\DoxyCodeLine{596       \}}
+\DoxyCodeLine{597     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{598 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{599       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul; i < nForm; i++)\{ V[i * (N+1)] = 1.0; \}}
+\DoxyCodeLine{600 }
+\DoxyCodeLine{601     \textcolor{comment}{// Only allocate HV on root process as it won't be touched by}}
+\DoxyCodeLine{602     \textcolor{comment}{// other processes}}
+\DoxyCodeLine{603     MatsT* HV = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{604     \textcolor{keywordflow}{if}( isRootMatComm ) \{}
+\DoxyCodeLine{605       HV = this-\/>memManager\_.template malloc<MatsT>(N*nStore);}
+\DoxyCodeLine{606       \textcolor{comment}{//std::fill\_n(HV,N*nStore,0.);}}
+\DoxyCodeLine{607     \}}
+\DoxyCodeLine{608   }
+\DoxyCodeLine{609 }
+\DoxyCodeLine{610 }
+\DoxyCodeLine{611     \textcolor{comment}{// Perform contraction directly}}
+\DoxyCodeLine{612     \textcolor{keyword}{auto} topContract = \mbox{\hyperlink{namespaceChronusQ_a715f671201f0f6e77216fcf1f72adbaf}{tick}}();}
+\DoxyCodeLine{613     \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll<MatsT>}} cList(1);}
+\DoxyCodeLine{614     cList.back().nVec = nForm;}
+\DoxyCodeLine{615     cList.back().N    = N;}
+\DoxyCodeLine{616     cList.back().X    = V;}
+\DoxyCodeLine{617     cList.back().AX   = HV;}
+\DoxyCodeLine{618 }
+\DoxyCodeLine{619     formLinearTrans\_direct(matComm,cList);}
+\DoxyCodeLine{620 }
+\DoxyCodeLine{621     \textcolor{keyword}{auto} durContract = \mbox{\hyperlink{namespaceChronusQ_a3b2153e93af4532ff5b1e75d8af453b0}{tock}}(topContract);}
+\DoxyCodeLine{622 }
+\DoxyCodeLine{623 }
+\DoxyCodeLine{624     this-\/>memManager\_.free(V); \textcolor{comment}{// Free up some memory}}
+\DoxyCodeLine{625 }
+\DoxyCodeLine{626     \textcolor{keyword}{auto} topTrans = \mbox{\hyperlink{namespaceChronusQ_a715f671201f0f6e77216fcf1f72adbaf}{tick}}();}
+\DoxyCodeLine{627     \textcolor{keywordflow}{if}( not this-\/>genSettings.formMatDist  and isRootMatComm )\{ }
+\DoxyCodeLine{628 }
+\DoxyCodeLine{629       \textcolor{comment}{// Negate the bottom half}}
+\DoxyCodeLine{630       \textcolor{keywordflow}{if}( not this-\/>genSettings.doTDA ) }
+\DoxyCodeLine{631         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},cDim\_,N,MatsT(-\/1.),HV + aDim\_,N,HV + aDim\_,N);}
+\DoxyCodeLine{632       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( doOcc\_ )}
+\DoxyCodeLine{633         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},cDim\_,N,MatsT(-\/1.),HV,N,HV,N);}
+\DoxyCodeLine{634 }
+\DoxyCodeLine{635     \}}
+\DoxyCodeLine{636 }
+\DoxyCodeLine{637     \textcolor{keywordtype}{double} durTrans = \mbox{\hyperlink{namespaceChronusQ_a3b2153e93af4532ff5b1e75d8af453b0}{tock}}(topTrans);}
+\DoxyCodeLine{638   }
+\DoxyCodeLine{639 }
+\DoxyCodeLine{640 }
+\DoxyCodeLine{641     \textcolor{keyword}{auto} topDist = \mbox{\hyperlink{namespaceChronusQ_a715f671201f0f6e77216fcf1f72adbaf}{tick}}();}
+\DoxyCodeLine{642 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{643     \textcolor{keywordflow}{if}( isDist ) \{}
+\DoxyCodeLine{644 }
+\DoxyCodeLine{645       \textcolor{comment}{// Create the grid}}
+\DoxyCodeLine{646       \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} MB = this-\/>genSettings.MB;}
+\DoxyCodeLine{647       this-\/>fullMatGrid\_ = }
+\DoxyCodeLine{648         std::make\_shared<CXXBLACS::BlacsGrid>(this-\/>comm\_,MB,MB);}
+\DoxyCodeLine{649 }
+\DoxyCodeLine{650       \textcolor{comment}{// Get local dims}}
+\DoxyCodeLine{651       \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} MLoc, NLoc;}
+\DoxyCodeLine{652       std::tie(MLoc,NLoc) = this-\/>fullMatGrid\_-\/>getLocalDims(N,nStoreP);}
+\DoxyCodeLine{653 }
+\DoxyCodeLine{654       \textcolor{comment}{// Set to ScaLAPACK descriptors}}
+\DoxyCodeLine{655       this-\/>descFullMat\_ = }
+\DoxyCodeLine{656         this-\/>fullMatGrid\_-\/>descInit(N,nStoreP,0,0,MLoc);}
+\DoxyCodeLine{657 }
+\DoxyCodeLine{658 }
+\DoxyCodeLine{659       \textcolor{keywordflow}{if}( isRoot ) \{}
+\DoxyCodeLine{660 }
+\DoxyCodeLine{661         \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} NPROCROW = this-\/>fullMatGrid\_-\/>nProcRow();}
+\DoxyCodeLine{662         \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} NPROCCOL = this-\/>fullMatGrid\_-\/>nProcCol();}
+\DoxyCodeLine{663         \textcolor{keywordtype}{size\_t} NLOCAL = MLoc*NLoc*\textcolor{keyword}{sizeof}(MatsT);}
+\DoxyCodeLine{664 }
+\DoxyCodeLine{665         std::cout << \textcolor{stringliteral}{"{}  * DISTRIBUTING FULL MATRIX TO BLACS GRID\(\backslash\)n"{}};}
+\DoxyCodeLine{666         std::cout << \textcolor{stringliteral}{"{}    * MB       = "{}} << MB << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{667         std::cout << \textcolor{stringliteral}{"{}    * NPROCROW = "{}} <<  NPROCROW << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{668         std::cout << \textcolor{stringliteral}{"{}    * NPROCCOL = "{}} <<  NPROCCOL << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{669         std::cout << \textcolor{stringliteral}{"{}    * LOCALBUF = "{}} << double(NLOCAL) / 1e6 << \textcolor{stringliteral}{"{} MB\(\backslash\)n"{}};}
+\DoxyCodeLine{670         }
+\DoxyCodeLine{671         std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{672 }
+\DoxyCodeLine{673       \}}
+\DoxyCodeLine{674 }
+\DoxyCodeLine{675       \textcolor{comment}{// Allocate local buffers}}
+\DoxyCodeLine{676       this-\/>fullMatrix\_ = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{677       \textcolor{keywordflow}{if}( MLoc and NLoc )}
+\DoxyCodeLine{678         this-\/>fullMatrix\_ = this-\/>memManager\_.template malloc<MatsT>(MLoc*NLoc);}
+\DoxyCodeLine{679 }
+\DoxyCodeLine{680       \textcolor{keywordflow}{if}( this-\/>genSettings.distMatFromRoot )}
+\DoxyCodeLine{681         this-\/>fullMatGrid\_-\/>Scatter(N,nStoreP,HV,N,this-\/>fullMatrix\_,MLoc,0,0);}
+\DoxyCodeLine{682       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{683 }
+\DoxyCodeLine{684         \textcolor{comment}{// Get the array descriptiors on the form Grid}}
+\DoxyCodeLine{685         \textcolor{keyword}{auto} curDesc = formGrid-\/>descInit(N,nFormP,0,0,N);}
+\DoxyCodeLine{686 }
+\DoxyCodeLine{687         \textcolor{comment}{// Scale / conjugate if necessary Conj(B) -\/> -\/Conj(B); C -\/> -\/C}}
+\DoxyCodeLine{688        \textcolor{keywordflow}{if}( not this-\/>genSettings.doTDA )}
+\DoxyCodeLine{689          \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},cDim\_,nForm,MatsT(-\/1.),HV + aDim\_,N,HV + aDim\_,N);}
+\DoxyCodeLine{690        \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( doOcc\_ )}
+\DoxyCodeLine{691          \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},cDim\_,nForm,MatsT(-\/1.),HV,N,HV,N);}
+\DoxyCodeLine{692 }
+\DoxyCodeLine{693         \textcolor{comment}{// Redistribute}}
+\DoxyCodeLine{694         CXXBLACS::PGEMR2D(N,nFormP,HV,1,1,curDesc,this-\/>fullMatrix\_,1,1,}
+\DoxyCodeLine{695           this-\/>descFullMat\_,this-\/>fullMatGrid\_-\/>iContxt());}
+\DoxyCodeLine{696 }
+\DoxyCodeLine{697       \}}
+\DoxyCodeLine{698 }
+\DoxyCodeLine{699 }
+\DoxyCodeLine{700       \textcolor{keywordflow}{if}( HV ) this-\/>memManager\_.free(HV);}
+\DoxyCodeLine{701 }
+\DoxyCodeLine{702     \} \textcolor{keywordflow}{else} }
+\DoxyCodeLine{703 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{704       this-\/>fullMatrix\_ = HV;}
+\DoxyCodeLine{705 }
+\DoxyCodeLine{706     \textcolor{keywordtype}{double} durDist = \mbox{\hyperlink{namespaceChronusQ_a3b2153e93af4532ff5b1e75d8af453b0}{tock}}(topDist);}
+\DoxyCodeLine{707 }
+\DoxyCodeLine{708     \textcolor{comment}{//if( isDist ) CErr();}}
+\DoxyCodeLine{709 }
+\DoxyCodeLine{710 }
+\DoxyCodeLine{711     \textcolor{keywordflow}{if}( matComm != this-\/>comm\_ ) \mbox{\hyperlink{namespaceChronusQ_ae9c2c6f04046395ca738d3adb27543d7}{MPICommFree}}(matComm);}
+\DoxyCodeLine{712 }
+\DoxyCodeLine{713     \textcolor{keywordflow}{if}( this-\/>savFile.exists() and isRoot and not isDist ) \{}
+\DoxyCodeLine{714 }
+\DoxyCodeLine{715       this-\/>savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/FULLMATRIX"{}},HV,\{nStore,N\});}
+\DoxyCodeLine{716 }
+\DoxyCodeLine{717     \}}
+\DoxyCodeLine{718 }
+\DoxyCodeLine{719     \textcolor{keywordtype}{double} durFull =  \mbox{\hyperlink{namespaceChronusQ_a3b2153e93af4532ff5b1e75d8af453b0}{tock}}(topFull);}
+\DoxyCodeLine{720     \textcolor{keywordflow}{if}( isRoot ) \{}
+\DoxyCodeLine{721 }
+\DoxyCodeLine{722       std::cout << \textcolor{stringliteral}{"{}  * TIMINGS\(\backslash\)n"{}};}
+\DoxyCodeLine{723       std::cout << \textcolor{stringliteral}{"{}    * TOTAL     "{}} << durFull << \textcolor{stringliteral}{"{} s\(\backslash\)n"{}};}
+\DoxyCodeLine{724       std::cout << \textcolor{stringliteral}{"{}    * CONTRACT  "{}} << durContract << \textcolor{stringliteral}{"{} s\(\backslash\)n"{}};}
+\DoxyCodeLine{725       \textcolor{keywordflow}{if}( not this-\/>genSettings.doTDA )}
+\DoxyCodeLine{726         std::cout << \textcolor{stringliteral}{"{}    * TRANS     "{}} << durTrans << \textcolor{stringliteral}{"{} s\(\backslash\)n"{}};}
+\DoxyCodeLine{727 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{728       \textcolor{keywordflow}{if}( isDist )}
+\DoxyCodeLine{729         std::cout << \textcolor{stringliteral}{"{}    * DIST      "{}} << durDist << \textcolor{stringliteral}{"{} s\(\backslash\)n"{}};}
+\DoxyCodeLine{730 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{731 }
+\DoxyCodeLine{732       std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{733     \}}
+\DoxyCodeLine{734 }
+\DoxyCodeLine{735 }
+\DoxyCodeLine{736     \mbox{\hyperlink{namespaceChronusQ_a23c2e4eb26f9455d90831342328f3b91}{MPI\_Barrier}}(this-\/>comm\_); \textcolor{comment}{// Sync MPI processes}}
+\DoxyCodeLine{737 }
+\DoxyCodeLine{738     \textcolor{comment}{/*}}
+\DoxyCodeLine{739 \textcolor{comment}{    if( isRoot ) \{}}
+\DoxyCodeLine{740 \textcolor{comment}{}}
+\DoxyCodeLine{741 \textcolor{comment}{      prettyPrintSmart(std::cout,"{}FM"{},this-\/>fullMatrix\_,N,nStore,N);}}
+\DoxyCodeLine{742 \textcolor{comment}{}}
+\DoxyCodeLine{743 \textcolor{comment}{    \}}}
+\DoxyCodeLine{744 \textcolor{comment}{    CErr();}}
+\DoxyCodeLine{745 \textcolor{comment}{    */}}
+\DoxyCodeLine{746   }
+\DoxyCodeLine{747     \textcolor{keywordflow}{return} this-\/>fullMatrix\_;}
+\DoxyCodeLine{748 }
+\DoxyCodeLine{749   \};}
+\DoxyCodeLine{750 }
+\DoxyCodeLine{751 }
+\DoxyCodeLine{752 }
+\DoxyCodeLine{753 }
+\DoxyCodeLine{754 }
+\DoxyCodeLine{755 }
+\DoxyCodeLine{756 }
+\DoxyCodeLine{757 }
+\DoxyCodeLine{758 }
+\DoxyCodeLine{759 }
+\DoxyCodeLine{760 }
+\DoxyCodeLine{761 }
+\DoxyCodeLine{762   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{763   MatsT * \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator<SingleSlater<MatsT,IntsT>}}>::formFullFromMemory() \{}
+\DoxyCodeLine{764 }
+\DoxyCodeLine{765     \textcolor{keywordtype}{bool} isDist = this-\/>genSettings.isDist(); }
+\DoxyCodeLine{766 }
+\DoxyCodeLine{767     \textcolor{comment}{// FIXME MPI : This is ad hoc logic, assumes that if the cases when}}
+\DoxyCodeLine{768     \textcolor{comment}{// matrix is not distributed that only the root process will be}}
+\DoxyCodeLine{769     \textcolor{comment}{// calling this function}}
+\DoxyCodeLine{770     \textcolor{keywordtype}{bool} needFullMat = not bool(this-\/>fullMatrix\_);}
+\DoxyCodeLine{771 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{772     \textcolor{keywordflow}{if}( this-\/>genSettings.isDist() ) \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(\&needFullMat,1,0,this-\/>comm\_);}
+\DoxyCodeLine{773 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{774     \textcolor{keywordflow}{if}(needFullMat) this-\/>formFullMatrix(); }
+\DoxyCodeLine{775 }
+\DoxyCodeLine{776 }
+\DoxyCodeLine{777     \textcolor{keywordflow}{return} this-\/>fullMatrix\_;}
+\DoxyCodeLine{778 }
+\DoxyCodeLine{779   \};}
+\DoxyCodeLine{780 }
+\DoxyCodeLine{781 }
+\DoxyCodeLine{782   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{783   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{784   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator<SingleSlater<MatsT, IntsT>}}>::preConditioner(\textcolor{keywordtype}{size\_t} nVec, }
+\DoxyCodeLine{785       U shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&AV) \{}
+\DoxyCodeLine{786 }
+\DoxyCodeLine{787 }
+\DoxyCodeLine{788     \textcolor{keyword}{auto}\& ss = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT, IntsT>}}\&\textcolor{keyword}{>}(*this-\/>ref\_);}
+\DoxyCodeLine{789 }
+\DoxyCodeLine{790     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV  = getNV1(doStarRef); }
+\DoxyCodeLine{791     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV2 = getNV2(doStarRef);}
+\DoxyCodeLine{792     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO  = getNO1(doStarRef); }
+\DoxyCodeLine{793     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO2 = getNO2(doStarRef); }
+\DoxyCodeLine{794 }
+\DoxyCodeLine{795 }
+\DoxyCodeLine{796 }
+\DoxyCodeLine{797     \textcolor{keywordtype}{bool} doLT = (ss.nC == 2) or (spinSepProp != \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca94718c14794ad2bce34245f1ac9e6f38}{PP\_AB}});}
+\DoxyCodeLine{798     \textcolor{keywordtype}{size\_t} hhSt = this-\/>genSettings.doTDA ? 0 : aDim\_;}
+\DoxyCodeLine{799 }
+\DoxyCodeLine{800 }
+\DoxyCodeLine{801 }
+\DoxyCodeLine{802 }
+\DoxyCodeLine{803 }
+\DoxyCodeLine{804 }
+\DoxyCodeLine{805 }
+\DoxyCodeLine{806     \textcolor{keyword}{auto} bmax = [\&](\textcolor{keywordtype}{size\_t} a)\{ \textcolor{keywordflow}{return} doLT ? a : NV2; \};}
+\DoxyCodeLine{807     \textcolor{keyword}{auto} jmax = [\&](\textcolor{keywordtype}{size\_t} i)\{ \textcolor{keywordflow}{return} doLT ? i : NO2; \};}
+\DoxyCodeLine{808 }
+\DoxyCodeLine{809     \textcolor{keywordtype}{double} *eps1 = \textcolor{keyword}{nullptr}; }
+\DoxyCodeLine{810     \textcolor{keywordtype}{double} *eps2 = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{811 }
+\DoxyCodeLine{812     \textcolor{keywordflow}{if}( ss.nC == 2 or ss.iCS ) \{}
+\DoxyCodeLine{813 }
+\DoxyCodeLine{814       eps1 = ss.eps1;}
+\DoxyCodeLine{815       eps2 = ss.eps1;}
+\DoxyCodeLine{816 }
+\DoxyCodeLine{817     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{818 }
+\DoxyCodeLine{819       \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca0e97952af46f16e5ca2214d7b55680bd}{PP\_AA}} ) \{}
+\DoxyCodeLine{820 }
+\DoxyCodeLine{821         eps1 = ss.eps1;}
+\DoxyCodeLine{822         eps2 = ss.eps1;}
+\DoxyCodeLine{823 }
+\DoxyCodeLine{824       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca94718c14794ad2bce34245f1ac9e6f38}{PP\_AB}} ) \{}
+\DoxyCodeLine{825 }
+\DoxyCodeLine{826         eps1 = ss.eps1;}
+\DoxyCodeLine{827         eps2 = ss.eps2;}
+\DoxyCodeLine{828 }
+\DoxyCodeLine{829       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{830 }
+\DoxyCodeLine{831         eps1 = ss.eps2;}
+\DoxyCodeLine{832         eps2 = ss.eps2;}
+\DoxyCodeLine{833 }
+\DoxyCodeLine{834       \}}
+\DoxyCodeLine{835 }
+\DoxyCodeLine{836     \}}
+\DoxyCodeLine{837                  }
+\DoxyCodeLine{838 }
+\DoxyCodeLine{839     \textcolor{keywordtype}{size\_t} NS = this-\/>nSingleDim\_;}
+\DoxyCodeLine{840 }
+\DoxyCodeLine{841     \textcolor{keywordtype}{bool} isRaw = V.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a5ae505dd0c9006a7ad34812a25c53c9a}{underlyingType}}() == \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1RawVectors}{RawVectors<U>}})}
+\DoxyCodeLine{842         and AV.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a5ae505dd0c9006a7ad34812a25c53c9a}{underlyingType}}() == \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1RawVectors}{RawVectors<U>}});}
+\DoxyCodeLine{843     \textcolor{keywordflow}{if} (isRaw and \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(this-\/>comm\_) == 0)}
+\DoxyCodeLine{844     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iVec = 0ul; iVec < nVec; iVec++) \{}
+\DoxyCodeLine{845 }
+\DoxyCodeLine{846       \textcolor{keyword}{auto} * AVk = AV.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a7b3f8467612fd8fb970a05f6711ea2a4}{getPtr}}() + iVec * NS;}
+\DoxyCodeLine{847       \textcolor{keyword}{auto} * Vk  = V.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a7b3f8467612fd8fb970a05f6711ea2a4}{getPtr}}()  + iVec * NS;}
+\DoxyCodeLine{848 }
+\DoxyCodeLine{849       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} a = 0ul, ab = 0ul; a < NV;      a++      )}
+\DoxyCodeLine{850       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} b = 0ul;           b < bmax(a); b++, ab++)}
+\DoxyCodeLine{851         AVk[ab] = Vk[ab] / (eps1[a + NO] + eps2[b + NO2] -\/ 2.*mu);}
+\DoxyCodeLine{852 }
+\DoxyCodeLine{853       \textcolor{keywordflow}{if}( doOcc\_ )}
+\DoxyCodeLine{854       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul, ij = hhSt; i < NO;      i++      )}
+\DoxyCodeLine{855       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0ul;            j < jmax(i); j++, ij++)}
+\DoxyCodeLine{856         AVk[ij] = -\/ Vk[ij] / (eps1[i] + eps2[j]-\/ 2.*mu);}
+\DoxyCodeLine{857 }
+\DoxyCodeLine{858 }
+\DoxyCodeLine{859     \} \textcolor{comment}{// loop over vectors}}
+\DoxyCodeLine{860     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (not isRaw)}
+\DoxyCodeLine{861     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iVec = 0ul; iVec < nVec; iVec++) \{}
+\DoxyCodeLine{862 }
+\DoxyCodeLine{863 }
+\DoxyCodeLine{864       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} a = 0ul, ab = 0ul; a < NV;      a++      )}
+\DoxyCodeLine{865       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} b = 0ul;           b < bmax(a); b++, ab++)}
+\DoxyCodeLine{866         AV.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_af0c53837e0d41d408fef087962ebcffc}{set}}(ab, iVec, V.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_adda5717c2e512b7fe9ebdca20b91f409}{get}}(ab, iVec) / (eps1[a + NO] + eps2[b + NO2] -\/ 2.*mu));}
+\DoxyCodeLine{867 }
+\DoxyCodeLine{868       \textcolor{keywordflow}{if}( doOcc\_ )}
+\DoxyCodeLine{869       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul, ij = hhSt; i < NO;      i++      )}
+\DoxyCodeLine{870         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0ul;            j < jmax(i); j++, ij++)}
+\DoxyCodeLine{871           AV.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_af0c53837e0d41d408fef087962ebcffc}{set}}(ij, iVec, -\/ V.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_adda5717c2e512b7fe9ebdca20b91f409}{get}}(ij, iVec) / (eps1[i] + eps2[j]-\/ 2.*mu));}
+\DoxyCodeLine{872 }
+\DoxyCodeLine{873 }
+\DoxyCodeLine{874     \} \textcolor{comment}{// loop over vectors}}
+\DoxyCodeLine{875 }
+\DoxyCodeLine{876 }
+\DoxyCodeLine{877   \};}
+\DoxyCodeLine{878 }
+\DoxyCodeLine{879 }
+\DoxyCodeLine{880   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{881   std::pair<size\_t,MatsT*> }
+\DoxyCodeLine{882     \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator<SingleSlater<MatsT, IntsT>}}>::formPropGrad(}
+\DoxyCodeLine{883       \mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67da}{ResponseOperator}} op) \{}
+\DoxyCodeLine{884 }
+\DoxyCodeLine{885 }
+\DoxyCodeLine{886     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}FDR Not Implemented for ParticleParticlePropagator: no formPropGrad!"{}});}
+\DoxyCodeLine{887 }
+\DoxyCodeLine{888     \textcolor{keywordflow}{return} std::pair<size\_t,MatsT*>(); }
+\DoxyCodeLine{889   \};}
+\DoxyCodeLine{890 }
+\DoxyCodeLine{891   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{892   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator<SingleSlater<MatsT, IntsT>}}>::formRHS() \{}
+\DoxyCodeLine{893 }
+\DoxyCodeLine{894     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}FDR Not Implemented for ParticleParticlePropagator: no formRHS!"{}});}
+\DoxyCodeLine{895 }
+\DoxyCodeLine{896   \}}
+\DoxyCodeLine{897   }
+\DoxyCodeLine{898 }
+\DoxyCodeLine{899 }
+\DoxyCodeLine{900 }
+\DoxyCodeLine{901 }
+\DoxyCodeLine{902 }
+\DoxyCodeLine{903 }
+\DoxyCodeLine{904 }
+\DoxyCodeLine{905 }
+\DoxyCodeLine{906 }
+\DoxyCodeLine{907 }
+\DoxyCodeLine{908 }
+\DoxyCodeLine{909 }
+\DoxyCodeLine{910   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{911   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{912   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator< SingleSlater<MatsT, IntsT>}} >::ppEpsilonScale(}
+\DoxyCodeLine{913     \textcolor{keywordtype}{bool} doInc, \textcolor{keywordtype}{bool} doInv, \textcolor{keywordtype}{bool} doOcc, \textcolor{keywordtype}{size\_t} nVec, \textcolor{keywordtype}{size\_t} N, U* V, U* HV) \{}
+\DoxyCodeLine{914 }
+\DoxyCodeLine{915 }
+\DoxyCodeLine{916 }
+\DoxyCodeLine{917 }
+\DoxyCodeLine{918     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&ss = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&\textcolor{keyword}{>}(*this-\/>ref\_);}
+\DoxyCodeLine{919 }
+\DoxyCodeLine{920 }
+\DoxyCodeLine{921 }
+\DoxyCodeLine{922 }
+\DoxyCodeLine{923     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV  = getNV1(doStarRef); }
+\DoxyCodeLine{924     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV2 = getNV2(doStarRef);}
+\DoxyCodeLine{925     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO  = getNO1(doStarRef); }
+\DoxyCodeLine{926     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO2 = getNO2(doStarRef); }
+\DoxyCodeLine{927 }
+\DoxyCodeLine{928     \textcolor{keyword}{const} \textcolor{keywordtype}{bool}   doLT  = (ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 2) or (spinSepProp != \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca94718c14794ad2bce34245f1ac9e6f38}{PP\_AB}});}
+\DoxyCodeLine{929 }
+\DoxyCodeLine{930     \textcolor{keyword}{const} \textcolor{keyword}{auto} bmax = [\&](\textcolor{keywordtype}{size\_t} a)\{ \textcolor{keywordflow}{return} doLT ? a : NV2; \};}
+\DoxyCodeLine{931     \textcolor{keyword}{const} \textcolor{keyword}{auto} jmax = [\&](\textcolor{keywordtype}{size\_t} i)\{ \textcolor{keywordflow}{return} doLT ? i : NO2; \};}
+\DoxyCodeLine{932 }
+\DoxyCodeLine{933     \textcolor{keyword}{auto} epsilonScale = doInv ? []( \textcolor{keywordtype}{double} x ) \{ \textcolor{keywordflow}{return} 1./x; \} :}
+\DoxyCodeLine{934                                 []( \textcolor{keywordtype}{double} x ) \{ \textcolor{keywordflow}{return} x;    \};}
+\DoxyCodeLine{935 }
+\DoxyCodeLine{936     \textcolor{keyword}{auto} increment    = doInc ? []( U x, U y ) \{ \textcolor{keywordflow}{return} x + y; \} :}
+\DoxyCodeLine{937                                 []( U x, U y ) \{ \textcolor{keywordflow}{return} y;  \};}
+\DoxyCodeLine{938 }
+\DoxyCodeLine{939 }
+\DoxyCodeLine{940     \textcolor{keywordtype}{double} *eps1 = \textcolor{keyword}{nullptr}; }
+\DoxyCodeLine{941     \textcolor{keywordtype}{double} *eps2 = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{942 }
+\DoxyCodeLine{943     \textcolor{keywordflow}{if}( ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 2 or ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}} ) \{}
+\DoxyCodeLine{944 }
+\DoxyCodeLine{945       eps1 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a5d8efa6559700f8211961900a557f358}{eps1}};}
+\DoxyCodeLine{946       eps2 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a5d8efa6559700f8211961900a557f358}{eps1}};}
+\DoxyCodeLine{947 }
+\DoxyCodeLine{948     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{949 }
+\DoxyCodeLine{950       \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca0e97952af46f16e5ca2214d7b55680bd}{PP\_AA}} ) \{}
+\DoxyCodeLine{951 }
+\DoxyCodeLine{952         eps1 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a5d8efa6559700f8211961900a557f358}{eps1}};}
+\DoxyCodeLine{953         eps2 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a5d8efa6559700f8211961900a557f358}{eps1}};}
+\DoxyCodeLine{954 }
+\DoxyCodeLine{955       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca94718c14794ad2bce34245f1ac9e6f38}{PP\_AB}} ) \{}
+\DoxyCodeLine{956 }
+\DoxyCodeLine{957         eps1 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a5d8efa6559700f8211961900a557f358}{eps1}};}
+\DoxyCodeLine{958         eps2 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_abbdbd414b7588dc41663f1f37753d247}{eps2}};}
+\DoxyCodeLine{959 }
+\DoxyCodeLine{960       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{961 }
+\DoxyCodeLine{962         eps1 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_abbdbd414b7588dc41663f1f37753d247}{eps2}};}
+\DoxyCodeLine{963         eps2 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_abbdbd414b7588dc41663f1f37753d247}{eps2}};}
+\DoxyCodeLine{964 }
+\DoxyCodeLine{965       \}}
+\DoxyCodeLine{966 }
+\DoxyCodeLine{967     \}}
+\DoxyCodeLine{968 }
+\DoxyCodeLine{969     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iVec = 0; iVec < nVec; iVec++) \{}
+\DoxyCodeLine{970 }
+\DoxyCodeLine{971 }
+\DoxyCodeLine{972       U* V\_c  = V  + iVec * N;}
+\DoxyCodeLine{973       U* HV\_c = HV + iVec * N;}
+\DoxyCodeLine{974 }
+\DoxyCodeLine{975       \textcolor{keywordflow}{if}( doOcc )}
+\DoxyCodeLine{976         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul, ij = 0ul; i < NO;      i++      )}
+\DoxyCodeLine{977         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0ul;           j < jmax(i); j++, ij++) }
+\DoxyCodeLine{978           HV\_c[ij] = increment(HV\_c[ij],}
+\DoxyCodeLine{979                                epsilonScale(-\/(eps1[i] + eps2[j] -\/ 2.*mu)) * }
+\DoxyCodeLine{980                                V\_c[ij]);}
+\DoxyCodeLine{981 }
+\DoxyCodeLine{982       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{983         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} a = 0ul, ab = 0ul; a < NV;      a++      )}
+\DoxyCodeLine{984         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} b = 0ul;           b < bmax(a); b++, ab++) }
+\DoxyCodeLine{985           HV\_c[ab] = increment(HV\_c[ab],}
+\DoxyCodeLine{986                                epsilonScale(eps1[a + NO] + eps2[b + NO2] -\/ }
+\DoxyCodeLine{987                                  2.*mu) * V\_c[ab]);}
+\DoxyCodeLine{988 }
+\DoxyCodeLine{989     \}}
+\DoxyCodeLine{990 }
+\DoxyCodeLine{991 }
+\DoxyCodeLine{992   \};}
+\DoxyCodeLine{993 }
+\DoxyCodeLine{994 }
+\DoxyCodeLine{995 }
+\DoxyCodeLine{996 }
+\DoxyCodeLine{997 }
+\DoxyCodeLine{998 }
+\DoxyCodeLine{999   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{1000   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{1001   std::vector<TwoBodyContraction<U>> }
+\DoxyCodeLine{1002     \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator< SingleSlater<MatsT, IntsT>}} >::ppTransitionVecMO2AO(}
+\DoxyCodeLine{1003       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \textcolor{keywordtype}{bool} scatter, \textcolor{keywordtype}{size\_t} nVec, \textcolor{keywordtype}{size\_t} N, Args... Vs)\{ }
+\DoxyCodeLine{1004     }
+\DoxyCodeLine{1005     \textcolor{keyword}{static\_assert}(\textcolor{keyword}{sizeof}...(Vs) > 0 and \textcolor{keyword}{sizeof}...(Vs) < 3,}
+\DoxyCodeLine{1006       \textcolor{stringliteral}{"{}Vs must consist of 1 or 2 pointers"{}});}
+\DoxyCodeLine{1007 }
+\DoxyCodeLine{1008     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} nVs = \textcolor{keyword}{sizeof}...(Vs);}
+\DoxyCodeLine{1009 }
+\DoxyCodeLine{1010     std::array<U*,nVs> V\_arr = \{ Vs... \};}
+\DoxyCodeLine{1011 }
+\DoxyCodeLine{1012 }
+\DoxyCodeLine{1013     \textcolor{keywordtype}{bool} isRoot = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(c) == 0;}
+\DoxyCodeLine{1014     \textcolor{keywordtype}{bool} trans  = isRoot or not scatter;}
+\DoxyCodeLine{1015 }
+\DoxyCodeLine{1016 }
+\DoxyCodeLine{1017     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&ss = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&\textcolor{keyword}{>}(*this-\/>ref\_);}
+\DoxyCodeLine{1018     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NB   = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a3830b10befd26044ea0cdcaed2342e17}{nAlphaOrbital}}();}
+\DoxyCodeLine{1019     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NB2  = NB * NB;}
+\DoxyCodeLine{1020     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NBC  = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} * NB;}
+\DoxyCodeLine{1021     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NBC2 = NBC * NBC;}
+\DoxyCodeLine{1022 }
+\DoxyCodeLine{1023 }
+\DoxyCodeLine{1024 }
+\DoxyCodeLine{1025     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV  = getNV1(doStarRef); }
+\DoxyCodeLine{1026     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV2 = getNV2(doStarRef);}
+\DoxyCodeLine{1027     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO  = getNO1(doStarRef); }
+\DoxyCodeLine{1028     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO2 = getNO2(doStarRef); }
+\DoxyCodeLine{1029 }
+\DoxyCodeLine{1030 }
+\DoxyCodeLine{1031     \textcolor{keyword}{const} \textcolor{keywordtype}{bool}   doLT  = (ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 2) or (spinSepProp != \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca94718c14794ad2bce34245f1ac9e6f38}{PP\_AB}});}
+\DoxyCodeLine{1032 }
+\DoxyCodeLine{1033     \textcolor{keyword}{const} \textcolor{keyword}{auto} bmax = [\&](\textcolor{keywordtype}{size\_t} a)\{ \textcolor{keywordflow}{return} doLT ? a : NV2; \};}
+\DoxyCodeLine{1034     \textcolor{keyword}{const} \textcolor{keyword}{auto} jmax = [\&](\textcolor{keywordtype}{size\_t} i)\{ \textcolor{keywordflow}{return} doLT ? i : NO2; \};}
+\DoxyCodeLine{1035     }
+\DoxyCodeLine{1036     U* MOT  = this-\/>memManager\_.template malloc<U>(NBC2);}
+\DoxyCodeLine{1037     U* SCR  = trans ? this-\/>memManager\_.template malloc<U>(NBC2) : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1038 }
+\DoxyCodeLine{1039 }
+\DoxyCodeLine{1040     std::vector<TwoBodyContraction<U>> cList;}
+\DoxyCodeLine{1041 }
+\DoxyCodeLine{1042     \textcolor{keyword}{auto} MOTRANS = [\&]( MatsT* CMO1, MatsT* CMO2, U* \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}} ) \{}
+\DoxyCodeLine{1043       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NBC,NBC,NBC,U(1.0),CMO1,NBC,\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}  ,NBC,U(0.0),SCR,NBC); }
+\DoxyCodeLine{1044       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::ConjTrans,NBC,NBC,NBC,U(1.0),CMO2,NBC,SCR,NBC,U(0.0),\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}  ,NBC);}
+\DoxyCodeLine{1045       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'C'},NBC,NBC,U(1.),\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}},NBC,NBC);}
+\DoxyCodeLine{1046     \};}
+\DoxyCodeLine{1047 }
+\DoxyCodeLine{1048 }
+\DoxyCodeLine{1049 }
+\DoxyCodeLine{1050     \textcolor{keywordtype}{size\_t} nMatPVec = (ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 1) ? 2 : 8;}
+\DoxyCodeLine{1051     \textcolor{keywordtype}{size\_t} nAlloc = nVec * nMatPVec * NB2;}
+\DoxyCodeLine{1052     \textcolor{comment}{//std::cerr << "{}MO2AO "{} << nAlloc*sizeof(MatsT) / 1e9 << std::endl;}}
+\DoxyCodeLine{1053 }
+\DoxyCodeLine{1054     U * first = this-\/>memManager\_.template malloc<U>(nAlloc);}
+\DoxyCodeLine{1055 }
+\DoxyCodeLine{1056     MatsT *mo1 = \textcolor{keyword}{nullptr}; }
+\DoxyCodeLine{1057     MatsT *mo2 = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1058 }
+\DoxyCodeLine{1059     \textcolor{keywordflow}{if}( ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 2 or ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}} ) \{}
+\DoxyCodeLine{1060 }
+\DoxyCodeLine{1061       mo1 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[0].pointer();}
+\DoxyCodeLine{1062       mo2 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[0].pointer();}
+\DoxyCodeLine{1063 }
+\DoxyCodeLine{1064     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1065 }
+\DoxyCodeLine{1066       \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca0e97952af46f16e5ca2214d7b55680bd}{PP\_AA}} ) \{}
+\DoxyCodeLine{1067 }
+\DoxyCodeLine{1068         mo1 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[0].pointer();}
+\DoxyCodeLine{1069         mo2 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[0].pointer();}
+\DoxyCodeLine{1070 }
+\DoxyCodeLine{1071       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca94718c14794ad2bce34245f1ac9e6f38}{PP\_AB}} ) \{}
+\DoxyCodeLine{1072 }
+\DoxyCodeLine{1073         mo1 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[0].pointer();}
+\DoxyCodeLine{1074         mo2 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[1].pointer();}
+\DoxyCodeLine{1075 }
+\DoxyCodeLine{1076       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1077 }
+\DoxyCodeLine{1078         mo1 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[1].pointer();}
+\DoxyCodeLine{1079         mo2 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[1].pointer();}
+\DoxyCodeLine{1080 }
+\DoxyCodeLine{1081       \}}
+\DoxyCodeLine{1082 }
+\DoxyCodeLine{1083     \}}
+\DoxyCodeLine{1084 }
+\DoxyCodeLine{1085     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iVec = 0; iVec < nVec; iVec++) \{}
+\DoxyCodeLine{1086 }
+\DoxyCodeLine{1087       \textcolor{comment}{//U* VX\_c = V\_arr[0] + iVec * N;}}
+\DoxyCodeLine{1088       \textcolor{comment}{//U* VY\_c = nullptr; }}
+\DoxyCodeLine{1089       \textcolor{comment}{//if( nVs > 1 ) VY\_c = V\_arr[1] + iVec * N;}}
+\DoxyCodeLine{1090 }
+\DoxyCodeLine{1091 }
+\DoxyCodeLine{1092       U* VX\_c = doVir\_ ? V\_arr[0] : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1093       U* VY\_c = (nVs > 1) ? V\_arr[1] : doOcc\_ ? V\_arr[0] : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1094 }
+\DoxyCodeLine{1095       VX\_c += iVec * N;}
+\DoxyCodeLine{1096       VY\_c += iVec * N;}
+\DoxyCodeLine{1097 }
+\DoxyCodeLine{1098 }
+\DoxyCodeLine{1099 }
+\DoxyCodeLine{1100       \textcolor{comment}{// Perform MO -\/> AO transformation}}
+\DoxyCodeLine{1101       \textcolor{keywordflow}{if}( trans ) \{}
+\DoxyCodeLine{1102 }
+\DoxyCodeLine{1103         \textcolor{comment}{// Zero out MOT}}
+\DoxyCodeLine{1104         std::fill\_n(MOT,NBC2,0.);}
+\DoxyCodeLine{1105 }
+\DoxyCodeLine{1106         \textcolor{comment}{// Place V -\/> MOT and transform into AO basis}}
+\DoxyCodeLine{1107 }
+\DoxyCodeLine{1108         \textcolor{comment}{// VV block}}
+\DoxyCodeLine{1109         \textcolor{keywordflow}{if}( doVir\_ )}
+\DoxyCodeLine{1110         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} a = 0ul, ab = 0ul; a < NV;       a++      )}
+\DoxyCodeLine{1111         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} b = 0ul          ; b < bmax(a) ; b++, ab++) \{}
+\DoxyCodeLine{1112 }
+\DoxyCodeLine{1113           \textcolor{keyword}{auto} A = a + NO;}
+\DoxyCodeLine{1114           \textcolor{keyword}{auto} B = b + NO2;}
+\DoxyCodeLine{1115 }
+\DoxyCodeLine{1116           MOT[A + B*NBC] = VX\_c[ab];}
+\DoxyCodeLine{1117           \textcolor{keywordflow}{if}( doLT ) MOT[B + A*NBC] = -\/VX\_c[ab];}
+\DoxyCodeLine{1118 }
+\DoxyCodeLine{1119         \}}
+\DoxyCodeLine{1120 }
+\DoxyCodeLine{1121         \textcolor{comment}{// OO block}}
+\DoxyCodeLine{1122         \textcolor{keywordflow}{if}( doOcc\_ )}
+\DoxyCodeLine{1123         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul, ij = 0ul; i < NO;       i++      )}
+\DoxyCodeLine{1124         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0ul          ; j < jmax(i) ; j++, ij++) \{}
+\DoxyCodeLine{1125 }
+\DoxyCodeLine{1126           MOT[i + j*NBC] = VY\_c[ij];}
+\DoxyCodeLine{1127           \textcolor{keywordflow}{if}( doLT ) MOT[j + i*NBC] = -\/VY\_c[ij];}
+\DoxyCodeLine{1128 }
+\DoxyCodeLine{1129         \}}
+\DoxyCodeLine{1130 }
+\DoxyCodeLine{1131 }
+\DoxyCodeLine{1132         MOTRANS(mo1,mo2,MOT);}
+\DoxyCodeLine{1133 }
+\DoxyCodeLine{1134       \}}
+\DoxyCodeLine{1135 }
+\DoxyCodeLine{1136       \textcolor{comment}{// Scatter results if requested}}
+\DoxyCodeLine{1137       \textcolor{keywordflow}{if}( scatter ) \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(MOT,NBC*NBC,0,c);}
+\DoxyCodeLine{1138 }
+\DoxyCodeLine{1139       U* AOaa(\textcolor{keyword}{nullptr}),  *AOab(\textcolor{keyword}{nullptr}),  *AOba(\textcolor{keyword}{nullptr}),  *AObb(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{1140       U* KAOaa(\textcolor{keyword}{nullptr}), *KAOab(\textcolor{keyword}{nullptr}), *KAOba(\textcolor{keyword}{nullptr}), *KAObb(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{1141 }
+\DoxyCodeLine{1142       AOaa  = first; }
+\DoxyCodeLine{1143       KAOaa = first + NB2;}
+\DoxyCodeLine{1144 }
+\DoxyCodeLine{1145       cList.push\_back( \{AOaa, KAOaa, \textcolor{keyword}{false}, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaa095106eab8e9a7a1e33352295d00093}{EXCHANGE}} \} );}
+\DoxyCodeLine{1146 }
+\DoxyCodeLine{1147       \textcolor{keywordflow}{if}( ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 2 ) \{}
+\DoxyCodeLine{1148 }
+\DoxyCodeLine{1149         AOab  = first + 2*NB2; }
+\DoxyCodeLine{1150         KAOab = first + 3*NB2;}
+\DoxyCodeLine{1151         AOba  = first + 4*NB2; }
+\DoxyCodeLine{1152         KAOba = first + 5*NB2;}
+\DoxyCodeLine{1153         AObb  = first + 6*NB2; }
+\DoxyCodeLine{1154         KAObb = first + 7*NB2;}
+\DoxyCodeLine{1155 }
+\DoxyCodeLine{1156         cList.push\_back( \{AOab, KAOab, \textcolor{keyword}{false}, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaa095106eab8e9a7a1e33352295d00093}{EXCHANGE}} \} );}
+\DoxyCodeLine{1157         cList.push\_back( \{AOba, KAOba, \textcolor{keyword}{false}, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaa095106eab8e9a7a1e33352295d00093}{EXCHANGE}} \} );}
+\DoxyCodeLine{1158         cList.push\_back( \{AObb, KAObb, \textcolor{keyword}{false}, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaa095106eab8e9a7a1e33352295d00093}{EXCHANGE}} \} );}
+\DoxyCodeLine{1159 }
+\DoxyCodeLine{1160       \}}
+\DoxyCodeLine{1161       }
+\DoxyCodeLine{1162       \textcolor{keywordflow}{if}( ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 1 ) \{}
+\DoxyCodeLine{1163 }
+\DoxyCodeLine{1164         std::copy\_n(MOT,NB2,AOaa);}
+\DoxyCodeLine{1165         std::fill\_n(KAOaa,NB2,0.);}
+\DoxyCodeLine{1166 }
+\DoxyCodeLine{1167       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1168 }
+\DoxyCodeLine{1169         std::fill\_n(KAOaa,NB2,0.);}
+\DoxyCodeLine{1170         std::fill\_n(KAOab,NB2,0.);}
+\DoxyCodeLine{1171         std::fill\_n(KAOba,NB2,0.);}
+\DoxyCodeLine{1172         std::fill\_n(KAObb,NB2,0.);}
+\DoxyCodeLine{1173 }
+\DoxyCodeLine{1174         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},NB,NB,U(1.),MOT             ,NBC,AOaa,NB);}
+\DoxyCodeLine{1175         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},NB,NB,U(1.),MOT + NB*NBC    ,NBC,AOab,NB);}
+\DoxyCodeLine{1176         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},NB,NB,U(1.),MOT + NB        ,NBC,AOba,NB);}
+\DoxyCodeLine{1177         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},NB,NB,U(1.),MOT + NB*(NBC+1),NBC,AObb,NB);}
+\DoxyCodeLine{1178 }
+\DoxyCodeLine{1179         \}}
+\DoxyCodeLine{1180 }
+\DoxyCodeLine{1181       first += nMatPVec * NB2;}
+\DoxyCodeLine{1182 }
+\DoxyCodeLine{1183 }
+\DoxyCodeLine{1184 }
+\DoxyCodeLine{1185     \}}
+\DoxyCodeLine{1186 }
+\DoxyCodeLine{1187 }
+\DoxyCodeLine{1188     this-\/>memManager\_.free(MOT);}
+\DoxyCodeLine{1189     \textcolor{keywordflow}{if}( SCR ) this-\/>memManager\_.free(SCR);}
+\DoxyCodeLine{1190 }
+\DoxyCodeLine{1191 }
+\DoxyCodeLine{1192     \textcolor{keywordflow}{return} cList;}
+\DoxyCodeLine{1193 }
+\DoxyCodeLine{1194 }
+\DoxyCodeLine{1195 }
+\DoxyCodeLine{1196   \};}
+\DoxyCodeLine{1197 }
+\DoxyCodeLine{1198 }
+\DoxyCodeLine{1199 }
+\DoxyCodeLine{1200 }
+\DoxyCodeLine{1201 }
+\DoxyCodeLine{1202 }
+\DoxyCodeLine{1203   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{1204   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{1205   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator< SingleSlater<MatsT, IntsT>}} >::ppTransitionVecAO2MO(}
+\DoxyCodeLine{1206     \textcolor{keywordtype}{size\_t} nVec, \textcolor{keywordtype}{size\_t} N, std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<U>}}> \&cList, }
+\DoxyCodeLine{1207     Args... HVs)\{ }
+\DoxyCodeLine{1208   }
+\DoxyCodeLine{1209     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} nHVs = \textcolor{keyword}{sizeof}...(HVs);}
+\DoxyCodeLine{1210 }
+\DoxyCodeLine{1211     std::array<U*,nHVs> HV\_arr = \{ HVs... \};}
+\DoxyCodeLine{1212 }
+\DoxyCodeLine{1213 }
+\DoxyCodeLine{1214     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&ss = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&\textcolor{keyword}{>}(*this-\/>ref\_);}
+\DoxyCodeLine{1215     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NB   = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a3830b10befd26044ea0cdcaed2342e17}{nAlphaOrbital}}();}
+\DoxyCodeLine{1216     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NB2  = NB * NB;}
+\DoxyCodeLine{1217     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NBC  = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} * NB;}
+\DoxyCodeLine{1218     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NBC2 = NBC * NBC;}
+\DoxyCodeLine{1219 }
+\DoxyCodeLine{1220 }
+\DoxyCodeLine{1221 }
+\DoxyCodeLine{1222     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV  = getNV1(doStarRef); }
+\DoxyCodeLine{1223     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV2 = getNV2(doStarRef);}
+\DoxyCodeLine{1224     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO  = getNO1(doStarRef); }
+\DoxyCodeLine{1225     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO2 = getNO2(doStarRef); }
+\DoxyCodeLine{1226 }
+\DoxyCodeLine{1227 }
+\DoxyCodeLine{1228 }
+\DoxyCodeLine{1229     \textcolor{keyword}{const} \textcolor{keywordtype}{bool}   doLT  = (ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 2) or (spinSepProp != \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca94718c14794ad2bce34245f1ac9e6f38}{PP\_AB}});}
+\DoxyCodeLine{1230 }
+\DoxyCodeLine{1231     \textcolor{keyword}{const} \textcolor{keyword}{auto} bmax = [\&](\textcolor{keywordtype}{size\_t} a)\{ \textcolor{keywordflow}{return} doLT ? a : NV2; \};}
+\DoxyCodeLine{1232     \textcolor{keyword}{const} \textcolor{keyword}{auto} jmax = [\&](\textcolor{keywordtype}{size\_t} i)\{ \textcolor{keywordflow}{return} doLT ? i : NO2; \};}
+\DoxyCodeLine{1233     }
+\DoxyCodeLine{1234     U* MOT  = this-\/>memManager\_.template malloc<U>(NBC2);}
+\DoxyCodeLine{1235     U* SCR  = this-\/>memManager\_.template malloc<U>(NBC2);}
+\DoxyCodeLine{1236   }
+\DoxyCodeLine{1237     \textcolor{keyword}{auto} MOTRANS = [\&]( MatsT* CMO1, MatsT* CMO2, U* \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}} ) \{}
+\DoxyCodeLine{1238       blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,NBC,NBC,NBC,U(1.0),CMO1,NBC,\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}  ,NBC,U(0.0),SCR,NBC); }
+\DoxyCodeLine{1239       blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::ConjTrans,NBC,NBC,NBC,U(1.0),CMO2,NBC,SCR,NBC,U(0.0),\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}  ,NBC);}
+\DoxyCodeLine{1240       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'C'},NBC,NBC,U(1.),\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}},NBC,NBC);}
+\DoxyCodeLine{1241     \};}
+\DoxyCodeLine{1242 }
+\DoxyCodeLine{1243     MatsT *mo1 = \textcolor{keyword}{nullptr}; }
+\DoxyCodeLine{1244     MatsT *mo2 = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1245 }
+\DoxyCodeLine{1246     \textcolor{keywordflow}{if}( ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 2 or ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}} ) \{}
+\DoxyCodeLine{1247 }
+\DoxyCodeLine{1248       mo1 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[0].pointer();}
+\DoxyCodeLine{1249       mo2 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[0].pointer();}
+\DoxyCodeLine{1250 }
+\DoxyCodeLine{1251     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1252 }
+\DoxyCodeLine{1253       \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca0e97952af46f16e5ca2214d7b55680bd}{PP\_AA}} ) \{}
+\DoxyCodeLine{1254 }
+\DoxyCodeLine{1255         mo1 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[0].pointer();}
+\DoxyCodeLine{1256         mo2 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[0].pointer();}
+\DoxyCodeLine{1257 }
+\DoxyCodeLine{1258       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca94718c14794ad2bce34245f1ac9e6f38}{PP\_AB}} ) \{}
+\DoxyCodeLine{1259 }
+\DoxyCodeLine{1260         mo1 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[0].pointer();}
+\DoxyCodeLine{1261         mo2 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[1].pointer();}
+\DoxyCodeLine{1262 }
+\DoxyCodeLine{1263       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1264 }
+\DoxyCodeLine{1265         mo1 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[1].pointer();}
+\DoxyCodeLine{1266         mo2 = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[1].pointer();}
+\DoxyCodeLine{1267 }
+\DoxyCodeLine{1268       \}}
+\DoxyCodeLine{1269 }
+\DoxyCodeLine{1270     \}}
+\DoxyCodeLine{1271 }
+\DoxyCodeLine{1272     \textcolor{keywordtype}{size\_t} nMat = (ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 1) ? 1 : 4;}
+\DoxyCodeLine{1273     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iVec = 0; iVec < nVec; iVec++) \{}
+\DoxyCodeLine{1274 }
+\DoxyCodeLine{1275       \textcolor{comment}{//U* HVX\_c = HV\_arr[0] + iVec * N;}}
+\DoxyCodeLine{1276       \textcolor{comment}{//U* HVY\_c = nullptr;}}
+\DoxyCodeLine{1277       \textcolor{comment}{//if( nHVs > 1 ) HVY\_c = HV\_arr[1] + iVec * N;}}
+\DoxyCodeLine{1278 }
+\DoxyCodeLine{1279       U* HVX\_c = doVir\_ ? HV\_arr[0] : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1280       U* HVY\_c = (nHVs > 1) ? HV\_arr[1] : doOcc\_ ? HV\_arr[0] : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1281 }
+\DoxyCodeLine{1282       HVX\_c += iVec * N;}
+\DoxyCodeLine{1283       HVY\_c += iVec * N;}
+\DoxyCodeLine{1284 }
+\DoxyCodeLine{1285       \textcolor{keywordtype}{size\_t} indx = iVec * nMat;}
+\DoxyCodeLine{1286 }
+\DoxyCodeLine{1287       U* Kaa = cList[indx].AX;}
+\DoxyCodeLine{1288       U* Kab(\textcolor{keyword}{nullptr}), *Kba(\textcolor{keyword}{nullptr}), *Kbb(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{1289 }
+\DoxyCodeLine{1290       \textcolor{keywordflow}{if}( ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 2 ) \{}
+\DoxyCodeLine{1291 }
+\DoxyCodeLine{1292         Kab = cList[indx + 1].AX;}
+\DoxyCodeLine{1293         Kba = cList[indx + 2].AX;}
+\DoxyCodeLine{1294         Kbb = cList[indx + 3].AX;}
+\DoxyCodeLine{1295 }
+\DoxyCodeLine{1296       \}}
+\DoxyCodeLine{1297 }
+\DoxyCodeLine{1298 }
+\DoxyCodeLine{1299       \textcolor{keywordflow}{if}( ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 1 ) std::copy\_n(Kaa,NB2,MOT);}
+\DoxyCodeLine{1300       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1301 }
+\DoxyCodeLine{1302         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},NB,NB,U(1.),Kaa,NB,MOT             ,NBC);}
+\DoxyCodeLine{1303         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},NB,NB,U(1.),Kab,NB,MOT + NB*NBC    ,NBC);}
+\DoxyCodeLine{1304         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},NB,NB,U(1.),Kba,NB,MOT + NB        ,NBC);}
+\DoxyCodeLine{1305         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},NB,NB,U(1.),Kbb,NB,MOT + NB*(NBC+1),NBC);}
+\DoxyCodeLine{1306 }
+\DoxyCodeLine{1307       \}}
+\DoxyCodeLine{1308 }
+\DoxyCodeLine{1309 }
+\DoxyCodeLine{1310 }
+\DoxyCodeLine{1311       MOTRANS(mo1,mo2,MOT);}
+\DoxyCodeLine{1312 }
+\DoxyCodeLine{1313 }
+\DoxyCodeLine{1314       \textcolor{keywordflow}{if}( doVir\_ )}
+\DoxyCodeLine{1315       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} a = 0ul, ab = 0ul; a < NV;       a++      )}
+\DoxyCodeLine{1316       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} b = 0ul          ; b < bmax(a) ; b++, ab++)\{ }
+\DoxyCodeLine{1317 }
+\DoxyCodeLine{1318         \textcolor{keyword}{auto} A = a + NO;}
+\DoxyCodeLine{1319         \textcolor{keyword}{auto} B = b + NO2;}
+\DoxyCodeLine{1320 }
+\DoxyCodeLine{1321         HVX\_c[ab] += MOT[A + B*NBC];}
+\DoxyCodeLine{1322 }
+\DoxyCodeLine{1323       \}}
+\DoxyCodeLine{1324 }
+\DoxyCodeLine{1325       \textcolor{keywordflow}{if}( doOcc\_ )}
+\DoxyCodeLine{1326       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul, ij = 0ul; i < NO;       i++      )}
+\DoxyCodeLine{1327       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0ul          ; j < jmax(i) ; j++, ij++) }
+\DoxyCodeLine{1328         HVY\_c[ij] += MOT[i + j*NBC];}
+\DoxyCodeLine{1329 }
+\DoxyCodeLine{1330 }
+\DoxyCodeLine{1331     \}}
+\DoxyCodeLine{1332 }
+\DoxyCodeLine{1333     this-\/>memManager\_.free(MOT,SCR);}
+\DoxyCodeLine{1334 }
+\DoxyCodeLine{1335   \}; }
+\DoxyCodeLine{1336 }
+\DoxyCodeLine{1337 \} \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{1338 }
+\DoxyCodeLine{1339 }
+
+\end{DoxyCode}

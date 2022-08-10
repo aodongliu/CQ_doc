@@ -1,0 +1,342 @@
+\hypertarget{gradints_8hpp_source}{}\doxysection{gradints.\+hpp}
+\label{gradints_8hpp_source}\index{include/particleintegrals/gradints.hpp@{include/particleintegrals/gradints.hpp}}
+\mbox{\hyperlink{gradints_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{particleintegrals_8hpp}{particleintegrals.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{twopints_8hpp}{particleintegrals/twopints.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{37   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}> \textcolor{keyword}{class }IntClass, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{38   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{ParticleIntegrals}} \{}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}> \textcolor{keyword}{class}, \textcolor{keyword}{typename}>}
+\DoxyCodeLine{41     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts}};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{44     \textcolor{keyword}{typedef} std::shared\_ptr<IntClass<IntsT>> \mbox{\hyperlink{classChronusQ_1_1GradInts_a008ddf9594f529e45b207449a6922cfd}{IntPtr}};}
+\DoxyCodeLine{45     \textcolor{keyword}{typedef} std::shared\_ptr<const IntClass<IntsT>> \mbox{\hyperlink{classChronusQ_1_1GradInts_ab019837967ab0e9d7ce36907408e43ea}{ConstIntPtr}};}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     std::vector<IntPtr> \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}};}
+\DoxyCodeLine{48     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50   \textcolor{keyword}{public}:}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{comment}{//}}
+\DoxyCodeLine{53     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{54     \textcolor{comment}{//}}
+\DoxyCodeLine{55     }
+\DoxyCodeLine{56     \mbox{\hyperlink{classChronusQ_1_1GradInts_a7f6cd7ff4da4e9b79e147cd8175ae38a}{GradInts}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{57     \mbox{\hyperlink{classChronusQ_1_1GradInts_a1dfe25517e771a9c978ecc076d0d7598}{GradInts}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts}} \& ) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{58     \mbox{\hyperlink{classChronusQ_1_1GradInts_a3da40e79867da5036c2572c25b202732}{GradInts}}( \mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts}} \&\& ) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     \textcolor{comment}{// Main constructor}}
+\DoxyCodeLine{61     \mbox{\hyperlink{classChronusQ_1_1GradInts_af88b4b36726548598efa694aafbb5828}{GradInts}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1GradInts_a402609476b09a0bf9638ac3eb1459671}{nAtoms}}):}
+\DoxyCodeLine{62         \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{ParticleIntegrals}}(mem, \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}), \mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}}(\mbox{\hyperlink{classChronusQ_1_1GradInts_a402609476b09a0bf9638ac3eb1459671}{nAtoms}}) \{}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64       \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}.reserve(3*\mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}});}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < 3*\mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}}; i++) \{}
+\DoxyCodeLine{67         \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}.emplace\_back(}
+\DoxyCodeLine{68           std::make\_shared<IntClass<IntsT>>(mem, \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}})}
+\DoxyCodeLine{69         );}
+\DoxyCodeLine{70       \}}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \};}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74     \textcolor{comment}{// Two basis constructor}}
+\DoxyCodeLine{75     \mbox{\hyperlink{classChronusQ_1_1GradInts_a55b9ac5c73c29f0afea9207a4b2740ca}{GradInts}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}, \textcolor{keywordtype}{size\_t} snBasis, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1GradInts_a402609476b09a0bf9638ac3eb1459671}{nAtoms}}):}
+\DoxyCodeLine{76         \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{ParticleIntegrals}}(mem, \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}), \mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}}(\mbox{\hyperlink{classChronusQ_1_1GradInts_a402609476b09a0bf9638ac3eb1459671}{nAtoms}}) \{}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78       \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}.reserve(3*\mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}});}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < 3*\mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}}; i++) \{}
+\DoxyCodeLine{81         \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}.emplace\_back(}
+\DoxyCodeLine{82           std::make\_shared<IntClass<IntsT>>(mem, \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}, snBasis)}
+\DoxyCodeLine{83         );}
+\DoxyCodeLine{84       \}}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     \};}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88     \textcolor{comment}{// Constructor from a vector of pointers to integrals}}
+\DoxyCodeLine{89     \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}> \textcolor{keyword}{class }IntSubClass>}
+\DoxyCodeLine{90     \mbox{\hyperlink{classChronusQ_1_1GradInts_a548e697cf128e32319413a9bd68eda9f}{GradInts}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1GradInts_a402609476b09a0bf9638ac3eb1459671}{nAtoms}},}
+\DoxyCodeLine{91       std::vector<std::shared\_ptr<IntSubClass<IntsT>>> integrals) :}
+\DoxyCodeLine{92       \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{ParticleIntegrals}}(mem, \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}), \mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}}(\mbox{\hyperlink{classChronusQ_1_1GradInts_a402609476b09a0bf9638ac3eb1459671}{nAtoms}})}
+\DoxyCodeLine{93     \{}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95       \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}.reserve(3*\mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}});}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97       assert(integrals.size() == 3*\mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}});}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < 3*\mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}}; i++) \{}
+\DoxyCodeLine{100         \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}.emplace\_back(}
+\DoxyCodeLine{101           std::dynamic\_pointer\_cast<IntClass<IntsT>>(integrals[i])}
+\DoxyCodeLine{102         );}
+\DoxyCodeLine{103       \}}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105       \textcolor{keywordflow}{if} ( std::any\_of(\mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}.begin(),}
+\DoxyCodeLine{106                        \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}.end(),}
+\DoxyCodeLine{107                        [](\textcolor{keyword}{auto}\& p) \{ return p == nullptr; \}) ) \{}
+\DoxyCodeLine{108         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Couldn't convert to parent class in GradInts constructor!"{}});}
+\DoxyCodeLine{109       \}}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     \}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     \textcolor{comment}{// Integral matrix type converter constructor}}
+\DoxyCodeLine{114     \textcolor{keyword}{template} <\textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{115     \mbox{\hyperlink{classChronusQ_1_1GradInts_a6472a97ce61afdc20af291b44cc4514e}{GradInts}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts<IntClass,IntsU>}} \&other, \textcolor{keywordtype}{int} = 0 ):}
+\DoxyCodeLine{116         \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{ParticleIntegrals}}(other), \mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}}(other.\mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}}) \{}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118       \textcolor{keywordflow}{if} (std::is\_same<IntsU, dcomplex>::value}
+\DoxyCodeLine{119           and std::is\_same<IntsT, double>::value)}
+\DoxyCodeLine{120         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cannot create a Real GradInts from a Complex one."{}});}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122       \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}.reserve(other.\mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}.size());}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \&p : other.\mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}})}
+\DoxyCodeLine{125         \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}.emplace\_back(std::make\_shared(*p));}
+\DoxyCodeLine{126     \}}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128     \textcolor{comment}{// TODO}}
+\DoxyCodeLine{129     \textcolor{comment}{// // Integral class converter constructor}}
+\DoxyCodeLine{130     \textcolor{comment}{// template <template <typename> class OtherIntClass>}}
+\DoxyCodeLine{131     \textcolor{comment}{// GradInts( const GradInts<OtherIntClass,IntsT> \&other, char = ' ' ) :}}
+\DoxyCodeLine{132     \textcolor{comment}{//   ParticleIntegrals(other), nAtoms\_(other.nAtoms\_) \{}}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134     \textcolor{comment}{// \}}}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137     \textcolor{comment}{//}}
+\DoxyCodeLine{138     \textcolor{comment}{// Access}}
+\DoxyCodeLine{139     \textcolor{comment}{//}}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141     \textcolor{comment}{// Element access by internal storage}}
+\DoxyCodeLine{142     \mbox{\hyperlink{classChronusQ_1_1GradInts_a008ddf9594f529e45b207449a6922cfd}{IntPtr}}\& \mbox{\hyperlink{classChronusQ_1_1GradInts_a9c5753fa9dd0bdc4f064a218f5ec7827}{operator[]}}(\textcolor{keywordtype}{size\_t} i) \{}
+\DoxyCodeLine{143       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}[i];}
+\DoxyCodeLine{144     \}}
+\DoxyCodeLine{145     \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1GradInts_ab019837967ab0e9d7ce36907408e43ea}{ConstIntPtr}}\& \mbox{\hyperlink{classChronusQ_1_1GradInts_aa7b35f3567b2fd26a3290ca07f717a62}{operator[]}}(\textcolor{keywordtype}{size\_t} i)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{146       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}[i];}
+\DoxyCodeLine{147     \}}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149     \textcolor{comment}{// Element access by atom index and cartesian index}}
+\DoxyCodeLine{150     \mbox{\hyperlink{classChronusQ_1_1GradInts_a008ddf9594f529e45b207449a6922cfd}{IntPtr}}\& \mbox{\hyperlink{classChronusQ_1_1GradInts_a4b99938c8047468727995b62b4d2dbb1}{integralByAtomCart}}(\textcolor{keywordtype}{size\_t} atom, \textcolor{keywordtype}{size\_t} xyz) \{}
+\DoxyCodeLine{151       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}[3*atom + xyz];}
+\DoxyCodeLine{152     \}}
+\DoxyCodeLine{153     \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1GradInts_ab019837967ab0e9d7ce36907408e43ea}{ConstIntPtr}}\& \mbox{\hyperlink{classChronusQ_1_1GradInts_a1c5eec057b404ab4ab23654de6c51f6f}{integralByAtomCart}}(\textcolor{keywordtype}{size\_t} atom, \textcolor{keywordtype}{size\_t} xyz)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{154       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}[3*atom + xyz];}
+\DoxyCodeLine{155     \}}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157     \textcolor{comment}{// Size access}}
+\DoxyCodeLine{158     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1GradInts_a402609476b09a0bf9638ac3eb1459671}{nAtoms}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}}; \}}
+\DoxyCodeLine{159     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1GradInts_ab90750c6309a4c44cc72a4e88914f8ad}{size}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}.size(); \}}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162     \textcolor{comment}{//}}
+\DoxyCodeLine{163     \textcolor{comment}{// Interface methods}}
+\DoxyCodeLine{164     \textcolor{comment}{//}}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GradInts_ac85b39c2240fabfb6533cf79edf81576}{computeAOInts}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{167         \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\&);}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GradInts_ac3ca15b80e5c7d2fafe0d2210a820c0a}{computeAOInts}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{170         \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\&);}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GradInts_ab81511d35d3a9c38346c85f70b437800}{clear}}() \{}
+\DoxyCodeLine{173       \textcolor{keywordflow}{for} (\mbox{\hyperlink{classChronusQ_1_1GradInts_a008ddf9594f529e45b207449a6922cfd}{IntPtr}}\& c : \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}})}
+\DoxyCodeLine{174         c-\/>clear();}
+\DoxyCodeLine{175     \}}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GradInts_a14dd4457af436e53d7860b14ac42750f}{output}}(std::ostream \&out, \textcolor{keyword}{const} std::string \&s = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{178                         \textcolor{keywordtype}{bool} printFull = \textcolor{keyword}{false})\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180       \textcolor{keywordflow}{if} (printFull) \{}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182         std::string oeiStr;}
+\DoxyCodeLine{183         \textcolor{keywordflow}{if} (s == \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{184           oeiStr = \textcolor{stringliteral}{"{}GradInts."{}};}
+\DoxyCodeLine{185         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{186           oeiStr = \textcolor{stringliteral}{"{}GradInts["{}} + s + \textcolor{stringliteral}{"{}]."{}};}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188         std::cout << oeiStr << std::endl;}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}.size(); i++) \{}
+\DoxyCodeLine{191           oeiStr = \textcolor{stringliteral}{"{}Grad "{}} + s + \textcolor{stringliteral}{"{} "{}} + std::to\_string(i);}
+\DoxyCodeLine{192           \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}[i]-\/>output(out, oeiStr, printFull);}
+\DoxyCodeLine{193         \}}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{196         std::string oeiStr;}
+\DoxyCodeLine{197         \textcolor{keywordflow}{if} (s == \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{198           oeiStr = \textcolor{stringliteral}{"{}Gradient Integral"{}};}
+\DoxyCodeLine{199         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{200           oeiStr = \textcolor{stringliteral}{"{}GradInts["{}} + s + \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{201         out << oeiStr << \textcolor{stringliteral}{"{} with "{}} << \mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}} << \textcolor{stringliteral}{"{} atoms."{}};}
+\DoxyCodeLine{202         out << std::endl;}
+\DoxyCodeLine{203       \}}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205     \}}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207     \textcolor{comment}{// Conversion to other type}}
+\DoxyCodeLine{208     \textcolor{keyword}{template} <\textcolor{keyword}{typename} TransT>}
+\DoxyCodeLine{209     \mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts}}<IntClass, \textcolor{keyword}{typename} std::conditional<}
+\DoxyCodeLine{210     (std::is\_same<IntsT, dcomplex>::value or}
+\DoxyCodeLine{211      std::is\_same<TransT, dcomplex>::value),}
+\DoxyCodeLine{212     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{double}>::type> \mbox{\hyperlink{classChronusQ_1_1GradInts_a590c483bba789d7139a13a8b7c7d5235}{transform}}(}
+\DoxyCodeLine{213         \textcolor{keywordtype}{char} TRANS, \textcolor{keyword}{const} TransT* T, \textcolor{keywordtype}{int} NT, \textcolor{keywordtype}{int} LDT) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{214 }
+\DoxyCodeLine{215       \mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts}}<IntClass, \textcolor{keyword}{typename} std::conditional<}
+\DoxyCodeLine{216       (std::is\_same<IntsT, dcomplex>::value or}
+\DoxyCodeLine{217        std::is\_same<TransT, dcomplex>::value),}
+\DoxyCodeLine{218       \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{double}>::type> transInts(}
+\DoxyCodeLine{219           \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}(), NT, \mbox{\hyperlink{classChronusQ_1_1GradInts_a42f9576e1b66bf3d25f09743172c47f2}{nAtoms\_}});}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < \mbox{\hyperlink{classChronusQ_1_1GradInts_a50a0199c3c7c0c0005d7a412fc9b25ca}{components\_}}.size(); i++)}
+\DoxyCodeLine{222         transInts[i] = (*\textcolor{keyword}{this})[i].\mbox{\hyperlink{classChronusQ_1_1GradInts_a590c483bba789d7139a13a8b7c7d5235}{transform}}(TRANS, T, NT, LDT);}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224       \textcolor{keywordflow}{return} transInts;}
+\DoxyCodeLine{225     \}}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227     \mbox{\hyperlink{classChronusQ_1_1GradInts_a5800793e412b46ee0665c0178bea05eb}{\string~GradInts}}() \{\}}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229   \}; \textcolor{comment}{// class GradInts}}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231 }
+\DoxyCodeLine{232 }
+\DoxyCodeLine{236   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{237   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1GradContractions}{GradContractions}} \{}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU, \textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{240     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1GradContractions}{GradContractions}};}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{243     \mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts<TwoPInts,IntsT>}}\& \mbox{\hyperlink{classChronusQ_1_1GradContractions_a8e6d50f419cbca0290aa6ca13e94888e}{grad\_}};}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245   \textcolor{keyword}{public}:}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{247     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{248     \mbox{\hyperlink{classChronusQ_1_1GradContractions_a78b5f55f7765e09878a9007ad1d23fae}{GradContractions}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{249     \mbox{\hyperlink{classChronusQ_1_1GradContractions_a4f09914ab8a45ac1e20c8772881fc666}{GradContractions}}(\mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts<TwoPInts,IntsT>}}\& grads): \mbox{\hyperlink{classChronusQ_1_1GradContractions_a8e6d50f419cbca0290aa6ca13e94888e}{grad\_}}(grads) \{ \}}
+\DoxyCodeLine{250 }
+\DoxyCodeLine{251     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{252     \mbox{\hyperlink{classChronusQ_1_1GradContractions_aa837026345e7a9d9c3397ba58c8111f4}{GradContractions}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1GradContractions}{GradContractions<MatsU,IntsT>}} \&other, \textcolor{keywordtype}{int} dummy = 0 ):}
+\DoxyCodeLine{253       \mbox{\hyperlink{classChronusQ_1_1GradContractions}{GradContractions}}(other.\mbox{\hyperlink{classChronusQ_1_1GradContractions_a8e6d50f419cbca0290aa6ca13e94888e}{grad\_}}) \{\}}
+\DoxyCodeLine{254     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{255     \mbox{\hyperlink{classChronusQ_1_1GradContractions_a2d2780c6993ea36201b1d832455de3eb}{GradContractions}}( \mbox{\hyperlink{classChronusQ_1_1GradContractions}{GradContractions<MatsU,IntsT>}} \&\&other, \textcolor{keywordtype}{int} dummy = 0 ):}
+\DoxyCodeLine{256       \mbox{\hyperlink{classChronusQ_1_1GradContractions}{GradContractions}}(other.\mbox{\hyperlink{classChronusQ_1_1GradContractions_a8e6d50f419cbca0290aa6ca13e94888e}{grad\_}}) \{\}}
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258     \mbox{\hyperlink{classChronusQ_1_1GradContractions_a991d707a16ef9196d2fe9cea1cdb5568}{GradContractions}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1GradContractions}{GradContractions}} \&other ):}
+\DoxyCodeLine{259       \mbox{\hyperlink{classChronusQ_1_1GradContractions}{GradContractions}}(other, 0) \{\}}
+\DoxyCodeLine{260     \mbox{\hyperlink{classChronusQ_1_1GradContractions_a6ed44619763f5cb1322e6d4354ba6827}{GradContractions}}( \mbox{\hyperlink{classChronusQ_1_1GradContractions}{GradContractions}} \&\&other ):}
+\DoxyCodeLine{261       \mbox{\hyperlink{classChronusQ_1_1GradContractions}{GradContractions}}(std::move(other), 0) \{\}}
+\DoxyCodeLine{262 }
+\DoxyCodeLine{263     \mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts<TwoPInts,IntsT>}}\& \mbox{\hyperlink{classChronusQ_1_1GradContractions_ac14ed8bd536c601fcca08309854e363b}{ints}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1GradContractions_a8e6d50f419cbca0290aa6ca13e94888e}{grad\_}}; \}}
+\DoxyCodeLine{264     \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts<TwoPInts,IntsT>}}\& \mbox{\hyperlink{classChronusQ_1_1GradContractions_a0db4226e4fe165eacd547f64a003ce16}{ints}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1GradContractions_a8e6d50f419cbca0290aa6ca13e94888e}{grad\_}}; \}}
+\DoxyCodeLine{265 }
+\DoxyCodeLine{266 }
+\DoxyCodeLine{279     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GradContractions_aece21b4d5541696710e96bb1fcce05d7}{gradTwoBodyContract}}(}
+\DoxyCodeLine{280       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}},}
+\DoxyCodeLine{281       \textcolor{keyword}{const} \textcolor{keywordtype}{bool},}
+\DoxyCodeLine{282       std::vector<std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}>>\&,}
+\DoxyCodeLine{283       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285     \textcolor{comment}{// Contract all into the same storage}}
+\DoxyCodeLine{286     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GradContractions_a3b2a757890df9c91dee7a175a6025c40}{gradTwoBodyContract}}(}
+\DoxyCodeLine{287       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{288       \textcolor{keyword}{const} \textcolor{keywordtype}{bool} screen,}
+\DoxyCodeLine{289       std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}>\& list,}
+\DoxyCodeLine{290       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{291       }
+\DoxyCodeLine{292       \textcolor{comment}{// Copy into individual contractions (using the same storage)}}
+\DoxyCodeLine{293       \textcolor{keywordtype}{size\_t} N = this-\/>grad\_.\mbox{\hyperlink{classChronusQ_1_1GradInts_ab90750c6309a4c44cc72a4e88914f8ad}{size}}();}
+\DoxyCodeLine{294       std::vector<std::vector<TwoBodyContraction<MatsT>>> longList(N, list);}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296       \mbox{\hyperlink{classChronusQ_1_1GradContractions_aece21b4d5541696710e96bb1fcce05d7}{gradTwoBodyContract}}(comm, screen, longList, pert);}
+\DoxyCodeLine{297     \}}
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299     \textcolor{comment}{// Other defaults}}
+\DoxyCodeLine{300     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GradContractions_a9c6678e50408cc408cc28ae659e4ddca}{gradTwoBodyContract}}(}
+\DoxyCodeLine{301       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{302       \textcolor{keyword}{const} \textcolor{keywordtype}{bool} screen,}
+\DoxyCodeLine{303       std::vector<std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}>>\& contList)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{304       }
+\DoxyCodeLine{305       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} pert;}
+\DoxyCodeLine{306       \mbox{\hyperlink{classChronusQ_1_1GradContractions_aece21b4d5541696710e96bb1fcce05d7}{gradTwoBodyContract}}(comm,screen,contList,pert);}
+\DoxyCodeLine{307     \}}
+\DoxyCodeLine{308 }
+\DoxyCodeLine{309     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GradContractions_a704780f2786186cadac90f8b19a95a86}{gradTwoBodyContract}}(}
+\DoxyCodeLine{310       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{311       \textcolor{keyword}{const} \textcolor{keywordtype}{bool} screen,}
+\DoxyCodeLine{312       std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}>\& contList)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{313       }
+\DoxyCodeLine{314       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} pert;}
+\DoxyCodeLine{315       \mbox{\hyperlink{classChronusQ_1_1GradContractions_aece21b4d5541696710e96bb1fcce05d7}{gradTwoBodyContract}}(comm,screen,contList,pert);}
+\DoxyCodeLine{316     \}}
+\DoxyCodeLine{317     }
+\DoxyCodeLine{318     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GradContractions_ac230775eea9a5d3f31c71c7f84c7a677}{gradTwoBodyContract}}(}
+\DoxyCodeLine{319         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{320         std::vector<std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}>> \&contList,}
+\DoxyCodeLine{321         \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{322       \mbox{\hyperlink{classChronusQ_1_1GradContractions_aece21b4d5541696710e96bb1fcce05d7}{gradTwoBodyContract}}(comm,\textcolor{keyword}{true},contList,pert);}
+\DoxyCodeLine{323     \}}
+\DoxyCodeLine{324 }
+\DoxyCodeLine{325     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GradContractions_a0091b0cda92de787cafb47f5ca887e31}{gradTwoBodyContract}}(}
+\DoxyCodeLine{326         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{327         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}> \&contList,}
+\DoxyCodeLine{328         \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{329       \mbox{\hyperlink{classChronusQ_1_1GradContractions_aece21b4d5541696710e96bb1fcce05d7}{gradTwoBodyContract}}(comm,\textcolor{keyword}{true},contList,pert);}
+\DoxyCodeLine{330     \}}
+\DoxyCodeLine{331 }
+\DoxyCodeLine{332     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GradContractions_a95d58551d63c081b4797feb751b1903e}{gradTwoBodyContract}}(}
+\DoxyCodeLine{333         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{334         std::vector<std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}>> \&contList)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{335       \mbox{\hyperlink{classChronusQ_1_1GradContractions_aece21b4d5541696710e96bb1fcce05d7}{gradTwoBodyContract}}(comm,\textcolor{keyword}{true},contList);}
+\DoxyCodeLine{336     \}}
+\DoxyCodeLine{337 }
+\DoxyCodeLine{338     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GradContractions_a2fd1b99ce6ca4e2735e37af4704594bd}{gradTwoBodyContract}}(}
+\DoxyCodeLine{339         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{340         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}> \&contList)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{341       \mbox{\hyperlink{classChronusQ_1_1GradContractions_aece21b4d5541696710e96bb1fcce05d7}{gradTwoBodyContract}}(comm,\textcolor{keyword}{true},contList);}
+\DoxyCodeLine{342     \}}
+\DoxyCodeLine{343 }
+\DoxyCodeLine{344     \textcolor{comment}{// Destructor}}
+\DoxyCodeLine{345     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1GradContractions_ad83432eb9bd5e9db362cb2d6e06bb648}{\string~GradContractions}}() \{\}}
+\DoxyCodeLine{346 }
+\DoxyCodeLine{347     \textcolor{comment}{// Pointer convertor}}
+\DoxyCodeLine{348     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{349     \textcolor{keyword}{static} std::shared\_ptr<GradContractions<MatsU,IntsT>>}
+\DoxyCodeLine{350     \mbox{\hyperlink{classChronusQ_1_1GradContractions_a766bb7220a1994de1067a5120107411b}{convert}}(\textcolor{keyword}{const} std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1GradContractions}{GradContractions<MatsT,IntsT>}}>\&);}
+\DoxyCodeLine{351 }
+\DoxyCodeLine{352     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1GradContractions_aa31c77f4f7085cbfe5cd474e2a67e842}{contractSecond}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354   \}; \textcolor{comment}{// class GradientContractions}}
+\DoxyCodeLine{355 }
+\DoxyCodeLine{356 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{357 }
+
+\end{DoxyCode}

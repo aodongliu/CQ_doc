@@ -1,0 +1,88 @@
+\hypertarget{atomic_8hpp_source}{}\doxysection{atomic.\+hpp}
+\label{atomic_8hpp_source}\index{include/corehbuilder/x2c/atomic.hpp@{include/corehbuilder/x2c/atomic.hpp}}
+\mbox{\hyperlink{atomic_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{x2c_8hpp}{corehbuilder/x2c.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{34   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{35   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1AtomicX2C}{AtomicX2C}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1X2C}{X2C}}<MatsT, IntsT> \{}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU, \textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{38     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1AtomicX2C}{AtomicX2C}};}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{41     \mbox{\hyperlink{structChronusQ_1_1ATOMIC__X2C__TYPE}{ATOMIC\_X2C\_TYPE}}                \mbox{\hyperlink{classChronusQ_1_1AtomicX2C_a2893738f3115e896e2ab48762e206b47}{type\_}};    }
+\DoxyCodeLine{42     std::vector<X2C<MatsT, IntsT>> \mbox{\hyperlink{classChronusQ_1_1AtomicX2C_a698b5d8c7c6cbc10c0b2818745be1a93}{atoms\_}};   }
+\DoxyCodeLine{43     std::vector<size\_t>            \mbox{\hyperlink{classChronusQ_1_1AtomicX2C_ad4dba996a492dc88969d3f19676aa2ab}{atomIdx\_}}; }
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45   \textcolor{keyword}{public}:}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{comment}{// Disable default constructor}}
+\DoxyCodeLine{50     \mbox{\hyperlink{classChronusQ_1_1AtomicX2C_ae329e6044e771860ba5deaefa2266715}{AtomicX2C}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{comment}{// Default copy and move constructors}}
+\DoxyCodeLine{53     \mbox{\hyperlink{classChronusQ_1_1AtomicX2C_af77cbfb77b8eb451d4d383ff5b36d3e8}{AtomicX2C}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1AtomicX2C}{AtomicX2C<MatsT,IntsT>}} \&);}
+\DoxyCodeLine{54     \mbox{\hyperlink{classChronusQ_1_1AtomicX2C_af77cbfb77b8eb451d4d383ff5b36d3e8}{AtomicX2C}}(\mbox{\hyperlink{classChronusQ_1_1AtomicX2C}{AtomicX2C<MatsT,IntsT>}} \&\&);}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{65     \mbox{\hyperlink{classChronusQ_1_1AtomicX2C_a0e4922af2d1d6992c934b2d60ecd3929}{AtomicX2C}}(\mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals<IntsT>}} \&aoints, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{66         \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis,}
+\DoxyCodeLine{67         \mbox{\hyperlink{structChronusQ_1_1SingleSlaterOptions}{SingleSlaterOptions}} ssOptions) :}
+\DoxyCodeLine{68       \mbox{\hyperlink{classChronusQ_1_1X2C}{X2C}}<MatsT,IntsT>(aoints, mem, mol, basis, ssOptions),}
+\DoxyCodeLine{69       \mbox{\hyperlink{classChronusQ_1_1AtomicX2C_a2893738f3115e896e2ab48762e206b47}{type\_}}(ssOptions.hamiltonianOptions.AtomicX2CType) \{\}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{comment}{// Different type}}
+\DoxyCodeLine{72     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{73     \mbox{\hyperlink{classChronusQ_1_1AtomicX2C_af77cbfb77b8eb451d4d383ff5b36d3e8}{AtomicX2C}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1AtomicX2C}{AtomicX2C<MatsU,IntsT>}} \&other, \textcolor{keywordtype}{int} dummy = 0);}
+\DoxyCodeLine{74     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{75     \mbox{\hyperlink{classChronusQ_1_1AtomicX2C_af77cbfb77b8eb451d4d383ff5b36d3e8}{AtomicX2C}}(\mbox{\hyperlink{classChronusQ_1_1AtomicX2C}{AtomicX2C<MatsU,IntsT>}} \&\&     other, \textcolor{keywordtype}{int} dummy = 0);}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{comment}{// Public Member functions}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{comment}{// Deallocation (see include/x2c/impl.hpp for docs)}}
+\DoxyCodeLine{81     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1AtomicX2C_ade870743e1e6bdc101d59eab859bf081}{dealloc}}();}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83     \textcolor{comment}{// Compute core Hamitlonian}}
+\DoxyCodeLine{84     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1AtomicX2C_aaa7530f9d2eabe17908d44b48e7ade92}{computeOneEX2C}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{85         std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}>);}
+\DoxyCodeLine{86     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1AtomicX2C_a435a16d84f3b66a3c1091e9664c154a2}{computeOneEX2C\_Umatrix}}();}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88     \textcolor{comment}{// Compute the gradient}}
+\DoxyCodeLine{89     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1AtomicX2C_ae0208ec05b4faeeb78f35d6327849fd8}{getGrad}}() \{}
+\DoxyCodeLine{90       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}X2C CoreH gradient NYI"{}},std::cout);}
+\DoxyCodeLine{91     \}}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93   \};}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

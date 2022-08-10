@@ -1,0 +1,302 @@
+\hypertarget{squarematrix_8hpp_source}{}\doxysection{squarematrix.\+hpp}
+\label{squarematrix_8hpp_source}\index{include/matrix/squarematrix.hpp@{include/matrix/squarematrix.hpp}}
+\mbox{\hyperlink{squarematrix_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{memmanager_8hpp}{memmanager.hpp}}>}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cerr_8hpp}{cerr.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg_8hpp}{cqlinalg.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keyword}{template} <\textcolor{keyword}{typename} ScalarT, \textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{33   \textcolor{keyword}{class }ScaledSquareMatrix;}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{36   \textcolor{keyword}{class }PauliSpinorSquareMatrices;}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{39   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}} \{}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{42     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}};}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{45     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}};}
+\DoxyCodeLine{46     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}}; }
+\DoxyCodeLine{47     MatsT *\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}} = \textcolor{keyword}{nullptr};     }
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49   \textcolor{keyword}{public}:}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{52     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a055e95f283d68c8d974b8fae9065fdc4}{SquareMatrix}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{53     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ad6341f342c22a46f7620d517cd9e3911}{SquareMatrix}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} n):}
+\DoxyCodeLine{54         \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}(n), \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}}(mem) \{}
+\DoxyCodeLine{55       \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a6f1ae1375b214352aa5557dcfda85243}{malloc}}();}
+\DoxyCodeLine{56     \}}
+\DoxyCodeLine{57     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a7a9b2054dddf4db5bae0690d8812b3c5}{SquareMatrix}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}} \&other ):}
+\DoxyCodeLine{58         \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}(other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}}, other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}) \{}
+\DoxyCodeLine{59       std::copy\_n(other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}}, \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}*\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}, \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}});}
+\DoxyCodeLine{60     \}}
+\DoxyCodeLine{61     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{62     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a8549f848f22ae522ab095ff351f837e6}{SquareMatrix}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \&other, \textcolor{keywordtype}{int} = 0 ):}
+\DoxyCodeLine{63         \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}(other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}}, other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}) \{}
+\DoxyCodeLine{64       \textcolor{keywordflow}{if} (std::is\_same<MatsU, dcomplex>::value}
+\DoxyCodeLine{65           and std::is\_same<MatsT, double>::value)}
+\DoxyCodeLine{66         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cannot create a Real SquareMatrix from a Complex one."{}});}
+\DoxyCodeLine{67       std::copy\_n(other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}}, \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}*\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}, \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}});}
+\DoxyCodeLine{68     \}}
+\DoxyCodeLine{69     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a20d0b7a8f2e2cd113e55a6b4977e9dbd}{SquareMatrix}}( \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}} \&\&other ):}
+\DoxyCodeLine{70         \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}(other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}), \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}}(other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}}),}
+\DoxyCodeLine{71         \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}}(other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}}) \{ other.ptr\_ = \textcolor{keyword}{nullptr}; \}}
+\DoxyCodeLine{72     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{73     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a45307c41922a729c1ec32c9557062ed7}{SquareMatrix}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsU>}} \&other ):}
+\DoxyCodeLine{74         \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}(other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}}, other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}) \{}
+\DoxyCodeLine{75       \textcolor{keywordflow}{if} (std::is\_same<MatsU, dcomplex>::value}
+\DoxyCodeLine{76           and std::is\_same<MatsT, double>::value)}
+\DoxyCodeLine{77         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cannot create a Real SquareMatrix from a Complex one."{}});}
+\DoxyCodeLine{78       \textcolor{keywordflow}{if} (other.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a3450d2f7af28a07c7f578f0458a7cbd1}{hasZ}}())}
+\DoxyCodeLine{79         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cannot create a SquareMatrix from a PauliSpinorSquareMatrices"{}}}
+\DoxyCodeLine{80              \textcolor{stringliteral}{"{} with XYZ components."{}});}
+\DoxyCodeLine{81       std::copy\_n(other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}*\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}, \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}});}
+\DoxyCodeLine{82     \}}
+\DoxyCodeLine{83     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a2c424fb137a2ab5e3b47c6074967500b}{SquareMatrix}}( \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}} \&\&other ):}
+\DoxyCodeLine{84         \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}(other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}), \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}}(other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}}),}
+\DoxyCodeLine{85         \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}}(other.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}}) \{}
+\DoxyCodeLine{86       \textcolor{keywordflow}{if} (other.hasZ())}
+\DoxyCodeLine{87         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cannot create a SquareMatrix from a PauliSpinorSquareMatrices"{}}}
+\DoxyCodeLine{88              \textcolor{stringliteral}{"{} with XYZ components."{}});}
+\DoxyCodeLine{89       other.ptr\_ = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{90     \}}
+\DoxyCodeLine{91     \textcolor{keyword}{template} <\textcolor{keyword}{typename} ScalarT, \textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{92     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ac5322101ed44faec658e13d0c6913c02}{SquareMatrix}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ScaledSquareMatrix}{ScaledSquareMatrix<ScalarT, MatsU>}}\& );}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}\& \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_afaa44df62ddcbd62b70293a65480e6be}{operator=}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}} \&other );}
+\DoxyCodeLine{95     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}\& \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_afaa44df62ddcbd62b70293a65480e6be}{operator=}}( \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}} \&\&other );}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97     \textcolor{keyword}{template} <\textcolor{keyword}{typename} ScalarT, \textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{98     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}\& \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae7516f5e487691aa29f88d2e02908b99}{operator=}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ScaledSquareMatrix}{ScaledSquareMatrix<ScalarT, MatsU>}}\& );}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_abbad979ef83e92bc5c875dd078f80ed8}{memManager}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}}; \}}
+\DoxyCodeLine{101     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ac97ef90f50aeccd6b6ff537e42023fed}{dimension}}()\textcolor{keyword}{ const}\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}; \}}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}\& \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a288154379475fbe48228cdf301e72355}{operator*=}}( MatsT );}
+\DoxyCodeLine{104     \mbox{\hyperlink{classChronusQ_1_1ScaledSquareMatrix}{ScaledSquareMatrix<double, MatsT>}} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a2063c35098a2dae5e1c6bdaaa30fc36f}{operator-\/}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{105       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ScaledSquareMatrix}{ScaledSquareMatrix<double, MatsT>}}(-\/1.0, *\textcolor{keyword}{this});}
+\DoxyCodeLine{106     \}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{109     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}\& \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a042ef3ed7b2fd4944d52989f26cf57c2}{operator+=}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}}\& );}
+\DoxyCodeLine{110     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{111     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}\& \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae8f355f848bb4f0afece8994dee718b8}{operator-\/=}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}}\& );}
+\DoxyCodeLine{112     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{113     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}<\textcolor{keyword}{typename} std::conditional<}
+\DoxyCodeLine{114     (std::is\_same<MatsT, dcomplex>::value or}
+\DoxyCodeLine{115      std::is\_same<MatsU, dcomplex>::value),}
+\DoxyCodeLine{116     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{double}>::type> \textcolor{keyword}{operator}+( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}}\& ) \textcolor{keyword}{const};}
+\DoxyCodeLine{117     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{118     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}<\textcolor{keyword}{typename} std::conditional<}
+\DoxyCodeLine{119     (std::is\_same<MatsT, dcomplex>::value or}
+\DoxyCodeLine{120      std::is\_same<MatsU, dcomplex>::value),}
+\DoxyCodeLine{121     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{double}>::type> \textcolor{keyword}{operator}-\/( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}}\& ) \textcolor{keyword}{const};}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123     \textcolor{keyword}{template} <\textcolor{keyword}{typename} ScalarT, \textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{124     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}\& \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a662c9a1310c3c7f847ed737c94b34700}{operator+=}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ScaledSquareMatrix}{ScaledSquareMatrix<ScalarT, MatsU>}}\& );}
+\DoxyCodeLine{125     \textcolor{keyword}{template} <\textcolor{keyword}{typename} ScalarT, \textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{126     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}\& \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a7d64940df4a872e6bbbaab2a05796017}{operator-\/=}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ScaledSquareMatrix}{ScaledSquareMatrix<ScalarT, MatsU>}}\& );}
+\DoxyCodeLine{127     \textcolor{keyword}{template} <\textcolor{keyword}{typename} ScalarT, \textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{128     \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<\textcolor{keyword}{typename} std::conditional<}
+\DoxyCodeLine{129     (std::is\_same<MatsT, dcomplex>::value or}
+\DoxyCodeLine{130      std::is\_same<MatsU, dcomplex>::value or}
+\DoxyCodeLine{131      std::is\_same<ScalarT, dcomplex>::value),}
+\DoxyCodeLine{132     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{double}>::type>}
+\DoxyCodeLine{133     \textcolor{keyword}{operator}+( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ScaledSquareMatrix}{ScaledSquareMatrix<ScalarT, MatsU>}}\& ) \textcolor{keyword}{const};}
+\DoxyCodeLine{134     \textcolor{keyword}{template} <\textcolor{keyword}{typename} ScalarT, \textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{135     \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<\textcolor{keyword}{typename} std::conditional<}
+\DoxyCodeLine{136     (std::is\_same<MatsT, dcomplex>::value or}
+\DoxyCodeLine{137      std::is\_same<MatsU, dcomplex>::value or}
+\DoxyCodeLine{138      std::is\_same<ScalarT, dcomplex>::value),}
+\DoxyCodeLine{139     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{double}>::type>}
+\DoxyCodeLine{140     \textcolor{keyword}{operator}-\/( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ScaledSquareMatrix}{ScaledSquareMatrix<ScalarT, MatsU>}}\& ) \textcolor{keyword}{const};}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142     MatsT\& \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a8e22e48ee21176eef7d7d14e3e8d8c23}{operator()}}(\textcolor{keywordtype}{size\_t} p, \textcolor{keywordtype}{size\_t} q) \{}
+\DoxyCodeLine{143       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}}[p + q*\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}];}
+\DoxyCodeLine{144     \}}
+\DoxyCodeLine{145     MatsT \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa6b1d179b1e3c834e46a51a7b1b47c1b}{operator()}}(\textcolor{keywordtype}{size\_t} p, \textcolor{keywordtype}{size\_t} q)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{146       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}}[p + q*\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}];}
+\DoxyCodeLine{147     \}}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149     \textcolor{comment}{// Matrix direct access}}
+\DoxyCodeLine{150     MatsT* \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}}; \}}
+\DoxyCodeLine{151     \textcolor{keyword}{const} MatsT* \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a9aadbd8b0c4976684afde50d052fa257}{pointer}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}}; \}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     \textcolor{keyword}{virtual} std::vector<MatsT*> \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a8491c799f813f0bc3c9d32888e957f1a}{SZYXPointers}}() \{}
+\DoxyCodeLine{154       \textcolor{keywordflow}{return} \{ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}() \};}
+\DoxyCodeLine{155     \}}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<double>}} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a70de99d1be6431931f5ced26b619b1e0}{real\_part}}() \{}
+\DoxyCodeLine{158       \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<double>}} realMat(\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}}, \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}});}
+\DoxyCodeLine{159       \mbox{\hyperlink{namespaceChronusQ_a9fa9cb59eb0530b89ec335deaafad83b}{GetMatRE}}(\textcolor{charliteral}{'N'},\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}},\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}},1.,\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}},realMat.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}});}
+\DoxyCodeLine{160       \textcolor{keywordflow}{return} realMat;}
+\DoxyCodeLine{161     \}}
+\DoxyCodeLine{162     }
+\DoxyCodeLine{163     \textcolor{comment}{// transform and return the transformed matrix}}
+\DoxyCodeLine{164     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a498c81dc8b022af21287d8b08ba064b0}{T}}(\textcolor{keywordtype}{char} TRANS = \textcolor{charliteral}{'T'});}
+\DoxyCodeLine{165     }
+\DoxyCodeLine{166     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae9ad6b2639dfd62c37d5ede32b6a4101}{clear}}() \{}
+\DoxyCodeLine{167       std::fill\_n(\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}},\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}*\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}},MatsT(0.));}
+\DoxyCodeLine{168     \}}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a4c5f9a5b176e0f5a15fc22f3ce3bdc0e}{output}}(std::ostream \&out, \textcolor{keyword}{const} std::string \&s = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{171                         \textcolor{keywordtype}{bool} printFull = \textcolor{keyword}{false})\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{172       std::string matStr;}
+\DoxyCodeLine{173       \textcolor{keywordflow}{if} (s == \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{174         matStr = \textcolor{stringliteral}{"{}Square Matrix"{}};}
+\DoxyCodeLine{175       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{176         matStr = \textcolor{stringliteral}{"{}Square Matrix["{}} + s + \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{177       \textcolor{keywordflow}{if} (printFull)}
+\DoxyCodeLine{178         \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out, matStr, \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}, \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}, \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}});}
+\DoxyCodeLine{179       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{180         out << matStr << std::endl;}
+\DoxyCodeLine{181       \}}
+\DoxyCodeLine{182     \}}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa66cf431bd1ba24c3623c8134e2f611e}{broadcast}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm = \mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\_COMM\_WORLD}}, \textcolor{keywordtype}{int} root = 0) \{}
+\DoxyCodeLine{185 }
+\DoxyCodeLine{186 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{187       \textcolor{comment}{// BCast matrix to all MPI processes}}
+\DoxyCodeLine{188       \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm) > 1 ) \{}
+\DoxyCodeLine{189         std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering a matrix ***\(\backslash\)n"{}};}
+\DoxyCodeLine{190         \textcolor{keywordtype}{size\_t} N\_bcast = \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}};}
+\DoxyCodeLine{191         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(N\_bcast,root,comm);}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193         \textcolor{keywordflow}{if} (N\_bcast != \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}) \{}
+\DoxyCodeLine{194           \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}} = N\_bcast;}
+\DoxyCodeLine{195           \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a6f1ae1375b214352aa5557dcfda85243}{malloc}}();}
+\DoxyCodeLine{196         \}}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}},\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}*\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}},root,comm);}
+\DoxyCodeLine{199       \}}
+\DoxyCodeLine{200 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202     \}}
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{205     \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsU>}} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa763f0d5689001a06c9ce46819750008}{spinScatter}}(}
+\DoxyCodeLine{206         \textcolor{keywordtype}{bool} hasXY = \textcolor{keyword}{true}, \textcolor{keywordtype}{bool} hasZ = \textcolor{keyword}{true}) \textcolor{keyword}{const};}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{209     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ad272226083803ab5d2227cf51a6eb0f7}{spatialToSpinBlock}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{210     }
+\DoxyCodeLine{211     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{212     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae94d36117f77ef8c5459dcf5e7d5e91e}{componentScatter}}(\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \& LL,}
+\DoxyCodeLine{213                           \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \& LS,}
+\DoxyCodeLine{214                           \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \& SL,}
+\DoxyCodeLine{215                           \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \& SS,}
+\DoxyCodeLine{216                           \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false}) \textcolor{keyword}{const};}
+\DoxyCodeLine{217      }
+\DoxyCodeLine{218     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{219     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a54ab0b0faae44a8382e2f0ce1e92679a}{componentGather}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \& LL,}
+\DoxyCodeLine{220                          \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \& LS,}
+\DoxyCodeLine{221                          \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \& SL,}
+\DoxyCodeLine{222                          \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \& SS,}
+\DoxyCodeLine{223                          \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false});}
+\DoxyCodeLine{224      }
+\DoxyCodeLine{225     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{226     \textcolor{keyword}{static} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}}
+\DoxyCodeLine{227     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a3a829ecd1d42241c194012f21de30d11}{componentGatherBuild}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \& LL,}
+\DoxyCodeLine{228                          \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \& LS,}
+\DoxyCodeLine{229                          \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \& SL,}
+\DoxyCodeLine{230                          \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \& SS);}
+\DoxyCodeLine{231     }
+\DoxyCodeLine{232     }
+\DoxyCodeLine{233     }
+\DoxyCodeLine{234     \textcolor{keyword}{template} <\textcolor{keyword}{typename} TransT>}
+\DoxyCodeLine{235     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}<\textcolor{keyword}{typename} std::conditional<}
+\DoxyCodeLine{236     (std::is\_same<MatsT, dcomplex>::value or}
+\DoxyCodeLine{237      std::is\_same<TransT, dcomplex>::value),}
+\DoxyCodeLine{238     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{double}>::type> \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ad761094d156e5e9b21c4ec7938468707}{transform}}(}
+\DoxyCodeLine{239         \textcolor{keywordtype}{char} TRANS, \textcolor{keyword}{const} TransT* \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a498c81dc8b022af21287d8b08ba064b0}{T}}, \textcolor{keywordtype}{int} NT, \textcolor{keywordtype}{int} LDT) \textcolor{keyword}{const};}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{241     \textcolor{keyword}{template} <\textcolor{keyword}{typename} TransT, \textcolor{keyword}{typename} OutT>}
+\DoxyCodeLine{242     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a1d14e9a1be16900e64dd9ba56a47b137}{subsetTransform}}(}
+\DoxyCodeLine{243         \textcolor{keywordtype}{char} TRANS, \textcolor{keyword}{const} TransT* \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a498c81dc8b022af21287d8b08ba064b0}{T}}, \textcolor{keywordtype}{int} LDT,}
+\DoxyCodeLine{244         \textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&off\_size,}
+\DoxyCodeLine{245         OutT* out, \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false}) \textcolor{keyword}{const};}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{247     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a6f1ae1375b214352aa5557dcfda85243}{malloc}}() \{}
+\DoxyCodeLine{248       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}}) \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}});}
+\DoxyCodeLine{249       \textcolor{keywordtype}{size\_t} N2 = \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}}*\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_aa2db2a321683b7c9ef8cf659108ad79a}{N\_}};}
+\DoxyCodeLine{250       \textcolor{keywordflow}{if} (N2 != 0) \{}
+\DoxyCodeLine{251         \textcolor{keywordflow}{try} \{ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}} = \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981}{malloc}}<MatsT>(N2); \}}
+\DoxyCodeLine{252         \textcolor{keywordflow}{catch}(...) \{}
+\DoxyCodeLine{253           std::cout << std::fixed;}
+\DoxyCodeLine{254           std::cout << \textcolor{stringliteral}{"{}Insufficient memory for the full INTS matrix ("{}}}
+\DoxyCodeLine{255                     << (N2/1e9) * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}) << \textcolor{stringliteral}{"{} GB)"{}} << std::endl;}
+\DoxyCodeLine{256           std::cout << std::endl << \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}} << std::endl;}
+\DoxyCodeLine{257           \textcolor{keywordflow}{throw} std::bad\_alloc();}
+\DoxyCodeLine{258         \}}
+\DoxyCodeLine{259       \}}
+\DoxyCodeLine{260     \}}
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262     \textcolor{comment}{// Pointer convertor}}
+\DoxyCodeLine{263     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{264     \textcolor{keyword}{static} std::shared\_ptr<SquareMatrix<MatsU>>}
+\DoxyCodeLine{265     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a4423864256dce0803e8e344660b4bef1}{convert}}(\textcolor{keyword}{const} std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}>\&);}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a75be390703082ac7acc5aa8c47bad6e5}{\string~SquareMatrix}}() \{}
+\DoxyCodeLine{268       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}}) \mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae877ee6e37be2fabb3cb4e84b6350657}{memManager\_}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_a85124ed73db96e23dcf5fad18d625910}{ptr\_}});}
+\DoxyCodeLine{269     \}}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271   \}; \textcolor{comment}{// class SquareMatrix}}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273   \textcolor{keyword}{template} <\textcolor{keyword}{typename} ScalarT, \textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{274   PauliSpinorSquareMatrices<\textcolor{keyword}{typename} std::conditional<}
+\DoxyCodeLine{275   (std::is\_same<MatsT, dcomplex>::value or}
+\DoxyCodeLine{276    std::is\_same<MatsU, dcomplex>::value or}
+\DoxyCodeLine{277    std::is\_same<ScalarT, dcomplex>::value),}
+\DoxyCodeLine{278   \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{double}>::type> \textcolor{keyword}{operator}+(}
+\DoxyCodeLine{279       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ScaledSquareMatrix}{ScaledSquareMatrix<ScalarT, MatsT>}} \&lhs, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \&rhs ) \{}
+\DoxyCodeLine{280     \textcolor{keywordflow}{return} rhs + lhs;}
+\DoxyCodeLine{281   \}}
+\DoxyCodeLine{282 }
+\DoxyCodeLine{283   \textcolor{keyword}{template} <\textcolor{keyword}{typename} ScalarT, \textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{284   PauliSpinorSquareMatrices<\textcolor{keyword}{typename} std::conditional<}
+\DoxyCodeLine{285   (std::is\_same<MatsT, dcomplex>::value or}
+\DoxyCodeLine{286    std::is\_same<MatsU, dcomplex>::value or}
+\DoxyCodeLine{287    std::is\_same<ScalarT, dcomplex>::value),}
+\DoxyCodeLine{288   \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{double}>::type> \textcolor{keyword}{operator}-\/(}
+\DoxyCodeLine{289       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ScaledSquareMatrix}{ScaledSquareMatrix<ScalarT, MatsT>}} \&lhs, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \&rhs ) \{}
+\DoxyCodeLine{290     \textcolor{keywordflow}{return} lhs + (-\/rhs);}
+\DoxyCodeLine{291   \}}
+\DoxyCodeLine{292 }
+\DoxyCodeLine{293   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{294   std::ostream\& \mbox{\hyperlink{namespaceChronusQ_ae965bd42e60432c83cec45044f21655a}{operator<<}}(std::ostream\&, \textcolor{keyword}{const} SquareMatrix<MatsT>\&);}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

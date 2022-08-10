@@ -1,0 +1,186 @@
+\hypertarget{ortho_8hpp_source}{}\doxysection{ortho.\+hpp}
+\label{ortho_8hpp_source}\index{include/cqlinalg/ortho.hpp@{include/cqlinalg/ortho.hpp}}
+\mbox{\hyperlink{ortho_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg__config_8hpp}{cqlinalg/cqlinalg\_config.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas3_8hpp}{cqlinalg/blas3.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34   \textcolor{keyword}{template} <\textcolor{keyword}{typename} F, \textcolor{keyword}{typename} \_VecNorm, \textcolor{keyword}{typename} \_MatInner>}
+\DoxyCodeLine{35   \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a297df8c15de632b2649710f25e104d51}{GramSchmidt}}(\textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{size\_t} Mold, \textcolor{keywordtype}{size\_t} Mnew, F *V, \textcolor{keywordtype}{size\_t} LDV, }
+\DoxyCodeLine{36     \_VecNorm vecNorm, \_MatInner matInner, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} NRe = 0,}
+\DoxyCodeLine{37     \textcolor{keywordtype}{double} eps = 1e-\/12) \{}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     F * SCR = mem.template malloc<F>(Mold + Mnew);}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keywordflow}{if}( Mold == 0 ) \{}
+\DoxyCodeLine{42       \textcolor{comment}{// Normalize the first vector}}
+\DoxyCodeLine{43       F inner = vecNorm(V);}
+\DoxyCodeLine{44       \textcolor{keywordflow}{if}(std::abs(inner) < eps) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Zero inner product incurred!"{}});}
+\DoxyCodeLine{45       blas::scal(N, 1./inner, V, 1);}
+\DoxyCodeLine{46     \}}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{comment}{// Orthonormalize the rest of the matrix using GS}}
+\DoxyCodeLine{49     \textcolor{keywordtype}{size\_t} iOrtho = (Mold == 0) ? Mold + 1: Mold;}
+\DoxyCodeLine{50     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = iOrtho; k < (Mold + Mnew); k++) \{}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52       F* V\_c = V + k      * LDV;}
+\DoxyCodeLine{53       F* V\_p = V + iOrtho * LDV;}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55       \textcolor{keywordflow}{if}( k != iOrtho ) std::copy\_n(V\_c,N,V\_p);}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57       \textcolor{comment}{// Project out the inner products}}
+\DoxyCodeLine{58       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iRe = 0; iRe < (NRe+1); iRe++) \{}
+\DoxyCodeLine{59         matInner(iOrtho,1,V,LDV,V\_p,LDV,SCR);}
+\DoxyCodeLine{60         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,N,1,iOrtho,F(-\/1.),V,LDV,SCR,iOrtho,F(1.),V\_p,LDV);}
+\DoxyCodeLine{61       \}}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63       \textcolor{comment}{// Normalize the new vector}}
+\DoxyCodeLine{64       F inner = vecNorm(V\_p);}
+\DoxyCodeLine{65       std::cout << k << \textcolor{stringliteral}{"{} "{}} << inner << std::endl;}
+\DoxyCodeLine{66       \textcolor{keywordflow}{if}(std::abs(inner) < N*eps) \{ }
+\DoxyCodeLine{67         std::cout << \textcolor{stringliteral}{"{}Zero inner product incurred! "{}} << k << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{68         blas::scal(N,F(0.),V\_p,1);}
+\DoxyCodeLine{69       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{70         blas::scal(N, 1./inner, V\_p, 1);}
+\DoxyCodeLine{71         iOrtho++;}
+\DoxyCodeLine{72       \}}
+\DoxyCodeLine{73     \}}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     mem.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(SCR);}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}} = iOrtho;}
+\DoxyCodeLine{81     F* tInner = mem.template malloc<F>(\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}*\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}});}
+\DoxyCodeLine{82     matInner(\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},V,LDV,V,LDV,tInner);}
+\DoxyCodeLine{83     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0ul; k < \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}; k++) tInner[k*(\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}+1)] -\/= 1.;}
+\DoxyCodeLine{84     std::cerr << \textcolor{stringliteral}{"{}Error after "{}} << blas::nrm2(\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}*\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},tInner,1) }
+\DoxyCodeLine{85               << std::endl;}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87     mem.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(tInner);}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{keywordflow}{return} iOrtho;}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94   \};}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97   \textcolor{keyword}{template} <\textcolor{keyword}{typename} F>}
+\DoxyCodeLine{98   \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a297df8c15de632b2649710f25e104d51}{GramSchmidt}}(\textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{size\_t} Mold, \textcolor{keywordtype}{size\_t} Mnew, F *V, \textcolor{keywordtype}{size\_t} LDV, }
+\DoxyCodeLine{99     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} NRe = 0, \textcolor{keywordtype}{double} eps = 1e-\/12) \{}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101     \textcolor{keywordflow}{return}}
+\DoxyCodeLine{102     \mbox{\hyperlink{namespaceChronusQ_a297df8c15de632b2649710f25e104d51}{GramSchmidt}}(N,Mold,Mnew,V,LDV,}
+\DoxyCodeLine{103       [\&](F* Vc)\{ \textcolor{keywordflow}{return} std::sqrt(std::abs(\mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(N,Vc,1,Vc,1))); \},}
+\DoxyCodeLine{104       [\&](\textcolor{keywordtype}{size\_t} i, \textcolor{keywordtype}{size\_t} j, F* Vi, \textcolor{keywordtype}{size\_t} LDVi, F* Vj, \textcolor{keywordtype}{size\_t} LDVj, }
+\DoxyCodeLine{105         F* inner)\{}
+\DoxyCodeLine{106         blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,i,j,N,F(1.),Vi,LDVi,Vj,LDVj,F(0.),inner,i);}
+\DoxyCodeLine{107       \},}
+\DoxyCodeLine{108       mem,NRe,eps);}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110   \};}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118   \textcolor{keyword}{template} <\textcolor{keyword}{typename} F, \textcolor{keyword}{typename} \_MatInner>}
+\DoxyCodeLine{119   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a297df8c15de632b2649710f25e104d51}{GramSchmidt}}(\textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{size\_t} Mold, \textcolor{keywordtype}{size\_t} Mnew, F *VL, \textcolor{keywordtype}{size\_t} LDVL, }
+\DoxyCodeLine{120     F *VR, \textcolor{keywordtype}{size\_t} LDVR, \_MatInner matInner, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} NRe = 0) \{}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122     F * SCR = mem.template malloc<F>(Mold + Mnew);}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124     \textcolor{keywordflow}{if}( Mold == 0 ) \{}
+\DoxyCodeLine{125       \textcolor{comment}{// Normalize the first vector of each set}}
+\DoxyCodeLine{126       F inner; matInner(1,1,VL,LDVL,VR,LDVR,\&inner);}
+\DoxyCodeLine{127       \textcolor{keywordflow}{if}( std::abs(inner) < 1e-\/12 ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Zero Inner product incurred"{}});}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129       blas::scal(N, F(1.) / std::sqrt(std::abs(inner)), VL, 1);}
+\DoxyCodeLine{130       blas::scal(N, F(1.) / std::sqrt(std::abs(inner)), VR, 1);}
+\DoxyCodeLine{131     \}}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133     \textcolor{comment}{// Orthonormalize the rest of the matrix using GS}}
+\DoxyCodeLine{134     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = Mold + 1; k < (Mold + Mnew); k++) \{}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136       F* VR\_c = VR + k*LDVR;}
+\DoxyCodeLine{137       F* VL\_c = VL + k*LDVL;}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139       \textcolor{comment}{// Project out the inner products}}
+\DoxyCodeLine{140       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iRe = 0; iRe < (NRe+1); iRe++) \{}
+\DoxyCodeLine{141         matInner(k,1,VR,LDVR,VL\_c,LDVL,SCR);}
+\DoxyCodeLine{142         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,N,1,k,F(-\/1.),VL,LDVL,SCR,k,F(1.),VL\_c,LDVL);}
+\DoxyCodeLine{143       \}}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iRe = 0; iRe < (NRe+1); iRe++) \{}
+\DoxyCodeLine{146         matInner(k,1,VL,LDVL,VR\_c,LDVR,SCR);}
+\DoxyCodeLine{147         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,N,1,k,F(-\/1.),VR,LDVR,SCR,k,F(1.),VR\_c,LDVR);}
+\DoxyCodeLine{148       \}}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150       \textcolor{comment}{// Normalize the new vector}}
+\DoxyCodeLine{151       F inner; matInner(1,1,VL\_c,LDVL,VR\_c,LDVR,\&inner);}
+\DoxyCodeLine{152       \textcolor{keywordflow}{if}( std::abs(inner) < 1e-\/12 ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Zero Inner product incurred"{}});}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154       blas::scal(N, F(1.) / std::sqrt(std::abs(inner)), VR\_c, 1);}
+\DoxyCodeLine{155       blas::scal(N, F(1.) / std::sqrt(std::abs(inner)), VL\_c, 1);}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157     \}}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159     mem.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(SCR);}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}} = Mold + Mnew;}
+\DoxyCodeLine{165     F* tInner = mem.template malloc<F>(\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}*\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}});}
+\DoxyCodeLine{166     matInner(\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},VL,LDVL,VR,LDVR,tInner);}
+\DoxyCodeLine{167     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0ul; k < \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}; k++) tInner[k*(\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}+1)] -\/= 1.;}
+\DoxyCodeLine{168     std::cerr << \textcolor{stringliteral}{"{}Error after "{}} << blas::nrm2(\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}*\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},tInner,1) }
+\DoxyCodeLine{169               << std::endl;}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171     mem.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(tInner);}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176   \};}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179 \} \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{180 }
+
+\end{DoxyCode}

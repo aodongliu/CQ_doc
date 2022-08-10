@@ -1,0 +1,80 @@
+\hypertarget{factorization_8hpp_source}{}\doxysection{factorization.\+hpp}
+\label{factorization_8hpp_source}\index{include/cqlinalg/factorization.hpp@{include/cqlinalg/factorization.hpp}}
+\mbox{\hyperlink{factorization_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg__config_8hpp}{cqlinalg/cqlinalg\_config.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{39   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{40   \textcolor{keywordtype}{int} \mbox{\hyperlink{namespaceChronusQ_a363e27c14db3c334b3a8e2a722b9128e}{LUInv}}(\textcolor{keywordtype}{int} N, \_F *A, \textcolor{keywordtype}{int} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem);}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{48   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{49   \textcolor{keywordtype}{int} \mbox{\hyperlink{namespaceChronusQ_a391751bfa1d1f1380c274a9a34b6656e}{QR}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{int} N, \_F *A, \textcolor{keywordtype}{int} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, \_F *R, \textcolor{keywordtype}{int} LDR, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem);}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 }
+\DoxyCodeLine{58   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{59   \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespaceChronusQ_a391751bfa1d1f1380c274a9a34b6656e}{QR}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{int} N, \_F *A, \textcolor{keywordtype}{int} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem) \{}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \textcolor{keywordtype}{int} LDR = std::min(\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},N);}
+\DoxyCodeLine{62     \_F *R = mem.template malloc<\_F>(LDR*LDR);}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{keywordtype}{int} INFO = \mbox{\hyperlink{namespaceChronusQ_a391751bfa1d1f1380c274a9a34b6656e}{QR}}(\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},N,A,\mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}},R,LDR,mem);}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     mem.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(R);}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     \textcolor{keywordflow}{return} INFO;}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70   \}}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{74   \textcolor{keywordtype}{int} \mbox{\hyperlink{namespaceChronusQ_a3ec03d6ca100eae94f52ab8378622893}{OrdQZ}}(\textcolor{keywordtype}{char} JOBVSL, \textcolor{keywordtype}{char} JOBVSR, \textcolor{keywordtype}{int} N, \_F *A, \textcolor{keywordtype}{int} LDA, \_F *B, }
+\DoxyCodeLine{75     \textcolor{keywordtype}{int} LDB, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} *ALPHA, \_F *BETA, \textcolor{keywordtype}{double} SIMGA, \_F *VSL, }
+\DoxyCodeLine{76     \textcolor{keywordtype}{int} LDVSL, \_F *VSR, \textcolor{keywordtype}{int} LDVSR, CQMemManager \&mem);}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{79   \textcolor{keywordtype}{int} \mbox{\hyperlink{namespaceChronusQ_a2ceeb21fc9097d04ef6c4214d831b173}{OrdQZ2}}(\textcolor{keywordtype}{char} JOBVSL, \textcolor{keywordtype}{char} JOBVSR, \textcolor{keywordtype}{int} N, \_F *A, \textcolor{keywordtype}{int} LDA, \_F *B, }
+\DoxyCodeLine{80     \textcolor{keywordtype}{int} LDB, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} *ALPHA, \_F *BETA, \textcolor{keywordtype}{double} hLim, \textcolor{keywordtype}{double} SIMGA, \_F *VSL, }
+\DoxyCodeLine{81     \textcolor{keywordtype}{int} LDVSL, \_F *VSR, \textcolor{keywordtype}{int} LDVSR, CQMemManager \&mem);}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84   \textcolor{comment}{/*}}
+\DoxyCodeLine{85 \textcolor{comment}{   *   Brief: This function computes an approximate matrix inverse. If the matrix}}
+\DoxyCodeLine{86 \textcolor{comment}{   *          is singular then it approximates the inverse by removing}}
+\DoxyCodeLine{87 \textcolor{comment}{   *          the singular columns from the matrix. Result is stored}}
+\DoxyCodeLine{88 \textcolor{comment}{   *          in place (A). num is the threshold to consider a singular}}
+\DoxyCodeLine{89 \textcolor{comment}{   *          value to be zero.}}
+\DoxyCodeLine{90 \textcolor{comment}{   */}}
+\DoxyCodeLine{91   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{92   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_afde78b48dbb3f1dfd2a35ef4a980e228}{SVDInverse}}(\textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N, MatsT* A, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} LDA, \textcolor{keyword}{const} \textcolor{keywordtype}{double} num, CQMemManager\& memManager);}
+\DoxyCodeLine{93   }
+\DoxyCodeLine{94 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{95 }
+
+\end{DoxyCode}

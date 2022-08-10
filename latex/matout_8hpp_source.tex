@@ -1,0 +1,176 @@
+\hypertarget{matout_8hpp_source}{}\doxysection{matout.\+hpp}
+\label{matout_8hpp_source}\index{include/util/matout.hpp@{include/util/matout.hpp}}
+\mbox{\hyperlink{matout_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{output_8hpp}{cxxapi/output.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <Eigen/Core>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{comment}{// Smallest value to print}}
+\DoxyCodeLine{33 \textcolor{keyword}{constexpr} \textcolor{keywordtype}{long} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a770008c51b3479ebf7b647b73625962c}{PRINT\_SMALL}} = 1e-\/10;}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{50 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{51 \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a4d31373098abb593be192495b0424894}{prettyPrintSmartBase}}(std::ostream\& out, \textcolor{keyword}{const} T* A, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},}
+\DoxyCodeLine{52   \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} colStride = 1, }
+\DoxyCodeLine{53   \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} list = 5, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} printWidth = 16) \{}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55   \textcolor{keywordtype}{int} end,endLT;}
+\DoxyCodeLine{56   out << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}};}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58   out << std::scientific << std::left << std::setprecision(8);}
+\DoxyCodeLine{59   \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < N; i += list) \{}
+\DoxyCodeLine{60     out << std::endl;}
+\DoxyCodeLine{61     end = list;}
+\DoxyCodeLine{62     out << std::setw(5) << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{63     \textcolor{keywordflow}{if}((i + list) >= N) end = N -\/ i;}
+\DoxyCodeLine{64     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} k = i; k < i+end; k++) out << std::setw(printWidth) << k+1;}
+\DoxyCodeLine{65     out << std::endl;}
+\DoxyCodeLine{66     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} j = 0; j < \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}; j++) \{}
+\DoxyCodeLine{67       out << std::setw(5) << std::left << j+1;}
+\DoxyCodeLine{68       out << std::right;}
+\DoxyCodeLine{69       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} n = i; n < i+end; n++) \{}
+\DoxyCodeLine{70         T VAL = A[j*colStride + n*\mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}];}
+\DoxyCodeLine{71         \textcolor{keywordflow}{if}(std::abs(VAL) > \mbox{\hyperlink{namespaceChronusQ_a770008c51b3479ebf7b647b73625962c}{PRINT\_SMALL}}) out << std::setw(printWidth) << VAL; }
+\DoxyCodeLine{72         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(std::isnan(VAL))        out << std::setw(printWidth) << \textcolor{stringliteral}{"{}NAN"{}};}
+\DoxyCodeLine{73         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(std::isinf(VAL))        out << std::setw(printWidth) << \textcolor{stringliteral}{"{}INF"{}};}
+\DoxyCodeLine{74         \textcolor{keywordflow}{else}                            out << std::setw(printWidth) << 0.;}
+\DoxyCodeLine{75       \}}
+\DoxyCodeLine{76       out << std::endl;}
+\DoxyCodeLine{77     \};}
+\DoxyCodeLine{78   \};}
+\DoxyCodeLine{79   out << \mbox{\hyperlink{namespaceChronusQ_a7ec03a45c0666f106c60a4ee2fa36f0c}{bannerEnd}} << std::endl;}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81 \}; \textcolor{comment}{// prettyPrintSmartBase}}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{96 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, }
+\DoxyCodeLine{97           \textcolor{keyword}{typename} std::enable\_if<}
+\DoxyCodeLine{98                      std::is\_same<T,double>::value,\textcolor{keywordtype}{int}>::type = 0>}
+\DoxyCodeLine{99 \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::ostream\& out, std::string str, \textcolor{keyword}{const} T* A,}
+\DoxyCodeLine{100   \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} colStride = 1, }
+\DoxyCodeLine{101   \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} list = 5, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} printWidth = 16) \{}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103   out.precision(10);}
+\DoxyCodeLine{104   out.fill(\textcolor{charliteral}{' '});}
+\DoxyCodeLine{105   out << std::endl << str + \textcolor{stringliteral}{"{}: "{}} << std::endl;}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107   \mbox{\hyperlink{namespaceChronusQ_a4d31373098abb593be192495b0424894}{prettyPrintSmartBase}}(out,A,\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},N,\mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}},colStride,list,printWidth);}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109 \}; \textcolor{comment}{// prettyPrintSmart (T = double)}}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{126 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, }
+\DoxyCodeLine{127           \textcolor{keyword}{typename} std::enable\_if<}
+\DoxyCodeLine{128                      std::is\_same<T,dcomplex>::value,\textcolor{keywordtype}{int}>::type = 0>}
+\DoxyCodeLine{129 \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::ostream\& out, std::string str, \textcolor{keyword}{const} T* A,}
+\DoxyCodeLine{130   \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} LDA, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} colStride = 1, }
+\DoxyCodeLine{131   \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} list = 5, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} printWidth = 16) \{}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133   out.precision(10);}
+\DoxyCodeLine{134   out.fill(\textcolor{charliteral}{' '});}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136   out << std::endl << \textcolor{stringliteral}{"{}Re["{}} << str + \textcolor{stringliteral}{"{}]: "{}} << std::endl;}
+\DoxyCodeLine{137   \mbox{\hyperlink{namespaceChronusQ_a4d31373098abb593be192495b0424894}{prettyPrintSmartBase}}(out,\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const }\textcolor{keywordtype}{double}*\textcolor{keyword}{>}(A),}
+\DoxyCodeLine{138                        \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},N,2*LDA,2*colStride,list,printWidth);}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140   out << std::endl << \textcolor{stringliteral}{"{}Im["{}} << str + \textcolor{stringliteral}{"{}]: "{}} << std::endl;}
+\DoxyCodeLine{141   \mbox{\hyperlink{namespaceChronusQ_a4d31373098abb593be192495b0424894}{prettyPrintSmartBase}}(out,\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const }\textcolor{keywordtype}{double}*\textcolor{keyword}{>}(A)+1,}
+\DoxyCodeLine{142                        \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},N,2*LDA,2*colStride,list,printWidth);}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144 \}; \textcolor{comment}{// prettyPrintSmart (T = dcomplex)}}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{159 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, }
+\DoxyCodeLine{160           \textcolor{keyword}{typename} std::enable\_if<}
+\DoxyCodeLine{161                      std::is\_same<T,int>::value,\textcolor{keywordtype}{int}>::type = 0>}
+\DoxyCodeLine{162 \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::ostream\& out, std::string str, \textcolor{keyword}{const} T* A,}
+\DoxyCodeLine{163   \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} LDA, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} colStride = 1, }
+\DoxyCodeLine{164   \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} list = 10, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} printWidth = 8) \{}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166   out.fill(\textcolor{charliteral}{' '});}
+\DoxyCodeLine{167   out << std::endl << str + \textcolor{stringliteral}{"{}: "{}} << std::endl;}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169   \mbox{\hyperlink{namespaceChronusQ_a4d31373098abb593be192495b0424894}{prettyPrintSmartBase}}(out,A,\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},N,LDA,colStride,list,printWidth);}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171 \}; \textcolor{comment}{// prettyPrintSmart (T = int)}}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, }
+\DoxyCodeLine{174           \textcolor{keyword}{typename} std::enable\_if<}
+\DoxyCodeLine{175                      std::is\_same<T,double>::value,\textcolor{keywordtype}{int}>::type = 0>}
+\DoxyCodeLine{176 \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_af73bc4655071ef33a13aaccaebd7d807}{mathematicaPrint}}(std::ostream\& out, std::string str, \textcolor{keyword}{const} T* A,}
+\DoxyCodeLine{177   \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, }
+\DoxyCodeLine{178   \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} colStride = 1) \{ }
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180   out << str << \textcolor{stringliteral}{"{}:   \(\backslash\)n"{}};}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182   out << \textcolor{stringliteral}{"{}\{ \(\backslash\)n"{}};}
+\DoxyCodeLine{183   \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}; i++)\{}
+\DoxyCodeLine{184     \textcolor{keywordflow}{if}( N != 1) out << \textcolor{stringliteral}{"{}\{  "{}};}
+\DoxyCodeLine{185   \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0; j < N; j++)\{}
+\DoxyCodeLine{186     out << std::setprecision(12) << A[colStride*i + j*\mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}];}
+\DoxyCodeLine{187     \textcolor{keywordflow}{if}(j != N-\/1) out << \textcolor{stringliteral}{"{}, "{}};}
+\DoxyCodeLine{188   \}}
+\DoxyCodeLine{189     \textcolor{keywordflow}{if}(N != 1) out << \textcolor{stringliteral}{"{}\}"{}};}
+\DoxyCodeLine{190     \textcolor{keywordflow}{if}( i != \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}-\/1 ) out << \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{191   \}}
+\DoxyCodeLine{192   out << \textcolor{stringliteral}{"{}\(\backslash\)n\}\(\backslash\)n"{}};}
+\DoxyCodeLine{193   }
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195 \};}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, }
+\DoxyCodeLine{198           \textcolor{keyword}{typename} std::enable\_if<}
+\DoxyCodeLine{199                      std::is\_same<T,dcomplex>::value,\textcolor{keywordtype}{int}>::type = 0>}
+\DoxyCodeLine{200 \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_af73bc4655071ef33a13aaccaebd7d807}{mathematicaPrint}}(std::ostream\& out, std::string str, \textcolor{keyword}{const} T* A,}
+\DoxyCodeLine{201   \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} LDA,}
+\DoxyCodeLine{202   \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} colStride = 1) \{ }
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204   out << str << \textcolor{stringliteral}{"{}:   \(\backslash\)n"{}};}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206   out << \textcolor{stringliteral}{"{}\{ \(\backslash\)n"{}};}
+\DoxyCodeLine{207   \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}; i++)\{}
+\DoxyCodeLine{208     \textcolor{keywordflow}{if}( N != 1 ) out << \textcolor{stringliteral}{"{}\{  "{}};}
+\DoxyCodeLine{209   \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0; j < N; j++)\{}
+\DoxyCodeLine{210     out << \textcolor{stringliteral}{"{}Complex["{}};}
+\DoxyCodeLine{211     out << std::setprecision(12) << std::real(A[colStride*i + j*LDA]);}
+\DoxyCodeLine{212     out << \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{213     out << std::setprecision(12) << std::imag(A[colStride*i + j*LDA]);}
+\DoxyCodeLine{214     out << \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{215     \textcolor{keywordflow}{if}(j != N-\/1) out << \textcolor{stringliteral}{"{}, "{}};}
+\DoxyCodeLine{216   \}}
+\DoxyCodeLine{217     \textcolor{keywordflow}{if}( N != 1 ) out << \textcolor{stringliteral}{"{}\}"{}};}
+\DoxyCodeLine{218     \textcolor{keywordflow}{if}( i != \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}-\/1 ) out << \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{219   \}}
+\DoxyCodeLine{220   out << \textcolor{stringliteral}{"{}\(\backslash\)n\}\(\backslash\)n"{}};}
+\DoxyCodeLine{221   }
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223 \};}
+\DoxyCodeLine{224 }
+\DoxyCodeLine{225 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{226 }
+
+\end{DoxyCode}

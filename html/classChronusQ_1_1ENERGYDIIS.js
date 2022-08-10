@@ -1,0 +1,26 @@
+var classChronusQ_1_1ENERGYDIIS =
+[
+    [ "oper_t", "classChronusQ_1_1ENERGYDIIS.html#a5419022fdac27c13b0c48551daeafd83", null ],
+    [ "oper_t_coll", "classChronusQ_1_1ENERGYDIIS.html#aa53ca655167555cc53b17db56eeffb7e", null ],
+    [ "oper_t_coll2", "classChronusQ_1_1ENERGYDIIS.html#a8ad47adff7dfc76f43da308f9c526e98", null ],
+    [ "ENERGYDIIS", "classChronusQ_1_1ENERGYDIIS.html#a116aa1b351401c682e49266c2c4c79f9", null ],
+    [ "ENERGYDIIS", "classChronusQ_1_1ENERGYDIIS.html#a4efd47188704e1f3aacb2338ddcbaad5", null ],
+    [ "ENERGYDIIS", "classChronusQ_1_1ENERGYDIIS.html#a7355c345cc2504339f08abbb4addaa83", null ],
+    [ "ENERGYDIIS", "classChronusQ_1_1ENERGYDIIS.html#a0124eb00c6edce01ca2d20e94f121f0d", null ],
+    [ "~ENERGYDIIS", "classChronusQ_1_1ENERGYDIIS.html#a185bcdf7bba39445fb77833d78e2aeef", null ],
+    [ "computeCoeffs", "classChronusQ_1_1ENERGYDIIS.html#af5f144dbf4d8ddc82066ef9d4c83340b", null ],
+    [ "gPointer", "classChronusQ_1_1ENERGYDIIS.html#a84ebdc4989842d32887cdc340f57eb5a", null ],
+    [ "gradFunc", "classChronusQ_1_1ENERGYDIIS.html#a844d76d655ed5076f6eea95251ff1728", null ],
+    [ "interpolate", "classChronusQ_1_1ENERGYDIIS.html#a6a104c3fe82064a7ced89f8f9a916f58", null ],
+    [ "objFunc", "classChronusQ_1_1ENERGYDIIS.html#a6915a8f58e82b4fdffc4957068f01490", null ],
+    [ "xPointer", "classChronusQ_1_1ENERGYDIIS.html#adef956ec88a123d1befb357307f89f06", null ],
+    [ "B", "classChronusQ_1_1ENERGYDIIS.html#ae8fb676491a209781316a962748b1bef", null ],
+    [ "coeffs", "classChronusQ_1_1ENERGYDIIS.html#ad346f9605a1bc908702246ff984ec55a", null ],
+    [ "energy", "classChronusQ_1_1ENERGYDIIS.html#ac82cb84c8a7fb89985118886b117ef81", null ],
+    [ "gOpt", "classChronusQ_1_1ENERGYDIIS.html#a2b9ffb2efeb4012ea7d2269e0d26b4b9", null ],
+    [ "memManager", "classChronusQ_1_1ENERGYDIIS.html#abdc914d37630706f273bfc29fa2c6d20", null ],
+    [ "nDimB", "classChronusQ_1_1ENERGYDIIS.html#a88040a53f3ac04377e12db4ccc68d6e6", null ],
+    [ "nInter", "classChronusQ_1_1ENERGYDIIS.html#a9e646b4a77bb641f274848afc3e698a1", null ],
+    [ "target", "classChronusQ_1_1ENERGYDIIS.html#ab8f2ccc45eccfa1120fdb3e6ae7b3e8c", null ],
+    [ "xOpt", "classChronusQ_1_1ENERGYDIIS.html#ae8e393ebe5a58e35eeb1b1474a824b06", null ]
+];

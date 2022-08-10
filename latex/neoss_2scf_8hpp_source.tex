@@ -1,0 +1,148 @@
+\hypertarget{neoss_2scf_8hpp_source}{}\doxysection{scf.\+hpp}
+\label{neoss_2scf_8hpp_source}\index{include/singleslater/neoss/scf.hpp@{include/singleslater/neoss/scf.hpp}}
+\mbox{\hyperlink{neoss_2scf_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2neoss_8hpp}{singleslater/neoss.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{33   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a5a1803c98b220f91ebaf493025c58263}{NEOSS<MatsT,IntsT>::printProperties}}() \{}
+\DoxyCodeLine{34     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}} = std::shared\_ptr<SingleSlater<MatsT,IntsT>>;}
+\DoxyCodeLine{35     applyToEach([](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{NEOSS<MatsT,IntsT>::SubSSPtr}}\& ss) \{}
+\DoxyCodeLine{36       ss-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlater_ac8da56bf9032318b1eaa59260940a583}{printMOInfo}}(std::cout);}
+\DoxyCodeLine{37       ss-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a406ba9024fcfa5e2b7ce6b176f397030}{printSpin}}(std::cout);}
+\DoxyCodeLine{38       ss-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a4a4fbbf854e5f10d44bd721c87d347e3}{printMiscProperties}}(std::cout);}
+\DoxyCodeLine{39     \});}
+\DoxyCodeLine{40     this-\/>printMultipoles(std::cout);}
+\DoxyCodeLine{41   \};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{44   std::vector<std::shared\_ptr<SquareMatrix<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_ae34b2dbca37677a62479d1ce72cbd981}{NEOSS<MatsT,IntsT>::getFock}}() \{}
+\DoxyCodeLine{45     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}} = std::shared\_ptr<SingleSlater<MatsT,IntsT>>;}
+\DoxyCodeLine{46     std::vector<std::shared\_ptr<SquareMatrix<MatsT>>> focks;}
+\DoxyCodeLine{47     applyToEach([\&focks](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss) \{}
+\DoxyCodeLine{48       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}: ss-\/>getFock() )}
+\DoxyCodeLine{49         focks.push\_back(\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}});}
+\DoxyCodeLine{50     \});}
+\DoxyCodeLine{51     \textcolor{keywordflow}{return} focks;}
+\DoxyCodeLine{52   \};}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{55   std::vector<std::shared\_ptr<SquareMatrix<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_a1399ce34a4162ad93d944a6a86541b60}{NEOSS<MatsT,IntsT>::getOnePDM}}() \{}
+\DoxyCodeLine{56     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}} = std::shared\_ptr<SingleSlater<MatsT,IntsT>>;}
+\DoxyCodeLine{57     std::vector<std::shared\_ptr<SquareMatrix<MatsT>>> dens;}
+\DoxyCodeLine{58     applyToEach([\&dens](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss) \{}
+\DoxyCodeLine{59       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}: ss-\/>getOnePDM() )}
+\DoxyCodeLine{60         dens.push\_back(\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}});}
+\DoxyCodeLine{61     \});}
+\DoxyCodeLine{62     \textcolor{keywordflow}{return} dens;}
+\DoxyCodeLine{63   \};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{66   std::vector<std::shared\_ptr<Orthogonalization<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_ac091e791a1593220c892bce5d4bf1d0e}{NEOSS<MatsT, IntsT>::getOrtho}}() \{}
+\DoxyCodeLine{67     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}} = std::shared\_ptr<SingleSlater<MatsT,IntsT>>;}
+\DoxyCodeLine{68     std::vector<std::shared\_ptr<Orthogonalization<MatsT>>> ortho;}
+\DoxyCodeLine{69     applyToEach([\&ortho](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss) \{}
+\DoxyCodeLine{70       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}: ss-\/>getOrtho() )}
+\DoxyCodeLine{71         ortho.push\_back(\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}});}
+\DoxyCodeLine{72     \});}
+\DoxyCodeLine{73     \textcolor{keywordflow}{return} ortho;}
+\DoxyCodeLine{74   \};}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{77   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a89867756aabd3ed30e33cfca28aa0e39}{NEOSS<MatsT, IntsT>::runModifyOrbitals}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert) \{}
+\DoxyCodeLine{78     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}} = std::shared\_ptr<SingleSlater<MatsT,IntsT>>;}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{comment}{// Initialize properties}}
+\DoxyCodeLine{81     applyToEach([\&pert](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss)\{}
+\DoxyCodeLine{82       ss-\/>getNewOrbitals();}
+\DoxyCodeLine{83       ss-\/>computeProperties(pert);}
+\DoxyCodeLine{84     \});}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     \textcolor{comment}{// Setup MO reference vector}}
+\DoxyCodeLine{87     std::vector<std::reference\_wrapper<SquareMatrix<MatsT>>> moRefs;}
+\DoxyCodeLine{88     applyToEach([\&moRefs](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss) \{}
+\DoxyCodeLine{89       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& m: ss-\/>mo )}
+\DoxyCodeLine{90         moRefs.emplace\_back(m);}
+\DoxyCodeLine{91     \});}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \textcolor{comment}{// Setup Eigenvalue vector}}
+\DoxyCodeLine{94     std::vector<double*> epsVec;}
+\DoxyCodeLine{95     applyToEach([\&epsVec](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss) \{}
+\DoxyCodeLine{96       epsVec.push\_back(ss-\/>eps1);}
+\DoxyCodeLine{97       \textcolor{keywordflow}{if}( ss-\/>nC == 1 and !ss-\/>iCS )}
+\DoxyCodeLine{98         epsVec.push\_back(ss-\/>eps2);}
+\DoxyCodeLine{99     \});}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101     this-\/>\mbox{\hyperlink{compositeSCF_8hpp_aa1b9cef53fedcd1b2b085bce117ae948}{modifyOrbitals}}-\/>runModifyOrbitals(pert, moRefs, epsVec);}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     applyToEach([](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss) \{}
+\DoxyCodeLine{104       ss-\/>ao2orthoFock();}
+\DoxyCodeLine{105       ss-\/>MOFOCK();}
+\DoxyCodeLine{106     \});}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108     saveCurrentState();}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{111   \textcolor{comment}{// Broadcast the updated MOs to all MPI processes}}
+\DoxyCodeLine{112     applyToEach([\&](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss) \{}
+\DoxyCodeLine{113       \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(ss-\/>comm) > 1 ) \{}
+\DoxyCodeLine{114         std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering the AO-\/MOs ***\(\backslash\)n"{}};}
+\DoxyCodeLine{115         size\_t Nmo = ss-\/>mo[0].dimension();}
+\DoxyCodeLine{116         MPIBCast(ss-\/>mo[0].pointer(),Nmo*Nmo,0,ss-\/>comm);}
+\DoxyCodeLine{117         if( ss-\/>nC == 1 and not ss-\/>iCS )}
+\DoxyCodeLine{118           MPIBCast(ss-\/>mo[1].pointer(),Nmo*Nmo,0,ss-\/>comm);}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120         std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering EPS ***\(\backslash\)n"{}};}
+\DoxyCodeLine{121         MPIBCast(ss-\/>eps1,Nmo,0,ss-\/>comm);}
+\DoxyCodeLine{122         if( ss-\/>nC == 1 and not ss-\/>iCS )}
+\DoxyCodeLine{123           MPIBCast(ss-\/>eps2,Nmo,0,ss-\/>comm);}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125         std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering FOCK ***\(\backslash\)n"{}};}
+\DoxyCodeLine{126         size\_t fockDim = ss-\/>fockMatrix-\/>dimension();}
+\DoxyCodeLine{127         for(MatsT *mat : ss-\/>fockMatrix-\/>SZYXPointers())}
+\DoxyCodeLine{128           MPIBCast(mat,fockDim*fockDim,0,ss-\/>comm);}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130         std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering the 1PDM ***\(\backslash\)n"{}};}
+\DoxyCodeLine{131         size\_t denDim = ss-\/>onePDM-\/>dimension();}
+\DoxyCodeLine{132         for(auto p : ss-\/>onePDM-\/>SZYXPointers())}
+\DoxyCodeLine{133           MPIBCast(p,denDim*denDim,0,ss-\/>comm);}
+\DoxyCodeLine{134       \}}
+\DoxyCodeLine{135     \});}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139   \};}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{142 }
+
+\end{DoxyCode}

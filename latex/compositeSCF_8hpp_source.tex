@@ -1,0 +1,91 @@
+\hypertarget{compositeSCF_8hpp_source}{}\doxysection{composite\+SCF.\+hpp}
+\label{compositeSCF_8hpp_source}\index{include/modifyorbitals/compositeSCF.hpp@{include/modifyorbitals/compositeSCF.hpp}}
+\mbox{\hyperlink{compositeSCF_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{comment}{/*}}
+\DoxyCodeLine{27 \textcolor{comment}{ *    This is a proposed object for carrying out a composite SCF calculation}}
+\DoxyCodeLine{28 \textcolor{comment}{ *    (where you can use a combination of several methods). However, this}}
+\DoxyCodeLine{29 \textcolor{comment}{ *    object has not been implemented or tested in anyway. It is included}}
+\DoxyCodeLine{30 \textcolor{comment}{ *    here for someone in the future to use it if they want to. }}
+\DoxyCodeLine{31 \textcolor{comment}{ *}}
+\DoxyCodeLine{32 \textcolor{comment}{ */}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{modifyorbitals_8hpp}{modifyorbitals.hpp}}>}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{38 \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1CompositeSCF}{CompositeSCF}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals}{ModifyOrbitals}}<MatsT> \{}
+\DoxyCodeLine{39 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{40   std::vector<std::shared\_ptr<ModifyOrbitals<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1CompositeSCF_a55eaf8b3ce5aff2d1edda71fa5ed1ee4}{modifyOrbitals}};}
+\DoxyCodeLine{41   std::vector<SCFControls> \mbox{\hyperlink{classChronusQ_1_1CompositeSCF_a0d6acd5bdc57a9e2248ae5660342ff9c}{scfControls}};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{keyword}{public}:}
+\DoxyCodeLine{44   \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{45   \mbox{\hyperlink{classChronusQ_1_1CompositeSCF_afe3aded009818fbe8e3f4ad7907093e9}{CompositeSCF}}(std::vector<SCFControls> sC, \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}}, \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{ModifyOrbitalsOptions<MatsT>}} modOpt, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& mem):}
+\DoxyCodeLine{46     \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals}{ModifyOrbitals}}(\mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}}, modOpt, mem) \{}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} s : \mbox{\hyperlink{classChronusQ_1_1CompositeSCF_a0d6acd5bdc57a9e2248ae5660342ff9c}{scfControls}} ) \{}
+\DoxyCodeLine{49       \textcolor{keywordflow}{if}( s.scfAlg == \mbox{\hyperlink{namespaceChronusQ_a01fc09180142c9ef18c921fb1807c2d4a8ffcf4a789f0831f6b3cfa72fa81f216}{\_CONVENTIONAL\_SCF}} ) \{}
+\DoxyCodeLine{50         \mbox{\hyperlink{classChronusQ_1_1CompositeSCF_a55eaf8b3ce5aff2d1edda71fa5ed1ee4}{modifyOrbitals}}.emplace\_back(std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals}{ModifyOrbitals<MatsT>}}>(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{ConventionalSCF<MatsT>}}>(s, \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}}, modOpt, mem)));}
+\DoxyCodeLine{51       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( s.scfAlg == \mbox{\hyperlink{namespaceChronusQ_a01fc09180142c9ef18c921fb1807c2d4a171f2799f46769a19c361caf630aa65e}{\_NEWTON\_RAPHSON\_SCF}} ) \{}
+\DoxyCodeLine{52         \mbox{\hyperlink{classChronusQ_1_1CompositeSCF_a55eaf8b3ce5aff2d1edda71fa5ed1ee4}{modifyOrbitals}}.emplace\_back(}
+\DoxyCodeLine{53           std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals}{ModifyOrbitals<MatsT>}}>(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF}{NewtonRaphsonSCF<MatsT>}}>(s, \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}}, modOpt, mem)));}
+\DoxyCodeLine{54       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{55         \mbox{\hyperlink{classChronusQ_1_1CompositeSCF_a55eaf8b3ce5aff2d1edda71fa5ed1ee4}{modifyOrbitals}}.emplace\_back(std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals}{ModifyOrbitals<MatsT>}}>(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1SkipSCF}{SkipSCF<MatsT>}}>(s, \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}}, modOpt, mem)));}
+\DoxyCodeLine{56       \}}
+\DoxyCodeLine{57     \}}
+\DoxyCodeLine{58   \};}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60   \textcolor{comment}{// Member Functions}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CompositeSCF_a95634482dc81fc7b6c74ddfe947af2ce}{runModifyOrbitals}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert, \mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef}}\& mo, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}} eps) \{}
+\DoxyCodeLine{63     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} mO : \mbox{\hyperlink{classChronusQ_1_1CompositeSCF_a55eaf8b3ce5aff2d1edda71fa5ed1ee4}{modifyOrbitals}} )}
+\DoxyCodeLine{64       mO-\/>runModifyOrbitals(pert, mo, eps);}
+\DoxyCodeLine{65   \};}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CompositeSCF_a2b7f1a6929247323a3e1bdf96571260c}{getNewOrbitals}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert, \mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef}}\& mo, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}} eps, \textcolor{keywordtype}{bool} frmFock = \textcolor{keyword}{true});}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69   \textcolor{comment}{// Printing functions}}
+\DoxyCodeLine{70   \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CompositeSCF_ac05e2bae6dd8652cad0983efdb178dac}{printRunHeader}}(std::ostream\& out, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&);}
+\DoxyCodeLine{71   \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CompositeSCF_ab8852a7d7f935d1dad00234ce5385349}{printIteration}}(std::ostream\& out = std::cout, \textcolor{keywordtype}{bool} printDiff = \textcolor{keyword}{true}) \{\};}
+\DoxyCodeLine{72 \}}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{75 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CompositeSCF_a2b7f1a6929247323a3e1bdf96571260c}{CompositeSCF<MatsT>::getNewOrbitals}}(EMPerturbation\& pert, \mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef}}\& mo, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}} eps, frmFock) \{}
+\DoxyCodeLine{76   \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} mO : \mbox{\hyperlink{compositeSCF_8hpp_aa1b9cef53fedcd1b2b085bce117ae948}{modifyOrbitals}} )}
+\DoxyCodeLine{77     mO-\/>runModifyOrbitals(pert, mo, eps, frmFock);}
+\DoxyCodeLine{78 \};}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{81 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CompositeSCF_ac05e2bae6dd8652cad0983efdb178dac}{CompositeSCF<MatsT> :: printRunHeader}}( std::ostream\& out, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert)\{}
+\DoxyCodeLine{82     std::cout << \textcolor{stringliteral}{"{}Performing a Composite SCF calculation with the following Algorithms:"{}} << std::endl;}
+\DoxyCodeLine{83     \textcolor{comment}{// FIXME: complete this function}}
+\DoxyCodeLine{84 \};}
+\DoxyCodeLine{85 \};   \textcolor{comment}{// NameSpace ChronusQ}}
+
+\end{DoxyCode}

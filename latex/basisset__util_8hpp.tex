@@ -1,0 +1,48 @@
+\hypertarget{basisset__util_8hpp}{}\doxysection{include/basisset/basisset\+\_\+util.hpp File Reference}
+\label{basisset__util_8hpp}\index{include/basisset/basisset\_util.hpp@{include/basisset/basisset\_util.hpp}}
+{\ttfamily \#include $<$libint2/shell.\+h$>$}\newline
+{\ttfamily \#include $<$memmanager.\+hpp$>$}\newline
+{\ttfamily \#include $<$basisset/basisset\+\_\+def.\+hpp$>$}\newline
+Include dependency graph for basisset\+\_\+util.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{basisset__util_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{basisset__util_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{Chronus\+Q\+::\+SHELL\+\_\+\+EVAL\+\_\+\+TYPE}} \{ \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{Chronus\+Q\+::\+GRADIENT}}
+, \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{Chronus\+Q\+::\+NOGRAD}}
+ \}
+\begin{DoxyCompactList}\small\item\em Specification for shellset evaluation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a8771d0c9717951111130fa2b68b2f19f}{Chronus\+Q\+::eval\+Shell\+Set}} (CQMem\+Manager \&, SHELL\+\_\+\+EVAL\+\_\+\+TYPE, std\+::vector$<$ libint2\+::\+Shell $>$ \&, double $\ast$, size\+\_\+t, double $\ast$, bool)
+\begin{DoxyCompactList}\small\item\em Level 1 Basis Set Evaluation Function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_abe81acf56923be6c277d4e3a57412fd2}{Chronus\+Q\+::eval\+Shell\+Set}} (CQMem\+Manager \&mem\+Manager, SHELL\+\_\+\+EVAL\+\_\+\+TYPE typ, std\+::vector$<$ libint2\+::\+Shell $>$ \&shells, std\+::vector$<$ std\+::array$<$ double, 3 $>$ $>$ \&\mbox{\hyperlink{lebedev__974_8cxx_a86e67370eee99277122aa8614f0d6a66}{pts}}, double $\ast$eval, bool \&force\+Cart)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a5520838471ff0bbb51943fe12f2f27b4}{Chronus\+Q\+::eval\+Shell\+Set}} (SHELL\+\_\+\+EVAL\+\_\+\+TYPE, std\+::vector$<$ libint2\+::\+Shell $>$ \&, std\+::vector$<$ bool $>$ \&, double $\ast$, double $\ast$, size\+\_\+t, size\+\_\+t, std\+::vector$<$ size\+\_\+t $>$ \&, size\+\_\+t, double $\ast$, double $\ast$, size\+\_\+t, bool)
+\begin{DoxyCompactList}\small\item\em Level 2 Basis Set Evaluation Function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_a07c1341de60286d424d02457aa2e9a4d}{Chronus\+Q\+::eval\+Shell\+Set}} (SHELL\+\_\+\+EVAL\+\_\+\+TYPE, const libint2\+::\+Shell \&, double, const std\+::array$<$ double, 3 $>$ \&, double $\ast$, size\+\_\+t)
+\begin{DoxyCompactList}\small\item\em Level 3 Basis Set Evaluation Function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_a4c150d1e43391e68cf98bc74ab1ed4ad}{Chronus\+Q\+::\+Car\+To\+Sp\+DEval}} (SHELL\+\_\+\+EVAL\+\_\+\+TYPE, size\+\_\+t, double $\ast$, double $\ast$, size\+\_\+t, size\+\_\+t, bool)
+\begin{DoxyCompactList}\small\item\em Basis Set transformation from Cartesian to Spherical it also provide to copy to the final storage (pointer) and requires that the transformation matrix Sp \texorpdfstring{$<$}{<}-\/\texorpdfstring{$>$}{>} Cart is already populated. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_a9701049857e0051a40bbafd07ce0bef4}{Chronus\+Q\+::test\+Eval}} (CQMem\+Manager \&mem\+Manager, double $\ast$SCR, std\+::vector$<$ libint2\+::\+Shell $>$ \&vshells, bool force\+Cart)
+\begin{DoxyCompactList}\small\item\em only for debug it tests 5 pts and the evaluation of the f,dx,dy,dz at those points for a vector of shells \end{DoxyCompactList}\end{DoxyCompactItemize}

@@ -1,0 +1,271 @@
+\hypertarget{base_2scf_8hpp_source}{}\doxysection{scf.\+hpp}
+\label{base_2scf_8hpp_source}\index{include/singleslater/base/scf.hpp@{include/singleslater/base/scf.hpp}}
+\mbox{\hyperlink{base_2scf_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{38   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49cad664bf1141d3a9456b7ef300576c8ce7}{SingleSlaterBase::SCF}}(EMPerturbation \&pert) \{}
+\DoxyCodeLine{39  }
+\DoxyCodeLine{40     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}SCF Total"{}});}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     SCFInit();}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \textcolor{comment}{// Initialize type independent parameters}}
+\DoxyCodeLine{45     \textcolor{keywordtype}{bool} isConverged = \textcolor{keyword}{false};}
+\DoxyCodeLine{46     \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_a1c011aeb2e3cf2f221bbe2b5c15f7365}{dampParam}} = \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_afa14d561ca4f4670d69d98e0acb9c2da}{dampStartParam}};}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{comment}{//TODO: incremental Fock is broken}}
+\DoxyCodeLine{49     \textcolor{comment}{//scfControls.doIncFock = scfControls.doIncFock and (this-\/>aoints.cAlg == DIRECT);}}
+\DoxyCodeLine{50     \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_ada768f933e2b5d9c7b2575e908d6a2a8}{doIncFock}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{51                  }
+\DoxyCodeLine{52     \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_aa6847e3ac1885322098e5930290a83bb}{scfAlg}} == \mbox{\hyperlink{namespaceChronusQ_a01fc09180142c9ef18c921fb1807c2d4a171f2799f46769a19c361caf630aa65e}{\_NEWTON\_RAPHSON\_SCF}} )}
+\DoxyCodeLine{53       \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_a0b53583d66018a2437d4de8432e1a491}{doExtrap}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_aa6847e3ac1885322098e5930290a83bb}{scfAlg}} == \mbox{\hyperlink{namespaceChronusQ_a01fc09180142c9ef18c921fb1807c2d4a41afd2d91afb3233ba7981b42a6dd6a1}{\_SKIP\_SCF}} ) \{}
+\DoxyCodeLine{56       isConverged = \textcolor{keyword}{true};}
+\DoxyCodeLine{57       MOFOCK();}
+\DoxyCodeLine{58     \}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     \textcolor{comment}{// Compute fock matrix and initial properties}}
+\DoxyCodeLine{61     this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a8da260eb4d6f0c98984bbc71ddf1f2ac}{formFock}}(pert);}
+\DoxyCodeLine{62     this-\/>\mbox{\hyperlink{namespaceChronusQ_a3acaa28fc32531f8292672cf3e259b45}{getNewOrbitals}}(pert,\textcolor{keyword}{false});}
+\DoxyCodeLine{63     this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a4c2e0e14116d87505f9aa61953d11194}{computeProperties}}(pert);}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_af18e02d566efe6aeaab668a9543ca589}{printLevel}} > 0 and \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}}) == 0 ) \{}
+\DoxyCodeLine{66       printSCFHeader(std::cout,pert);}
+\DoxyCodeLine{67       printSCFProg(std::cout,\textcolor{keyword}{false});}
+\DoxyCodeLine{68     \}}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     \textcolor{keywordflow}{for}( scfConv.nSCFIter = 0; scfConv.nSCFIter < \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_ae3d1695a6fa9e866364f6bdd993ad23a}{maxSCFIter}}; }
+\DoxyCodeLine{71          scfConv.nSCFIter++) \{}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74       \textcolor{comment}{// Save current state of the wave function (method specific)}}
+\DoxyCodeLine{75       \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a159721922665bf61e9ec0a62ac5703e1}{saveCurrentState}}();}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77       \textcolor{comment}{// Exit loop on convergence}}
+\DoxyCodeLine{78       \textcolor{keywordflow}{if}(isConverged) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}SCF Iter"{}});}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82       \textcolor{comment}{// Get new orbtials and densities from current state: }}
+\DoxyCodeLine{83       \textcolor{comment}{//   C/D(k) -\/> C/D(k + 1)}}
+\DoxyCodeLine{84       \mbox{\hyperlink{namespaceChronusQ_a3acaa28fc32531f8292672cf3e259b45}{getNewOrbitals}}(pert);}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86       \textcolor{comment}{// Evaluate convergence}}
+\DoxyCodeLine{87       isConverged = evalConver(pert);}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89       \textcolor{comment}{// Print out iteration information}}
+\DoxyCodeLine{90       \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_af18e02d566efe6aeaab668a9543ca589}{printLevel}} > 0 and (\mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}}) == 0)) printSCFProg(std::cout);}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}SCF Iter"{}});}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94     \}; \textcolor{comment}{// Iteration loop}}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     \textcolor{comment}{// Save current state of the wave function (method specific)}}
+\DoxyCodeLine{97     \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a159721922665bf61e9ec0a62ac5703e1}{saveCurrentState}}();}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99     SCFFin();}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101     \textcolor{comment}{// Compute initial properties}}
+\DoxyCodeLine{102     this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a4c2e0e14116d87505f9aa61953d11194}{computeProperties}}(pert);}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104     \textcolor{comment}{//printSCFFooter(isConverged);}}
+\DoxyCodeLine{105     \textcolor{keywordflow}{if}(not isConverged)}
+\DoxyCodeLine{106       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(std::string(\textcolor{stringliteral}{"{}SCF Failed to converged within "{}}) + }
+\DoxyCodeLine{107         std::to\_string(\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_ae3d1695a6fa9e866364f6bdd993ad23a}{maxSCFIter}}) + }
+\DoxyCodeLine{108         std::string(\textcolor{stringliteral}{"{} iterations"{}}));}
+\DoxyCodeLine{109     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_af18e02d566efe6aeaab668a9543ca589}{printLevel}} > 0 ) \{}
+\DoxyCodeLine{110       std::cout << std::endl << \textcolor{stringliteral}{"{}SCF Completed: E("{}}}
+\DoxyCodeLine{111                 << \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a531a032e4edaeffb1405a294e6da6b13}{refShortName\_}} << \textcolor{stringliteral}{"{}) = "{}} << std::fixed}
+\DoxyCodeLine{112                 << std::setprecision(10) << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}{totalEnergy}}}
+\DoxyCodeLine{113                 << \textcolor{stringliteral}{"{} Eh after "{}} << scfConv.nSCFIter}
+\DoxyCodeLine{114                 << \textcolor{stringliteral}{"{} SCF Iterations"{}} << std::endl;}
+\DoxyCodeLine{115     \}}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_af18e02d566efe6aeaab668a9543ca589}{printLevel}} > 0 ) std::cout << \mbox{\hyperlink{namespaceChronusQ_a0c336a0275cfd2e395b01766efa494b2}{BannerEnd}} << std::endl;}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_af18e02d566efe6aeaab668a9543ca589}{printLevel}} > 1 ) \{}
+\DoxyCodeLine{120       this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a9d59a8af8ae1303c389bfcc6ff659d7e}{printMOInfo}}(std::cout);}
+\DoxyCodeLine{121       this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_aedcce2518a1e9011d92ab8cf881de33e}{printMultipoles}}(std::cout);}
+\DoxyCodeLine{122       this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a406ba9024fcfa5e2b7ce6b176f397030}{printSpin}}(std::cout);}
+\DoxyCodeLine{123       this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a8f4367e2adf918c689f381a2eaf15599}{printMiscProperties}}(std::cout);}
+\DoxyCodeLine{124     \}}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}SCF Total"{}});}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128 \textcolor{preprocessor}{\#ifdef TEST\_MOINTSTRANSFORMER}}
+\DoxyCodeLine{129     MOIntsTransformationTest(pert);}
+\DoxyCodeLine{130 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132   \}; \textcolor{comment}{// SingleSlaterBase::SCF()}}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134   }
+\DoxyCodeLine{135   \textcolor{keywordtype}{void} SingleSlaterBase::printSCFHeader(std::ostream \&out, }
+\DoxyCodeLine{136     EMPerturbation \&pert) \{}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138     out << \mbox{\hyperlink{namespaceChronusQ_aea3bdcfe8284fa0cf16ef6866b5a99a7}{BannerTop}} << std::endl;}
+\DoxyCodeLine{139     out << \textcolor{stringliteral}{"{}Self Consistent Field (SCF) Settings:"{}} << std::endl << std::endl;}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141     out << std::setw(38) << std::left << \textcolor{stringliteral}{"{}  Reference:"{}} << \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a0a49cbbc09f5076d671240b41b87158d}{refLongName\_}} }
+\DoxyCodeLine{142            << std::endl;}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     out << std::setprecision(6) << std::scientific;}
+\DoxyCodeLine{145     out << std::setw(38) << std::left << \textcolor{stringliteral}{"{}  Density Convergence Tolerence:"{}} }
+\DoxyCodeLine{146            <<  \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_ab35eddd86f51d5614999f7e000be9cd5}{denConvTol}} << std::endl;}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148     out << std::setw(38) << std::left << \textcolor{stringliteral}{"{}  Energy Convergence Tolerence:"{}} }
+\DoxyCodeLine{149            <<  \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_a79d77808a40e46f3bef02623a117c4d6}{eneConvTol}} << std::endl;}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151     out << std::setw(38) << std::left << \textcolor{stringliteral}{"{}  Maximum Number of SCF Cycles:"{}} }
+\DoxyCodeLine{152            << \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_ae3d1695a6fa9e866364f6bdd993ad23a}{maxSCFIter}} << std::endl;}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155     out << std::setw(38)   << std::left << \textcolor{stringliteral}{"{}  SCF Algorithm:"{}};}
+\DoxyCodeLine{156     \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_aa6847e3ac1885322098e5930290a83bb}{scfAlg}} == \mbox{\hyperlink{namespaceChronusQ_a01fc09180142c9ef18c921fb1807c2d4a8ffcf4a789f0831f6b3cfa72fa81f216}{\_CONVENTIONAL\_SCF}} )}
+\DoxyCodeLine{157       out << \textcolor{stringliteral}{"{}Conventional SCF"{}};}
+\DoxyCodeLine{158     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_aa6847e3ac1885322098e5930290a83bb}{scfAlg}} == \mbox{\hyperlink{namespaceChronusQ_a01fc09180142c9ef18c921fb1807c2d4a171f2799f46769a19c361caf630aa65e}{\_NEWTON\_RAPHSON\_SCF}} )}
+\DoxyCodeLine{159       out << \textcolor{stringliteral}{"{}Newton-\/Raphson (2nd Order)"{}};}
+\DoxyCodeLine{160     out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163     \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_a0b53583d66018a2437d4de8432e1a491}{doExtrap}}) \{}
+\DoxyCodeLine{164       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_af5d9e9223dcc74cf8ec5e088a9c57be1}{doDamp}}) \{}
+\DoxyCodeLine{165         out << std::setw(38)   << std::left << \textcolor{stringliteral}{"{}  Static Damping Factor:"{}} }
+\DoxyCodeLine{166                <<  \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_a1c011aeb2e3cf2f221bbe2b5c15f7365}{dampParam}} << std::endl;}
+\DoxyCodeLine{167         out << std::setw(38)   << std::left << \textcolor{stringliteral}{"{}  Damping Error:"{}} }
+\DoxyCodeLine{168                <<  \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_afe2f86f80815613098ad2a05573781db}{dampError}} << std::endl;}
+\DoxyCodeLine{169       \}}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_af8ed638262e0613be803a8785bd2ddf3}{diisAlg}} != \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1a21b39feca0ff31393cbb148d973d5877}{NONE}}) \{}
+\DoxyCodeLine{172         out << std::setw(38) << std::left << \textcolor{stringliteral}{"{}  DIIS Extrapolation Algorithm:"{}};}
+\DoxyCodeLine{173         \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_af8ed638262e0613be803a8785bd2ddf3}{diisAlg}} == \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1af6a9d2066f566205f25fed675e09b5eb}{CDIIS}}) out << \textcolor{stringliteral}{"{}CDIIS"{}};}
+\DoxyCodeLine{174         out << std::endl;}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176         out << std::left << \textcolor{stringliteral}{"{}    * DIIS will track up to "{}} }
+\DoxyCodeLine{177             << \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_a4bfbbd4a6e9fca206a003a8ec74a613c}{nKeep}} << \textcolor{stringliteral}{"{} previous iterations"{}} << std::endl;}
+\DoxyCodeLine{178       \}}
+\DoxyCodeLine{179  }
+\DoxyCodeLine{180     \}}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183     \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_ada768f933e2b5d9c7b2575e908d6a2a8}{doIncFock}} ) \{}
+\DoxyCodeLine{184       out << \textcolor{stringliteral}{"{}\(\backslash\)n  * Will Perform Incremental Fock Build -\/-\/ Restarting Every "{}}}
+\DoxyCodeLine{185           << \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_a81914bf24a382a8816bf7a049d5f5a7b}{nIncFock}} << \textcolor{stringliteral}{"{} SCF Steps\(\backslash\)n"{}};}
+\DoxyCodeLine{186          }
+\DoxyCodeLine{187     \}}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189     \textcolor{comment}{// Field print}}
+\DoxyCodeLine{190     \textcolor{keywordflow}{if}( pert.fields.size() != 0 ) \{}
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192       out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n  * SCF will be performed in the presence of an EM "{}}}
+\DoxyCodeLine{193           << \textcolor{stringliteral}{"{}perturbation:\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&field : pert.fields) \{}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197         \textcolor{keyword}{auto} amp = field-\/>getAmp();}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199         out << \textcolor{stringliteral}{"{}     * "{}};}
+\DoxyCodeLine{200         \textcolor{keywordflow}{if}( field-\/>emFieldTyp == \mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9affb099f0286d43119e7134902486543e}{Electric}} ) out << \textcolor{stringliteral}{"{}Electric"{}};}
+\DoxyCodeLine{201         \textcolor{keywordflow}{else}                                out << \textcolor{stringliteral}{"{}Magnetic"{}};}
+\DoxyCodeLine{202         }
+\DoxyCodeLine{203         out << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{204       }
+\DoxyCodeLine{205         \textcolor{keywordflow}{if}( field-\/>size == 3 )        out << \textcolor{stringliteral}{"{}Dipole"{}};}
+\DoxyCodeLine{206         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( field-\/>size == 6 )  out << \textcolor{stringliteral}{"{}Quadrupole"{}};}
+\DoxyCodeLine{207         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( field-\/>size == 10 ) out << \textcolor{stringliteral}{"{}Octupole"{}};}
+\DoxyCodeLine{208         }
+\DoxyCodeLine{209         out << \textcolor{stringliteral}{"{} Field: "{}};}
+\DoxyCodeLine{210         out << \textcolor{stringliteral}{"{}\{ "{}};}
+\DoxyCodeLine{211         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < amp.size(); i++) \{}
+\DoxyCodeLine{212           out << amp[i]; \textcolor{keywordflow}{if}(i != amp.size() -\/ 1) out << \textcolor{stringliteral}{"{}, "{}};}
+\DoxyCodeLine{213         \}}
+\DoxyCodeLine{214         out << \textcolor{stringliteral}{"{} \}\(\backslash\)n"{}};}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216       \}}
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219     \}}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223     out << std::endl << \mbox{\hyperlink{namespaceChronusQ_acd74097d6389b14818f836849afba8ff}{BannerMid}} << std::endl << std::endl;}
+\DoxyCodeLine{224     out << std::setw(16) << \textcolor{stringliteral}{"{}SCF Iteration"{}};}
+\DoxyCodeLine{225     out << std::setw(18) << \textcolor{stringliteral}{"{}Energy (Eh)"{}};}
+\DoxyCodeLine{226     out << std::setw(18) << \textcolor{stringliteral}{"{}\(\backslash\)u0394E (Eh)"{}};}
+\DoxyCodeLine{227     out << std::setw(18) << \textcolor{stringliteral}{"{} |\(\backslash\)u0394P(S)|"{}};}
+\DoxyCodeLine{228     \textcolor{keywordflow}{if}(not \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}} or \mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} > 1)}
+\DoxyCodeLine{229       out << std::setw(18) << \textcolor{stringliteral}{"{}  |\(\backslash\)u0394P(M)|"{}};}
+\DoxyCodeLine{230      }
+\DoxyCodeLine{231     out << std::endl;}
+\DoxyCodeLine{232     out << std::setw(16) << \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{233     out << std::setw(18) << \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{234     out << std::setw(18) << \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{235     out << std::setw(18) << \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{236     \textcolor{keywordflow}{if}(not \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}} or \mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} > 1)}
+\DoxyCodeLine{237       out << std::setw(18) << \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{238     out << std::endl;}
+\DoxyCodeLine{239 }
+\DoxyCodeLine{240   \}; \textcolor{comment}{// SingleSlater<T>::printSCFHeader}}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242 }
+\DoxyCodeLine{247   \textcolor{keywordtype}{void} SingleSlaterBase::printSCFProg(std::ostream \&out,}
+\DoxyCodeLine{248     \textcolor{keywordtype}{bool} printDiff) \{}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250     \textcolor{comment}{// SCF Iteration}}
+\DoxyCodeLine{251     out << \textcolor{stringliteral}{"{}  SCFIt: "{}} <<std::setw(6) << std::left;}
+\DoxyCodeLine{252 }
+\DoxyCodeLine{253     \textcolor{keywordflow}{if}( printDiff ) out << scfConv.nSCFIter + 1;}
+\DoxyCodeLine{254     \textcolor{keywordflow}{else}            out << 0;}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256     \textcolor{comment}{// Current Total Energy}}
+\DoxyCodeLine{257     out << std::setw(18) << std::fixed << std::setprecision(10)}
+\DoxyCodeLine{258                          << std::left << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}{totalEnergy}};}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260     \textcolor{keywordflow}{if}( printDiff ) \{}
+\DoxyCodeLine{261       out << std::scientific << std::setprecision(7);}
+\DoxyCodeLine{262       \textcolor{comment}{// Current Change in Energy}}
+\DoxyCodeLine{263       out << std::setw(14) << std::right << scfConv.deltaEnergy;}
+\DoxyCodeLine{264       out << \textcolor{stringliteral}{"{}   "{}};}
+\DoxyCodeLine{265       out << std::setw(13) << std::right << scfConv.RMSDenScalar;}
+\DoxyCodeLine{266       \textcolor{keywordflow}{if}(not \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}} or \mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} > 1) \{}
+\DoxyCodeLine{267         out << \textcolor{stringliteral}{"{}   "{}};}
+\DoxyCodeLine{268         out << std::setw(13) << std::right << scfConv.RMSDenMag;}
+\DoxyCodeLine{269       \}}
+\DoxyCodeLine{270     \}}
+\DoxyCodeLine{271   }
+\DoxyCodeLine{272     out << std::endl;}
+\DoxyCodeLine{273   \}; \textcolor{comment}{// SingleSlater<T>::printSCFProg}}
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{276 }
+
+\end{DoxyCode}

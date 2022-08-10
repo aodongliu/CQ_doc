@@ -1,0 +1,93 @@
+\hypertarget{fockbuilder_8hpp_source}{}\doxysection{fockbuilder.\+hpp}
+\label{fockbuilder_8hpp_source}\index{include/fockbuilder.hpp@{include/fockbuilder.hpp}}
+\mbox{\hyperlink{fockbuilder_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{realtime_2fields_8hpp}{fields.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_8hpp}{singleslater.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{34   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{35   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}} \{}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU, \textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{38     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}};}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{41     \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a50ff57df6dc5ac81d7ef7e4bdc787c34}{hamiltonianOptions\_}}; }
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \textcolor{keyword}{public}:}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{46     \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a8ba2206b93c41d04c32d8569aec571d7}{FockBuilder}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{47     \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a5d7827e4227f15eeaaa2efa40e2498a4}{FockBuilder}}(\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} hamiltonianOptions):}
+\DoxyCodeLine{48       \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a50ff57df6dc5ac81d7ef7e4bdc787c34}{hamiltonianOptions\_}}(hamiltonianOptions) \{\}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     \textcolor{comment}{// Different type}}
+\DoxyCodeLine{51     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{52     \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a508b030b59772725b1b38cc70a0ff5db}{FockBuilder}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder<MatsU,IntsT>}} \&);}
+\DoxyCodeLine{53     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{54     \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a508b030b59772725b1b38cc70a0ff5db}{FockBuilder}}(\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder<MatsU,IntsT>}} \&\&);}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{comment}{// Virtual destructor}}
+\DoxyCodeLine{57     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a531311e06c39549983ac5ed08b158ec6}{\string~FockBuilder}}() \{\}}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     \textcolor{comment}{// Public member functions}}
+\DoxyCodeLine{61     \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\& \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a905a9374a02fe036c39d747fa2aeebb3}{getHamiltonianOptions}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{62       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a50ff57df6dc5ac81d7ef7e4bdc787c34}{hamiltonianOptions\_}};}
+\DoxyCodeLine{63     \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{comment}{// Form the Hartree-\/Fock perturbation tensor (see include/fockbuilder/impl.hpp for docs)}}
+\DoxyCodeLine{66     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FockBuilder_abd221d78f5019318b38eadd94ecc9030}{formGD}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false}, \textcolor{keywordtype}{double} xHFX = 1., \textcolor{keywordtype}{bool} HerDen = \textcolor{keyword}{true});}
+\DoxyCodeLine{67     }
+\DoxyCodeLine{68     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a61db2a06441a1b0b8788683afbef0f75}{formRawGDInBatches}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, \textcolor{keywordtype}{bool}, \textcolor{keywordtype}{double}, \textcolor{keywordtype}{bool}, }
+\DoxyCodeLine{69       std::vector<std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}>> \&, }
+\DoxyCodeLine{70       std::vector<std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}>> \&, }
+\DoxyCodeLine{71       std::vector<std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}>> \&,}
+\DoxyCodeLine{72       std::vector<std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}>> \&);}
+\DoxyCodeLine{73     }
+\DoxyCodeLine{74     \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1FockBuilder_aba0a6fed16d77e3f7e113cb89c3be662}{formRawGDSCRSizePerBatch}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&, \textcolor{keywordtype}{bool}, \textcolor{keywordtype}{bool}) \textcolor{keyword}{const};}
+\DoxyCodeLine{75     }
+\DoxyCodeLine{76     \textcolor{comment}{// Form a fock matrix (see include/fockbuilder/impl.hpp for docs)}}
+\DoxyCodeLine{77     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a4242ef13cf11b05ad75b9acd3604bf6d}{formFock}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false}, \textcolor{keywordtype}{double} xHFX = 1.);}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \textcolor{comment}{// Compute the 2e gradient}}
+\DoxyCodeLine{80     \textcolor{keyword}{virtual} std::vector<double> \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a2fd0a49b321ae23f8c386c10297935b7}{getGDGrad}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&, \textcolor{keywordtype}{double} xHFX = 1.);}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82     \textcolor{comment}{// Pointer convertor}}
+\DoxyCodeLine{83     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{84     \textcolor{keyword}{static} std::shared\_ptr<FockBuilder<MatsU,IntsT>>}
+\DoxyCodeLine{85     \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a8e56c30a51e9e104d6fb010b274d8c14}{convert}}(\textcolor{keyword}{const} std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder<MatsT,IntsT>}}>\&);}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88   \};}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90 \}}
+
+\end{DoxyCode}

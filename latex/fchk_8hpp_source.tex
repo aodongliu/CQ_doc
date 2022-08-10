@@ -1,0 +1,313 @@
+\hypertarget{fchk_8hpp_source}{}\doxysection{fchk.\+hpp}
+\label{fchk_8hpp_source}\index{include/singleslater/fchk.hpp@{include/singleslater/fchk.hpp}}
+\mbox{\hyperlink{fchk_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg_8hpp}{cqlinalg.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{46   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{47   std::unordered\_map<int,std::vector<int>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7cd3cbc49125b3ad668488279ea51086}{SingleSlater<MatsT,IntsT>::returnAngReorder}}()\{}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     std::unordered\_map<int,std::vector<int>> angReorder(}
+\DoxyCodeLine{50       \{}
+\DoxyCodeLine{51         \{ 0 , \{0\} \},                          \textcolor{comment}{// s function}}
+\DoxyCodeLine{52         \{ 1 , \{0,0,0\} \},                      \textcolor{comment}{// p function}}
+\DoxyCodeLine{53         \{-\/1 , \{0,0,0,0\} \},                    \textcolor{comment}{// s and p function}}
+\DoxyCodeLine{54         \{-\/2 , \{2,2,-\/1,1,-\/4\} \},                \textcolor{comment}{// sph. d function}}
+\DoxyCodeLine{55         \{ 2 , \{0,2,3,-\/2,-\/2,-\/1\} \},             \textcolor{comment}{// Cart. d function}}
+\DoxyCodeLine{56         \{-\/3 , \{3,3,0,2,-\/3,1,-\/6\} \},            \textcolor{comment}{// sph. f function}}
+\DoxyCodeLine{57         \{-\/4 , \{4,4,1,3,-\/2,2,-\/5,1,-\/8\} \},       \textcolor{comment}{// sph. g function}}
+\DoxyCodeLine{58         \{-\/5 , \{5,5,2,4,-\/1,3,-\/4,2,-\/7,1,-\/10\} \}  \textcolor{comment}{// sph. h function}}
+\DoxyCodeLine{59       \}}
+\DoxyCodeLine{60     );}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \textcolor{keywordflow}{return} angReorder;}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64   \}}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{73   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{74   std::vector<int> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a902c20baa61578af71ecdd400f975c3a}{SingleSlater<MatsT,IntsT>::fchkToCQMO}}() \{}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     std::ifstream fchkFile;}
+\DoxyCodeLine{77     fchkFile.open(fchkFileName);}
+\DoxyCodeLine{78     std::vector<int> sl;}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{keywordflow}{if} ( not fchkFile.good() ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Could not find fchkFile. Use -\/s flag."{}});}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82     \textcolor{comment}{// dimension of mo1 and mo2}}
+\DoxyCodeLine{83     \textcolor{keyword}{auto} NB =  this-\/>basisSet().nBasis;}
+\DoxyCodeLine{84     \textcolor{keyword}{auto} NBC = this-\/>nC * NB;}
+\DoxyCodeLine{85     \textcolor{keyword}{auto} NB2 = NB*NB;}
+\DoxyCodeLine{86     \textcolor{keyword}{auto} NBC2 = NBC*NBC;}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88     \textcolor{comment}{// Boolean for if fchk entries are found}}
+\DoxyCodeLine{89     \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19da5bc43759ddaa1e8da9405a90a0047626}{isBeta}}=\textcolor{keyword}{false}, readAlpha=\textcolor{keyword}{false}, readBeta=\textcolor{keyword}{false};}
+\DoxyCodeLine{90     \textcolor{keywordtype}{bool} readShell=\textcolor{keyword}{false};}
+\DoxyCodeLine{91     \textcolor{comment}{// Various integers}}
+\DoxyCodeLine{92     \textcolor{keywordtype}{int} mo1Counter = 0, mo2Counter = 0, compCounter = 0, maxLfchk;}
+\DoxyCodeLine{93     \textcolor{comment}{// Various double}}
+\DoxyCodeLine{94     \textcolor{keywordtype}{double} prevValue = 0.0;}
+\DoxyCodeLine{95     \textcolor{comment}{// Double pointer for handling complex mo1}}
+\DoxyCodeLine{96     \textcolor{keywordtype}{double}* dptr = \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{double}*\textcolor{keyword}{>}(this-\/>mo[0].pointer());}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     \textcolor{comment}{// Parse fchk file}}
+\DoxyCodeLine{99     \textcolor{keywordflow}{while}( not fchkFile.eof() ) \{}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101       std::string line;}
+\DoxyCodeLine{102       std::getline(fchkFile,line);}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104       \textcolor{comment}{// Determine position of first and last non-\/space character}}
+\DoxyCodeLine{105       \textcolor{keywordtype}{size\_t} firstNonSpace = line.find\_first\_not\_of(\textcolor{stringliteral}{"{} "{}});}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107       \textcolor{comment}{// Skip blank lines}}
+\DoxyCodeLine{108       \textcolor{keywordflow}{if}( firstNonSpace == std::string::npos ) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110       \textcolor{comment}{// Strip trailing spaces}}
+\DoxyCodeLine{111       \mbox{\hyperlink{namespaceChronusQ_a08973b9e5bc981b1baacd018e8de5d53}{trim\_right}}(line);}
+\DoxyCodeLine{112       line =}
+\DoxyCodeLine{113          line.substr(firstNonSpace,line.length()-\/firstNonSpace);}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115       \textcolor{comment}{// Split the line into tokens, trim spaces}}
+\DoxyCodeLine{116       std::vector<std::string> tokens;}
+\DoxyCodeLine{117       \mbox{\hyperlink{namespaceChronusQ_a5a888ba5c67f0326b7a6f78e7726c925}{split}}(tokens,line,\textcolor{stringliteral}{"{}   "{}});}
+\DoxyCodeLine{118       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}} : tokens) \{ \mbox{\hyperlink{namespaceChronusQ_ab19179d28489fad72b45f53a89c7c384}{trim}}(\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}); \}}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120       \textcolor{comment}{// Some sanity checks on fchk data}}
+\DoxyCodeLine{121       \textcolor{comment}{// Checking NB}}
+\DoxyCodeLine{122       \textcolor{keywordflow}{if} ( tokens.size() > 5 )\{}
+\DoxyCodeLine{123         \textcolor{keywordflow}{if} ( tokens[2] == \textcolor{stringliteral}{"{}basis"{}} and tokens[3] == \textcolor{stringliteral}{"{}functions"{}} )\{}
+\DoxyCodeLine{124           \textcolor{keywordflow}{if} ( std::stoi(tokens[5]) != NB )\{}
+\DoxyCodeLine{125             std::cout << \textcolor{stringliteral}{"{}      NB from fchk is "{}} << tokens[5] << \textcolor{stringliteral}{"{} and NB in Chronus is "{}} << NB << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{126             \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Basis functions do not agree between fchk and Chronus!"{}});}
+\DoxyCodeLine{127           \}}
+\DoxyCodeLine{128         \}}
+\DoxyCodeLine{129       \}}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131       \textcolor{comment}{// Checking highest angular momentum}}
+\DoxyCodeLine{132       \textcolor{keywordflow}{if} ( tokens.size() > 4 )\{}
+\DoxyCodeLine{133         \textcolor{keywordflow}{if} ( tokens[0] == \textcolor{stringliteral}{"{}Highest"{}} and tokens[1] == \textcolor{stringliteral}{"{}angular"{}} )\{}
+\DoxyCodeLine{134           maxLfchk = std::stoi(tokens[4]);}
+\DoxyCodeLine{135           \textcolor{keywordflow}{if}( maxLfchk > 5 )\{}
+\DoxyCodeLine{136             std::cout << \textcolor{stringliteral}{"{}Max L in fchk is "{}} << maxLfchk << \textcolor{stringliteral}{"{}, but greater than "{}} << 5 << \textcolor{stringliteral}{"{} is NYI"{}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{137             \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Angular momentum too high for fchk parser!"{}});}
+\DoxyCodeLine{138           \}}
+\DoxyCodeLine{139         \}}
+\DoxyCodeLine{140       \}}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142       \textcolor{comment}{// Checking size of mo1}}
+\DoxyCodeLine{143       \textcolor{keywordflow}{if} ( tokens.size() > 5 )\{}
+\DoxyCodeLine{144         \textcolor{keywordflow}{if} ( tokens[0] == \textcolor{stringliteral}{"{}Alpha"{}} and tokens[1] == \textcolor{stringliteral}{"{}MO"{}} )\{}
+\DoxyCodeLine{145           \textcolor{keywordflow}{if} ( this-\/>nC == 1 )\{}
+\DoxyCodeLine{146             \textcolor{keywordflow}{if} ( std::stoi(tokens[5]) != NBC2 )\{}
+\DoxyCodeLine{147               std::cout << \textcolor{stringliteral}{"{}      MO size from fchk is "{}} << tokens[5] << \textcolor{stringliteral}{"{} and MO size in Chronus is "{}} << NBC2 << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{148               \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}MO coefficient size do not agree between fchk and ChronusQ!"{}});}
+\DoxyCodeLine{149             \}}
+\DoxyCodeLine{150           \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( this-\/>nC == 2 )\{}
+\DoxyCodeLine{151             \textcolor{comment}{// Factor of two here since real and imaginary are separate in fchk}}
+\DoxyCodeLine{152             \textcolor{keywordflow}{if} ( std::stoi(tokens[5]) != 2*NBC2 )\{}
+\DoxyCodeLine{153               std::cout << \textcolor{stringliteral}{"{}      MO size from fchk is "{}} << tokens[5] << \textcolor{stringliteral}{"{} but expected size is "{}} << 2*NBC2 << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{154               \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}MO coefficient size on fchk is not compatible!"{}});}
+\DoxyCodeLine{155             \}}
+\DoxyCodeLine{156           \} \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{157             \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}fchk functionality only implemented for 1c and 2c!"{}});}
+\DoxyCodeLine{158           \}}
+\DoxyCodeLine{159           \textcolor{comment}{// Found alpha MO block}}
+\DoxyCodeLine{160           readAlpha=\textcolor{keyword}{true};}
+\DoxyCodeLine{161           \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{162         \}}
+\DoxyCodeLine{163       \}}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165       \textcolor{comment}{// Check if unrestricted}}
+\DoxyCodeLine{166       \textcolor{keywordflow}{if} ( tokens.size() > 5 )\{}
+\DoxyCodeLine{167         \textcolor{keywordflow}{if} ( tokens[0] == \textcolor{stringliteral}{"{}Beta"{}} and tokens[1] == \textcolor{stringliteral}{"{}MO"{}} )\{}
+\DoxyCodeLine{168           \textcolor{keywordflow}{if} ( this-\/>nC == 2 or this-\/>iCS ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Beta MOs present in fchk file but Chronus is 2c or restricted"{}});}
+\DoxyCodeLine{169           \mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19da5bc43759ddaa1e8da9405a90a0047626}{isBeta}} = \textcolor{keyword}{true};}
+\DoxyCodeLine{170           readBeta = \textcolor{keyword}{true};}
+\DoxyCodeLine{171           readAlpha = \textcolor{keyword}{false};}
+\DoxyCodeLine{172           \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{173         \}}
+\DoxyCodeLine{174       \}}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176       \textcolor{comment}{// Check if shell list started}}
+\DoxyCodeLine{177       \textcolor{keywordflow}{if} ( tokens.size() > 4 )\{}
+\DoxyCodeLine{178         \textcolor{keywordflow}{if} ( tokens[0] == \textcolor{stringliteral}{"{}Shell"{}} and tokens[1] == \textcolor{stringliteral}{"{}types"{}} )\{}
+\DoxyCodeLine{179           readShell = \textcolor{keyword}{true};}
+\DoxyCodeLine{180           \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{181         \}}
+\DoxyCodeLine{182       \}}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184       \textcolor{comment}{// Check if shell list ended}}
+\DoxyCodeLine{185       \textcolor{keywordflow}{if} ( tokens.size() > 5 )\{}
+\DoxyCodeLine{186         \textcolor{keywordflow}{if} ( tokens[2] == \textcolor{stringliteral}{"{}primitives"{}} and tokens[3] == \textcolor{stringliteral}{"{}per"{}} )\{}
+\DoxyCodeLine{187           readShell = \textcolor{keyword}{false};}
+\DoxyCodeLine{188           \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{189         \}}
+\DoxyCodeLine{190       \}}
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192       \textcolor{comment}{// Check if alpha or beta block ended}}
+\DoxyCodeLine{193       \textcolor{keywordflow}{if} ( tokens.size() == 5 )\{}
+\DoxyCodeLine{194         \textcolor{keywordflow}{if} ( tokens[0] == \textcolor{stringliteral}{"{}Orthonormal"{}} and tokens[1] == \textcolor{stringliteral}{"{}basis"{}} )\{}
+\DoxyCodeLine{195           \textcolor{keywordflow}{if}( this-\/> nC == 1)\{}
+\DoxyCodeLine{196             \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19da5bc43759ddaa1e8da9405a90a0047626}{isBeta}} ) readBeta = \textcolor{keyword}{false};}
+\DoxyCodeLine{197             \textcolor{keywordflow}{else} readAlpha = \textcolor{keyword}{false};}
+\DoxyCodeLine{198             \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{199           \}}
+\DoxyCodeLine{200           \textcolor{keywordflow}{if}( this-\/> nC == 2)\{}
+\DoxyCodeLine{201             readAlpha = \textcolor{keyword}{false};}
+\DoxyCodeLine{202             \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{203           \}}
+\DoxyCodeLine{204         \}}
+\DoxyCodeLine{205       \}}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207       \textcolor{comment}{// Read in Alpha MO coeffients}}
+\DoxyCodeLine{208       \textcolor{keywordflow}{if} ( readAlpha )\{}
+\DoxyCodeLine{209         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0; i<tokens.size(); i++)\{}
+\DoxyCodeLine{210           dptr[mo1Counter]=std::stod(tokens[i]);}
+\DoxyCodeLine{211           mo1Counter=mo1Counter+1;}
+\DoxyCodeLine{212         \}}
+\DoxyCodeLine{213       \}}
+\DoxyCodeLine{214 }
+\DoxyCodeLine{215       \textcolor{comment}{// Read in Beta MO coeffients}}
+\DoxyCodeLine{216       \textcolor{keywordflow}{if} ( readBeta )\{}
+\DoxyCodeLine{217         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0; i<tokens.size(); i++)\{}
+\DoxyCodeLine{218           this-\/>mo[1].pointer()[mo2Counter]=std::stod(tokens[i]);}
+\DoxyCodeLine{219           mo2Counter=mo2Counter+1;}
+\DoxyCodeLine{220         \}}
+\DoxyCodeLine{221       \}}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223       \textcolor{comment}{// Read in shell types}}
+\DoxyCodeLine{224       \textcolor{keywordflow}{if} ( readShell )\{}
+\DoxyCodeLine{225         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0; i<tokens.size(); i++)\{}
+\DoxyCodeLine{226           sl.push\_back(std::stoi(tokens[i]));}
+\DoxyCodeLine{227         \}}
+\DoxyCodeLine{228       \}}
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230     \}\textcolor{comment}{// end of eof loop}}
+\DoxyCodeLine{231 }
+\DoxyCodeLine{232     \textcolor{keywordflow}{if} ( not \mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19da5bc43759ddaa1e8da9405a90a0047626}{isBeta}} and this-\/>nC == 1 and not this-\/>iCS ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Could not find beta MOs on fchk file!"{}});}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234     fchkFile.close();}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236     \textcolor{keywordflow}{return} sl;}
+\DoxyCodeLine{237 }
+\DoxyCodeLine{238   \} \textcolor{comment}{// SingleSlater<T>::fchkToCQMO()}}
+\DoxyCodeLine{239 }
+\DoxyCodeLine{245   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{246   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ae9d35c2e558280c82d48c3fb0f22505f}{SingleSlater<MatsT,IntsT>::reorderAngMO}}(std::vector<int> sl, MatsT* tmo, \textcolor{keywordtype}{int} sp) \{}
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248     \textcolor{comment}{// Dimension of mo}}
+\DoxyCodeLine{249     \textcolor{keyword}{auto} NB = this-\/>basisSet().nBasis;}
+\DoxyCodeLine{250     \textcolor{keyword}{auto} NBC = this-\/>nC * NB;}
+\DoxyCodeLine{251     \textcolor{keyword}{auto} NBC2 = NBC*NBC;}
+\DoxyCodeLine{252 }
+\DoxyCodeLine{253     \textcolor{keywordflow}{if}( this-\/>nC == 4 ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}reorderAngMO NYI for 4c"{}},std::cout);}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255     \textcolor{comment}{// Skip past beta part if 2c}}
+\DoxyCodeLine{256     \textcolor{keywordtype}{int} skipl = this-\/>nC;}
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258     \textcolor{comment}{// Obtain map for angular momentum ordering between Gaussian and CQ}}
+\DoxyCodeLine{259     std::unordered\_map<int,std::vector<int>> angReorder = returnAngReorder();}
+\DoxyCodeLine{260 }
+\DoxyCodeLine{261     \textcolor{comment}{// Loop over each MO}}
+\DoxyCodeLine{262     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iMO=0; iMO<NBC; iMO++)\{}
+\DoxyCodeLine{263 }
+\DoxyCodeLine{264       \textcolor{comment}{// Loop over each shell entry in sl}}
+\DoxyCodeLine{265       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iSh=0, iAO=0; iSh<sl.size(); iSh++)\{}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267         \textcolor{comment}{// Check that shell entry is implemented}}
+\DoxyCodeLine{268         \textcolor{keywordtype}{bool} contains = angReorder.find(sl[iSh]) != angReorder.end();}
+\DoxyCodeLine{269         \textcolor{keywordflow}{if}( not contains )\{}
+\DoxyCodeLine{270           std::cout << \textcolor{stringliteral}{"{}Cannot find shell entry: "{}} << sl[iSh] << std::endl;}
+\DoxyCodeLine{271           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Shell value for FCHKMO NYI!"{}},std::cout);}
+\DoxyCodeLine{272         \}}
+\DoxyCodeLine{273 }
+\DoxyCodeLine{274         \textcolor{keyword}{const} std::vector<int>\& reorder = angReorder[sl[iSh]];}
+\DoxyCodeLine{275 }
+\DoxyCodeLine{276         \textcolor{comment}{// Loop over each function per shell}}
+\DoxyCodeLine{277         \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iML=0; iML<reorder.size(); iML++)\{}
+\DoxyCodeLine{278 }
+\DoxyCodeLine{279           this-\/>mo[sp].pointer()[iMO*NBC+iAO+skipl*(iML+reorder[iML])] = tmo[iMO*NBC+iAO+iML*skipl];}
+\DoxyCodeLine{280           \textcolor{comment}{// Beta part}}
+\DoxyCodeLine{281           \textcolor{keywordflow}{if}( this-\/>nC==2 ) }
+\DoxyCodeLine{282             this-\/>mo[sp].pointer()[iMO*NBC+1+iAO+skipl*(iML+reorder[iML])] = tmo[iMO*NBC+1+iAO+iML*skipl];}
+\DoxyCodeLine{283 }
+\DoxyCodeLine{284         \}}
+\DoxyCodeLine{285 }
+\DoxyCodeLine{286         iAO=iAO+reorder.size()*skipl;}
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288       \}}
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290     \}}
+\DoxyCodeLine{291 }
+\DoxyCodeLine{292   \} \textcolor{comment}{// SingleSlater<T>::reorderAngMO()}}
+\DoxyCodeLine{293 }
+\DoxyCodeLine{294 }
+\DoxyCodeLine{301   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{302   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_afe8af82f3cb0ae9c31d56474c55f60b1}{SingleSlater<MatsT,IntsT>::reorderSpinMO}}() \{}
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304     \textcolor{comment}{// Dimension of mo1}}
+\DoxyCodeLine{305     \textcolor{keyword}{auto} NB = this-\/>basisSet().nBasis;}
+\DoxyCodeLine{306     \textcolor{keyword}{auto} NBC = this-\/>nC * NB;}
+\DoxyCodeLine{307     \textcolor{keyword}{auto} NBC2 = NBC*NBC;}
+\DoxyCodeLine{308 }
+\DoxyCodeLine{309     \textcolor{comment}{// Counters for spin reordering}}
+\DoxyCodeLine{310     \textcolor{keywordtype}{int} acount = 0, bcount = NB -\/ 1;}
+\DoxyCodeLine{311 }
+\DoxyCodeLine{312     \textcolor{comment}{// mo scratch}}
+\DoxyCodeLine{313     MatsT* mo1tmp = memManager.malloc<MatsT>(NBC2);}
+\DoxyCodeLine{314     \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},NBC,NBC,MatsT(1.),this-\/>mo[0].pointer(),NBC,mo1tmp,NBC);}
+\DoxyCodeLine{315 }
+\DoxyCodeLine{316     \textcolor{comment}{// Loop over mo1}}
+\DoxyCodeLine{317     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{int} i=0; i<NBC2; i++)\{}
+\DoxyCodeLine{318 }
+\DoxyCodeLine{319       \textcolor{comment}{// Reset acount and bcount for each MO}}
+\DoxyCodeLine{320       \textcolor{keywordflow}{if}( i \% NBC == 0 )\{}
+\DoxyCodeLine{321         acount = 0;}
+\DoxyCodeLine{322         bcount = NB -\/ 1;}
+\DoxyCodeLine{323       \}}
+\DoxyCodeLine{324 }
+\DoxyCodeLine{325       \textcolor{comment}{// If alpha}}
+\DoxyCodeLine{326       \textcolor{keywordflow}{if}( i \% 2 == 0 )\{}
+\DoxyCodeLine{327         this-\/>mo[0].pointer()[i-\/acount] = mo1tmp[i];}
+\DoxyCodeLine{328         acount = acount + 1;}
+\DoxyCodeLine{329       \}\textcolor{keywordflow}{else}\{ \textcolor{comment}{// If beta}}
+\DoxyCodeLine{330         this-\/>mo[0].pointer()[i+bcount] = mo1tmp[i];}
+\DoxyCodeLine{331         bcount = bcount -\/ 1;}
+\DoxyCodeLine{332       \}}
+\DoxyCodeLine{333     \}}
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335     memManager.free(mo1tmp);}
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337   \} \textcolor{comment}{// SingleSlater<T>::reorderSpinMO()}}
+\DoxyCodeLine{338 }
+\DoxyCodeLine{339 \}}
+
+\end{DoxyCode}

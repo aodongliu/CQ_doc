@@ -1,0 +1,466 @@
+\hypertarget{polarization_8hpp_source}{}\doxysection{polarization.\+hpp}
+\label{polarization_8hpp_source}\index{include/response/polarization.hpp@{include/response/polarization.hpp}}
+\mbox{\hyperlink{polarization_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2hartreefock_8hpp}{singleslater/hartreefock.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2kohnsham_8hpp}{singleslater/kohnsham.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2neoss_8hpp}{singleslater/neoss.hpp}}>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{tbase_8hpp}{response/tbase.hpp}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35   \textcolor{comment}{// Forward decl of Reference templated PolarizationPropagator class}}
+\DoxyCodeLine{36   \textcolor{keyword}{template} <\textcolor{keyword}{class} Reference> \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}};}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1SingleSlaterPolarBase}{SingleSlaterPolarBase}} \{ }
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41       \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1SingleSlaterPolarBase_ab4923d370bb9891d3efe53008b788767}{doReduced}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{42       \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1SingleSlaterPolarBase_a6e2c155f998fd51248fc9d8bd7c63d14}{doAPB\_AMB}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{43       \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1SingleSlaterPolarBase_aee797e2d1fa08c980b7505198d119776}{incMet}}    = \textcolor{keyword}{true};}
+\DoxyCodeLine{44       \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1SingleSlaterPolarBase_a690a1f4720cef973aaa7425ac3621278}{doStab}}    = \textcolor{keyword}{false};}
+\DoxyCodeLine{45       \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1SingleSlaterPolarBase_a6a58d10a31bb65151286f9d397d1cb4b}{doNR}}      = \textcolor{keyword}{false};}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47   \};}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1OrbitalHessianSettings}{OrbitalHessianSettings}} \{}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1OrbitalHessianSettings_a93d417fbbb87c8a42d8a865a000a75c8}{useEigenEnergies}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53   \};}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{56   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}< \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT> > : }
+\DoxyCodeLine{57     \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase}{ResponseRefBase}}< SingleSlater<MatsT, IntsT> >, }
+\DoxyCodeLine{58     \textcolor{keyword}{public} \mbox{\hyperlink{structChronusQ_1_1SingleSlaterPolarBase}{SingleSlaterPolarBase}} \{}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{61       \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll}} = std::vector<RESPONSE\_CONTRACTION<U>>;}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{keyword}{public}:}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67       \textcolor{comment}{// Orbital Hessian Controls}}
+\DoxyCodeLine{68       \mbox{\hyperlink{structChronusQ_1_1OrbitalHessianSettings}{OrbitalHessianSettings}} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ad47d96d2c7776542aae4b98ecd19f412}{orbHessCtl}};}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{75       \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a7d7eef58d4e0e548268e09d69f6fd981}{blockTransform}}(\textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{size\_t} nVec, \textcolor{keywordtype}{double} fact, }
+\DoxyCodeLine{76         U* V1, \textcolor{keywordtype}{size\_t} LDV1, U* V2, \textcolor{keywordtype}{size\_t} LDV2) \{}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79         \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} j = 0ul; j < nVec; j++ )}
+\DoxyCodeLine{80         \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} i = 0ul; i < N ; i++ ) \{}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82           U tmp = V1[i + j*LDV1];}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84           V1[i + j*LDV1] = fact * ( tmp + V2[i + j*LDV2] );}
+\DoxyCodeLine{85           V2[i + j*LDV2] = fact * ( tmp -\/ V2[i + j*LDV2] );}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87         \}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90       \}}
+\DoxyCodeLine{91       \textcolor{keyword}{inline} \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aebe8324f3828c5baa15e1682b5087edd}{getNSingleDim}}(\textcolor{keyword}{const} \textcolor{keywordtype}{bool} doTDA = \textcolor{keyword}{false}) \{}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93         \textcolor{keywordtype}{size\_t} N = 0;}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95         \textcolor{keyword}{auto} \&ss = *this-\/>ref\_;}
+\DoxyCodeLine{96         \textcolor{keywordtype}{size\_t} nOAVA = ss.nOA * ss.nVA;}
+\DoxyCodeLine{97         \textcolor{keywordtype}{size\_t} nOBVB = ss.nOB * ss.nVB;}
+\DoxyCodeLine{98         \textcolor{keywordtype}{size\_t} nOV   = ss.nO  * ss.nV;}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100         N = (ss.nC == 1) ? nOAVA + nOBVB : nOV;}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102         \textcolor{keywordflow}{if}( not doTDA and not doReduced ) N *= 2;}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104         assert(N != 0);}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106         \textcolor{keywordflow}{return} N;}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108       \}}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112       \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a9c646c627faa7fcf08c1ea918b562686}{PolarizationPropagator}}( \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616}{ResponseType}} job, }
+\DoxyCodeLine{113         std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}> ref, MatsT* fullMatrix = \textcolor{keyword}{nullptr} ) : }
+\DoxyCodeLine{114         \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase}{ResponseRefBase}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>>(c,job,ref,fullMatrix),}
+\DoxyCodeLine{115         \mbox{\hyperlink{structChronusQ_1_1SingleSlaterPolarBase}{SingleSlaterPolarBase}}() \{ }
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117           this-\/>PC\_ = [\&](\textcolor{keywordtype}{size\_t} nVec, MatsT shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&AV) \{}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119             preConditioner(nVec,shift,V,AV);}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121           \};}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123           this-\/>nSPC\_ = [\&](\textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&AV) \{}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125             preConditioner(nVec,MatsT(0.),V,AV);}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127           \};}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129           this-\/>cmplxPC\_ = [\&](\textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<dcomplex>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<dcomplex>}} \&AV) \{}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131             preConditioner(nVec,shift,V,AV);}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133           \};}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135         \}}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137       \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a1022489952e9044ce878a33cb7f74c72}{PolarizationPropagator}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}} \&other ) : }
+\DoxyCodeLine{138         \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase}{ResponseRefBase}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT>>(}
+\DoxyCodeLine{139           dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase}{ResponseRefBase}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT>>\&>(other)}
+\DoxyCodeLine{140         ), }
+\DoxyCodeLine{141         \mbox{\hyperlink{structChronusQ_1_1SingleSlaterPolarBase}{SingleSlaterPolarBase}}(}
+\DoxyCodeLine{142           dynamic\_cast<const \mbox{\hyperlink{structChronusQ_1_1SingleSlaterPolarBase}{SingleSlaterPolarBase}}\&>(other)}
+\DoxyCodeLine{143         ) \{ \}}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145       MatsT*                   formFullFromMemory(); }
+\DoxyCodeLine{146       MatsT*                   formFullMatrix(); }
+\DoxyCodeLine{147       \textcolor{keywordtype}{void}                 formRHS();}
+\DoxyCodeLine{148       std::pair<size\_t,MatsT*> formPropGrad(\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67da}{ResponseOperator}});}
+\DoxyCodeLine{149       \textcolor{keywordtype}{void}                 configOptions();}
+\DoxyCodeLine{150       \textcolor{keywordtype}{void}                 eigVecNorm();}
+\DoxyCodeLine{151       \textcolor{keywordtype}{void}                 constructShifts();}
+\DoxyCodeLine{152       \textcolor{keywordtype}{void}                 postLinearSolve();}
+\DoxyCodeLine{153       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}         resGuess(\textcolor{keywordtype}{size\_t}, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&, \textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155       MatsT getGDiag(\textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{bool}, \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&, MatsT*,}
+\DoxyCodeLine{156         MatsT*);}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159       \textcolor{comment}{// Internal implementations for direct linear transformation}}
+\DoxyCodeLine{160       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a8a09351b0a0836e7aa7369a53763aa37}{formLinearTrans\_direct}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<double>}},}
+\DoxyCodeLine{161           \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}}, \textcolor{keywordtype}{bool} noTrans = \textcolor{keyword}{false}) = 0;}
+\DoxyCodeLine{162       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a26d0277c41e73a9f27df901c2187f84e}{formLinearTrans\_direct}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<dcomplex>}},}
+\DoxyCodeLine{163           \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}}, \textcolor{keywordtype}{bool} noTrans = \textcolor{keyword}{false}) = 0;}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165       \textcolor{comment}{// Incore linear transformation}}
+\DoxyCodeLine{166       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{167       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_afe37bae4ed5dfca1b01dcca316d97a78}{formLinearTrans\_incore\_impl}}(\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<U>}}, }
+\DoxyCodeLine{168           \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}});}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a8c70948b0791b1e52750370a5a9d4160}{formLinearTrans\_incore}}(\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<double>}} x, }
+\DoxyCodeLine{171           \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op);}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a6750b992d9f55466f935c3d8afb56473}{formLinearTrans\_incore}}(\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<dcomplex>}} x, }
+\DoxyCodeLine{174           \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op) \{}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176         formLinearTrans\_incore\_impl(x,op);}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178       \}}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185       \textcolor{comment}{// Toggle between direct / incore}}
+\DoxyCodeLine{186       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{187       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_af28491eac061eb1b09d15287b6f7a222}{formLinearTrans}}(\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<U>}} x, \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op) \{}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189         \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9698b57cd81ca4095a7668b46683eb71}{ProgramTimer::timeOp}}(\textcolor{stringliteral}{"{}Linear Trans"{}}, [\&]() \{}
+\DoxyCodeLine{190           \textcolor{keywordflow}{if}( this-\/>genSettings.formFullMat ) \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_abd71cee88535f74febd433b608aa47a0}{formLinearTrans\_incore}}(x,op);}
+\DoxyCodeLine{191           \textcolor{keywordflow}{else}  \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_a186f7adcd8827bc2b6f553af8e49f8b5}{formLinearTrans\_direct}}(this-\/>comm\_,x,op);}
+\DoxyCodeLine{192         \});}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194       \};}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196       \textcolor{comment}{// Interface to ResponseRBase double exposure}}
+\DoxyCodeLine{197       \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a49ebc2bc921a0307138c5ff73b27d36e}{formLinearTrans}}( \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<double>}} x ) \{}
+\DoxyCodeLine{198        }
+\DoxyCodeLine{199         formLinearTrans(x,\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8a6b1d0d357e2ef704e56faecb9a404e77}{FULL}});}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201       \};}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203       \textcolor{comment}{// Interface to ResponseRBase dcomplex exposure}}
+\DoxyCodeLine{204       \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a7fc0d0426a9cd990e8987c150e18cfbf}{formLinearTrans}}( \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<dcomplex>}} x ) \{}
+\DoxyCodeLine{205        }
+\DoxyCodeLine{206         formLinearTrans(x,\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8a6b1d0d357e2ef704e56faecb9a404e77}{FULL}});}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208       \};}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a43d99bbbe9e689cefe7a5926e3c8d99d}{printResMO}}(std::ostream \&out) \{}
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213         \textcolor{keywordtype}{size\_t} N      = this-\/>nSingleDim\_;}
+\DoxyCodeLine{214         \textcolor{keywordtype}{size\_t} nRoots = this-\/>resSettings.nRoots;}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216         \textcolor{keyword}{auto} *VR = this-\/>resResults.VR; }
+\DoxyCodeLine{217         \textcolor{keyword}{auto} *VL = this-\/>resResults.VL; }
+\DoxyCodeLine{218         \textcolor{keywordflow}{if}( not doReduced ) VL = VR + N/2;}
+\DoxyCodeLine{219 }
+\DoxyCodeLine{220         \textcolor{comment}{// Transform X+Y/X-\/Y to X/Y for print}}
+\DoxyCodeLine{221         \textcolor{keywordflow}{if}( doAPB\_AMB ) blockTransform(nRoots,nRoots,std::sqrt(0.5),VR,N,VL,N);}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223         printResMO(out,this-\/>resSettings.nRoots,this-\/>resResults.W,}
+\DoxyCodeLine{224             \{\{\textcolor{stringliteral}{"{}f     = "{}},this-\/>resObs.oscStrength\}\},VL,VR); }
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226         \textcolor{comment}{// Transform back to X+Y/X-\/Y from X/Y }}
+\DoxyCodeLine{227         \textcolor{keywordflow}{if}( doAPB\_AMB ) blockTransform(nRoots,nRoots,std::sqrt(0.5),VR,N,VL,N);}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229       \}}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{232       \textcolor{keywordtype}{void} printResMO\_impl(std::ostream \&out, \textcolor{keywordtype}{size\_t} nRoots, \textcolor{keywordtype}{double} *W,}
+\DoxyCodeLine{233         std::vector<std::pair<std::string,double *>> data, U* VL, U* VR);}
+\DoxyCodeLine{234 }
+\DoxyCodeLine{235       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a16a05b4c928ca5cf7ada502b3c2be0b3}{printResMO}}(std::ostream \&out, \textcolor{keywordtype}{size\_t} nRoots, \textcolor{keywordtype}{double} *W,}
+\DoxyCodeLine{236         std::vector<std::pair<std::string,double *>> data, \textcolor{keywordtype}{double}* VL, }
+\DoxyCodeLine{237         \textcolor{keywordtype}{double}* VR) \{}
+\DoxyCodeLine{238         printResMO\_impl(out,nRoots,W,data,VL,VR); }
+\DoxyCodeLine{239       \};}
+\DoxyCodeLine{240       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a2835c5e9b2d6f37feffd5903611a17ad}{printResMO}}(std::ostream \&out, \textcolor{keywordtype}{size\_t} nRoots, \textcolor{keywordtype}{double} *W,}
+\DoxyCodeLine{241         std::vector<std::pair<std::string,double *>> data, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}* VL, }
+\DoxyCodeLine{242         \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}* VR) \{}
+\DoxyCodeLine{243         printResMO\_impl(out,nRoots,W,data,VL,VR); }
+\DoxyCodeLine{244       \};}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{246 }
+\DoxyCodeLine{247       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{248       std::vector< std::pair< std::pair<int,int>, U > >}
+\DoxyCodeLine{249         getMOContributions(U *V, \textcolor{keywordtype}{double} tol);}
+\DoxyCodeLine{250 }
+\DoxyCodeLine{251 }
+\DoxyCodeLine{252       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{253       \textcolor{keywordtype}{void} preConditioner(\textcolor{keywordtype}{size\_t} nVec, U shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&AV);}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258 }
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260 }
+\DoxyCodeLine{261       \textcolor{comment}{// Helper functions}}
+\DoxyCodeLine{262 }
+\DoxyCodeLine{263       \textcolor{comment}{// Transform ph-\/transition vector MO -\/> AO}}
+\DoxyCodeLine{264       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{265       std::vector<TwoBodyContraction<U>> phTransitionVecMO2AO(}
+\DoxyCodeLine{266         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,\textcolor{keywordtype}{bool} scatter, \textcolor{keywordtype}{size\_t} nVec, \textcolor{keywordtype}{size\_t} N,}
+\DoxyCodeLine{267         \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\& ss1, \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\& ss2,}
+\DoxyCodeLine{268         \textcolor{keywordtype}{bool} doExchange, Args... Vs);}
+\DoxyCodeLine{269 }
+\DoxyCodeLine{270       \textcolor{comment}{// Transform ph-\/transition vector AO -\/> MO}}
+\DoxyCodeLine{271       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{272       \textcolor{keywordtype}{void} phTransitionVecAO2MO(\textcolor{keywordtype}{size\_t} nVec, \textcolor{keywordtype}{size\_t} N, }
+\DoxyCodeLine{273         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<U>}}> \&cList,\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT, IntsT>}}\& ss,\textcolor{keywordtype}{bool} doExchange, Args... HVs); }
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275       \textcolor{comment}{// Scale transition vector by diagonals of orbital Hessian}}
+\DoxyCodeLine{276       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{277       \textcolor{keywordtype}{void} phEpsilonScale(\textcolor{keywordtype}{bool} doInc, \textcolor{keywordtype}{bool} doInv, \textcolor{keywordtype}{size\_t} nVec, \textcolor{keywordtype}{size\_t} N,\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT, IntsT>}}\& ss, }
+\DoxyCodeLine{278        U* V, U* HV);}
+\DoxyCodeLine{279   \}; }
+\DoxyCodeLine{280 }
+\DoxyCodeLine{281 }
+\DoxyCodeLine{282   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{283   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}< \mbox{\hyperlink{classChronusQ_1_1HartreeFock}{HartreeFock}}<MatsT, IntsT> > : }
+\DoxyCodeLine{284     \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}< SingleSlater<MatsT, IntsT> > \{}
+\DoxyCodeLine{285 }
+\DoxyCodeLine{286       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{287       \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll}} = std::vector<RESPONSE\_CONTRACTION<U>>;}
+\DoxyCodeLine{288 }
+\DoxyCodeLine{289     \textcolor{keyword}{public}:}
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291 }
+\DoxyCodeLine{292       \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01HartreeFock_3_01MatsT_00_01IntsT_01_4_01_4_a21bf584bbf517fb04d8437dab73e0485}{PolarizationPropagator}}( \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616}{ResponseType}} job, }
+\DoxyCodeLine{293         std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1HartreeFock}{HartreeFock<MatsT, IntsT>}}> ref, MatsT* fullMatrix = \textcolor{keyword}{nullptr} ) : }
+\DoxyCodeLine{294         \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT>>(c,job,}
+\DoxyCodeLine{295           std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT>>(ref),fullMatrix) \{ \}}
+\DoxyCodeLine{296 }
+\DoxyCodeLine{297       \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01HartreeFock_3_01MatsT_00_01IntsT_01_4_01_4_abc9f55d1f8c2b7a7445bc7dfdf0fbd34}{PolarizationPropagator}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}} \&other ) : }
+\DoxyCodeLine{298         \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT>>(}
+\DoxyCodeLine{299           dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT>>\&>(other)}
+\DoxyCodeLine{300         )\{ \}}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302 }
+\DoxyCodeLine{303       \textcolor{comment}{// Inherit the ResponseTBase exposures from }}
+\DoxyCodeLine{304       \textcolor{comment}{// PolarizationPropagator<SingleSlater>}}
+\DoxyCodeLine{305       \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT, IntsT>}}>::formLinearTrans;}
+\DoxyCodeLine{306 }
+\DoxyCodeLine{307       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{308       \textcolor{keywordtype}{void} formLinearTrans\_direct\_impl(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, RC\_coll<U> x,}
+\DoxyCodeLine{309           \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op, \textcolor{keywordtype}{bool} noTrans);}
+\DoxyCodeLine{310 }
+\DoxyCodeLine{311 }
+\DoxyCodeLine{312 }
+\DoxyCodeLine{313       \textcolor{comment}{// Interface to PolarizationPropagator<SingleSlater> double exposure}}
+\DoxyCodeLine{314       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01HartreeFock_3_01MatsT_00_01IntsT_01_4_01_4_a3f747fa542f3da8c22f2d377cd4b5251}{formLinearTrans\_direct}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<double>}} x,}
+\DoxyCodeLine{315           \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op, \textcolor{keywordtype}{bool} noTrans = \textcolor{keyword}{false}); }
+\DoxyCodeLine{316 }
+\DoxyCodeLine{317       \textcolor{comment}{// Interface to PolarizationPropagator<SingleSlater> dcomplex exposure}}
+\DoxyCodeLine{318       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01HartreeFock_3_01MatsT_00_01IntsT_01_4_01_4_a1e2174a75b22b7709aaaaafb19bca05d}{formLinearTrans\_direct}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<dcomplex>}} x,}
+\DoxyCodeLine{319           \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op, \textcolor{keywordtype}{bool} noTrans = \textcolor{keyword}{false})\{ }
+\DoxyCodeLine{320       }
+\DoxyCodeLine{321         formLinearTrans\_direct\_impl(c,x,op,noTrans);}
+\DoxyCodeLine{322 }
+\DoxyCodeLine{323       \};}
+\DoxyCodeLine{324 }
+\DoxyCodeLine{325 }
+\DoxyCodeLine{326   \}; }
+\DoxyCodeLine{327 }
+\DoxyCodeLine{328 }
+\DoxyCodeLine{329 }
+\DoxyCodeLine{330   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{331   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}< \mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham}}<MatsT, IntsT> > : }
+\DoxyCodeLine{332     \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}< SingleSlater<MatsT, IntsT> > \{}
+\DoxyCodeLine{333 }
+\DoxyCodeLine{334       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{335       \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll}} = std::vector<RESPONSE\_CONTRACTION<U>>;}
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337 }
+\DoxyCodeLine{338     \textcolor{keyword}{public}:}
+\DoxyCodeLine{339 }
+\DoxyCodeLine{340 }
+\DoxyCodeLine{341       \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01KohnSham_3_01MatsT_00_01IntsT_01_4_01_4_a141d60667816a6755acce01abea2e344}{PolarizationPropagator}}( \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616}{ResponseType}} job, }
+\DoxyCodeLine{342         std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham<MatsT, IntsT>}}> ref, MatsT* fullMatrix = \textcolor{keyword}{nullptr} ) : }
+\DoxyCodeLine{343         \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT>>(c,job,}
+\DoxyCodeLine{344           std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT>>(ref),fullMatrix) \{ \}}
+\DoxyCodeLine{345 }
+\DoxyCodeLine{346       \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01KohnSham_3_01MatsT_00_01IntsT_01_4_01_4_af738abe33dacee14a2dc19f0d72d498b}{PolarizationPropagator}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}} \&other ) : }
+\DoxyCodeLine{347         \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT>>(}
+\DoxyCodeLine{348           dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT>>\&>(other)}
+\DoxyCodeLine{349         )\{ \}}
+\DoxyCodeLine{350       \textcolor{comment}{// Inherit the ResponseTBase exposures from }}
+\DoxyCodeLine{351       \textcolor{comment}{// PolarizationPropagator<SingleSlater>}}
+\DoxyCodeLine{352       \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT, IntsT>}}>::formLinearTrans;}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{355       \textcolor{keywordtype}{void} formLinearTrans\_direct\_impl(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, RC\_coll<U> x,}
+\DoxyCodeLine{356           \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op, \textcolor{keywordtype}{bool} noTrans);}
+\DoxyCodeLine{357 }
+\DoxyCodeLine{358 }
+\DoxyCodeLine{359 }
+\DoxyCodeLine{360       \textcolor{comment}{// Interface to PolarizationPropagator<SingleSlater> double exposure}}
+\DoxyCodeLine{361       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01KohnSham_3_01MatsT_00_01IntsT_01_4_01_4_a9ffa8c854d005906035a51bd2acaa034}{formLinearTrans\_direct}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<double>}} x,}
+\DoxyCodeLine{362           \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op, \textcolor{keywordtype}{bool} noTrans = \textcolor{keyword}{false}); }
+\DoxyCodeLine{363 }
+\DoxyCodeLine{364       \textcolor{comment}{// Interface to PolarizationPropagator<SingleSlater> dcomplex exposure}}
+\DoxyCodeLine{365       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01KohnSham_3_01MatsT_00_01IntsT_01_4_01_4_ad51cb9225580aba142c6f5bed974f713}{formLinearTrans\_direct}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<dcomplex>}} x,}
+\DoxyCodeLine{366           \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op, \textcolor{keywordtype}{bool} noTrans = \textcolor{keyword}{false})\{ }
+\DoxyCodeLine{367       }
+\DoxyCodeLine{368         formLinearTrans\_direct\_impl(c,x,op,noTrans);}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370       \};}
+\DoxyCodeLine{371 }
+\DoxyCodeLine{372   \};}
+\DoxyCodeLine{373 }
+\DoxyCodeLine{374 }
+\DoxyCodeLine{375  }
+\DoxyCodeLine{376   \textcolor{comment}{//Class specialization to deal with NEOSS Objects}}
+\DoxyCodeLine{377   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{378   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}< \mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS}}<MatsT, IntsT> > :}
+\DoxyCodeLine{379     \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}< SingleSlater<MatsT, IntsT> >\{}
+\DoxyCodeLine{380 }
+\DoxyCodeLine{381       \textcolor{keyword}{template}<\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{382       \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll}} = std::vector<RESPONSE\_CONTRACTION<U>>;}
+\DoxyCodeLine{383 }
+\DoxyCodeLine{384       std::vector<MatsT> \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01NEOSS_3_01MatsT_00_01IntsT_01_4_01_4_ae9be9140ffb633fcc06bbde91d64f1c1}{diagonals}};}
+\DoxyCodeLine{385 }
+\DoxyCodeLine{386     \textcolor{keyword}{public}:}
+\DoxyCodeLine{387 }
+\DoxyCodeLine{388       \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01NEOSS_3_01MatsT_00_01IntsT_01_4_01_4_ae4be809d6c2252cc54adf30f6d5f56b6}{PolarizationPropagator}}( \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616}{ResponseType}} job,}
+\DoxyCodeLine{389         std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS<MatsT, IntsT>}}> ref, MatsT* fullMatrix = \textcolor{keyword}{nullptr} ) :}
+\DoxyCodeLine{390         \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT>>(c,job,}
+\DoxyCodeLine{391           std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT>>(ref),fullMatrix) \{}
+\DoxyCodeLine{392         this-\/>PC\_ = [\&](\textcolor{keywordtype}{size\_t} nVec, MatsT shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&AV) \{}
+\DoxyCodeLine{393           neoPreConditioner(nVec,shift,V,AV);}
+\DoxyCodeLine{394         \};}
+\DoxyCodeLine{395         this-\/>nSPC\_ = [\&](\textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&AV) \{}
+\DoxyCodeLine{396           neoPreConditioner(nVec,MatsT(0.),V,AV);}
+\DoxyCodeLine{397         \};}
+\DoxyCodeLine{398         this-\/>cmplxPC\_ = [\&](\textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<dcomplex>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<dcomplex>}} \&AV) \{}
+\DoxyCodeLine{399           neoPreConditioner(nVec,shift,V,AV);}
+\DoxyCodeLine{400         \};}
+\DoxyCodeLine{401       \}}
+\DoxyCodeLine{402 }
+\DoxyCodeLine{403       \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01NEOSS_3_01MatsT_00_01IntsT_01_4_01_4_a92f5f9a1a5a504beb599bfe012e40f91}{PolarizationPropagator}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}} \&other ) :}
+\DoxyCodeLine{404         \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT>>(}
+\DoxyCodeLine{405           dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT, IntsT>>\&>(other)}
+\DoxyCodeLine{406         )\{ \}}
+\DoxyCodeLine{407 }
+\DoxyCodeLine{408       \textcolor{comment}{// Inherit the ResponseTBase exposures from }}
+\DoxyCodeLine{409       \textcolor{comment}{// PolarizationPropagator<SingleSlater>}}
+\DoxyCodeLine{410       \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT, IntsT>}}>::formLinearTrans;}
+\DoxyCodeLine{411 }
+\DoxyCodeLine{412       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{413       \textcolor{keywordtype}{void} formLinearTrans\_direct\_impl(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, RC\_coll<U> x,}
+\DoxyCodeLine{414           \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op, \textcolor{keywordtype}{bool} noTrans);}
+\DoxyCodeLine{415 }
+\DoxyCodeLine{416       \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} getNSingleDim(\textcolor{keyword}{const} \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{417 }
+\DoxyCodeLine{418       \textcolor{keywordtype}{size\_t} getNSingleSSDim(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\& , \textcolor{keyword}{const} \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{419 }
+\DoxyCodeLine{420       std::pair<size\_t,MatsT*> formPropGrad( \mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67da}{ResponseOperator}} );}
+\DoxyCodeLine{421 }
+\DoxyCodeLine{422       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{423       \textcolor{keywordtype}{void} neoPreConditioner(\textcolor{keywordtype}{size\_t} nVec, U shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&AV);}
+\DoxyCodeLine{424 }
+\DoxyCodeLine{425       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{426       std::vector< std::pair< std::pair<int,int>, U > >}
+\DoxyCodeLine{427         getMOContributions(U *V, \textcolor{keywordtype}{double} tol);}
+\DoxyCodeLine{428 }
+\DoxyCodeLine{429       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{430       \textcolor{keywordtype}{void} printResMO\_impl( std::ostream \&out, \textcolor{keywordtype}{size\_t} nRoots, \textcolor{keywordtype}{double} *W\_print,}
+\DoxyCodeLine{431       std::vector<std::pair<std::string,double *>> data,U* VL, U* VR);}
+\DoxyCodeLine{432 }
+\DoxyCodeLine{433       \textcolor{keywordtype}{void} resGuess(\textcolor{keywordtype}{size\_t}, MatsT*, \textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{434 }
+\DoxyCodeLine{435       \textcolor{comment}{// Interface to PolarizationPropagator<SingleSlater> double exposure}}
+\DoxyCodeLine{436       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01NEOSS_3_01MatsT_00_01IntsT_01_4_01_4_ab7ab6ea6a80dc4b490a5bbd0951db0f7}{formLinearTrans\_direct}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<double>}} x,}
+\DoxyCodeLine{437           \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op, \textcolor{keywordtype}{bool} noTrans = \textcolor{keyword}{false}); }
+\DoxyCodeLine{438       \textcolor{comment}{// Interface to PolarizationPropagator<SingleSlater> dcomplex exposure}}
+\DoxyCodeLine{439       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01NEOSS_3_01MatsT_00_01IntsT_01_4_01_4_a56528b4a5a51068f385ac4a06c3ccd8a}{formLinearTrans\_direct}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<dcomplex>}} x,}
+\DoxyCodeLine{440           \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op, \textcolor{keywordtype}{bool} noTrans = \textcolor{keyword}{false})\{ }
+\DoxyCodeLine{441       }
+\DoxyCodeLine{442         formLinearTrans\_direct\_impl(c,x,op,noTrans);}
+\DoxyCodeLine{443 }
+\DoxyCodeLine{444       \};}
+\DoxyCodeLine{445         }
+\DoxyCodeLine{446       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01NEOSS_3_01MatsT_00_01IntsT_01_4_01_4_a6441d46ff8f60791294ef3f8ee3e21c0}{printResMO}}(std::ostream \&out, \textcolor{keywordtype}{size\_t} nRoots, \textcolor{keywordtype}{double} *W, }
+\DoxyCodeLine{447         std::vector<std::pair<std::string,double *>> data, \textcolor{keywordtype}{double}* VL, \textcolor{keywordtype}{double}* VR) \{}
+\DoxyCodeLine{448           printResMO\_impl(out,nRoots,W,data,VL,VR);}
+\DoxyCodeLine{449       \};}
+\DoxyCodeLine{450       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01NEOSS_3_01MatsT_00_01IntsT_01_4_01_4_af5d1beb4b24cf13844bab4030b941c3e}{printResMO}}(std::ostream \&out, \textcolor{keywordtype}{size\_t} nRoots, \textcolor{keywordtype}{double} *W, }
+\DoxyCodeLine{451         std::vector<std::pair<std::string,double *>> data, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}* VL, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}* VR) \{}
+\DoxyCodeLine{452           printResMO\_impl(out,nRoots,W,data,VL,VR);}
+\DoxyCodeLine{453       \};}
+\DoxyCodeLine{454  }
+\DoxyCodeLine{455   \};}
+\DoxyCodeLine{456 }
+\DoxyCodeLine{457 }
+\DoxyCodeLine{458 }
+\DoxyCodeLine{459 \};}
+\DoxyCodeLine{460 }
+
+\end{DoxyCode}

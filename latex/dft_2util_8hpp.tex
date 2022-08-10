@@ -1,0 +1,42 @@
+\hypertarget{dft_2util_8hpp}{}\doxysection{include/dft/util.hpp File Reference}
+\label{dft_2util_8hpp}\index{include/dft/util.hpp@{include/dft/util.hpp}}
+{\ttfamily \#include $<$dft.\+hpp$>$}\newline
+{\ttfamily \#include $<$matrix.\+hpp$>$}\newline
+{\ttfamily \#include $<$quantum/base.\+hpp$>$}\newline
+{\ttfamily \#include $<$basisset/basisset\+\_\+util.\+hpp$>$}\newline
+Include dependency graph for util.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dft_2util_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dft_2util_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a654e71de0544fb13ed428e0b95197cb8}{Chronus\+Q\+::load\+VXCder}} (std\+::vector$<$ std\+::shared\+\_\+ptr$<$ DFTFunctional $>$ $>$ functionals, size\+\_\+t NPts, double $\ast$Den, double $\ast$Gamma, double $\ast$eps\+Eval, double $\ast$VRho\+Eval, double $\ast$Vgamma\+Eval, double $\ast$Eps\+SCR, double $\ast$VRho\+SCR, double $\ast$Vgamma\+SCR)
+\begin{DoxyCompactList}\small\item\em wrapper for evaluating and loading the DFT kernel derivatives from libxc wrt to the U var. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename MatsT $>$ }\\void \mbox{\hyperlink{namespaceChronusQ_a45b9888964ad8ea63285a94626e9a2ca}{Chronus\+Q\+::mk\+Aux\+Var}} (std\+::shared\+\_\+ptr$<$ Pauli\+Spinor\+Square\+Matrices$<$ MatsT $>$ $>$ one\+PDM, bool is\+GGA, double eps\+Screen, size\+\_\+t NPts, double $\ast$Scalar, double $\ast$Mz, double $\ast$My, double $\ast$Mx, double $\ast$dndX, double $\ast$dndY, double $\ast$dndZ, double $\ast$d\+MzdX, double $\ast$d\+MzdY, double $\ast$d\+MzdZ, double $\ast$d\+MydX, double $\ast$d\+MydY, double $\ast$d\+MydZ, double $\ast$d\+MxdX, double $\ast$d\+MxdY, double $\ast$d\+MxdZ, double $\ast$Mnorm, double $\ast$Kx, double $\ast$Ky, double $\ast$Kz, double $\ast$Hx, double $\ast$Hy, double $\ast$Hz, double $\ast$DSDMnormv, double $\ast$sign\+MDv, bool $\ast$Msmall, double $\ast$n\+Coll, double $\ast$gamma\+Coll)
+\begin{DoxyCompactList}\small\item\em form the U variables given the V variables. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_ae1353c367e2eae7c0d590cfeba186022}{Chronus\+Q\+::eval\+Den}} (SHELL\+\_\+\+EVAL\+\_\+\+TYPE typ, size\+\_\+t NPts, size\+\_\+t NBE, size\+\_\+t NB, std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&sub\+Mat\+Cut, double $\ast$SCR1, double $\ast$SCR2, double $\ast$DENMAT, double $\ast$Den, double $\ast$GDenX, double $\ast$GDenY, double $\ast$GDenZ, double $\ast$Basis\+Scr)
+\begin{DoxyCompactList}\small\item\em evaluates the V (Den, GDENX, GDENY and GDENZ) varibles for a given density in input in DENMAT (scalar or magnetization). \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{namespaceChronusQ_a2ece142284dd9de77042942e5362b32a}{Chronus\+Q\+::energy\+\_\+vxc}} (size\+\_\+t NPts, std\+::vector$<$ double $>$ \&\mbox{\hyperlink{lebedev__974_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}, double $\ast$eps\+Eval, double $\ast$DenS)
+\begin{DoxyCompactList}\small\item\em Evaluate the EXC energy. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename MatsT $>$ }\\void \mbox{\hyperlink{namespaceChronusQ_a92d549d57d6b2a7b3422f3883701c4df}{Chronus\+Q\+::construct\+ZVars}} (std\+::shared\+\_\+ptr$<$ Pauli\+Spinor\+Square\+Matrices$<$ MatsT $>$ $>$ one\+PDM, DENSITY\+\_\+\+TYPE den\+Typ, bool is\+GGA, size\+\_\+t NPts, double $\ast$Vrho\+Eval, double $\ast$Vgamma\+Eval, double $\ast$Zrho\+Var1, double $\ast$Zgamma\+Var1, double $\ast$Zgamma\+Var2)
+\begin{DoxyCompactList}\small\item\em Construct the required quantities for the formation of the Z vector, for a given density component, given the kernel derivatives wrt U variables. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename MatsT $>$ }\\void \mbox{\hyperlink{namespaceChronusQ_a2d0ffb2bbc33ef26e77177521633af23}{Chronus\+Q\+::form\+Z\+\_\+vxc}} (std\+::shared\+\_\+ptr$<$ Pauli\+Spinor\+Square\+Matrices$<$ MatsT $>$ $>$ one\+PDM, DENSITY\+\_\+\+TYPE den\+Typ, bool is\+GGA, size\+\_\+t NPts, size\+\_\+t NBE, size\+\_\+t IOff, double eps\+Screen, std\+::vector$<$ double $>$ \&\mbox{\hyperlink{lebedev__974_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}, double $\ast$Zrho\+Var1, double $\ast$Zgamma\+Var1, double $\ast$Zgamma\+Var2, double $\ast$DenS, double $\ast$DenZ, double $\ast$DenY, double $\ast$DenX, double $\ast$GDenS, double $\ast$GDenZ, double $\ast$GDenY, double $\ast$GDenX, double $\ast$Kx, double $\ast$Ky, double $\ast$Kz, double $\ast$Hx, double $\ast$Hy, double $\ast$Hz, double $\ast$Basis\+Scratch, double $\ast$ZMAT)
+\begin{DoxyCompactList}\small\item\em assemble the final Z vector -\/\texorpdfstring{$>$}{>} ZMAT (for a given density component), given the precomputed required U dependent quantities (ZUvar\# from construct\+ZVars) and the V variables (Den\+S/\+Z/\+X/Y and GDen\+S/\+Z/\+Y/X from eval\+Den) in input. It requires in input also the pointer (Basis\+Scratch) to all basis set (and their gradient) \end{DoxyCompactList}\end{DoxyCompactItemize}

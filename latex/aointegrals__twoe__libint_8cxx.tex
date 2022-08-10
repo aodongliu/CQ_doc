@@ -1,0 +1,49 @@
+\hypertarget{aointegrals__twoe__libint_8cxx}{}\doxysection{src/particleintegrals/aointegrals/aointegrals\+\_\+twoe\+\_\+libint.cxx File Reference}
+\label{aointegrals__twoe__libint_8cxx}\index{src/particleintegrals/aointegrals/aointegrals\_twoe\_libint.cxx@{src/particleintegrals/aointegrals/aointegrals\_twoe\_libint.cxx}}
+{\ttfamily \#include $<$particleintegrals/twopints/incore4indexreleri.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/incore4indextpi.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/gtodirectreleri.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/incoreritpi.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/gradints.\+hpp$>$}\newline
+{\ttfamily \#include $<$libint2/engine.\+h$>$}\newline
+{\ttfamily \#include $<$cqlinalg.\+hpp$>$}\newline
+{\ttfamily \#include $<$cqlinalg/blasutil.\+hpp$>$}\newline
+{\ttfamily \#include $<$util/timer.\+hpp$>$}\newline
+{\ttfamily \#include $<$util/matout.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/inhouseaointegral.\+hpp$>$}\newline
+{\ttfamily \#include $<$util/threads.\+hpp$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+Include dependency graph for aointegrals\+\_\+twoe\+\_\+libint.\+cxx\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{aointegrals__twoe__libint_8cxx__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{aointegrals__twoe__libint_8cxx_ab2d3076a94aeea4cfcd3b393ca2aa9bf}{\+\_\+\+\_\+\+IN\+\_\+\+HOUSE\+\_\+\+INT\+\_\+\+GAUGE\+\_\+\+\_\+}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Inner\+Func $>$ }\\void \mbox{\hyperlink{namespaceChronusQ_aeae906a8d6ab942aa3174c64f0c051dc}{Chronus\+Q\+::do\+ERIIn\+Core}} (size\+\_\+t deriv, std\+::vector$<$ double $\ast$ $>$ eris, Inner\+Func func, Basis\+Set \&basis, Basis\+Set \&basis2, OPERATOR op, const Hamiltonian\+Options \&options)
+\begin{DoxyCompactList}\small\item\em Helper function to do the setup and loops over basis functions for evaluating in core ERIs. Generic to gradient level. \end{DoxyCompactList}\item 
+std\+::pair$<$ size\+\_\+t, double $>$ \mbox{\hyperlink{namespaceChronusQ_ac63163d7e7f6f6acab4d047b9c85d2ab}{Chronus\+Q\+::libint\+General\+Contraction\+ERI}} (size\+\_\+t P, size\+\_\+t Q, size\+\_\+t R, size\+\_\+t S, Basis\+Set \&basis\+Set, libint2\+::\+Engine \&engine, std\+::vector$<$ std\+::vector$<$ libint2\+::\+Shell $>$ $>$ \&shell\+Prims\+\_\+, std\+::vector$<$ double $\ast$ $>$ \&coef\+Blocks\+\_\+, double $\ast$work\+Block, const double $\ast$\&res\+PQRS)
+\begin{DoxyCompactList}\small\item\em Compute ERI in a general-\/contraction shell quartet. Note layout difference, res\+PQRS need to be reorganized by the following code to match the layout of a general shell quartet output as in libcint\+: for (size\+\_\+t SS = 0, pqrs = 0; SS \texorpdfstring{$<$}{<} s\+Contr\+Size; SS++) for (size\+\_\+t s = 0; s \texorpdfstring{$<$}{<} s\+AMSize; s++) for (size\+\_\+t RR = 0; RR \texorpdfstring{$<$}{<} r\+Contr\+Size; RR++) for (size\+\_\+t r = 0; r \texorpdfstring{$<$}{<} r\+AMSize; r++) for (size\+\_\+t QQ = 0; QQ \texorpdfstring{$<$}{<} q\+Contr\+Size; QQ++) for (size\+\_\+t q = 0; q \texorpdfstring{$<$}{<} q\+AMSize; q++) for (size\+\_\+t PP = 0; PP \texorpdfstring{$<$}{<} p\+Contr\+Size; PP++) for (size\+\_\+t p = 0; p \texorpdfstring{$<$}{<} p\+AMSize; p++, pqrs++) \{ block\mbox{[}pqrs\mbox{]} = res\+PQRS\mbox{[}(s + s\+AMSize $\ast$ (r + r\+AMSize $\ast$ (q + q\+AMSize $\ast$ p))) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{aointegrals__twoe__libint_8cxx_ab2d3076a94aeea4cfcd3b393ca2aa9bf}\label{aointegrals__twoe__libint_8cxx_ab2d3076a94aeea4cfcd3b393ca2aa9bf}} 
+\index{aointegrals\_twoe\_libint.cxx@{aointegrals\_twoe\_libint.cxx}!\_\_IN\_HOUSE\_INT\_GAUGE\_\_@{\_\_IN\_HOUSE\_INT\_GAUGE\_\_}}
+\index{\_\_IN\_HOUSE\_INT\_GAUGE\_\_@{\_\_IN\_HOUSE\_INT\_GAUGE\_\_}!aointegrals\_twoe\_libint.cxx@{aointegrals\_twoe\_libint.cxx}}
+\doxysubsubsection{\texorpdfstring{\_\_IN\_HOUSE\_INT\_GAUGE\_\_}{\_\_IN\_HOUSE\_INT\_GAUGE\_\_}}
+{\footnotesize\ttfamily \#define \+\_\+\+\_\+\+IN\+\_\+\+HOUSE\+\_\+\+INT\+\_\+\+GAUGE\+\_\+\+\_\+}
+

@@ -1,0 +1,229 @@
+\hypertarget{options_8hpp_source}{}\doxysection{options.\+hpp}
+\label{options_8hpp_source}\index{include/cxxapi/options.hpp@{include/cxxapi/options.hpp}}
+\mbox{\hyperlink{options_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{input_8hpp}{cxxapi/input.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{procedural_8hpp}{cxxapi/procedural.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{molecule_8hpp}{molecule.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{basisset_8hpp}{basisset.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{integrals_8hpp}{integrals.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{realtime_8hpp}{realtime.hpp}}>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{response_8hpp}{response.hpp}}>}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{coupledcluster_8hpp}{coupledcluster.hpp}}>}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcscf_8hpp}{mcscf.hpp}}>}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{comment}{// Preprocessor directive to aid the digestion of optional }}
+\DoxyCodeLine{41 \textcolor{comment}{// input arguments}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#define OPTOPT(x) try\{ x; \} catch(...) \{ ; \}}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46   \textcolor{comment}{// Type of Job}}
+\DoxyCodeLine{47   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49c}{JobType}} \{}
+\DoxyCodeLine{48     \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49cad664bf1141d3a9456b7ef300576c8ce7}{SCF}},}
+\DoxyCodeLine{49     \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49cad5e352f6c90f020973b0642158b5bd72}{RT}},}
+\DoxyCodeLine{50     \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca766a9729b84ffe88364678cc206fa6a8}{RESP}},}
+\DoxyCodeLine{51     \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca97722c431158a7a7f2c470ef1c3b08e7}{CC}},}
+\DoxyCodeLine{52     \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca320f98db8f8cb1b64a285eff4abf83e8}{MR}},}
+\DoxyCodeLine{53     \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca7dc2e2de9c9b700fcffe2078d89a6671}{BOMD}},}
+\DoxyCodeLine{54     \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca9f22cb4d57faf35fdba2ffbac38f8650}{EHRENFEST}}}
+\DoxyCodeLine{55   \};}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57   \textcolor{comment}{// Tedious, but there isn't an easier way to do this}}
+\DoxyCodeLine{58   \textcolor{keyword}{inline} \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49c}{JobType}} \mbox{\hyperlink{namespaceChronusQ_a43a1986c2900b5975af3ff14d45d2686}{parseJob}}(std::string jobStr) \{}
+\DoxyCodeLine{59     \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49c}{JobType}} job;}
+\DoxyCodeLine{60     \textcolor{keywordflow}{if}( jobStr == \textcolor{stringliteral}{"{}SCF"{}} ) \{}
+\DoxyCodeLine{61       job = \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49cad664bf1141d3a9456b7ef300576c8ce7}{SCF}};}
+\DoxyCodeLine{62     \}}
+\DoxyCodeLine{63     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( jobStr == \textcolor{stringliteral}{"{}RT"{}} ) \{}
+\DoxyCodeLine{64       job = \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49cad5e352f6c90f020973b0642158b5bd72}{RT}};}
+\DoxyCodeLine{65     \}}
+\DoxyCodeLine{66     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( jobStr == \textcolor{stringliteral}{"{}RESP"{}} ) \{}
+\DoxyCodeLine{67       job = \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca766a9729b84ffe88364678cc206fa6a8}{RESP}};}
+\DoxyCodeLine{68     \}}
+\DoxyCodeLine{69     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( jobStr == \textcolor{stringliteral}{"{}CC"{}} ) \{}
+\DoxyCodeLine{70       job = \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca97722c431158a7a7f2c470ef1c3b08e7}{CC}};}
+\DoxyCodeLine{71     \}}
+\DoxyCodeLine{72     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( jobStr == \textcolor{stringliteral}{"{}BOMD"{}} ) \{}
+\DoxyCodeLine{73       job = \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca7dc2e2de9c9b700fcffe2078d89a6671}{BOMD}};}
+\DoxyCodeLine{74     \}}
+\DoxyCodeLine{75     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( jobStr == \textcolor{stringliteral}{"{}EHRENFEST"{}} ) \{}
+\DoxyCodeLine{76       job = \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca9f22cb4d57faf35fdba2ffbac38f8650}{EHRENFEST}};}
+\DoxyCodeLine{77     \}}
+\DoxyCodeLine{78     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( jobStr == \textcolor{stringliteral}{"{}MCSCF"{}} ) \{}
+\DoxyCodeLine{79       job = \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca320f98db8f8cb1b64a285eff4abf83e8}{MR}};}
+\DoxyCodeLine{80     \}}
+\DoxyCodeLine{81     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{82       jobStr = \textcolor{stringliteral}{"{}Unrecognized job type \(\backslash\)"{}"{}} + jobStr + \textcolor{stringliteral}{"{}\(\backslash\)"{}!"{}};}
+\DoxyCodeLine{83       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(jobStr);}
+\DoxyCodeLine{84     \}}
+\DoxyCodeLine{85     \textcolor{keywordflow}{return} job;}
+\DoxyCodeLine{86   \};}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88   \textcolor{comment}{// Function definitions ofr option parsing. }}
+\DoxyCodeLine{89   \textcolor{comment}{// See src/cxxapi/input/*opts.cxx for documentation}}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91   \textcolor{comment}{// Parse the options relating to the Molecule object}}
+\DoxyCodeLine{92   Molecule \mbox{\hyperlink{namespaceChronusQ_ad675c677ac5e37f484a3c44b57f2c6be}{CQMoleculeOptions}}(std::ostream \&, CQInputFile \&, std::string \&);}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a78ad4b49e28a7f44e9e74715eb501baf}{CQMOLECULE\_VALID}}(std::ostream\&, CQInputFile \&);}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a91bb065a96f2f3497f951072ee2235ca}{parseGeomInp}}(Molecule \&, std::string \&, std::ostream \&, \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a268403a9fd7b03e2264426f95a264c90}{parseGeomFchk}}(Molecule \&, std::string \&, std::ostream \&);}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100   RefOptions \mbox{\hyperlink{namespaceChronusQ_a93d35c12a7e248b8eff086f5d9111f17}{parseRef}}(std::ostream \&, Molecule \&, std::vector<std::string> \&);}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_acc241eaa10d9bc4bea98ff80b5ebd28d}{buildFunclist}}(std::vector<std::shared\_ptr<DFTFunctional>> \&,}
+\DoxyCodeLine{103     std::string);}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a62f31ced96035f658faab49abd20f1ac}{parseIntParam}}(std::ostream \&, CQInputFile \&, IntegrationParam \&);}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a5db57f35ec7cbdcd299dd60349c9f082}{parseHamiltonianOptions}}(std::ostream \&, CQInputFile \&, }
+\DoxyCodeLine{108     BasisSet \&basis, std::shared\_ptr<IntegralsBase> aoints,}
+\DoxyCodeLine{109     RefOptions \&refOptions, HamiltonianOptions \&hamiltonianOptions, std::string);}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111   \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespaceChronusQ_ab9a93d62b54318c59ae43900f8d2d0a5}{parseAtomicType}}(std::ostream \&, CQInputFile \&, ATOMIC\_X2C\_TYPE \&, std::string);}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113   \textcolor{comment}{// Parse the options relating to the BasisSet}}
+\DoxyCodeLine{114   std::shared\_ptr<BasisSet> \mbox{\hyperlink{namespaceChronusQ_a7b7a33f68936fbe25cb52940a20bb569}{CQBasisSetOptions}}(std::ostream \&, CQInputFile \&,}
+\DoxyCodeLine{115     Molecule \&, std::string);}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a5de84345ef0d86b35289f129ef836909}{CQBASIS\_VALID}}(std::ostream\&, CQInputFile \&, std::string);}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119   \textcolor{comment}{// Parse the options relating to the SingleSlaterOptions}}
+\DoxyCodeLine{120   SingleSlaterOptions \mbox{\hyperlink{namespaceChronusQ_a0b9580122cf79d829f1bb8acef8244bc}{CQSingleSlaterOptions}}(}
+\DoxyCodeLine{121       std::ostream \&, CQInputFile \&, Molecule \&, BasisSet \&,}
+\DoxyCodeLine{122       std::shared\_ptr<IntegralsBase>);}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124   \textcolor{comment}{// Parse the options relating to NEOSS}}
+\DoxyCodeLine{125   std::pair<std::shared\_ptr<SingleSlaterBase>, SingleSlaterOptions> \mbox{\hyperlink{namespaceChronusQ_a4ab693f751da1ad27afe7ecad8a0f63c}{CQNEOSSOptions}}(}
+\DoxyCodeLine{126       std::ostream \&, CQInputFile \&,}
+\DoxyCodeLine{127       CQMemManager \&mem, Molecule \&mol,}
+\DoxyCodeLine{128       BasisSet \&ebasis, BasisSet \&pbasis,}
+\DoxyCodeLine{129       std::shared\_ptr<IntegralsBase> eaoints,}
+\DoxyCodeLine{130       std::shared\_ptr<IntegralsBase> paoints,}
+\DoxyCodeLine{131       std::shared\_ptr<IntegralsBase> epaoints);}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a611b7ae3a2176a1887185370794079b4}{CQQM\_VALID}}(std::ostream\&, CQInputFile \&);}
+\DoxyCodeLine{134   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a2bc556eaefc17fbe3f5f2f1ec12203f2}{CQDFTINT\_VALID}}(std::ostream\&, CQInputFile \&);}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136   \textcolor{comment}{// Parse RT options}}
+\DoxyCodeLine{137   std::shared\_ptr<RealTimeBase> \mbox{\hyperlink{namespaceChronusQ_aea523910e009a64f20c62424046c3f01}{CQRealTimeOptions}}(}
+\DoxyCodeLine{138     std::ostream \&, CQInputFile \&, std::shared\_ptr<SingleSlaterBase> \&,}
+\DoxyCodeLine{139     EMPerturbation \&}
+\DoxyCodeLine{140   );}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a0e9f851e4c1d7c68ca3b2acee7575391}{CQRT\_VALID}}(std::ostream\&, CQInputFile \&);}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144   \textcolor{comment}{// Parse Response options}}
+\DoxyCodeLine{145   std::shared\_ptr<ResponseBase> \mbox{\hyperlink{namespaceChronusQ_a0b8ed2228df752f38ce14baec9929bca}{CQResponseOptions}}(}
+\DoxyCodeLine{146     std::ostream \&, CQInputFile \&, std::shared\_ptr<SingleSlaterBase>}
+\DoxyCodeLine{147   );}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ab68b016e84626b2fd6a6b37643960259}{CQRESPONSE\_VALID}}(std::ostream\&, CQInputFile \&);}
+\DoxyCodeLine{150   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a0e2c584c794d8627e32494cdedc70573}{CQMOR\_VALID}}(std::ostream\&, CQInputFile \&);}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152   \textcolor{comment}{// Parse integral options}}
+\DoxyCodeLine{153   std::shared\_ptr<IntegralsBase> \mbox{\hyperlink{namespaceChronusQ_a682d3f06462c3c9ff6736aaff9f16cf4}{CQIntsOptions}}(std::ostream \&, }
+\DoxyCodeLine{154     CQInputFile \&, CQMemManager \&, Molecule \&,}
+\DoxyCodeLine{155     std::shared\_ptr<BasisSet>, std::shared\_ptr<BasisSet>,}
+\DoxyCodeLine{156     std::shared\_ptr<BasisSet>, std::string int\_sec = \textcolor{stringliteral}{"{}INTS"{}});}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a241ac9157b55d79095bef79688bf7994}{CQINTS\_VALID}}(std::ostream\&, CQInputFile \&);}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160   \textcolor{comment}{// Parse the SCF options}}
+\DoxyCodeLine{161   SCFControls \mbox{\hyperlink{namespaceChronusQ_ae2e73d970f9bc1e0e863a97d9501227c}{CQSCFOptions}}(std::ostream\&, CQInputFile\&, EMPerturbation \&);}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_add83af53ac897e80b1bdbe58c9e8310a}{HandleOrbitalSwaps}}(std::ostream\&, CQInputFile\&, SingleSlaterBase\&);}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_af549f0ef87f2381f385bc3d878182888}{CQSCF\_VALID}}(std::ostream\&, CQInputFile \&);}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167   \textcolor{comment}{// Parse CC options}}
+\DoxyCodeLine{168 \textcolor{preprocessor}{\#ifdef CQ\_HAS\_TA}}
+\DoxyCodeLine{169   std::shared\_ptr<CCBase> CQCCOptions(std::ostream \&, }
+\DoxyCodeLine{170      CQInputFile \&, std::shared\_ptr<SingleSlaterBase> \&);}
+\DoxyCodeLine{171 \textcolor{preprocessor}{\#endif  }}
+\DoxyCodeLine{172   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ab92af0483ad882491f9928cfd0b5f6c3}{CQCC\_VALID}}(std::ostream \&, CQInputFile \&);}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174   \textcolor{comment}{// Parse geometry modifier options}}
+\DoxyCodeLine{175   \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49c}{JobType}} \mbox{\hyperlink{namespaceChronusQ_a836c037859ec4dcfc183bd35fc9883d7}{CQGeometryOptions}}(std::ostream\& out, CQInputFile\& input, }
+\DoxyCodeLine{176     \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49c}{JobType}} job, Molecule\& mol, std::shared\_ptr<SingleSlaterBase> ss,}
+\DoxyCodeLine{177     std::shared\_ptr<RealTimeBase>\& rt, std::shared\_ptr<IntegralsBase> epints,}
+\DoxyCodeLine{178     EMPerturbation\& emPert);}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180   \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49c}{JobType}} \mbox{\hyperlink{namespaceChronusQ_a4a96520df68c1c39c56fc3e6ce4647b8}{CQDynamicsOptions}}(std::ostream\& out, CQInputFile\& input, }
+\DoxyCodeLine{181     \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49c}{JobType}} job, Molecule\& mol, std::shared\_ptr<SingleSlaterBase> ss,}
+\DoxyCodeLine{182     std::shared\_ptr<RealTimeBase>\& rt, std::shared\_ptr<IntegralsBase> epints,}
+\DoxyCodeLine{183     EMPerturbation\& emPert);}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a30f495ca1bdf11c13c3d026fb7e9d744}{CQDYNAMICS\_VALID}}( std::ostream\& out, CQInputFile\& input );}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187   \textcolor{comment}{// Parse MCSCF options}}
+\DoxyCodeLine{188   std::shared\_ptr<MCWaveFunctionBase> \mbox{\hyperlink{namespaceChronusQ_a5db44cca14bf350d52aa511858a70402}{CQMCSCFOptions}}(std::ostream \&, }
+\DoxyCodeLine{189      CQInputFile \&, std::shared\_ptr<SingleSlaterBase> \&);}
+\DoxyCodeLine{190   }
+\DoxyCodeLine{191   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a4e0583a06aba4d09f0a82b09d3e39b17}{CQMCSCF\_VALID}}(std::ostream \&, CQInputFile \&);}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193   std::shared\_ptr<CQMemManager> \mbox{\hyperlink{namespaceChronusQ_a7b8d46700d25cfb122c6dfefe0846f0f}{CQMiscOptions}}(std::ostream \&,}
+\DoxyCodeLine{194     CQInputFile \&);}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ade066402f7f15072b5e4cc35eab62d39}{CQMISC\_VALID}}(std::ostream\&, CQInputFile \&);}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199   \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ac5a458c597e4843dc31bd670b802793f}{CQINPUT\_VALID}}(std::ostream \&out, \mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInputFile}} \&input) \{}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201     \mbox{\hyperlink{namespaceChronusQ_a78ad4b49e28a7f44e9e74715eb501baf}{CQMOLECULE\_VALID}}(out,input);}
+\DoxyCodeLine{202     \mbox{\hyperlink{namespaceChronusQ_a5de84345ef0d86b35289f129ef836909}{CQBASIS\_VALID}}(out,input,\textcolor{stringliteral}{"{}BASIS"{}});}
+\DoxyCodeLine{203     \mbox{\hyperlink{namespaceChronusQ_a5de84345ef0d86b35289f129ef836909}{CQBASIS\_VALID}}(out,input,\textcolor{stringliteral}{"{}DFBASIS"{}});}
+\DoxyCodeLine{204     \mbox{\hyperlink{namespaceChronusQ_a241ac9157b55d79095bef79688bf7994}{CQINTS\_VALID}}(out,input);}
+\DoxyCodeLine{205     \mbox{\hyperlink{namespaceChronusQ_a611b7ae3a2176a1887185370794079b4}{CQQM\_VALID}}(out,input);}
+\DoxyCodeLine{206     \mbox{\hyperlink{namespaceChronusQ_a2bc556eaefc17fbe3f5f2f1ec12203f2}{CQDFTINT\_VALID}}(out,input);}
+\DoxyCodeLine{207     \mbox{\hyperlink{namespaceChronusQ_af549f0ef87f2381f385bc3d878182888}{CQSCF\_VALID}}(out,input);}
+\DoxyCodeLine{208     \mbox{\hyperlink{namespaceChronusQ_a0e9f851e4c1d7c68ca3b2acee7575391}{CQRT\_VALID}}(out,input);}
+\DoxyCodeLine{209     \mbox{\hyperlink{namespaceChronusQ_ab68b016e84626b2fd6a6b37643960259}{CQRESPONSE\_VALID}}(out,input);}
+\DoxyCodeLine{210     \mbox{\hyperlink{namespaceChronusQ_a0e2c584c794d8627e32494cdedc70573}{CQMOR\_VALID}}(out,input);}
+\DoxyCodeLine{211     \mbox{\hyperlink{namespaceChronusQ_ade066402f7f15072b5e4cc35eab62d39}{CQMISC\_VALID}}(out,input);}
+\DoxyCodeLine{212     \mbox{\hyperlink{namespaceChronusQ_ab92af0483ad882491f9928cfd0b5f6c3}{CQCC\_VALID}}(out,input);}
+\DoxyCodeLine{213     \mbox{\hyperlink{namespaceChronusQ_a30f495ca1bdf11c13c3d026fb7e9d744}{CQDYNAMICS\_VALID}}(out,input);}
+\DoxyCodeLine{214     \mbox{\hyperlink{namespaceChronusQ_a4e0583a06aba4d09f0a82b09d3e39b17}{CQMCSCF\_VALID}}(out,input);}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216   \}}
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219 \};}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223 }
+
+\end{DoxyCode}

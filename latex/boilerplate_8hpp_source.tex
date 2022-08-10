@@ -1,0 +1,94 @@
+\hypertarget{boilerplate_8hpp_source}{}\doxysection{boilerplate.\+hpp}
+\label{boilerplate_8hpp_source}\index{include/cxxapi/boilerplate.hpp@{include/cxxapi/boilerplate.hpp}}
+\mbox{\hyperlink{boilerplate_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <libint2/cxxapi.h>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{particleintegrals_8hpp}{particleintegrals.hpp}}>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{threads_8hpp}{util/threads.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <H5Cpp.h>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#ifdef CQ\_HAS\_TA}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{  \#include <tiledarray.h>}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a9e3cb4f1c6ee07bda36d023d0d23317c}{generateFmTTable}}();}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{50   \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a1c0a5b9f73b2fc4a574418d08745969d}{initialize}}() \{}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{comment}{// Bootstrap libint2 env}}
+\DoxyCodeLine{53     \mbox{\hyperlink{namespaceChronusQ_a1c0a5b9f73b2fc4a574418d08745969d}{libint2::initialize}}();}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{comment}{// SS start}}
+\DoxyCodeLine{56     \mbox{\hyperlink{namespaceChronusQ_a77372afd4469aacf10397f5d0df9a12c}{pop\_cart\_ang\_list}}();  \textcolor{comment}{// populate cartesian angular momentum list  }}
+\DoxyCodeLine{57     \mbox{\hyperlink{namespaceChronusQ_a23d23e191872ec3b651b6bf594a393aa}{pop\_car2sph\_matrix}}(); \textcolor{comment}{// populate cartesian to spherical transform matrix}}
+\DoxyCodeLine{58     \mbox{\hyperlink{namespaceChronusQ_a9e3cb4f1c6ee07bda36d023d0d23317c}{generateFmTTable}}();}
+\DoxyCodeLine{59     \textcolor{comment}{// SS end}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \textcolor{comment}{// Parallelism}}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \textcolor{comment}{// SMP}}
+\DoxyCodeLine{64     \mbox{\hyperlink{namespaceChronusQ_ad084c7a03162483850a408c3d69ac40e}{SetNumThreads}}(1);}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \textcolor{comment}{// MPI}}
+\DoxyCodeLine{67 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{68 \textcolor{preprocessor}{  \#ifdef \_OPENMP}}
+\DoxyCodeLine{69     \textcolor{keywordtype}{int} mpi\_th\_support;}
+\DoxyCodeLine{70     MPI\_Init\_thread(NULL,NULL,MPI\_THREAD\_MULTIPLE,\&mpi\_th\_support);}
+\DoxyCodeLine{71     assert(mpi\_th\_support == MPI\_THREAD\_MULTIPLE);}
+\DoxyCodeLine{72 \textcolor{preprocessor}{  \#else}}
+\DoxyCodeLine{73     MPI\_Init(NULL,NULL);}
+\DoxyCodeLine{74 \textcolor{preprocessor}{  \#endif}}
+\DoxyCodeLine{75 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77     }
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     H5::Exception::dontPrint();}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81   \}; \textcolor{comment}{// initialize}}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{89   \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a43529f0dc38774a95d73532e0400739c}{finalize}}() \{}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{comment}{// Finalize libint2 env}}
+\DoxyCodeLine{92     \mbox{\hyperlink{namespaceChronusQ_a43529f0dc38774a95d73532e0400739c}{libint2::finalize}}();}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94     \textcolor{comment}{// MPI}}
+\DoxyCodeLine{95 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{96     MPI\_Finalize();}
+\DoxyCodeLine{97 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99   \}; \textcolor{comment}{// finalize}}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{102 }
+
+\end{DoxyCode}

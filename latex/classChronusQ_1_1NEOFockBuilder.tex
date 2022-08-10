@@ -1,0 +1,223 @@
+\hypertarget{classChronusQ_1_1NEOFockBuilder}{}\doxysection{ChronusQ\+::NEOFock\+Builder\texorpdfstring{$<$}{<} MatsT, IntsT \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1NEOFockBuilder}\index{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}}
+
+
+{\ttfamily \#include $<$neofock.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::NEOFock\+Builder\texorpdfstring{$<$}{<} MatsT, IntsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOFockBuilder__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::NEOFock\+Builder\texorpdfstring{$<$}{<} MatsT, IntsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOFockBuilder__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a89956920cee3f475c06767ba7485df82}{NEOFock\+Builder}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_acd46ac22a8a98e61c8dff385f335ea64}{NEOFock\+Builder}} (\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{Hamiltonian\+Options}} hamiltonian\+Options)
+\item 
+{\footnotesize template$<$typename MatsU $>$ }\\\mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a5ca65b4cc08dddf7526a867a5bee841a}{NEOFock\+Builder}} (const \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{NEOFock\+Builder}}$<$ MatsU, IntsT $>$ \&other)
+\item 
+{\footnotesize template$<$typename MatsU $>$ }\\\mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_aaab38ae98fbbb9e57b3f48c007af037d}{NEOFock\+Builder}} (\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{Fock\+Builder}}$<$ MatsU, IntsT $>$ \&\&other)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a61e88a806c874e257a09de7504fc880a}{set\+Contraction}} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}$<$ MatsT, IntsT $>$ $>$ cont)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a3d800e92c63e2dac2efb35be830ad72d}{set\+Gradient\+Integrals}} (\mbox{\hyperlink{classChronusQ_1_1GradInts}{Grad\+Ints}}$<$ \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}, IntsT $>$ $\ast$tpi)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a0d35d66f383828bf0afdc0f476f4d228}{formepJ}} (\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ \&, bool increment=false)
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a83c708063db88664e5633661c662b03f}{formep\+JGrad}} (\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ \&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, double x\+HFX)
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a41e9a3ae141c0dae34db32cac969760a}{form\+Fock}} (\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ \&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, bool increment=false, double x\+HFX=1.)
+\begin{DoxyCompactList}\small\item\em Forms the Fock matrix for a single slater determinant using the 1PDM. \end{DoxyCompactList}\item 
+virtual std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_afdf4602a4a99fed692db96451b539af2}{get\+GDGrad}} (\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ \&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, double x\+HFX=1.)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}$<$ MatsT, IntsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_aa14ca30cc71c76e705a4c537f7be2be6}{contraction}} = nullptr
+\item 
+\mbox{\hyperlink{classChronusQ_1_1GradInts}{Grad\+Ints}}$<$ \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}, IntsT $>$ $\ast$ \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_adc1ad192694e7146a5406d2a398ec32b}{grad\+TPI}} = nullptr
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename MatsU , typename IntsU $>$ }\\class \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_aeb7e05071f5bd16b2b0ed5a2f13ac4f5}{NEOFock\+Builder}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1NEOFockBuilder_a89956920cee3f475c06767ba7485df82}\label{classChronusQ_1_1NEOFockBuilder_a89956920cee3f475c06767ba7485df82}} 
+\index{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}!NEOFockBuilder@{NEOFockBuilder}}
+\index{NEOFockBuilder@{NEOFockBuilder}!ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{NEOFockBuilder()}{NEOFockBuilder()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{Chronus\+Q\+::\+NEOFock\+Builder}}$<$ MatsT, IntsT $>$\+::\+NEOFock\+Builder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOFockBuilder_acd46ac22a8a98e61c8dff385f335ea64}\label{classChronusQ_1_1NEOFockBuilder_acd46ac22a8a98e61c8dff385f335ea64}} 
+\index{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}!NEOFockBuilder@{NEOFockBuilder}}
+\index{NEOFockBuilder@{NEOFockBuilder}!ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{NEOFockBuilder()}{NEOFockBuilder()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{Chronus\+Q\+::\+NEOFock\+Builder}}$<$ MatsT, IntsT $>$\+::\+NEOFock\+Builder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{Hamiltonian\+Options}}}]{hamiltonian\+Options }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOFockBuilder_a5ca65b4cc08dddf7526a867a5bee841a}\label{classChronusQ_1_1NEOFockBuilder_a5ca65b4cc08dddf7526a867a5bee841a}} 
+\index{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}!NEOFockBuilder@{NEOFockBuilder}}
+\index{NEOFockBuilder@{NEOFockBuilder}!ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{NEOFockBuilder()}{NEOFockBuilder()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename MatsU $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{Chronus\+Q\+::\+NEOFock\+Builder}}$<$ MatsT, IntsT $>$\+::\+NEOFock\+Builder (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{NEOFock\+Builder}}$<$ MatsU, IntsT $>$ \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOFockBuilder_aaab38ae98fbbb9e57b3f48c007af037d}\label{classChronusQ_1_1NEOFockBuilder_aaab38ae98fbbb9e57b3f48c007af037d}} 
+\index{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}!NEOFockBuilder@{NEOFockBuilder}}
+\index{NEOFockBuilder@{NEOFockBuilder}!ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{NEOFockBuilder()}{NEOFockBuilder()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename MatsU $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{Chronus\+Q\+::\+NEOFock\+Builder}}$<$ MatsT, IntsT $>$\+::\+NEOFock\+Builder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{Fock\+Builder}}$<$ MatsU, IntsT $>$ \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1NEOFockBuilder_a0d35d66f383828bf0afdc0f476f4d228}\label{classChronusQ_1_1NEOFockBuilder_a0d35d66f383828bf0afdc0f476f4d228}} 
+\index{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}!formepJ@{formepJ}}
+\index{formepJ@{formepJ}!ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{formepJ()}{formepJ()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{Chronus\+Q\+::\+NEOFock\+Builder}}$<$ MatsT, IntsT $>$\+::formepJ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ \&}]{ss,  }\item[{bool}]{increment = {\ttfamily false} }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOFockBuilder_a0d35d66f383828bf0afdc0f476f4d228_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOFockBuilder_a83c708063db88664e5633661c662b03f}\label{classChronusQ_1_1NEOFockBuilder_a83c708063db88664e5633661c662b03f}} 
+\index{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}!formepJGrad@{formepJGrad}}
+\index{formepJGrad@{formepJGrad}!ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{formepJGrad()}{formepJGrad()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{Chronus\+Q\+::\+NEOFock\+Builder}}$<$ MatsT, IntsT $>$\+::formep\+JGrad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ \&}]{ss,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{double}]{x\+HFX }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOFockBuilder_a83c708063db88664e5633661c662b03f_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOFockBuilder_a41e9a3ae141c0dae34db32cac969760a}\label{classChronusQ_1_1NEOFockBuilder_a41e9a3ae141c0dae34db32cac969760a}} 
+\index{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}!formFock@{formFock}}
+\index{formFock@{formFock}!ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{formFock()}{formFock()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{Chronus\+Q\+::\+NEOFock\+Builder}}$<$ MatsT, IntsT $>$\+::form\+Fock (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ \&}]{ss,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{bool}]{increment = {\ttfamily false},  }\item[{double}]{x\+HFX = {\ttfamily 1.} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Forms the Fock matrix for a single slater determinant using the 1PDM. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em increment} & Whether or not the Fock matrix is being incremented using a previous density\\
+\hline
+\end{DoxyParams}
+Populates / overwrites fock strorage in \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}} \&ss 
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a4242ef13cf11b05ad75b9acd3604bf6d}{Chronus\+Q\+::\+Fock\+Builder$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOFockBuilder_a41e9a3ae141c0dae34db32cac969760a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOFockBuilder_afdf4602a4a99fed692db96451b539af2}\label{classChronusQ_1_1NEOFockBuilder_afdf4602a4a99fed692db96451b539af2}} 
+\index{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}!getGDGrad@{getGDGrad}}
+\index{getGDGrad@{getGDGrad}!ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getGDGrad()}{getGDGrad()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{Chronus\+Q\+::\+NEOFock\+Builder}}$<$ MatsT, IntsT $>$\+::get\+GDGrad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ \&}]{ss,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{double}]{x\+HFX = {\ttfamily 1.} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a2fd0a49b321ae23f8c386c10297935b7}{Chronus\+Q\+::\+Fock\+Builder$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOFockBuilder_afdf4602a4a99fed692db96451b539af2_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOFockBuilder_a61e88a806c874e257a09de7504fc880a}\label{classChronusQ_1_1NEOFockBuilder_a61e88a806c874e257a09de7504fc880a}} 
+\index{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}!setContraction@{setContraction}}
+\index{setContraction@{setContraction}!ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{setContraction()}{setContraction()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{Chronus\+Q\+::\+NEOFock\+Builder}}$<$ MatsT, IntsT $>$\+::set\+Contraction (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}$<$ MatsT, IntsT $>$ $>$}]{cont }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOFockBuilder_a3d800e92c63e2dac2efb35be830ad72d}\label{classChronusQ_1_1NEOFockBuilder_a3d800e92c63e2dac2efb35be830ad72d}} 
+\index{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}!setGradientIntegrals@{setGradientIntegrals}}
+\index{setGradientIntegrals@{setGradientIntegrals}!ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{setGradientIntegrals()}{setGradientIntegrals()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{Chronus\+Q\+::\+NEOFock\+Builder}}$<$ MatsT, IntsT $>$\+::set\+Gradient\+Integrals (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1GradInts}{Grad\+Ints}}$<$ \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}, IntsT $>$ $\ast$}]{tpi }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1NEOFockBuilder_aeb7e05071f5bd16b2b0ed5a2f13ac4f5}\label{classChronusQ_1_1NEOFockBuilder_aeb7e05071f5bd16b2b0ed5a2f13ac4f5}} 
+\index{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}!NEOFockBuilder@{NEOFockBuilder}}
+\index{NEOFockBuilder@{NEOFockBuilder}!ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{NEOFockBuilder}{NEOFockBuilder}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename MatsU , typename IntsU $>$ \\
+friend class \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{NEOFock\+Builder}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1NEOFockBuilder_aa14ca30cc71c76e705a4c537f7be2be6}\label{classChronusQ_1_1NEOFockBuilder_aa14ca30cc71c76e705a4c537f7be2be6}} 
+\index{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}!contraction@{contraction}}
+\index{contraction@{contraction}!ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{contraction}{contraction}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}$<$MatsT,IntsT$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{Chronus\+Q\+::\+NEOFock\+Builder}}$<$ MatsT, IntsT $>$\+::contraction = nullptr\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOFockBuilder_adc1ad192694e7146a5406d2a398ec32b}\label{classChronusQ_1_1NEOFockBuilder_adc1ad192694e7146a5406d2a398ec32b}} 
+\index{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}!gradTPI@{gradTPI}}
+\index{gradTPI@{gradTPI}!ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$@{ChronusQ::NEOFockBuilder$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{gradTPI}{gradTPI}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1GradInts}{Grad\+Ints}}$<$\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}},IntsT$>$$\ast$ \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{Chronus\+Q\+::\+NEOFock\+Builder}}$<$ MatsT, IntsT $>$\+::grad\+TPI = nullptr\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/fockbuilder/\mbox{\hyperlink{neofock_8hpp}{neofock.\+hpp}}\item 
+include/fockbuilder/neofock/\mbox{\hyperlink{fockbuilder_2neofock_2impl_8hpp}{impl.\+hpp}}\end{DoxyCompactItemize}

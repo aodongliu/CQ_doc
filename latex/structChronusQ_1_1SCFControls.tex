@@ -1,0 +1,295 @@
+\hypertarget{structChronusQ_1_1SCFControls}{}\doxysection{ChronusQ\+::SCFControls Struct Reference}
+\label{structChronusQ_1_1SCFControls}\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+
+
+A struct to hold the information pertaining to the control of an SCF procedure.  
+
+
+
+
+{\ttfamily \#include $<$base.\+hpp$>$}
+
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{structChronusQ_1_1SCFControls_ab35eddd86f51d5614999f7e000be9cd5}{den\+Conv\+Tol}} = 1e-\/8
+\begin{DoxyCompactList}\small\item\em Density convergence criteria. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{structChronusQ_1_1SCFControls_a79d77808a40e46f3bef02623a117c4d6}{ene\+Conv\+Tol}} = 1e-\/10
+\begin{DoxyCompactList}\small\item\em Energy convergence criteria. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{structChronusQ_1_1SCFControls_a153dfb5ca84637d006688129f41af1a4}{FDCConv\+Tol}} = 1e-\/8
+\begin{DoxyCompactList}\small\item\em Gradient convergence criteria. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structChronusQ_1_1SCFControls_a0b53583d66018a2437d4de8432e1a491}{do\+Extrap}} = true
+\begin{DoxyCompactList}\small\item\em Whether to extrapolate Fock matrix. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceChronusQ_a4c8be3d9eff6d8729a8d34d64d035f25}{SCF\+\_\+\+STEP}} \mbox{\hyperlink{structChronusQ_1_1SCFControls_a1a659381542516c966525453a5bedcfb}{scf\+Step}} = \mbox{\hyperlink{namespaceChronusQ_a4c8be3d9eff6d8729a8d34d64d035f25abd11c5f91f2dafbb83196621a9c0f7cb}{\+\_\+\+CONVENTIONAL\+\_\+\+SCF\+\_\+\+STEP}}
+\item 
+\mbox{\hyperlink{namespaceChronusQ_a01fc09180142c9ef18c921fb1807c2d4}{SCF\+\_\+\+ALG}} \mbox{\hyperlink{structChronusQ_1_1SCFControls_aa6847e3ac1885322098e5930290a83bb}{scf\+Alg}} = \mbox{\hyperlink{namespaceChronusQ_a01fc09180142c9ef18c921fb1807c2d4a8ffcf4a789f0831f6b3cfa72fa81f216}{\+\_\+\+CONVENTIONAL\+\_\+\+SCF}}
+\item 
+\mbox{\hyperlink{namespaceChronusQ_aff61a7e23880290b032e2c98a656e364}{NR\+\_\+\+APPROX}} \mbox{\hyperlink{structChronusQ_1_1SCFControls_ae5370cdbd352f8720730937ea3153842}{nr\+Alg}} = \mbox{\hyperlink{namespaceChronusQ_aff61a7e23880290b032e2c98a656e364a221402c6433c4602a0d81a3af5ebeaf7}{QUASI\+\_\+\+BFGS}}
+\begin{DoxyCompactList}\small\item\em NR approximation(i.\+e. quasi-\/\+Newton) \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{structChronusQ_1_1SCFControls_a93d6ef7ed5b7d79d5ba74b1fe0f4c540}{nr\+Trust}} = 0.\+1
+\begin{DoxyCompactList}\small\item\em Initial trust region for NR SCF. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{structChronusQ_1_1SCFControls_aa0f1bca3be8f3098db49231815f8a0f0}{nr\+Level\+Shift}} = 0.
+\begin{DoxyCompactList}\small\item\em Level shift for diagonal hessian. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6e}{SS\+\_\+\+GUESS}} \mbox{\hyperlink{structChronusQ_1_1SCFControls_a3e9cc9aee1298d27ce5b8c0e45ba130d}{guess}} = \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6ea23187c33c11d5287ae288934894b33c6}{SAD}}
+\item 
+\mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6e}{SS\+\_\+\+GUESS}} \mbox{\hyperlink{structChronusQ_1_1SCFControls_a80a767472903aed147be0e4af5ef3461}{prot\+\_\+guess}} = \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6eaf606ef2ee36ec22dbee81b070a28e645}{CORE}}
+\item 
+\mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1}{DIIS\+\_\+\+ALG}} \mbox{\hyperlink{structChronusQ_1_1SCFControls_af8ed638262e0613be803a8785bd2ddf3}{diis\+Alg}} = \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1addd669d250447f4c8ee2479af495cc1c}{CEDIIS}}
+\begin{DoxyCompactList}\small\item\em Type of \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} extrapolation. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{structChronusQ_1_1SCFControls_a4bfbbd4a6e9fca206a003a8ec74a613c}{n\+Keep}} = 10
+\begin{DoxyCompactList}\small\item\em Number of matrices to use for \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}}. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{structChronusQ_1_1SCFControls_ab5376d5b7da47ef3c4c3cf1532967a74}{cediis\+Switch}} = 0.\+05
+\begin{DoxyCompactList}\small\item\em When to switch from EDIIS to CDIIS. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structChronusQ_1_1SCFControls_af5d9e9223dcc74cf8ec5e088a9c57be1}{do\+Damp}} = false
+\begin{DoxyCompactList}\small\item\em Flag for turning on damping. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{structChronusQ_1_1SCFControls_afa14d561ca4f4670d69d98e0acb9c2da}{damp\+Start\+Param}} = 0.\+7
+\begin{DoxyCompactList}\small\item\em Starting damping parameter. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{structChronusQ_1_1SCFControls_a1c011aeb2e3cf2f221bbe2b5c15f7365}{damp\+Param}} = \mbox{\hyperlink{structChronusQ_1_1SCFControls_afa14d561ca4f4670d69d98e0acb9c2da}{damp\+Start\+Param}}
+\begin{DoxyCompactList}\small\item\em Current Damp parameter. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{structChronusQ_1_1SCFControls_afe2f86f80815613098ad2a05573781db}{damp\+Error}} = 1e-\/3
+\begin{DoxyCompactList}\small\item\em Energy oscillation to turn off damp. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structChronusQ_1_1SCFControls_ada768f933e2b5d9c7b2575e908d6a2a8}{do\+Inc\+Fock}} = false
+\begin{DoxyCompactList}\small\item\em Whether to perform an incremental fock build. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{structChronusQ_1_1SCFControls_a81914bf24a382a8816bf7a049d5f5a7b}{n\+Inc\+Fock}} = 20
+\begin{DoxyCompactList}\small\item\em Restart incremental fock build after n steps. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{structChronusQ_1_1SCFControls_ae3d1695a6fa9e866364f6bdd993ad23a}{max\+SCFIter}} = 128
+\begin{DoxyCompactList}\small\item\em Maximum SCF iterations. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{structChronusQ_1_1SCFControls_ab9267b97c784ce843e28d8075e2063fb}{print\+MOCoeffs}} = 0
+\item 
+size\+\_\+t \mbox{\hyperlink{structChronusQ_1_1SCFControls_accc6822cea5c15bc2c1b846a10224ee9}{print\+Level}} = 1
+\item 
+std\+::string \mbox{\hyperlink{structChronusQ_1_1SCFControls_a46eb49916af54fb511cb995f15901470}{ref\+Long\+Name\+\_\+}}
+\item 
+std\+::string \mbox{\hyperlink{structChronusQ_1_1SCFControls_ab78575ee1d21e6341a58937fcb5dfada}{ref\+Short\+Name\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A struct to hold the information pertaining to the control of an SCF procedure. 
+
+Holds information like convergence critera, \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} settings, max iterations, etc. 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_ab5376d5b7da47ef3c4c3cf1532967a74}\label{structChronusQ_1_1SCFControls_ab5376d5b7da47ef3c4c3cf1532967a74}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!cediisSwitch@{cediisSwitch}}
+\index{cediisSwitch@{cediisSwitch}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{cediisSwitch}{cediisSwitch}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+SCFControls\+::cediis\+Switch = 0.\+05}
+
+
+
+When to switch from EDIIS to CDIIS. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_afe2f86f80815613098ad2a05573781db}\label{structChronusQ_1_1SCFControls_afe2f86f80815613098ad2a05573781db}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!dampError@{dampError}}
+\index{dampError@{dampError}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{dampError}{dampError}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+SCFControls\+::damp\+Error = 1e-\/3}
+
+
+
+Energy oscillation to turn off damp. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_a1c011aeb2e3cf2f221bbe2b5c15f7365}\label{structChronusQ_1_1SCFControls_a1c011aeb2e3cf2f221bbe2b5c15f7365}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!dampParam@{dampParam}}
+\index{dampParam@{dampParam}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{dampParam}{dampParam}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+SCFControls\+::damp\+Param = \mbox{\hyperlink{structChronusQ_1_1SCFControls_afa14d561ca4f4670d69d98e0acb9c2da}{damp\+Start\+Param}}}
+
+
+
+Current Damp parameter. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_afa14d561ca4f4670d69d98e0acb9c2da}\label{structChronusQ_1_1SCFControls_afa14d561ca4f4670d69d98e0acb9c2da}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!dampStartParam@{dampStartParam}}
+\index{dampStartParam@{dampStartParam}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{dampStartParam}{dampStartParam}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+SCFControls\+::damp\+Start\+Param = 0.\+7}
+
+
+
+Starting damping parameter. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_ab35eddd86f51d5614999f7e000be9cd5}\label{structChronusQ_1_1SCFControls_ab35eddd86f51d5614999f7e000be9cd5}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!denConvTol@{denConvTol}}
+\index{denConvTol@{denConvTol}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{denConvTol}{denConvTol}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+SCFControls\+::den\+Conv\+Tol = 1e-\/8}
+
+
+
+Density convergence criteria. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_af8ed638262e0613be803a8785bd2ddf3}\label{structChronusQ_1_1SCFControls_af8ed638262e0613be803a8785bd2ddf3}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!diisAlg@{diisAlg}}
+\index{diisAlg@{diisAlg}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{diisAlg}{diisAlg}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1}{DIIS\+\_\+\+ALG}} Chronus\+Q\+::\+SCFControls\+::diis\+Alg = \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1addd669d250447f4c8ee2479af495cc1c}{CEDIIS}}}
+
+
+
+Type of \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} extrapolation. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_af5d9e9223dcc74cf8ec5e088a9c57be1}\label{structChronusQ_1_1SCFControls_af5d9e9223dcc74cf8ec5e088a9c57be1}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!doDamp@{doDamp}}
+\index{doDamp@{doDamp}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{doDamp}{doDamp}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+SCFControls\+::do\+Damp = false}
+
+
+
+Flag for turning on damping. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_a0b53583d66018a2437d4de8432e1a491}\label{structChronusQ_1_1SCFControls_a0b53583d66018a2437d4de8432e1a491}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!doExtrap@{doExtrap}}
+\index{doExtrap@{doExtrap}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{doExtrap}{doExtrap}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+SCFControls\+::do\+Extrap = true}
+
+
+
+Whether to extrapolate Fock matrix. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_ada768f933e2b5d9c7b2575e908d6a2a8}\label{structChronusQ_1_1SCFControls_ada768f933e2b5d9c7b2575e908d6a2a8}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!doIncFock@{doIncFock}}
+\index{doIncFock@{doIncFock}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{doIncFock}{doIncFock}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+SCFControls\+::do\+Inc\+Fock = false}
+
+
+
+Whether to perform an incremental fock build. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_a79d77808a40e46f3bef02623a117c4d6}\label{structChronusQ_1_1SCFControls_a79d77808a40e46f3bef02623a117c4d6}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!eneConvTol@{eneConvTol}}
+\index{eneConvTol@{eneConvTol}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{eneConvTol}{eneConvTol}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+SCFControls\+::ene\+Conv\+Tol = 1e-\/10}
+
+
+
+Energy convergence criteria. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_a153dfb5ca84637d006688129f41af1a4}\label{structChronusQ_1_1SCFControls_a153dfb5ca84637d006688129f41af1a4}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!FDCConvTol@{FDCConvTol}}
+\index{FDCConvTol@{FDCConvTol}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{FDCConvTol}{FDCConvTol}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+SCFControls\+::\+FDCConv\+Tol = 1e-\/8}
+
+
+
+Gradient convergence criteria. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_a3e9cc9aee1298d27ce5b8c0e45ba130d}\label{structChronusQ_1_1SCFControls_a3e9cc9aee1298d27ce5b8c0e45ba130d}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!guess@{guess}}
+\index{guess@{guess}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{guess}{guess}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6e}{SS\+\_\+\+GUESS}} Chronus\+Q\+::\+SCFControls\+::guess = \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6ea23187c33c11d5287ae288934894b33c6}{SAD}}}
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_ae3d1695a6fa9e866364f6bdd993ad23a}\label{structChronusQ_1_1SCFControls_ae3d1695a6fa9e866364f6bdd993ad23a}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!maxSCFIter@{maxSCFIter}}
+\index{maxSCFIter@{maxSCFIter}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{maxSCFIter}{maxSCFIter}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+SCFControls\+::max\+SCFIter = 128}
+
+
+
+Maximum SCF iterations. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_a81914bf24a382a8816bf7a049d5f5a7b}\label{structChronusQ_1_1SCFControls_a81914bf24a382a8816bf7a049d5f5a7b}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!nIncFock@{nIncFock}}
+\index{nIncFock@{nIncFock}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{nIncFock}{nIncFock}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+SCFControls\+::n\+Inc\+Fock = 20}
+
+
+
+Restart incremental fock build after n steps. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_a4bfbbd4a6e9fca206a003a8ec74a613c}\label{structChronusQ_1_1SCFControls_a4bfbbd4a6e9fca206a003a8ec74a613c}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!nKeep@{nKeep}}
+\index{nKeep@{nKeep}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{nKeep}{nKeep}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+SCFControls\+::n\+Keep = 10}
+
+
+
+Number of matrices to use for \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}}. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_ae5370cdbd352f8720730937ea3153842}\label{structChronusQ_1_1SCFControls_ae5370cdbd352f8720730937ea3153842}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!nrAlg@{nrAlg}}
+\index{nrAlg@{nrAlg}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{nrAlg}{nrAlg}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceChronusQ_aff61a7e23880290b032e2c98a656e364}{NR\+\_\+\+APPROX}} Chronus\+Q\+::\+SCFControls\+::nr\+Alg = \mbox{\hyperlink{namespaceChronusQ_aff61a7e23880290b032e2c98a656e364a221402c6433c4602a0d81a3af5ebeaf7}{QUASI\+\_\+\+BFGS}}}
+
+
+
+NR approximation(i.\+e. quasi-\/\+Newton) 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_aa0f1bca3be8f3098db49231815f8a0f0}\label{structChronusQ_1_1SCFControls_aa0f1bca3be8f3098db49231815f8a0f0}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!nrLevelShift@{nrLevelShift}}
+\index{nrLevelShift@{nrLevelShift}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{nrLevelShift}{nrLevelShift}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+SCFControls\+::nr\+Level\+Shift = 0.}
+
+
+
+Level shift for diagonal hessian. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_a93d6ef7ed5b7d79d5ba74b1fe0f4c540}\label{structChronusQ_1_1SCFControls_a93d6ef7ed5b7d79d5ba74b1fe0f4c540}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!nrTrust@{nrTrust}}
+\index{nrTrust@{nrTrust}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{nrTrust}{nrTrust}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+SCFControls\+::nr\+Trust = 0.\+1}
+
+
+
+Initial trust region for NR SCF. 
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_accc6822cea5c15bc2c1b846a10224ee9}\label{structChronusQ_1_1SCFControls_accc6822cea5c15bc2c1b846a10224ee9}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!printLevel@{printLevel}}
+\index{printLevel@{printLevel}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{printLevel}{printLevel}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+SCFControls\+::print\+Level = 1}
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_ab9267b97c784ce843e28d8075e2063fb}\label{structChronusQ_1_1SCFControls_ab9267b97c784ce843e28d8075e2063fb}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!printMOCoeffs@{printMOCoeffs}}
+\index{printMOCoeffs@{printMOCoeffs}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{printMOCoeffs}{printMOCoeffs}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+SCFControls\+::print\+MOCoeffs = 0}
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_a80a767472903aed147be0e4af5ef3461}\label{structChronusQ_1_1SCFControls_a80a767472903aed147be0e4af5ef3461}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!prot\_guess@{prot\_guess}}
+\index{prot\_guess@{prot\_guess}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{prot\_guess}{prot\_guess}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6e}{SS\+\_\+\+GUESS}} Chronus\+Q\+::\+SCFControls\+::prot\+\_\+guess = \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6eaf606ef2ee36ec22dbee81b070a28e645}{CORE}}}
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_a46eb49916af54fb511cb995f15901470}\label{structChronusQ_1_1SCFControls_a46eb49916af54fb511cb995f15901470}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!refLongName\_@{refLongName\_}}
+\index{refLongName\_@{refLongName\_}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{refLongName\_}{refLongName\_}}
+{\footnotesize\ttfamily std\+::string Chronus\+Q\+::\+SCFControls\+::ref\+Long\+Name\+\_\+}
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_ab78575ee1d21e6341a58937fcb5dfada}\label{structChronusQ_1_1SCFControls_ab78575ee1d21e6341a58937fcb5dfada}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!refShortName\_@{refShortName\_}}
+\index{refShortName\_@{refShortName\_}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{refShortName\_}{refShortName\_}}
+{\footnotesize\ttfamily std\+::string Chronus\+Q\+::\+SCFControls\+::ref\+Short\+Name\+\_\+}
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_aa6847e3ac1885322098e5930290a83bb}\label{structChronusQ_1_1SCFControls_aa6847e3ac1885322098e5930290a83bb}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!scfAlg@{scfAlg}}
+\index{scfAlg@{scfAlg}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{scfAlg}{scfAlg}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceChronusQ_a01fc09180142c9ef18c921fb1807c2d4}{SCF\+\_\+\+ALG}} Chronus\+Q\+::\+SCFControls\+::scf\+Alg = \mbox{\hyperlink{namespaceChronusQ_a01fc09180142c9ef18c921fb1807c2d4a8ffcf4a789f0831f6b3cfa72fa81f216}{\+\_\+\+CONVENTIONAL\+\_\+\+SCF}}}
+
+\mbox{\Hypertarget{structChronusQ_1_1SCFControls_a1a659381542516c966525453a5bedcfb}\label{structChronusQ_1_1SCFControls_a1a659381542516c966525453a5bedcfb}} 
+\index{ChronusQ::SCFControls@{ChronusQ::SCFControls}!scfStep@{scfStep}}
+\index{scfStep@{scfStep}!ChronusQ::SCFControls@{ChronusQ::SCFControls}}
+\doxysubsubsection{\texorpdfstring{scfStep}{scfStep}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceChronusQ_a4c8be3d9eff6d8729a8d34d64d035f25}{SCF\+\_\+\+STEP}} Chronus\+Q\+::\+SCFControls\+::scf\+Step = \mbox{\hyperlink{namespaceChronusQ_a4c8be3d9eff6d8729a8d34d64d035f25abd11c5f91f2dafbb83196621a9c0f7cb}{\+\_\+\+CONVENTIONAL\+\_\+\+SCF\+\_\+\+STEP}}}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/singleslater/\mbox{\hyperlink{singleslater_2base_8hpp}{base.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,532 @@
+\hypertarget{wavefunction_2print_8hpp_source}{}\doxysection{print.\+hpp}
+\label{wavefunction_2print_8hpp_source}\index{include/wavefunction/print.hpp@{include/wavefunction/print.hpp}}
+\mbox{\hyperlink{wavefunction_2print_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you ca redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{wavefunction_8hpp}{wavefunction.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{math_8hpp}{util/math.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{physcon_8hpp}{physcon.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{35   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a0817d7fb38162cdba6e4350a29a5278a}{WaveFunction<MatsT,IntsT>::printMO}}(std::ostream \&out) \{}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \textcolor{keywordtype}{size\_t} NB = nAlphaOrbital() * this-\/>nC;}
+\DoxyCodeLine{38    }
+\DoxyCodeLine{39     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}MO 1"{}},mo[0].pointer(),NB,NB,NB);}
+\DoxyCodeLine{40     \textcolor{keywordflow}{if}( mo.size() > 1 )}
+\DoxyCodeLine{41       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}MO 2"{}},mo[1].pointer(),NB,NB,NB);}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \}; \textcolor{comment}{// WaveFunction<T,MatsT,IntsT>::printMO}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{46   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a6d387c926ec301e02bbe12563cd75b78}{WaveFunction<MatsT,IntsT>::printEPS}}(std::ostream \&out) \{}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keywordtype}{size\_t} NB = nAlphaOrbital() * this-\/>nC;}
+\DoxyCodeLine{49    }
+\DoxyCodeLine{50     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}EPS 1"{}},eps1,NB,NB,NB);}
+\DoxyCodeLine{51     \textcolor{keywordflow}{if}( eps2 != \textcolor{keyword}{nullptr} )}
+\DoxyCodeLine{52       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}EPS 2"{}},eps2,NB,NB,NB);}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54   \}; \textcolor{comment}{// WaveFunction<T,MatsT,IntsT>::printEPS}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{60   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename} ValManipOp>}
+\DoxyCodeLine{61   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ae7e6d2ac0bb02fd9cf42a4586eb35560}{prettyMOPrint}}(std::ostream \&out, \textcolor{keywordtype}{size\_t} NB, \textcolor{keywordtype}{size\_t} NOrb, \textcolor{keywordtype}{double} *EPS,}
+\DoxyCodeLine{62     T* MO, \textcolor{keywordtype}{size\_t} LDM, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis,}
+\DoxyCodeLine{63     ValManipOp op )\{}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} maxLPrint = 6 + 1;}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     std::array< std::vector<std::string>, maxLPrint > cartLabel, sphLabel;}
+\DoxyCodeLine{68     std::array< std::string, maxLPrint > angLabel =}
+\DoxyCodeLine{69     \{ \textcolor{stringliteral}{"{}S"{}}, \textcolor{stringliteral}{"{}P"{}}, \textcolor{stringliteral}{"{}D"{}}, \textcolor{stringliteral}{"{}F"{}}, \textcolor{stringliteral}{"{}G"{}}, \textcolor{stringliteral}{"{}H"{}}, \textcolor{stringliteral}{"{}I"{}} \};}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     std::array< std::string, 3 > axes = \{ \textcolor{stringliteral}{"{}X"{}}, \textcolor{stringliteral}{"{}Y"{}}, \textcolor{stringliteral}{"{}Z"{}} \};}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{comment}{// S Functions}}
+\DoxyCodeLine{74     cartLabel[0] = \{ angLabel[0] \};}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < 3; i++) \{}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78       \textcolor{comment}{// P Functions}}
+\DoxyCodeLine{79       cartLabel[1].emplace\_back( angLabel[1] + axes[i] );}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = i; j < 3; j++) \{}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83       \textcolor{comment}{// D Functions}}
+\DoxyCodeLine{84       cartLabel[2].emplace\_back( angLabel[2] + axes[i] + axes[j] );}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = j; k < 3; k++) \{}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88       \textcolor{comment}{// F Functions}}
+\DoxyCodeLine{89       cartLabel[3].emplace\_back( angLabel[3] + axes[i] + axes[j] + axes[k] );}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} l = k; l < 3; l++) \{}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93       \textcolor{comment}{// G Functions}}
+\DoxyCodeLine{94       cartLabel[4].emplace\_back( angLabel[4] + axes[i] + axes[j] + axes[k]}
+\DoxyCodeLine{95           + axes[l] );}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} m = l; m < 3; m++) \{}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99       \textcolor{comment}{// H Functions}}
+\DoxyCodeLine{100       cartLabel[5].emplace\_back( angLabel[5] + axes[i] + axes[j] + axes[k]}
+\DoxyCodeLine{101           + axes[l] + axes[m] );}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} n = m; n < 3; n++) \{}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105       \textcolor{comment}{// I Functions}}
+\DoxyCodeLine{106       cartLabel[6].emplace\_back( angLabel[6] + axes[i] + axes[j] + axes[k]}
+\DoxyCodeLine{107           + axes[l] + axes[m] + axes[n] );}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109     \}\}\}\}\}\}}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     \textcolor{comment}{// Spherical Labels}}
+\DoxyCodeLine{112     \textcolor{keyword}{auto} pm\_string = [](\textcolor{keywordtype}{int} x) -\/> std::string \{}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114       \textcolor{keywordflow}{if}( x > 0 )      \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}+"{}} + std::to\_string(x) ;}
+\DoxyCodeLine{115       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (x < 0 ) \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}} + std::to\_string(x) ;}
+\DoxyCodeLine{116       \textcolor{keywordflow}{else}             \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{} "{}} + std::to\_string(x) ;}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118     \};}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     sphLabel[0] = cartLabel[0];}
+\DoxyCodeLine{121     sphLabel[1] = cartLabel[1];}
+\DoxyCodeLine{122     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 2; i < maxLPrint; i++) \{}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} ml = -\/i; ml <= i; ml++)}
+\DoxyCodeLine{125         sphLabel[i].emplace\_back( angLabel[i] + pm\_string(ml) );}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127     \}}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129     \textcolor{comment}{// Printing format setting}}
+\DoxyCodeLine{130     \textcolor{keywordtype}{size\_t} list = 4; \textcolor{comment}{// \#mo per line}}
+\DoxyCodeLine{131     \textcolor{keywordtype}{size\_t} printWidth = 14;}
+\DoxyCodeLine{132     \textcolor{keywordtype}{size\_t} eValOff = 24;}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134     out << std::endl << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}} << std::endl;}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     out << std::scientific << std::left << std::setprecision(5);}
+\DoxyCodeLine{137     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} p = 0; p < NOrb; p += list) \{}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139       out << std::left << std::endl;}
+\DoxyCodeLine{140       \textcolor{keywordtype}{int} end = list;}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142       \textcolor{keywordflow}{if}( (p + list) >= NOrb ) end = NOrb -\/ p;}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144       out << std::left << std::setw(eValOff) << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{145       out << std::right;}
+\DoxyCodeLine{146       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} k = p; k < p + end; k++)}
+\DoxyCodeLine{147         out << std::setw(printWidth) << k + 1;}
+\DoxyCodeLine{148       out << std::endl;}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150       out << std::left << std::setw(eValOff) << \textcolor{stringliteral}{"{} EigV -\/-\/"{}};}
+\DoxyCodeLine{151       out << std::right;}
+\DoxyCodeLine{152       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} k = p; k < p + end; k++)}
+\DoxyCodeLine{153         out << std::setw(printWidth) << EPS[k];}
+\DoxyCodeLine{154       out << std::endl << std::endl;}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156       \textcolor{comment}{// Function to get the atom info}}
+\DoxyCodeLine{157       \textcolor{keyword}{auto} getAtmSymb = [\&](\textcolor{keywordtype}{size\_t} iAtm) -\/> std::string \{}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159         std::map<std::string,Atom>::const\_iterator it =}
+\DoxyCodeLine{160         std::find\_if(\mbox{\hyperlink{namespaceChronusQ_a75ec1b57ce29641740d7e737070defc9}{atomicReference}}.begin(),\mbox{\hyperlink{namespaceChronusQ_a75ec1b57ce29641740d7e737070defc9}{atomicReference}}.end(),}
+\DoxyCodeLine{161           [\&](\textcolor{keyword}{const} std::pair<std::string,Atom> \&st)\{}
+\DoxyCodeLine{162             return (st.second.atomicNumber == mol.atoms[iAtm].atomicNumber) and}
+\DoxyCodeLine{163                    (st.second.massNumber == mol.atoms[iAtm].massNumber);\}}
+\DoxyCodeLine{164            );}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166         \textcolor{keywordflow}{return} (it == \mbox{\hyperlink{namespaceChronusQ_a75ec1b57ce29641740d7e737070defc9}{atomicReference}}.end() ? \textcolor{stringliteral}{"{}X"{}} : it-\/>first);}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168       \};}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170       \textcolor{keywordtype}{size\_t} iAtm = 0;}
+\DoxyCodeLine{171       std::string atmSymb = getAtmSymb(iAtm);}
+\DoxyCodeLine{172       \textcolor{keywordtype}{size\_t} iShellAtm = 0;}
+\DoxyCodeLine{173       \textcolor{keywordtype}{size\_t} nShell = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}.size();}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iShell = 0; iShell < nShell ; iShell++, iShellAtm++) \{}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177         \textcolor{keywordtype}{size\_t} bfst = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{mapSh2Bf}}[iShell];}
+\DoxyCodeLine{178         \textcolor{keywordtype}{size\_t} sz   = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[iShell].size();}
+\DoxyCodeLine{179         \textcolor{keywordtype}{size\_t} L    = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[iShell].contr[0].l;}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181         \textcolor{keywordtype}{size\_t} curCen = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a2e39c31c653bccb44ec140148baa1ea0}{mapSh2Cen}}[iShell];}
+\DoxyCodeLine{182         \textcolor{keywordtype}{bool} newAtm = \textcolor{keyword}{false};}
+\DoxyCodeLine{183         \textcolor{keywordflow}{if}( curCen != iAtm ) \{}
+\DoxyCodeLine{184           newAtm = \textcolor{keyword}{true};}
+\DoxyCodeLine{185           iAtm++;}
+\DoxyCodeLine{186           atmSymb = getAtmSymb(iAtm);}
+\DoxyCodeLine{187           iShellAtm = 0;}
+\DoxyCodeLine{188         \}}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190         \textcolor{keywordtype}{bool} lastAtm  = iAtm == (mol.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}.size() -\/ 1);}
+\DoxyCodeLine{191         \textcolor{keywordtype}{bool} firstAtm = iShell == 0;}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} mu = bfst, ml = 0 ; ml < sz; mu++, ml++) \{}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195           \textcolor{comment}{// BF number}}
+\DoxyCodeLine{196           out << \textcolor{stringliteral}{"{} "{}} << std::setw(5) << std::left <<  mu + 1; \textcolor{comment}{// 6}}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198           \textcolor{comment}{// atom info}}
+\DoxyCodeLine{199           \textcolor{keywordflow}{if}( (newAtm or firstAtm) ) \{}
+\DoxyCodeLine{200             out << std::setw(3) << iAtm;}
+\DoxyCodeLine{201             out << std::setw(7) << atmSymb;}
+\DoxyCodeLine{202           \} \textcolor{keywordflow}{else} out << std::setw(10) << \textcolor{stringliteral}{"{} "{}}; \textcolor{comment}{// 16}}
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204           \textcolor{comment}{// \#shell and spherical label}}
+\DoxyCodeLine{205           out << std::setw(2) << iShellAtm ;}
+\DoxyCodeLine{206           out << std::setw(4) << sphLabel[L][ml]; \textcolor{comment}{//22}}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208           out << std::setw(2) << \textcolor{stringliteral}{"{} "{}}; \textcolor{comment}{// 24}}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210           \textcolor{comment}{// MO coefficients}}
+\DoxyCodeLine{211           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} q = p; q < p + end; q++) \{}
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213             \textcolor{keywordtype}{double} VAL = op(MO[mu + q*LDM]);}
+\DoxyCodeLine{214             out << std::right << std::setw(printWidth);}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216             \textcolor{keywordflow}{if}(std::abs(VAL) > \mbox{\hyperlink{namespaceChronusQ_a770008c51b3479ebf7b647b73625962c}{PRINT\_SMALL}})    out << VAL;}
+\DoxyCodeLine{217             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(std::isnan(std::abs(VAL))) out << \textcolor{stringliteral}{"{}NAN"{}};}
+\DoxyCodeLine{218             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(std::isinf(std::abs(VAL))) out << \textcolor{stringliteral}{"{}INF"{}};}
+\DoxyCodeLine{219             \textcolor{keywordflow}{else}                               out << 0.;}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221           \}}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223           out << std::endl;}
+\DoxyCodeLine{224 }
+\DoxyCodeLine{225           \textcolor{keywordtype}{bool} nextAtmNew = lastAtm ? false : (mu+1) >= basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_ad24883d35c67703cc3805197053c28f1}{mapCen2BfSt}}[iAtm+1];}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227           \textcolor{keywordflow}{if}( nextAtmNew ) out<<std::endl;}
+\DoxyCodeLine{228         \}}
+\DoxyCodeLine{229       \}}
+\DoxyCodeLine{230       out << std::endl;}
+\DoxyCodeLine{231     \}}
+\DoxyCodeLine{232     out << \mbox{\hyperlink{namespaceChronusQ_a7ec03a45c0666f106c60a4ee2fa36f0c}{bannerEnd}} << std::endl;}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234   \}; \textcolor{comment}{// prettyMOPrint}}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{237   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ae7e6d2ac0bb02fd9cf42a4586eb35560}{prettyMOPrint}}(std::ostream \&out, \textcolor{keywordtype}{size\_t} NB, \textcolor{keywordtype}{size\_t} NOrb, \textcolor{keywordtype}{double} *EPS,}
+\DoxyCodeLine{238     T* MO, \textcolor{keywordtype}{size\_t} LDM, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis)\{}
+\DoxyCodeLine{239 }
+\DoxyCodeLine{240     \mbox{\hyperlink{namespaceChronusQ_ae7e6d2ac0bb02fd9cf42a4586eb35560}{prettyMOPrint}}(out,NB,NOrb,EPS,MO,LDM,mol,basis,}
+\DoxyCodeLine{241         [](T x)\{ \textcolor{keywordflow}{return} x; \});}
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243   \}; \textcolor{comment}{// prettyMOPrint}}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{249   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{250   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a05ea431a1346e14a5228dccaf9df9139}{analyzeMOPrint}}(std::ostream \&out, \textcolor{keywordtype}{size\_t} NB, \textcolor{keywordtype}{size\_t} NOrb, IntsT* S, T* MO,}
+\DoxyCodeLine{251         \textcolor{keywordtype}{size\_t} LDM, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{252         \textcolor{keywordtype}{bool} groupAtm = \textcolor{keyword}{false}, T* MO2 = \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{254     out << \textcolor{stringliteral}{"{}\(\backslash\)nMO components projected to basis functions of different angular momentum"{}}; }
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256     \textcolor{keyword}{constexpr} \textcolor{keywordtype}{size\_t} maxLPrint = 6 + 1;}
+\DoxyCodeLine{257     T* SCR  = mem.template malloc<T>(NB*NOrb);}
+\DoxyCodeLine{258     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,}
+\DoxyCodeLine{259                NB,NOrb,NB,T(1.),\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}},NB,MO,LDM,T(0.),SCR,NB);}
+\DoxyCodeLine{260     \textcolor{comment}{// If alpha and beta parts are summed together}}
+\DoxyCodeLine{261     T *SCR2;}
+\DoxyCodeLine{262     \textcolor{keywordflow}{if} (MO2) \{}
+\DoxyCodeLine{263       SCR2 = mem.template malloc<T>(NB*NOrb);}
+\DoxyCodeLine{264       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,}
+\DoxyCodeLine{265                NB,NOrb,NB,T(1.),\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}},NB,MO2,LDM,T(0.),SCR2,NB);}
+\DoxyCodeLine{266     \}}
+\DoxyCodeLine{267 }
+\DoxyCodeLine{268     std::array< std::string, maxLPrint > angLabel =}
+\DoxyCodeLine{269                 \{ \textcolor{stringliteral}{"{}S"{}}, \textcolor{stringliteral}{"{}P"{}}, \textcolor{stringliteral}{"{}D"{}}, \textcolor{stringliteral}{"{}F"{}}, \textcolor{stringliteral}{"{}G"{}}, \textcolor{stringliteral}{"{}H"{}}, \textcolor{stringliteral}{"{}I"{}} \};}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271     \textcolor{comment}{// Printing format setting}}
+\DoxyCodeLine{272     \textcolor{keywordtype}{size\_t} list = 7;}
+\DoxyCodeLine{273     \textcolor{keywordtype}{size\_t} printWidth = 10;}
+\DoxyCodeLine{274     \textcolor{keywordtype}{size\_t} eValOff = 10;}
+\DoxyCodeLine{275 }
+\DoxyCodeLine{276     out << std::endl << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}} << std::endl;}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278     \textcolor{keyword}{auto} getAtmSymb = [\&](\textcolor{keywordtype}{size\_t} iAtm) -\/> std::string \{}
+\DoxyCodeLine{279 }
+\DoxyCodeLine{280       std::map<std::string,Atom>::const\_iterator it =}
+\DoxyCodeLine{281       std::find\_if(\mbox{\hyperlink{namespaceChronusQ_a75ec1b57ce29641740d7e737070defc9}{atomicReference}}.begin(),\mbox{\hyperlink{namespaceChronusQ_a75ec1b57ce29641740d7e737070defc9}{atomicReference}}.end(),}
+\DoxyCodeLine{282         [\&](\textcolor{keyword}{const} std::pair<std::string,Atom> \&st)\{}
+\DoxyCodeLine{283           return (st.second.atomicNumber == mol.atoms[iAtm].atomicNumber) and}
+\DoxyCodeLine{284                  (st.second.massNumber == mol.atoms[iAtm].massNumber);\}}
+\DoxyCodeLine{285          );}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287       \textcolor{keywordflow}{return} (it == \mbox{\hyperlink{namespaceChronusQ_a75ec1b57ce29641740d7e737070defc9}{atomicReference}}.end() ? \textcolor{stringliteral}{"{}X"{}} : it-\/>first);}
+\DoxyCodeLine{288 }
+\DoxyCodeLine{289     \};}
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291 }
+\DoxyCodeLine{292     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} p = 0; p < NOrb; p += list) \{}
+\DoxyCodeLine{293       out << std::left << std::endl;}
+\DoxyCodeLine{294       \textcolor{keywordtype}{int} end = list;}
+\DoxyCodeLine{295       \textcolor{keywordflow}{if}( (p + list) >= NOrb ) end = NOrb -\/ p;}
+\DoxyCodeLine{296       std::vector<std::vector<T>> angWeight(end,}
+\DoxyCodeLine{297                 std::vector<T>(maxLPrint, T(0.0)));}
+\DoxyCodeLine{298       out << std::left << std::setw(eValOff) << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{299       out << std::right;}
+\DoxyCodeLine{300       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} k = p; k < p + end; k++)}
+\DoxyCodeLine{301         out << std::setw(printWidth) << k + 1;}
+\DoxyCodeLine{302       out << std::endl;}
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304       \textcolor{keywordtype}{size\_t} iAtm = 0;}
+\DoxyCodeLine{305       std::string atmSymb = getAtmSymb(iAtm);}
+\DoxyCodeLine{306 }
+\DoxyCodeLine{307       \textcolor{keywordtype}{size\_t} nShell = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}.size();}
+\DoxyCodeLine{308       \textcolor{keywordtype}{size\_t} maxL = 0;}
+\DoxyCodeLine{309       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iShell = 0; iShell < nShell ; iShell++) \{}
+\DoxyCodeLine{310         \textcolor{keywordtype}{size\_t} bfst = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{mapSh2Bf}}[iShell];}
+\DoxyCodeLine{311         \textcolor{keywordtype}{size\_t} sz   = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[iShell].size();}
+\DoxyCodeLine{312         \textcolor{keywordtype}{size\_t} L    = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[iShell].contr[0].l;}
+\DoxyCodeLine{313         \textcolor{keywordflow}{if} (L > maxL) maxL = L;}
+\DoxyCodeLine{314         \textcolor{keywordtype}{size\_t} curCen = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a2e39c31c653bccb44ec140148baa1ea0}{mapSh2Cen}}[iShell];}
+\DoxyCodeLine{315         \textcolor{keywordtype}{bool} newAtm = \textcolor{keyword}{false};}
+\DoxyCodeLine{316         \textcolor{keywordflow}{if}( curCen != iAtm ) \{}
+\DoxyCodeLine{317           iAtm++;}
+\DoxyCodeLine{318           \textcolor{keywordflow}{if}( !groupAtm or (groupAtm and (atmSymb != getAtmSymb(iAtm))) ) \{}
+\DoxyCodeLine{319             newAtm = \textcolor{keyword}{true};}
+\DoxyCodeLine{320             atmSymb = getAtmSymb(iAtm);}
+\DoxyCodeLine{321             \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < end; i++)}
+\DoxyCodeLine{322               std::fill(angWeight[i].begin(), angWeight[i].end(), 0.0);}
+\DoxyCodeLine{323           \}}
+\DoxyCodeLine{324         \}}
+\DoxyCodeLine{325         \textcolor{keywordtype}{bool} lastAtm  = iAtm == (mol.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}.size() -\/ 1);}
+\DoxyCodeLine{326         \textcolor{keywordtype}{bool} firstAtm = iShell == 0;}
+\DoxyCodeLine{327         \textcolor{keywordtype}{bool} nextAtmNew;}
+\DoxyCodeLine{328 }
+\DoxyCodeLine{329         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} mu = bfst; mu < bfst + sz; mu++) \{}
+\DoxyCodeLine{330           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} q = p; q < p + end; q++) \{}
+\DoxyCodeLine{331             angWeight[q-\/p][L] += \mbox{\hyperlink{namespaceChronusQ_afe3e41cf782d225ede67d9450e48aa34}{SmartConj}}(MO[mu + q*LDM]) * SCR[mu + q*NB];}
+\DoxyCodeLine{332             \textcolor{keywordflow}{if} (MO2)}
+\DoxyCodeLine{333               angWeight[q-\/p][L] += \mbox{\hyperlink{namespaceChronusQ_afe3e41cf782d225ede67d9450e48aa34}{SmartConj}}(MO2[mu + q*LDM]) * SCR2[mu + q*NB];}
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335           \}}
+\DoxyCodeLine{336           nextAtmNew = lastAtm ? false : (mu+1) >= basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_ad24883d35c67703cc3805197053c28f1}{mapCen2BfSt}}[iAtm+1];}
+\DoxyCodeLine{337           if (groupAtm and (atmSymb == getAtmSymb(iAtm+1))) nextAtmNew = \textcolor{keyword}{false};}
+\DoxyCodeLine{338         \}}
+\DoxyCodeLine{339 }
+\DoxyCodeLine{340         \textcolor{keywordflow}{if}( (newAtm or firstAtm) ) \{}
+\DoxyCodeLine{341             out << std::setw(6) << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{342             out << std::setw(3) << std::left << iAtm;}
+\DoxyCodeLine{343             out << std::setw(7) << std::left << atmSymb;}
+\DoxyCodeLine{344             out << std::endl;}
+\DoxyCodeLine{345         \}}
+\DoxyCodeLine{346         \textcolor{keywordflow}{if}( nextAtmNew or (iShell + 1 == nShell) ) \{}
+\DoxyCodeLine{347           \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i <= maxL; i++) \{}
+\DoxyCodeLine{348             out << \textcolor{stringliteral}{"{} "{}} << std::left << std::setw(eValOff-\/1) << angLabel[i];}
+\DoxyCodeLine{349             out << std::right;}
+\DoxyCodeLine{350             \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} q = p; q < p+end; q++) \{}
+\DoxyCodeLine{351               \textcolor{keywordtype}{double} VAL = std::real(angWeight[q-\/p][i]);}
+\DoxyCodeLine{352               std::cout << std::fixed << std::right<< std::setprecision(4);}
+\DoxyCodeLine{353               std::cout.fill(\textcolor{charliteral}{' '});}
+\DoxyCodeLine{354 }
+\DoxyCodeLine{355               \textcolor{keywordflow}{if}(std::abs(VAL) >= 1e-\/4)    out << std::setw(printWidth) << VAL;}
+\DoxyCodeLine{356               \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(std::isnan(std::abs(VAL))) out << std::setw(printWidth) << \textcolor{stringliteral}{"{}NAN"{}};}
+\DoxyCodeLine{357               \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(std::isinf(std::abs(VAL))) out << std::setw(printWidth) << \textcolor{stringliteral}{"{}INF"{}};}
+\DoxyCodeLine{358               \textcolor{keywordflow}{else}                               out << std::setw(printWidth) << \textcolor{stringliteral}{"{}-\/"{}};}
+\DoxyCodeLine{359             \}}
+\DoxyCodeLine{360             out << std::endl;}
+\DoxyCodeLine{361           \}}
+\DoxyCodeLine{362         \}}
+\DoxyCodeLine{363       \}}
+\DoxyCodeLine{364       out << std::endl;}
+\DoxyCodeLine{365     \}}
+\DoxyCodeLine{366 }
+\DoxyCodeLine{367     mem.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(SCR);}
+\DoxyCodeLine{368     out << \mbox{\hyperlink{namespaceChronusQ_a7ec03a45c0666f106c60a4ee2fa36f0c}{bannerEnd}} << std::endl;}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370   \} \textcolor{comment}{// analyzeMOPrint}}
+\DoxyCodeLine{371 }
+\DoxyCodeLine{372 }
+\DoxyCodeLine{373   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{374   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a7ba29f2396149233f97d9b4ba0eff22e}{WaveFunction<MatsT,IntsT>::printMOInfo}}(std::ostream \&out, \textcolor{keywordtype}{size\_t} printLevel) \{}
+\DoxyCodeLine{375 }
+\DoxyCodeLine{376     \textcolor{keywordtype}{size\_t} NB = this-\/>nAlphaOrbital();}
+\DoxyCodeLine{377     \textcolor{keywordtype}{size\_t} NOrb = NB * this-\/>nC;}
+\DoxyCodeLine{378 }
+\DoxyCodeLine{379     \textcolor{keywordtype}{bool} MOcoeffs = printLevel \% 2 == 1;}
+\DoxyCodeLine{380     \textcolor{keywordtype}{bool} analyzeMO = printLevel / 2 > 0;}
+\DoxyCodeLine{381 }
+\DoxyCodeLine{382     \textcolor{keywordflow}{if} (MOcoeffs) \{}
+\DoxyCodeLine{383 }
+\DoxyCodeLine{384     printLevel -\/= 1;}
+\DoxyCodeLine{385 }
+\DoxyCodeLine{386     \textcolor{comment}{// Pretty MO print}}
+\DoxyCodeLine{387     std::function<double(MatsT)> printOp1 = [](MatsT x) \{ \textcolor{keywordflow}{return} std::real(x); \};}
+\DoxyCodeLine{388     std::function<double(MatsT)> printOp2 = printOp1;}
+\DoxyCodeLine{389 }
+\DoxyCodeLine{390     \textcolor{keywordflow}{if}( std::is\_same<MatsT,dcomplex>::value ) \{}
+\DoxyCodeLine{391       printOp1 = [](MatsT x) \{ \textcolor{keywordflow}{return} std::abs(x); \};}
+\DoxyCodeLine{392       printOp2 = [](MatsT x) \{ \textcolor{keywordflow}{return} std::arg(x); \};}
+\DoxyCodeLine{393     \}}
+\DoxyCodeLine{394 }
+\DoxyCodeLine{395     \textcolor{keywordflow}{if}( this-\/>nC >= 2 )}
+\DoxyCodeLine{396     out << \textcolor{stringliteral}{"{} *** NOTICE: Alpha and Beta Coefficients refer to the SAME "{}}}
+\DoxyCodeLine{397       << \textcolor{stringliteral}{"{}Canonical MOs ***\(\backslash\)n"{}};}
+\DoxyCodeLine{398 }
+\DoxyCodeLine{399     out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCanonical Molecular Orbital Coefficients (Alpha)"{}};}
+\DoxyCodeLine{400     \textcolor{keywordflow}{if}( std::is\_same<MatsT,dcomplex>::value )}
+\DoxyCodeLine{401       out << \textcolor{stringliteral}{"{} Magnitude"{}};}
+\DoxyCodeLine{402     \textcolor{keywordflow}{if}( this-\/>nC == 4 ) out << \textcolor{stringliteral}{"{} for Large component"{}};}
+\DoxyCodeLine{403 }
+\DoxyCodeLine{404     \mbox{\hyperlink{namespaceChronusQ_ae7e6d2ac0bb02fd9cf42a4586eb35560}{prettyMOPrint}}(out,NB,NOrb,this-\/>eps1,this-\/>mo[0].pointer(),NOrb,}
+\DoxyCodeLine{405         molecule(),basisSet(),printOp1);}
+\DoxyCodeLine{406 }
+\DoxyCodeLine{407     \textcolor{keywordflow}{if}( std::is\_same<MatsT,dcomplex>::value ) \{}
+\DoxyCodeLine{408       out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCanonical Molecular Orbital Coefficients (Alpha) Phase"{}};}
+\DoxyCodeLine{409       \textcolor{keywordflow}{if}( this-\/>nC == 4 ) out << \textcolor{stringliteral}{"{} for Large component"{}}; }
+\DoxyCodeLine{410       \mbox{\hyperlink{namespaceChronusQ_ae7e6d2ac0bb02fd9cf42a4586eb35560}{prettyMOPrint}}(out,NB,NOrb,this-\/>eps1,this-\/>mo[0].pointer(),NOrb,}
+\DoxyCodeLine{411           molecule(),basisSet(),printOp2);}
+\DoxyCodeLine{412     \}}
+\DoxyCodeLine{413 }
+\DoxyCodeLine{414     \textcolor{keywordflow}{if}( this-\/>nC >= 2 or not this-\/>iCS ) \{}
+\DoxyCodeLine{415 }
+\DoxyCodeLine{416       out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCanonical Molecular Orbital Coefficients (Beta)"{}};}
+\DoxyCodeLine{417       \textcolor{keywordflow}{if}( std::is\_same<MatsT,dcomplex>::value )}
+\DoxyCodeLine{418         out << \textcolor{stringliteral}{"{} Magnitude"{}};}
+\DoxyCodeLine{419       \textcolor{keywordflow}{if}( this-\/>nC == 4 ) out << \textcolor{stringliteral}{"{} for Large component"{}};}
+\DoxyCodeLine{420 }
+\DoxyCodeLine{421       \textcolor{keywordflow}{if}( this-\/>nC == 1 )}
+\DoxyCodeLine{422         \mbox{\hyperlink{namespaceChronusQ_ae7e6d2ac0bb02fd9cf42a4586eb35560}{prettyMOPrint}}(out,NB,NOrb,this-\/>eps2,this-\/>mo[1].pointer(),NOrb,}
+\DoxyCodeLine{423             molecule(),basisSet(),printOp1);}
+\DoxyCodeLine{424       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{425         \mbox{\hyperlink{namespaceChronusQ_ae7e6d2ac0bb02fd9cf42a4586eb35560}{prettyMOPrint}}(out,NB,NOrb,this-\/>eps1,this-\/>mo[0].pointer() + (this-\/>nC/2)*NB,}
+\DoxyCodeLine{426             NOrb,molecule(),basisSet(),printOp1);}
+\DoxyCodeLine{427 }
+\DoxyCodeLine{428       \textcolor{keywordflow}{if}( std::is\_same<MatsT,dcomplex>::value ) \{}
+\DoxyCodeLine{429         out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCanonical Molecular Orbital Coefficients (Beta) Phase"{}};}
+\DoxyCodeLine{430         \textcolor{keywordflow}{if}( this-\/>nC == 4 ) out << \textcolor{stringliteral}{"{} for Large component"{}};}
+\DoxyCodeLine{431 }
+\DoxyCodeLine{432         \textcolor{keywordflow}{if}( this-\/>nC == 1 )}
+\DoxyCodeLine{433           \mbox{\hyperlink{namespaceChronusQ_ae7e6d2ac0bb02fd9cf42a4586eb35560}{prettyMOPrint}}(out,NB,NOrb,this-\/>eps2,this-\/>mo[1].pointer(),NOrb,}
+\DoxyCodeLine{434               molecule(),basisSet(),printOp2);}
+\DoxyCodeLine{435         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{436           \mbox{\hyperlink{namespaceChronusQ_ae7e6d2ac0bb02fd9cf42a4586eb35560}{prettyMOPrint}}(out,NB,NOrb,this-\/>eps1,this-\/>mo[0].pointer() + (this-\/>nC/2)*NB,}
+\DoxyCodeLine{437               NOrb,molecule(),basisSet(),printOp2);}
+\DoxyCodeLine{438       \}}
+\DoxyCodeLine{439     \}}
+\DoxyCodeLine{440 }
+\DoxyCodeLine{441     \textcolor{keywordflow}{if}( this-\/>nC == 4 ) \{}
+\DoxyCodeLine{442 }
+\DoxyCodeLine{443       out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCanonical Molecular Orbital Coefficients (Alpha)"{}};}
+\DoxyCodeLine{444       \textcolor{keywordflow}{if}( std::is\_same<MatsT,dcomplex>::value )}
+\DoxyCodeLine{445         out << \textcolor{stringliteral}{"{} Magnitude"{}};}
+\DoxyCodeLine{446       out << \textcolor{stringliteral}{"{} for Small component"{}};}
+\DoxyCodeLine{447       \mbox{\hyperlink{namespaceChronusQ_ae7e6d2ac0bb02fd9cf42a4586eb35560}{prettyMOPrint}}(out,NB,NOrb,this-\/>eps1,this-\/>mo[0].pointer() + NB,NOrb,}
+\DoxyCodeLine{448         molecule(),basisSet(),printOp1);}
+\DoxyCodeLine{449 }
+\DoxyCodeLine{450       \textcolor{keywordflow}{if}( std::is\_same<MatsT,dcomplex>::value ) \{}
+\DoxyCodeLine{451         out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCanonical Molecular Orbital Coefficients (Alpha) Phase for Small component"{}};}
+\DoxyCodeLine{452         \mbox{\hyperlink{namespaceChronusQ_ae7e6d2ac0bb02fd9cf42a4586eb35560}{prettyMOPrint}}(out,NB,NOrb,this-\/>eps1,this-\/>mo[0].pointer() + NB,NOrb,}
+\DoxyCodeLine{453         molecule(),basisSet(),printOp2);}
+\DoxyCodeLine{454       \}}
+\DoxyCodeLine{455 }
+\DoxyCodeLine{456       out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCanonical Molecular Orbital Coefficients (Beta)"{}};}
+\DoxyCodeLine{457       \textcolor{keywordflow}{if}( std::is\_same<MatsT,dcomplex>::value )}
+\DoxyCodeLine{458         out << \textcolor{stringliteral}{"{} Magnitude"{}};}
+\DoxyCodeLine{459       out << \textcolor{stringliteral}{"{} for Small component"{}};}
+\DoxyCodeLine{460       \mbox{\hyperlink{namespaceChronusQ_ae7e6d2ac0bb02fd9cf42a4586eb35560}{prettyMOPrint}}(out,NB,NOrb,this-\/>eps1,this-\/>mo[0].pointer() + 3*NB,NOrb,}
+\DoxyCodeLine{461         molecule(),basisSet(),printOp1);}
+\DoxyCodeLine{462 }
+\DoxyCodeLine{463       \textcolor{keywordflow}{if}( std::is\_same<MatsT,dcomplex>::value ) \{}
+\DoxyCodeLine{464         out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCanonical Molecular Orbital Coefficients (Beta) Phase for Small component"{}};}
+\DoxyCodeLine{465         \mbox{\hyperlink{namespaceChronusQ_ae7e6d2ac0bb02fd9cf42a4586eb35560}{prettyMOPrint}}(out,NB,NOrb,this-\/>eps1,this-\/>mo[0].pointer() + 3*NB,NOrb,}
+\DoxyCodeLine{466         molecule(),basisSet(),printOp2);}
+\DoxyCodeLine{467       \}}
+\DoxyCodeLine{468 }
+\DoxyCodeLine{469     \}}
+\DoxyCodeLine{470     out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}} << \mbox{\hyperlink{namespaceChronusQ_a0c336a0275cfd2e395b01766efa494b2}{BannerEnd}} << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{471 }
+\DoxyCodeLine{472     \}}
+\DoxyCodeLine{473 }
+\DoxyCodeLine{474     \textcolor{keywordflow}{if} ( analyzeMO ) \{}
+\DoxyCodeLine{475 }
+\DoxyCodeLine{476     \textcolor{comment}{// Analysis angular momentum components of MOs}}
+\DoxyCodeLine{477     \textcolor{keywordtype}{bool} groupAtm = (printLevel/2) \% 2 == 0;}
+\DoxyCodeLine{478     \textcolor{keywordtype}{bool} groupAB = printLevel/2 >= 3;}
+\DoxyCodeLine{479 }
+\DoxyCodeLine{480     MatsT * MO2 = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{481     \textcolor{keywordflow}{if}( groupAB ) \{}
+\DoxyCodeLine{482       out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCanonical Molecular Orbital based Mulliken Population Analysis (Alpha + Beta)"{}};}
+\DoxyCodeLine{483       \textcolor{keywordflow}{if} (this-\/>nC == 1 and not this-\/>iCS) MO2 = this-\/>mo[1].pointer();}
+\DoxyCodeLine{484       \textcolor{keywordflow}{else} MO2 =  this-\/>mo[0].pointer() + (this-\/>nC/2)*NB;}
+\DoxyCodeLine{485     \}}
+\DoxyCodeLine{486     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( this-\/>nC >= 2 ) \{}
+\DoxyCodeLine{487       out << \textcolor{stringliteral}{"{}\(\backslash\)n *** NOTICE: Alpha and Beta Analysis refer to the SAME "{}}}
+\DoxyCodeLine{488         << \textcolor{stringliteral}{"{}Canonical MOs ***"{}};}
+\DoxyCodeLine{489       out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCanonical Molecular Orbital based Mulliken Population Analysis (Alpha)"{}};}
+\DoxyCodeLine{490     \}}
+\DoxyCodeLine{491     \textcolor{keywordflow}{if}( this-\/>nC == 4 ) out << \textcolor{stringliteral}{"{} for Large component"{}};}
+\DoxyCodeLine{492     \mbox{\hyperlink{namespaceChronusQ_a05ea431a1346e14a5228dccaf9df9139}{analyzeMOPrint}}(out, NB, NOrb, aoints.overlap-\/>pointer(), this-\/>mo[0].pointer(),}
+\DoxyCodeLine{493             NOrb, molecule(), basisSet(), this-\/>memManager, groupAtm, MO2);}
+\DoxyCodeLine{494 }
+\DoxyCodeLine{495     \textcolor{keywordflow}{if}( not groupAB and (this-\/>nC >= 2 or not this-\/>iCS) ) \{}
+\DoxyCodeLine{496       out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCanonical Molecular Orbital based Mulliken Population Analysis (Beta)"{}};}
+\DoxyCodeLine{497       \textcolor{keywordflow}{if}( this-\/>nC == 4 ) out << \textcolor{stringliteral}{"{} for Large component"{}};}
+\DoxyCodeLine{498       \textcolor{keywordflow}{if}( this-\/>nC == 1 )}
+\DoxyCodeLine{499         \mbox{\hyperlink{namespaceChronusQ_a05ea431a1346e14a5228dccaf9df9139}{analyzeMOPrint}}(out, NB, NOrb, aoints.overlap-\/>pointer(),}
+\DoxyCodeLine{500               this-\/>mo[1].pointer(), NOrb, molecule(), basisSet(), this-\/>memManager, groupAtm);}
+\DoxyCodeLine{501       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{502         \mbox{\hyperlink{namespaceChronusQ_a05ea431a1346e14a5228dccaf9df9139}{analyzeMOPrint}}(out, NB, NOrb, aoints.overlap-\/>pointer(),}
+\DoxyCodeLine{503               this-\/>mo[0].pointer() + (this-\/>nC/2)*NB, NOrb, molecule(), basisSet(),}
+\DoxyCodeLine{504               this-\/>memManager, groupAtm);}
+\DoxyCodeLine{505 }
+\DoxyCodeLine{506     \}}
+\DoxyCodeLine{507 }
+\DoxyCodeLine{508     \textcolor{keywordflow}{if}( this-\/>nC == 4 ) \{}
+\DoxyCodeLine{509       IntsT* ssOverlap = this-\/>memManager.template malloc<IntsT>(NB*NB);}
+\DoxyCodeLine{510       \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},NB,NB,1./(2*\mbox{\hyperlink{namespaceChronusQ_a387c8ccd4e18ad322b87f75f51fd008d}{SpeedOfLight}}*\mbox{\hyperlink{namespaceChronusQ_a387c8ccd4e18ad322b87f75f51fd008d}{SpeedOfLight}}),this-\/>aoints.kinetic-\/>pointer(),}
+\DoxyCodeLine{511                 NB,ssOverlap,NB);}
+\DoxyCodeLine{512       out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCanonical Molecular Orbital based Mulliken Population Analysis (Alpha) for Small component"{}};}
+\DoxyCodeLine{513       \mbox{\hyperlink{namespaceChronusQ_a05ea431a1346e14a5228dccaf9df9139}{analyzeMOPrint}}(out, NB, NOrb, ssOverlap, this-\/>mo[0].pointer() + NB,}
+\DoxyCodeLine{514             NOrb, molecule(), basisSet(), this-\/>memManager, groupAtm, MO2);}
+\DoxyCodeLine{515       \textcolor{keywordflow}{if}( not groupAB ) \{}
+\DoxyCodeLine{516         out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCanonical Molecular Orbital based Mulliken Population Analysis (Beta) for Small component"{}};}
+\DoxyCodeLine{517         \mbox{\hyperlink{namespaceChronusQ_a05ea431a1346e14a5228dccaf9df9139}{analyzeMOPrint}}(out, NB, NOrb, ssOverlap, this-\/>mo[0].pointer() + 3*NB,}
+\DoxyCodeLine{518                NOrb, molecule(), basisSet(), this-\/>memManager, groupAtm);}
+\DoxyCodeLine{519       \}}
+\DoxyCodeLine{520       this-\/>memManager.free(ssOverlap);}
+\DoxyCodeLine{521 }
+\DoxyCodeLine{522     \}}
+\DoxyCodeLine{523 }
+\DoxyCodeLine{524 }
+\DoxyCodeLine{525     out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}} << \mbox{\hyperlink{namespaceChronusQ_a0c336a0275cfd2e395b01766efa494b2}{BannerEnd}} << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{526 }
+\DoxyCodeLine{527     \}}
+\DoxyCodeLine{528 }
+\DoxyCodeLine{529   \}; \textcolor{comment}{// WaveFunction::printMOInfo}}
+\DoxyCodeLine{530 }
+\DoxyCodeLine{531 }
+\DoxyCodeLine{532 }
+\DoxyCodeLine{533 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{534 }
+
+\end{DoxyCode}

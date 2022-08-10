@@ -1,0 +1,201 @@
+\hypertarget{singleslater_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{singleslater_2impl_8hpp_source}\index{include/singleslater/impl.hpp@{include/singleslater/impl.hpp}}
+\mbox{\hyperlink{singleslater_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you ca redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{util_2preprocessor_8hpp}{util/preprocessor.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{quantum_2preprocessor_8hpp}{quantum/preprocessor.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{corehbuilder_2impl_8hpp}{corehbuilder/impl.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{particleintegrals_2twopints_2impl_8hpp}{particleintegrals/twopints/impl.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{rofock_8hpp}{fockbuilder/rofock.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{fourcompfock_8hpp}{fockbuilder/fourcompfock.hpp}}>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{44   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{45   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU> }
+\DoxyCodeLine{46   \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa88b30b3b531876ae23a8c65f08c2d51}{SingleSlater<MatsT,IntsT>::SingleSlater}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsU,IntsT>}} \&other,\textcolor{keywordtype}{int} dummy) : }
+\DoxyCodeLine{47     \textcolor{comment}{//orthoType(other.orthoType),coreType(other.coreType),}}
+\DoxyCodeLine{48     \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}}(dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}}\&>(other)),}
+\DoxyCodeLine{49     \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{WaveFunctionBase}}(dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{WaveFunctionBase}}\&>(other)),}
+\DoxyCodeLine{50     \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{SingleSlaterBase}}(dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{SingleSlaterBase}}\&>(other)),}
+\DoxyCodeLine{51     \mbox{\hyperlink{classChronusQ_1_1WaveFunction}{WaveFunction}}<MatsT,IntsT>(dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1WaveFunction}{WaveFunction}}<MatsU,IntsT>\&>(other)),}
+\DoxyCodeLine{52     \textcolor{comment}{//basisSet\_(other.basisSet\_),}}
+\DoxyCodeLine{53     fockMatrix(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(*other.fockMatrix)),}
+\DoxyCodeLine{54     fockMatrixOrtho(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(*other.fockMatrixOrtho)),}
+\DoxyCodeLine{55     coulombMatrix(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}<MatsT>>(*other.coulombMatrix)),}
+\DoxyCodeLine{56     exchangeMatrix(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(*other.exchangeMatrix)),}
+\DoxyCodeLine{57     twoeH(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(*other.twoeH)),}
+\DoxyCodeLine{58     onePDMOrtho(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(*other.onePDMOrtho)),}
+\DoxyCodeLine{59     deltaOnePDM(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(*other.deltaOnePDM)),}
+\DoxyCodeLine{60     \textcolor{comment}{//coreH(std::make\_shared<PauliSpinorSquareMatrices<MatsT>>(*other.coreH)),}}
+\DoxyCodeLine{61     coreH(other.coreH ? std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(*other.coreH) : nullptr),}
+\DoxyCodeLine{62     coreHPerturbed(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(*other.coreHPerturbed)),}
+\DoxyCodeLine{63     TPI(\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}<MatsU,IntsT>::template convert<MatsT>(other.TPI)),}
+\DoxyCodeLine{64     coreHBuilder(\mbox{\hyperlink{classChronusQ_1_1CoreHBuilder}{CoreHBuilder}}<MatsU,IntsT>::template convert<MatsT>(other.coreHBuilder)),}
+\DoxyCodeLine{65     fockBuilder(\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsU,IntsT>::template convert<MatsT>(other.fockBuilder)) \{}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 \textcolor{preprocessor}{\#ifdef \_SingleSlaterDebug}}
+\DoxyCodeLine{68     std::cout << \textcolor{stringliteral}{"{}SingleSlater<MatsT>::SingleSlater(const SingleSlater<U>\&) "{}}}
+\DoxyCodeLine{69               << \textcolor{stringliteral}{"{}(this = "{}} << \textcolor{keyword}{this} << \textcolor{stringliteral}{"{}, other = "{}} << \&other << \textcolor{stringliteral}{"{})"{}} }
+\DoxyCodeLine{70               << std::endl;}
+\DoxyCodeLine{71 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{72     \textcolor{keywordflow}{if}( other.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7b247a547632814d69c0328dd0fdf637}{orthoSpinor}} )}
+\DoxyCodeLine{73       \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7b247a547632814d69c0328dd0fdf637}{orthoSpinor}} = std::make\_shared<Orthogonalization<MatsT>>(*other.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7b247a547632814d69c0328dd0fdf637}{orthoSpinor}});}
+\DoxyCodeLine{74     \textcolor{keywordflow}{if}( other.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a5f8672e41e08fa9f1abcae424d663dc2}{orthoAB}} )}
+\DoxyCodeLine{75       \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a5f8672e41e08fa9f1abcae424d663dc2}{orthoAB}} = std::make\_shared<Orthogonalization<MatsT>>(*other.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a5f8672e41e08fa9f1abcae424d663dc2}{orthoAB}});}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77   \}; \textcolor{comment}{// SingleSlater<MatsT>::SingleSlater(const SingleSlater<U> \&)}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80 }
+\DoxyCodeLine{91   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{92   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU> }
+\DoxyCodeLine{93   \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa88b30b3b531876ae23a8c65f08c2d51}{SingleSlater<MatsT,IntsT>::SingleSlater}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsU,IntsT>}} \&\&other,\textcolor{keywordtype}{int} dummy) : }
+\DoxyCodeLine{94     \textcolor{comment}{//orthoType(other.orthoType),coreType(other.coreType),}}
+\DoxyCodeLine{95     \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}}(dynamic\_cast<\mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}}\&\&>(std::move(other))),}
+\DoxyCodeLine{96     \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{WaveFunctionBase}}(dynamic\_cast<\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{WaveFunctionBase}}\&\&>(std::move(other))),}
+\DoxyCodeLine{97     \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{SingleSlaterBase}}(dynamic\_cast<\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{SingleSlaterBase}}\&\&>(std::move(other))),}
+\DoxyCodeLine{98     \mbox{\hyperlink{classChronusQ_1_1WaveFunction}{WaveFunction}}<MatsT,IntsT>(dynamic\_cast<\mbox{\hyperlink{classChronusQ_1_1WaveFunction}{WaveFunction}}<MatsU,IntsT>\&\&>(std::move(other))),}
+\DoxyCodeLine{99     \textcolor{comment}{//basisSet\_(other.basisSet\_),}}
+\DoxyCodeLine{100     fockMatrix(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(std::move(*other.fockMatrix))),}
+\DoxyCodeLine{101     fockMatrixOrtho(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(std::move(*other.fockMatrixOrtho))),}
+\DoxyCodeLine{102     coulombMatrix(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}<MatsT>>(std::move(*other.coulombMatrix))),}
+\DoxyCodeLine{103     exchangeMatrix(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(std::move(*other.exchangeMatrix))),}
+\DoxyCodeLine{104     twoeH(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(std::move(*other.twoeH))),}
+\DoxyCodeLine{105     onePDMOrtho(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(std::move(*other.onePDMOrtho))),}
+\DoxyCodeLine{106     deltaOnePDM(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(std::move(*other.deltaOnePDM))),}
+\DoxyCodeLine{107     coreH(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(std::move(*other.coreH))),}
+\DoxyCodeLine{108     coreHPerturbed(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices}}<MatsT>>(std::move(*other.coreHPerturbed))),}
+\DoxyCodeLine{109     TPI(\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}<MatsU,IntsT>::template convert<MatsT>(other.TPI)),}
+\DoxyCodeLine{110     coreHBuilder(\mbox{\hyperlink{classChronusQ_1_1CoreHBuilder}{CoreHBuilder}}<MatsU,IntsT>::template convert<MatsT>(other.coreHBuilder)),}
+\DoxyCodeLine{111     fockBuilder(\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsU,IntsT>::template convert<MatsT>(other.fockBuilder)) \{}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113 \textcolor{preprocessor}{\#ifdef \_SingleSlaterDebug}}
+\DoxyCodeLine{114     std::cout << \textcolor{stringliteral}{"{}SingleSlater<MatsT>::SingleSlater(SingleSlater<U>\&\&) "{}}}
+\DoxyCodeLine{115               << \textcolor{stringliteral}{"{}(this = "{}} << \textcolor{keyword}{this} << \textcolor{stringliteral}{"{}, other = "{}} << \&other << \textcolor{stringliteral}{"{})"{}} }
+\DoxyCodeLine{116               << std::endl;}
+\DoxyCodeLine{117 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \textcolor{keywordflow}{if}( other.orthoSpinor )}
+\DoxyCodeLine{120       \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7b247a547632814d69c0328dd0fdf637}{orthoSpinor}} = std::make\_shared<Orthogonalization<MatsT>>(std::move(*other.orthoSpinor));}
+\DoxyCodeLine{121     \textcolor{keywordflow}{if}( other.orthoAB )}
+\DoxyCodeLine{122       \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a5f8672e41e08fa9f1abcae424d663dc2}{orthoAB}} = std::make\_shared<Orthogonalization<MatsT>>(std::move(*other.orthoAB));}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124   \}; \textcolor{comment}{// SingleSlater<MatsT>::SingleSlater(SingleSlater<U> \&\&)}}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127   \textcolor{comment}{// Delagate the copy constructor to the conversion constructors}}
+\DoxyCodeLine{128   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{129   \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa88b30b3b531876ae23a8c65f08c2d51}{SingleSlater<MatsT,IntsT>::SingleSlater}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&other) : }
+\DoxyCodeLine{130     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}(other,0)\{ \};}
+\DoxyCodeLine{131   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{132   \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa88b30b3b531876ae23a8c65f08c2d51}{SingleSlater<MatsT,IntsT>::SingleSlater}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&\&other) : }
+\DoxyCodeLine{133     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}(std::move(other),0)\{ \};}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135 }
+\DoxyCodeLine{139   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{140   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a4e284265c548cf208ee288d7fe812dba}{SingleSlater<MatsT,IntsT>::alloc}}() \{}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142 \textcolor{preprocessor}{\#ifdef \_SingleSlaterDebug}}
+\DoxyCodeLine{143     std::cout << \textcolor{stringliteral}{"{}SingleSlater::alloc (this = "{}} << \textcolor{keyword}{this} << \textcolor{stringliteral}{"{})"{}} << std::endl;}
+\DoxyCodeLine{144 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146     \textcolor{keywordtype}{size\_t} NB = this-\/>basisSet().nBasis;}
+\DoxyCodeLine{147     moPairs.resize(2, \{\});}
+\DoxyCodeLine{148     }
+\DoxyCodeLine{149     \textcolor{keywordflow}{if}( nC != 4 ) \{}
+\DoxyCodeLine{150       \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\_OPERATOR\_ALLOC}}(NB,fockMatrix);}
+\DoxyCodeLine{151       \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\_OPERATOR\_ALLOC}}(NB,fockMatrixOrtho);}
+\DoxyCodeLine{152       \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\_OPERATOR\_ALLOC}}(NB,onePDMOrtho);}
+\DoxyCodeLine{153       \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\_OPERATOR\_ALLOC}}(NB,deltaOnePDM);}
+\DoxyCodeLine{154       \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\_OPERATOR\_ALLOC}}(NB,coreHPerturbed);}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157       \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\_OPERATOR\_ALLOC}}(NB,exchangeMatrix);}
+\DoxyCodeLine{158       \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\_OPERATOR\_ALLOC}}(NB,twoeH);}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160       coulombMatrix = std::make\_shared<SquareMatrix<MatsT>>(memManager, NB);}
+\DoxyCodeLine{161     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163       \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\_OPERATOR\_ALLOC}}(2*NB,fockMatrix);}
+\DoxyCodeLine{164       \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\_OPERATOR\_ALLOC}}(2*NB,fockMatrixOrtho);}
+\DoxyCodeLine{165       \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\_OPERATOR\_ALLOC}}(2*NB,onePDMOrtho);}
+\DoxyCodeLine{166       \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\_OPERATOR\_ALLOC}}(2*NB,deltaOnePDM);}
+\DoxyCodeLine{167       \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\_OPERATOR\_ALLOC}}(2*NB,coreHPerturbed);}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169       \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\_OPERATOR\_ALLOC}}(2*NB,exchangeMatrix);}
+\DoxyCodeLine{170       \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\_OPERATOR\_ALLOC}}(2*NB,twoeH);}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172       coulombMatrix = std::make\_shared<SquareMatrix<MatsT>>(memManager, 2*NB);}
+\DoxyCodeLine{173     \}}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175   \}; \textcolor{comment}{// SingleSlater<MatsT>::alloc}}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177 }
+\DoxyCodeLine{181   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{182   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a4feb78741a10acaad6cfda680425e026}{SingleSlater<MatsT,IntsT>::dealloc}}() \{}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184 \textcolor{preprocessor}{\#ifdef \_SingleSlaterDebug}}
+\DoxyCodeLine{185     std::cout << \textcolor{stringliteral}{"{}SingleSlater::dealloc (this = "{}} << \textcolor{keyword}{this} << \textcolor{stringliteral}{"{})"{}} << std::endl;}
+\DoxyCodeLine{186 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188     fockMatrix = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{189     fockMatrixOrtho = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{190     onePDMOrtho = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{191     coreHPerturbed = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193     exchangeMatrix = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{194     twoeH = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196    coulombMatrix = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198   \}; \textcolor{comment}{// SingleSlater<MatsT>::dealloc}}
+\DoxyCodeLine{199  }
+\DoxyCodeLine{200 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203 \textcolor{comment}{// Other implementation files}}
+\DoxyCodeLine{204 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2quantum_8hpp}{singleslater/quantum.hpp}}>}   \textcolor{comment}{// Quantum declarations}}
+\DoxyCodeLine{205 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2fock_8hpp}{singleslater/fock.hpp}}>}      \textcolor{comment}{// Fock matrix header}}
+\DoxyCodeLine{206 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{guess_8hpp}{singleslater/guess.hpp}}>}     \textcolor{comment}{// Guess header}}
+\DoxyCodeLine{207 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{scf_8hpp}{singleslater/scf.hpp}}>}       \textcolor{comment}{// SCF header}}
+\DoxyCodeLine{208 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2print_8hpp}{singleslater/print.hpp}}>}     \textcolor{comment}{// Print header}}
+\DoxyCodeLine{209 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{pop_8hpp}{singleslater/pop.hpp}}>}       \textcolor{comment}{// Population analysis}}
+\DoxyCodeLine{210 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{fchk_8hpp}{singleslater/fchk.hpp}}>}      \textcolor{comment}{// Fchk-\/specific header}}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2kohnsham_2impl_8hpp}{singleslater/kohnsham/impl.hpp}}>} \textcolor{comment}{// KS headers}}
+\DoxyCodeLine{214 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{fxc_8hpp}{singleslater/kohnsham/fxc.hpp}}>} \textcolor{comment}{// KS headers}}
+\DoxyCodeLine{215 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{kohnsham_2scf_8hpp}{singleslater/kohnsham/scf.hpp}}>} \textcolor{comment}{// Newton-\/Raphson functions}}
+\DoxyCodeLine{216 }
+\DoxyCodeLine{217 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{hartreefock_2scf_8hpp}{singleslater/hartreefock/scf.hpp}}>} \textcolor{comment}{// Newton-\/Raphson Functions}}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{modifyorbitals_2impl_8hpp}{modifyorbitals/impl.hpp}}>} \textcolor{comment}{// ModifyOrbitals Implementation headers}}
+
+\end{DoxyCode}

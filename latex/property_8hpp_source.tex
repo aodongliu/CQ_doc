@@ -1,0 +1,158 @@
+\hypertarget{property_8hpp_source}{}\doxysection{property.\+hpp}
+\label{property_8hpp_source}\index{include/mcwavefunction/property.hpp@{include/mcwavefunction/property.hpp}}
+\mbox{\hyperlink{property_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcwavefunction_8hpp}{mcwavefunction.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas3_8hpp}{cqlinalg/blas3.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasutil_8hpp}{cqlinalg/blasutil.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matfunc_8hpp}{cqlinalg/matfunc.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{output_8hpp}{cxxapi/output.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36  \textcolor{comment}{/*}}
+\DoxyCodeLine{37 \textcolor{comment}{  * \(\backslash\)brief Perform mulliken analysis for each state}}
+\DoxyCodeLine{38 \textcolor{comment}{  *         1. Transform 1RDM back to AO basis, copy to SS-\/>onePDM}}
+\DoxyCodeLine{39 \textcolor{comment}{  *         2. SingleSlater-\/>populationAnalysis()}}
+\DoxyCodeLine{40 \textcolor{comment}{  *}}
+\DoxyCodeLine{41 \textcolor{comment}{  */}}
+\DoxyCodeLine{42   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{43   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a8d7e553d88c2ce450ee6a2f78f23ed64}{MCWaveFunction<MatsT,IntsT>::populationAnalysis}}(\textcolor{keywordtype}{size\_t} i) \{}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     std::cout << std::endl << \textcolor{stringliteral}{"{}Population Analysis for State "{}} << i+1 << \textcolor{stringliteral}{"{}: "{}};}
+\DoxyCodeLine{46     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} * ss\_ptr = \&reference();}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{comment}{// transform oneRDM to AO basis}}
+\DoxyCodeLine{49     rdm2pdm(this-\/>oneRDM[i]);}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     ss\_ptr-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7d730c8b8c684dc260c813730ed1004f}{populationAnalysis}}();}
+\DoxyCodeLine{52     ss\_ptr-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a4a4fbbf854e5f10d44bd721c87d347e3}{printMiscProperties}}(std::cout);}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54   \}; \textcolor{comment}{// MCWaveFunction::populationAnalysis}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{57   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a8d7e553d88c2ce450ee6a2f78f23ed64}{MCWaveFunction<MatsT,IntsT>::populationAnalysis}}() \{}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < this-\/>NStates; i++) \{}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61       \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a8d7e553d88c2ce450ee6a2f78f23ed64}{MCWaveFunction::populationAnalysis}}(i);}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65   \}; \textcolor{comment}{// MCWaveFunction::populationAnalysis}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68  \textcolor{comment}{/*}}
+\DoxyCodeLine{69 \textcolor{comment}{  * \(\backslash\)brief Compute oscillator strength for MC wavefunction}}
+\DoxyCodeLine{70 \textcolor{comment}{  *         using AO dipole and MO coefficients and MO TDM}}
+\DoxyCodeLine{71 \textcolor{comment}{  *         Only for 1C and 2C}}
+\DoxyCodeLine{72 \textcolor{comment}{  *         s1: initial state}}
+\DoxyCodeLine{73 \textcolor{comment}{  *         s2: final state}}
+\DoxyCodeLine{74 \textcolor{comment}{  */} }
+\DoxyCodeLine{75   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{76   \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a99a24b90879fa825515cda219c7b685a}{MCWaveFunction<MatsT,IntsT>::oscillator\_strength}}(\textcolor{keywordtype}{size\_t} s2, \textcolor{keywordtype}{size\_t} s1) \{}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{keywordflow}{if} (referenceWaveFunction().nC == 4) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}4C has no dipole."{}});}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{keyword}{auto}  \&mem = memManager;}
+\DoxyCodeLine{81     \textcolor{keywordtype}{size\_t} nAO = reference().nAlphaOrbital() * reference().nC;;}
+\DoxyCodeLine{82     \textcolor{keywordtype}{size\_t} nCorrO = MOPartition.nCorrO;}
+\DoxyCodeLine{83     \textcolor{keywordtype}{size\_t} nInact = MOPartition.nInact;}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     \textcolor{comment}{// compute transition density matrix for specific state}}
+\DoxyCodeLine{86     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} tmpTDM1(mem,nCorrO);}
+\DoxyCodeLine{87     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} tmpTDM2(mem,nCorrO);}
+\DoxyCodeLine{88     ciBuilder-\/>computeTDM(*\textcolor{keyword}{this}, CIVecs[s1], CIVecs[s2], tmpTDM1);}
+\DoxyCodeLine{89     ciBuilder-\/>computeTDM(*\textcolor{keyword}{this}, CIVecs[s2], CIVecs[s1], tmpTDM2);}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     MatsT D = MatsT(0.);}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \textcolor{comment}{// dipole AO -\/> MO transformation}}
+\DoxyCodeLine{94     \textcolor{keyword}{auto} MOdipole = moints.getIntegral<\mbox{\hyperlink{classChronusQ_1_1VectorInts}{VectorInts}},MatsT>(\textcolor{stringliteral}{"{}MOdipole"{}});}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     \textcolor{keywordflow}{if} (not MOdipole) \{}
+\DoxyCodeLine{97       std::shared\_ptr<VectorInts<IntsT>> AOdipole = }
+\DoxyCodeLine{98                 std::make\_shared<VectorInts<IntsT>>(mem, nAO, 1, \textcolor{keyword}{true});}
+\DoxyCodeLine{99       std::shared\_ptr<VectorInts<MatsT>> MOdipole\_scr =}
+\DoxyCodeLine{100                 std::make\_shared<VectorInts<MatsT>>(mem, nCorrO, 1, \textcolor{keyword}{true});}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102       std::vector<std::pair<size\_t, size\_t>> active(2, \{MOPartition.nFCore+nInact, nCorrO\});}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iXYZ = 0; iXYZ < 3; iXYZ++) \{}
+\DoxyCodeLine{105         \textcolor{keywordflow}{if} (referenceWaveFunction().nC == 1)}
+\DoxyCodeLine{106                  (*AOdipole)[iXYZ] = (*reference().aoints.lenElectric)[iXYZ];}
+\DoxyCodeLine{107         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (referenceWaveFunction().nC == 2)}
+\DoxyCodeLine{108           (*AOdipole)[iXYZ] = (*reference().aoints.lenElectric)[iXYZ]}
+\DoxyCodeLine{109                                 .\textcolor{keyword}{template} spatialToSpinBlock<IntsT>();}
+\DoxyCodeLine{110         (*AOdipole)[iXYZ].subsetTransform(\textcolor{charliteral}{'N'},reference().mo[0].pointer(),}
+\DoxyCodeLine{111                 nAO, active, (*MOdipole\_scr)[iXYZ].pointer(), \textcolor{keyword}{false});}
+\DoxyCodeLine{112       \}}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114       moints.addIntegral(\textcolor{stringliteral}{"{}MOdipole"{}}, MOdipole\_scr);}
+\DoxyCodeLine{115     \}}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     MOdipole = moints.getIntegral<\mbox{\hyperlink{classChronusQ_1_1VectorInts}{VectorInts}},MatsT>(\textcolor{stringliteral}{"{}MOdipole"{}});}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \textcolor{comment}{// dipole strength D = Tr(TDM \(\backslash\)dot MOdiple) Tr(TDM\string^* \(\backslash\)dot MOdipole)}}
+\DoxyCodeLine{120     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iXYZ = 0; iXYZ < 3; iXYZ++) \{}
+\DoxyCodeLine{121       D += \mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(nCorrO*nCorrO,tmpTDM1.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),1,(*MOdipole)[iXYZ].pointer(),1)}
+\DoxyCodeLine{122           *\mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(nCorrO*nCorrO,tmpTDM2.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),1,(*MOdipole)[iXYZ].pointer(),1);}
+\DoxyCodeLine{123     \}}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125     \textcolor{comment}{// oscillator strength f = 2/3 (E2 -\/ E1) D.}}
+\DoxyCodeLine{126     \textcolor{keywordtype}{double} f = (2./3.) * (StateEnergy[s2] -\/ StateEnergy[s1]) * std::real(D);}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128     \textcolor{comment}{// output}}
+\DoxyCodeLine{129     std::cout << \textcolor{stringliteral}{"{}Excited State: "{}} << std::setw(3) << std::right << s2+1}
+\DoxyCodeLine{130               << \textcolor{stringliteral}{"{} to state: "{}} << std::setw(3) << std::right << s1+1 << \textcolor{stringliteral}{"{}:"{}};}
+\DoxyCodeLine{131     std::cout << std::setw(15) << std::right << \textcolor{stringliteral}{"{}E(Eh) = "{}}}
+\DoxyCodeLine{132               << std::setprecision(8) << std::fixed << (StateEnergy[s2] -\/ StateEnergy[s1]);}
+\DoxyCodeLine{133     std::cout << std::setw(15) << std::right << \textcolor{stringliteral}{"{}f = "{}}}
+\DoxyCodeLine{134               << std::setprecision(6) << std::fixed << f << std::endl;}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     tmpTDM1.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae9ad6b2639dfd62c37d5ede32b6a4101}{clear}}();}
+\DoxyCodeLine{137     tmpTDM2.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae9ad6b2639dfd62c37d5ede32b6a4101}{clear}}();}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139     \textcolor{keywordflow}{return} f;}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141   \} \textcolor{comment}{// MCWaveFunction::oscillator\_strength}}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152 }
+
+\end{DoxyCode}

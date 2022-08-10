@@ -1,0 +1,275 @@
+\hypertarget{classChronusQ_1_1TPIContractions}{}\doxysection{ChronusQ\+::TPIContractions\texorpdfstring{$<$}{<} MatsT, IntsT \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1TPIContractions}\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+
+
+Templated class to define the interface to perform transformations and contractions of ERInts. Handles the contraction of 2-\/body (3,4 index) integrals with 1-\/body (2 index) operators.  
+
+
+
+
+{\ttfamily \#include $<$twopints.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::TPIContractions\texorpdfstring{$<$}{<} MatsT, IntsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TPIContractions__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TPIContractions_aa86ecdc4839a0d8af20c7dc416ed419b}{TPIContractions}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a17ecf52aa16b85f17125cf0a76874dc1}{TPIContractions}} (\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsT $>$ \&tpi)
+\item 
+{\footnotesize template$<$typename MatsU $>$ }\\\mbox{\hyperlink{classChronusQ_1_1TPIContractions_aa1d86dbe3221524e0123e852041a4ea7}{TPIContractions}} (const \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}$<$ MatsU, IntsT $>$ \&other, int dummy=0)
+\item 
+{\footnotesize template$<$typename MatsU $>$ }\\\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a171355ff401bd4356726e34f55ecbab1}{TPIContractions}} (\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}$<$ MatsU, IntsT $>$ \&\&other, int dummy=0)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TPIContractions_afb93010774da56292c26a5e02684e1cc}{TPIContractions}} (const \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}} \&other)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a5ca969180b5d1b1defdf7c1a794814e3}{TPIContractions}} (\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}} \&\&other)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1TPIContractions_aae59759f8f3e438eacf211529aa7d5b6}{ints}} ()
+\item 
+const \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1TPIContractions_ad2b8ae4e964c8bb8e756654e0df86b10}{ints}} () const
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1TPIContractions_aa4ad81411e763c882bd21e0bb8552041}{two\+Body\+Contract}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}, const bool, std\+::vector$<$ \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{Two\+Body\+Contraction}}$<$ MatsT $>$ $>$ \&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&) const =0
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a76d3c3a9b2d5608c610d758ee54c3d53}{two\+Body\+Contract}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} comm, const bool screen, std\+::vector$<$ \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{Two\+Body\+Contraction}}$<$ MatsT $>$ $>$ \&cont\+List) const
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a72b811a893fd1a36b4f7efee6ca4eb8f}{two\+Body\+Contract}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} comm, std\+::vector$<$ \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{Two\+Body\+Contraction}}$<$ MatsT $>$ $>$ \&cont\+List, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert) const
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a6283804202cfcc171935471676ca0586}{two\+Body\+Contract}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} comm, std\+::vector$<$ \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{Two\+Body\+Contraction}}$<$ MatsT $>$ $>$ \&cont\+List) const
+\item 
+virtual \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a87a8ea0b19a3e870655f0747ad0f8213}{$\sim$\+TPIContractions}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename MatsU $>$ }\\static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}$<$ MatsU, IntsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a901d93fc30f036df77db190a7d101330}{convert}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}$<$ MatsT, IntsT $>$ $>$ \&)
+\begin{DoxyCompactList}\small\item\em The pointer convertor. This static function converts the underlying polymorphism correctly to hold a different type of matrices. It is called when the corresponding \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}} object is being converted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}{contract\+Second}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\+\_\+}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename MatsU , typename IntsU $>$ }\\class \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a2a695fa7eb74493b2f970353eb7f4d29}{TPIContractions}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename MatsT, typename IntsT$>$\newline
+class Chronus\+Q\+::\+TPIContractions$<$ Mats\+T, Ints\+T $>$}
+Templated class to define the interface to perform transformations and contractions of ERInts. Handles the contraction of 2-\/body (3,4 index) integrals with 1-\/body (2 index) operators. 
+
+Templated over matrix type (MatsT) to allow for a seamless interface to both real-\/ and complex-\/valued coefficients and density. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_aa86ecdc4839a0d8af20c7dc416ed419b}\label{classChronusQ_1_1TPIContractions_aa86ecdc4839a0d8af20c7dc416ed419b}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!TPIContractions@{TPIContractions}}
+\index{TPIContractions@{TPIContractions}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{TPIContractions()}{TPIContractions()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::\+TPIContractions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_a17ecf52aa16b85f17125cf0a76874dc1}\label{classChronusQ_1_1TPIContractions_a17ecf52aa16b85f17125cf0a76874dc1}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!TPIContractions@{TPIContractions}}
+\index{TPIContractions@{TPIContractions}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{TPIContractions()}{TPIContractions()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::\+TPIContractions (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsT $>$ \&}]{tpi }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_aa1d86dbe3221524e0123e852041a4ea7}\label{classChronusQ_1_1TPIContractions_aa1d86dbe3221524e0123e852041a4ea7}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!TPIContractions@{TPIContractions}}
+\index{TPIContractions@{TPIContractions}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{TPIContractions()}{TPIContractions()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename MatsU $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::\+TPIContractions (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}$<$ MatsU, IntsT $>$ \&}]{other,  }\item[{int}]{dummy = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_a171355ff401bd4356726e34f55ecbab1}\label{classChronusQ_1_1TPIContractions_a171355ff401bd4356726e34f55ecbab1}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!TPIContractions@{TPIContractions}}
+\index{TPIContractions@{TPIContractions}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{TPIContractions()}{TPIContractions()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename MatsU $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::\+TPIContractions (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}$<$ MatsU, IntsT $>$ \&\&}]{other,  }\item[{int}]{dummy = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_afb93010774da56292c26a5e02684e1cc}\label{classChronusQ_1_1TPIContractions_afb93010774da56292c26a5e02684e1cc}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!TPIContractions@{TPIContractions}}
+\index{TPIContractions@{TPIContractions}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{TPIContractions()}{TPIContractions()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::\+TPIContractions (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}$<$ MatsT, IntsT $>$ \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_a5ca969180b5d1b1defdf7c1a794814e3}\label{classChronusQ_1_1TPIContractions_a5ca969180b5d1b1defdf7c1a794814e3}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!TPIContractions@{TPIContractions}}
+\index{TPIContractions@{TPIContractions}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{TPIContractions()}{TPIContractions()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::\+TPIContractions (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}$<$ MatsT, IntsT $>$ \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_a87a8ea0b19a3e870655f0747ad0f8213}\label{classChronusQ_1_1TPIContractions_a87a8ea0b19a3e870655f0747ad0f8213}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!````~TPIContractions@{$\sim$TPIContractions}}
+\index{````~TPIContractions@{$\sim$TPIContractions}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$TPIContractions()}{~TPIContractions()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+virtual \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::$\sim$\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_a901d93fc30f036df77db190a7d101330}\label{classChronusQ_1_1TPIContractions_a901d93fc30f036df77db190a7d101330}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!convert@{convert}}
+\index{convert@{convert}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{convert()}{convert()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename MatsU $>$ \\
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}$<$ MatsU, IntsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::convert (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}$<$ MatsT, IntsT $>$ $>$ \&}]{ch }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The pointer convertor. This static function converts the underlying polymorphism correctly to hold a different type of matrices. It is called when the corresponding \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}} object is being converted. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TPIContractions_a901d93fc30f036df77db190a7d101330_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_aae59759f8f3e438eacf211529aa7d5b6}\label{classChronusQ_1_1TPIContractions_aae59759f8f3e438eacf211529aa7d5b6}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!ints@{ints}}
+\index{ints@{ints}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{ints()}{ints()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::ints (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_ad2b8ae4e964c8bb8e756654e0df86b10}\label{classChronusQ_1_1TPIContractions_ad2b8ae4e964c8bb8e756654e0df86b10}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!ints@{ints}}
+\index{ints@{ints}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{ints()}{ints()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+const \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::ints (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_a76d3c3a9b2d5608c610d758ee54c3d53}\label{classChronusQ_1_1TPIContractions_a76d3c3a9b2d5608c610d758ee54c3d53}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!twoBodyContract@{twoBodyContract}}
+\index{twoBodyContract@{twoBodyContract}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{twoBodyContract()}{twoBodyContract()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::two\+Body\+Contract (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{comm,  }\item[{const bool}]{screen,  }\item[{std\+::vector$<$ \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{Two\+Body\+Contraction}}$<$ MatsT $>$ $>$ \&}]{cont\+List }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TPIContractions_a76d3c3a9b2d5608c610d758ee54c3d53_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_a6283804202cfcc171935471676ca0586}\label{classChronusQ_1_1TPIContractions_a6283804202cfcc171935471676ca0586}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!twoBodyContract@{twoBodyContract}}
+\index{twoBodyContract@{twoBodyContract}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{twoBodyContract()}{twoBodyContract()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::two\+Body\+Contract (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{comm,  }\item[{std\+::vector$<$ \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{Two\+Body\+Contraction}}$<$ MatsT $>$ $>$ \&}]{cont\+List }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TPIContractions_a6283804202cfcc171935471676ca0586_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_a72b811a893fd1a36b4f7efee6ca4eb8f}\label{classChronusQ_1_1TPIContractions_a72b811a893fd1a36b4f7efee6ca4eb8f}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!twoBodyContract@{twoBodyContract}}
+\index{twoBodyContract@{twoBodyContract}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{twoBodyContract()}{twoBodyContract()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::two\+Body\+Contract (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{comm,  }\item[{std\+::vector$<$ \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{Two\+Body\+Contraction}}$<$ MatsT $>$ $>$ \&}]{cont\+List,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TPIContractions_a72b811a893fd1a36b4f7efee6ca4eb8f_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_aa4ad81411e763c882bd21e0bb8552041}\label{classChronusQ_1_1TPIContractions_aa4ad81411e763c882bd21e0bb8552041}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!twoBodyContract@{twoBodyContract}}
+\index{twoBodyContract@{twoBodyContract}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{twoBodyContract()}{twoBodyContract()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::two\+Body\+Contract (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{,  }\item[{const bool}]{,  }\item[{std\+::vector$<$ \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{Two\+Body\+Contraction}}$<$ MatsT $>$ $>$ \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Contract the two body potential with one body (2 index) operators.
+
+Smartly determines whether to do the contraction directly, incore or using density fitting depending on context
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{[}in/ont\mbox{]}} & cont\+List List of one body operators for contraction. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1GIAODirectERIContraction_a1c929146ed20f558e0e247e9736ca23d}{Chronus\+Q\+::\+GIAODirect\+ERIContraction}}, \mbox{\hyperlink{classChronusQ_1_1GTODirectTPIContraction_a58d2a1d8103d37e2f8baa014adbaf01c}{Chronus\+Q\+::\+GTODirect\+TPIContraction$<$ dcomplex, dcomplex $>$}}, \mbox{\hyperlink{classChronusQ_1_1GTODirectTPIContraction_a58d2a1d8103d37e2f8baa014adbaf01c}{Chronus\+Q\+::\+GTODirect\+TPIContraction$<$ Mats\+T, Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction_a32ae5d08d2f5c0d08499f8bbc8f96139}{Chronus\+Q\+::\+In\+Core4index\+TPIContraction$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TPIContractions_aa4ad81411e763c882bd21e0bb8552041_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_a2a695fa7eb74493b2f970353eb7f4d29}\label{classChronusQ_1_1TPIContractions_a2a695fa7eb74493b2f970353eb7f4d29}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!TPIContractions@{TPIContractions}}
+\index{TPIContractions@{TPIContractions}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{TPIContractions}{TPIContractions}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename MatsU , typename IntsU $>$ \\
+friend class \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}\label{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!contractSecond@{contractSecond}}
+\index{contractSecond@{contractSecond}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{contractSecond}{contractSecond}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::contract\+Second = false}
+
+\mbox{\Hypertarget{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}\label{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}} 
+\index{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}!ints\_@{ints\_}}
+\index{ints\_@{ints\_}!ChronusQ::TPIContractions$<$ MatsT, IntsT $>$@{ChronusQ::TPIContractions$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{ints\_}{ints\_}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$IntsT$>$\& \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{Chronus\+Q\+::\+TPIContractions}}$<$ MatsT, IntsT $>$\+::ints\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/particleintegrals/\mbox{\hyperlink{twopints_8hpp}{twopints.\+hpp}}\item 
+include/particleintegrals/twopints/\mbox{\hyperlink{particleintegrals_2twopints_2impl_8hpp}{impl.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,63 @@
+\hypertarget{aointegrals__twoe__ri_8cxx}{}\doxysection{src/particleintegrals/aointegrals/aointegrals\+\_\+twoe\+\_\+ri.cxx File Reference}
+\label{aointegrals__twoe__ri_8cxx}\index{src/particleintegrals/aointegrals/aointegrals\_twoe\_ri.cxx@{src/particleintegrals/aointegrals/aointegrals\_twoe\_ri.cxx}}
+{\ttfamily \#include $<$cqlinalg.\+hpp$>$}\newline
+{\ttfamily \#include $<$cqlinalg/blasutil.\+hpp$>$}\newline
+{\ttfamily \#include $<$util/timer.\+hpp$>$}\newline
+{\ttfamily \#include $<$util/matout.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/incore4indextpi.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/incoreritpi.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/gtodirecttpi.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/onepints.\+hpp$>$}\newline
+{\ttfamily \#include $<$util/threads.\+hpp$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+{\ttfamily \#include $<$set$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$libcint.\+hpp$>$}\newline
+Include dependency graph for aointegrals\+\_\+twoe\+\_\+ri.\+cxx\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{aointegrals__twoe__ri_8cxx__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classChronusQ_1_1BisectMemManager}{Chronus\+Q\+::\+Bisect\+Mem\+Manager$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em The \mbox{\hyperlink{classChronusQ_1_1BisectMemManager}{Bisect\+Mem\+Manager}} class A memory manager class specially designed for computing Cholesky decomposition pivots. When the memory requirement of each vector is less than half of the original, number of available memory vectors double. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structChronusQ_1_1DynamicERIVec}{Chronus\+Q\+::\+Dynamic\+ERIVec}}
+\item 
+struct \mbox{\hyperlink{structChronusQ_1_1DynamicShellPair}{Chronus\+Q\+::\+Dynamic\+Shell\+Pair}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{namespaceChronusQ_a6a7476dcfca0c810905a7e1137634bd5}{Chronus\+Q\+::compound\+To\+Square}} (size\+\_\+t I, size\+\_\+t NB)
+\item 
+size\+\_\+t \mbox{\hyperlink{namespaceChronusQ_a68678a16aadf42ec12d3d1c0b8cfddb6}{Chronus\+Q\+::square\+To\+Compound}} (size\+\_\+t I, size\+\_\+t NB)
+\item 
+size\+\_\+t \mbox{\hyperlink{namespaceChronusQ_a0d36b77289eee9909fc0558e52d4f9ea}{Chronus\+Q\+::to\+Square}} (size\+\_\+t p, size\+\_\+t q, size\+\_\+t NB)
+\item 
+std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ \mbox{\hyperlink{namespaceChronusQ_ae06424668fc64d35b31f2771b11240a5}{Chronus\+Q\+::ana\+Square}} (size\+\_\+t I, size\+\_\+t NB)
+\item 
+size\+\_\+t \mbox{\hyperlink{namespaceChronusQ_a6e7ba0fd3aefe087b4fdc3a3583b09fc}{Chronus\+Q\+::to\+Compound}} (size\+\_\+t p, size\+\_\+t q)
+\item 
+std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ \mbox{\hyperlink{namespaceChronusQ_a7a5520ac3bced3a14fc9e0474df5de69}{Chronus\+Q\+::ana\+Compound}} (size\+\_\+t I)
+\item 
+std\+::pair$<$ size\+\_\+t, double $>$ \mbox{\hyperlink{namespaceChronusQ_ac63163d7e7f6f6acab4d047b9c85d2ab}{Chronus\+Q\+::libint\+General\+Contraction\+ERI}} (size\+\_\+t P, size\+\_\+t Q, size\+\_\+t R, size\+\_\+t S, Basis\+Set \&basis\+Set, libint2\+::\+Engine \&engine, std\+::vector$<$ std\+::vector$<$ libint2\+::\+Shell $>$ $>$ \&shell\+Prims\+\_\+, std\+::vector$<$ double $\ast$ $>$ \&coef\+Blocks\+\_\+, double $\ast$work\+Block, const double $\ast$\&res\+PQRS)
+\begin{DoxyCompactList}\small\item\em Compute ERI in a general-\/contraction shell quartet. Note layout difference, res\+PQRS need to be reorganized by the following code to match the layout of a general shell quartet output as in libcint\+: for (size\+\_\+t SS = 0, pqrs = 0; SS \texorpdfstring{$<$}{<} s\+Contr\+Size; SS++) for (size\+\_\+t s = 0; s \texorpdfstring{$<$}{<} s\+AMSize; s++) for (size\+\_\+t RR = 0; RR \texorpdfstring{$<$}{<} r\+Contr\+Size; RR++) for (size\+\_\+t r = 0; r \texorpdfstring{$<$}{<} r\+AMSize; r++) for (size\+\_\+t QQ = 0; QQ \texorpdfstring{$<$}{<} q\+Contr\+Size; QQ++) for (size\+\_\+t q = 0; q \texorpdfstring{$<$}{<} q\+AMSize; q++) for (size\+\_\+t PP = 0; PP \texorpdfstring{$<$}{<} p\+Contr\+Size; PP++) for (size\+\_\+t p = 0; p \texorpdfstring{$<$}{<} p\+AMSize; p++, pqrs++) \{ block\mbox{[}pqrs\mbox{]} = res\+PQRS\mbox{[}(s + s\+AMSize $\ast$ (r + r\+AMSize $\ast$ (q + q\+AMSize $\ast$ p))) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_a19ca86253fab580a6a2d0e1e85f1d136}{Chronus\+Q\+::compute\+Diagonal\+Prebuilt4\+Index}} (double $\ast$diag, std\+::shared\+\_\+ptr$<$ In\+Core4index\+TPI$<$ double $>$ $>$ eri4\+I\+\_\+)
+\begin{DoxyCompactList}\small\item\em Compute diagonal elements of ERI for Cholesky RI using libcint. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespaceChronusQ_a2ca81d347f21e15fa18f6403e4eb54b7}{Chronus\+Q\+::compute\+Dynamic\+All\+ERIVector\+Copy\+Cases}} (Dynamic\+Shell\+Pair \&candidatesI, std\+::vector$<$ Dynamic\+ERIVec $>$ \&raw\+\_\+vec\+\_\+\+RS, std\+::vector$<$ std\+::pair$<$ size\+\_\+t, double $\ast$ $>$ $>$ \&rs\+To\+Eval, size\+\_\+t NB, size\+\_\+t RSstart, size\+\_\+t R, size\+\_\+t r\+Begin, size\+\_\+t r\+Size, size\+\_\+t S, size\+\_\+t s\+Begin, size\+\_\+t s\+Size, std\+::map$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$, double $\ast$ $>$ \&diag\+Blocks, std\+::shared\+\_\+ptr$<$ In\+Core4index\+TPI$<$ double $>$ $>$ eri4I)
+\begin{DoxyCompactList}\small\item\em Copy existing element cases in computing the ERI vectors for dynamic-\/all CD algorithm. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_ad05b197faa75ba14a6f2bf7f992ceee5}{Chronus\+Q\+::compute\+Dynamic\+All\+ERIVector\+Libcint}} (Basis\+Set \&basis\+Set, std\+::vector$<$ Dynamic\+Shell\+Pair $>$ \&candidates, Dynamic\+Shell\+Pair \&shell\+Pair, std\+::map$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$, double $\ast$ $>$ \&diag\+Blocks, Bisect\+Mem\+Manager$<$ double $>$ \&dynamic\+Mem, std\+::vector$<$ std\+::pair$<$ size\+\_\+t, double $\ast$ $>$ $>$ \&rs\+To\+Eval, int $\ast$atm, int n\+Atoms, int $\ast$bas, int n\+Shells, double $\ast$env, double $\ast$buff\+All, int buff\+N4, double $\ast$cache\+All, int cache\+\_\+size, double tau, size\+\_\+t NB, std\+::shared\+\_\+ptr$<$ In\+Core4index\+TPI$<$ double $>$ $>$ eri4I, size\+\_\+t \&c1\+ERI, double \&t1\+ERI)
+\begin{DoxyCompactList}\small\item\em Compute the ERI vectors for dynamic-\/all CD algorithm with Libcint over the CGTO basis. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_a3aae22d9241b7ed65290fdb24c4bf12d}{Chronus\+Q\+::compute\+Dynamic\+All\+ERIVector\+Libint}} (Basis\+Set \&basis\+Set, std\+::vector$<$ Dynamic\+Shell\+Pair $>$ \&candidates, Dynamic\+Shell\+Pair \&shell\+Pair, std\+::map$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$, double $\ast$ $>$ \&diag\+Blocks, Bisect\+Mem\+Manager$<$ double $>$ \&dynamic\+Mem, std\+::vector$<$ std\+::pair$<$ size\+\_\+t, double $\ast$ $>$ $>$ \&rs\+To\+Eval, std\+::vector$<$ libint2\+::\+Engine $>$ \&engines, std\+::vector$<$ std\+::vector$<$ libint2\+::\+Shell $>$ $>$ \&shell\+Prims\+\_\+, std\+::vector$<$ double $\ast$ $>$ \&coef\+Blocks\+\_\+, std\+::vector$<$ double $\ast$ $>$ \&work\+Blocks, double tau, size\+\_\+t NB, std\+::shared\+\_\+ptr$<$ In\+Core4index\+TPI$<$ double $>$ $>$ eri4I, size\+\_\+t \&c1\+ERI, double \&t1\+ERI)
+\begin{DoxyCompactList}\small\item\em Compute the ERI vectors for dynamic-\/all CD algorithm with Libint2 over the CGTO basis. \end{DoxyCompactList}\end{DoxyCompactItemize}

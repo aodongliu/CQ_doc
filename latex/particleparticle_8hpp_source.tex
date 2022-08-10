@@ -1,0 +1,503 @@
+\hypertarget{particleparticle_8hpp_source}{}\doxysection{particleparticle.\+hpp}
+\label{particleparticle_8hpp_source}\index{include/response/particleparticle.hpp@{include/response/particleparticle.hpp}}
+\mbox{\hyperlink{particleparticle_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2hartreefock_8hpp}{singleslater/hartreefock.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2kohnsham_8hpp}{singleslater/kohnsham.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{tbase_8hpp}{response/tbase.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34   \textcolor{comment}{// Forward decl of Reference templated ParticleParticlePropagator class}}
+\DoxyCodeLine{35   \textcolor{keyword}{template} <\textcolor{keyword}{class} Reference> \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}};}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1SingleSlaterParticleParticleBase}{SingleSlaterParticleParticleBase}} \{ }
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1c}{ParticleParticleProp\_SpinSep}}  \mbox{\hyperlink{structChronusQ_1_1SingleSlaterParticleParticleBase_a380bf177a4a5b45d0810831c439049b2}{spinSepProp}} = \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca94718c14794ad2bce34245f1ac9e6f38}{PP\_AB}}; \textcolor{comment}{// Default to AB}}
+\DoxyCodeLine{41     \mbox{\hyperlink{namespaceChronusQ_aa3c047a596017ff0bdd05339a36555bc}{ParticleParticleTDA}}           \mbox{\hyperlink{structChronusQ_1_1SingleSlaterParticleParticleBase_aeea0e21f277111207508b9d948853ef1}{tdaOp}}       = \mbox{\hyperlink{namespaceChronusQ_aa3c047a596017ff0bdd05339a36555bca9895cbc6ee4d70c385b9a006ab30d93c}{PP\_A}};  \textcolor{comment}{// Default to A-\/TDA}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keywordtype}{double}                        \mbox{\hyperlink{structChronusQ_1_1SingleSlaterParticleParticleBase_a32a4def73b99af1357675394ed787570}{mu}}          = 0;     \textcolor{comment}{// Chemical Potential}}
+\DoxyCodeLine{44     }
+\DoxyCodeLine{45     \textcolor{keywordtype}{bool}                          \mbox{\hyperlink{structChronusQ_1_1SingleSlaterParticleParticleBase_a1ea3dcc85ac730cccfe0c5c6019aae5b}{doStarRef}}   = \textcolor{keyword}{false}; \textcolor{comment}{// Do "{}*"{} reference}}
+\DoxyCodeLine{46     std::pair<long int, long int> \mbox{\hyperlink{structChronusQ_1_1SingleSlaterParticleParticleBase_abd286d983981857ca28c3c48c15c2344}{starOrb}};             \textcolor{comment}{// Orbitals for *-\/ref}}
+\DoxyCodeLine{47   \};}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{51   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}}< \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT> > : }
+\DoxyCodeLine{52     \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase}{ResponseRefBase}}< SingleSlater<MatsT,IntsT> >, }
+\DoxyCodeLine{53     \textcolor{keyword}{public} \mbox{\hyperlink{structChronusQ_1_1SingleSlaterParticleParticleBase}{SingleSlaterParticleParticleBase}} \{}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{56       \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll}} = std::vector<RESPONSE\_CONTRACTION<U>>;}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60       \textcolor{keywordtype}{size\_t} aDim\_  = 0;}
+\DoxyCodeLine{61       \textcolor{keywordtype}{size\_t} cDim\_  = 0;}
+\DoxyCodeLine{62       \textcolor{keywordtype}{bool}   doVir\_ = \textcolor{keyword}{false};}
+\DoxyCodeLine{63       \textcolor{keywordtype}{bool}   doOcc\_ = \textcolor{keyword}{false};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66       \textcolor{keyword}{inline} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a3687bbdc8f98489242a8666121357165}{getNO1}}(\textcolor{keywordtype}{bool} doStar)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68         \textcolor{keywordtype}{size\_t} NO = (this-\/>ref\_-\/>nC == 2)  ? this-\/>ref\_-\/>nO  :}
+\DoxyCodeLine{69           (spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca2253031b1d4b07be614989c4da2bddc9}{PP\_BB}}) ? this-\/>ref\_-\/>nOB : this-\/>ref\_-\/>nOA;}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71         \textcolor{keywordflow}{if}( doStar ) \{}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73           \textcolor{keywordtype}{bool} starIsAlpha = starOrb.first > 0;}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75           \textcolor{keywordflow}{if}( this-\/>ref\_-\/>nC == 2 ) NO -\/= 2;}
+\DoxyCodeLine{76           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca2253031b1d4b07be614989c4da2bddc9}{PP\_BB}} ) \{}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78             \textcolor{keywordflow}{if}( not starIsAlpha ) NO-\/-\/;}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80           \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( starIsAlpha ) NO-\/-\/;}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82         \}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85         \textcolor{keywordflow}{return} NO;}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87       \}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90       \textcolor{keyword}{inline} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a8677ffc63c4bc4986850a40cb194d520}{getNO2}}(\textcolor{keywordtype}{bool} doStar)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92         \textcolor{keywordtype}{size\_t} NO = (this-\/>ref\_-\/>nC == 2)  ? this-\/>ref\_-\/>nO  :}
+\DoxyCodeLine{93           (spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca0e97952af46f16e5ca2214d7b55680bd}{PP\_AA}}) ? this-\/>ref\_-\/>nOA : this-\/>ref\_-\/>nOB;}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95         \textcolor{keywordflow}{if}( doStar ) \{}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97           \textcolor{keywordtype}{bool} starIsAlpha = starOrb.second > 0;}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99           \textcolor{keywordflow}{if}( this-\/>ref\_-\/>nC == 2 ) NO -\/= 2;}
+\DoxyCodeLine{100           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca0e97952af46f16e5ca2214d7b55680bd}{PP\_AA}} ) \{}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102             \textcolor{keywordflow}{if}( starIsAlpha ) NO-\/-\/;}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104           \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( not starIsAlpha ) NO-\/-\/;}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106         \}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109         \textcolor{keywordflow}{return} NO;}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111       \}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114       \textcolor{keyword}{inline} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a0942ae4109d2eefd7e437d40525918b2}{getNV1}}(\textcolor{keywordtype}{bool} doStar)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116         \textcolor{keywordtype}{size\_t} NV = (this-\/>ref\_-\/>nC == 2)  ? this-\/>ref\_-\/>nV  :}
+\DoxyCodeLine{117           (spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca2253031b1d4b07be614989c4da2bddc9}{PP\_BB}}) ? this-\/>ref\_-\/>nVB : this-\/>ref\_-\/>nVA;}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119         \textcolor{keywordflow}{if}( doStar ) \{}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121           \textcolor{keywordtype}{bool} starIsAlpha = starOrb.first > 0;}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123           \textcolor{keywordflow}{if}( this-\/>ref\_-\/>nC == 2 ) NV += 2;}
+\DoxyCodeLine{124           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca2253031b1d4b07be614989c4da2bddc9}{PP\_BB}} ) \{}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126             \textcolor{keywordflow}{if}( not starIsAlpha ) NV++;}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128           \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( starIsAlpha ) NV++;}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130         \}}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133         \textcolor{keywordflow}{return} NV;}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135       \}}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138       \textcolor{keyword}{inline} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ab75c01e2a530c96d67b0244172859837}{getNV2}}(\textcolor{keywordtype}{bool} doStar)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140         \textcolor{keywordtype}{size\_t} NV = (this-\/>ref\_-\/>nC == 2)  ? this-\/>ref\_-\/>nV  :}
+\DoxyCodeLine{141           (spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca0e97952af46f16e5ca2214d7b55680bd}{PP\_AA}}) ? this-\/>ref\_-\/>nVA : this-\/>ref\_-\/>nVB;}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143         \textcolor{keywordflow}{if}( doStar ) \{}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145           \textcolor{keywordtype}{bool} starIsAlpha = starOrb.second > 0;}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147           \textcolor{keywordflow}{if}( this-\/>ref\_-\/>nC == 2 ) NV += 2;}
+\DoxyCodeLine{148           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( spinSepProp == \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca0e97952af46f16e5ca2214d7b55680bd}{PP\_AA}} ) \{}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150             \textcolor{keywordflow}{if}( starIsAlpha ) NV++;}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152           \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( not starIsAlpha ) NV++;}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154         \}}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157         \textcolor{keywordflow}{return} NV;}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159       \}}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163       \textcolor{keyword}{inline} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aead285a759004c54718cc184af1e6834}{getADim}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165         \textcolor{comment}{/*}}
+\DoxyCodeLine{166 \textcolor{comment}{        auto \&ss = *this-\/>ref\_;}}
+\DoxyCodeLine{167 \textcolor{comment}{        size\_t nVAVA\_lt = ss.nVA * (ss.nVA-\/1) / 2;}}
+\DoxyCodeLine{168 \textcolor{comment}{        size\_t nVBVB\_lt = ss.nVB * (ss.nVB-\/1) / 2;}}
+\DoxyCodeLine{169 \textcolor{comment}{        size\_t nVV\_lt   = ss.nV  * (ss.nV-\/1)  / 2;}}
+\DoxyCodeLine{170 \textcolor{comment}{}}
+\DoxyCodeLine{171 \textcolor{comment}{        size\_t nVAVB    = ss.nVA * ss.nVB;}}
+\DoxyCodeLine{172 \textcolor{comment}{}}
+\DoxyCodeLine{173 \textcolor{comment}{        if( ss.nC == 2 )                return nVV\_lt;}}
+\DoxyCodeLine{174 \textcolor{comment}{        else if( spinSepProp == PP\_AA ) return nVAVA\_lt;}}
+\DoxyCodeLine{175 \textcolor{comment}{        else if( spinSepProp == PP\_BB ) return nVBVB\_lt;}}
+\DoxyCodeLine{176 \textcolor{comment}{        else                            return nVAVB;}}
+\DoxyCodeLine{177 \textcolor{comment}{        */}}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179         \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV1 = getNV1(doStarRef);}
+\DoxyCodeLine{180         \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV2 = getNV2(doStarRef);}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182         \textcolor{keyword}{const} \textcolor{keywordtype}{bool} doLT = (this-\/>ref\_-\/>nC == 2) or (spinSepProp != \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca94718c14794ad2bce34245f1ac9e6f38}{PP\_AB}});}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185         \textcolor{keywordflow}{return} doLT ? NV1*(NV1-\/1) / 2 : NV1*NV2;}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188       \};}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190       \textcolor{keyword}{inline} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a9f70e1b01161cd83b68003c5cbe8d710}{getCDim}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192         \textcolor{comment}{/*}}
+\DoxyCodeLine{193 \textcolor{comment}{        auto \&ss = *this-\/>ref\_;}}
+\DoxyCodeLine{194 \textcolor{comment}{        size\_t nOAOA\_lt = ss.nOA * (ss.nOA-\/1) / 2;}}
+\DoxyCodeLine{195 \textcolor{comment}{        size\_t nOBOB\_lt = ss.nOB * (ss.nOB-\/1) / 2;}}
+\DoxyCodeLine{196 \textcolor{comment}{        size\_t nOO\_lt   = ss.nO  * (ss.nO-\/1)  / 2;}}
+\DoxyCodeLine{197 \textcolor{comment}{}}
+\DoxyCodeLine{198 \textcolor{comment}{        size\_t nOAOB    = ss.nOA * ss.nOB;}}
+\DoxyCodeLine{199 \textcolor{comment}{}}
+\DoxyCodeLine{200 \textcolor{comment}{        if( ss.nC == 2 )                return nOO\_lt;}}
+\DoxyCodeLine{201 \textcolor{comment}{        else if( spinSepProp == PP\_AA ) return nOAOA\_lt;}}
+\DoxyCodeLine{202 \textcolor{comment}{        else if( spinSepProp == PP\_BB ) return nOBOB\_lt;}}
+\DoxyCodeLine{203 \textcolor{comment}{        else                            return nOAOB;}}
+\DoxyCodeLine{204 \textcolor{comment}{        */}}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206         \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO1 = getNO1(doStarRef);}
+\DoxyCodeLine{207         \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO2 = getNO2(doStarRef);}
+\DoxyCodeLine{208 }
+\DoxyCodeLine{209         \textcolor{keyword}{const} \textcolor{keywordtype}{bool} doLT = (this-\/>ref\_-\/>nC == 2) or (spinSepProp != \mbox{\hyperlink{namespaceChronusQ_aaa0cdcb79ecf8eb2e6f1dd128273bd1ca94718c14794ad2bce34245f1ac9e6f38}{PP\_AB}});}
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212         \textcolor{keywordflow}{return} doLT ? NO1*(NO1-\/1) / 2 : NO1*NO2;}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214 }
+\DoxyCodeLine{215       \};}
+\DoxyCodeLine{216 }
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218     \textcolor{keyword}{public}:}
+\DoxyCodeLine{219 }
+\DoxyCodeLine{220       \textcolor{keyword}{inline} \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ac5da86647afc03bb2a9e0bc060176e8d}{getNSingleDim}}(\textcolor{keyword}{const} \textcolor{keywordtype}{bool} doTDA = \textcolor{keyword}{false}) \{}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222         \textcolor{keywordtype}{size\_t} N = 0;}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224         \textcolor{keywordtype}{size\_t} ADIM = getADim();}
+\DoxyCodeLine{225         \textcolor{keywordtype}{size\_t} CDIM = getCDim();}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227         \textcolor{keywordflow}{if}( doTDA ) N = (tdaOp == \mbox{\hyperlink{namespaceChronusQ_aa3c047a596017ff0bdd05339a36555bca9895cbc6ee4d70c385b9a006ab30d93c}{PP\_A}}) ? ADIM : CDIM;}
+\DoxyCodeLine{228         \textcolor{keywordflow}{else}        N = ADIM + CDIM;}
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230         assert(N != 0);}
+\DoxyCodeLine{231 }
+\DoxyCodeLine{232         \textcolor{keywordflow}{return} N;}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234       \}}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236 }
+\DoxyCodeLine{237 }
+\DoxyCodeLine{238       \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae0b58c334cf79bec990ac9406b057b21}{ParticleParticlePropagator}}( \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616}{ResponseType}} job, }
+\DoxyCodeLine{239         std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}> ref, }
+\DoxyCodeLine{240           MatsT* fullMatrix = \textcolor{keyword}{nullptr} ) : }
+\DoxyCodeLine{241         \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase}{ResponseRefBase}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>>(c,job,ref,fullMatrix),}
+\DoxyCodeLine{242         \mbox{\hyperlink{structChronusQ_1_1SingleSlaterParticleParticleBase}{SingleSlaterParticleParticleBase}}() \{ }
+\DoxyCodeLine{243 }
+\DoxyCodeLine{244           this-\/>hasResGuess\_ = \textcolor{keyword}{false};}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{246           this-\/>PC\_ = [\&](\textcolor{keywordtype}{size\_t} nVec, MatsT shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&AV) \{}
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248             preConditioner(nVec,shift,V,AV);}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250           \};}
+\DoxyCodeLine{251 }
+\DoxyCodeLine{252           this-\/>nSPC\_ = [\&](\textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&AV) \{}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{254             preConditioner(nVec,MatsT(0.),V,AV);}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256           \};}
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258           this-\/>cmplxPC\_ = [\&](\textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<dcomplex>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<dcomplex>}} \&AV) \{}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260             preConditioner(nVec,shift,V,AV);}
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262           \};}
+\DoxyCodeLine{263 }
+\DoxyCodeLine{264         \}}
+\DoxyCodeLine{265 }
+\DoxyCodeLine{266       \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a743b9c6abfbbbee425ea94b23932ffe5}{ParticleParticlePropagator}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}} \&other ) : }
+\DoxyCodeLine{267         \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase}{ResponseRefBase}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>>(}
+\DoxyCodeLine{268           dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase}{ResponseRefBase}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>>\&>(other)}
+\DoxyCodeLine{269         ), }
+\DoxyCodeLine{270         \mbox{\hyperlink{structChronusQ_1_1SingleSlaterParticleParticleBase}{SingleSlaterParticleParticleBase}}(}
+\DoxyCodeLine{271           dynamic\_cast<const \mbox{\hyperlink{structChronusQ_1_1SingleSlaterParticleParticleBase}{SingleSlaterParticleParticleBase}}\&>(other)}
+\DoxyCodeLine{272         ) \{ \}}
+\DoxyCodeLine{273 }
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275       MatsT*                   formFullFromMemory(); }
+\DoxyCodeLine{276       MatsT*                   formFullMatrix(); }
+\DoxyCodeLine{277       \textcolor{keywordtype}{void}                 formRHS();}
+\DoxyCodeLine{278       std::pair<size\_t,MatsT*> formPropGrad(\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67da}{ResponseOperator}});}
+\DoxyCodeLine{279       \textcolor{keywordtype}{void}                 configOptions();}
+\DoxyCodeLine{280       \textcolor{keywordtype}{void}                 eigVecNorm();}
+\DoxyCodeLine{281       \textcolor{keywordtype}{void}                 constructShifts();}
+\DoxyCodeLine{282       \textcolor{keywordtype}{void}                 postLinearSolve();}
+\DoxyCodeLine{283       \textcolor{keywordtype}{void}                 \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a9e26a90395ef02ddd2afa738f2a66568}{resGuess}}(\textcolor{keywordtype}{size\_t}, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&, \textcolor{keywordtype}{size\_t})\textcolor{keyword}{ override }\{ \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(); \};}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285 }
+\DoxyCodeLine{286       \textcolor{comment}{// Internal implementations for direct linear transformation}}
+\DoxyCodeLine{287       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aa11908fa08b34927029409d35ba76e3a}{formLinearTrans\_direct}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll<double>}})   = 0;}
+\DoxyCodeLine{288       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_acd01fd66d35b0ee21d08be02e30290c5}{formLinearTrans\_direct}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll<dcomplex>}}) = 0;}
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290       \textcolor{comment}{// Incore linear transformation}}
+\DoxyCodeLine{291       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{292       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a228652c21c0b3a3ff8912392cc9395f6}{formLinearTrans\_incore\_impl}}(\mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll<U>}});}
+\DoxyCodeLine{293 }
+\DoxyCodeLine{294       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a209fccc11737ebbf06453659ddb6cb30}{formLinearTrans\_incore}}(\mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll<double>}} x);}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_af26356e37c4b8823d5ebdbddd52495d7}{formLinearTrans\_incore}}(\mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll<dcomplex>}} x) \{}
+\DoxyCodeLine{297 }
+\DoxyCodeLine{298         formLinearTrans\_incore\_impl(x);}
+\DoxyCodeLine{299 }
+\DoxyCodeLine{300       \}}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302 }
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304 }
+\DoxyCodeLine{305 }
+\DoxyCodeLine{306 }
+\DoxyCodeLine{307       \textcolor{comment}{// Toggle between direct / incore}}
+\DoxyCodeLine{308       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{309       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a2295583f21f6fbacd2cf07e024edee32}{formLinearTrans\_impl}}(\mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll<U>}} x) \{}
+\DoxyCodeLine{310        }
+\DoxyCodeLine{311         \textcolor{keywordflow}{if}( this-\/>genSettings.formFullMat ) \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_a781c9eeaa7f57baefc17749e562ccec3}{formLinearTrans\_incore}}(x);}
+\DoxyCodeLine{312         \textcolor{keywordflow}{else}  \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_af93dc9ed15dcdc74ab3b8a028f3008e5}{formLinearTrans\_direct}}(this-\/>comm\_,x);}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314       \};}
+\DoxyCodeLine{315 }
+\DoxyCodeLine{316       \textcolor{comment}{// Interface to ResponseRBase double exposure}}
+\DoxyCodeLine{317       \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ab326363db2b6b4e836b409865f6fc7e2}{formLinearTrans}}( \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll<double>}} x ) \{}
+\DoxyCodeLine{318        }
+\DoxyCodeLine{319         formLinearTrans\_impl(x);}
+\DoxyCodeLine{320 }
+\DoxyCodeLine{321       \};}
+\DoxyCodeLine{322 }
+\DoxyCodeLine{323       \textcolor{comment}{// Interface to ResponseRBase dcomplex exposure}}
+\DoxyCodeLine{324       \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a4650f8c90abb01dfabcca9f09cc5f332}{formLinearTrans}}( \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll<dcomplex>}} x ) \{}
+\DoxyCodeLine{325        }
+\DoxyCodeLine{326         formLinearTrans\_impl(x);}
+\DoxyCodeLine{327 }
+\DoxyCodeLine{328       \};}
+\DoxyCodeLine{329 }
+\DoxyCodeLine{330 }
+\DoxyCodeLine{331       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a2a5c99f37b8ddd737b29ca42d1eceda8}{printResMO}}(std::ostream \&out) \{}
+\DoxyCodeLine{332 }
+\DoxyCodeLine{333         \textcolor{keywordtype}{size\_t} N      = this-\/>nSingleDim\_;}
+\DoxyCodeLine{334         \textcolor{keywordtype}{size\_t} nRoots = this-\/>resSettings.nRoots;}
+\DoxyCodeLine{335 }
+\DoxyCodeLine{336         \textcolor{keyword}{auto} *VR = this-\/>resResults.VR; }
+\DoxyCodeLine{337 }
+\DoxyCodeLine{338         printResMO(out,this-\/>resSettings.nRoots,this-\/>resResults.W,}
+\DoxyCodeLine{339             \{\{\textcolor{stringliteral}{"{}f     = "{}},this-\/>resObs.oscStrength\}\},VR,VR); }
+\DoxyCodeLine{340 }
+\DoxyCodeLine{341       \}}
+\DoxyCodeLine{342 }
+\DoxyCodeLine{343       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{344       \textcolor{keywordtype}{void} printResMO\_impl(std::ostream \&out, \textcolor{keywordtype}{size\_t} nRoots, \textcolor{keywordtype}{double} *W,}
+\DoxyCodeLine{345         std::vector<std::pair<std::string,double *>> data, U* VL, U* VR);}
+\DoxyCodeLine{346 }
+\DoxyCodeLine{347       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_afd640f70b54de508655a92867c778e30}{printResMO}}(std::ostream \&out, \textcolor{keywordtype}{size\_t} nRoots, \textcolor{keywordtype}{double} *W,}
+\DoxyCodeLine{348         std::vector<std::pair<std::string,double *>> data, \textcolor{keywordtype}{double}* VL, }
+\DoxyCodeLine{349         \textcolor{keywordtype}{double}* VR) \{}
+\DoxyCodeLine{350         printResMO\_impl(out,nRoots,W,data,VL,VR); }
+\DoxyCodeLine{351       \};}
+\DoxyCodeLine{352       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a2457828f563cde3dd0bab7ab181c74d6}{printResMO}}(std::ostream \&out, \textcolor{keywordtype}{size\_t} nRoots, \textcolor{keywordtype}{double} *W,}
+\DoxyCodeLine{353         std::vector<std::pair<std::string,double *>> data, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}* VL, }
+\DoxyCodeLine{354         \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}* VR) \{}
+\DoxyCodeLine{355         printResMO\_impl(out,nRoots,W,data,VL,VR); }
+\DoxyCodeLine{356       \};}
+\DoxyCodeLine{357 }
+\DoxyCodeLine{358 }
+\DoxyCodeLine{359       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{360       std::vector< std::pair< std::pair<int,int>, U > >}
+\DoxyCodeLine{361         getMOContributions(U *V, \textcolor{keywordtype}{double} tol);}
+\DoxyCodeLine{362 }
+\DoxyCodeLine{363 }
+\DoxyCodeLine{364       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{365       \textcolor{keywordtype}{void} preConditioner(\textcolor{keywordtype}{size\_t} nVec, U shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&AV);}
+\DoxyCodeLine{366 }
+\DoxyCodeLine{367 }
+\DoxyCodeLine{368 }
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370 }
+\DoxyCodeLine{371 }
+\DoxyCodeLine{372       \textcolor{comment}{// Helper functions}}
+\DoxyCodeLine{373         }
+\DoxyCodeLine{374       \textcolor{comment}{// Transform pp-\/transition vector MO -\/> AO}}
+\DoxyCodeLine{375       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{376       std::vector<TwoBodyContraction<U>> }
+\DoxyCodeLine{377         ppTransitionVecMO2AO(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \textcolor{keywordtype}{bool} scatter, \textcolor{keywordtype}{size\_t} nVec, \textcolor{keywordtype}{size\_t} N, }
+\DoxyCodeLine{378           Args... Vs);}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380 }
+\DoxyCodeLine{381       \textcolor{comment}{// Transform pp-\/transition vector AO -\/> MO}}
+\DoxyCodeLine{382       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{383       \textcolor{keywordtype}{void} ppTransitionVecAO2MO( \textcolor{keywordtype}{size\_t} nVec, \textcolor{keywordtype}{size\_t} N, }
+\DoxyCodeLine{384         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<U>}}> \&cList, Args... HVs); }
+\DoxyCodeLine{385 }
+\DoxyCodeLine{386       \textcolor{comment}{// Scale pp-\/transition vector by diagonals}}
+\DoxyCodeLine{387       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{388       \textcolor{keywordtype}{void} ppEpsilonScale(\textcolor{keywordtype}{bool} doInc, \textcolor{keywordtype}{bool} doInv, \textcolor{keywordtype}{bool} doOcc, \textcolor{keywordtype}{size\_t} nVec, }
+\DoxyCodeLine{389         \textcolor{keywordtype}{size\_t} N, U* V, U* HV);}
+\DoxyCodeLine{390 }
+\DoxyCodeLine{391 }
+\DoxyCodeLine{392 }
+\DoxyCodeLine{393 }
+\DoxyCodeLine{394 }
+\DoxyCodeLine{395 }
+\DoxyCodeLine{396   \}; }
+\DoxyCodeLine{397 }
+\DoxyCodeLine{398 }
+\DoxyCodeLine{399   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{400   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}}< \mbox{\hyperlink{classChronusQ_1_1HartreeFock}{HartreeFock}}<MatsT,IntsT> > : }
+\DoxyCodeLine{401     \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}}< SingleSlater<MatsT,IntsT> > \{}
+\DoxyCodeLine{402 }
+\DoxyCodeLine{403       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{404       \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll}} = std::vector<RESPONSE\_CONTRACTION<U>>;}
+\DoxyCodeLine{405 }
+\DoxyCodeLine{406 }
+\DoxyCodeLine{407     \textcolor{keyword}{public}:}
+\DoxyCodeLine{408 }
+\DoxyCodeLine{409 }
+\DoxyCodeLine{410       \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01HartreeFock_3_01MatsT_00_01IntsT_01_4_01_4_a5dae1100a16d446d550610d0f7387ab3}{ParticleParticlePropagator}}( \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616}{ResponseType}} job, }
+\DoxyCodeLine{411         std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1HartreeFock}{HartreeFock<MatsT,IntsT>}}> ref, MatsT* fullMatrix = \textcolor{keyword}{nullptr} ) : }
+\DoxyCodeLine{412         \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>>(c,job, }
+\DoxyCodeLine{413             std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>>(ref), fullMatrix) \{ \}}
+\DoxyCodeLine{414 }
+\DoxyCodeLine{415       \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01HartreeFock_3_01MatsT_00_01IntsT_01_4_01_4_a57ebf34a7a0fee19ce02f5433df9926d}{ParticleParticlePropagator}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}} \&other ) : }
+\DoxyCodeLine{416         \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>>( }
+\DoxyCodeLine{417             dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>>\&>(}
+\DoxyCodeLine{418               other) }
+\DoxyCodeLine{419             )\{ \}}
+\DoxyCodeLine{420 }
+\DoxyCodeLine{421 }
+\DoxyCodeLine{422       \textcolor{comment}{// Inherit the ResponseTBase exposures from }}
+\DoxyCodeLine{423       \textcolor{comment}{// ParticleParticlePropagator<SingleSlater>}}
+\DoxyCodeLine{424       \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}>::formLinearTrans;}
+\DoxyCodeLine{425 }
+\DoxyCodeLine{426       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{427       \textcolor{keywordtype}{void} formLinearTrans\_direct\_impl(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, RC\_coll<U> x);}
+\DoxyCodeLine{428 }
+\DoxyCodeLine{429 }
+\DoxyCodeLine{430 }
+\DoxyCodeLine{431       \textcolor{comment}{// Interface to ParticleParticlePropagator<SingleSlater> double exposure}}
+\DoxyCodeLine{432       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01HartreeFock_3_01MatsT_00_01IntsT_01_4_01_4_a8a0894b8ed1c2c5831ce927d8151927a}{formLinearTrans\_direct}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll<double>}} x); }
+\DoxyCodeLine{433 }
+\DoxyCodeLine{434       \textcolor{comment}{// Interface to ParticleParticlePropagator<SingleSlater> dcomplex }}
+\DoxyCodeLine{435       \textcolor{comment}{// exposure}}
+\DoxyCodeLine{436       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01HartreeFock_3_01MatsT_00_01IntsT_01_4_01_4_a9d06fc34d11b71a6c2584bd12f0c3226}{formLinearTrans\_direct}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll<dcomplex>}} x)\{ }
+\DoxyCodeLine{437       }
+\DoxyCodeLine{438         formLinearTrans\_direct\_impl(c,x);}
+\DoxyCodeLine{439 }
+\DoxyCodeLine{440       \};}
+\DoxyCodeLine{441 }
+\DoxyCodeLine{442 }
+\DoxyCodeLine{443   \}; }
+\DoxyCodeLine{444 }
+\DoxyCodeLine{445 }
+\DoxyCodeLine{446 }
+\DoxyCodeLine{447   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{448   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}}< \mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham}}<MatsT,IntsT> > : }
+\DoxyCodeLine{449     \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}}< SingleSlater<MatsT,IntsT> > \{}
+\DoxyCodeLine{450 }
+\DoxyCodeLine{451       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{452       \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll}} = std::vector<RESPONSE\_CONTRACTION<U>>;}
+\DoxyCodeLine{453 }
+\DoxyCodeLine{454     \textcolor{keyword}{public}:}
+\DoxyCodeLine{455 }
+\DoxyCodeLine{456 }
+\DoxyCodeLine{457       \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01KohnSham_3_01MatsT_00_01IntsT_01_4_01_4_a3b52422850bf092c5b8436c2982733e6}{ParticleParticlePropagator}}( \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616}{ResponseType}} job, }
+\DoxyCodeLine{458         std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham<MatsT,IntsT>}}> ref, MatsT* fullMatrix = \textcolor{keyword}{nullptr} ) : }
+\DoxyCodeLine{459         \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>>(c,job,}
+\DoxyCodeLine{460             std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>>(ref), fullMatrix) \{ \}}
+\DoxyCodeLine{461 }
+\DoxyCodeLine{462       \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01KohnSham_3_01MatsT_00_01IntsT_01_4_01_4_a1d1969bdcfce9e3125acd9bb09e9364b}{ParticleParticlePropagator}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}} \&other ) : }
+\DoxyCodeLine{463         \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>>( }
+\DoxyCodeLine{464             dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>>\&>(}
+\DoxyCodeLine{465               other) }
+\DoxyCodeLine{466             )\{ \}}
+\DoxyCodeLine{467 }
+\DoxyCodeLine{468 }
+\DoxyCodeLine{469       \textcolor{comment}{// Inherit the ResponseTBase exposures from }}
+\DoxyCodeLine{470       \textcolor{comment}{// ParticleParticlePropagator<SingleSlater>}}
+\DoxyCodeLine{471       \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator}{ParticleParticlePropagator}}<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}>::formLinearTrans;}
+\DoxyCodeLine{472 }
+\DoxyCodeLine{473       \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{474       \textcolor{keywordtype}{void} formLinearTrans\_direct\_impl(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, RC\_coll<U> x);}
+\DoxyCodeLine{475 }
+\DoxyCodeLine{476 }
+\DoxyCodeLine{477 }
+\DoxyCodeLine{478       \textcolor{comment}{// Interface to ParticleParticlePropagator<SingleSlater> double exposure}}
+\DoxyCodeLine{479       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01KohnSham_3_01MatsT_00_01IntsT_01_4_01_4_a2dc93ebe77a6cda82f13672245597c6f}{formLinearTrans\_direct}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll<double>}} x); }
+\DoxyCodeLine{480 }
+\DoxyCodeLine{481       \textcolor{comment}{// Interface to ParticleParticlePropagator<SingleSlater> dcomplex }}
+\DoxyCodeLine{482       \textcolor{comment}{// exposure}}
+\DoxyCodeLine{483       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01KohnSham_3_01MatsT_00_01IntsT_01_4_01_4_a9d7f7bdc136a6e2219c4e664d3e18359}{formLinearTrans\_direct}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aafe8adbe32f2a9ef0dd254901c15b908}{RC\_coll<dcomplex>}} x)\{ }
+\DoxyCodeLine{484       }
+\DoxyCodeLine{485         formLinearTrans\_direct\_impl(c,x);}
+\DoxyCodeLine{486 }
+\DoxyCodeLine{487       \};}
+\DoxyCodeLine{488 }
+\DoxyCodeLine{489 }
+\DoxyCodeLine{490   \}; }
+\DoxyCodeLine{491 }
+\DoxyCodeLine{492 }
+\DoxyCodeLine{493 }
+\DoxyCodeLine{494 \};}
+\DoxyCodeLine{495 }
+\DoxyCodeLine{496 }
+\DoxyCodeLine{497 }
+
+\end{DoxyCode}

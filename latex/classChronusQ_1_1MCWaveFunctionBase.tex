@@ -1,0 +1,486 @@
+\hypertarget{classChronusQ_1_1MCWaveFunctionBase}{}\doxysection{ChronusQ\+::MCWave\+Function\+Base Class Reference}
+\label{classChronusQ_1_1MCWaveFunctionBase}\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+
+
+The \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWave\+Function\+Base}} class. The abstraction of information relating to the \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} class which are independent of storage type.  
+
+
+
+
+{\ttfamily \#include $<$base.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::MCWave\+Function\+Base\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=247pt]{classChronusQ_1_1MCWaveFunctionBase__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::MCWave\+Function\+Base\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunctionBase__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::vector$<$ std\+::vector$<$ int $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a9eae42a5906d1386456a2762fb5792dd}{int\+\_\+matrix}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a588fde23402eb50d1ccc138a7ba06014}{MCWave\+Function\+Base}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aa6409514bed7dbd143b8e323f79c03db}{MCWave\+Function\+Base}} (const \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWave\+Function\+Base}} \&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a708a1bad222925f2725ff3293db7a403}{MCWave\+Function\+Base}} (\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWave\+Function\+Base}} \&\&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_af218cf17aa36db827039ec4419b32fed}{MCWave\+Function\+Base}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem, size\+\_\+t NS)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a5ee4354c52c14c5f533863debc3799c5}{$\sim$\+MCWave\+Function\+Base}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_ac5073b869ad227eb39c78063e20e053f}{partition\+MOSpace}} (std\+::vector$<$ size\+\_\+t $>$, size\+\_\+t)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a2894352a39545d5f1433a42f15656649}{turn\+On\+State\+Average}} (const std\+::vector$<$ double $>$ \&)
+\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_ad73a35950136899844b16c5344082296}{genf\+Cat}} (std\+::vector$<$ std\+::vector$<$ size\+\_\+t $>$ $>$, std\+::vector$<$ std\+::vector$<$ size\+\_\+t $>$ $>$, size\+\_\+t, size\+\_\+t)
+\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a722813a4cea972658f6d72bcc0e8b486}{genf\+Cat}} (std\+::vector$<$ std\+::vector$<$ size\+\_\+t $>$ $>$, size\+\_\+t)
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a27c499158c3e19c5342088c58ebf6fb2}{run}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&)=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a7631c0cf10b0d7c19d96f526b30299be}{set\+MORanges}} ()=0
+\item 
+virtual \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{Wave\+Function\+Base}} \& \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a426e18e72ad8c5671ca65a42fc3500fe}{reference\+Wave\+Function}} ()=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a7d3be045939df179ddc8faf398360b47}{swap\+MOs}} (std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ $>$ \&, \mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19d}{Spin\+Type}})=0
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a3e11a00592d57ba3810ce2236ef50936}{set\+Active\+Space\+And\+Re\+Order}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aa0b05c2b1dc273c57f4940eb6b2671ab}{alloc}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a647635843b7ee3053fc943aa3c1f2e9f}{dealloc}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1SafeFile}{Safe\+File}} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aca03345351a2ad806274c4adddc7afd3}{sav\+File}}
+\begin{DoxyCompactList}\small\item\em Data File, for restart. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{mem\+Manager}}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aa29310d86ed737acb570d160dc971f1f}{comm}}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition}{MOSpace\+Partition}} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0ad25ed51be67666dfec4df8b3de6bce}{NDet}}
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a933e57263d7a49bfe655de67b8590cff}{NStates}} = 1
+\begin{DoxyCompactList}\small\item\em \texorpdfstring{$<$}{<} Number of Determinants \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a90324093ea0d7e66a965d984402de5c5}{Four\+Comp\+No\+Pair}} = true
+\begin{DoxyCompactList}\small\item\em \texorpdfstring{$<$}{<} Number of States \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1DetStringManager}{Det\+String\+Manager}} $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0b502bfda30330beb9beefff3429f1bd}{det\+Str}} = nullptr
+\begin{DoxyCompactList}\small\item\em default as true if 4C \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1DetStringManager}{Det\+String\+Manager}} $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a48a2f2a849d1eb8ccd057bb17e20dc55}{det\+Str\+Beta}} = nullptr
+\item 
+double \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0d37a12d6d2dbb7b99e67e5285eef04a}{Inact\+Energy}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_ad94c23274a04fba12703fbaa1af5e177}{State\+Energy}}
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a40086fd454521b05c4e6bbc01d8048e9}{State\+Average}} = false
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aad6387c4a9d7d2ac1f201f08d86fdb06}{SAWeight}}
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aada5dccca5fffcd7f68255e14e7c6226}{Population\+Analysis}} = false
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a8e2e2665ce1f808db2d8d965dda7844c}{Nos\+S1}} = 0
+\item 
+double $\ast$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a21f69973fa990bbfa8cea7ec197ce12e}{osc\+\_\+str}} = nullptr
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a1244a4d477bd6d31b92d0d97a77f6a7d}{print\+MOCoeffs}} = 0
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0e3a2c2f4025b9e3fc8690a8fcbea819}{print\+RDMs}} = 0
+\item 
+double \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a9cb2f6a72001ea131ffe004da012bc55}{rdm\+Cut}} = 0.\+10
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWave\+Function\+Base}} class. The abstraction of information relating to the \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} class which are independent of storage type. 
+
+See \mbox{\hyperlink{classChronusQ_1_1WaveFunction}{Wave\+Function}} for further docs. 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a9eae42a5906d1386456a2762fb5792dd}\label{classChronusQ_1_1MCWaveFunctionBase_a9eae42a5906d1386456a2762fb5792dd}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!int\_matrix@{int\_matrix}}
+\index{int\_matrix@{int\_matrix}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{int\_matrix}{int\_matrix}}
+{\footnotesize\ttfamily typedef std\+::vector$<$std\+::vector$<$int$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a9eae42a5906d1386456a2762fb5792dd}{Chronus\+Q\+::\+MCWave\+Function\+Base\+::int\+\_\+matrix}}}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a588fde23402eb50d1ccc138a7ba06014}\label{classChronusQ_1_1MCWaveFunctionBase_a588fde23402eb50d1ccc138a7ba06014}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!MCWaveFunctionBase@{MCWaveFunctionBase}}
+\index{MCWaveFunctionBase@{MCWaveFunctionBase}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{MCWaveFunctionBase()}{MCWaveFunctionBase()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+MCWave\+Function\+Base\+::\+MCWave\+Function\+Base (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_aa6409514bed7dbd143b8e323f79c03db}\label{classChronusQ_1_1MCWaveFunctionBase_aa6409514bed7dbd143b8e323f79c03db}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!MCWaveFunctionBase@{MCWaveFunctionBase}}
+\index{MCWaveFunctionBase@{MCWaveFunctionBase}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{MCWaveFunctionBase()}{MCWaveFunctionBase()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+MCWave\+Function\+Base\+::\+MCWave\+Function\+Base (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWave\+Function\+Base}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a708a1bad222925f2725ff3293db7a403}\label{classChronusQ_1_1MCWaveFunctionBase_a708a1bad222925f2725ff3293db7a403}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!MCWaveFunctionBase@{MCWaveFunctionBase}}
+\index{MCWaveFunctionBase@{MCWaveFunctionBase}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{MCWaveFunctionBase()}{MCWaveFunctionBase()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+MCWave\+Function\+Base\+::\+MCWave\+Function\+Base (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWave\+Function\+Base}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_af218cf17aa36db827039ec4419b32fed}\label{classChronusQ_1_1MCWaveFunctionBase_af218cf17aa36db827039ec4419b32fed}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!MCWaveFunctionBase@{MCWaveFunctionBase}}
+\index{MCWaveFunctionBase@{MCWaveFunctionBase}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{MCWaveFunctionBase()}{MCWaveFunctionBase()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+MCWave\+Function\+Base\+::\+MCWave\+Function\+Base (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{c,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem,  }\item[{size\+\_\+t}]{NS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWave\+Function\+Base}} Constructor. Constructs a \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{Wave\+Function\+Base}} object
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em NS} & Number of States constructed by \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunctionBase_af218cf17aa36db827039ec4419b32fed_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a5ee4354c52c14c5f533863debc3799c5}\label{classChronusQ_1_1MCWaveFunctionBase_a5ee4354c52c14c5f533863debc3799c5}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!````~MCWaveFunctionBase@{$\sim$MCWaveFunctionBase}}
+\index{````~MCWaveFunctionBase@{$\sim$MCWaveFunctionBase}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{$\sim$MCWaveFunctionBase()}{~MCWaveFunctionBase()}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+MCWave\+Function\+Base\+::$\sim$\+MCWave\+Function\+Base (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunctionBase_a5ee4354c52c14c5f533863debc3799c5_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_aa0b05c2b1dc273c57f4940eb6b2671ab}\label{classChronusQ_1_1MCWaveFunctionBase_aa0b05c2b1dc273c57f4940eb6b2671ab}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!alloc@{alloc}}
+\index{alloc@{alloc}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{alloc()}{alloc()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+MCWave\+Function\+Base\+::alloc (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunctionBase_aa0b05c2b1dc273c57f4940eb6b2671ab_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a647635843b7ee3053fc943aa3c1f2e9f}\label{classChronusQ_1_1MCWaveFunctionBase_a647635843b7ee3053fc943aa3c1f2e9f}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!dealloc@{dealloc}}
+\index{dealloc@{dealloc}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{dealloc()}{dealloc()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+MCWave\+Function\+Base\+::dealloc (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunctionBase_a647635843b7ee3053fc943aa3c1f2e9f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a722813a4cea972658f6d72bcc0e8b486}\label{classChronusQ_1_1MCWaveFunctionBase_a722813a4cea972658f6d72bcc0e8b486}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!genfCat@{genfCat}}
+\index{genfCat@{genfCat}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{genfCat()}{genfCat()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily std\+::vector$<$ int $>$ Chronus\+Q\+::\+MCWave\+Function\+Base\+::genf\+Cat (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::vector$<$ size\+\_\+t $>$ $>$}]{LCat,  }\item[{size\+\_\+t}]{n\+Cat }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_ad73a35950136899844b16c5344082296}\label{classChronusQ_1_1MCWaveFunctionBase_ad73a35950136899844b16c5344082296}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!genfCat@{genfCat}}
+\index{genfCat@{genfCat}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{genfCat()}{genfCat()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily std\+::vector$<$ int $>$ Chronus\+Q\+::\+MCWave\+Function\+Base\+::genf\+Cat (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::vector$<$ size\+\_\+t $>$ $>$}]{LCata,  }\item[{std\+::vector$<$ std\+::vector$<$ size\+\_\+t $>$ $>$}]{LCatb,  }\item[{size\+\_\+t}]{n\+Cata,  }\item[{size\+\_\+t}]{n\+Catb }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunctionBase_ad73a35950136899844b16c5344082296_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_ac5073b869ad227eb39c78063e20e053f}\label{classChronusQ_1_1MCWaveFunctionBase_ac5073b869ad227eb39c78063e20e053f}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!partitionMOSpace@{partitionMOSpace}}
+\index{partitionMOSpace@{partitionMOSpace}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{partitionMOSpace()}{partitionMOSpace()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+MCWave\+Function\+Base\+::partition\+MOSpace (\begin{DoxyParamCaption}\item[{std\+::vector$<$ size\+\_\+t $>$}]{n\+ActO,  }\item[{size\+\_\+t}]{n\+CorrE }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunctionBase_ac5073b869ad227eb39c78063e20e053f_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a426e18e72ad8c5671ca65a42fc3500fe}\label{classChronusQ_1_1MCWaveFunctionBase_a426e18e72ad8c5671ca65a42fc3500fe}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!referenceWaveFunction@{referenceWaveFunction}}
+\index{referenceWaveFunction@{referenceWaveFunction}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{referenceWaveFunction()}{referenceWaveFunction()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{Wave\+Function\+Base}} \& Chronus\+Q\+::\+MCWave\+Function\+Base\+::reference\+Wave\+Function (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_ab817904a4e9f9f254c1a868b9bf0e3f9}{Chronus\+Q\+::\+MCWave\+Function$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunctionBase_a426e18e72ad8c5671ca65a42fc3500fe_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a27c499158c3e19c5342088c58ebf6fb2}\label{classChronusQ_1_1MCWaveFunctionBase_a27c499158c3e19c5342088c58ebf6fb2}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!run@{run}}
+\index{run@{run}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+MCWave\+Function\+Base\+::run (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MCSCF_ae2b5040ab5221af280964057bf5d9a18}{Chronus\+Q\+::\+MCSCF$<$ Mats\+T, Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a5d1e50f554cf5dbd4c86022d93e61d17}{Chronus\+Q\+::\+MCWave\+Function$<$ Mats\+T, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a3e11a00592d57ba3810ce2236ef50936}\label{classChronusQ_1_1MCWaveFunctionBase_a3e11a00592d57ba3810ce2236ef50936}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!setActiveSpaceAndReOrder@{setActiveSpaceAndReOrder}}
+\index{setActiveSpaceAndReOrder@{setActiveSpaceAndReOrder}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{setActiveSpaceAndReOrder()}{setActiveSpaceAndReOrder()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+MCWave\+Function\+Base\+::set\+Active\+Space\+And\+Re\+Order (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunctionBase_a3e11a00592d57ba3810ce2236ef50936_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunctionBase_a3e11a00592d57ba3810ce2236ef50936_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a7631c0cf10b0d7c19d96f526b30299be}\label{classChronusQ_1_1MCWaveFunctionBase_a7631c0cf10b0d7c19d96f526b30299be}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!setMORanges@{setMORanges}}
+\index{setMORanges@{setMORanges}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{setMORanges()}{setMORanges()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+MCWave\+Function\+Base\+::set\+MORanges (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a07e50dde8975711c0d2243bbf9f4e5bc}{Chronus\+Q\+::\+MCWave\+Function$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunctionBase_a7631c0cf10b0d7c19d96f526b30299be_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a7d3be045939df179ddc8faf398360b47}\label{classChronusQ_1_1MCWaveFunctionBase_a7d3be045939df179ddc8faf398360b47}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!swapMOs@{swapMOs}}
+\index{swapMOs@{swapMOs}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{swapMOs()}{swapMOs()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+MCWave\+Function\+Base\+::swap\+MOs (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ $>$ \&}]{,  }\item[{\mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19d}{Spin\+Type}}}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a0f054ac532138f6749e11b74b1b717cd}{Chronus\+Q\+::\+MCWave\+Function$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunctionBase_a7d3be045939df179ddc8faf398360b47_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a2894352a39545d5f1433a42f15656649}\label{classChronusQ_1_1MCWaveFunctionBase_a2894352a39545d5f1433a42f15656649}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!turnOnStateAverage@{turnOnStateAverage}}
+\index{turnOnStateAverage@{turnOnStateAverage}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{turnOnStateAverage()}{turnOnStateAverage()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+MCWave\+Function\+Base\+::turn\+On\+State\+Average (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{weight }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunctionBase_a2894352a39545d5f1433a42f15656649_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_aa29310d86ed737acb570d160dc971f1f}\label{classChronusQ_1_1MCWaveFunctionBase_aa29310d86ed737acb570d160dc971f1f}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!comm@{comm}}
+\index{comm@{comm}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{comm}{comm}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} Chronus\+Q\+::\+MCWave\+Function\+Base\+::comm}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a0b502bfda30330beb9beefff3429f1bd}\label{classChronusQ_1_1MCWaveFunctionBase_a0b502bfda30330beb9beefff3429f1bd}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!detStr@{detStr}}
+\index{detStr@{detStr}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{detStr}{detStr}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1DetStringManager}{Det\+String\+Manager}}$>$ Chronus\+Q\+::\+MCWave\+Function\+Base\+::det\+Str = nullptr}
+
+
+
+default as true if 4C 
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a48a2f2a849d1eb8ccd057bb17e20dc55}\label{classChronusQ_1_1MCWaveFunctionBase_a48a2f2a849d1eb8ccd057bb17e20dc55}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!detStrBeta@{detStrBeta}}
+\index{detStrBeta@{detStrBeta}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{detStrBeta}{detStrBeta}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1DetStringManager}{Det\+String\+Manager}}$>$ Chronus\+Q\+::\+MCWave\+Function\+Base\+::det\+Str\+Beta = nullptr}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a90324093ea0d7e66a965d984402de5c5}\label{classChronusQ_1_1MCWaveFunctionBase_a90324093ea0d7e66a965d984402de5c5}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!FourCompNoPair@{FourCompNoPair}}
+\index{FourCompNoPair@{FourCompNoPair}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{FourCompNoPair}{FourCompNoPair}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+MCWave\+Function\+Base\+::\+Four\+Comp\+No\+Pair = true}
+
+
+
+\texorpdfstring{$<$}{<} Number of States 
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a0d37a12d6d2dbb7b99e67e5285eef04a}\label{classChronusQ_1_1MCWaveFunctionBase_a0d37a12d6d2dbb7b99e67e5285eef04a}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!InactEnergy@{InactEnergy}}
+\index{InactEnergy@{InactEnergy}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{InactEnergy}{InactEnergy}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+MCWave\+Function\+Base\+::\+Inact\+Energy}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}\label{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!memManager@{memManager}}
+\index{memManager@{memManager}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{memManager}{memManager}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}}\& Chronus\+Q\+::\+MCWave\+Function\+Base\+::mem\+Manager}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}\label{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!MOPartition@{MOPartition}}
+\index{MOPartition@{MOPartition}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{MOPartition}{MOPartition}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition}{MOSpace\+Partition}} Chronus\+Q\+::\+MCWave\+Function\+Base\+::\+MOPartition}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a0ad25ed51be67666dfec4df8b3de6bce}\label{classChronusQ_1_1MCWaveFunctionBase_a0ad25ed51be67666dfec4df8b3de6bce}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!NDet@{NDet}}
+\index{NDet@{NDet}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{NDet}{NDet}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+MCWave\+Function\+Base\+::\+NDet}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a8e2e2665ce1f808db2d8d965dda7844c}\label{classChronusQ_1_1MCWaveFunctionBase_a8e2e2665ce1f808db2d8d965dda7844c}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!NosS1@{NosS1}}
+\index{NosS1@{NosS1}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{NosS1}{NosS1}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+MCWave\+Function\+Base\+::\+Nos\+S1 = 0}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a933e57263d7a49bfe655de67b8590cff}\label{classChronusQ_1_1MCWaveFunctionBase_a933e57263d7a49bfe655de67b8590cff}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!NStates@{NStates}}
+\index{NStates@{NStates}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{NStates}{NStates}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+MCWave\+Function\+Base\+::\+NStates = 1}
+
+
+
+\texorpdfstring{$<$}{<} Number of Determinants 
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a21f69973fa990bbfa8cea7ec197ce12e}\label{classChronusQ_1_1MCWaveFunctionBase_a21f69973fa990bbfa8cea7ec197ce12e}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!osc\_str@{osc\_str}}
+\index{osc\_str@{osc\_str}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{osc\_str}{osc\_str}}
+{\footnotesize\ttfamily double$\ast$ Chronus\+Q\+::\+MCWave\+Function\+Base\+::osc\+\_\+str = nullptr}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_aada5dccca5fffcd7f68255e14e7c6226}\label{classChronusQ_1_1MCWaveFunctionBase_aada5dccca5fffcd7f68255e14e7c6226}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!PopulationAnalysis@{PopulationAnalysis}}
+\index{PopulationAnalysis@{PopulationAnalysis}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{PopulationAnalysis}{PopulationAnalysis}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+MCWave\+Function\+Base\+::\+Population\+Analysis = false}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a1244a4d477bd6d31b92d0d97a77f6a7d}\label{classChronusQ_1_1MCWaveFunctionBase_a1244a4d477bd6d31b92d0d97a77f6a7d}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!printMOCoeffs@{printMOCoeffs}}
+\index{printMOCoeffs@{printMOCoeffs}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{printMOCoeffs}{printMOCoeffs}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+MCWave\+Function\+Base\+::print\+MOCoeffs = 0}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a0e3a2c2f4025b9e3fc8690a8fcbea819}\label{classChronusQ_1_1MCWaveFunctionBase_a0e3a2c2f4025b9e3fc8690a8fcbea819}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!printRDMs@{printRDMs}}
+\index{printRDMs@{printRDMs}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{printRDMs}{printRDMs}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+MCWave\+Function\+Base\+::print\+RDMs = 0}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a9cb2f6a72001ea131ffe004da012bc55}\label{classChronusQ_1_1MCWaveFunctionBase_a9cb2f6a72001ea131ffe004da012bc55}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!rdmCut@{rdmCut}}
+\index{rdmCut@{rdmCut}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{rdmCut}{rdmCut}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+MCWave\+Function\+Base\+::rdm\+Cut = 0.\+10}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_aca03345351a2ad806274c4adddc7afd3}\label{classChronusQ_1_1MCWaveFunctionBase_aca03345351a2ad806274c4adddc7afd3}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!savFile@{savFile}}
+\index{savFile@{savFile}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{savFile}{savFile}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1SafeFile}{Safe\+File}} Chronus\+Q\+::\+MCWave\+Function\+Base\+::sav\+File}
+
+
+
+Data File, for restart. 
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_aad6387c4a9d7d2ac1f201f08d86fdb06}\label{classChronusQ_1_1MCWaveFunctionBase_aad6387c4a9d7d2ac1f201f08d86fdb06}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!SAWeight@{SAWeight}}
+\index{SAWeight@{SAWeight}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{SAWeight}{SAWeight}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ Chronus\+Q\+::\+MCWave\+Function\+Base\+::\+SAWeight}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_a40086fd454521b05c4e6bbc01d8048e9}\label{classChronusQ_1_1MCWaveFunctionBase_a40086fd454521b05c4e6bbc01d8048e9}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!StateAverage@{StateAverage}}
+\index{StateAverage@{StateAverage}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{StateAverage}{StateAverage}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+MCWave\+Function\+Base\+::\+State\+Average = false}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunctionBase_ad94c23274a04fba12703fbaa1af5e177}\label{classChronusQ_1_1MCWaveFunctionBase_ad94c23274a04fba12703fbaa1af5e177}} 
+\index{ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}!StateEnergy@{StateEnergy}}
+\index{StateEnergy@{StateEnergy}!ChronusQ::MCWaveFunctionBase@{ChronusQ::MCWaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{StateEnergy}{StateEnergy}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ Chronus\+Q\+::\+MCWave\+Function\+Base\+::\+State\+Energy}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/mcwavefunction/\mbox{\hyperlink{mcwavefunction_2base_8hpp}{base.\+hpp}}\item 
+include/mcwavefunction/base/\mbox{\hyperlink{mcwavefunction_2base_2impl_8hpp}{impl.\+hpp}}\end{DoxyCompactItemize}

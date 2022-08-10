@@ -1,0 +1,44 @@
+\hypertarget{epc_8hpp}{}\doxysection{include/dft/epc.hpp File Reference}
+\label{epc_8hpp}\index{include/dft/epc.hpp@{include/dft/epc.hpp}}
+{\ttfamily \#include $<$dft.\+hpp$>$}\newline
+{\ttfamily \#include $<$matrix.\+hpp$>$}\newline
+{\ttfamily \#include $<$quantum/base.\+hpp$>$}\newline
+Include dependency graph for epc.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{epc_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{epc_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classChronusQ_1_1EPC17}{Chronus\+Q\+::\+EPC17}}
+\begin{DoxyCompactList}\small\item\em EPC-\/17 functional. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classChronusQ_1_1EPC19}{Chronus\+Q\+::\+EPC19}}
+\begin{DoxyCompactList}\small\item\em EPC-\/19 functional. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename MatsT $>$ }\\void \mbox{\hyperlink{namespaceChronusQ_a8b6ce2b6b67536f010ea1326dec72bcb}{Chronus\+Q\+::mk\+Cross\+Aux\+Var}} (bool check\+\_\+aux, bool electron, std\+::shared\+\_\+ptr$<$ Pauli\+Spinor\+Square\+Matrices$<$ MatsT $>$ $>$ one\+PDM1, std\+::shared\+\_\+ptr$<$ Pauli\+Spinor\+Square\+Matrices$<$ MatsT $>$ $>$ one\+PDM2, double eps\+Screen, size\+\_\+t NPts, double $\ast$dnd\+X1, double $\ast$dnd\+Y1, double $\ast$dnd\+Z1, double $\ast$d\+Mxd\+X1, double $\ast$d\+Mxd\+Y1, double $\ast$d\+Mxd\+Z1, double $\ast$d\+Myd\+X1, double $\ast$d\+Myd\+Y1, double $\ast$d\+Myd\+Z1, double $\ast$d\+Mzd\+X1, double $\ast$d\+Mzd\+Y1, double $\ast$d\+Mzd\+Z1, double $\ast$dnd\+X2, double $\ast$dnd\+Y2, double $\ast$dnd\+Z2, double $\ast$d\+Mxd\+X2, double $\ast$d\+Mxd\+Y2, double $\ast$d\+Mxd\+Z2, double $\ast$d\+Myd\+X2, double $\ast$d\+Myd\+Y2, double $\ast$d\+Myd\+Z2, double $\ast$d\+Mzd\+X2, double $\ast$d\+Mzd\+Y2, double $\ast$d\+Mzd\+Z2, double $\ast$gamma\+Coll)
+\begin{DoxyCompactList}\small\item\em form the U variables given the V variables. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_a0ecad9fb6bbb86b9e15cb07efcc7b256}{Chronus\+Q\+::load\+EPCVXCder}} (bool electron, std\+::vector$<$ std\+::shared\+\_\+ptr$<$ DFTFunctional $>$ $>$ functionals, size\+\_\+t NPts, double $\ast$Den1, double $\ast$Gamma1, double $\ast$Den2, double $\ast$Gamma2, double $\ast$c\+Gamma, double $\ast$eps\+Eval, double $\ast$VRho\+Eval, double $\ast$Vgamma\+Eval, double $\ast$CVgamma\+Eval, double $\ast$Eps\+SCR, double $\ast$VRho\+SCR, double $\ast$Vgamma\+SCR, double $\ast$CVgamma\+SCR, double $\ast$epc\+Eval)
+\begin{DoxyCompactList}\small\item\em wrapper for evaluating and loading the NEO-\/\+DFT kernel derivatives from libxc wrt to the U var. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_a3b3b3494232d56f304a7838ecd110356}{Chronus\+Q\+::construct\+EPCZVars}} (bool electron, DENSITY\+\_\+\+TYPE den\+Typ, size\+\_\+t NPts, double $\ast$CVgamma\+Eval, double $\ast$Zgamma\+Var3)
+\begin{DoxyCompactList}\small\item\em Construct the required quantities for the formation of the Z vector, for a given density component, given the kernel derivatives wrt U variables. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename MatsT $>$ }\\void \mbox{\hyperlink{namespaceChronusQ_ac1dce6121eb20d5236d321cc4403db85}{Chronus\+Q\+::form\+Z\+\_\+vxc\+\_\+epc}} (std\+::shared\+\_\+ptr$<$ Pauli\+Spinor\+Square\+Matrices$<$ MatsT $>$ $>$ one\+PDM1, std\+::shared\+\_\+ptr$<$ Pauli\+Spinor\+Square\+Matrices$<$ MatsT $>$ $>$ one\+PDM2, DENSITY\+\_\+\+TYPE den\+Typ, bool is\+GGA, size\+\_\+t NPts, size\+\_\+t NBE, size\+\_\+t IOff, double eps\+Screen, std\+::vector$<$ double $>$ \&\mbox{\hyperlink{lebedev__974_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}, double $\ast$Zrho\+Var1, double $\ast$Zgamma\+Var1, double $\ast$Zgamma\+Var2, double $\ast$Zgamma\+Var3, double $\ast$DenS, double $\ast$DenZ, double $\ast$DenY, double $\ast$DenX, double $\ast$GDenS, double $\ast$GDenZ, double $\ast$GDenY, double $\ast$GDenX, double $\ast$aux\+\_\+\+DenS, double $\ast$aux\+\_\+\+DenZ, double $\ast$aux\+\_\+\+DenY, double $\ast$aux\+\_\+\+DenX, double $\ast$aux\+\_\+\+GDenS, double $\ast$aux\+\_\+\+GDenZ, double $\ast$aux\+\_\+\+GDenY, double $\ast$aux\+\_\+\+GDenX, double $\ast$Basis\+Scratch, double $\ast$ZMAT)
+\begin{DoxyCompactList}\small\item\em assemble the final Z vector -\/\texorpdfstring{$>$}{>} ZMAT (for a given density component), given the precomputed required U dependent quantities (ZUvar\# from construct\+ZVars) and the V variables (Den\+S/\+Z/\+X/Y and GDen\+S/\+Z/\+Y/X from eval\+Den) in input. It requires in input also the pointer (Basis\+Scratch) to all basis set (and their gradient) \end{DoxyCompactList}\end{DoxyCompactItemize}

@@ -1,0 +1,304 @@
+\hypertarget{mcwavefunction_2base_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{mcwavefunction_2base_2impl_8hpp_source}\index{include/mcwavefunction/base/impl.hpp@{include/mcwavefunction/base/impl.hpp}}
+\mbox{\hyperlink{mcwavefunction_2base_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you ca redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcwavefunction_2base_8hpp}{mcwavefunction/base.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{detstringmanager_8hpp}{detstringmanager.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_ac5073b869ad227eb39c78063e20e053f}{MCWaveFunctionBase::partitionMOSpace}}(std::vector<size\_t> nActO, \textcolor{keywordtype}{size\_t} nCorrE) \{}
+\DoxyCodeLine{32   }
+\DoxyCodeLine{33     \textcolor{keyword}{auto} \& mopart = this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}};}
+\DoxyCodeLine{34     \textcolor{keyword}{auto} \& wfn = \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a426e18e72ad8c5671ca65a42fc3500fe}{referenceWaveFunction}}();}
+\DoxyCodeLine{35     }
+\DoxyCodeLine{36     \textcolor{keywordflow}{if} (wfn.nC == 4 and not this-\/>FourCompNoPair)}
+\DoxyCodeLine{37       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}4C without no-\/pair approximation is not implemented."{}});}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keywordflow}{if} (wfn.nC == 1) \{}
+\DoxyCodeLine{40       mopart.nElecMO = wfn.nAlphaOrbital();}
+\DoxyCodeLine{41     \} \textcolor{keywordflow}{else} \{ }
+\DoxyCodeLine{42       mopart.nElecMO = wfn.nV + wfn.nO;}
+\DoxyCodeLine{43     \} }
+\DoxyCodeLine{44     }
+\DoxyCodeLine{45     }
+\DoxyCodeLine{46     \textcolor{keywordflow}{if} (wfn.nC == 4) \{}
+\DoxyCodeLine{47       mopart.nMO = 2 * mopart.nElecMO;}
+\DoxyCodeLine{48       mopart.nNegMO = mopart.nElecMO;}
+\DoxyCodeLine{49     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{50       mopart.nMO = mopart.nElecMO; }
+\DoxyCodeLine{51     \}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{keywordtype}{size\_t} nCorrO = std::accumulate(nActO.begin(), nActO.end(), 0);}
+\DoxyCodeLine{54     }
+\DoxyCodeLine{55     \textcolor{keywordflow}{if}( nCorrO > mopart.nElecMO or nCorrO <=0 or (nCorrE > wfn.nO) or nCorrE <= 0)  }
+\DoxyCodeLine{56       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}This is not a valid active space, please modify the input!"{}});}
+\DoxyCodeLine{57     }
+\DoxyCodeLine{58     \textcolor{keywordflow}{if} (wfn.nC == 1) \{}
+\DoxyCodeLine{59       \textcolor{keywordflow}{if} (wfn.iCS) \{}
+\DoxyCodeLine{60         mopart.nCorrEA = nCorrE / 2;}
+\DoxyCodeLine{61         mopart.nCorrEB = mopart.nCorrEA;  }
+\DoxyCodeLine{62       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{63         \textcolor{keywordtype}{int} singleE   = wfn.nOA -\/ wfn.nOB;}
+\DoxyCodeLine{64         mopart.nCorrEA = (nCorrE + singleE) / 2;}
+\DoxyCodeLine{65         mopart.nCorrEB = nCorrE -\/ mopart.nCorrEA;  }
+\DoxyCodeLine{66       \}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68       \textcolor{keywordflow}{if} (nCorrO < mopart.nCorrEA) }
+\DoxyCodeLine{69         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}The specified number of correlated orbitals can not hold all the correlated electrons"{}}); }
+\DoxyCodeLine{70     }
+\DoxyCodeLine{71       mopart.nInact = wfn.nOA -\/ mopart.nCorrEA;}
+\DoxyCodeLine{72     \} \textcolor{keywordflow}{else} \{ \textcolor{comment}{// other than 1C}}
+\DoxyCodeLine{73   }
+\DoxyCodeLine{74       \textcolor{keywordflow}{if} (nCorrO < nCorrE)}
+\DoxyCodeLine{75         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}The specified number of correlated orbitals can not hold all the correlated electrons"{}}); }
+\DoxyCodeLine{76       }
+\DoxyCodeLine{77       mopart.nInact = wfn.nO -\/ nCorrE;}
+\DoxyCodeLine{78     \}    }
+\DoxyCodeLine{79     }
+\DoxyCodeLine{80     mopart.nFVirt = mopart.nElecMO -\/ nCorrO -\/ mopart.nInact;}
+\DoxyCodeLine{81     mopart.nCorrO = nCorrO;}
+\DoxyCodeLine{82     mopart.nCorrE = nCorrE;}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     \textcolor{keywordflow}{if}( mopart.nElecMO < (nCorrO + mopart.nInact) )}
+\DoxyCodeLine{85       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}This is not a valid active space, please modify the input!"{}});}
+\DoxyCodeLine{86     }
+\DoxyCodeLine{87   }
+\DoxyCodeLine{88 \textcolor{preprocessor}{    \#define CONSTRUCT\_CASSTRINGMANAGER(M\_, N\_) \(\backslash\)}}
+\DoxyCodeLine{89 \textcolor{preprocessor}{      std::dynamic\_pointer\_cast<DetStringManager>( \(\backslash\)}}
+\DoxyCodeLine{90 \textcolor{preprocessor}{        std::make\_shared<CASStringManager>(this-\/>memManager, M\_, N\_))}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92     \textcolor{comment}{// Initialize String Engine}}
+\DoxyCodeLine{93     \textcolor{keywordflow}{if} (mopart.scheme == \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855ae5cf53c1e4b7d40256d436ef0b515aac}{CAS}}) \{}
+\DoxyCodeLine{94       \textcolor{keywordflow}{if} (wfn.nC == 1) \{}
+\DoxyCodeLine{95         this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0ad25ed51be67666dfec4df8b3de6bce}{NDet}} = \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}}(nCorrO, mopart.nCorrEA) *}
+\DoxyCodeLine{96                      \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}}(nCorrO, mopart.nCorrEB);}
+\DoxyCodeLine{97         this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0b502bfda30330beb9beefff3429f1bd}{detStr}} = \mbox{\hyperlink{mcwavefunction_2base_2impl_8hpp_aac4183a367b891d07e0c7a1bf92118f3}{CONSTRUCT\_CASSTRINGMANAGER}}(nCorrO, mopart.nCorrEA);}
+\DoxyCodeLine{98       }
+\DoxyCodeLine{99         this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a48a2f2a849d1eb8ccd057bb17e20dc55}{detStrBeta}} = (wfn.iCS) ? \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0b502bfda30330beb9beefff3429f1bd}{detStr}}:}
+\DoxyCodeLine{100           \mbox{\hyperlink{mcwavefunction_2base_2impl_8hpp_aac4183a367b891d07e0c7a1bf92118f3}{CONSTRUCT\_CASSTRINGMANAGER}}(nCorrO, mopart.nCorrEB);}
+\DoxyCodeLine{101       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{102         this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0ad25ed51be67666dfec4df8b3de6bce}{NDet}} = \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}}(nCorrO, nCorrE);}
+\DoxyCodeLine{103         this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0b502bfda30330beb9beefff3429f1bd}{detStr}} = \mbox{\hyperlink{mcwavefunction_2base_2impl_8hpp_aac4183a367b891d07e0c7a1bf92118f3}{CONSTRUCT\_CASSTRINGMANAGER}}(nCorrO, nCorrE);}
+\DoxyCodeLine{104       \}}
+\DoxyCodeLine{105     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (mopart.scheme == \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855a0df50d487b9483d2a3f3cb45d81e2ae7}{RAS}}) \{}
+\DoxyCodeLine{106       \textcolor{keywordtype}{size\_t} mhRas1 = std::min(nActO[0],mopart.mxHole);}
+\DoxyCodeLine{107       \textcolor{keywordtype}{size\_t} meRas3 = std::min(nActO[2],mopart.mxElec);}
+\DoxyCodeLine{108       \textcolor{keywordflow}{if}(wfn.nC ==1) \{}
+\DoxyCodeLine{109         \textcolor{keywordflow}{if}(mopart.mxHole > nActO[0]*2 or mopart.mxElec > nActO[2]*2)}
+\DoxyCodeLine{110           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Invalid Input for RAS Specification"{}});}
+\DoxyCodeLine{111         \textcolor{keywordflow}{if}((mopart.nCorrEA + mhRas1) > nCorrO)}
+\DoxyCodeLine{112           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}RAS3 is too small to generate full MxHole."{}});}
+\DoxyCodeLine{113         \textcolor{keywordflow}{if}(mopart.nCorrEA < meRas3)}
+\DoxyCodeLine{114           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}RAS1 is too small to generate full MxElec."{}});}
+\DoxyCodeLine{115         std::shared\_ptr<RASStringManager> rasStr = std::make\_shared<RASStringManager>(}
+\DoxyCodeLine{116             this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}, nActO, mopart.nCorrEA, mopart.mxHole, mopart.mxElec);}
+\DoxyCodeLine{117         std::shared\_ptr<RASStringManager> rasStrBeta = (wfn.iCS) ? rasStr:}
+\DoxyCodeLine{118             std::make\_shared<RASStringManager>(this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}, nActO, mopart.nCorrEB,}
+\DoxyCodeLine{119             mopart.mxHole, mopart.mxElec);}
+\DoxyCodeLine{120         mopart.fCat = \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_ad73a35950136899844b16c5344082296}{genfCat}}(rasStr-\/>LCategory(), rasStrBeta-\/>LCategory(),}
+\DoxyCodeLine{121             rasStr-\/>nCategory(), rasStrBeta-\/>nCategory());}
+\DoxyCodeLine{122         this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0ad25ed51be67666dfec4df8b3de6bce}{NDet}} = rasStr-\/>nString() * rasStrBeta-\/>nString();}
+\DoxyCodeLine{123         this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0b502bfda30330beb9beefff3429f1bd}{detStr}} = std::dynamic\_pointer\_cast<DetStringManager>(rasStr);}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125         this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a48a2f2a849d1eb8ccd057bb17e20dc55}{detStrBeta}} = (wfn.iCS) ? \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0b502bfda30330beb9beefff3429f1bd}{detStr}}:}
+\DoxyCodeLine{126                 std::dynamic\_pointer\_cast<DetStringManager>(rasStrBeta);}
+\DoxyCodeLine{127       \} \textcolor{keywordflow}{else} \{ \textcolor{comment}{// nC ==2 or 4}}
+\DoxyCodeLine{128         \textcolor{keywordflow}{if}(mopart.mxHole > nActO[0] or mopart.mxElec > nActO[2])}
+\DoxyCodeLine{129           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Invalid Input for RAS Specification"{}});}
+\DoxyCodeLine{130         \textcolor{keywordflow}{if}((mopart.nCorrE + mhRas1) > nCorrO)}
+\DoxyCodeLine{131           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}RAS3 is too small to generate full MxHole."{}});}
+\DoxyCodeLine{132         \textcolor{keywordflow}{if}(mopart.nCorrE < meRas3)}
+\DoxyCodeLine{133           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}RAS1 is too small to generate full MxElec."{}});}
+\DoxyCodeLine{134         std::shared\_ptr<RASStringManager> rasStr = std::make\_shared<RASStringManager>(}
+\DoxyCodeLine{135                this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}, nActO, nCorrE, mopart.mxHole, mopart.mxElec);}
+\DoxyCodeLine{136         mopart.fCat = \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_ad73a35950136899844b16c5344082296}{genfCat}}(rasStr-\/>LCategory(), rasStr-\/>nCategory());}
+\DoxyCodeLine{137         this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0ad25ed51be67666dfec4df8b3de6bce}{NDet}} = rasStr-\/>nString();}
+\DoxyCodeLine{138         this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0b502bfda30330beb9beefff3429f1bd}{detStr}} = std::dynamic\_pointer\_cast<DetStringManager>(rasStr);}
+\DoxyCodeLine{139       \}}
+\DoxyCodeLine{140       mopart.nActOs = nActO;  \textcolor{comment}{// Number of orbitals for each RAS space.}}
+\DoxyCodeLine{141     \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{142       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}DetStringManager other than CAS or RAS is not implemented"{}}); }
+\DoxyCodeLine{143     }
+\DoxyCodeLine{144     \textcolor{comment}{// initialize orbital index}}
+\DoxyCodeLine{145     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a3e11a00592d57ba3810ce2236ef50936}{setActiveSpaceAndReOrder}}();   }
+\DoxyCodeLine{146     }
+\DoxyCodeLine{147     \textcolor{comment}{// initalize indices in MOIntsTransformer }}
+\DoxyCodeLine{148     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a7631c0cf10b0d7c19d96f526b30299be}{setMORanges}}(); }
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150   \}; \textcolor{comment}{// partiation MOSpace}}
+\DoxyCodeLine{151   }
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a2894352a39545d5f1433a42f15656649}{MCWaveFunctionBase::turnOnStateAverage}}(\textcolor{keyword}{const} std::vector<double> \& weight) \{}
+\DoxyCodeLine{154     }
+\DoxyCodeLine{155     \textcolor{keywordtype}{size\_t} NS = this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a933e57263d7a49bfe655de67b8590cff}{NStates}};}
+\DoxyCodeLine{156     }
+\DoxyCodeLine{157     \textcolor{keywordflow}{if}( weight.size() != NS) }
+\DoxyCodeLine{158       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}MCSCF needs "{}}+std::to\_string(NS)+\textcolor{stringliteral}{"{} weights for state average"{}} );   }
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160     this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a40086fd454521b05c4e6bbc01d8048e9}{StateAverage}} = \textcolor{keyword}{true};}
+\DoxyCodeLine{161     this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aad6387c4a9d7d2ac1f201f08d86fdb06}{SAWeight}} = std::vector<double>(NS);}
+\DoxyCodeLine{162     std::copy\_n(weight.begin(), NS, this-\/>SAWeight.begin());}
+\DoxyCodeLine{163   \};}
+\DoxyCodeLine{164   }
+\DoxyCodeLine{165   \textcolor{comment}{// Generate the category offset for nC=1: fCat[iCata+iCatb*nCat]}}
+\DoxyCodeLine{166   std::vector<int> \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_ad73a35950136899844b16c5344082296}{MCWaveFunctionBase::genfCat}}(std::vector<std::vector<size\_t>> LCata,}
+\DoxyCodeLine{167     std::vector<std::vector<size\_t>> LCatb, \textcolor{keywordtype}{size\_t} nCata, \textcolor{keywordtype}{size\_t} nCatb) \{}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169     std::vector<int> fCat(nCata * nCatb, 0);}
+\DoxyCodeLine{170     \textcolor{keywordtype}{size\_t} nDet = 0;}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172     \textcolor{keywordtype}{size\_t} iCatb = 0;}
+\DoxyCodeLine{173     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iEb = 0; iEb <= this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_af74cc539c2a39c840723045d48cc47b3}{mxElec}}; iEb++)}
+\DoxyCodeLine{174     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iHb = 0; iHb <= this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a8410a4b0858622428848a26abe240bbe}{mxHole}}; iHb++, iCatb++) \{}
+\DoxyCodeLine{175       \textcolor{keywordtype}{size\_t} iCata = 0;}
+\DoxyCodeLine{176       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iEa = 0; iEa <= this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_af74cc539c2a39c840723045d48cc47b3}{mxElec}}; iEa++)}
+\DoxyCodeLine{177       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iHa = 0; iHa <= this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a8410a4b0858622428848a26abe240bbe}{mxHole}}; iHa++, iCata++) \{}
+\DoxyCodeLine{178         \textcolor{keywordflow}{if} (LCata[iCata][3] == 0 or LCatb[iCatb][3] == 0) fCat[iCata + iCatb*nCata] = -\/2;}
+\DoxyCodeLine{179         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((iEb+iEa) > this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_af74cc539c2a39c840723045d48cc47b3}{mxElec}} or (iHb+iHa) > this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a8410a4b0858622428848a26abe240bbe}{mxHole}})}
+\DoxyCodeLine{180           fCat[iCata + iCatb*nCata] = -\/1;}
+\DoxyCodeLine{181         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{182           fCat[iCata + iCatb*nCata] = nDet;}
+\DoxyCodeLine{183           nDet += LCata[iCata][3] * LCatb[iCatb][3];}
+\DoxyCodeLine{184         \}}
+\DoxyCodeLine{185       \}}
+\DoxyCodeLine{186     \}}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188     \textcolor{keywordflow}{return} fCat;}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190   \} \textcolor{comment}{// MCWaveFunctionBase::genfCat}}
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192   \textcolor{comment}{// Generate the category offset for nC>1: fCat[iCat]}}
+\DoxyCodeLine{193   std::vector<int> \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_ad73a35950136899844b16c5344082296}{MCWaveFunctionBase::genfCat}}(std::vector<std::vector<size\_t>> LCat,}
+\DoxyCodeLine{194         \textcolor{keywordtype}{size\_t} nCat) \{}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196     std::vector<int> fCat(nCat, 0);}
+\DoxyCodeLine{197     \textcolor{keywordtype}{size\_t} nDet = 0;}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iCat = 0; iCat < nCat; iCat++) \{}
+\DoxyCodeLine{200       \textcolor{keywordflow}{if} (LCat[iCat][3] == 0) fCat[iCat] = -\/2;}
+\DoxyCodeLine{201       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{202         fCat[iCat] = nDet;}
+\DoxyCodeLine{203         nDet += LCat[iCat][3];}
+\DoxyCodeLine{204       \}}
+\DoxyCodeLine{205     \}}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207     \textcolor{keywordflow}{return} fCat;}
+\DoxyCodeLine{208 }
+\DoxyCodeLine{209   \}; \textcolor{comment}{// MCWaveFunctionBase::genfCat}}
+\DoxyCodeLine{210   }
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212   \textcolor{comment}{/*}}
+\DoxyCodeLine{213 \textcolor{comment}{   *  'N' -\/> Negative Energy MO, only for 4C }}
+\DoxyCodeLine{214 \textcolor{comment}{   *  'I' -\/> Inactive  / inactive}}
+\DoxyCodeLine{215 \textcolor{comment}{   *  'A' -\/> Active   "{}1, 2, 3"{} for RAS}}
+\DoxyCodeLine{216 \textcolor{comment}{   *  'S' -\/> Secondary / frozen virtual}}
+\DoxyCodeLine{217 \textcolor{comment}{   */}}
+\DoxyCodeLine{218   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a3e11a00592d57ba3810ce2236ef50936}{MCWaveFunctionBase::setActiveSpaceAndReOrder}}() \{}
+\DoxyCodeLine{219 }
+\DoxyCodeLine{220     std::vector<size\_t> nOrbs;}
+\DoxyCodeLine{221     std::vector<char> orbIdentifiers;}
+\DoxyCodeLine{222     \textcolor{keywordtype}{size\_t} totalElecMO = \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a5d8954996f85b6bac00ac5314fa0b62a}{nElecMO}};}
+\DoxyCodeLine{223     }
+\DoxyCodeLine{224     \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a426e18e72ad8c5671ca65a42fc3500fe}{referenceWaveFunction}}().nC == 4) \{}
+\DoxyCodeLine{225       nOrbs.push\_back(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a1b18045506a3f85d2f0e7395de0fa923}{nNegMO}});}
+\DoxyCodeLine{226       orbIdentifiers.push\_back(\textcolor{charliteral}{'N'});}
+\DoxyCodeLine{227     \}}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229     \textcolor{comment}{// set up numbers }}
+\DoxyCodeLine{230     nOrbs.push\_back(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a2fadec603056b6560e7d5d3f2f9aa5ab}{nInact}});}
+\DoxyCodeLine{231     orbIdentifiers.push\_back(\textcolor{charliteral}{'I'});}
+\DoxyCodeLine{232 }
+\DoxyCodeLine{233     \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a0cf66a1b90d6c5334d6f06a816ac9463}{scheme}} != \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855a0df50d487b9483d2a3f3cb45d81e2ae7}{RAS}}) \{ }
+\DoxyCodeLine{234       nOrbs.push\_back(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a01af3f55840fbbf39a5ec1164a5d95ab}{nCorrO}});}
+\DoxyCodeLine{235       orbIdentifiers.push\_back(\textcolor{charliteral}{'A'});}
+\DoxyCodeLine{236     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{237       nOrbs.push\_back(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_ad137773763a4b2b29902d15ac099ed28}{nActOs}}[0]);}
+\DoxyCodeLine{238       orbIdentifiers.push\_back(\textcolor{charliteral}{'1'});}
+\DoxyCodeLine{239       nOrbs.push\_back(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_ad137773763a4b2b29902d15ac099ed28}{nActOs}}[1]);}
+\DoxyCodeLine{240       orbIdentifiers.push\_back(\textcolor{charliteral}{'2'});}
+\DoxyCodeLine{241       nOrbs.push\_back(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_ad137773763a4b2b29902d15ac099ed28}{nActOs}}[2]);}
+\DoxyCodeLine{242       orbIdentifiers.push\_back(\textcolor{charliteral}{'3'});}
+\DoxyCodeLine{243     \}}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245     nOrbs.push\_back(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a995a21430af415c9652e617a9d789970}{nFVirt}});}
+\DoxyCodeLine{246     orbIdentifiers.push\_back(\textcolor{charliteral}{'S'});}
+\DoxyCodeLine{247     }
+\DoxyCodeLine{248     \textcolor{keyword}{auto} \& orbIndices = \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a2e5e917c3faa8628b1f01caa248d9782}{orbIndices}};}
+\DoxyCodeLine{249     \textcolor{keywordtype}{size\_t} scan\_start = 0, scan\_end = 0;}
+\DoxyCodeLine{250 }
+\DoxyCodeLine{251     \textcolor{keywordflow}{if} (orbIndices.size() == 0) \{}
+\DoxyCodeLine{252       \textcolor{comment}{// initialize the MO indices}}
+\DoxyCodeLine{253       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < nOrbs.size(); i++) \{ }
+\DoxyCodeLine{254         scan\_end = scan\_start + nOrbs[i];}
+\DoxyCodeLine{255         \textcolor{keywordtype}{char} \& scan\_id = orbIdentifiers[i];}
+\DoxyCodeLine{256         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} j = scan\_start; j < scan\_end; j++) \{}
+\DoxyCodeLine{257           orbIndices.push\_back(scan\_id);  }
+\DoxyCodeLine{258         \}}
+\DoxyCodeLine{259         scan\_start = scan\_end;}
+\DoxyCodeLine{260       \}}
+\DoxyCodeLine{261     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (orbIndices.size() == totalElecMO) \{}
+\DoxyCodeLine{262       }
+\DoxyCodeLine{263       \textcolor{comment}{// generating swapping pairs if necessary }}
+\DoxyCodeLine{264       std::vector<std::vector<std::pair<size\_t, size\_t>>> moPairs;}
+\DoxyCodeLine{265       moPairs.resize(2, \{\});}
+\DoxyCodeLine{266       }
+\DoxyCodeLine{267       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < nOrbs.size(); i++) \{}
+\DoxyCodeLine{268         scan\_end = scan\_start + nOrbs[i];}
+\DoxyCodeLine{269         \textcolor{keywordtype}{char} \& scan\_id = orbIdentifiers[i];}
+\DoxyCodeLine{270         }
+\DoxyCodeLine{271         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} j = scan\_start; j < scan\_end; j++) \{}
+\DoxyCodeLine{272           \textcolor{keywordflow}{if} (orbIndices[j] != scan\_id) \{ }
+\DoxyCodeLine{273             \textcolor{keywordtype}{bool} found = \textcolor{keyword}{false};}
+\DoxyCodeLine{274             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} k = scan\_end; k < totalElecMO; k++) \{}
+\DoxyCodeLine{275               \textcolor{keywordflow}{if} (orbIndices[k] == scan\_id) \{}
+\DoxyCodeLine{276                 found = \textcolor{keyword}{true};}
+\DoxyCodeLine{277                 moPairs[0].push\_back(\{j+1, k+1\});}
+\DoxyCodeLine{278                 orbIndices[k] = orbIndices[j];}
+\DoxyCodeLine{279                 orbIndices[j] = scan\_id;}
+\DoxyCodeLine{280                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{281               \}}
+\DoxyCodeLine{282             \}}
+\DoxyCodeLine{283             \textcolor{keywordflow}{if} (not found) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}inconsistency between number of orbitals and orbial indices"{}});}
+\DoxyCodeLine{284           \}}
+\DoxyCodeLine{285         \}}
+\DoxyCodeLine{286         scan\_start = scan\_end;}
+\DoxyCodeLine{287       \}}
+\DoxyCodeLine{288 }
+\DoxyCodeLine{289       this-\/>\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a7d3be045939df179ddc8faf398360b47}{swapMOs}}(moPairs,\mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19da40231985d0fe1ed584790ad3486b046f}{isAlpha}});}
+\DoxyCodeLine{290     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{291       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}wrong sizes set in MOPartition.orbIndices"{}}); }
+\DoxyCodeLine{292     \}}
+\DoxyCodeLine{293 }
+\DoxyCodeLine{294   \}; \textcolor{comment}{// MCWaveFunctionBase::setActiveSpaceAndReOrder}}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{297 }
+\DoxyCodeLine{298 }
+
+\end{DoxyCode}

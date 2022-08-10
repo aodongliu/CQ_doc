@@ -1,0 +1,111 @@
+\hypertarget{conventionalSCF_8hpp_source}{}\doxysection{conventional\+SCF.\+hpp}
+\label{conventionalSCF_8hpp_source}\index{include/modifyorbitals/conventionalSCF.hpp@{include/modifyorbitals/conventionalSCF.hpp}}
+\mbox{\hyperlink{conventionalSCF_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{optOrbitals_8hpp}{modifyorbitals/optOrbitals.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{31 \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{ConventionalSCF}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{OptimizeOrbitals}}<MatsT> \{}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{34   \textcolor{comment}{// Orthogonal Fock/Density Matrices}}
+\DoxyCodeLine{35   std::vector<SquareMatrix<MatsT>> \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a42db9b453d8721902f5b3bce9cf0c093}{fockMatrixOrtho}};}
+\DoxyCodeLine{36   std::vector<SquareMatrix<MatsT>> \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_af6a23272e0492be5b3306a9095c154ed}{onePDMOrtho}};}
+\DoxyCodeLine{37   std::vector<SquareMatrix<MatsT>> \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_aba7dc05a9366a95cddc525227e39ccf3}{orbGrad}};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39   \textcolor{comment}{// DIIS matrices}}
+\DoxyCodeLine{40   std::vector<std::vector<SquareMatrix<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a96d54f54c441212fc316169d8cd06243}{diisFock}};     }
+\DoxyCodeLine{41   std::vector<std::vector<SquareMatrix<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a78f5ea142760c2914a03f942f5253c13}{diisOnePDM}};   }
+\DoxyCodeLine{42   std::vector<std::vector<SquareMatrix<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a8bde639a7e273c6a46cdace88d296349}{diisError}};    }
+\DoxyCodeLine{43   std::vector<double> \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_abff248d370077557c3697fed1f342f88}{diisEnergy}};                             }
+\DoxyCodeLine{44   std::shared\_ptr<SquareMatrix<double>> \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_aea7337d8ab6c4efb87056a388472cf07}{diisBMat}};             }
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48   \textcolor{comment}{// Damping Matrices}}
+\DoxyCodeLine{49   std::vector<SquareMatrix<MatsT>> \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a3181cae01d5f531345eee9caff629b26}{prevFock}};     }
+\DoxyCodeLine{50   std::vector<SquareMatrix<MatsT>> \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ac51668937ce7daa4ef193e87ae2711f8}{prevOnePDM}};   }
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52 \textcolor{keyword}{public}:}
+\DoxyCodeLine{53   \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{54   \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ac30d4cd9614b85b4e8138639e2b559e6}{ConventionalSCF}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{55   \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ab916bae58b234db49f0769ee6198bbea}{ConventionalSCF}}(\mbox{\hyperlink{structChronusQ_1_1SCFControls}{SCFControls}} sC, \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}}, \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{ModifyOrbitalsOptions<MatsT>}} mod, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& mem): \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{OptimizeOrbitals}}<MatsT>(sC, \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}}, mod, mem) \{}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{comment}{// Allocate ortho Fock and Den}}
+\DoxyCodeLine{58     \mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} fock = this-\/>\mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}}.getFock();}
+\DoxyCodeLine{59     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& f : fock )}
+\DoxyCodeLine{60       \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a42db9b453d8721902f5b3bce9cf0c093}{fockMatrixOrtho}}.emplace\_back(f-\/>memManager(), f-\/>dimension());}
+\DoxyCodeLine{61     \mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} den = this-\/>\mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}}.getOnePDM();}
+\DoxyCodeLine{62     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& d : den )}
+\DoxyCodeLine{63       \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_af6a23272e0492be5b3306a9095c154ed}{onePDMOrtho}}.emplace\_back(d-\/>memManager(), d-\/>dimension());}
+\DoxyCodeLine{64     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& d : den )}
+\DoxyCodeLine{65       \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_aba7dc05a9366a95cddc525227e39ccf3}{orbGrad}}.emplace\_back(d-\/>memManager(), d-\/>dimension());}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a1c2583249553f15ab9bfefa73efac407}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_a0b53583d66018a2437d4de8432e1a491}{doExtrap}} ) \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a9356ec9a5e1762be0488e093b8078906}{allocExtrapStorage}}();}
+\DoxyCodeLine{68   \};}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70   \textcolor{comment}{// Destructor}}
+\DoxyCodeLine{71   \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a04c700d836d8546a46d184933f7bb696}{\string~ConventionalSCF}}() \{}
+\DoxyCodeLine{72     diisFock.clear();}
+\DoxyCodeLine{73     \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a78f5ea142760c2914a03f942f5253c13}{diisOnePDM}}.clear();}
+\DoxyCodeLine{74     \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a8bde639a7e273c6a46cdace88d296349}{diisError}}.clear();}
+\DoxyCodeLine{75     \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_abff248d370077557c3697fed1f342f88}{diisEnergy}}.clear();}
+\DoxyCodeLine{76     \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a3181cae01d5f531345eee9caff629b26}{prevFock}}.clear();}
+\DoxyCodeLine{77     \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ac51668937ce7daa4ef193e87ae2711f8}{prevOnePDM}}.clear();}
+\DoxyCodeLine{78     \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a42db9b453d8721902f5b3bce9cf0c093}{fockMatrixOrtho}}.clear();}
+\DoxyCodeLine{79     \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_af6a23272e0492be5b3306a9095c154ed}{onePDMOrtho}}.clear();}
+\DoxyCodeLine{80     \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_aea7337d8ab6c4efb87056a388472cf07}{diisBMat}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{81   \};}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83   \textcolor{comment}{// ModifyOrbital Functions}}
+\DoxyCodeLine{84   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a1e7b565d010d5bef616df601c5b73f22}{getNewOrbitals}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&, \mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\&, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}}\&);}
+\DoxyCodeLine{85   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ad2b6dac9d331592e27336f2c3b2782f2}{printRunHeader}}(std::ostream\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87   \textcolor{comment}{// Orthogonalization Functions}}
+\DoxyCodeLine{88   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a8780278352da9d3c4888686abd174f58}{ao2orthoFock}}(\mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} fock = \{\});}
+\DoxyCodeLine{89   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_adb62e152c4da7bb3095e062ae1ecaafe}{ao2orthoDen}}(VecShrdPtrMat<MatsT> den = \{\});}
+\DoxyCodeLine{90   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ab3cb5e07915cd6c4a5a53654be56c940}{ortho2aoMOs}}(VecMORef<MatsT>\&);}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92   \textcolor{comment}{// SCF extrapolation functions (see include/singleslater/extrap.hpp for docs)}}
+\DoxyCodeLine{93   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a9356ec9a5e1762be0488e093b8078906}{allocExtrapStorage}}();}
+\DoxyCodeLine{94   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ae7b2e7d4a5d00545297bbc533935454f}{diagOrthoFock}}(VecMORef<MatsT>\&, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}}\&);}
+\DoxyCodeLine{95   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a62544a327c861c3a1c1e9b67463e2be1}{modifyFock}}(EMPerturbation\&);}
+\DoxyCodeLine{96   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a2257f6458ceefd1e089e42ca3a7677cc}{fockDamping}}();}
+\DoxyCodeLine{97   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_aa7cb069220bda93cab0cb6b8e5d345eb}{scfCDIIS}}(\textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{98   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a3db7008d82f135fe89929d801c6f462d}{scfEDIIS}}(\textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{size\_t}, EMPerturbation\&);}
+\DoxyCodeLine{99   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a7dd691cd81eb08c6dae714f719f42b94}{scfCEDIIS}}(\textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{size\_t}, EMPerturbation\&);}
+\DoxyCodeLine{100   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_aea52eed4d12b45382fb6a022c38bb240}{ediisErrorMetric}}(\textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{101   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a77cc120a9d9a8bcce2947c15036bcfc6}{diisCombineMat}}(std::vector<MatsT>, \textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{102   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a56fa77cae387401c2c7c47cc54fa6080}{computeOrbGradient}}(std::vector<SquareMatrix<MatsT>>\&);}
+\DoxyCodeLine{103   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a122d0114e75c76a9c5de8eabb43c3364}{FDCommutator}}(std::vector<SquareMatrix<MatsT>>\&);}
+\DoxyCodeLine{104   \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a169da6e13b79a2764f67b65dfd19a4c5}{computeFDCConv}}();}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106 \};   \textcolor{comment}{// ConventionalSCF}}
+\DoxyCodeLine{107 \};   \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

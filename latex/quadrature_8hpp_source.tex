@@ -1,0 +1,115 @@
+\hypertarget{quadrature_8hpp_source}{}\doxysection{quadrature.\+hpp}
+\label{quadrature_8hpp_source}\index{include/grid/quadrature.hpp@{include/grid/quadrature.hpp}}
+\mbox{\hyperlink{quadrature_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{keyword}{using }\mbox{\hyperlink{integrator_8hpp_a93e5e2ec9477b0f26d2595f37bef369f}{cart\_t}} = std::array<double,3>;}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{39   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_PtTyp>}
+\DoxyCodeLine{40   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} \{}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keyword}{typedef} \_PtTyp \mbox{\hyperlink{structChronusQ_1_1Quadrature_aa5e206c82d0e15cdbc845d95ae2643e3}{point\_type}}; }
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \textcolor{keywordtype}{size\_t}              \mbox{\hyperlink{structChronusQ_1_1Quadrature_a1af425934edd76c35d9b491576b3f969}{nPts}};    }
+\DoxyCodeLine{45     std::vector<\_PtTyp> \mbox{\hyperlink{structChronusQ_1_1Quadrature_ad1c404a4bb4e8bd69d82e203e1b0e94e}{pts}};     }
+\DoxyCodeLine{46     std::vector<double> \mbox{\hyperlink{structChronusQ_1_1Quadrature_aa4ceeb002db09a2138b4223df36c4e19}{weights}}; }
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1Quadrature_a8b4151593e99da062191c4a2eaafd330}{upBound}};  }
+\DoxyCodeLine{49     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1Quadrature_a7b3818d9382c91c65ae2c871e88c0b98}{lowBound}}; }
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{comment}{// Deleted ctors}}
+\DoxyCodeLine{53     \mbox{\hyperlink{structChronusQ_1_1Quadrature_a17525a21c051dde10e8075f56fa05dbc}{Quadrature}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \mbox{\hyperlink{structChronusQ_1_1Quadrature_a10d1d5e49f9f720549f96a04b4753c86}{Quadrature}}(\textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{double} a, \textcolor{keywordtype}{double} b):}
+\DoxyCodeLine{57       \mbox{\hyperlink{structChronusQ_1_1Quadrature_a8b4151593e99da062191c4a2eaafd330}{upBound}}(b), \mbox{\hyperlink{structChronusQ_1_1Quadrature_a7b3818d9382c91c65ae2c871e88c0b98}{lowBound}}(a), \mbox{\hyperlink{structChronusQ_1_1Quadrature_a1af425934edd76c35d9b491576b3f969}{nPts}}(N) \{\}; \textcolor{comment}{// Quadrature}}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     \mbox{\hyperlink{structChronusQ_1_1Quadrature_aae6fe5e58b9070c21ce4d7063156d733}{Quadrature}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} \&other) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{61     \mbox{\hyperlink{structChronusQ_1_1Quadrature_a6a46db3fec51d4f89429bc1bf7e6fcfb}{Quadrature}}(\mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} \&\&other)      = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63 }
+\DoxyCodeLine{70     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1Quadrature_a8257fe2fdc00689016c72ea02826810b}{generateQuadrature}}() \{}
+\DoxyCodeLine{71       \mbox{\hyperlink{structChronusQ_1_1Quadrature_aa4ceeb002db09a2138b4223df36c4e19}{weights}}.clear(); \textcolor{keywordflow}{if}(\mbox{\hyperlink{structChronusQ_1_1Quadrature_a1af425934edd76c35d9b491576b3f969}{nPts}}) \mbox{\hyperlink{structChronusQ_1_1Quadrature_aa4ceeb002db09a2138b4223df36c4e19}{weights}}.resize(\mbox{\hyperlink{structChronusQ_1_1Quadrature_a1af425934edd76c35d9b491576b3f969}{nPts}});}
+\DoxyCodeLine{72       \mbox{\hyperlink{structChronusQ_1_1Quadrature_ad1c404a4bb4e8bd69d82e203e1b0e94e}{pts}}.clear(); \textcolor{keywordflow}{if}(\mbox{\hyperlink{structChronusQ_1_1Quadrature_a1af425934edd76c35d9b491576b3f969}{nPts}}) \mbox{\hyperlink{structChronusQ_1_1Quadrature_ad1c404a4bb4e8bd69d82e203e1b0e94e}{pts}}.resize(\mbox{\hyperlink{structChronusQ_1_1Quadrature_a1af425934edd76c35d9b491576b3f969}{nPts}});}
+\DoxyCodeLine{73     \};}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1Quadrature_a26cb076489249339ee71716170007e08}{printQuadrature}}()\{}
+\DoxyCodeLine{76       std::cerr << std::endl;}
+\DoxyCodeLine{77       std::cerr << \textcolor{stringliteral}{"{}Start Printing Grid "{}} << std::endl;}
+\DoxyCodeLine{78       std::cerr << std::endl;}
+\DoxyCodeLine{79       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < this-\/>\mbox{\hyperlink{structChronusQ_1_1Quadrature_a1af425934edd76c35d9b491576b3f969}{nPts}}; i++) }
+\DoxyCodeLine{80         std::cerr << i << \textcolor{stringliteral}{"{} "{}}<< this-\/>pts[i] << \textcolor{stringliteral}{"{}, "{}} << this-\/>weights[i] << std::endl;}
+\DoxyCodeLine{81       \textcolor{keywordtype}{double} sumW = 0.;}
+\DoxyCodeLine{82       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < this-\/>\mbox{\hyperlink{structChronusQ_1_1Quadrature_a1af425934edd76c35d9b491576b3f969}{nPts}}; i++) }
+\DoxyCodeLine{83         sumW += \mbox{\hyperlink{structChronusQ_1_1Quadrature_aa4ceeb002db09a2138b4223df36c4e19}{weights}}[i];}
+\DoxyCodeLine{84       std::cerr << \textcolor{stringliteral}{"{}SUM W "{}} << sumW <<std::endl;}
+\DoxyCodeLine{85       std::cerr << std::endl;}
+\DoxyCodeLine{86       std::cerr << \textcolor{stringliteral}{"{}End Printing Grid "{}} << std::endl;}
+\DoxyCodeLine{87       std::cerr << std::endl;}
+\DoxyCodeLine{88     \};}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90   \}; \textcolor{comment}{// struct Quadrature}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92   \textcolor{comment}{// Template for Quadrature specialization}}
+\DoxyCodeLine{93 \textcolor{preprocessor}{  \#define QuadratureTemplate(NAME,TYP) \(\backslash\)}}
+\DoxyCodeLine{94 \textcolor{preprocessor}{  struct NAME : public Quadrature<TYP> \{\(\backslash\)}}
+\DoxyCodeLine{95 \textcolor{preprocessor}{  \(\backslash\)}}
+\DoxyCodeLine{96 \textcolor{preprocessor}{    NAME(size\_t N, \(\backslash\)}}
+\DoxyCodeLine{97 \textcolor{preprocessor}{         double a = -\/std::numeric\_limits<double>::infinity(),\(\backslash\)}}
+\DoxyCodeLine{98 \textcolor{preprocessor}{         double b = std::numeric\_limits<double>::infinity()) : \(\backslash\)}}
+\DoxyCodeLine{99 \textcolor{preprocessor}{      Quadrature<TYP>(N,a,b) \{\}; \(\backslash\)}}
+\DoxyCodeLine{100 \textcolor{preprocessor}{\(\backslash\)}}
+\DoxyCodeLine{101 \textcolor{preprocessor}{    NAME(const NAME \&) = default;\(\backslash\)}}
+\DoxyCodeLine{102 \textcolor{preprocessor}{    NAME(NAME \&\&)      = default;\(\backslash\)}}
+\DoxyCodeLine{103 \textcolor{preprocessor}{\(\backslash\)}}
+\DoxyCodeLine{104 \textcolor{preprocessor}{    void generateQuadrature();  \(\backslash\)}}
+\DoxyCodeLine{105 \textcolor{preprocessor}{\(\backslash\)}}
+\DoxyCodeLine{106 \textcolor{preprocessor}{  \};}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109   \textcolor{comment}{// Declarations of quadrature specializations (see src/grid for details)}}
+\DoxyCodeLine{110   \mbox{\hyperlink{namespaceChronusQ_a138137bc654f651725482aa6091ad1d4}{QuadratureTemplate}}(GaussChebFst,\textcolor{keywordtype}{double});}
+\DoxyCodeLine{111   \mbox{\hyperlink{namespaceChronusQ_a138137bc654f651725482aa6091ad1d4}{QuadratureTemplate}}(GaussChebSnd,\textcolor{keywordtype}{double});}
+\DoxyCodeLine{112   \mbox{\hyperlink{namespaceChronusQ_a138137bc654f651725482aa6091ad1d4}{QuadratureTemplate}}(GaussLegendre,\textcolor{keywordtype}{double});}
+\DoxyCodeLine{113   \mbox{\hyperlink{namespaceChronusQ_a138137bc654f651725482aa6091ad1d4}{QuadratureTemplate}}(EulerMac,\textcolor{keywordtype}{double});}
+\DoxyCodeLine{114   \mbox{\hyperlink{namespaceChronusQ_a138137bc654f651725482aa6091ad1d4}{QuadratureTemplate}}(Lebedev,\mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\_t}});}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117   \textcolor{comment}{// Utility Functions}}
+\DoxyCodeLine{118   std::pair<double,double> \mbox{\hyperlink{namespaceChronusQ_a3dc1d00ae051dd8de14f6a23afe81e1f}{unitBoundTransform}}(\textcolor{keywordtype}{double} lowBound, \textcolor{keywordtype}{double} upBound, \textcolor{keywordtype}{double} pt, \textcolor{keywordtype}{double} wgt);}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{121 }
+
+\end{DoxyCode}

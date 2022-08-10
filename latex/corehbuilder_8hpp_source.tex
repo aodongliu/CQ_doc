@@ -1,0 +1,89 @@
+\hypertarget{corehbuilder_8hpp_source}{}\doxysection{corehbuilder.\+hpp}
+\label{corehbuilder_8hpp_source}\index{include/corehbuilder.hpp@{include/corehbuilder.hpp}}
+\mbox{\hyperlink{corehbuilder_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{realtime_2fields_8hpp}{fields.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_8hpp}{singleslater.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{integrals_8hpp}{integrals.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{35   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{36   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1CoreHBuilder}{CoreHBuilder}} \{}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU, \textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{39     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1CoreHBuilder}{CoreHBuilder}};}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{42     \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals<IntsT>}}  \&\mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a5fd204a230dc50f9cb3db666cfa37df5}{aoints\_}};}
+\DoxyCodeLine{43     \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a222d5af96c510e1d421248fb8a141e4a}{hamiltonianOptions\_}}; }
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45   \textcolor{keyword}{public}:}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{comment}{// Disable default constructor}}
+\DoxyCodeLine{50     \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_afac8fdda76f587b941018a105653735f}{CoreHBuilder}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{51     \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a78490ba52577c48f588677b74ab84546}{CoreHBuilder}}(\mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals<IntsT>}} \&aoints, \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} hamiltonianOptions):}
+\DoxyCodeLine{52       \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a5fd204a230dc50f9cb3db666cfa37df5}{aoints\_}}(aoints), \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a222d5af96c510e1d421248fb8a141e4a}{hamiltonianOptions\_}}(hamiltonianOptions) \{\}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{comment}{// Same or Different type}}
+\DoxyCodeLine{55     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{56     \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_ad890b013b5f3fa6de2b4de2a639aabc8}{CoreHBuilder}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder}{CoreHBuilder<MatsU,IntsT>}} \&other):}
+\DoxyCodeLine{57       \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a5fd204a230dc50f9cb3db666cfa37df5}{aoints\_}}(other.\mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a5fd204a230dc50f9cb3db666cfa37df5}{aoints\_}}), \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a222d5af96c510e1d421248fb8a141e4a}{hamiltonianOptions\_}}(other.\mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a222d5af96c510e1d421248fb8a141e4a}{hamiltonianOptions\_}}) \{\}}
+\DoxyCodeLine{58     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{59     \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a0e2930a4781c71a3a6e2f9af254274c0}{CoreHBuilder}}(\mbox{\hyperlink{classChronusQ_1_1CoreHBuilder}{CoreHBuilder<MatsU,IntsT>}} \&\&other):}
+\DoxyCodeLine{60       \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a5fd204a230dc50f9cb3db666cfa37df5}{aoints\_}}(other.\mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a5fd204a230dc50f9cb3db666cfa37df5}{aoints\_}}), \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a222d5af96c510e1d421248fb8a141e4a}{hamiltonianOptions\_}}(other.\mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a222d5af96c510e1d421248fb8a141e4a}{hamiltonianOptions\_}}) \{\}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \textcolor{comment}{// Virtual destructor}}
+\DoxyCodeLine{63     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a80d016f12a26843e51bbd180e1a0cee5}{\string~CoreHBuilder}}() \{\}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \textcolor{comment}{// Public member functions}}
+\DoxyCodeLine{67     \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\& \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a1fc33d843f39d98869cb09348c5199f2}{getHamiltonianOptions}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{68       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a222d5af96c510e1d421248fb8a141e4a}{hamiltonianOptions\_}};}
+\DoxyCodeLine{69     \}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{comment}{// Compute various core Hamitlonian}}
+\DoxyCodeLine{72     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_af01c121353b25497af108c976c17ca24}{computeCoreH}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{73         std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}>) = 0;}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \textcolor{comment}{// Compute the gradient}}
+\DoxyCodeLine{76     \textcolor{keyword}{virtual} std::vector<double> \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_ae9a35a6b9dcd21f63eb7c7ebeb99ce1d}{getGrad}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{77       \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&) = 0;}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \textcolor{comment}{// Pointer convertor}}
+\DoxyCodeLine{80     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{81     \textcolor{keyword}{static} std::shared\_ptr<CoreHBuilder<MatsU,IntsT>>}
+\DoxyCodeLine{82     \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a3b9a53d1dfe185623bfc328164cddac3}{convert}}(\textcolor{keyword}{const} std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1CoreHBuilder}{CoreHBuilder<MatsT,IntsT>}}>\&);}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84   \};}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86 \}}
+
+\end{DoxyCode}

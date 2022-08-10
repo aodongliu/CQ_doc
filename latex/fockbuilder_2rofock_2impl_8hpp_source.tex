@@ -1,0 +1,115 @@
+\hypertarget{fockbuilder_2rofock_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{fockbuilder_2rofock_2impl_8hpp_source}\index{include/fockbuilder/rofock/impl.hpp@{include/fockbuilder/rofock/impl.hpp}}
+\mbox{\hyperlink{fockbuilder_2rofock_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{rofock_8hpp}{fockbuilder/rofock.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg_8hpp}{cqlinalg.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{38   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{39   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ROFock_a311546d33055e93d21916777528ef5ef}{ROFock<MatsT,IntsT>::rohfFock}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&ss) \{}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keywordtype}{size\_t} NB = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5bb8768829c6a466209aae6e9e690ab3}{basisSet}}().\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{42     \textcolor{keywordtype}{size\_t} NB2 = NB*NB;}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}});}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{comment}{//construct focka and fockb}}
+\DoxyCodeLine{47     std::vector<SquareMatrix<MatsT>> SCR = ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab82f1f8ad464a41f46f9ee508cf22b38}{fockMatrix}}-\/>template spinGatherToBlocks<MatsT>(\textcolor{keyword}{false});}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{comment}{//construct projectors for closed, open, virtual}}
+\DoxyCodeLine{50     \textcolor{comment}{//pc = dmb * S}}
+\DoxyCodeLine{51     \textcolor{comment}{//po = (dma -\/ dmb) * S}}
+\DoxyCodeLine{52     \textcolor{comment}{//pv = I -\/ dma * S}}
+\DoxyCodeLine{53     MatsT* pc  = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<MatsT>(NB*NB);}
+\DoxyCodeLine{54     MatsT* po  = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<MatsT>(NB*NB);}
+\DoxyCodeLine{55     MatsT* pv  = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<MatsT>(NB*NB);}
+\DoxyCodeLine{56     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} tmp(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}},NB);}
+\DoxyCodeLine{57     MatsT* tmp2 = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<MatsT>(NB*NB);}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{comment}{//overlap matrix}}
+\DoxyCodeLine{60     tmp = 0.5 * (ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>S() -\/ ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>Z());}
+\DoxyCodeLine{61     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(1.),tmp.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),NB,}
+\DoxyCodeLine{62          \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}(ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a34841f96cd1e2bcdc2d3857db3d26163}{aoints}}.overlap-\/>matrix()).\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),NB,}
+\DoxyCodeLine{63          MatsT(0.),pc,NB);}
+\DoxyCodeLine{64     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(1.),ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>Z().pointer(),NB,}
+\DoxyCodeLine{65          \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}(ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a34841f96cd1e2bcdc2d3857db3d26163}{aoints}}.overlap-\/>matrix()).\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),NB,}
+\DoxyCodeLine{66          MatsT(0.),po,NB);}
+\DoxyCodeLine{67     tmp = 0.5 * (ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>S() + ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>Z());}
+\DoxyCodeLine{68     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(-\/1.),tmp.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),NB,}
+\DoxyCodeLine{69          \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}(ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a34841f96cd1e2bcdc2d3857db3d26163}{aoints}}.overlap-\/>matrix()).\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),NB,}
+\DoxyCodeLine{70          MatsT(0.),pv,NB);}
+\DoxyCodeLine{71     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0; j < NB; j++) pv[j*NB+j] = MatsT(1.) + pv[j*NB+j];}
+\DoxyCodeLine{72     \textcolor{comment}{/*}}
+\DoxyCodeLine{73 \textcolor{comment}{     * construct Roothaan's effective fock}}
+\DoxyCodeLine{74 \textcolor{comment}{        ======== ======== ====== =========}}
+\DoxyCodeLine{75 \textcolor{comment}{        space     closed   open   virtual}}
+\DoxyCodeLine{76 \textcolor{comment}{        ======== ======== ====== =========}}
+\DoxyCodeLine{77 \textcolor{comment}{        closed      Fc      Fb     Fc}}
+\DoxyCodeLine{78 \textcolor{comment}{        open        Fb      Fc     Fa}}
+\DoxyCodeLine{79 \textcolor{comment}{        virtual     Fc      Fa     Fc}}
+\DoxyCodeLine{80 \textcolor{comment}{        ======== ======== ====== =========}}
+\DoxyCodeLine{81 \textcolor{comment}{        where Fc = (Fa + Fb) / 2}}
+\DoxyCodeLine{82 \textcolor{comment}{     */}}
+\DoxyCodeLine{83     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(0.5),ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab82f1f8ad464a41f46f9ee508cf22b38}{fockMatrix}}-\/>S().pointer(),NB,}
+\DoxyCodeLine{84          pc,NB,MatsT(0.),tmp2,NB);}
+\DoxyCodeLine{85     blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(0.5),pc,NB,tmp2,NB,MatsT(0.),tmp.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),NB);}
+\DoxyCodeLine{86     blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(1.),pv,NB,tmp2,NB,MatsT(1.),tmp.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),NB);}
+\DoxyCodeLine{87     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(0.5),ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab82f1f8ad464a41f46f9ee508cf22b38}{fockMatrix}}-\/>S().pointer(),NB,}
+\DoxyCodeLine{88          po,NB,MatsT(0.),tmp2,NB);}
+\DoxyCodeLine{89     blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(0.5),po,NB,tmp2,NB,MatsT(1.),tmp.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),NB);}
+\DoxyCodeLine{90     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(0.5),ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab82f1f8ad464a41f46f9ee508cf22b38}{fockMatrix}}-\/>S().pointer(),NB,}
+\DoxyCodeLine{91          pv,NB,MatsT(0.),tmp2,NB);}
+\DoxyCodeLine{92     blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(0.5),pv,NB,tmp2,NB,MatsT(1.),tmp.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),NB);}
+\DoxyCodeLine{93     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(1.),SCR[1].pointer(),NB,pc,NB,MatsT(0.),tmp2,NB);}
+\DoxyCodeLine{94     blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(1.),po,NB,tmp2,NB,MatsT(1.),tmp.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),NB);}
+\DoxyCodeLine{95     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(1.),SCR[0].pointer(),NB,pv,NB,MatsT(0.),tmp2,NB);}
+\DoxyCodeLine{96     blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(1.),po,NB,tmp2,NB,MatsT(1.),tmp.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),NB);}
+\DoxyCodeLine{97     \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'C'},\textcolor{charliteral}{'N'},NB,NB,MatsT(1.),tmp.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),NB,MatsT(1.),}
+\DoxyCodeLine{98            tmp.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),NB,ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab82f1f8ad464a41f46f9ee508cf22b38}{fockMatrix}}-\/>S().pointer(),NB);}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100     ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(pc,po,pv,tmp2);}
+\DoxyCodeLine{101   \}; \textcolor{comment}{// ROFock<MatsT, IntsT>::rohfFock}}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{112   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{113   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ROFock_a6ce39a0bebba2f5ef56b002134b193cf}{ROFock<MatsT,IntsT>::formFock}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&ss,}
+\DoxyCodeLine{114     \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert, \textcolor{keywordtype}{bool} increment, \textcolor{keywordtype}{double} xHFX) \{}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116     \textcolor{comment}{// General fock build}}
+\DoxyCodeLine{117     \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a4242ef13cf11b05ad75b9acd3604bf6d}{FockBuilder<MatsT,IntsT>::formFock}}(ss, pert, increment, xHFX);}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \textcolor{comment}{// ROHF fock build}}
+\DoxyCodeLine{120     rohfFock(ss);}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122   \} \textcolor{comment}{// ROFock<MatsT,IntsT>::formFock}}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

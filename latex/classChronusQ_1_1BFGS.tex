@@ -1,0 +1,438 @@
+\hypertarget{classChronusQ_1_1BFGS}{}\doxysection{ChronusQ\+::BFGS\texorpdfstring{$<$}{<} VT \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1BFGS}\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+
+
+{\ttfamily \#include $<$bfgs.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::BFGS\texorpdfstring{$<$}{<} VT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=241pt]{classChronusQ_1_1BFGS__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::BFGS\texorpdfstring{$<$}{<} VT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BFGS__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1BFGS_a86e806754b170350a86dfe4a94c1fb75}{BFGS}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1BFGS_a3bc5efdb60490474cf62fe630ef48e70}{BFGS}} (size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1BFGS_ae079a5674618a8de8338377f01d43f56}{N}}, double conv, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mM)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1BFGS_a76e05d19df7f0b939888153a08498f6d}{BFGS}} (const \mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS}}$<$ VT $>$ \&)=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1BFGS_a4fbef3ae02067bd2e2b3da7f908c92ed}{BFGS}} (\mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS}}$<$ VT $>$ \&\&)=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1BFGS_abbc491e0c966318a1e21cc893502c05c}{$\sim$\+BFGS}} ()
+\item 
+VT $\ast$ \mbox{\hyperlink{classChronusQ_1_1BFGS_a6a5ffbb4a9926d4a46ffffaccb78d1e7}{g\+Pointer}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1BFGS_a08045e44d0f723a0bf1b56f88e16677f}{set\+GPointer}} (VT $\ast$g)
+\item 
+VT $\ast$ \mbox{\hyperlink{classChronusQ_1_1BFGS_aa13a67027db4f79239f4605f1d421a73}{x\+Pointer}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1BFGS_aef481bef57f37def61fc10359cbcff74}{set\+XPointer}} (VT $\ast$x\+New)
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1BFGS_a7c2a97670286c44be4eb4e3385cfa725}{optimize}} ()
+\begin{DoxyCompactList}\small\item\em Will return true for a successful optimization and false for unsucessful. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1BFGS_a65f89adea8c13e811753df3ccdce76a2}{line\+Search}} (VT $\ast$initX, VT $\ast$dx, double \&ymin, VT \&amin)
+\begin{DoxyCompactList}\small\item\em Line search algorithms. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1BFGS_a86f7d7a16b99bc35dbcb3ad4c362566d}{obj\+Func}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1BFGS_ac04d6c125d177ec0433e8f992a64e06a}{grad\+Func}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1BFGS_a12861ba7622fd74981682fba1f724bc2}{make\+Unit}} (VT $\ast$inv\+Hess)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classChronusQ_1_1BFGS_ad1091738465e8a9a892a26b328fb2256}{convergence}} = 1E-\/12
+\begin{DoxyCompactList}\small\item\em Convergence criteria for objective function. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classChronusQ_1_1BFGS_a61804f650d4ec4c166204be53cd0332b}{update\+Inv\+Hess}} = true
+\begin{DoxyCompactList}\small\item\em Whether to update the Inverse Hessian with \mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS}} update. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classChronusQ_1_1BFGS_afab75a7aa71eb093bcd616c6e8da4d97}{print\+Search\+Direction}} = false
+\begin{DoxyCompactList}\small\item\em Whether to print the search direction in \mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS}} opt. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1BFGS_aefab5add601bb8f08c61bf0f4c6a55b8}{print\+Precision}} = 10
+\begin{DoxyCompactList}\small\item\em Level of Precision for printing. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classChronusQ_1_1BFGS_ac6a68f690dc179f4e07411ffe6892f04}{reset\+Inv\+Hess}} = true
+\begin{DoxyCompactList}\small\item\em Whether to reset the inv\+Hess to unit matrix every N steps. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classChronusQ_1_1BFGS_aa060ec9bdb4cb03113f75d173fb10a74}{scale\+Inv\+Hess}} = true
+\begin{DoxyCompactList}\small\item\em Whether to use to rescale the inv\+Hess during the optimization. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceChronusQ_a9d23460a989a2201e7ebd987e3ab5fa1}{Line\+Search\+Algorithm}} \mbox{\hyperlink{classChronusQ_1_1BFGS_a2d09bb4256d127d530a71217a8840f4a}{line\+Alg}} = \mbox{\hyperlink{namespaceChronusQ_a9d23460a989a2201e7ebd987e3ab5fa1aead5ce6a35cd2ef6bed221816b54833c}{Golden\+Section}}
+\item 
+double \mbox{\hyperlink{classChronusQ_1_1BFGS_ab14cec793ea056cdca3646a28131357d}{golden\+Section\+Max\+Disp}} = 5.
+\begin{DoxyCompactList}\small\item\em The Maximum displacement for the \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch}{Golden\+Section\+Search}}. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1BFGS_ab8985a8d4e42904816a7c2c4921b56a6}{sd\+Max\+Disp}} = 1.\+0
+\begin{DoxyCompactList}\small\item\em The maximum displacement for Steapest\+Descent along the search direction. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1BFGS_a96a6fbd822f95e83b018647df7f79fe3}{scale\+Failed\+SD}} = 0.\+1
+\begin{DoxyCompactList}\small\item\em Amount to scale the Steapest\+Descent step if the obj\+Func increases by too much. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1BFGS_aaaa9f3df569973c1a3fe1cfe38888218}{percent\+Fail\+SD}} = 10.
+\begin{DoxyCompactList}\small\item\em The percent amount the function can go up by without reducing the search step. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1BFGS_ae079a5674618a8de8338377f01d43f56}{N}}
+\begin{DoxyCompactList}\small\item\em Dimension of optimization problem. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& \mbox{\hyperlink{classChronusQ_1_1BFGS_af56baf548b3d0fd1ceec065a1b80f0ff}{mem\+Manager}}
+\item 
+VT $\ast$ \mbox{\hyperlink{classChronusQ_1_1BFGS_a1c04f14fa8c125ec76b481b17e80505b}{x\+BFGS}}
+\begin{DoxyCompactList}\small\item\em Pointer to variables. \end{DoxyCompactList}\item 
+VT $\ast$ \mbox{\hyperlink{classChronusQ_1_1BFGS_a7eebd30dae06e962f9de2790c61419d6}{g\+BFGS}}
+\begin{DoxyCompactList}\small\item\em Pointer to Gradient vector. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a86e806754b170350a86dfe4a94c1fb75}\label{classChronusQ_1_1BFGS_a86e806754b170350a86dfe4a94c1fb75}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!BFGS@{BFGS}}
+\index{BFGS@{BFGS}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{BFGS()}{BFGS()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::\+BFGS (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a3bc5efdb60490474cf62fe630ef48e70}\label{classChronusQ_1_1BFGS_a3bc5efdb60490474cf62fe630ef48e70}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!BFGS@{BFGS}}
+\index{BFGS@{BFGS}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{BFGS()}{BFGS()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::\+BFGS (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{N,  }\item[{double}]{conv,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mM }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a76e05d19df7f0b939888153a08498f6d}\label{classChronusQ_1_1BFGS_a76e05d19df7f0b939888153a08498f6d}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!BFGS@{BFGS}}
+\index{BFGS@{BFGS}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{BFGS()}{BFGS()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::\+BFGS (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS}}$<$ VT $>$ \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a4fbef3ae02067bd2e2b3da7f908c92ed}\label{classChronusQ_1_1BFGS_a4fbef3ae02067bd2e2b3da7f908c92ed}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!BFGS@{BFGS}}
+\index{BFGS@{BFGS}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{BFGS()}{BFGS()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::\+BFGS (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS}}$<$ VT $>$ \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_abbc491e0c966318a1e21cc893502c05c}\label{classChronusQ_1_1BFGS_abbc491e0c966318a1e21cc893502c05c}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!````~BFGS@{$\sim$BFGS}}
+\index{````~BFGS@{$\sim$BFGS}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$BFGS()}{~BFGS()}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::$\sim$\mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a6a5ffbb4a9926d4a46ffffaccb78d1e7}\label{classChronusQ_1_1BFGS_a6a5ffbb4a9926d4a46ffffaccb78d1e7}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!gPointer@{gPointer}}
+\index{gPointer@{gPointer}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{gPointer()}{gPointer()}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+VT $\ast$ \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::g\+Pointer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_ac04d6c125d177ec0433e8f992a64e06a}\label{classChronusQ_1_1BFGS_ac04d6c125d177ec0433e8f992a64e06a}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!gradFunc@{gradFunc}}
+\index{gradFunc@{gradFunc}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{gradFunc()}{gradFunc()}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::grad\+Func (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1NonLinearOpt_a81f4a27f81c69b0fdf60d151eb629e2f}{Chronus\+Q\+::\+Non\+Linear\+Opt}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a65f89adea8c13e811753df3ccdce76a2}\label{classChronusQ_1_1BFGS_a65f89adea8c13e811753df3ccdce76a2}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!lineSearch@{lineSearch}}
+\index{lineSearch@{lineSearch}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{lineSearch()}{lineSearch()}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::line\+Search (\begin{DoxyParamCaption}\item[{VT $\ast$}]{initX,  }\item[{VT $\ast$}]{dx,  }\item[{double \&}]{ymin,  }\item[{VT \&}]{amin }\end{DoxyParamCaption})}
+
+
+
+Line search algorithms. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BFGS_a65f89adea8c13e811753df3ccdce76a2_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BFGS_a65f89adea8c13e811753df3ccdce76a2_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a12861ba7622fd74981682fba1f724bc2}\label{classChronusQ_1_1BFGS_a12861ba7622fd74981682fba1f724bc2}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!makeUnit@{makeUnit}}
+\index{makeUnit@{makeUnit}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{makeUnit()}{makeUnit()}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::make\+Unit (\begin{DoxyParamCaption}\item[{VT $\ast$}]{inv\+Hess }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a86f7d7a16b99bc35dbcb3ad4c362566d}\label{classChronusQ_1_1BFGS_a86f7d7a16b99bc35dbcb3ad4c362566d}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!objFunc@{objFunc}}
+\index{objFunc@{objFunc}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{objFunc()}{objFunc()}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::obj\+Func (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1NonLinearOpt_a3587f01b95cad81ee99de42aadd314f1}{Chronus\+Q\+::\+Non\+Linear\+Opt}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a7c2a97670286c44be4eb4e3385cfa725}\label{classChronusQ_1_1BFGS_a7c2a97670286c44be4eb4e3385cfa725}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!optimize@{optimize}}
+\index{optimize@{optimize}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{optimize()}{optimize()}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::optimize\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Will return true for a successful optimization and false for unsucessful. 
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1NonLinearOpt_a63d11bc90082995082eb8547a0dc89ce}{Chronus\+Q\+::\+Non\+Linear\+Opt}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BFGS_a7c2a97670286c44be4eb4e3385cfa725_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BFGS_a7c2a97670286c44be4eb4e3385cfa725_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a08045e44d0f723a0bf1b56f88e16677f}\label{classChronusQ_1_1BFGS_a08045e44d0f723a0bf1b56f88e16677f}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!setGPointer@{setGPointer}}
+\index{setGPointer@{setGPointer}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{setGPointer()}{setGPointer()}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::set\+GPointer (\begin{DoxyParamCaption}\item[{VT $\ast$}]{g }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BFGS_a08045e44d0f723a0bf1b56f88e16677f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_aef481bef57f37def61fc10359cbcff74}\label{classChronusQ_1_1BFGS_aef481bef57f37def61fc10359cbcff74}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!setXPointer@{setXPointer}}
+\index{setXPointer@{setXPointer}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{setXPointer()}{setXPointer()}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::set\+XPointer (\begin{DoxyParamCaption}\item[{VT $\ast$}]{x\+New }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BFGS_aef481bef57f37def61fc10359cbcff74_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BFGS_aef481bef57f37def61fc10359cbcff74_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_aa13a67027db4f79239f4605f1d421a73}\label{classChronusQ_1_1BFGS_aa13a67027db4f79239f4605f1d421a73}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!xPointer@{xPointer}}
+\index{xPointer@{xPointer}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{xPointer()}{xPointer()}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+VT $\ast$ \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::x\+Pointer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_ad1091738465e8a9a892a26b328fb2256}\label{classChronusQ_1_1BFGS_ad1091738465e8a9a892a26b328fb2256}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!convergence@{convergence}}
+\index{convergence@{convergence}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{convergence}{convergence}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::convergence = 1E-\/12}
+
+
+
+Convergence criteria for objective function. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a7eebd30dae06e962f9de2790c61419d6}\label{classChronusQ_1_1BFGS_a7eebd30dae06e962f9de2790c61419d6}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!gBFGS@{gBFGS}}
+\index{gBFGS@{gBFGS}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{gBFGS}{gBFGS}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+VT$\ast$ \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::g\+BFGS\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Pointer to Gradient vector. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_ab14cec793ea056cdca3646a28131357d}\label{classChronusQ_1_1BFGS_ab14cec793ea056cdca3646a28131357d}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!goldenSectionMaxDisp@{goldenSectionMaxDisp}}
+\index{goldenSectionMaxDisp@{goldenSectionMaxDisp}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{goldenSectionMaxDisp}{goldenSectionMaxDisp}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::golden\+Section\+Max\+Disp = 5.}
+
+
+
+The Maximum displacement for the \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch}{Golden\+Section\+Search}}. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a2d09bb4256d127d530a71217a8840f4a}\label{classChronusQ_1_1BFGS_a2d09bb4256d127d530a71217a8840f4a}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!lineAlg@{lineAlg}}
+\index{lineAlg@{lineAlg}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{lineAlg}{lineAlg}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+\mbox{\hyperlink{namespaceChronusQ_a9d23460a989a2201e7ebd987e3ab5fa1}{Line\+Search\+Algorithm}} \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::line\+Alg = \mbox{\hyperlink{namespaceChronusQ_a9d23460a989a2201e7ebd987e3ab5fa1aead5ce6a35cd2ef6bed221816b54833c}{Golden\+Section}}}
+
+Choose algorithm to perform line Search. NOTE\+: \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch}{Golden\+Section\+Search}} requires many calls to the obj\+Func but zero calls to grad\+Func \mbox{\Hypertarget{classChronusQ_1_1BFGS_af56baf548b3d0fd1ceec065a1b80f0ff}\label{classChronusQ_1_1BFGS_af56baf548b3d0fd1ceec065a1b80f0ff}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!memManager@{memManager}}
+\index{memManager@{memManager}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{memManager}{memManager}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}}\& \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::mem\+Manager\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_ae079a5674618a8de8338377f01d43f56}\label{classChronusQ_1_1BFGS_ae079a5674618a8de8338377f01d43f56}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!N@{N}}
+\index{N@{N}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{N}{N}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::N\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Dimension of optimization problem. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_aaaa9f3df569973c1a3fe1cfe38888218}\label{classChronusQ_1_1BFGS_aaaa9f3df569973c1a3fe1cfe38888218}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!percentFailSD@{percentFailSD}}
+\index{percentFailSD@{percentFailSD}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{percentFailSD}{percentFailSD}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::percent\+Fail\+SD = 10.}
+
+
+
+The percent amount the function can go up by without reducing the search step. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_aefab5add601bb8f08c61bf0f4c6a55b8}\label{classChronusQ_1_1BFGS_aefab5add601bb8f08c61bf0f4c6a55b8}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!printPrecision@{printPrecision}}
+\index{printPrecision@{printPrecision}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{printPrecision}{printPrecision}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::print\+Precision = 10}
+
+
+
+Level of Precision for printing. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_afab75a7aa71eb093bcd616c6e8da4d97}\label{classChronusQ_1_1BFGS_afab75a7aa71eb093bcd616c6e8da4d97}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!printSearchDirection@{printSearchDirection}}
+\index{printSearchDirection@{printSearchDirection}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{printSearchDirection}{printSearchDirection}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::print\+Search\+Direction = false}
+
+
+
+Whether to print the search direction in \mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS}} opt. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_ac6a68f690dc179f4e07411ffe6892f04}\label{classChronusQ_1_1BFGS_ac6a68f690dc179f4e07411ffe6892f04}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!resetInvHess@{resetInvHess}}
+\index{resetInvHess@{resetInvHess}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{resetInvHess}{resetInvHess}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::reset\+Inv\+Hess = true}
+
+
+
+Whether to reset the inv\+Hess to unit matrix every N steps. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a96a6fbd822f95e83b018647df7f79fe3}\label{classChronusQ_1_1BFGS_a96a6fbd822f95e83b018647df7f79fe3}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!scaleFailedSD@{scaleFailedSD}}
+\index{scaleFailedSD@{scaleFailedSD}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{scaleFailedSD}{scaleFailedSD}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::scale\+Failed\+SD = 0.\+1}
+
+
+
+Amount to scale the Steapest\+Descent step if the obj\+Func increases by too much. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_aa060ec9bdb4cb03113f75d173fb10a74}\label{classChronusQ_1_1BFGS_aa060ec9bdb4cb03113f75d173fb10a74}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!scaleInvHess@{scaleInvHess}}
+\index{scaleInvHess@{scaleInvHess}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{scaleInvHess}{scaleInvHess}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::scale\+Inv\+Hess = true}
+
+
+
+Whether to use to rescale the inv\+Hess during the optimization. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_ab8985a8d4e42904816a7c2c4921b56a6}\label{classChronusQ_1_1BFGS_ab8985a8d4e42904816a7c2c4921b56a6}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!sdMaxDisp@{sdMaxDisp}}
+\index{sdMaxDisp@{sdMaxDisp}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{sdMaxDisp}{sdMaxDisp}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::sd\+Max\+Disp = 1.\+0}
+
+
+
+The maximum displacement for Steapest\+Descent along the search direction. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a61804f650d4ec4c166204be53cd0332b}\label{classChronusQ_1_1BFGS_a61804f650d4ec4c166204be53cd0332b}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!updateInvHess@{updateInvHess}}
+\index{updateInvHess@{updateInvHess}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{updateInvHess}{updateInvHess}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::update\+Inv\+Hess = true}
+
+
+
+Whether to update the Inverse Hessian with \mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS}} update. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BFGS_a1c04f14fa8c125ec76b481b17e80505b}\label{classChronusQ_1_1BFGS_a1c04f14fa8c125ec76b481b17e80505b}} 
+\index{ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}!xBFGS@{xBFGS}}
+\index{xBFGS@{xBFGS}!ChronusQ::BFGS$<$ VT $>$@{ChronusQ::BFGS$<$ VT $>$}}
+\doxysubsubsection{\texorpdfstring{xBFGS}{xBFGS}}
+{\footnotesize\ttfamily template$<$typename VT $>$ \\
+VT$\ast$ \mbox{\hyperlink{classChronusQ_1_1BFGS}{Chronus\+Q\+::\+BFGS}}$<$ VT $>$\+::x\+BFGS\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Pointer to variables. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/nonlinearopt/\mbox{\hyperlink{bfgs_8hpp}{bfgs.\+hpp}}\end{DoxyCompactItemize}

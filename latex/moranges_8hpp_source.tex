@@ -1,0 +1,194 @@
+\hypertarget{moranges_8hpp_source}{}\doxysection{moranges.\+hpp}
+\label{moranges_8hpp_source}\index{include/mointstransformer/moranges.hpp@{include/mointstransformer/moranges.hpp}}
+\mbox{\hyperlink{moranges_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mointstransformer_8hpp}{mointstransformer.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{33   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{34   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a8a3923450bdb64d2e6d133e284a3178d}{MOIntsTransformer<MatsT,IntsT>::addMORanges}}(\textcolor{keyword}{const} std::set<char> \& symSet,}
+\DoxyCodeLine{35     \textcolor{keyword}{const} std::pair<size\_t, size\_t> \& range) \{}
+\DoxyCodeLine{36       }
+\DoxyCodeLine{37       symbol\_sets\_.push\_back(symSet);}
+\DoxyCodeLine{38       mo\_ranges\_.push\_back(range);}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40   \}; \textcolor{comment}{// MOIntsTransformer::addMORanges  }}
+\DoxyCodeLine{41   }
+\DoxyCodeLine{42   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{43   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ac535ffe051f398de687f0709a03134ee}{MOIntsTransformer<MatsT,IntsT>::setMORanges}}(\textcolor{keywordtype}{size\_t} nFrozenCore, \textcolor{keywordtype}{size\_t} nFrozenVirt) \{}
+\DoxyCodeLine{44     }
+\DoxyCodeLine{45       \textcolor{comment}{// set 4C for no-\/pair approximation}}
+\DoxyCodeLine{46       \textcolor{keywordtype}{size\_t} fourCompOffset = (ss\_.nC == 4) ? ss\_.nAlphaOrbital() * 2: 0;}
+\DoxyCodeLine{47       \textcolor{keywordtype}{size\_t} oneCompFactor  = (ss\_.nC == 1) ? 2: 1;}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49       \textcolor{keywordtype}{size\_t} nO = ss\_.nO/oneCompFactor -\/ nFrozenCore;}
+\DoxyCodeLine{50       \textcolor{keywordtype}{size\_t} nV = ss\_.nV/oneCompFactor -\/ nFrozenVirt; }
+\DoxyCodeLine{51       \textcolor{keywordtype}{size\_t} nT = nO + nV;}
+\DoxyCodeLine{52       }
+\DoxyCodeLine{53       resetMORanges();}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55       \textcolor{comment}{// general indices}}
+\DoxyCodeLine{56       addMORanges(\{\textcolor{charliteral}{'p'},\textcolor{charliteral}{'q'},\textcolor{charliteral}{'r'},\textcolor{charliteral}{'s'}\}, \{fourCompOffset + nFrozenCore, nT\});}
+\DoxyCodeLine{57       }
+\DoxyCodeLine{58       \textcolor{comment}{// hole indices}}
+\DoxyCodeLine{59       addMORanges(\{\textcolor{charliteral}{'i'},\textcolor{charliteral}{'j'},\textcolor{charliteral}{'k'},\textcolor{charliteral}{'l'}\}, \{fourCompOffset + nFrozenCore, nO\});}
+\DoxyCodeLine{60       }
+\DoxyCodeLine{61       \textcolor{comment}{// particle indices}}
+\DoxyCodeLine{62       addMORanges(\{\textcolor{charliteral}{'a'},\textcolor{charliteral}{'b'},\textcolor{charliteral}{'c'},\textcolor{charliteral}{'d'}\}, \{fourCompOffset + ss\_.nO, nV\}); }
+\DoxyCodeLine{63       }
+\DoxyCodeLine{64   \}; \textcolor{comment}{// MOIntsTransformer::setMORanges for SingleSlater}}
+\DoxyCodeLine{65   }
+\DoxyCodeLine{66   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{67   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ac535ffe051f398de687f0709a03134ee}{MOIntsTransformer<MatsT,IntsT>::setMORanges}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWaveFunctionBase}} \& mcwfn) \{}
+\DoxyCodeLine{68   }
+\DoxyCodeLine{69       \textcolor{comment}{// set 4C for no-\/pair approximation}}
+\DoxyCodeLine{70       \textcolor{keywordtype}{size\_t} offset = (ss\_.nC == 4 and mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a90324093ea0d7e66a965d984402de5c5}{FourCompNoPair}}) ? ss\_.nAlphaOrbital() * 2: 0;}
+\DoxyCodeLine{71       }
+\DoxyCodeLine{72       \textcolor{keyword}{const} \textcolor{keyword}{auto} \&  mopart = mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}};}
+\DoxyCodeLine{73       offset += mopart.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a7de87290cee31f6db28aa7972a23b07a}{nFCore}};}
+\DoxyCodeLine{74       \textcolor{keywordtype}{size\_t} nInact = mopart.nInact; }
+\DoxyCodeLine{75       \textcolor{keywordtype}{size\_t} nCorrO = mopart.nCorrO;}
+\DoxyCodeLine{76       \textcolor{keywordtype}{size\_t} nFVirt = mopart.nFVirt; }
+\DoxyCodeLine{77       \textcolor{keywordtype}{size\_t} nT = mopart.nMO; }
+\DoxyCodeLine{78       \textcolor{keywordtype}{size\_t} corrOffset = offset + nInact;}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80       resetMORanges();}
+\DoxyCodeLine{81       }
+\DoxyCodeLine{82       \textcolor{comment}{// negative energy MO indices}}
+\DoxyCodeLine{83       \textcolor{keywordflow}{if} (ss\_.nC == 4) addMORanges(\{\textcolor{charliteral}{'m'}, \textcolor{charliteral}{'n'}\}, \{0ul, mopart.nNegMO\});}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85       \textcolor{comment}{// general electronic indices}}
+\DoxyCodeLine{86       addMORanges(\{\textcolor{charliteral}{'p'},\textcolor{charliteral}{'q'},\textcolor{charliteral}{'r'},\textcolor{charliteral}{'s'}\}, \{0ul, nT\});}
+\DoxyCodeLine{87       }
+\DoxyCodeLine{88       \textcolor{comment}{// inactive core indices}}
+\DoxyCodeLine{89       addMORanges(\{\textcolor{charliteral}{'i'},\textcolor{charliteral}{'j'},\textcolor{charliteral}{'k'},\textcolor{charliteral}{'l'}\}, \{offset, nInact\});}
+\DoxyCodeLine{90       }
+\DoxyCodeLine{91       \textcolor{comment}{// correlated space}}
+\DoxyCodeLine{92       addMORanges(\{\textcolor{charliteral}{'t'},\textcolor{charliteral}{'u'},\textcolor{charliteral}{'v'},\textcolor{charliteral}{'w'}\}, \{corrOffset, nCorrO\});}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94       \textcolor{comment}{// virtual indices}}
+\DoxyCodeLine{95       addMORanges(\{\textcolor{charliteral}{'a'},\textcolor{charliteral}{'b'},\textcolor{charliteral}{'c'},\textcolor{charliteral}{'d'}\}, \{corrOffset + nCorrO, nFVirt\});}
+\DoxyCodeLine{96       }
+\DoxyCodeLine{97       \textcolor{keywordflow}{if} (mopart.scheme == \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855a0df50d487b9483d2a3f3cb45d81e2ae7}{DetScheme::RAS}}) \{}
+\DoxyCodeLine{98         \textcolor{comment}{// '1', '2', '3' for RAS1 RAS2 RAS3 repectively }}
+\DoxyCodeLine{99         \textcolor{keywordtype}{char} nRAS = \textcolor{charliteral}{'1'};}
+\DoxyCodeLine{100         \textcolor{keywordtype}{size\_t} nRASOff = corrOffset;}
+\DoxyCodeLine{101         \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto} \&nActO: mopart.nActOs) \{}
+\DoxyCodeLine{102           addMORanges(\{nRAS\}, \{nRASOff, nActO\}); }
+\DoxyCodeLine{103           nRAS++;}
+\DoxyCodeLine{104           nRASOff += nActO;}
+\DoxyCodeLine{105         \}}
+\DoxyCodeLine{106       \}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108   \}; \textcolor{comment}{// MOIntsTransformer::setMORanges for MCWaveFunction}}
+\DoxyCodeLine{109   }
+\DoxyCodeLine{113   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{114   std::vector<std::pair<size\_t,size\_t>> }
+\DoxyCodeLine{115   \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ae293bbbb891eb7cc881ebba92aa7b73a}{MOIntsTransformer<MatsT,IntsT>::parseMOType}}(\textcolor{keyword}{const} std::string \& moType) \{}
+\DoxyCodeLine{116       }
+\DoxyCodeLine{117       \textcolor{comment}{// std::cout << "{} * parsing moType "{} << moType << std::endl;}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119       std::vector<std::pair<size\_t,size\_t>> off\_sizes;}
+\DoxyCodeLine{120       }
+\DoxyCodeLine{121       \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto}\& ch: moType) off\_sizes.push\_back(parseMOType(ch));        }
+\DoxyCodeLine{122       }
+\DoxyCodeLine{123       \textcolor{keywordflow}{return} off\_sizes;}
+\DoxyCodeLine{124   \}; \textcolor{comment}{// MOIntsTransformer::parseMOIntsType(string)}}
+\DoxyCodeLine{125   }
+\DoxyCodeLine{129   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{130   std::pair<size\_t,size\_t> }
+\DoxyCodeLine{131   \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ae293bbbb891eb7cc881ebba92aa7b73a}{MOIntsTransformer<MatsT,IntsT>::parseMOType}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} type) \{}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133       std::pair<size\_t,size\_t> off\_size;}
+\DoxyCodeLine{134       \textcolor{keywordtype}{bool} foundMOType = \textcolor{keyword}{false};}
+\DoxyCodeLine{135       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < symbol\_sets\_.size(); i++) \{}
+\DoxyCodeLine{136         \textcolor{keywordflow}{if} (symbol\_sets\_[i].count(type)) \{}
+\DoxyCodeLine{137           off\_size = mo\_ranges\_[i];}
+\DoxyCodeLine{138           foundMOType = \textcolor{keyword}{true};}
+\DoxyCodeLine{139           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{140         \}}
+\DoxyCodeLine{141       \}}
+\DoxyCodeLine{142       }
+\DoxyCodeLine{143       \textcolor{keywordflow}{if} (not foundMOType) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Wrong MO Type in parseMOIntsType"{}});}
+\DoxyCodeLine{144       }
+\DoxyCodeLine{145       \textcolor{keywordflow}{return} off\_size;}
+\DoxyCodeLine{146   \}; \textcolor{comment}{// MOIntsTransformer::parseMOIntsType(char)}}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148   \textcolor{comment}{/*}}
+\DoxyCodeLine{149 \textcolor{comment}{   * \(\backslash\)brief get unique symbols}}
+\DoxyCodeLine{150 \textcolor{comment}{   */} }
+\DoxyCodeLine{151   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{152   \textcolor{keywordtype}{char} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_afd7354aefaffa69920e5652296b3054a}{MOIntsTransformer<MatsT,IntsT>::getUniqueSymbol}}(\textcolor{keywordtype}{char} type) \{}
+\DoxyCodeLine{153   }
+\DoxyCodeLine{154       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < symbol\_sets\_.size(); i++) \{}
+\DoxyCodeLine{155         \textcolor{keywordflow}{if} (symbol\_sets\_[i].count(type)) \{}
+\DoxyCodeLine{156           \textcolor{keywordflow}{return} *symbol\_sets\_[i].begin();}
+\DoxyCodeLine{157         \}}
+\DoxyCodeLine{158       \}}
+\DoxyCodeLine{159       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Wrong MO Type in parseMOIntsType"{}});}
+\DoxyCodeLine{160       \textcolor{keywordflow}{return} \textcolor{charliteral}{' '};}
+\DoxyCodeLine{161   \}; \textcolor{comment}{// MOIntsTransformer::getUniqueSymbol}}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{166   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{167   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a7446f49cd3fe3c6340f3a580e8086038}{MOIntsTransformer<MatsT,IntsT>::printOffSizes}}(}
+\DoxyCodeLine{168     \textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \& off\_size) \{ }
+\DoxyCodeLine{169     std::cout << \textcolor{stringliteral}{"{}-\/-\/-\/-\/MO Ranges: "{}} << std::endl;}
+\DoxyCodeLine{170     }
+\DoxyCodeLine{171     \textcolor{keywordtype}{size\_t} counter = 0;}
+\DoxyCodeLine{172     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \& size: off\_size) \{}
+\DoxyCodeLine{173       \textcolor{keywordflow}{if} (size.second == 0) \textcolor{keywordflow}{continue}; }
+\DoxyCodeLine{174       counter ++;}
+\DoxyCodeLine{175       std::cout << \textcolor{stringliteral}{"{}Index "{}} << counter << \textcolor{stringliteral}{"{}: from "{}} << std::setw(5)}
+\DoxyCodeLine{176                 << size.first + 1 << \textcolor{stringliteral}{"{} to "{}} << std::setw(5)}
+\DoxyCodeLine{177                 << size.first + size.second << std::endl;}
+\DoxyCodeLine{178     \}}
+\DoxyCodeLine{179     std::cout << std::endl;}
+\DoxyCodeLine{180   \} \textcolor{comment}{// MOIntsTransformer::printOffSizes}}
+\DoxyCodeLine{181   }
+\DoxyCodeLine{185   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{186   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a6e90d9bf4a5acfe8595b27ee0f4229d7}{MOIntsTransformer<MatsT,IntsT>::printMORangesSummary}}() \{}
+\DoxyCodeLine{187   }
+\DoxyCodeLine{188     std::cout << \textcolor{stringliteral}{"{}  * Summary of MO ranges and symbols in MOIntsTransformer: "{}} << std::endl;}
+\DoxyCodeLine{189     }
+\DoxyCodeLine{190     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < mo\_ranges\_.size(); i++) \{}
+\DoxyCodeLine{191       \textcolor{keywordflow}{if} (mo\_ranges\_[i].second == 0) \textcolor{keywordflow}{continue}; }
+\DoxyCodeLine{192       std::cout << \textcolor{stringliteral}{"{}    -\/ MO Ranges "{}} << std::setw(5) << mo\_ranges\_[i].first + 1 << \textcolor{stringliteral}{"{} \string~ "{}}  }
+\DoxyCodeLine{193                 << std::setw(5)  << mo\_ranges\_[i].first + mo\_ranges\_[i].second }
+\DoxyCodeLine{194                 << \textcolor{stringliteral}{"{}, labeled as: "{}};}
+\DoxyCodeLine{195       }
+\DoxyCodeLine{196       \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto} \& c: symbol\_sets\_[i])}
+\DoxyCodeLine{197         std::cout << c << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{198       }
+\DoxyCodeLine{199       std::cout << std::endl;}
+\DoxyCodeLine{200     \}}
+\DoxyCodeLine{201   \} \textcolor{comment}{// MOIntsTransformer::printMORangesSummary}}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

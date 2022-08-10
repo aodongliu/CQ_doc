@@ -1,0 +1,215 @@
+\hypertarget{rasstringmanager_8hpp_source}{}\doxysection{rasstringmanager.\+hpp}
+\label{rasstringmanager_8hpp_source}\index{include/detstringmanager/rasstringmanager.hpp@{include/detstringmanager/rasstringmanager.hpp}}
+\mbox{\hyperlink{rasstringmanager_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{comment}{//\#define \_DEBUG\_RASSTRING}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{detstringmanager_8hpp}{detstringmanager.hpp}}>} }
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33   \textcolor{keyword}{typedef} \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{DetStringManager::int\_matrix}} \mbox{\hyperlink{namespaceChronusQ_a144dc6be8819e768735d0a039ffa30f6}{int\_matrix}}; }
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35   \textcolor{comment}{/*}}
+\DoxyCodeLine{36 \textcolor{comment}{   * Generate unordered\_map Key for RAS excitation lists}}
+\DoxyCodeLine{37 \textcolor{comment}{   *   p, q ...... p, q blocks}}
+\DoxyCodeLine{38 \textcolor{comment}{   *   L, K ...... Categories for strings L and K}}
+\DoxyCodeLine{39 \textcolor{comment}{   *   return a string "{}p\_q\_L\_K"{}}}
+\DoxyCodeLine{40 \textcolor{comment}{   */}}
+\DoxyCodeLine{41   std::string \mbox{\hyperlink{classChronusQ_1_1RASStringManager_a76bb53c55c51f4f2e7436a87a10408cb}{RASStringManager::mapKey}}(\textcolor{keywordtype}{size\_t} p, \textcolor{keywordtype}{size\_t} q,}
+\DoxyCodeLine{42                                 \textcolor{keywordtype}{size\_t} L, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8a8e3950a3df211dc18e0099561e0f6f0a}{K}})\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \textcolor{keywordflow}{return} std::to\_string(p) + \textcolor{stringliteral}{"{}\_"{}} + std::to\_string(q)}
+\DoxyCodeLine{45       + \textcolor{stringliteral}{"{}\_"{}} + std::to\_string(L) + \textcolor{stringliteral}{"{}\_"{}} + std::to\_string(\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8a8e3950a3df211dc18e0099561e0f6f0a}{K}});}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47   \} \textcolor{comment}{// RASStringManager::mapKey}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49   \textcolor{comment}{/*}}
+\DoxyCodeLine{50 \textcolor{comment}{   * find the Excitation list corresponding to a set of input:}}
+\DoxyCodeLine{51 \textcolor{comment}{   *    p, q ...... p, q blocks}}
+\DoxyCodeLine{52 \textcolor{comment}{   *    L, K ...... Categories for strings L and K}}
+\DoxyCodeLine{53 \textcolor{comment}{   *    return a pointer to the ExcitationList}}
+\DoxyCodeLine{54 \textcolor{comment}{   */}}
+\DoxyCodeLine{55   std::shared\_ptr<const ExcitationList> \mbox{\hyperlink{classChronusQ_1_1RASStringManager_a74e0e07faa9b9108ebc9f369c8f3557e}{RASStringManager::find\_exlist}}(}
+\DoxyCodeLine{56                 \textcolor{keywordtype}{size\_t} p, \textcolor{keywordtype}{size\_t} q, \textcolor{keywordtype}{size\_t} L, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8a8e3950a3df211dc18e0099561e0f6f0a}{K}})\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     std::string map\_key = this-\/>\mbox{\hyperlink{classChronusQ_1_1RASStringManager_a76bb53c55c51f4f2e7436a87a10408cb}{mapKey}}(p, q, L, \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8a8e3950a3df211dc18e0099561e0f6f0a}{K}});}
+\DoxyCodeLine{59     \textcolor{keyword}{auto} search = this-\/>\mbox{\hyperlink{classChronusQ_1_1RASStringManager_a83270af617abe90d00e28d64b5305fe6}{exList\_}}.find(map\_key);}
+\DoxyCodeLine{60     \textcolor{keywordflow}{if} (search != this-\/>\mbox{\hyperlink{classChronusQ_1_1RASStringManager_a83270af617abe90d00e28d64b5305fe6}{exList\_}}.end() ) \textcolor{keywordflow}{return} search-\/>second;}
+\DoxyCodeLine{61     \textcolor{keywordflow}{else} \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63   \} \textcolor{comment}{// RASStringManager::find\_exlist}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65   \textcolor{comment}{/* }}
+\DoxyCodeLine{66 \textcolor{comment}{   * Generate the offset of each space for each category}}
+\DoxyCodeLine{67 \textcolor{comment}{   *   nStr: total number of strings for RAS case.}}
+\DoxyCodeLine{68 \textcolor{comment}{   *   LCat: nCat\_ x 4}}
+\DoxyCodeLine{69 \textcolor{comment}{   *     RAS 1 offset ... 1}}
+\DoxyCodeLine{70 \textcolor{comment}{   *     RAS 2 offset ... N(RAS1)}}
+\DoxyCodeLine{71 \textcolor{comment}{   *     RAS 3 offset ... N(RAS1)*N(RAS2)}}
+\DoxyCodeLine{72 \textcolor{comment}{   *     total number of string for that category iCat ... N(RAS1)*NRAS2)*N(RAS3)}}
+\DoxyCodeLine{73 \textcolor{comment}{   */} }
+\DoxyCodeLine{74   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab989ed1e7e6257e3ec0aa7204fdf2f71}{RASStringManager::genLCat}}() \{}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}} = std::vector<std::vector<size\_t>>(\mbox{\hyperlink{classChronusQ_1_1RASStringManager_ac5b91230423e0e5eb473512005de0dc3}{nCat\_}}, std::vector<size\_t>(4, 0));}
+\DoxyCodeLine{77     }
+\DoxyCodeLine{78     this-\/>\mbox{\hyperlink{classChronusQ_1_1DetStringManager_a4bf895f0ab388b68892b2effbecab8cb}{nStr\_}} = 0ul;}
+\DoxyCodeLine{79     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iE = 0ul, iCat = 0ul; iE <= \mbox{\hyperlink{classChronusQ_1_1RASStringManager_aecb1aaef638c1156d938bc6599c52455}{mxElec\_}}; iE++)}
+\DoxyCodeLine{80     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iH = 0ul; iH <= \mbox{\hyperlink{classChronusQ_1_1RASStringManager_afdee8d87fa44f2afdf874844f12031fe}{mxHole\_}}; iH++, iCat++) \{}
+\DoxyCodeLine{81       \textcolor{keywordflow}{if}((\mbox{\hyperlink{classChronusQ_1_1DetStringManager_ae902431cce168a3c47be9f2f09ebc11f}{nE\_}}+iH) < (\mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[0]+iE) or (\mbox{\hyperlink{classChronusQ_1_1DetStringManager_ae902431cce168a3c47be9f2f09ebc11f}{nE\_}}+iH) > (\mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[0]+iE+\mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[1])) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{82       \textcolor{keywordtype}{size\_t} nEras2 = \mbox{\hyperlink{classChronusQ_1_1DetStringManager_ae902431cce168a3c47be9f2f09ebc11f}{nE\_}} -\/ \mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[0] + iH -\/ iE;}
+\DoxyCodeLine{83       \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCat][0] = 1;}
+\DoxyCodeLine{84       \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCat][1] = \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}}(\mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[0], iH);}
+\DoxyCodeLine{85       \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCat][2] = \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCat][1] * \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}}(\mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[1], nEras2);}
+\DoxyCodeLine{86       \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCat][3] = \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCat][2] * \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}}(\mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[2], iE);}
+\DoxyCodeLine{87       this-\/>nStr\_ += \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCat][3];}
+\DoxyCodeLine{88     \}}
+\DoxyCodeLine{89     }
+\DoxyCodeLine{90   \} \textcolor{comment}{// RASStringManager::genLCat}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab2b9d2658c14c92ef0313b3350214664}{RASStringManager::computeList}}() \{}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94 \textcolor{comment}{//    auto RASStringSt = tick();}}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     \textcolor{keywordflow}{if}(this-\/>\mbox{\hyperlink{classChronusQ_1_1DetStringManager_af39df85f0e53fea0cdd6838eef53b350}{scheme\_}} == \mbox{\hyperlink{namespaceChronusQ_aba77e0ab11cab8be3615e83c7ced29a8aadc11e310fd6ee33ead218fc5ba1ea58}{PRECOMPUTED\_CONFIGURATION\_DRIVEN\_LIST}})\{}
+\DoxyCodeLine{97     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} pBlk = 0ul; pBlk < 3; pBlk++)}
+\DoxyCodeLine{98     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} qBlk = 0ul; qBlk < 3; qBlk++) \{}
+\DoxyCodeLine{99       \textcolor{keywordtype}{int} iCatL = 0;}
+\DoxyCodeLine{100       std::unordered\_map<size\_t, std::shared\_ptr<ExcitationList>> LCache;}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iE = 0ul; iE <= \mbox{\hyperlink{classChronusQ_1_1RASStringManager_aecb1aaef638c1156d938bc6599c52455}{mxElec\_}}; iE++)}
+\DoxyCodeLine{103       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iH = 0ul; iH <= \mbox{\hyperlink{classChronusQ_1_1RASStringManager_afdee8d87fa44f2afdf874844f12031fe}{mxHole\_}}; iH++, iCatL++) \{}
+\DoxyCodeLine{104         }
+\DoxyCodeLine{105         \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCatL][3] ==0) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{106         }
+\DoxyCodeLine{107         \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} nEras = this-\/>\mbox{\hyperlink{classChronusQ_1_1DetStringManager_af848ef6e170f4e711fde15f3a765a96b}{init\_int\_matrix}}(3, 2, 0);}
+\DoxyCodeLine{108         int\_matrix nDras = this-\/>\mbox{\hyperlink{classChronusQ_1_1DetStringManager_af848ef6e170f4e711fde15f3a765a96b}{init\_int\_matrix}}(3, 2, 0);}
+\DoxyCodeLine{109         std::shared\_ptr<ExcitationList> ras\_exl;}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111         nEras[0][0] = \mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[0] -\/ iH;}
+\DoxyCodeLine{112         nEras[2][0] = iE;}
+\DoxyCodeLine{113         nEras[1][0] = \mbox{\hyperlink{classChronusQ_1_1DetStringManager_ae902431cce168a3c47be9f2f09ebc11f}{nE\_}} -\/ nEras[0][0] -\/ nEras[2][0];}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115         nDras[0][0] = \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCatL][1];}
+\DoxyCodeLine{116         nDras[1][0] = \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCatL][2]/\mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCatL][1];}
+\DoxyCodeLine{117         nDras[2][0] = \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCatL][3]/\mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCatL][2];}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119         \textcolor{keywordflow}{if}(pBlk == qBlk) \{ \textcolor{comment}{// diagonal block}}
+\DoxyCodeLine{120           \textcolor{keywordtype}{int} nVp = \mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[pBlk] -\/ nEras[pBlk][0];}
+\DoxyCodeLine{121           \textcolor{keywordtype}{int} nNZ = nEras[pBlk][0] * (nVp + 1);}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123           \textcolor{keywordflow}{if}(nNZ == 0) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{124           \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{125             \textcolor{keyword}{auto} search = LCache.find(nEras[pBlk][0]);}
+\DoxyCodeLine{126             \textcolor{keywordflow}{if} (search != LCache.end() ) ras\_exl = search-\/>second;}
+\DoxyCodeLine{127             \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{128               \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} ras\_addr\_array =}
+\DoxyCodeLine{129                   this-\/>buildAddressingArray(nEras[pBlk][0], \mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[pBlk]);}
+\DoxyCodeLine{130               ras\_exl = std::make\_shared<ExcitationList>(}
+\DoxyCodeLine{131                 this-\/>\mbox{\hyperlink{classChronusQ_1_1DetStringManager_ab1b6be9ea6979bd2b690fac17ee099a6}{computeIntraCASExcitationList}}(\mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[pBlk],}
+\DoxyCodeLine{132                                 nEras[pBlk][0], ras\_addr\_array));}
+\DoxyCodeLine{133               LCache.insert(\{nEras[pBlk][0], ras\_exl\});}
+\DoxyCodeLine{134             \}}
+\DoxyCodeLine{135             \mbox{\hyperlink{classChronusQ_1_1RASStringManager_a83270af617abe90d00e28d64b5305fe6}{exList\_}}.insert(\{\mbox{\hyperlink{classChronusQ_1_1RASStringManager_a76bb53c55c51f4f2e7436a87a10408cb}{mapKey}}(pBlk, qBlk, iCatL, iCatL), ras\_exl\});}
+\DoxyCodeLine{136 \textcolor{preprocessor}{\#ifdef \_DEBUG\_RASSTRING}}
+\DoxyCodeLine{137             std::cout << \textcolor{stringliteral}{"{}p: "{}} << pBlk+1 << \textcolor{stringliteral}{"{} and q: "{}} << qBlk+1 << std::endl;}
+\DoxyCodeLine{138             std::cout << \textcolor{stringliteral}{"{}LCat: "{}} << iCatL+1 << \textcolor{stringliteral}{"{} and KCat: "{}} << iCatL + 1 << std::endl;}
+\DoxyCodeLine{139 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{140           \}}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142         \} \textcolor{keywordflow}{else} \{ \textcolor{comment}{// off-\/diagonal block}}
+\DoxyCodeLine{143           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < 3; i++)}
+\DoxyCodeLine{144             nEras[i][1] = nEras[i][0];}
+\DoxyCodeLine{145           nEras[pBlk][1] += 1;}
+\DoxyCodeLine{146           nEras[qBlk][1] -\/= 1;}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148           \textcolor{keywordtype}{bool} checko = \textcolor{keyword}{false};}
+\DoxyCodeLine{149           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < 3; i++) \{}
+\DoxyCodeLine{150             \textcolor{keywordflow}{if}(nEras[i][1] < 0 or nEras[i][1] > \mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[i]) \{}
+\DoxyCodeLine{151               checko = \textcolor{keyword}{true};}
+\DoxyCodeLine{152               \textcolor{keywordflow}{break};}
+\DoxyCodeLine{153             \}}
+\DoxyCodeLine{154           \}}
+\DoxyCodeLine{155           \textcolor{keywordflow}{if}(not checko) \{}
+\DoxyCodeLine{156             \textcolor{keywordtype}{int} iHK = \mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[0] -\/ nEras[0][1];}
+\DoxyCodeLine{157             \textcolor{keywordtype}{int} iEK = nEras[2][1];}
+\DoxyCodeLine{158             \textcolor{keywordflow}{if}(iHK > \mbox{\hyperlink{classChronusQ_1_1RASStringManager_afdee8d87fa44f2afdf874844f12031fe}{mxHole\_}} or iEK > \mbox{\hyperlink{classChronusQ_1_1RASStringManager_aecb1aaef638c1156d938bc6599c52455}{mxElec\_}}) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{159             \textcolor{keywordtype}{int} iCatK = iHK + (\mbox{\hyperlink{classChronusQ_1_1RASStringManager_afdee8d87fa44f2afdf874844f12031fe}{mxHole\_}} + 1) * iEK;}
+\DoxyCodeLine{160             \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCatK][3] == 0) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162             nDras[0][1] = \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCatK][1];}
+\DoxyCodeLine{163             nDras[1][1] = \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCatK][2]/\mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCatK][1];}
+\DoxyCodeLine{164             nDras[2][1] = \mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCatK][3]/\mbox{\hyperlink{classChronusQ_1_1RASStringManager_ab4d6ddfe5198ff2d8892fb8588709053}{LCat\_}}[iCatK][2];}
+\DoxyCodeLine{165             \textcolor{keywordtype}{size\_t} nVpL = \mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[pBlk] -\/ nEras[pBlk][0];}
+\DoxyCodeLine{166             \textcolor{keywordtype}{size\_t} nNZL = nEras[qBlk][0] * nVpL;}
+\DoxyCodeLine{167             \textcolor{keywordtype}{size\_t} nVqK = \mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[qBlk] -\/ nEras[qBlk][1];}
+\DoxyCodeLine{168             \textcolor{keywordtype}{size\_t} nNZK = nEras[pBlk][1] * nVqK;}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170             \textcolor{keywordflow}{if}(nNZL == 0 or nNZK == 0) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172 \textcolor{preprocessor}{\#ifdef \_DEBUG\_RASSTRING}}
+\DoxyCodeLine{173             std::cout << \textcolor{stringliteral}{"{}p: "{}} << pBlk+1 << \textcolor{stringliteral}{"{} and q: "{}} << qBlk+1 << std::endl;}
+\DoxyCodeLine{174             std::cout << \textcolor{stringliteral}{"{}LCat: "{}} << iCatL+1 << \textcolor{stringliteral}{"{} and KCat: "{}} << iCatK + 1 << std::endl;}
+\DoxyCodeLine{175 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177             \textcolor{keywordtype}{int} Sgnoff = 1;}
+\DoxyCodeLine{178             \textcolor{keywordflow}{if}((pBlk == 2 and qBlk == 0) or (pBlk == 0 and qBlk == 2))}
+\DoxyCodeLine{179               \textcolor{keywordflow}{if}(nEras[1][1] \% 2 == 1) Sgnoff = -\/1;}
+\DoxyCodeLine{180             \textcolor{keywordtype}{bool} pqseq = (pBlk < qBlk) ? \textcolor{keyword}{true} : \textcolor{keyword}{false};}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182             \textcolor{comment}{// form addressing array}}
+\DoxyCodeLine{183             \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} addr\_array\_pK = \mbox{\hyperlink{classChronusQ_1_1DetStringManager_a390cab66bcf83529806795fae17dcbe7}{buildAddressingArray}}(nEras[pBlk][1], \mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[pBlk]);}
+\DoxyCodeLine{184             \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} addr\_array\_qK = \mbox{\hyperlink{classChronusQ_1_1DetStringManager_a390cab66bcf83529806795fae17dcbe7}{buildAddressingArray}}(nEras[qBlk][1], \mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[qBlk]);}
+\DoxyCodeLine{185 }
+\DoxyCodeLine{186             ras\_exl = std::make\_shared<ExcitationList>(}
+\DoxyCodeLine{187               this-\/>\mbox{\hyperlink{classChronusQ_1_1DetStringManager_a91f494e197834eb29e2550cc7668328c}{computeInterCASExcitationList}}(\mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[pBlk], nEras[pBlk][0],}
+\DoxyCodeLine{188                         \mbox{\hyperlink{classChronusQ_1_1RASStringManager_afbb030e325fdaea096113f86a826ee2e}{nActO\_}}[qBlk], nEras[qBlk][0], Sgnoff, pqseq,}
+\DoxyCodeLine{189                         addr\_array\_pK, addr\_array\_qK));}
+\DoxyCodeLine{190             \mbox{\hyperlink{classChronusQ_1_1RASStringManager_a83270af617abe90d00e28d64b5305fe6}{exList\_}}.insert(\{\mbox{\hyperlink{classChronusQ_1_1RASStringManager_a76bb53c55c51f4f2e7436a87a10408cb}{mapKey}}(pBlk, qBlk, iCatL, iCatK),}
+\DoxyCodeLine{191                             ras\_exl\});}
+\DoxyCodeLine{192           \}}
+\DoxyCodeLine{193         \}}
+\DoxyCodeLine{194       \}}
+\DoxyCodeLine{195     \}}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197 \textcolor{comment}{//    double RASStringdur = tock(RASStringSt);}}
+\DoxyCodeLine{198 \textcolor{comment}{//    std::cout << "{}\(\backslash\)nRAS String -\/ DURATION = "{} << std::setprecision(8)}}
+\DoxyCodeLine{199 \textcolor{comment}{//                << RASStringdur << "{} s."{} << std::endl;}}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201 \textcolor{preprocessor}{\#ifdef \_DEBUG\_RASSTRING}}
+\DoxyCodeLine{202     std::cout << \textcolor{stringliteral}{"{}RAS string all finished."{}} << std::endl;}
+\DoxyCodeLine{203 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205   \} \textcolor{keywordflow}{else} \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Not Implemented yet"{}});}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207   \} \textcolor{comment}{// RASString::buildConfDrivenExcitationList}}
+\DoxyCodeLine{208 }
+\DoxyCodeLine{209 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

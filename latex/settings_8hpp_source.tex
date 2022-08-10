@@ -1,0 +1,108 @@
+\hypertarget{settings_8hpp_source}{}\doxysection{settings.\+hpp}
+\label{settings_8hpp_source}\index{include/response/settings.hpp@{include/response/settings.hpp}}
+\mbox{\hyperlink{settings_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg__config_8hpp}{cqlinalg/cqlinalg\_config.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <fields.hpp>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{response_2enums_8hpp}{response/enums.hpp}}>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1ResponseSettings}{ResponseSettings}} \{}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616}{ResponseType}} \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ad69628e89f8f86c6b31579eca54d4e95}{jobType}} = \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616a63c476c3263a43d31f0b25a0a52471ae}{RESIDUE}};}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \textcolor{comment}{// Convergence}}
+\DoxyCodeLine{38     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_aafbc6ab36f2537e39745cc4f556aa0a0}{convCrit}} = 1e-\/7;}
+\DoxyCodeLine{39     int64\_t \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_a4b8c8fe5ea5c3d31c34d84d7e81e8ae5}{maxIter}} = 500;}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{comment}{// Matrix Handle}}
+\DoxyCodeLine{43     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ab42fab3e8db02c70be9d79e2fd652f22}{doFull}}        = \textcolor{keyword}{true}; }
+\DoxyCodeLine{44     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ad5796f9ec56ab1be7e1455fde3226e67}{formFullMat}}   = \textcolor{keyword}{true}; }
+\DoxyCodeLine{45     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ad08634b1f218f0ab70b9f1da517e0c43}{distMatFromRoot}} = \textcolor{keyword}{false}; }
+\DoxyCodeLine{46     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_aafc72deb0a953ea9ac0df88dabb1e7b8}{formMatDist}}     = \textcolor{keyword}{false}; }
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{49     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_a52aad22ad0059c0c77072a6b2ca65906}{isDist}}()\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ad08634b1f218f0ab70b9f1da517e0c43}{distMatFromRoot}} or \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_aafc72deb0a953ea9ac0df88dabb1e7b8}{formMatDist}}; \} }
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{51     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_a52aad22ad0059c0c77072a6b2ca65906}{isDist}}()\{ \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \} }
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{55     \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} MB = 2; }
+\DoxyCodeLine{56 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     \textcolor{comment}{// Matrix Properties}}
+\DoxyCodeLine{59     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_a5055bf4d3e78cb2b79d43f7aae2c2b4d}{doTDA}}    = \textcolor{keyword}{false};}
+\DoxyCodeLine{60     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_a3cf52dd1baf8bc123fbc01be184b155a}{doSA}}     = \textcolor{keyword}{false};}
+\DoxyCodeLine{61     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ab0f46b41c16864a27751ab0d179bf098}{matIsHer}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \textcolor{keywordtype}{int}  \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_aa43aa10bd7d2957ddded72d7071838d9}{printLevel}} = 1;}
+\DoxyCodeLine{64     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_af7b696268162a607afd1c2ac9f2980a9}{evalProp}}   = \textcolor{keyword}{true};}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     std::vector<ResponseOperator> \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_adcbc0ebd3e07158380b9f5105a7b990d}{aOps}}  = \mbox{\hyperlink{namespaceChronusQ_a6dfa20ca8a52f23f808366df628201bc}{AllOps}};}
+\DoxyCodeLine{67     std::vector<ResponseOperator> \mbox{\hyperlink{structChronusQ_1_1ResponseSettings_adedb64284f758d18d00b29fe5d6b15ea}{bOps}}  = \{ \mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa5e425f87d7cf99d79ca5c78dc8e15376}{LenElectricDipole}} \};}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69   \};}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1FDResponseSettings}{FDResponseSettings}} \{}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{keywordtype}{size\_t}              \mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_ada2fedc8ccd21f067741f4e830b7014b}{order}}      = 1;}
+\DoxyCodeLine{74     \textcolor{keywordtype}{double}              \mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_a78434b28bcaae00cc816d22b6950f41b}{dampFactor}} = 0.;}
+\DoxyCodeLine{75     \textcolor{keywordtype}{bool}                \mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_a2dc457b2d05dd0a7602183f0690c9f48}{forceDamp}}  = \textcolor{keyword}{false};}
+\DoxyCodeLine{76     std::vector<double> \mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_ac8af009cdd88d32a598b50068fe8bd57}{bFreq}}      = \{ 0. \};}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{keywordtype}{size\_t}              \mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_a18787da6a0dcb690554a829c42689358}{nRHS}}       = 0;}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{keywordtype}{bool}                \mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_ab3515f07a4a4c85474e883e075275135}{needP}}      = \textcolor{keyword}{false};}
+\DoxyCodeLine{81     \textcolor{keywordtype}{bool}                \mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_a4ff53505d815a3cb214a9beabe0d2175}{needQ}}      = \textcolor{keyword}{false};}
+\DoxyCodeLine{82   \};}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1ResidueResponseSettings}{ResidueResponseSettings}} \{}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1ResidueResponseSettings_a618b9c21e55d70bec34486d8611c8dce}{nRoots}} = 3;}
+\DoxyCodeLine{87     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1ResidueResponseSettings_a3b6d713d3a17c9c3fe6565e428ab8ebd}{needVR}} = \textcolor{keyword}{true};}
+\DoxyCodeLine{88     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1ResidueResponseSettings_a96659256bff8a1e52b9211b0cc3e4327}{needVL}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{comment}{// Direct settings}}
+\DoxyCodeLine{92     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1ResidueResponseSettings_a8d49df9a8f613ec43a42d87c1f688710}{deMin}} = 0.;}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     \textcolor{comment}{// GPLHR specific settings}}
+\DoxyCodeLine{96     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1ResidueResponseSettings_adf6ddc7aeceaabaf55b4802ad000961c}{gplhr\_m}}     = 3;}
+\DoxyCodeLine{97     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1ResidueResponseSettings_a92c6ed1efc29f5cf99c4612e621bb5e9}{gplhr\_sigma}} = 0.;}
+\DoxyCodeLine{98   \};}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{102 }
+
+\end{DoxyCode}

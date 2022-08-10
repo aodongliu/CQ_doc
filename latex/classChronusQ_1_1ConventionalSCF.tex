@@ -1,0 +1,481 @@
+\hypertarget{classChronusQ_1_1ConventionalSCF}{}\doxysection{ChronusQ\+::Conventional\+SCF\texorpdfstring{$<$}{<} MatsT \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1ConventionalSCF}\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+
+
+{\ttfamily \#include $<$conventional\+SCF.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::Conventional\+SCF\texorpdfstring{$<$}{<} MatsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=224pt]{classChronusQ_1_1ConventionalSCF__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::Conventional\+SCF\texorpdfstring{$<$}{<} MatsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ConventionalSCF__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ac30d4cd9614b85b4e8138639e2b559e6}{Conventional\+SCF}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ab916bae58b234db49f0769ee6198bbea}{Conventional\+SCF}} (\mbox{\hyperlink{structChronusQ_1_1SCFControls}{SCFControls}} sC, \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}}, \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Modify\+Orbitals\+Options}}$<$ MatsT $>$ mod, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a04c700d836d8546a46d184933f7bb696}{$\sim$\+Conventional\+SCF}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a1e7b565d010d5bef616df601c5b73f22}{get\+New\+Orbitals}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, \mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{Vec\+MORef}}$<$ MatsT $>$ \&, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{Vec\+EPtr}} \&)
+\begin{DoxyCompactList}\small\item\em Obtain a new set of orbitals given a Fock matrix. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ad2b6dac9d331592e27336f2c3b2782f2}{print\+Run\+Header}} (std\+::ostream \&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&) const
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a8780278352da9d3c4888686abd174f58}{ao2ortho\+Fock}} (\mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{Vec\+Shrd\+Ptr\+Mat}}$<$ MatsT $>$ fock=\{\})
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_adb62e152c4da7bb3095e062ae1ecaafe}{ao2ortho\+Den}} (\mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{Vec\+Shrd\+Ptr\+Mat}}$<$ MatsT $>$ den=\{\})
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ab3cb5e07915cd6c4a5a53654be56c940}{ortho2ao\+MOs}} (\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{Vec\+MORef}}$<$ MatsT $>$ \&)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a9356ec9a5e1762be0488e093b8078906}{alloc\+Extrap\+Storage}} ()
+\begin{DoxyCompactList}\small\item\em Allocates storage for different extrapolation approaches to SCF. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ae7b2e7d4a5d00545297bbc533935454f}{diag\+Ortho\+Fock}} (\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{Vec\+MORef}}$<$ MatsT $>$ \&, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{Vec\+EPtr}} \&)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a62544a327c861c3a1c1e9b67463e2be1}{modify\+Fock}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&)
+\begin{DoxyCompactList}\small\item\em Control routine for \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} and damping for SCF. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a2257f6458ceefd1e089e42ca3a7677cc}{fock\+Damping}} ()
+\begin{DoxyCompactList}\small\item\em Static Fock Damping routine. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_aa7cb069220bda93cab0cb6b8e5d345eb}{scf\+CDIIS}} (size\+\_\+t, size\+\_\+t)
+\begin{DoxyCompactList}\small\item\em Commutator \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a3db7008d82f135fe89929d801c6f462d}{scf\+EDIIS}} (size\+\_\+t, size\+\_\+t, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&)
+\begin{DoxyCompactList}\small\item\em Energy \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a7dd691cd81eb08c6dae714f719f42b94}{scf\+CEDIIS}} (size\+\_\+t, size\+\_\+t, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_aea52eed4d12b45382fb6a022c38bb240}{ediis\+Error\+Metric}} (size\+\_\+t, size\+\_\+t)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a77cc120a9d9a8bcce2947c15036bcfc6}{diis\+Combine\+Mat}} (std\+::vector$<$ MatsT $>$, size\+\_\+t)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a56fa77cae387401c2c7c47cc54fa6080}{compute\+Orb\+Gradient}} (std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ \&)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a122d0114e75c76a9c5de8eabb43c3364}{FDCommutator}} (std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ \&)
+\begin{DoxyCompactList}\small\item\em Form the orthonormal \mbox{[}F,D\mbox{]} commutator and store in diis\+Error. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a169da6e13b79a2764f67b65dfd19a4c5}{compute\+FDCConv}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a42db9b453d8721902f5b3bce9cf0c093}{fock\+Matrix\+Ortho}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_af6a23272e0492be5b3306a9095c154ed}{one\+PDMOrtho}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_aba7dc05a9366a95cddc525227e39ccf3}{orb\+Grad}}
+\item 
+std\+::vector$<$ std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a96d54f54c441212fc316169d8cd06243}{diis\+Fock}}
+\begin{DoxyCompactList}\small\item\em List of AO Fock matrices for \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} extrap. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a78f5ea142760c2914a03f942f5253c13}{diis\+One\+PDM}}
+\begin{DoxyCompactList}\small\item\em List of AO Density matrices for \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} extrap. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a8bde639a7e273c6a46cdace88d296349}{diis\+Error}}
+\begin{DoxyCompactList}\small\item\em List of orthonormal \mbox{[}F,D\mbox{]} for \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} extrap. \end{DoxyCompactList}\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_abff248d370077557c3697fed1f342f88}{diis\+Energy}}
+\begin{DoxyCompactList}\small\item\em List of energies for EDIIS. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ double $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_aea7337d8ab6c4efb87056a388472cf07}{diis\+BMat}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a3181cae01d5f531345eee9caff629b26}{prev\+Fock}}
+\begin{DoxyCompactList}\small\item\em AO Fock from the previous SCF iteration. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ac51668937ce7daa4ef193e87ae2711f8}{prev\+One\+PDM}}
+\begin{DoxyCompactList}\small\item\em AO Density from the previous SCF iteration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_ac30d4cd9614b85b4e8138639e2b559e6}\label{classChronusQ_1_1ConventionalSCF_ac30d4cd9614b85b4e8138639e2b559e6}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!ConventionalSCF@{ConventionalSCF}}
+\index{ConventionalSCF@{ConventionalSCF}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{ConventionalSCF()}{ConventionalSCF()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::\+Conventional\+SCF (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_ab916bae58b234db49f0769ee6198bbea}\label{classChronusQ_1_1ConventionalSCF_ab916bae58b234db49f0769ee6198bbea}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!ConventionalSCF@{ConventionalSCF}}
+\index{ConventionalSCF@{ConventionalSCF}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{ConventionalSCF()}{ConventionalSCF()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::\+Conventional\+SCF (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1SCFControls}{SCFControls}}}]{sC,  }\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{comm,  }\item[{\mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Modify\+Orbitals\+Options}}$<$ MatsT $>$}]{mod,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ConventionalSCF_ab916bae58b234db49f0769ee6198bbea_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a04c700d836d8546a46d184933f7bb696}\label{classChronusQ_1_1ConventionalSCF_a04c700d836d8546a46d184933f7bb696}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!````~ConventionalSCF@{$\sim$ConventionalSCF}}
+\index{````~ConventionalSCF@{$\sim$ConventionalSCF}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$ConventionalSCF()}{~ConventionalSCF()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::$\sim$\mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Conventional\+SCF}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a9356ec9a5e1762be0488e093b8078906}\label{classChronusQ_1_1ConventionalSCF_a9356ec9a5e1762be0488e093b8078906}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!allocExtrapStorage@{allocExtrapStorage}}
+\index{allocExtrapStorage@{allocExtrapStorage}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{allocExtrapStorage()}{allocExtrapStorage()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::alloc\+Extrap\+Storage}
+
+
+
+Allocates storage for different extrapolation approaches to SCF. 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ConventionalSCF_a9356ec9a5e1762be0488e093b8078906_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_adb62e152c4da7bb3095e062ae1ecaafe}\label{classChronusQ_1_1ConventionalSCF_adb62e152c4da7bb3095e062ae1ecaafe}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!ao2orthoDen@{ao2orthoDen}}
+\index{ao2orthoDen@{ao2orthoDen}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{ao2orthoDen()}{ao2orthoDen()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::ao2ortho\+Den (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{Vec\+Shrd\+Ptr\+Mat}}$<$ MatsT $>$}]{den = {\ttfamily \{\}} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a8780278352da9d3c4888686abd174f58}\label{classChronusQ_1_1ConventionalSCF_a8780278352da9d3c4888686abd174f58}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!ao2orthoFock@{ao2orthoFock}}
+\index{ao2orthoFock@{ao2orthoFock}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{ao2orthoFock()}{ao2orthoFock()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::ao2ortho\+Fock (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{Vec\+Shrd\+Ptr\+Mat}}$<$ MatsT $>$}]{fock = {\ttfamily \{\}} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a169da6e13b79a2764f67b65dfd19a4c5}\label{classChronusQ_1_1ConventionalSCF_a169da6e13b79a2764f67b65dfd19a4c5}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!computeFDCConv@{computeFDCConv}}
+\index{computeFDCConv@{computeFDCConv}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeFDCConv()}{computeFDCConv()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::compute\+FDCConv\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a12721b322a76a804f8198e54f04542ff}{Chronus\+Q\+::\+Optimize\+Orbitals$<$ Mats\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a56fa77cae387401c2c7c47cc54fa6080}\label{classChronusQ_1_1ConventionalSCF_a56fa77cae387401c2c7c47cc54fa6080}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!computeOrbGradient@{computeOrbGradient}}
+\index{computeOrbGradient@{computeOrbGradient}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeOrbGradient()}{computeOrbGradient()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::compute\+Orb\+Gradient (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ \&}]{grad }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_ae7b2e7d4a5d00545297bbc533935454f}\label{classChronusQ_1_1ConventionalSCF_ae7b2e7d4a5d00545297bbc533935454f}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!diagOrthoFock@{diagOrthoFock}}
+\index{diagOrthoFock@{diagOrthoFock}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{diagOrthoFock()}{diagOrthoFock()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::diag\+Ortho\+Fock (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{Vec\+MORef}}$<$ MatsT $>$ \&}]{mo,  }\item[{\mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{Vec\+EPtr}} \&}]{eps }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ConventionalSCF_ae7b2e7d4a5d00545297bbc533935454f_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a77cc120a9d9a8bcce2947c15036bcfc6}\label{classChronusQ_1_1ConventionalSCF_a77cc120a9d9a8bcce2947c15036bcfc6}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!diisCombineMat@{diisCombineMat}}
+\index{diisCombineMat@{diisCombineMat}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{diisCombineMat()}{diisCombineMat()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::diis\+Combine\+Mat (\begin{DoxyParamCaption}\item[{std\+::vector$<$ MatsT $>$}]{c,  }\item[{size\+\_\+t}]{n\+Extrap }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_aea52eed4d12b45382fb6a022c38bb240}\label{classChronusQ_1_1ConventionalSCF_aea52eed4d12b45382fb6a022c38bb240}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!ediisErrorMetric@{ediisErrorMetric}}
+\index{ediisErrorMetric@{ediisErrorMetric}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{ediisErrorMetric()}{ediisErrorMetric()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::ediis\+Error\+Metric (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{i\+DIIS,  }\item[{size\+\_\+t}]{n\+Extrap }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ConventionalSCF_aea52eed4d12b45382fb6a022c38bb240_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a122d0114e75c76a9c5de8eabb43c3364}\label{classChronusQ_1_1ConventionalSCF_a122d0114e75c76a9c5de8eabb43c3364}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!FDCommutator@{FDCommutator}}
+\index{FDCommutator@{FDCommutator}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{FDCommutator()}{FDCommutator()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::\+FDCommutator (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ \&}]{FDC }\end{DoxyParamCaption})}
+
+
+
+Form the orthonormal \mbox{[}F,D\mbox{]} commutator and store in diis\+Error. 
+
+The commutator is formed using FD and its adjoint \mbox{[}F,D\mbox{]} = FD -\/ Adj(\+FD)
+
+TODO\+: This routine only works for R/\+UHF right now Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ConventionalSCF_a122d0114e75c76a9c5de8eabb43c3364_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a2257f6458ceefd1e089e42ca3a7677cc}\label{classChronusQ_1_1ConventionalSCF_a2257f6458ceefd1e089e42ca3a7677cc}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!fockDamping@{fockDamping}}
+\index{fockDamping@{fockDamping}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{fockDamping()}{fockDamping()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::fock\+Damping}
+
+
+
+Static Fock Damping routine. 
+
+F$^\wedge$k = (1-\/dp)$\ast$\+F$^\wedge$k + dp$\ast$\+F$^\wedge$\{k-\/1\} \mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a1e7b565d010d5bef616df601c5b73f22}\label{classChronusQ_1_1ConventionalSCF_a1e7b565d010d5bef616df601c5b73f22}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!getNewOrbitals@{getNewOrbitals}}
+\index{getNewOrbitals@{getNewOrbitals}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{getNewOrbitals()}{getNewOrbitals()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::get\+New\+Orbitals (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{Vec\+MORef}}$<$ MatsT $>$ \&}]{mo,  }\item[{\mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{Vec\+EPtr}} \&}]{eps }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Obtain a new set of orbitals given a Fock matrix. 
+
+Currently implements the fixed-\/point SCF procedure. 
+
+Implements \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4839e2ba3f88b13f1ebcbf10aa1f2438}{Chronus\+Q\+::\+Modify\+Orbitals$<$ Mats\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ConventionalSCF_a1e7b565d010d5bef616df601c5b73f22_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a62544a327c861c3a1c1e9b67463e2be1}\label{classChronusQ_1_1ConventionalSCF_a62544a327c861c3a1c1e9b67463e2be1}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!modifyFock@{modifyFock}}
+\index{modifyFock@{modifyFock}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{modifyFock()}{modifyFock()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::modify\+Fock (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert }\end{DoxyParamCaption})}
+
+
+
+Control routine for \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} and damping for SCF. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ConventionalSCF_a62544a327c861c3a1c1e9b67463e2be1_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_ab3cb5e07915cd6c4a5a53654be56c940}\label{classChronusQ_1_1ConventionalSCF_ab3cb5e07915cd6c4a5a53654be56c940}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!ortho2aoMOs@{ortho2aoMOs}}
+\index{ortho2aoMOs@{ortho2aoMOs}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{ortho2aoMOs()}{ortho2aoMOs()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::ortho2ao\+MOs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{Vec\+MORef}}$<$ MatsT $>$ \&}]{mo }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_ad2b6dac9d331592e27336f2c3b2782f2}\label{classChronusQ_1_1ConventionalSCF_ad2b6dac9d331592e27336f2c3b2782f2}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!printRunHeader@{printRunHeader}}
+\index{printRunHeader@{printRunHeader}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{printRunHeader()}{printRunHeader()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::print\+Run\+Header (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a04a078bad24116b35f46876a911e0a74}{Chronus\+Q\+::\+Modify\+Orbitals$<$ Mats\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ConventionalSCF_ad2b6dac9d331592e27336f2c3b2782f2_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ConventionalSCF_ad2b6dac9d331592e27336f2c3b2782f2_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_aa7cb069220bda93cab0cb6b8e5d345eb}\label{classChronusQ_1_1ConventionalSCF_aa7cb069220bda93cab0cb6b8e5d345eb}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!scfCDIIS@{scfCDIIS}}
+\index{scfCDIIS@{scfCDIIS}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{scfCDIIS()}{scfCDIIS()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::scf\+CDIIS (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n\+Extrap,  }\item[{size\+\_\+t}]{i\+DIIS }\end{DoxyParamCaption})}
+
+
+
+Commutator \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}}. 
+
+Saves the AO fock and density matrices, evaluates the \mbox{[}F,D\mbox{]} commutator and uses this to extrapolate the Fock and density. Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ConventionalSCF_aa7cb069220bda93cab0cb6b8e5d345eb_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a7dd691cd81eb08c6dae714f719f42b94}\label{classChronusQ_1_1ConventionalSCF_a7dd691cd81eb08c6dae714f719f42b94}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!scfCEDIIS@{scfCEDIIS}}
+\index{scfCEDIIS@{scfCEDIIS}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{scfCEDIIS()}{scfCEDIIS()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::scf\+CEDIIS (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n\+Extrap,  }\item[{size\+\_\+t}]{i\+DIIS,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ConventionalSCF_a7dd691cd81eb08c6dae714f719f42b94_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a3db7008d82f135fe89929d801c6f462d}\label{classChronusQ_1_1ConventionalSCF_a3db7008d82f135fe89929d801c6f462d}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!scfEDIIS@{scfEDIIS}}
+\index{scfEDIIS@{scfEDIIS}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{scfEDIIS()}{scfEDIIS()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::scf\+EDIIS (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n\+Extrap,  }\item[{size\+\_\+t}]{i\+DIIS,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert }\end{DoxyParamCaption})}
+
+
+
+Energy \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}}. 
+
+Evaluates the EDIIS error metric and uses this to interpolate the Fock and density matrices. Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ConventionalSCF_a3db7008d82f135fe89929d801c6f462d_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_aea7337d8ab6c4efb87056a388472cf07}\label{classChronusQ_1_1ConventionalSCF_aea7337d8ab6c4efb87056a388472cf07}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!diisBMat@{diisBMat}}
+\index{diisBMat@{diisBMat}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{diisBMat}{diisBMat}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$double$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::diis\+BMat\hspace{0.3cm}{\ttfamily [protected]}}
+
+Matrix of couplings between EDIIS elements diis\+BMat needs to be a shared\+\_\+ptr because there is no resize/default constructor for \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}. \mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_abff248d370077557c3697fed1f342f88}\label{classChronusQ_1_1ConventionalSCF_abff248d370077557c3697fed1f342f88}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!diisEnergy@{diisEnergy}}
+\index{diisEnergy@{diisEnergy}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{diisEnergy}{diisEnergy}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::vector$<$double$>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::diis\+Energy\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+List of energies for EDIIS. 
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a8bde639a7e273c6a46cdace88d296349}\label{classChronusQ_1_1ConventionalSCF_a8bde639a7e273c6a46cdace88d296349}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!diisError@{diisError}}
+\index{diisError@{diisError}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{diisError}{diisError}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::vector$<$std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$MatsT$>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::diis\+Error\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+List of orthonormal \mbox{[}F,D\mbox{]} for \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} extrap. 
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a96d54f54c441212fc316169d8cd06243}\label{classChronusQ_1_1ConventionalSCF_a96d54f54c441212fc316169d8cd06243}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!diisFock@{diisFock}}
+\index{diisFock@{diisFock}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{diisFock}{diisFock}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::vector$<$std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$MatsT$>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::diis\+Fock\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+List of AO Fock matrices for \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} extrap. 
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a78f5ea142760c2914a03f942f5253c13}\label{classChronusQ_1_1ConventionalSCF_a78f5ea142760c2914a03f942f5253c13}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!diisOnePDM@{diisOnePDM}}
+\index{diisOnePDM@{diisOnePDM}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{diisOnePDM}{diisOnePDM}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::vector$<$std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$MatsT$>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::diis\+One\+PDM\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+List of AO Density matrices for \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} extrap. 
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a42db9b453d8721902f5b3bce9cf0c093}\label{classChronusQ_1_1ConventionalSCF_a42db9b453d8721902f5b3bce9cf0c093}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!fockMatrixOrtho@{fockMatrixOrtho}}
+\index{fockMatrixOrtho@{fockMatrixOrtho}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{fockMatrixOrtho}{fockMatrixOrtho}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$MatsT$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::fock\+Matrix\+Ortho\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_af6a23272e0492be5b3306a9095c154ed}\label{classChronusQ_1_1ConventionalSCF_af6a23272e0492be5b3306a9095c154ed}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!onePDMOrtho@{onePDMOrtho}}
+\index{onePDMOrtho@{onePDMOrtho}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{onePDMOrtho}{onePDMOrtho}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$MatsT$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::one\+PDMOrtho\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_aba7dc05a9366a95cddc525227e39ccf3}\label{classChronusQ_1_1ConventionalSCF_aba7dc05a9366a95cddc525227e39ccf3}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!orbGrad@{orbGrad}}
+\index{orbGrad@{orbGrad}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{orbGrad}{orbGrad}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$MatsT$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::orb\+Grad\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_a3181cae01d5f531345eee9caff629b26}\label{classChronusQ_1_1ConventionalSCF_a3181cae01d5f531345eee9caff629b26}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!prevFock@{prevFock}}
+\index{prevFock@{prevFock}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{prevFock}{prevFock}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$MatsT$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::prev\+Fock\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+AO Fock from the previous SCF iteration. 
+
+\mbox{\Hypertarget{classChronusQ_1_1ConventionalSCF_ac51668937ce7daa4ef193e87ae2711f8}\label{classChronusQ_1_1ConventionalSCF_ac51668937ce7daa4ef193e87ae2711f8}} 
+\index{ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}!prevOnePDM@{prevOnePDM}}
+\index{prevOnePDM@{prevOnePDM}!ChronusQ::ConventionalSCF$<$ MatsT $>$@{ChronusQ::ConventionalSCF$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{prevOnePDM}{prevOnePDM}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$MatsT$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Chronus\+Q\+::\+Conventional\+SCF}}$<$ MatsT $>$\+::prev\+One\+PDM\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+AO Density from the previous SCF iteration. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/modifyorbitals/\mbox{\hyperlink{conventionalSCF_8hpp}{conventional\+SCF.\+hpp}}\item 
+include/modifyorbitals/conventional\+SCF/\mbox{\hyperlink{modifyorbitals_2conventionalSCF_2extrap_8hpp}{extrap.\+hpp}}\item 
+include/modifyorbitals/conventional\+SCF/\mbox{\hyperlink{modifyorbitals_2conventionalSCF_2impl_8hpp}{impl.\+hpp}}\end{DoxyCompactItemize}

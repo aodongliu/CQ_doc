@@ -1,0 +1,153 @@
+\hypertarget{modifyorbitals_2conventionalSCF_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{modifyorbitals_2conventionalSCF_2impl_8hpp_source}\index{include/modifyorbitals/conventionalSCF/impl.hpp@{include/modifyorbitals/conventionalSCF/impl.hpp}}
+\mbox{\hyperlink{modifyorbitals_2conventionalSCF_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{modifyorbitals_2conventionalSCF_2extrap_8hpp}{modifyorbitals/conventionalSCF/extrap.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{35 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{36 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a1e7b565d010d5bef616df601c5b73f22}{ConventionalSCF<MatsT>::getNewOrbitals}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert, \mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\& mo,}
+\DoxyCodeLine{37                                             \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}}\& eps) \{}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39   \textcolor{comment}{// Form the Fock matrix D(k) -\/> F(k)}}
+\DoxyCodeLine{40   \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9698b57cd81ca4095a7668b46683eb71}{ProgramTimer::timeOp}}(\textcolor{stringliteral}{"{}Form Fock"{}}, [\&]() \{ this-\/>modOrbOpt.formFock(pert); \});}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42   \textcolor{comment}{// Transform AO fock into the orthonormal basis (on root MPI process)}}
+\DoxyCodeLine{43   ao2orthoFock();}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45   \textcolor{comment}{// Compute the orbital gradient for convergence tests and DIIS}}
+\DoxyCodeLine{46   computeOrbGradient(orbGrad);}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48   \textcolor{comment}{// Modify fock matrix if requested (on root MPI process)}}
+\DoxyCodeLine{49   \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.doExtrap ) modifyFock(pert);}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51   \textcolor{comment}{// Diagonalize the orthonormal fock Matrix (on root MPI process)}}
+\DoxyCodeLine{52   diagOrthoFock(mo, eps);}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54   ortho2aoMOs(mo);}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56   this-\/>modOrbOpt.formDensity();}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 \};   \textcolor{comment}{// NewtonRaphsonSCF<MatsT,IntsT>::getNewOrbitals}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{61 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a8780278352da9d3c4888686abd174f58}{ConventionalSCF<MatsT>::ao2orthoFock}}(\mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} fock) \{}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63   \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(this-\/>comm);}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65   \textcolor{keywordflow}{if}( fock.empty() ) fock = this-\/>modOrbOpt.getFock();}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67   \mbox{\hyperlink{namespaceChronusQ_a71ad93b60c8da083001c53826c18cbdc}{VecShrdPtrOrtho<MatsT>}} ortho = this-\/>modOrbOpt.getOrtho();}
+\DoxyCodeLine{68   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i = 0; i < fock.size(); i++ ) \{}
+\DoxyCodeLine{69     \textcolor{keywordflow}{if}( ortho[i]-\/>hasOverlap() ) \{}
+\DoxyCodeLine{70       fockMatrixOrtho[i] = ortho[i]-\/>nonortho2ortho(*fock[i]);}
+\DoxyCodeLine{71     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{72       fockMatrixOrtho[i] = *(fock[i]);}
+\DoxyCodeLine{73     \}}
+\DoxyCodeLine{74   \}}
+\DoxyCodeLine{75 \};}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{78 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_adb62e152c4da7bb3095e062ae1ecaafe}{ConventionalSCF<MatsT>::ao2orthoDen}}(\mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} den) \{}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80   \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(this-\/>comm);}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82   \textcolor{keywordflow}{if}( den.empty() ) den = this-\/>modOrbOpt.getOnePDM();}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84   \mbox{\hyperlink{namespaceChronusQ_a71ad93b60c8da083001c53826c18cbdc}{VecShrdPtrOrtho<MatsT>}} ortho = this-\/>modOrbOpt.getOrtho();}
+\DoxyCodeLine{85   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i = 0; i < den.size(); i++ ) \{}
+\DoxyCodeLine{86     \textcolor{keywordflow}{if}( ortho[i]-\/>hasOverlap() ) \{}
+\DoxyCodeLine{87       onePDMOrtho[i] = ortho[i]-\/>ortho2nonortho(*den[i]);}
+\DoxyCodeLine{88     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{89       onePDMOrtho[i] = *(den[i]);}
+\DoxyCodeLine{90     \}}
+\DoxyCodeLine{91   \}}
+\DoxyCodeLine{92 \};}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{95 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ae7b2e7d4a5d00545297bbc533935454f}{ConventionalSCF<MatsT>::diagOrthoFock}}(\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\& mo, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}}\& eps) \{}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97   \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(this-\/>comm);}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i = 0; i < mo.size(); i++ ) \{}
+\DoxyCodeLine{100     \textcolor{keywordtype}{size\_t} NB = mo[i].get().dimension();}
+\DoxyCodeLine{101     \textcolor{keywordflow}{if}( NB != fockMatrixOrtho[i].dimension() ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Ortho Fock and MO dimensions do not match"{}});}
+\DoxyCodeLine{102     std::copy\_n(fockMatrixOrtho[i].pointer(),NB*NB,mo[i].get().pointer());}
+\DoxyCodeLine{103     \textcolor{keywordtype}{int} INFO  = \mbox{\hyperlink{namespaceChronusQ_a1153a882d53ef1052da6ede1f8fba24b}{HermetianEigen}}(\textcolor{charliteral}{'V'}, \textcolor{charliteral}{'L'}, NB, mo[i].get().pointer(), NB, eps[i], this-\/>memManager);}
+\DoxyCodeLine{104     \textcolor{keywordflow}{if}( INFO != 0 ) \{}
+\DoxyCodeLine{105       std::cout << \textcolor{stringliteral}{"{}Attempted to diagonalize "{}} << i << \textcolor{stringliteral}{"{}th Fock Matrix"{}} << std::endl;}
+\DoxyCodeLine{106       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}HermetianEigen failed in Fock"{}}, std::cout);}
+\DoxyCodeLine{107     \}}
+\DoxyCodeLine{108   \}}
+\DoxyCodeLine{109 \}}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{112 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ab3cb5e07915cd6c4a5a53654be56c940}{ConventionalSCF<MatsT>::ortho2aoMOs}}(\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\& mo) \{}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114   \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(this-\/>comm);}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116   \mbox{\hyperlink{namespaceChronusQ_a71ad93b60c8da083001c53826c18cbdc}{VecShrdPtrOrtho<MatsT>}} ortho = this-\/>modOrbOpt.getOrtho();}
+\DoxyCodeLine{117   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i = 0; i < mo.size(); i++ ) \{}
+\DoxyCodeLine{118     \textcolor{keywordflow}{if}( ortho[i]-\/>hasOverlap() ) \{ ortho[i]-\/>ortho2nonorthoCoeffs(mo[i]); \}}
+\DoxyCodeLine{119   \}}
+\DoxyCodeLine{120 \}}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{123 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_ad2b6dac9d331592e27336f2c3b2782f2}{ConventionalSCF<MatsT>::printRunHeader}}(std::ostream\& out, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{124   \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a682c902ef78a1e67340a4ccb76a6f6c3}{OptimizeOrbitals<MatsT>::printRunHeader}}(out, pert);}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126   \textcolor{comment}{// Print DIIS Algorithm info}}
+\DoxyCodeLine{127   \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.doExtrap ) \{}
+\DoxyCodeLine{128     \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.doDamp ) \{}
+\DoxyCodeLine{129       out << std::setw(38) << std::left << \textcolor{stringliteral}{"{}  Static Damping Factor:"{}} << this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.dampParam << std::endl;}
+\DoxyCodeLine{130       out << std::setw(38) << std::left << \textcolor{stringliteral}{"{}  Damping Error:"{}} << this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.dampError << std::endl;}
+\DoxyCodeLine{131     \}}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133     \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.diisAlg != \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1a21b39feca0ff31393cbb148d973d5877}{NONE}} ) \{}
+\DoxyCodeLine{134       out << std::setw(38) << std::left << \textcolor{stringliteral}{"{}  DIIS Extrapolation Algorithm:"{}};}
+\DoxyCodeLine{135       \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.diisAlg == \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1af6a9d2066f566205f25fed675e09b5eb}{CDIIS}} ) out << \textcolor{stringliteral}{"{}CDIIS"{}};}
+\DoxyCodeLine{136       \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.diisAlg == \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1a6137206dda2774d075f65718060b25e3}{EDIIS}} ) out << \textcolor{stringliteral}{"{}EDIIS"{}};}
+\DoxyCodeLine{137       \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.diisAlg == \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1addd669d250447f4c8ee2479af495cc1c}{CEDIIS}} ) out << \textcolor{stringliteral}{"{}CEDIIS"{}};}
+\DoxyCodeLine{138       out << std::endl;}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140       \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.diisAlg == \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1addd669d250447f4c8ee2479af495cc1c}{CEDIIS}} ) \{}
+\DoxyCodeLine{141         out << std::left << \textcolor{stringliteral}{"{}    * CDIIS will track up to "{}} << this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nKeep << \textcolor{stringliteral}{"{} previous iterations"{}} << std::endl;}
+\DoxyCodeLine{142         out << std::left << \textcolor{stringliteral}{"{}    * EDIIS will track up to "{}} << this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nKeep << \textcolor{stringliteral}{"{} previous iterations"{}} << std::endl;}
+\DoxyCodeLine{143         out << std::left << \textcolor{stringliteral}{"{}    * will switch at "{}} << std::fixed << std::setprecision(8) << this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.cediisSwitch << \textcolor{stringliteral}{"{} for max([F,D])"{}}}
+\DoxyCodeLine{144             << std::endl;}
+\DoxyCodeLine{145       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{146         out << std::left << \textcolor{stringliteral}{"{}    * DIIS will track up to "{}} << this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nKeep << \textcolor{stringliteral}{"{} previous iterations"{}} << std::endl;}
+\DoxyCodeLine{147       \}}
+\DoxyCodeLine{148     \}}
+\DoxyCodeLine{149   \}}
+\DoxyCodeLine{150 \};}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152 \};   \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

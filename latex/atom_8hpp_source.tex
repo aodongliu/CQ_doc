@@ -1,0 +1,781 @@
+\hypertarget{atom_8hpp_source}{}\doxysection{atom.\+hpp}
+\label{atom_8hpp_source}\index{include/atom.hpp@{include/atom.hpp}}
+\mbox{\hyperlink{atom_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{35   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}} \{}
+\DoxyCodeLine{36     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1Atom_ac304c587a6eff864371d8d2d7558b13f}{atomicNumber}}; }
+\DoxyCodeLine{37     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1Atom_a87b7e112d2ff5c838d6a623b9f7e3b32}{nucCharge}};    }
+\DoxyCodeLine{38     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1Atom_a0cb414a7101e055643f013ebf56fca12}{massNumber}};   }
+\DoxyCodeLine{39     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1Atom_a0619d9b84e1d125cd146fbb59aebe1d2}{atomicMass}};   }
+\DoxyCodeLine{40     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1Atom_a3c49f5d7308f48049dcb7bfd7bbd2ffb}{slaterRadius}}; }
+\DoxyCodeLine{41     \textcolor{keywordtype}{bool}   \mbox{\hyperlink{structChronusQ_1_1Atom_a240cab247b1cbb9358f193078eddcc52}{quantum}};      }
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     std::array<double,3> \mbox{\hyperlink{structChronusQ_1_1Atom_a523cfb92fd227059becf5360535813ea}{coord}}; }
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     std::array<double,3> \mbox{\hyperlink{structChronusQ_1_1Atom_a369e005fe4f9df468be89619a6db590b}{velocity}}\{\{0.,0.,0.\}\}; }
+\DoxyCodeLine{46     std::array<double,3> \mbox{\hyperlink{structChronusQ_1_1Atom_a0486aafb2ebb47d59bb5f0b8dfb306d1}{force}}\{\{0.,0.,0.\}\};    }
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48 }
+\DoxyCodeLine{60     \mbox{\hyperlink{structChronusQ_1_1Atom_a6b4a5cb4895f7b666e5b423f271ea4c6}{Atom}}(\textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} AN = 0, \textcolor{keyword}{const} \textcolor{keywordtype}{double} NC = 0., \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MN = 0,}
+\DoxyCodeLine{61       \textcolor{keyword}{const} \textcolor{keywordtype}{double} MASS = 0., \textcolor{keyword}{const} \textcolor{keywordtype}{double} RAD = 0.,}
+\DoxyCodeLine{62       std::array<double,3> XYZ = \{0.,0.,0.\}, \textcolor{keywordtype}{bool} Q = \textcolor{keyword}{false}) :}
+\DoxyCodeLine{63       \mbox{\hyperlink{structChronusQ_1_1Atom_ac304c587a6eff864371d8d2d7558b13f}{atomicNumber}}(AN), \mbox{\hyperlink{structChronusQ_1_1Atom_a87b7e112d2ff5c838d6a623b9f7e3b32}{nucCharge}}(NC), \mbox{\hyperlink{structChronusQ_1_1Atom_a0cb414a7101e055643f013ebf56fca12}{massNumber}}(MN), \mbox{\hyperlink{structChronusQ_1_1Atom_a0619d9b84e1d125cd146fbb59aebe1d2}{atomicMass}}(MASS),}
+\DoxyCodeLine{64       \mbox{\hyperlink{structChronusQ_1_1Atom_a3c49f5d7308f48049dcb7bfd7bbd2ffb}{slaterRadius}}(RAD), \mbox{\hyperlink{structChronusQ_1_1Atom_a523cfb92fd227059becf5360535813ea}{coord}}(std::move(XYZ)), }
+\DoxyCodeLine{65       \mbox{\hyperlink{structChronusQ_1_1Atom_a240cab247b1cbb9358f193078eddcc52}{quantum}}(Q) \{ \};}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{80     \mbox{\hyperlink{structChronusQ_1_1Atom_a09f8ff1d509d7c00ffcdbae432645b55}{Atom}}(\textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} AN, \textcolor{keyword}{const} \textcolor{keywordtype}{double} NC, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MN,}
+\DoxyCodeLine{81       \textcolor{keyword}{const} \textcolor{keywordtype}{double} MASS, \textcolor{keyword}{const} \textcolor{keywordtype}{double} RAD, \textcolor{keywordtype}{double} X, \textcolor{keywordtype}{double} Y, \textcolor{keywordtype}{double} Z, \textcolor{keywordtype}{bool} Q = \textcolor{keyword}{false}) :}
+\DoxyCodeLine{82       \mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}}(AN,NC,MN,MASS,RAD,\{\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}},\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa57cec4137b614c87cb4e24a3d003a3e0}{Y}},\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa21c2e59531c8710156d34a3c30ac81d5}{Z}}\},Q)\{ \};}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{90     \mbox{\hyperlink{structChronusQ_1_1Atom_a6b4a5cb4895f7b666e5b423f271ea4c6}{Atom}}(std::string symb, std::array<double,3> XYZ);}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{100     \mbox{\hyperlink{structChronusQ_1_1Atom_ac5783f624d662580a0a7a24c05129da2}{Atom}}(std::string symb, \textcolor{keywordtype}{double} X = 0., \textcolor{keywordtype}{double} Y = 0., \textcolor{keywordtype}{double} Z = 0.) :}
+\DoxyCodeLine{101       \mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}}(symb,\{\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}},\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa57cec4137b614c87cb4e24a3d003a3e0}{Y}},\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa21c2e59531c8710156d34a3c30ac81d5}{Z}}\})\{ \};}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104 }
+\DoxyCodeLine{110     \mbox{\hyperlink{structChronusQ_1_1Atom_a8ecaa03e5ad51578e7bdf33e850a6fde}{Atom}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{117     \mbox{\hyperlink{structChronusQ_1_1Atom_abb9f4a45e4faa7747655af37ab73713e}{Atom}}(\mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}} \&\&)      = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119 }
+\DoxyCodeLine{125     \mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}}\& \mbox{\hyperlink{structChronusQ_1_1Atom_ac2b789fa1cb9f6ab4861689bf896012d}{operator=}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{132     \mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}}\& \mbox{\hyperlink{structChronusQ_1_1Atom_a8df8079c0c3498288f6eaecb5e32c9b0}{operator=}}(\mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}} \&\&)      = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{137     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1Atom_a0d811c87d64dba9b7a67356cc1a37ab4}{fractionalNucCharge}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{138       \textcolor{keywordflow}{return} std::fabs(\mbox{\hyperlink{structChronusQ_1_1Atom_a87b7e112d2ff5c838d6a623b9f7e3b32}{nucCharge}} -\/ std::round(\mbox{\hyperlink{structChronusQ_1_1Atom_a87b7e112d2ff5c838d6a623b9f7e3b32}{nucCharge}}))}
+\DoxyCodeLine{139           > std::numeric\_limits<double>::epsilon();}
+\DoxyCodeLine{140     \}}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{145     \textcolor{keywordtype}{int} \mbox{\hyperlink{structChronusQ_1_1Atom_a5b35bed82b41f66fb94a8c657c000b80}{integerNucCharge}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{146       \textcolor{keywordflow}{return} std::lround(\mbox{\hyperlink{structChronusQ_1_1Atom_a87b7e112d2ff5c838d6a623b9f7e3b32}{nucCharge}});}
+\DoxyCodeLine{147     \}}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149   \}; \textcolor{comment}{// Atom struct}}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152   \textcolor{comment}{// Map atomic symbol to predefined Atom objects. Support}}
+\DoxyCodeLine{153   \textcolor{comment}{// for non-\/standard isotopes forthcoming}}
+\DoxyCodeLine{154   \textcolor{comment}{//}}
+\DoxyCodeLine{155   \textcolor{comment}{// Last values: Atomic Radius (in Ang). According Slater, J. Chem. Phys. 41, pg 3199 (1964).}}
+\DoxyCodeLine{156   \textcolor{comment}{// Note for Hydrogen is already multiplied by 2 (to prevent the scaling later on) }}
+\DoxyCodeLine{157   \textcolor{comment}{// all noble gasses values are computed values from Reinhardt J. Chem. Phys. 47, pg 1300 (1967)}}
+\DoxyCodeLine{158   \textcolor{comment}{// after Am all set to 2.01 (Ang)}}
+\DoxyCodeLine{159   \textcolor{comment}{// FIXME: Need to specify isotope label for non-\/default isotopes}}
+\DoxyCodeLine{160   \textcolor{keyword}{static} std::map<std::string,Atom> \mbox{\hyperlink{namespaceChronusQ_a75ec1b57ce29641740d7e737070defc9}{atomicReference}}(}
+\DoxyCodeLine{161     \{}
+\DoxyCodeLine{162       \{ \textcolor{stringliteral}{"{}H-\/1"{}}      , \{   1  ,   1.  ,   1  ,   1.0078250321  ,   1.058  \} \},}
+\DoxyCodeLine{163       \{ \textcolor{stringliteral}{"{}H-\/2"{}}      , \{   1  ,   1.  ,   2  ,   2.0141017780  ,   1.058  \} \},}
+\DoxyCodeLine{164       \{ \textcolor{stringliteral}{"{}H-\/3"{}}      , \{   1  ,   1.  ,   3  ,   3.0160492675  ,   1.058  \} \},}
+\DoxyCodeLine{165       \{ \textcolor{stringliteral}{"{}HE-\/3"{}}     , \{   2  ,   2.  ,   3  ,   3.0160293097  ,   0.310  \} \},}
+\DoxyCodeLine{166       \{ \textcolor{stringliteral}{"{}HE-\/4"{}}     , \{   2  ,   2.  ,   4  ,   4.0026032497  ,   0.310  \} \},}
+\DoxyCodeLine{167       \{ \textcolor{stringliteral}{"{}LI-\/6"{}}     , \{   3  ,   3.  ,   6  ,   6.0151223     ,   1.450  \} \},}
+\DoxyCodeLine{168       \{ \textcolor{stringliteral}{"{}LI-\/7"{}}     , \{   3  ,   3.  ,   7  ,   7.0160040     ,   1.450  \} \},}
+\DoxyCodeLine{169       \{ \textcolor{stringliteral}{"{}BE-\/9"{}}     , \{   4  ,   4.  ,   9  ,   9.0121821     ,   1.050  \} \},}
+\DoxyCodeLine{170       \{ \textcolor{stringliteral}{"{}B-\/10"{}}     , \{   5  ,   5.  ,  10  ,  10.012937      ,   0.85   \} \},}
+\DoxyCodeLine{171       \{ \textcolor{stringliteral}{"{}B-\/11"{}}     , \{   5  ,   5.  ,  11  ,  11.0093055     ,   0.85   \} \},}
+\DoxyCodeLine{172       \{ \textcolor{stringliteral}{"{}C-\/12"{}}     , \{   6  ,   6.  ,  12  ,  12.0000000     ,   0.70   \} \},}
+\DoxyCodeLine{173       \{ \textcolor{stringliteral}{"{}C-\/13"{}}     , \{   6  ,   6.  ,  13  ,  13.0033548378  ,   0.70   \} \},}
+\DoxyCodeLine{174       \{ \textcolor{stringliteral}{"{}C-\/14"{}}     , \{   6  ,   6.  ,  14  ,  14.003241988   ,   0.70   \} \},}
+\DoxyCodeLine{175       \{ \textcolor{stringliteral}{"{}N-\/14"{}}     , \{   7  ,   7.  ,  14  ,  14.0030740052  ,   0.65   \} \},}
+\DoxyCodeLine{176       \{ \textcolor{stringliteral}{"{}N-\/15"{}}     , \{   7  ,   7.  ,  15  ,  15.0001088984  ,   0.65   \} \},}
+\DoxyCodeLine{177       \{ \textcolor{stringliteral}{"{}O-\/16"{}}     , \{   8  ,   8.  ,  16  ,  15.9949146221  ,   0.60   \} \},}
+\DoxyCodeLine{178       \{ \textcolor{stringliteral}{"{}O-\/17"{}}     , \{   8  ,   8.  ,  17  ,  16.99913150    ,   0.60   \} \},}
+\DoxyCodeLine{179       \{ \textcolor{stringliteral}{"{}O-\/18"{}}     , \{   8  ,   8.  ,  18  ,  17.9991604     ,   0.60   \} \},}
+\DoxyCodeLine{180       \{ \textcolor{stringliteral}{"{}F-\/19"{}}     , \{   9  ,   9.  ,  19  ,  18.9984032     ,   0.50   \} \},}
+\DoxyCodeLine{181       \{ \textcolor{stringliteral}{"{}NE-\/20"{}}    , \{  10  ,  10.  ,  20  ,  19.9924401759  ,   0.38   \} \},}
+\DoxyCodeLine{182       \{ \textcolor{stringliteral}{"{}NE-\/21"{}}    , \{  10  ,  10.  ,  21  ,  20.99384674    ,   0.38   \} \},}
+\DoxyCodeLine{183       \{ \textcolor{stringliteral}{"{}NE-\/22"{}}    , \{  10  ,  10.  ,  22  ,  21.99138551    ,   0.38   \} \},}
+\DoxyCodeLine{184       \{ \textcolor{stringliteral}{"{}NA-\/23"{}}    , \{  11  ,  11.  ,  23  ,  22.98976967    ,   1.80   \} \},}
+\DoxyCodeLine{185       \{ \textcolor{stringliteral}{"{}MG-\/24"{}}    , \{  12  ,  12.  ,  24  ,  23.98504190    ,   1.50   \} \},}
+\DoxyCodeLine{186       \{ \textcolor{stringliteral}{"{}MG-\/25"{}}    , \{  12  ,  12.  ,  25  ,  24.98583702    ,   1.50   \} \},}
+\DoxyCodeLine{187       \{ \textcolor{stringliteral}{"{}MG-\/26"{}}    , \{  12  ,  12.  ,  26  ,  25.98259304    ,   1.50   \} \},}
+\DoxyCodeLine{188       \{ \textcolor{stringliteral}{"{}AL-\/27"{}}    , \{  13  ,  13.  ,  27  ,  26.98153844    ,   1.25   \} \},}
+\DoxyCodeLine{189       \{ \textcolor{stringliteral}{"{}SI-\/28"{}}    , \{  14  ,  14.  ,  28  ,  27.9769265327  ,   1.10   \} \},}
+\DoxyCodeLine{190       \{ \textcolor{stringliteral}{"{}SI-\/29"{}}    , \{  14  ,  14.  ,  29  ,  28.97649472    ,   1.10   \} \},}
+\DoxyCodeLine{191       \{ \textcolor{stringliteral}{"{}SI-\/30"{}}    , \{  14  ,  14.  ,  30  ,  29.97377022    ,   1.10   \} \},}
+\DoxyCodeLine{192       \{ \textcolor{stringliteral}{"{}P-\/31"{}}     , \{  15  ,  15.  ,  31  ,  30.97376151    ,   1.00   \} \},}
+\DoxyCodeLine{193       \{ \textcolor{stringliteral}{"{}S-\/32"{}}     , \{  16  ,  16.  ,  32  ,  31.97207069    ,   1.00   \} \},}
+\DoxyCodeLine{194       \{ \textcolor{stringliteral}{"{}S-\/33"{}}     , \{  16  ,  16.  ,  33  ,  32.97145850    ,   1.00   \} \},}
+\DoxyCodeLine{195       \{ \textcolor{stringliteral}{"{}S-\/34"{}}     , \{  16  ,  16.  ,  34  ,  33.96786683    ,   1.00   \} \},}
+\DoxyCodeLine{196       \{ \textcolor{stringliteral}{"{}S-\/36"{}}     , \{  16  ,  16.  ,  36  ,  35.96708088    ,   1.00   \} \},}
+\DoxyCodeLine{197       \{ \textcolor{stringliteral}{"{}CL-\/35"{}}    , \{  17  ,  17.  ,  35  ,  34.96885271    ,   1.00   \} \},}
+\DoxyCodeLine{198       \{ \textcolor{stringliteral}{"{}CL-\/37"{}}    , \{  17  ,  17.  ,  37  ,  36.96590260    ,   1.00   \} \},}
+\DoxyCodeLine{199       \{ \textcolor{stringliteral}{"{}AR-\/36"{}}    , \{  18  ,  18.  ,  36  ,  35.96754628    ,   0.71   \} \},}
+\DoxyCodeLine{200       \{ \textcolor{stringliteral}{"{}AR-\/38"{}}    , \{  18  ,  18.  ,  38  ,  37.9627322     ,   0.71   \} \},}
+\DoxyCodeLine{201       \{ \textcolor{stringliteral}{"{}AR-\/40"{}}    , \{  18  ,  18.  ,  40  ,  39.962383123   ,   0.71   \} \},}
+\DoxyCodeLine{202       \{ \textcolor{stringliteral}{"{}K-\/39"{}}     , \{  19  ,  19.  ,  39  ,  38.9637069     ,   2.20   \} \},}
+\DoxyCodeLine{203       \{ \textcolor{stringliteral}{"{}K-\/40"{}}     , \{  19  ,  19.  ,  40  ,  39.96399867    ,   2.20   \} \},}
+\DoxyCodeLine{204       \{ \textcolor{stringliteral}{"{}K-\/41"{}}     , \{  19  ,  19.  ,  41  ,  40.96182597    ,   2.20   \} \},}
+\DoxyCodeLine{205       \{ \textcolor{stringliteral}{"{}CA-\/40"{}}    , \{  20  ,  20.  ,  40  ,  39.9625912     ,   1.80   \} \},}
+\DoxyCodeLine{206       \{ \textcolor{stringliteral}{"{}CA-\/42"{}}    , \{  20  ,  20.  ,  42  ,  41.9586183     ,   1.80   \} \},}
+\DoxyCodeLine{207       \{ \textcolor{stringliteral}{"{}CA-\/43"{}}    , \{  20  ,  20.  ,  43  ,  42.9587668     ,   1.80   \} \},}
+\DoxyCodeLine{208       \{ \textcolor{stringliteral}{"{}CA-\/44"{}}    , \{  20  ,  20.  ,  44  ,  43.9554811     ,   1.80   \} \},}
+\DoxyCodeLine{209       \{ \textcolor{stringliteral}{"{}CA-\/46"{}}    , \{  20  ,  20.  ,  46  ,  45.9536928     ,   1.80   \} \},}
+\DoxyCodeLine{210       \{ \textcolor{stringliteral}{"{}CA-\/48"{}}    , \{  20  ,  20.  ,  48  ,  47.952534      ,   1.80   \} \},}
+\DoxyCodeLine{211       \{ \textcolor{stringliteral}{"{}SC-\/45"{}}    , \{  21  ,  21.  ,  45  ,  44.9559102     ,   1.60   \} \},}
+\DoxyCodeLine{212       \{ \textcolor{stringliteral}{"{}TI-\/46"{}}    , \{  22  ,  22.  ,  46  ,  45.9526295     ,   1.40   \} \},}
+\DoxyCodeLine{213       \{ \textcolor{stringliteral}{"{}TI-\/47"{}}    , \{  22  ,  22.  ,  47  ,  46.9517638     ,   1.40   \} \},}
+\DoxyCodeLine{214       \{ \textcolor{stringliteral}{"{}TI-\/48"{}}    , \{  22  ,  22.  ,  48  ,  47.9479471     ,   1.40   \} \},}
+\DoxyCodeLine{215       \{ \textcolor{stringliteral}{"{}TI-\/49"{}}    , \{  22  ,  22.  ,  49  ,  48.9478708     ,   1.40   \} \},}
+\DoxyCodeLine{216       \{ \textcolor{stringliteral}{"{}TI-\/50"{}}    , \{  22  ,  22.  ,  50  ,  49.9447921     ,   1.40   \} \},}
+\DoxyCodeLine{217       \{ \textcolor{stringliteral}{"{}V-\/50"{}}     , \{  23  ,  23.  ,  50  ,  49.9471628     ,   1.35   \} \},}
+\DoxyCodeLine{218       \{ \textcolor{stringliteral}{"{}V-\/51"{}}     , \{  23  ,  23.  ,  51  ,  50.9439637     ,   1.35   \} \},}
+\DoxyCodeLine{219       \{ \textcolor{stringliteral}{"{}CR-\/50"{}}    , \{  24  ,  24.  ,  50  ,  49.9460496     ,   1.40   \} \},}
+\DoxyCodeLine{220       \{ \textcolor{stringliteral}{"{}CR-\/52"{}}    , \{  24  ,  24.  ,  52  ,  51.9405119     ,   1.40   \} \},}
+\DoxyCodeLine{221       \{ \textcolor{stringliteral}{"{}CR-\/53"{}}    , \{  24  ,  24.  ,  53  ,  52.9406538     ,   1.40   \} \},}
+\DoxyCodeLine{222       \{ \textcolor{stringliteral}{"{}CR-\/54"{}}    , \{  24  ,  24.  ,  54  ,  53.9388849     ,   1.40   \} \},}
+\DoxyCodeLine{223       \{ \textcolor{stringliteral}{"{}MN-\/55"{}}    , \{  25  ,  25.  ,  55  ,  54.9380496     ,   1.40   \} \},}
+\DoxyCodeLine{224       \{ \textcolor{stringliteral}{"{}FE-\/54"{}}    , \{  26  ,  26.  ,  54  ,  53.9396148     ,   1.40   \} \},}
+\DoxyCodeLine{225       \{ \textcolor{stringliteral}{"{}FE-\/56"{}}    , \{  26  ,  26.  ,  56  ,  55.9349421     ,   1.40   \} \},}
+\DoxyCodeLine{226       \{ \textcolor{stringliteral}{"{}FE-\/57"{}}    , \{  26  ,  26.  ,  57  ,  56.9353987     ,   1.40   \} \},}
+\DoxyCodeLine{227       \{ \textcolor{stringliteral}{"{}FE-\/58"{}}    , \{  26  ,  26.  ,  58  ,  57.9332805     ,   1.40   \} \},}
+\DoxyCodeLine{228       \{ \textcolor{stringliteral}{"{}CO-\/59"{}}    , \{  27  ,  27.  ,  59  ,  58.9332002     ,   1.35   \} \},}
+\DoxyCodeLine{229       \{ \textcolor{stringliteral}{"{}NI-\/58"{}}    , \{  28  ,  28.  ,  58  ,  57.9353479     ,   1.35   \} \},}
+\DoxyCodeLine{230       \{ \textcolor{stringliteral}{"{}NI-\/60"{}}    , \{  28  ,  28.  ,  60  ,  59.9307906     ,   1.35   \} \},}
+\DoxyCodeLine{231       \{ \textcolor{stringliteral}{"{}NI-\/61"{}}    , \{  28  ,  28.  ,  61  ,  60.9310604     ,   1.35   \} \},}
+\DoxyCodeLine{232       \{ \textcolor{stringliteral}{"{}NI-\/62"{}}    , \{  28  ,  28.  ,  62  ,  61.9283488     ,   1.35   \} \},}
+\DoxyCodeLine{233       \{ \textcolor{stringliteral}{"{}NI-\/64"{}}    , \{  28  ,  28.  ,  64  ,  63.9279696     ,   1.35   \} \},}
+\DoxyCodeLine{234       \{ \textcolor{stringliteral}{"{}CU-\/63"{}}    , \{  29  ,  29.  ,  63  ,  62.9296011     ,   1.35   \} \},}
+\DoxyCodeLine{235       \{ \textcolor{stringliteral}{"{}CU-\/65"{}}    , \{  29  ,  29.  ,  65  ,  64.9277937     ,   1.35   \} \},}
+\DoxyCodeLine{236       \{ \textcolor{stringliteral}{"{}ZN-\/64"{}}    , \{  30  ,  30.  ,  64  ,  63.9291466     ,   1.35   \} \},}
+\DoxyCodeLine{237       \{ \textcolor{stringliteral}{"{}ZN-\/66"{}}    , \{  30  ,  30.  ,  66  ,  65.9260368     ,   1.35   \} \},}
+\DoxyCodeLine{238       \{ \textcolor{stringliteral}{"{}ZN-\/67"{}}    , \{  30  ,  30.  ,  67  ,  66.9271309     ,   1.35   \} \},}
+\DoxyCodeLine{239       \{ \textcolor{stringliteral}{"{}ZN-\/68"{}}    , \{  30  ,  30.  ,  68  ,  67.9248476     ,   1.35   \} \},}
+\DoxyCodeLine{240       \{ \textcolor{stringliteral}{"{}ZN-\/70"{}}    , \{  30  ,  30.  ,  70  ,  69.925325      ,   1.35   \} \},}
+\DoxyCodeLine{241       \{ \textcolor{stringliteral}{"{}GA-\/69"{}}    , \{  31  ,  31.  ,  69  ,  68.925581      ,   1.30   \} \},}
+\DoxyCodeLine{242       \{ \textcolor{stringliteral}{"{}GA-\/71"{}}    , \{  31  ,  31.  ,  71  ,  70.9247050     ,   1.30   \} \},}
+\DoxyCodeLine{243       \{ \textcolor{stringliteral}{"{}GE-\/70"{}}    , \{  32  ,  32.  ,  70  ,  69.9242504     ,   1.25   \} \},}
+\DoxyCodeLine{244       \{ \textcolor{stringliteral}{"{}GE-\/72"{}}    , \{  32  ,  32.  ,  72  ,  71.9220762     ,   1.25   \} \},}
+\DoxyCodeLine{245       \{ \textcolor{stringliteral}{"{}GE-\/73"{}}    , \{  32  ,  32.  ,  73  ,  72.9234594     ,   1.25   \} \},}
+\DoxyCodeLine{246       \{ \textcolor{stringliteral}{"{}GE-\/74"{}}    , \{  32  ,  32.  ,  74  ,  73.9211782     ,   1.25   \} \},}
+\DoxyCodeLine{247       \{ \textcolor{stringliteral}{"{}GE-\/76"{}}    , \{  32  ,  32.  ,  76  ,  75.9214027     ,   1.25   \} \},}
+\DoxyCodeLine{248       \{ \textcolor{stringliteral}{"{}AS-\/75"{}}    , \{  33  ,  33.  ,  75  ,  74.9215964     ,   1.15   \} \},}
+\DoxyCodeLine{249       \{ \textcolor{stringliteral}{"{}SE-\/74"{}}    , \{  34  ,  34.  ,  74  ,  73.9224766     ,   1.15   \} \},}
+\DoxyCodeLine{250       \{ \textcolor{stringliteral}{"{}SE-\/76"{}}    , \{  34  ,  34.  ,  76  ,  75.9192141     ,   1.15   \} \},}
+\DoxyCodeLine{251       \{ \textcolor{stringliteral}{"{}SE-\/77"{}}    , \{  34  ,  34.  ,  77  ,  76.9199146     ,   1.15   \} \},}
+\DoxyCodeLine{252       \{ \textcolor{stringliteral}{"{}SE-\/78"{}}    , \{  34  ,  34.  ,  78  ,  77.9173095     ,   1.15   \} \},}
+\DoxyCodeLine{253       \{ \textcolor{stringliteral}{"{}SE-\/80"{}}    , \{  34  ,  34.  ,  80  ,  79.9165218     ,   1.15   \} \},}
+\DoxyCodeLine{254       \{ \textcolor{stringliteral}{"{}SE-\/82"{}}    , \{  34  ,  34.  ,  82  ,  81.9167000     ,   1.15   \} \},}
+\DoxyCodeLine{255       \{ \textcolor{stringliteral}{"{}BR-\/79"{}}    , \{  35  ,  35.  ,  79  ,  78.9183376     ,   1.15   \} \},}
+\DoxyCodeLine{256       \{ \textcolor{stringliteral}{"{}BR-\/81"{}}    , \{  35  ,  35.  ,  81  ,  80.916291      ,   1.15   \} \},}
+\DoxyCodeLine{257       \{ \textcolor{stringliteral}{"{}KR-\/78"{}}    , \{  36  ,  36.  ,  78  ,  77.920386      ,   0.88   \} \},}
+\DoxyCodeLine{258       \{ \textcolor{stringliteral}{"{}KR-\/80"{}}    , \{  36  ,  36.  ,  80  ,  79.916378      ,   0.88   \} \},}
+\DoxyCodeLine{259       \{ \textcolor{stringliteral}{"{}KR-\/82"{}}    , \{  36  ,  36.  ,  82  ,  81.9134846     ,   0.88   \} \},}
+\DoxyCodeLine{260       \{ \textcolor{stringliteral}{"{}KR-\/83"{}}    , \{  36  ,  36.  ,  83  ,  82.914136      ,   0.88   \} \},}
+\DoxyCodeLine{261       \{ \textcolor{stringliteral}{"{}KR-\/84"{}}    , \{  36  ,  36.  ,  84  ,  83.911507      ,   0.88   \} \},}
+\DoxyCodeLine{262       \{ \textcolor{stringliteral}{"{}KR-\/86"{}}    , \{  36  ,  36.  ,  86  ,  85.9106103     ,   0.88   \} \},}
+\DoxyCodeLine{263       \{ \textcolor{stringliteral}{"{}RB-\/85"{}}    , \{  37  ,  37.  ,  85  ,  84.9117893     ,   2.35   \} \},}
+\DoxyCodeLine{264       \{ \textcolor{stringliteral}{"{}RB-\/87"{}}    , \{  37  ,  37.  ,  87  ,  86.9091835     ,   2.35   \} \},}
+\DoxyCodeLine{265       \{ \textcolor{stringliteral}{"{}SR-\/84"{}}    , \{  38  ,  38.  ,  84  ,  83.913425      ,   2.00   \} \},}
+\DoxyCodeLine{266       \{ \textcolor{stringliteral}{"{}SR-\/86"{}}    , \{  38  ,  38.  ,  86  ,  85.9092624     ,   2.00   \} \},}
+\DoxyCodeLine{267       \{ \textcolor{stringliteral}{"{}SR-\/87"{}}    , \{  38  ,  38.  ,  87  ,  86.9088793     ,   2.00   \} \},}
+\DoxyCodeLine{268       \{ \textcolor{stringliteral}{"{}SR-\/88"{}}    , \{  38  ,  38.  ,  88  ,  87.9056143     ,   2.00   \} \},}
+\DoxyCodeLine{269       \{ \textcolor{stringliteral}{"{}Y-\/89"{}}     , \{  39  ,  39.  ,  89  ,  88.9058479     ,   1.80   \} \},}
+\DoxyCodeLine{270       \{ \textcolor{stringliteral}{"{}ZR-\/90"{}}    , \{  40  ,  40.  ,  90  ,  89.9047037     ,   1.55   \} \},}
+\DoxyCodeLine{271       \{ \textcolor{stringliteral}{"{}ZR-\/91"{}}    , \{  40  ,  40.  ,  91  ,  90.9056450     ,   1.55   \} \},}
+\DoxyCodeLine{272       \{ \textcolor{stringliteral}{"{}ZR-\/92"{}}    , \{  40  ,  40.  ,  92  ,  91.9050401     ,   1.55   \} \},}
+\DoxyCodeLine{273       \{ \textcolor{stringliteral}{"{}ZR-\/94"{}}    , \{  40  ,  40.  ,  94  ,  93.9063158     ,   1.55   \} \},}
+\DoxyCodeLine{274       \{ \textcolor{stringliteral}{"{}ZR-\/96"{}}    , \{  40  ,  40.  ,  96  ,  95.908276      ,   1.55   \} \},}
+\DoxyCodeLine{275       \{ \textcolor{stringliteral}{"{}NB-\/93"{}}    , \{  41  ,  41.  ,  93  ,  92.9063775     ,   1.45   \} \},}
+\DoxyCodeLine{276       \{ \textcolor{stringliteral}{"{}MO-\/92"{}}    , \{  42  ,  42.  ,  92  ,  91.906810      ,   1.45   \} \},}
+\DoxyCodeLine{277       \{ \textcolor{stringliteral}{"{}MO-\/94"{}}    , \{  42  ,  42.  ,  94  ,  93.9050876     ,   1.45   \} \},}
+\DoxyCodeLine{278       \{ \textcolor{stringliteral}{"{}MO-\/95"{}}    , \{  42  ,  42.  ,  95  ,  94.9058415     ,   1.45   \} \},}
+\DoxyCodeLine{279       \{ \textcolor{stringliteral}{"{}MO-\/96"{}}    , \{  42  ,  42.  ,  96  ,  95.9046789     ,   1.45   \} \},}
+\DoxyCodeLine{280       \{ \textcolor{stringliteral}{"{}MO-\/97"{}}    , \{  42  ,  42.  ,  97  ,  96.9060210     ,   1.45   \} \},}
+\DoxyCodeLine{281       \{ \textcolor{stringliteral}{"{}MO-\/98"{}}    , \{  42  ,  42.  ,  98  ,  97.9054078     ,   1.45   \} \},}
+\DoxyCodeLine{282       \{ \textcolor{stringliteral}{"{}MO-\/100"{}}   , \{  42  ,  42.  , 100  ,  99.907477      ,   1.45   \} \},}
+\DoxyCodeLine{283       \{ \textcolor{stringliteral}{"{}TC-\/97"{}}    , \{  43  ,  43.  ,  97  ,  96.906365      ,   1.35   \} \},}
+\DoxyCodeLine{284       \{ \textcolor{stringliteral}{"{}TC-\/98"{}}    , \{  43  ,  43.  ,  98  ,  97.907216      ,   1.35   \} \},}
+\DoxyCodeLine{285       \{ \textcolor{stringliteral}{"{}TC-\/99"{}}    , \{  43  ,  43.  ,  99  ,  98.9062546     ,   1.35   \} \},}
+\DoxyCodeLine{286       \{ \textcolor{stringliteral}{"{}RU-\/96"{}}    , \{  44  ,  44.  ,  96  ,  95.907598      ,   1.30   \} \},}
+\DoxyCodeLine{287       \{ \textcolor{stringliteral}{"{}RU-\/98"{}}    , \{  44  ,  44.  ,  98  ,  97.905287      ,   1.30   \} \},}
+\DoxyCodeLine{288       \{ \textcolor{stringliteral}{"{}RU-\/99"{}}    , \{  44  ,  44.  ,  99  ,  98.9059393     ,   1.30   \} \},}
+\DoxyCodeLine{289       \{ \textcolor{stringliteral}{"{}RU-\/100"{}}   , \{  44  ,  44.  , 100  ,  99.9042197     ,   1.30   \} \},}
+\DoxyCodeLine{290       \{ \textcolor{stringliteral}{"{}RU-\/101"{}}   , \{  44  ,  44.  , 101  , 100.9055822     ,   1.30   \} \},}
+\DoxyCodeLine{291       \{ \textcolor{stringliteral}{"{}RU-\/102"{}}   , \{  44  ,  44.  , 102  , 101.9043495     ,   1.30   \} \},}
+\DoxyCodeLine{292       \{ \textcolor{stringliteral}{"{}RU-\/104"{}}   , \{  44  ,  44.  , 104  , 103.905430      ,   1.30   \} \},}
+\DoxyCodeLine{293       \{ \textcolor{stringliteral}{"{}RH-\/103"{}}   , \{  45  ,  45.  , 103  , 102.905504      ,   1.35   \} \},}
+\DoxyCodeLine{294       \{ \textcolor{stringliteral}{"{}PD-\/102"{}}   , \{  46  ,  46.  , 102  , 101.905608      ,   1.40   \} \},}
+\DoxyCodeLine{295       \{ \textcolor{stringliteral}{"{}PD-\/104"{}}   , \{  46  ,  46.  , 104  , 103.904035      ,   1.40   \} \},}
+\DoxyCodeLine{296       \{ \textcolor{stringliteral}{"{}PD-\/105"{}}   , \{  46  ,  46.  , 105  , 104.905084      ,   1.40   \} \},}
+\DoxyCodeLine{297       \{ \textcolor{stringliteral}{"{}PD-\/106"{}}   , \{  46  ,  46.  , 106  , 105.903483      ,   1.40   \} \},}
+\DoxyCodeLine{298       \{ \textcolor{stringliteral}{"{}PD-\/108"{}}   , \{  46  ,  46.  , 108  , 107.903894      ,   1.40   \} \},}
+\DoxyCodeLine{299       \{ \textcolor{stringliteral}{"{}PD-\/110"{}}   , \{  46  ,  46.  , 110  , 109.905152      ,   1.40   \} \},}
+\DoxyCodeLine{300       \{ \textcolor{stringliteral}{"{}AG-\/107"{}}   , \{  47  ,  47.  , 107  , 106.905093      ,   1.60   \} \},}
+\DoxyCodeLine{301       \{ \textcolor{stringliteral}{"{}AG-\/109"{}}   , \{  47  ,  47.  , 109  , 108.904756      ,   1.60   \} \},}
+\DoxyCodeLine{302       \{ \textcolor{stringliteral}{"{}CD-\/106"{}}   , \{  48  ,  48.  , 106  , 105.906458      ,   1.55   \} \},}
+\DoxyCodeLine{303       \{ \textcolor{stringliteral}{"{}CD-\/108"{}}   , \{  48  ,  48.  , 108  , 107.904183      ,   1.55   \} \},}
+\DoxyCodeLine{304       \{ \textcolor{stringliteral}{"{}CD-\/110"{}}   , \{  48  ,  48.  , 110  , 109.903006      ,   1.55   \} \},}
+\DoxyCodeLine{305       \{ \textcolor{stringliteral}{"{}CD-\/111"{}}   , \{  48  ,  48.  , 111  , 110.904182      ,   1.55   \} \},}
+\DoxyCodeLine{306       \{ \textcolor{stringliteral}{"{}CD-\/112"{}}   , \{  48  ,  48.  , 112  , 111.9027572     ,   1.55   \} \},}
+\DoxyCodeLine{307       \{ \textcolor{stringliteral}{"{}CD-\/113"{}}   , \{  48  ,  48.  , 113  , 112.9044009     ,   1.55   \} \},}
+\DoxyCodeLine{308       \{ \textcolor{stringliteral}{"{}CD-\/114"{}}   , \{  48  ,  48.  , 114  , 113.9033581     ,   1.55   \} \},}
+\DoxyCodeLine{309       \{ \textcolor{stringliteral}{"{}CD-\/116"{}}   , \{  48  ,  48.  , 116  , 115.904755      ,   1.55   \} \},}
+\DoxyCodeLine{310       \{ \textcolor{stringliteral}{"{}IN-\/113"{}}   , \{  49  ,  49.  , 113  , 112.904061      ,   1.55   \} \},}
+\DoxyCodeLine{311       \{ \textcolor{stringliteral}{"{}IN-\/115"{}}   , \{  49  ,  49.  , 115  , 114.903878      ,   1.55   \} \},}
+\DoxyCodeLine{312       \{ \textcolor{stringliteral}{"{}SN-\/112"{}}   , \{  50  ,  50.  , 112  , 111.904821      ,   1.45   \} \},}
+\DoxyCodeLine{313       \{ \textcolor{stringliteral}{"{}SN-\/114"{}}   , \{  50  ,  50.  , 114  , 113.902782      ,   1.45   \} \},}
+\DoxyCodeLine{314       \{ \textcolor{stringliteral}{"{}SN-\/115"{}}   , \{  50  ,  50.  , 115  , 114.903346      ,   1.45   \} \},}
+\DoxyCodeLine{315       \{ \textcolor{stringliteral}{"{}SN-\/116"{}}   , \{  50  ,  50.  , 116  , 115.901744      ,   1.45   \} \},}
+\DoxyCodeLine{316       \{ \textcolor{stringliteral}{"{}SN-\/117"{}}   , \{  50  ,  50.  , 117  , 116.902954      ,   1.45   \} \},}
+\DoxyCodeLine{317       \{ \textcolor{stringliteral}{"{}SN-\/118"{}}   , \{  50  ,  50.  , 118  , 117.901606      ,   1.45   \} \},}
+\DoxyCodeLine{318       \{ \textcolor{stringliteral}{"{}SN-\/119"{}}   , \{  50  ,  50.  , 119  , 118.903309      ,   1.45   \} \},}
+\DoxyCodeLine{319       \{ \textcolor{stringliteral}{"{}SN-\/120"{}}   , \{  50  ,  50.  , 120  , 119.9021966     ,   1.45   \} \},}
+\DoxyCodeLine{320       \{ \textcolor{stringliteral}{"{}SN-\/122"{}}   , \{  50  ,  50.  , 122  , 121.9034401     ,   1.45   \} \},}
+\DoxyCodeLine{321       \{ \textcolor{stringliteral}{"{}SN-\/124"{}}   , \{  50  ,  50.  , 124  , 123.9052746     ,   1.45   \} \},}
+\DoxyCodeLine{322       \{ \textcolor{stringliteral}{"{}SB-\/121"{}}   , \{  51  ,  51.  , 121  , 120.9038180     ,   1.45   \} \},}
+\DoxyCodeLine{323       \{ \textcolor{stringliteral}{"{}SB-\/123"{}}   , \{  51  ,  51.  , 123  , 122.9042157     ,   1.45   \} \},}
+\DoxyCodeLine{324       \{ \textcolor{stringliteral}{"{}TE-\/120"{}}   , \{  52  ,  52.  , 120  , 119.904020      ,   1.40   \} \},}
+\DoxyCodeLine{325       \{ \textcolor{stringliteral}{"{}TE-\/122"{}}   , \{  52  ,  52.  , 122  , 121.9030471     ,   1.40   \} \},}
+\DoxyCodeLine{326       \{ \textcolor{stringliteral}{"{}TE-\/123"{}}   , \{  52  ,  52.  , 123  , 122.9042730     ,   1.40   \} \},}
+\DoxyCodeLine{327       \{ \textcolor{stringliteral}{"{}TE-\/124"{}}   , \{  52  ,  52.  , 124  , 123.9028195     ,   1.40   \} \},}
+\DoxyCodeLine{328       \{ \textcolor{stringliteral}{"{}TE-\/125"{}}   , \{  52  ,  52.  , 125  , 124.9044247     ,   1.40   \} \},}
+\DoxyCodeLine{329       \{ \textcolor{stringliteral}{"{}TE-\/126"{}}   , \{  52  ,  52.  , 126  , 125.9033055     ,   1.40   \} \},}
+\DoxyCodeLine{330       \{ \textcolor{stringliteral}{"{}TE-\/128"{}}   , \{  52  ,  52.  , 128  , 127.9044614     ,   1.40   \} \},}
+\DoxyCodeLine{331       \{ \textcolor{stringliteral}{"{}TE-\/130"{}}   , \{  52  ,  52.  , 130  , 129.9062228     ,   1.40   \} \},}
+\DoxyCodeLine{332       \{ \textcolor{stringliteral}{"{}I-\/127"{}}    , \{  53  ,  53.  , 127  , 126.904468      ,   1.40   \} \},}
+\DoxyCodeLine{333       \{ \textcolor{stringliteral}{"{}XE-\/124"{}}   , \{  54  ,  54.  , 124  , 123.9058958     ,   1.08   \} \},}
+\DoxyCodeLine{334       \{ \textcolor{stringliteral}{"{}XE-\/126"{}}   , \{  54  ,  54.  , 126  , 125.904269      ,   1.08   \} \},}
+\DoxyCodeLine{335       \{ \textcolor{stringliteral}{"{}XE-\/128"{}}   , \{  54  ,  54.  , 128  , 127.9035304     ,   1.08   \} \},}
+\DoxyCodeLine{336       \{ \textcolor{stringliteral}{"{}XE-\/129"{}}   , \{  54  ,  54.  , 129  , 128.9047795     ,   1.08   \} \},}
+\DoxyCodeLine{337       \{ \textcolor{stringliteral}{"{}XE-\/130"{}}   , \{  54  ,  54.  , 130  , 129.9035079     ,   1.08   \} \},}
+\DoxyCodeLine{338       \{ \textcolor{stringliteral}{"{}XE-\/131"{}}   , \{  54  ,  54.  , 131  , 130.9050819     ,   1.08   \} \},}
+\DoxyCodeLine{339       \{ \textcolor{stringliteral}{"{}XE-\/132"{}}   , \{  54  ,  54.  , 132  , 131.9041545     ,   1.08   \} \},}
+\DoxyCodeLine{340       \{ \textcolor{stringliteral}{"{}XE-\/134"{}}   , \{  54  ,  54.  , 134  , 133.9053945     ,   1.08   \} \},}
+\DoxyCodeLine{341       \{ \textcolor{stringliteral}{"{}XE-\/136"{}}   , \{  54  ,  54.  , 136  , 135.907220      ,   1.08   \} \},}
+\DoxyCodeLine{342       \{ \textcolor{stringliteral}{"{}CS-\/133"{}}   , \{  55  ,  55.  , 133  , 132.905447      ,   2.60   \} \},}
+\DoxyCodeLine{343       \{ \textcolor{stringliteral}{"{}BA-\/130"{}}   , \{  56  ,  56.  , 130  , 129.906310      ,   2.15   \} \},}
+\DoxyCodeLine{344       \{ \textcolor{stringliteral}{"{}BA-\/132"{}}   , \{  56  ,  56.  , 132  , 131.905056      ,   2.15   \} \},}
+\DoxyCodeLine{345       \{ \textcolor{stringliteral}{"{}BA-\/134"{}}   , \{  56  ,  56.  , 134  , 133.904503      ,   2.15   \} \},}
+\DoxyCodeLine{346       \{ \textcolor{stringliteral}{"{}BA-\/135"{}}   , \{  56  ,  56.  , 135  , 134.905683      ,   2.15   \} \},}
+\DoxyCodeLine{347       \{ \textcolor{stringliteral}{"{}BA-\/136"{}}   , \{  56  ,  56.  , 136  , 135.904570      ,   2.15   \} \},}
+\DoxyCodeLine{348       \{ \textcolor{stringliteral}{"{}BA-\/137"{}}   , \{  56  ,  56.  , 137  , 136.905821      ,   2.15   \} \},}
+\DoxyCodeLine{349       \{ \textcolor{stringliteral}{"{}BA-\/138"{}}   , \{  56  ,  56.  , 138  , 137.905241      ,   2.15   \} \},}
+\DoxyCodeLine{350       \{ \textcolor{stringliteral}{"{}LA-\/138"{}}   , \{  57  ,  57.  , 138  , 137.907107      ,   1.95   \} \},}
+\DoxyCodeLine{351       \{ \textcolor{stringliteral}{"{}LA-\/139"{}}   , \{  57  ,  57.  , 139  , 138.906348      ,   1.95   \} \},}
+\DoxyCodeLine{352       \{ \textcolor{stringliteral}{"{}CE-\/136"{}}   , \{  58  ,  58.  , 136  , 135.907140      ,   1.85   \} \},}
+\DoxyCodeLine{353       \{ \textcolor{stringliteral}{"{}CE-\/138"{}}   , \{  58  ,  58.  , 138  , 137.905986      ,   1.85   \} \},}
+\DoxyCodeLine{354       \{ \textcolor{stringliteral}{"{}CE-\/140"{}}   , \{  58  ,  58.  , 140  , 139.905434      ,   1.85   \} \},}
+\DoxyCodeLine{355       \{ \textcolor{stringliteral}{"{}CE-\/142"{}}   , \{  58  ,  58.  , 142  , 141.909240      ,   1.85   \} \},}
+\DoxyCodeLine{356       \{ \textcolor{stringliteral}{"{}PR-\/141"{}}   , \{  59  ,  59.  , 141  , 140.907648      ,   1.85   \} \},}
+\DoxyCodeLine{357       \{ \textcolor{stringliteral}{"{}ND-\/142"{}}   , \{  60  ,  60.  , 142  , 141.907719      ,   1.85   \} \},}
+\DoxyCodeLine{358       \{ \textcolor{stringliteral}{"{}ND-\/143"{}}   , \{  60  ,  60.  , 143  , 142.909810      ,   1.85   \} \},}
+\DoxyCodeLine{359       \{ \textcolor{stringliteral}{"{}ND-\/144"{}}   , \{  60  ,  60.  , 144  , 143.910083      ,   1.85   \} \},}
+\DoxyCodeLine{360       \{ \textcolor{stringliteral}{"{}ND-\/145"{}}   , \{  60  ,  60.  , 145  , 144.912569      ,   1.85   \} \},}
+\DoxyCodeLine{361       \{ \textcolor{stringliteral}{"{}ND-\/146"{}}   , \{  60  ,  60.  , 146  , 145.913112      ,   1.85   \} \},}
+\DoxyCodeLine{362       \{ \textcolor{stringliteral}{"{}ND-\/148"{}}   , \{  60  ,  60.  , 148  , 147.916889      ,   1.85   \} \},}
+\DoxyCodeLine{363       \{ \textcolor{stringliteral}{"{}ND-\/150"{}}   , \{  60  ,  60.  , 150  , 149.920887      ,   1.85   \} \},}
+\DoxyCodeLine{364       \{ \textcolor{stringliteral}{"{}PM-\/145"{}}   , \{  61  ,  61.  , 145  , 144.912744      ,   1.85   \} \},}
+\DoxyCodeLine{365       \{ \textcolor{stringliteral}{"{}PM-\/147"{}}   , \{  61  ,  61.  , 147  , 146.915134      ,   1.85   \} \},}
+\DoxyCodeLine{366       \{ \textcolor{stringliteral}{"{}SM-\/144"{}}   , \{  62  ,  62.  , 144  , 143.911995      ,   1.85   \} \},}
+\DoxyCodeLine{367       \{ \textcolor{stringliteral}{"{}SM-\/147"{}}   , \{  62  ,  62.  , 147  , 146.914893      ,   1.85   \} \},}
+\DoxyCodeLine{368       \{ \textcolor{stringliteral}{"{}SM-\/148"{}}   , \{  62  ,  62.  , 148  , 147.914818      ,   1.85   \} \},}
+\DoxyCodeLine{369       \{ \textcolor{stringliteral}{"{}SM-\/149"{}}   , \{  62  ,  62.  , 149  , 148.917180      ,   1.85   \} \},}
+\DoxyCodeLine{370       \{ \textcolor{stringliteral}{"{}SM-\/150"{}}   , \{  62  ,  62.  , 150  , 149.917271      ,   1.85   \} \},}
+\DoxyCodeLine{371       \{ \textcolor{stringliteral}{"{}SM-\/152"{}}   , \{  62  ,  62.  , 152  , 151.919728      ,   1.85   \} \},}
+\DoxyCodeLine{372       \{ \textcolor{stringliteral}{"{}SM-\/154"{}}   , \{  62  ,  62.  , 154  , 153.922205      ,   1.85   \} \},}
+\DoxyCodeLine{373       \{ \textcolor{stringliteral}{"{}EU-\/151"{}}   , \{  63  ,  63.  , 151  , 150.919846      ,   1.85   \} \},}
+\DoxyCodeLine{374       \{ \textcolor{stringliteral}{"{}EU-\/153"{}}   , \{  63  ,  63.  , 153  , 152.921226      ,   1.85   \} \},}
+\DoxyCodeLine{375       \{ \textcolor{stringliteral}{"{}GD-\/152"{}}   , \{  64  ,  64.  , 152  , 151.919788      ,   1.80   \} \},}
+\DoxyCodeLine{376       \{ \textcolor{stringliteral}{"{}GD-\/154"{}}   , \{  64  ,  64.  , 154  , 153.920862      ,   1.80   \} \},}
+\DoxyCodeLine{377       \{ \textcolor{stringliteral}{"{}GD-\/155"{}}   , \{  64  ,  64.  , 155  , 154.922619      ,   1.80   \} \},}
+\DoxyCodeLine{378       \{ \textcolor{stringliteral}{"{}GD-\/156"{}}   , \{  64  ,  64.  , 156  , 155.922120      ,   1.80   \} \},}
+\DoxyCodeLine{379       \{ \textcolor{stringliteral}{"{}GD-\/157"{}}   , \{  64  ,  64.  , 157  , 156.923957      ,   1.80   \} \},}
+\DoxyCodeLine{380       \{ \textcolor{stringliteral}{"{}GD-\/158"{}}   , \{  64  ,  64.  , 158  , 157.924101      ,   1.80   \} \},}
+\DoxyCodeLine{381       \{ \textcolor{stringliteral}{"{}GD-\/160"{}}   , \{  64  ,  64.  , 160  , 159.927051      ,   1.80   \} \},}
+\DoxyCodeLine{382       \{ \textcolor{stringliteral}{"{}TB-\/159"{}}   , \{  65  ,  65.  , 159  , 158.925343      ,   1.75   \} \},}
+\DoxyCodeLine{383       \{ \textcolor{stringliteral}{"{}DY-\/156"{}}   , \{  66  ,  66.  , 156  , 155.924278      ,   1.75   \} \},}
+\DoxyCodeLine{384       \{ \textcolor{stringliteral}{"{}DY-\/158"{}}   , \{  66  ,  66.  , 158  , 157.924405      ,   1.75   \} \},}
+\DoxyCodeLine{385       \{ \textcolor{stringliteral}{"{}DY-\/160"{}}   , \{  66  ,  66.  , 160  , 159.925194      ,   1.75   \} \},}
+\DoxyCodeLine{386       \{ \textcolor{stringliteral}{"{}DY-\/161"{}}   , \{  66  ,  66.  , 161  , 160.926930      ,   1.75   \} \},}
+\DoxyCodeLine{387       \{ \textcolor{stringliteral}{"{}DY-\/162"{}}   , \{  66  ,  66.  , 162  , 161.926795      ,   1.75   \} \},}
+\DoxyCodeLine{388       \{ \textcolor{stringliteral}{"{}DY-\/163"{}}   , \{  66  ,  66.  , 163  , 162.928728      ,   1.75   \} \},}
+\DoxyCodeLine{389       \{ \textcolor{stringliteral}{"{}DY-\/164"{}}   , \{  66  ,  66.  , 164  , 163.929171      ,   1.75   \} \},}
+\DoxyCodeLine{390       \{ \textcolor{stringliteral}{"{}HO-\/165"{}}   , \{  67  ,  67.  , 165  , 164.930319      ,   1.75   \} \},}
+\DoxyCodeLine{391       \{ \textcolor{stringliteral}{"{}ER-\/162"{}}   , \{  68  ,  68.  , 162  , 161.928775      ,   1.75   \} \},}
+\DoxyCodeLine{392       \{ \textcolor{stringliteral}{"{}ER-\/164"{}}   , \{  68  ,  68.  , 164  , 163.929197      ,   1.75   \} \},}
+\DoxyCodeLine{393       \{ \textcolor{stringliteral}{"{}ER-\/166"{}}   , \{  68  ,  68.  , 166  , 165.930290      ,   1.75   \} \},}
+\DoxyCodeLine{394       \{ \textcolor{stringliteral}{"{}ER-\/167"{}}   , \{  68  ,  68.  , 167  , 166.932045      ,   1.75   \} \},}
+\DoxyCodeLine{395       \{ \textcolor{stringliteral}{"{}ER-\/168"{}}   , \{  68  ,  68.  , 168  , 167.932368      ,   1.75   \} \},}
+\DoxyCodeLine{396       \{ \textcolor{stringliteral}{"{}ER-\/170"{}}   , \{  68  ,  68.  , 170  , 169.935460      ,   1.75   \} \},}
+\DoxyCodeLine{397       \{ \textcolor{stringliteral}{"{}TM-\/169"{}}   , \{  69  ,  69.  , 169  , 168.934211      ,   1.75   \} \},}
+\DoxyCodeLine{398       \{ \textcolor{stringliteral}{"{}YB-\/168"{}}   , \{  70  ,  70.  , 168  , 167.933894      ,   1.75   \} \},}
+\DoxyCodeLine{399       \{ \textcolor{stringliteral}{"{}YB-\/170"{}}   , \{  70  ,  70.  , 170  , 169.934759      ,   1.75   \} \},}
+\DoxyCodeLine{400       \{ \textcolor{stringliteral}{"{}YB-\/171"{}}   , \{  70  ,  70.  , 171  , 170.936322      ,   1.75   \} \},}
+\DoxyCodeLine{401       \{ \textcolor{stringliteral}{"{}YB-\/172"{}}   , \{  70  ,  70.  , 172  , 171.9363777     ,   1.75   \} \},}
+\DoxyCodeLine{402       \{ \textcolor{stringliteral}{"{}YB-\/173"{}}   , \{  70  ,  70.  , 173  , 172.9382068     ,   1.75   \} \},}
+\DoxyCodeLine{403       \{ \textcolor{stringliteral}{"{}YB-\/174"{}}   , \{  70  ,  70.  , 174  , 173.9388581     ,   1.75   \} \},}
+\DoxyCodeLine{404       \{ \textcolor{stringliteral}{"{}YB-\/176"{}}   , \{  70  ,  70.  , 176  , 175.942568      ,   1.75   \} \},}
+\DoxyCodeLine{405       \{ \textcolor{stringliteral}{"{}LU-\/175"{}}   , \{  71  ,  71.  , 175  , 174.9407679     ,   1.75   \} \},}
+\DoxyCodeLine{406       \{ \textcolor{stringliteral}{"{}LU-\/176"{}}   , \{  71  ,  71.  , 176  , 175.9426824     ,   1.75   \} \},}
+\DoxyCodeLine{407       \{ \textcolor{stringliteral}{"{}HF-\/174"{}}   , \{  72  ,  72.  , 174  , 173.940040      ,   1.55   \} \},}
+\DoxyCodeLine{408       \{ \textcolor{stringliteral}{"{}HF-\/176"{}}   , \{  72  ,  72.  , 176  , 175.9414018     ,   1.55   \} \},}
+\DoxyCodeLine{409       \{ \textcolor{stringliteral}{"{}HF-\/177"{}}   , \{  72  ,  72.  , 177  , 176.9432200     ,   1.55   \} \},}
+\DoxyCodeLine{410       \{ \textcolor{stringliteral}{"{}HF-\/178"{}}   , \{  72  ,  72.  , 178  , 177.9436977     ,   1.55   \} \},}
+\DoxyCodeLine{411       \{ \textcolor{stringliteral}{"{}HF-\/179"{}}   , \{  72  ,  72.  , 179  , 178.9458151     ,   1.55   \} \},}
+\DoxyCodeLine{412       \{ \textcolor{stringliteral}{"{}HF-\/180"{}}   , \{  72  ,  72.  , 180  , 179.9465488     ,   1.55   \} \},}
+\DoxyCodeLine{413       \{ \textcolor{stringliteral}{"{}TA-\/180"{}}   , \{  73  ,  73.  , 180  , 179.947466      ,   1.45   \} \},}
+\DoxyCodeLine{414       \{ \textcolor{stringliteral}{"{}TA-\/181"{}}   , \{  73  ,  73.  , 181  , 180.947996      ,   1.45   \} \},}
+\DoxyCodeLine{415       \{ \textcolor{stringliteral}{"{}W-\/180"{}}    , \{  74  ,  74.  , 180  , 179.946706      ,   1.35   \} \},}
+\DoxyCodeLine{416       \{ \textcolor{stringliteral}{"{}W-\/182"{}}    , \{  74  ,  74.  , 182  , 181.948206      ,   1.35   \} \},}
+\DoxyCodeLine{417       \{ \textcolor{stringliteral}{"{}W-\/183"{}}    , \{  74  ,  74.  , 183  , 182.9502245     ,   1.35   \} \},}
+\DoxyCodeLine{418       \{ \textcolor{stringliteral}{"{}W-\/184"{}}    , \{  74  ,  74.  , 184  , 183.9509326     ,   1.35   \} \},}
+\DoxyCodeLine{419       \{ \textcolor{stringliteral}{"{}W-\/186"{}}    , \{  74  ,  74.  , 186  , 185.954362      ,   1.35   \} \},}
+\DoxyCodeLine{420       \{ \textcolor{stringliteral}{"{}RE-\/185"{}}   , \{  75  ,  75.  , 185  , 184.9529557     ,   1.35   \} \},}
+\DoxyCodeLine{421       \{ \textcolor{stringliteral}{"{}RE-\/187"{}}   , \{  75  ,  75.  , 187  , 186.9557508     ,   1.35   \} \},}
+\DoxyCodeLine{422       \{ \textcolor{stringliteral}{"{}OS-\/184"{}}   , \{  76  ,  76.  , 184  , 183.952491      ,   1.30   \} \},}
+\DoxyCodeLine{423       \{ \textcolor{stringliteral}{"{}OS-\/186"{}}   , \{  76  ,  76.  , 186  , 185.953838      ,   1.30   \} \},}
+\DoxyCodeLine{424       \{ \textcolor{stringliteral}{"{}OS-\/187"{}}   , \{  76  ,  76.  , 187  , 186.9557479     ,   1.30   \} \},}
+\DoxyCodeLine{425       \{ \textcolor{stringliteral}{"{}OS-\/188"{}}   , \{  76  ,  76.  , 188  , 187.9558360     ,   1.30   \} \},}
+\DoxyCodeLine{426       \{ \textcolor{stringliteral}{"{}OS-\/189"{}}   , \{  76  ,  76.  , 189  , 188.9581449     ,   1.30   \} \},}
+\DoxyCodeLine{427       \{ \textcolor{stringliteral}{"{}OS-\/190"{}}   , \{  76  ,  76.  , 190  , 189.958445      ,   1.30   \} \},}
+\DoxyCodeLine{428       \{ \textcolor{stringliteral}{"{}OS-\/192"{}}   , \{  76  ,  76.  , 192  , 191.961479      ,   1.30   \} \},}
+\DoxyCodeLine{429       \{ \textcolor{stringliteral}{"{}IR-\/191"{}}   , \{  77  ,  77.  , 191  , 190.960591      ,   1.35   \} \},}
+\DoxyCodeLine{430       \{ \textcolor{stringliteral}{"{}IR-\/193"{}}   , \{  77  ,  77.  , 193  , 192.962924      ,   1.35   \} \},}
+\DoxyCodeLine{431       \{ \textcolor{stringliteral}{"{}PT-\/190"{}}   , \{  78  ,  78.  , 190  , 189.959930      ,   1.35   \} \},}
+\DoxyCodeLine{432       \{ \textcolor{stringliteral}{"{}PT-\/192"{}}   , \{  78  ,  78.  , 192  , 191.961035      ,   1.35   \} \},}
+\DoxyCodeLine{433       \{ \textcolor{stringliteral}{"{}PT-\/194"{}}   , \{  78  ,  78.  , 194  , 193.962664      ,   1.35   \} \},}
+\DoxyCodeLine{434       \{ \textcolor{stringliteral}{"{}PT-\/195"{}}   , \{  78  ,  78.  , 195  , 194.964774      ,   1.35   \} \},}
+\DoxyCodeLine{435       \{ \textcolor{stringliteral}{"{}PT-\/196"{}}   , \{  78  ,  78.  , 196  , 195.964935      ,   1.35   \} \},}
+\DoxyCodeLine{436       \{ \textcolor{stringliteral}{"{}PT-\/198"{}}   , \{  78  ,  78.  , 198  , 197.967876      ,   1.35   \} \},}
+\DoxyCodeLine{437       \{ \textcolor{stringliteral}{"{}AU-\/197"{}}   , \{  79  ,  79.  , 197  , 196.966552      ,   1.35   \} \},}
+\DoxyCodeLine{438       \{ \textcolor{stringliteral}{"{}HG-\/196"{}}   , \{  80  ,  80.  , 196  , 195.965815      ,   1.50   \} \},}
+\DoxyCodeLine{439       \{ \textcolor{stringliteral}{"{}HG-\/198"{}}   , \{  80  ,  80.  , 198  , 197.966752      ,   1.50   \} \},}
+\DoxyCodeLine{440       \{ \textcolor{stringliteral}{"{}HG-\/199"{}}   , \{  80  ,  80.  , 199  , 198.968262      ,   1.50   \} \},}
+\DoxyCodeLine{441       \{ \textcolor{stringliteral}{"{}HG-\/200"{}}   , \{  80  ,  80.  , 200  , 199.968309      ,   1.50   \} \},}
+\DoxyCodeLine{442       \{ \textcolor{stringliteral}{"{}HG-\/201"{}}   , \{  80  ,  80.  , 201  , 200.970285      ,   1.50   \} \},}
+\DoxyCodeLine{443       \{ \textcolor{stringliteral}{"{}HG-\/202"{}}   , \{  80  ,  80.  , 202  , 201.970626      ,   1.50   \} \},}
+\DoxyCodeLine{444       \{ \textcolor{stringliteral}{"{}HG-\/204"{}}   , \{  80  ,  80.  , 204  , 203.973476      ,   1.50   \} \},}
+\DoxyCodeLine{445       \{ \textcolor{stringliteral}{"{}TL-\/203"{}}   , \{  81  ,  81.  , 203  , 202.972329      ,   1.90   \} \},}
+\DoxyCodeLine{446       \{ \textcolor{stringliteral}{"{}TL-\/205"{}}   , \{  81  ,  81.  , 205  , 204.974412      ,   1.90   \} \},}
+\DoxyCodeLine{447       \{ \textcolor{stringliteral}{"{}PB-\/204"{}}   , \{  82  ,  82.  , 204  , 203.973029      ,   1.90   \} \},}
+\DoxyCodeLine{448       \{ \textcolor{stringliteral}{"{}PB-\/206"{}}   , \{  82  ,  82.  , 206  , 205.974449      ,   1.90   \} \},}
+\DoxyCodeLine{449       \{ \textcolor{stringliteral}{"{}PB-\/207"{}}   , \{  82  ,  82.  , 207  , 206.975881      ,   1.90   \} \},}
+\DoxyCodeLine{450       \{ \textcolor{stringliteral}{"{}PB-\/208"{}}   , \{  82  ,  82.  , 208  , 207.976636      ,   1.90   \} \},}
+\DoxyCodeLine{451       \{ \textcolor{stringliteral}{"{}BI-\/209"{}}   , \{  83  ,  83.  , 209  , 208.980383      ,   1.60   \} \},}
+\DoxyCodeLine{452       \{ \textcolor{stringliteral}{"{}PO-\/209"{}}   , \{  84  ,  84.  , 209  , 208.982416      ,   1.90   \} \},}
+\DoxyCodeLine{453       \{ \textcolor{stringliteral}{"{}PO-\/210"{}}   , \{  84  ,  84.  , 210  , 209.982857      ,   1.90   \} \},}
+\DoxyCodeLine{454       \{ \textcolor{stringliteral}{"{}AT-\/210"{}}   , \{  85  ,  85.  , 210  , 209.987131      ,   1.90   \} \},}
+\DoxyCodeLine{455       \{ \textcolor{stringliteral}{"{}AT-\/211"{}}   , \{  85  ,  85.  , 211  , 210.987481      ,   1.90   \} \},}
+\DoxyCodeLine{456       \{ \textcolor{stringliteral}{"{}RN-\/211"{}}   , \{  86  ,  86.  , 211  , 210.990585      ,   2.01   \} \},}
+\DoxyCodeLine{457       \{ \textcolor{stringliteral}{"{}RN-\/220"{}}   , \{  86  ,  86.  , 220  , 220.0113841     ,   2.01   \} \},}
+\DoxyCodeLine{458       \{ \textcolor{stringliteral}{"{}RN-\/222"{}}   , \{  86  ,  86.  , 222  , 222.0175705     ,   2.01   \} \},}
+\DoxyCodeLine{459       \{ \textcolor{stringliteral}{"{}FR-\/223"{}}   , \{  87  ,  87.  , 223  , 223.0197307     ,   1.90   \} \},}
+\DoxyCodeLine{460       \{ \textcolor{stringliteral}{"{}RA-\/223"{}}   , \{  88  ,  88.  , 223  , 223.018497      ,   1.90   \} \},}
+\DoxyCodeLine{461       \{ \textcolor{stringliteral}{"{}RA-\/224"{}}   , \{  88  ,  88.  , 224  , 224.0202020     ,   1.90   \} \},}
+\DoxyCodeLine{462       \{ \textcolor{stringliteral}{"{}RA-\/226"{}}   , \{  88  ,  88.  , 226  , 226.0254026     ,   2.15   \} \},}
+\DoxyCodeLine{463       \{ \textcolor{stringliteral}{"{}RA-\/228"{}}   , \{  88  ,  88.  , 228  , 228.0310641     ,   2.15   \} \},}
+\DoxyCodeLine{464       \{ \textcolor{stringliteral}{"{}AC-\/227"{}}   , \{  89  ,  89.  , 227  , 227.0277470     ,   1.95   \} \},}
+\DoxyCodeLine{465       \{ \textcolor{stringliteral}{"{}TH-\/230"{}}   , \{  90  ,  90.  , 230  , 230.0331266     ,   1.80   \} \},}
+\DoxyCodeLine{466       \{ \textcolor{stringliteral}{"{}TH-\/232"{}}   , \{  90  ,  90.  , 232  , 232.0380504     ,   1.80   \} \},}
+\DoxyCodeLine{467       \{ \textcolor{stringliteral}{"{}PA-\/231"{}}   , \{  91  ,  91.  , 231  , 231.0358789     ,   1.80   \} \},}
+\DoxyCodeLine{468       \{ \textcolor{stringliteral}{"{}U-\/233"{}}    , \{  92  ,  92.  , 233  , 233.039628      ,   1.75   \} \},}
+\DoxyCodeLine{469       \{ \textcolor{stringliteral}{"{}U-\/234"{}}    , \{  92  ,  92.  , 234  , 234.0409456     ,   1.75   \} \},}
+\DoxyCodeLine{470       \{ \textcolor{stringliteral}{"{}U-\/235"{}}    , \{  92  ,  92.  , 235  , 235.0439231     ,   1.75   \} \},}
+\DoxyCodeLine{471       \{ \textcolor{stringliteral}{"{}U-\/236"{}}    , \{  92  ,  92.  , 236  , 236.0455619     ,   1.75   \} \},}
+\DoxyCodeLine{472       \{ \textcolor{stringliteral}{"{}U-\/238"{}}    , \{  92  ,  92.  , 238  , 238.0507826     ,   1.75   \} \},}
+\DoxyCodeLine{473       \{ \textcolor{stringliteral}{"{}NP-\/237"{}}   , \{  93  ,  93.  , 237  , 237.0481673     ,   1.75   \} \},}
+\DoxyCodeLine{474       \{ \textcolor{stringliteral}{"{}NP-\/239"{}}   , \{  93  ,  93.  , 239  , 239.0529314     ,   1.75   \} \},}
+\DoxyCodeLine{475       \{ \textcolor{stringliteral}{"{}PU-\/238"{}}   , \{  94  ,  94.  , 238  , 238.0495534     ,   1.75   \} \},}
+\DoxyCodeLine{476       \{ \textcolor{stringliteral}{"{}PU-\/239"{}}   , \{  94  ,  94.  , 239  , 239.0521565     ,   1.75   \} \},}
+\DoxyCodeLine{477       \{ \textcolor{stringliteral}{"{}PU-\/240"{}}   , \{  94  ,  94.  , 240  , 240.0538075     ,   1.75   \} \},}
+\DoxyCodeLine{478       \{ \textcolor{stringliteral}{"{}PU-\/241"{}}   , \{  94  ,  94.  , 241  , 241.0568453     ,   1.75   \} \},}
+\DoxyCodeLine{479       \{ \textcolor{stringliteral}{"{}PU-\/242"{}}   , \{  94  ,  94.  , 242  , 242.0587368     ,   1.75   \} \},}
+\DoxyCodeLine{480       \{ \textcolor{stringliteral}{"{}PU-\/244"{}}   , \{  94  ,  94.  , 244  , 244.064198      ,   1.75   \} \},}
+\DoxyCodeLine{481       \{ \textcolor{stringliteral}{"{}AM-\/241"{}}   , \{  95  ,  95.  , 241  , 241.0568229     ,   1.75   \} \},}
+\DoxyCodeLine{482       \{ \textcolor{stringliteral}{"{}AM-\/243"{}}   , \{  95  ,  95.  , 243  , 243.0613727     ,   1.75   \} \},}
+\DoxyCodeLine{483       \{ \textcolor{stringliteral}{"{}CM-\/243"{}}   , \{  96  ,  96.  , 243  , 243.0613822     ,   2.01   \} \},}
+\DoxyCodeLine{484       \{ \textcolor{stringliteral}{"{}CM-\/244"{}}   , \{  96  ,  96.  , 244  , 244.0627463     ,   2.01   \} \},}
+\DoxyCodeLine{485       \{ \textcolor{stringliteral}{"{}CM-\/245"{}}   , \{  96  ,  96.  , 245  , 245.0654856     ,   2.01   \} \},}
+\DoxyCodeLine{486       \{ \textcolor{stringliteral}{"{}CM-\/246"{}}   , \{  96  ,  96.  , 246  , 246.0672176     ,   2.01   \} \},}
+\DoxyCodeLine{487       \{ \textcolor{stringliteral}{"{}CM-\/247"{}}   , \{  96  ,  96.  , 247  , 247.070347      ,   2.01   \} \},}
+\DoxyCodeLine{488       \{ \textcolor{stringliteral}{"{}CM-\/248"{}}   , \{  96  ,  96.  , 248  , 248.072342      ,   2.01   \} \},}
+\DoxyCodeLine{489       \{ \textcolor{stringliteral}{"{}BK-\/247"{}}   , \{  97  ,  97.  , 247  , 247.070299      ,   2.01   \} \},}
+\DoxyCodeLine{490       \{ \textcolor{stringliteral}{"{}BK-\/249"{}}   , \{  97  ,  97.  , 249  , 249.074980      ,   2.01   \} \},}
+\DoxyCodeLine{491       \{ \textcolor{stringliteral}{"{}CF-\/249"{}}   , \{  98  ,  98.  , 249  , 249.074847      ,   2.01   \} \},}
+\DoxyCodeLine{492       \{ \textcolor{stringliteral}{"{}CF-\/250"{}}   , \{  98  ,  98.  , 250  , 250.0764000     ,   2.01   \} \},}
+\DoxyCodeLine{493       \{ \textcolor{stringliteral}{"{}CF-\/251"{}}   , \{  98  ,  98.  , 251  , 251.079580      ,   2.01   \} \},}
+\DoxyCodeLine{494       \{ \textcolor{stringliteral}{"{}CF-\/252"{}}   , \{  98  ,  98.  , 252  , 252.081620      ,   2.01   \} \},}
+\DoxyCodeLine{495       \{ \textcolor{stringliteral}{"{}ES-\/252"{}}   , \{  99  ,  99.  , 252  , 252.082970      ,   2.01   \} \},}
+\DoxyCodeLine{496       \{ \textcolor{stringliteral}{"{}FM-\/257"{}}   , \{ 100  , 100.  , 257  , 257.095099      ,   2.01   \} \},}
+\DoxyCodeLine{497       \{ \textcolor{stringliteral}{"{}MD-\/256"{}}   , \{ 101  , 101.  , 256  , 256.094050      ,   2.01   \} \},}
+\DoxyCodeLine{498       \{ \textcolor{stringliteral}{"{}MD-\/258"{}}   , \{ 101  , 101.  , 258  , 258.098425      ,   2.01   \} \},}
+\DoxyCodeLine{499       \{ \textcolor{stringliteral}{"{}NO-\/259"{}}   , \{ 102  , 102.  , 259  , 259.10102       ,   2.01   \} \},}
+\DoxyCodeLine{500       \{ \textcolor{stringliteral}{"{}LR-\/262"{}}   , \{ 103  , 103.  , 262  , 262.10969       ,   2.01   \} \},}
+\DoxyCodeLine{501       \{ \textcolor{stringliteral}{"{}RF-\/261"{}}   , \{ 104  , 104.  , 261  , 261.10875       ,   2.01   \} \},}
+\DoxyCodeLine{502       \{ \textcolor{stringliteral}{"{}DB-\/262"{}}   , \{ 105  , 105.  , 262  , 262.11415       ,   2.01   \} \},}
+\DoxyCodeLine{503       \{ \textcolor{stringliteral}{"{}SG-\/266"{}}   , \{ 106  , 106.  , 266  , 266.12193       ,   2.01   \} \},}
+\DoxyCodeLine{504       \{ \textcolor{stringliteral}{"{}BH-\/264"{}}   , \{ 107  , 107.  , 264  , 264.12473       ,   2.01   \} \},}
+\DoxyCodeLine{505       \{ \textcolor{stringliteral}{"{}MT-\/268"{}}   , \{ 109  , 109.  , 268  , 268.13882       ,   2.01   \} \} }
+\DoxyCodeLine{506     \}}
+\DoxyCodeLine{507   ); }
+\DoxyCodeLine{508 }
+\DoxyCodeLine{509   \textcolor{comment}{// Map atomic symbol to atomic number}}
+\DoxyCodeLine{510   \textcolor{keyword}{static} std::unordered\_map<std::string,int> \mbox{\hyperlink{namespaceChronusQ_a3efd0f34627d702445b287c7c6a8abb5}{atomicNumMap}}(}
+\DoxyCodeLine{511     \{}
+\DoxyCodeLine{512       \{ \textcolor{stringliteral}{"{}H"{}}    ,  1   \}, }
+\DoxyCodeLine{513       \{ \textcolor{stringliteral}{"{}He"{}}   ,  2   \},}
+\DoxyCodeLine{514       \{ \textcolor{stringliteral}{"{}HE"{}}   ,  2   \},}
+\DoxyCodeLine{515       \{ \textcolor{stringliteral}{"{}Li"{}}   ,  3   \},}
+\DoxyCodeLine{516       \{ \textcolor{stringliteral}{"{}LI"{}}   ,  3   \},}
+\DoxyCodeLine{517       \{ \textcolor{stringliteral}{"{}Be"{}}   ,  4   \},}
+\DoxyCodeLine{518       \{ \textcolor{stringliteral}{"{}BE"{}}   ,  4   \},}
+\DoxyCodeLine{519       \{ \textcolor{stringliteral}{"{}B"{}}    ,  5   \},}
+\DoxyCodeLine{520       \{ \textcolor{stringliteral}{"{}C"{}}    ,  6   \},}
+\DoxyCodeLine{521       \{ \textcolor{stringliteral}{"{}N"{}}    ,  7   \},}
+\DoxyCodeLine{522       \{ \textcolor{stringliteral}{"{}O"{}}    ,  8   \},}
+\DoxyCodeLine{523       \{ \textcolor{stringliteral}{"{}F"{}}    ,  9   \},}
+\DoxyCodeLine{524       \{ \textcolor{stringliteral}{"{}Ne"{}}   ,  10  \},}
+\DoxyCodeLine{525       \{ \textcolor{stringliteral}{"{}NE"{}}   ,  10  \},}
+\DoxyCodeLine{526       \{ \textcolor{stringliteral}{"{}Na"{}}   ,  11  \},}
+\DoxyCodeLine{527       \{ \textcolor{stringliteral}{"{}NA"{}}   ,  11  \},}
+\DoxyCodeLine{528       \{ \textcolor{stringliteral}{"{}Mg"{}}   ,  12  \},}
+\DoxyCodeLine{529       \{ \textcolor{stringliteral}{"{}MG"{}}   ,  12  \},}
+\DoxyCodeLine{530       \{ \textcolor{stringliteral}{"{}Al"{}}   ,  13  \},}
+\DoxyCodeLine{531       \{ \textcolor{stringliteral}{"{}AL"{}}   ,  13  \},}
+\DoxyCodeLine{532       \{ \textcolor{stringliteral}{"{}Si"{}}   ,  14  \},}
+\DoxyCodeLine{533       \{ \textcolor{stringliteral}{"{}SI"{}}   ,  14  \},}
+\DoxyCodeLine{534       \{ \textcolor{stringliteral}{"{}P"{}}    ,  15  \},}
+\DoxyCodeLine{535       \{ \textcolor{stringliteral}{"{}S"{}}    ,  16  \},}
+\DoxyCodeLine{536       \{ \textcolor{stringliteral}{"{}Cl"{}}   ,  17  \},}
+\DoxyCodeLine{537       \{ \textcolor{stringliteral}{"{}CL"{}}   ,  17  \},}
+\DoxyCodeLine{538       \{ \textcolor{stringliteral}{"{}Ar"{}}   ,  18  \},}
+\DoxyCodeLine{539       \{ \textcolor{stringliteral}{"{}AR"{}}   ,  18  \},}
+\DoxyCodeLine{540       \{ \textcolor{stringliteral}{"{}K"{}}    ,  19  \},}
+\DoxyCodeLine{541       \{ \textcolor{stringliteral}{"{}Ca"{}}   ,  20  \},}
+\DoxyCodeLine{542       \{ \textcolor{stringliteral}{"{}CA"{}}   ,  20  \},}
+\DoxyCodeLine{543       \{ \textcolor{stringliteral}{"{}Sc"{}}   ,  21  \},}
+\DoxyCodeLine{544       \{ \textcolor{stringliteral}{"{}SC"{}}   ,  21  \},}
+\DoxyCodeLine{545       \{ \textcolor{stringliteral}{"{}Ti"{}}   ,  22  \},}
+\DoxyCodeLine{546       \{ \textcolor{stringliteral}{"{}TI"{}}   ,  22  \},}
+\DoxyCodeLine{547       \{ \textcolor{stringliteral}{"{}V"{}}    ,  23  \},}
+\DoxyCodeLine{548       \{ \textcolor{stringliteral}{"{}Cr"{}}   ,  24  \},}
+\DoxyCodeLine{549       \{ \textcolor{stringliteral}{"{}CR"{}}   ,  24  \},}
+\DoxyCodeLine{550       \{ \textcolor{stringliteral}{"{}Mn"{}}   ,  25  \},}
+\DoxyCodeLine{551       \{ \textcolor{stringliteral}{"{}MN"{}}   ,  25  \},}
+\DoxyCodeLine{552       \{ \textcolor{stringliteral}{"{}Fe"{}}   ,  26  \},}
+\DoxyCodeLine{553       \{ \textcolor{stringliteral}{"{}FE"{}}   ,  26  \},}
+\DoxyCodeLine{554       \{ \textcolor{stringliteral}{"{}Co"{}}   ,  27  \},}
+\DoxyCodeLine{555       \{ \textcolor{stringliteral}{"{}CO"{}}   ,  27  \},}
+\DoxyCodeLine{556       \{ \textcolor{stringliteral}{"{}Ni"{}}   ,  28  \},}
+\DoxyCodeLine{557       \{ \textcolor{stringliteral}{"{}NI"{}}   ,  28  \},}
+\DoxyCodeLine{558       \{ \textcolor{stringliteral}{"{}Cu"{}}   ,  29  \},}
+\DoxyCodeLine{559       \{ \textcolor{stringliteral}{"{}CU"{}}   ,  29  \},}
+\DoxyCodeLine{560       \{ \textcolor{stringliteral}{"{}Zn"{}}   ,  30  \},}
+\DoxyCodeLine{561       \{ \textcolor{stringliteral}{"{}ZN"{}}   ,  30  \},}
+\DoxyCodeLine{562       \{ \textcolor{stringliteral}{"{}Ga"{}}   ,  31  \},}
+\DoxyCodeLine{563       \{ \textcolor{stringliteral}{"{}GA"{}}   ,  31  \},}
+\DoxyCodeLine{564       \{ \textcolor{stringliteral}{"{}Ge"{}}   ,  32  \},}
+\DoxyCodeLine{565       \{ \textcolor{stringliteral}{"{}GE"{}}   ,  32  \},}
+\DoxyCodeLine{566       \{ \textcolor{stringliteral}{"{}As"{}}   ,  33  \},}
+\DoxyCodeLine{567       \{ \textcolor{stringliteral}{"{}AS"{}}   ,  33  \},}
+\DoxyCodeLine{568       \{ \textcolor{stringliteral}{"{}Se"{}}   ,  34  \},}
+\DoxyCodeLine{569       \{ \textcolor{stringliteral}{"{}SE"{}}   ,  34  \},}
+\DoxyCodeLine{570       \{ \textcolor{stringliteral}{"{}Br"{}}   ,  35  \},}
+\DoxyCodeLine{571       \{ \textcolor{stringliteral}{"{}BR"{}}   ,  35  \},}
+\DoxyCodeLine{572       \{ \textcolor{stringliteral}{"{}Kr"{}}   ,  36  \},}
+\DoxyCodeLine{573       \{ \textcolor{stringliteral}{"{}KR"{}}   ,  36  \},}
+\DoxyCodeLine{574       \{ \textcolor{stringliteral}{"{}Rb"{}}   ,  37  \},}
+\DoxyCodeLine{575       \{ \textcolor{stringliteral}{"{}RB"{}}   ,  37  \},}
+\DoxyCodeLine{576       \{ \textcolor{stringliteral}{"{}Sr"{}}   ,  38  \},}
+\DoxyCodeLine{577       \{ \textcolor{stringliteral}{"{}SR"{}}   ,  38  \},}
+\DoxyCodeLine{578       \{ \textcolor{stringliteral}{"{}Y"{}}    ,  39  \},}
+\DoxyCodeLine{579       \{ \textcolor{stringliteral}{"{}Zr"{}}   ,  40  \},}
+\DoxyCodeLine{580       \{ \textcolor{stringliteral}{"{}ZR"{}}   ,  40  \},}
+\DoxyCodeLine{581       \{ \textcolor{stringliteral}{"{}Nb"{}}   ,  41  \},}
+\DoxyCodeLine{582       \{ \textcolor{stringliteral}{"{}NB"{}}   ,  41  \},}
+\DoxyCodeLine{583       \{ \textcolor{stringliteral}{"{}Mo"{}}   ,  42  \},}
+\DoxyCodeLine{584       \{ \textcolor{stringliteral}{"{}MO"{}}   ,  42  \},}
+\DoxyCodeLine{585       \{ \textcolor{stringliteral}{"{}Tc"{}}   ,  43  \},}
+\DoxyCodeLine{586       \{ \textcolor{stringliteral}{"{}TC"{}}   ,  43  \},}
+\DoxyCodeLine{587       \{ \textcolor{stringliteral}{"{}Ru"{}}   ,  44  \},}
+\DoxyCodeLine{588       \{ \textcolor{stringliteral}{"{}RU"{}}   ,  44  \},}
+\DoxyCodeLine{589       \{ \textcolor{stringliteral}{"{}Rh"{}}   ,  45  \},}
+\DoxyCodeLine{590       \{ \textcolor{stringliteral}{"{}RH"{}}   ,  45  \},}
+\DoxyCodeLine{591       \{ \textcolor{stringliteral}{"{}Pd"{}}   ,  46  \},}
+\DoxyCodeLine{592       \{ \textcolor{stringliteral}{"{}PD"{}}   ,  46  \},}
+\DoxyCodeLine{593       \{ \textcolor{stringliteral}{"{}Ag"{}}   ,  47  \},}
+\DoxyCodeLine{594       \{ \textcolor{stringliteral}{"{}AG"{}}   ,  47  \},}
+\DoxyCodeLine{595       \{ \textcolor{stringliteral}{"{}Cd"{}}   ,  48  \},}
+\DoxyCodeLine{596       \{ \textcolor{stringliteral}{"{}CD"{}}   ,  48  \},}
+\DoxyCodeLine{597       \{ \textcolor{stringliteral}{"{}In"{}}   ,  49  \},}
+\DoxyCodeLine{598       \{ \textcolor{stringliteral}{"{}IN"{}}   ,  49  \},}
+\DoxyCodeLine{599       \{ \textcolor{stringliteral}{"{}Sn"{}}   ,  50  \},}
+\DoxyCodeLine{600       \{ \textcolor{stringliteral}{"{}SN"{}}   ,  50  \},}
+\DoxyCodeLine{601       \{ \textcolor{stringliteral}{"{}Sb"{}}   ,  51  \},}
+\DoxyCodeLine{602       \{ \textcolor{stringliteral}{"{}SB"{}}   ,  51  \},}
+\DoxyCodeLine{603       \{ \textcolor{stringliteral}{"{}Te"{}}   ,  52  \},}
+\DoxyCodeLine{604       \{ \textcolor{stringliteral}{"{}TE"{}}   ,  52  \},}
+\DoxyCodeLine{605       \{ \textcolor{stringliteral}{"{}I"{}}    ,  53  \},}
+\DoxyCodeLine{606       \{ \textcolor{stringliteral}{"{}Xe"{}}   ,  54  \},}
+\DoxyCodeLine{607       \{ \textcolor{stringliteral}{"{}XE"{}}   ,  54  \},}
+\DoxyCodeLine{608       \{ \textcolor{stringliteral}{"{}Cs"{}}   ,  55  \},}
+\DoxyCodeLine{609       \{ \textcolor{stringliteral}{"{}CS"{}}   ,  55  \},}
+\DoxyCodeLine{610       \{ \textcolor{stringliteral}{"{}Ba"{}}   ,  56  \},}
+\DoxyCodeLine{611       \{ \textcolor{stringliteral}{"{}BA"{}}   ,  56  \},}
+\DoxyCodeLine{612       \{ \textcolor{stringliteral}{"{}La"{}}   ,  57  \},}
+\DoxyCodeLine{613       \{ \textcolor{stringliteral}{"{}LA"{}}   ,  57  \},}
+\DoxyCodeLine{614       \{ \textcolor{stringliteral}{"{}Ce"{}}   ,  58  \},}
+\DoxyCodeLine{615       \{ \textcolor{stringliteral}{"{}CE"{}}   ,  58  \},}
+\DoxyCodeLine{616       \{ \textcolor{stringliteral}{"{}Pr"{}}   ,  59  \},}
+\DoxyCodeLine{617       \{ \textcolor{stringliteral}{"{}PR"{}}   ,  59  \},}
+\DoxyCodeLine{618       \{ \textcolor{stringliteral}{"{}Nd"{}}   ,  60  \},}
+\DoxyCodeLine{619       \{ \textcolor{stringliteral}{"{}ND"{}}   ,  60  \},}
+\DoxyCodeLine{620       \{ \textcolor{stringliteral}{"{}Pm"{}}   ,  61  \},}
+\DoxyCodeLine{621       \{ \textcolor{stringliteral}{"{}PM"{}}   ,  61  \},}
+\DoxyCodeLine{622       \{ \textcolor{stringliteral}{"{}Sm"{}}   ,  62  \},}
+\DoxyCodeLine{623       \{ \textcolor{stringliteral}{"{}SM"{}}   ,  62  \},}
+\DoxyCodeLine{624       \{ \textcolor{stringliteral}{"{}Eu"{}}   ,  63  \},}
+\DoxyCodeLine{625       \{ \textcolor{stringliteral}{"{}EU"{}}   ,  63  \},}
+\DoxyCodeLine{626       \{ \textcolor{stringliteral}{"{}Gd"{}}   ,  64  \},}
+\DoxyCodeLine{627       \{ \textcolor{stringliteral}{"{}GD"{}}   ,  64  \},}
+\DoxyCodeLine{628       \{ \textcolor{stringliteral}{"{}Tb"{}}   ,  65  \},}
+\DoxyCodeLine{629       \{ \textcolor{stringliteral}{"{}TB"{}}   ,  65  \},}
+\DoxyCodeLine{630       \{ \textcolor{stringliteral}{"{}Dy"{}}   ,  66  \},}
+\DoxyCodeLine{631       \{ \textcolor{stringliteral}{"{}DY"{}}   ,  66  \},}
+\DoxyCodeLine{632       \{ \textcolor{stringliteral}{"{}Ho"{}}   ,  67  \},}
+\DoxyCodeLine{633       \{ \textcolor{stringliteral}{"{}HO"{}}   ,  67  \},}
+\DoxyCodeLine{634       \{ \textcolor{stringliteral}{"{}Er"{}}   ,  68  \},}
+\DoxyCodeLine{635       \{ \textcolor{stringliteral}{"{}ER"{}}   ,  68  \},}
+\DoxyCodeLine{636       \{ \textcolor{stringliteral}{"{}Tm"{}}   ,  69  \},}
+\DoxyCodeLine{637       \{ \textcolor{stringliteral}{"{}TM"{}}   ,  69  \},}
+\DoxyCodeLine{638       \{ \textcolor{stringliteral}{"{}Yb"{}}   ,  70  \},}
+\DoxyCodeLine{639       \{ \textcolor{stringliteral}{"{}YB"{}}   ,  70  \},}
+\DoxyCodeLine{640       \{ \textcolor{stringliteral}{"{}Lu"{}}   ,  71  \},}
+\DoxyCodeLine{641       \{ \textcolor{stringliteral}{"{}LU"{}}   ,  71  \},}
+\DoxyCodeLine{642       \{ \textcolor{stringliteral}{"{}Hf"{}}   ,  72  \},}
+\DoxyCodeLine{643       \{ \textcolor{stringliteral}{"{}HF"{}}   ,  72  \},}
+\DoxyCodeLine{644       \{ \textcolor{stringliteral}{"{}Ta"{}}   ,  73  \},}
+\DoxyCodeLine{645       \{ \textcolor{stringliteral}{"{}TA"{}}   ,  73  \},}
+\DoxyCodeLine{646       \{ \textcolor{stringliteral}{"{}W"{}}    ,  74  \},}
+\DoxyCodeLine{647       \{ \textcolor{stringliteral}{"{}Re"{}}   ,  75  \},}
+\DoxyCodeLine{648       \{ \textcolor{stringliteral}{"{}RE"{}}   ,  75  \},}
+\DoxyCodeLine{649       \{ \textcolor{stringliteral}{"{}Os"{}}   ,  76  \},}
+\DoxyCodeLine{650       \{ \textcolor{stringliteral}{"{}OS"{}}   ,  76  \},}
+\DoxyCodeLine{651       \{ \textcolor{stringliteral}{"{}Ir"{}}   ,  77  \},}
+\DoxyCodeLine{652       \{ \textcolor{stringliteral}{"{}IR"{}}   ,  77  \},}
+\DoxyCodeLine{653       \{ \textcolor{stringliteral}{"{}Pt"{}}   ,  78  \},}
+\DoxyCodeLine{654       \{ \textcolor{stringliteral}{"{}PT"{}}   ,  78  \},}
+\DoxyCodeLine{655       \{ \textcolor{stringliteral}{"{}Au"{}}   ,  79  \},}
+\DoxyCodeLine{656       \{ \textcolor{stringliteral}{"{}AU"{}}   ,  79  \},}
+\DoxyCodeLine{657       \{ \textcolor{stringliteral}{"{}Hg"{}}   ,  80  \},}
+\DoxyCodeLine{658       \{ \textcolor{stringliteral}{"{}HG"{}}   ,  80  \},}
+\DoxyCodeLine{659       \{ \textcolor{stringliteral}{"{}Tl"{}}   ,  81  \},}
+\DoxyCodeLine{660       \{ \textcolor{stringliteral}{"{}TL"{}}   ,  81  \},}
+\DoxyCodeLine{661       \{ \textcolor{stringliteral}{"{}Pb"{}}   ,  82  \},}
+\DoxyCodeLine{662       \{ \textcolor{stringliteral}{"{}PB"{}}   ,  82  \},}
+\DoxyCodeLine{663       \{ \textcolor{stringliteral}{"{}Bi"{}}   ,  83  \},}
+\DoxyCodeLine{664       \{ \textcolor{stringliteral}{"{}BI"{}}   ,  83  \},}
+\DoxyCodeLine{665       \{ \textcolor{stringliteral}{"{}Po"{}}   ,  84  \},}
+\DoxyCodeLine{666       \{ \textcolor{stringliteral}{"{}PO"{}}   ,  84  \},}
+\DoxyCodeLine{667       \{ \textcolor{stringliteral}{"{}At"{}}   ,  85  \},}
+\DoxyCodeLine{668       \{ \textcolor{stringliteral}{"{}AT"{}}   ,  85  \},}
+\DoxyCodeLine{669       \{ \textcolor{stringliteral}{"{}Rn"{}}   ,  86  \},}
+\DoxyCodeLine{670       \{ \textcolor{stringliteral}{"{}RN"{}}   ,  86  \},}
+\DoxyCodeLine{671       \{ \textcolor{stringliteral}{"{}Fr"{}}   ,  87  \},}
+\DoxyCodeLine{672       \{ \textcolor{stringliteral}{"{}FR"{}}   ,  87  \},}
+\DoxyCodeLine{673       \{ \textcolor{stringliteral}{"{}Ra"{}}   ,  88  \},}
+\DoxyCodeLine{674       \{ \textcolor{stringliteral}{"{}RA"{}}   ,  88  \},}
+\DoxyCodeLine{675       \{ \textcolor{stringliteral}{"{}Ac"{}}   ,  89  \},}
+\DoxyCodeLine{676       \{ \textcolor{stringliteral}{"{}AC"{}}   ,  89  \},}
+\DoxyCodeLine{677       \{ \textcolor{stringliteral}{"{}Th"{}}   ,  90  \},}
+\DoxyCodeLine{678       \{ \textcolor{stringliteral}{"{}TH"{}}   ,  90  \},}
+\DoxyCodeLine{679       \{ \textcolor{stringliteral}{"{}Pa"{}}   ,  91  \},}
+\DoxyCodeLine{680       \{ \textcolor{stringliteral}{"{}PA"{}}   ,  91  \},}
+\DoxyCodeLine{681       \{ \textcolor{stringliteral}{"{}U"{}}    ,  92  \},}
+\DoxyCodeLine{682       \{ \textcolor{stringliteral}{"{}Np"{}}   ,  93  \},}
+\DoxyCodeLine{683       \{ \textcolor{stringliteral}{"{}NP"{}}   ,  93  \},}
+\DoxyCodeLine{684       \{ \textcolor{stringliteral}{"{}Pu"{}}   ,  94  \},}
+\DoxyCodeLine{685       \{ \textcolor{stringliteral}{"{}PU"{}}   ,  94  \},}
+\DoxyCodeLine{686       \{ \textcolor{stringliteral}{"{}Am"{}}   ,  95  \},}
+\DoxyCodeLine{687       \{ \textcolor{stringliteral}{"{}AM"{}}   ,  95  \},}
+\DoxyCodeLine{688       \{ \textcolor{stringliteral}{"{}Cm"{}}   ,  96  \},}
+\DoxyCodeLine{689       \{ \textcolor{stringliteral}{"{}CM"{}}   ,  96  \},}
+\DoxyCodeLine{690       \{ \textcolor{stringliteral}{"{}Bk"{}}   ,  97  \},}
+\DoxyCodeLine{691       \{ \textcolor{stringliteral}{"{}BK"{}}   ,  97  \},}
+\DoxyCodeLine{692       \{ \textcolor{stringliteral}{"{}Cf"{}}   ,  98  \},}
+\DoxyCodeLine{693       \{ \textcolor{stringliteral}{"{}CF"{}}   ,  98  \},}
+\DoxyCodeLine{694       \{ \textcolor{stringliteral}{"{}Es"{}}   ,  99  \},}
+\DoxyCodeLine{695       \{ \textcolor{stringliteral}{"{}ES"{}}   ,  99  \},}
+\DoxyCodeLine{696       \{ \textcolor{stringliteral}{"{}Fm"{}}   ,  100 \},}
+\DoxyCodeLine{697       \{ \textcolor{stringliteral}{"{}FM"{}}   ,  100 \},}
+\DoxyCodeLine{698       \{ \textcolor{stringliteral}{"{}Md"{}}   ,  101 \},}
+\DoxyCodeLine{699       \{ \textcolor{stringliteral}{"{}MD"{}}   ,  101 \},}
+\DoxyCodeLine{700       \{ \textcolor{stringliteral}{"{}No"{}}   ,  102 \},}
+\DoxyCodeLine{701       \{ \textcolor{stringliteral}{"{}NO"{}}   ,  102 \},}
+\DoxyCodeLine{702       \{ \textcolor{stringliteral}{"{}Lr"{}}   ,  103 \},}
+\DoxyCodeLine{703       \{ \textcolor{stringliteral}{"{}LR"{}}   ,  103 \},}
+\DoxyCodeLine{704       \{ \textcolor{stringliteral}{"{}Rf"{}}   ,  104 \},}
+\DoxyCodeLine{705       \{ \textcolor{stringliteral}{"{}RF"{}}   ,  104 \},}
+\DoxyCodeLine{706       \{ \textcolor{stringliteral}{"{}Db"{}}   ,  105 \},}
+\DoxyCodeLine{707       \{ \textcolor{stringliteral}{"{}DB"{}}   ,  105 \},}
+\DoxyCodeLine{708       \{ \textcolor{stringliteral}{"{}Sg"{}}   ,  106 \},}
+\DoxyCodeLine{709       \{ \textcolor{stringliteral}{"{}SG"{}}   ,  106 \},}
+\DoxyCodeLine{710       \{ \textcolor{stringliteral}{"{}Bh"{}}   ,  107 \},}
+\DoxyCodeLine{711       \{ \textcolor{stringliteral}{"{}BH"{}}   ,  107 \},}
+\DoxyCodeLine{712       \{ \textcolor{stringliteral}{"{}Mt"{}}   ,  109 \},}
+\DoxyCodeLine{713       \{ \textcolor{stringliteral}{"{}MT"{}}   ,  109 \} }
+\DoxyCodeLine{714     \}}
+\DoxyCodeLine{715   ); }
+\DoxyCodeLine{716 }
+\DoxyCodeLine{717 }
+\DoxyCodeLine{718 }
+\DoxyCodeLine{719 }
+\DoxyCodeLine{720   \textcolor{comment}{// Map atomic symbol to default isotope}}
+\DoxyCodeLine{721   \textcolor{comment}{// https://physics.nist.gov/cgi-\/bin/Compositions/stand\_alone.pl?ele=\&all=all\&isotype=some}}
+\DoxyCodeLine{722   \textcolor{keyword}{static} std::unordered\_map<std::string,std::string> \mbox{\hyperlink{namespaceChronusQ_aff35a6c03c6fdb30e5343e9b7ef34c55}{defaultIsotope}}(}
+\DoxyCodeLine{723     \{}
+\DoxyCodeLine{724       \{ \textcolor{stringliteral}{"{}H"{}}    ,  \textcolor{stringliteral}{"{}H-\/1"{}}  \}, }
+\DoxyCodeLine{725       \{ \textcolor{stringliteral}{"{}HE"{}}   ,  \textcolor{stringliteral}{"{}HE-\/4"{}} \},}
+\DoxyCodeLine{726       \{ \textcolor{stringliteral}{"{}LI"{}}   ,  \textcolor{stringliteral}{"{}LI-\/7"{}} \},}
+\DoxyCodeLine{727       \{ \textcolor{stringliteral}{"{}BE"{}}   ,  \textcolor{stringliteral}{"{}BE-\/9"{}} \},}
+\DoxyCodeLine{728       \{ \textcolor{stringliteral}{"{}B"{}}    ,  \textcolor{stringliteral}{"{}B-\/11"{}}  \},}
+\DoxyCodeLine{729       \{ \textcolor{stringliteral}{"{}C"{}}    ,  \textcolor{stringliteral}{"{}C-\/12"{}}  \},}
+\DoxyCodeLine{730       \{ \textcolor{stringliteral}{"{}N"{}}    ,  \textcolor{stringliteral}{"{}N-\/14"{}}  \},}
+\DoxyCodeLine{731       \{ \textcolor{stringliteral}{"{}O"{}}    ,  \textcolor{stringliteral}{"{}O-\/16"{}}  \},}
+\DoxyCodeLine{732       \{ \textcolor{stringliteral}{"{}F"{}}    ,  \textcolor{stringliteral}{"{}F-\/19"{}}  \},}
+\DoxyCodeLine{733       \{ \textcolor{stringliteral}{"{}NE"{}}   ,  \textcolor{stringliteral}{"{}NE-\/20"{}} \},}
+\DoxyCodeLine{734       \{ \textcolor{stringliteral}{"{}NA"{}}   ,  \textcolor{stringliteral}{"{}NA-\/23"{}} \},}
+\DoxyCodeLine{735       \{ \textcolor{stringliteral}{"{}MG"{}}   ,  \textcolor{stringliteral}{"{}MG-\/24"{}} \},}
+\DoxyCodeLine{736       \{ \textcolor{stringliteral}{"{}AL"{}}   ,  \textcolor{stringliteral}{"{}AL-\/27"{}} \},}
+\DoxyCodeLine{737       \{ \textcolor{stringliteral}{"{}SI"{}}   ,  \textcolor{stringliteral}{"{}SI-\/28"{}} \},}
+\DoxyCodeLine{738       \{ \textcolor{stringliteral}{"{}P"{}}    ,  \textcolor{stringliteral}{"{}P-\/31"{}}  \},}
+\DoxyCodeLine{739       \{ \textcolor{stringliteral}{"{}S"{}}    ,  \textcolor{stringliteral}{"{}S-\/32"{}}  \},}
+\DoxyCodeLine{740       \{ \textcolor{stringliteral}{"{}CL"{}}   ,  \textcolor{stringliteral}{"{}CL-\/35"{}} \},}
+\DoxyCodeLine{741       \{ \textcolor{stringliteral}{"{}AR"{}}   ,  \textcolor{stringliteral}{"{}AR-\/40"{}} \},}
+\DoxyCodeLine{742       \{ \textcolor{stringliteral}{"{}K"{}}    ,  \textcolor{stringliteral}{"{}K-\/39"{}}  \},}
+\DoxyCodeLine{743       \{ \textcolor{stringliteral}{"{}CA"{}}   ,  \textcolor{stringliteral}{"{}CA-\/40"{}} \},}
+\DoxyCodeLine{744       \{ \textcolor{stringliteral}{"{}SC"{}}   ,  \textcolor{stringliteral}{"{}SC-\/45"{}} \},}
+\DoxyCodeLine{745       \{ \textcolor{stringliteral}{"{}TI"{}}   ,  \textcolor{stringliteral}{"{}TI-\/48"{}} \},}
+\DoxyCodeLine{746       \{ \textcolor{stringliteral}{"{}V"{}}    ,  \textcolor{stringliteral}{"{}V-\/51"{}}  \},}
+\DoxyCodeLine{747       \{ \textcolor{stringliteral}{"{}CR"{}}   ,  \textcolor{stringliteral}{"{}CR-\/52"{}} \},}
+\DoxyCodeLine{748       \{ \textcolor{stringliteral}{"{}MN"{}}   ,  \textcolor{stringliteral}{"{}MN-\/55"{}} \},}
+\DoxyCodeLine{749       \{ \textcolor{stringliteral}{"{}FE"{}}   ,  \textcolor{stringliteral}{"{}FE-\/56"{}} \},}
+\DoxyCodeLine{750       \{ \textcolor{stringliteral}{"{}CO"{}}   ,  \textcolor{stringliteral}{"{}CO-\/59"{}} \},}
+\DoxyCodeLine{751       \{ \textcolor{stringliteral}{"{}NI"{}}   ,  \textcolor{stringliteral}{"{}NI-\/58"{}} \},}
+\DoxyCodeLine{752       \{ \textcolor{stringliteral}{"{}CU"{}}   ,  \textcolor{stringliteral}{"{}CU-\/63"{}} \},}
+\DoxyCodeLine{753       \{ \textcolor{stringliteral}{"{}ZN"{}}   ,  \textcolor{stringliteral}{"{}ZN-\/64"{}} \},}
+\DoxyCodeLine{754       \{ \textcolor{stringliteral}{"{}GA"{}}   ,  \textcolor{stringliteral}{"{}GA-\/69"{}} \},}
+\DoxyCodeLine{755       \{ \textcolor{stringliteral}{"{}GE"{}}   ,  \textcolor{stringliteral}{"{}GE-\/74"{}} \},}
+\DoxyCodeLine{756       \{ \textcolor{stringliteral}{"{}AS"{}}   ,  \textcolor{stringliteral}{"{}AS-\/75"{}} \},}
+\DoxyCodeLine{757       \{ \textcolor{stringliteral}{"{}SE"{}}   ,  \textcolor{stringliteral}{"{}SE-\/80"{}} \},}
+\DoxyCodeLine{758       \{ \textcolor{stringliteral}{"{}BR"{}}   ,  \textcolor{stringliteral}{"{}BR-\/79"{}} \},}
+\DoxyCodeLine{759       \{ \textcolor{stringliteral}{"{}KR"{}}   ,  \textcolor{stringliteral}{"{}KR-\/84"{}} \},}
+\DoxyCodeLine{760       \{ \textcolor{stringliteral}{"{}RB"{}}   ,  \textcolor{stringliteral}{"{}RB-\/85"{}} \},}
+\DoxyCodeLine{761       \{ \textcolor{stringliteral}{"{}SR"{}}   ,  \textcolor{stringliteral}{"{}SR-\/88"{}} \},}
+\DoxyCodeLine{762       \{ \textcolor{stringliteral}{"{}Y"{}}    ,  \textcolor{stringliteral}{"{}Y-\/89"{}}  \},}
+\DoxyCodeLine{763       \{ \textcolor{stringliteral}{"{}ZR"{}}   ,  \textcolor{stringliteral}{"{}ZR-\/90"{}} \},}
+\DoxyCodeLine{764       \{ \textcolor{stringliteral}{"{}NB"{}}   ,  \textcolor{stringliteral}{"{}NB-\/93"{}} \},}
+\DoxyCodeLine{765       \{ \textcolor{stringliteral}{"{}MO"{}}   ,  \textcolor{stringliteral}{"{}MO-\/98"{}} \},}
+\DoxyCodeLine{766       \{ \textcolor{stringliteral}{"{}TC"{}}   ,  \textcolor{stringliteral}{"{}TC-\/98"{}} \},}
+\DoxyCodeLine{767       \{ \textcolor{stringliteral}{"{}RU"{}}   ,  \textcolor{stringliteral}{"{}RU-\/102"{}} \},}
+\DoxyCodeLine{768       \{ \textcolor{stringliteral}{"{}RH"{}}   ,  \textcolor{stringliteral}{"{}RH-\/103"{}} \},}
+\DoxyCodeLine{769       \{ \textcolor{stringliteral}{"{}PD"{}}   ,  \textcolor{stringliteral}{"{}PD-\/106"{}} \},}
+\DoxyCodeLine{770       \{ \textcolor{stringliteral}{"{}AG"{}}   ,  \textcolor{stringliteral}{"{}AG-\/107"{}} \},}
+\DoxyCodeLine{771       \{ \textcolor{stringliteral}{"{}CD"{}}   ,  \textcolor{stringliteral}{"{}CD-\/114"{}} \},}
+\DoxyCodeLine{772       \{ \textcolor{stringliteral}{"{}IN"{}}   ,  \textcolor{stringliteral}{"{}IN-\/115"{}} \},}
+\DoxyCodeLine{773       \{ \textcolor{stringliteral}{"{}SN"{}}   ,  \textcolor{stringliteral}{"{}SN-\/120"{}} \},}
+\DoxyCodeLine{774       \{ \textcolor{stringliteral}{"{}SB"{}}   ,  \textcolor{stringliteral}{"{}SB-\/121"{}} \},}
+\DoxyCodeLine{775       \{ \textcolor{stringliteral}{"{}TE"{}}   ,  \textcolor{stringliteral}{"{}TE-\/130"{}} \},}
+\DoxyCodeLine{776       \{ \textcolor{stringliteral}{"{}I"{}}    ,  \textcolor{stringliteral}{"{}I-\/127"{}}  \},}
+\DoxyCodeLine{777       \{ \textcolor{stringliteral}{"{}XE"{}}   ,  \textcolor{stringliteral}{"{}XE-\/132"{}} \},}
+\DoxyCodeLine{778       \{ \textcolor{stringliteral}{"{}CS"{}}   ,  \textcolor{stringliteral}{"{}CS-\/133"{}} \},}
+\DoxyCodeLine{779       \{ \textcolor{stringliteral}{"{}BA"{}}   ,  \textcolor{stringliteral}{"{}BA-\/138"{}} \},}
+\DoxyCodeLine{780       \{ \textcolor{stringliteral}{"{}LA"{}}   ,  \textcolor{stringliteral}{"{}LA-\/139"{}} \},}
+\DoxyCodeLine{781       \{ \textcolor{stringliteral}{"{}CE"{}}   ,  \textcolor{stringliteral}{"{}CE-\/140"{}} \},}
+\DoxyCodeLine{782       \{ \textcolor{stringliteral}{"{}PR"{}}   ,  \textcolor{stringliteral}{"{}PR-\/141"{}} \},}
+\DoxyCodeLine{783       \{ \textcolor{stringliteral}{"{}ND"{}}   ,  \textcolor{stringliteral}{"{}ND-\/142"{}} \},}
+\DoxyCodeLine{784       \{ \textcolor{stringliteral}{"{}PM"{}}   ,  \textcolor{stringliteral}{"{}PM-\/145"{}} \},}
+\DoxyCodeLine{785       \{ \textcolor{stringliteral}{"{}SM"{}}   ,  \textcolor{stringliteral}{"{}SM-\/152"{}} \},}
+\DoxyCodeLine{786       \{ \textcolor{stringliteral}{"{}EU"{}}   ,  \textcolor{stringliteral}{"{}EU-\/153"{}} \},}
+\DoxyCodeLine{787       \{ \textcolor{stringliteral}{"{}GD"{}}   ,  \textcolor{stringliteral}{"{}GD-\/158"{}} \},}
+\DoxyCodeLine{788       \{ \textcolor{stringliteral}{"{}TB"{}}   ,  \textcolor{stringliteral}{"{}TB-\/159"{}} \},}
+\DoxyCodeLine{789       \{ \textcolor{stringliteral}{"{}DY"{}}   ,  \textcolor{stringliteral}{"{}DY-\/164"{}} \},}
+\DoxyCodeLine{790       \{ \textcolor{stringliteral}{"{}HO"{}}   ,  \textcolor{stringliteral}{"{}HO-\/165"{}} \},}
+\DoxyCodeLine{791       \{ \textcolor{stringliteral}{"{}ER"{}}   ,  \textcolor{stringliteral}{"{}ER-\/166"{}} \},}
+\DoxyCodeLine{792       \{ \textcolor{stringliteral}{"{}TM"{}}   ,  \textcolor{stringliteral}{"{}TM-\/169"{}} \},}
+\DoxyCodeLine{793       \{ \textcolor{stringliteral}{"{}YB"{}}   ,  \textcolor{stringliteral}{"{}YB-\/174"{}} \},}
+\DoxyCodeLine{794       \{ \textcolor{stringliteral}{"{}LU"{}}   ,  \textcolor{stringliteral}{"{}LU-\/175"{}} \},}
+\DoxyCodeLine{795       \{ \textcolor{stringliteral}{"{}HF"{}}   ,  \textcolor{stringliteral}{"{}HF-\/180"{}} \},}
+\DoxyCodeLine{796       \{ \textcolor{stringliteral}{"{}TA"{}}   ,  \textcolor{stringliteral}{"{}TA-\/181"{}} \},}
+\DoxyCodeLine{797       \{ \textcolor{stringliteral}{"{}W"{}}    ,  \textcolor{stringliteral}{"{}W-\/184"{}}  \},}
+\DoxyCodeLine{798       \{ \textcolor{stringliteral}{"{}RE"{}}   ,  \textcolor{stringliteral}{"{}RE-\/187"{}} \},}
+\DoxyCodeLine{799       \{ \textcolor{stringliteral}{"{}OS"{}}   ,  \textcolor{stringliteral}{"{}OS-\/192"{}} \},}
+\DoxyCodeLine{800       \{ \textcolor{stringliteral}{"{}IR"{}}   ,  \textcolor{stringliteral}{"{}IR-\/193"{}} \},}
+\DoxyCodeLine{801       \{ \textcolor{stringliteral}{"{}PT"{}}   ,  \textcolor{stringliteral}{"{}PT-\/195"{}} \},}
+\DoxyCodeLine{802       \{ \textcolor{stringliteral}{"{}AU"{}}   ,  \textcolor{stringliteral}{"{}AU-\/197"{}} \},}
+\DoxyCodeLine{803       \{ \textcolor{stringliteral}{"{}HG"{}}   ,  \textcolor{stringliteral}{"{}HG-\/202"{}} \},}
+\DoxyCodeLine{804       \{ \textcolor{stringliteral}{"{}TL"{}}   ,  \textcolor{stringliteral}{"{}TL-\/205"{}} \},}
+\DoxyCodeLine{805       \{ \textcolor{stringliteral}{"{}PB"{}}   ,  \textcolor{stringliteral}{"{}PB-\/208"{}} \},}
+\DoxyCodeLine{806       \{ \textcolor{stringliteral}{"{}BI"{}}   ,  \textcolor{stringliteral}{"{}BI-\/209"{}} \},}
+\DoxyCodeLine{807       \{ \textcolor{stringliteral}{"{}PO"{}}   ,  \textcolor{stringliteral}{"{}PO-\/209"{}} \},}
+\DoxyCodeLine{808       \{ \textcolor{stringliteral}{"{}AT"{}}   ,  \textcolor{stringliteral}{"{}AT-\/210"{}} \},}
+\DoxyCodeLine{809       \{ \textcolor{stringliteral}{"{}RN"{}}   ,  \textcolor{stringliteral}{"{}RN-\/222"{}} \},}
+\DoxyCodeLine{810       \{ \textcolor{stringliteral}{"{}FR"{}}   ,  \textcolor{stringliteral}{"{}FR-\/223"{}} \},}
+\DoxyCodeLine{811       \{ \textcolor{stringliteral}{"{}RA"{}}   ,  \textcolor{stringliteral}{"{}RA-\/226"{}} \},}
+\DoxyCodeLine{812       \{ \textcolor{stringliteral}{"{}AC"{}}   ,  \textcolor{stringliteral}{"{}AC-\/227"{}} \},}
+\DoxyCodeLine{813       \{ \textcolor{stringliteral}{"{}TH"{}}   ,  \textcolor{stringliteral}{"{}TH-\/232"{}} \},}
+\DoxyCodeLine{814       \{ \textcolor{stringliteral}{"{}PA"{}}   ,  \textcolor{stringliteral}{"{}PA-\/231"{}} \},}
+\DoxyCodeLine{815       \{ \textcolor{stringliteral}{"{}U"{}}    ,  \textcolor{stringliteral}{"{}U-\/238"{}}  \},}
+\DoxyCodeLine{816       \{ \textcolor{stringliteral}{"{}NP"{}}   ,  \textcolor{stringliteral}{"{}NP-\/237"{}} \},}
+\DoxyCodeLine{817       \{ \textcolor{stringliteral}{"{}PU"{}}   ,  \textcolor{stringliteral}{"{}PU-\/244"{}} \},}
+\DoxyCodeLine{818       \{ \textcolor{stringliteral}{"{}AM"{}}   ,  \textcolor{stringliteral}{"{}XXX"{}} \},}
+\DoxyCodeLine{819       \{ \textcolor{stringliteral}{"{}CM"{}}   ,  \textcolor{stringliteral}{"{}XXX"{}} \},}
+\DoxyCodeLine{820       \{ \textcolor{stringliteral}{"{}BK"{}}   ,  \textcolor{stringliteral}{"{}XXX"{}} \},}
+\DoxyCodeLine{821       \{ \textcolor{stringliteral}{"{}CF"{}}   ,  \textcolor{stringliteral}{"{}XXX"{}} \},}
+\DoxyCodeLine{822       \{ \textcolor{stringliteral}{"{}ES"{}}   ,  \textcolor{stringliteral}{"{}XXX"{}} \},}
+\DoxyCodeLine{823       \{ \textcolor{stringliteral}{"{}FM"{}}   ,  \textcolor{stringliteral}{"{}XXX"{}} \},}
+\DoxyCodeLine{824       \{ \textcolor{stringliteral}{"{}MD"{}}   ,  \textcolor{stringliteral}{"{}XXX"{}} \},}
+\DoxyCodeLine{825       \{ \textcolor{stringliteral}{"{}NO"{}}   ,  \textcolor{stringliteral}{"{}XXX"{}} \},}
+\DoxyCodeLine{826       \{ \textcolor{stringliteral}{"{}LR"{}}   ,  \textcolor{stringliteral}{"{}XXX"{}} \},}
+\DoxyCodeLine{827       \{ \textcolor{stringliteral}{"{}RF"{}}   ,  \textcolor{stringliteral}{"{}XXX"{}} \},}
+\DoxyCodeLine{828       \{ \textcolor{stringliteral}{"{}DB"{}}   ,  \textcolor{stringliteral}{"{}XXX"{}} \},}
+\DoxyCodeLine{829       \{ \textcolor{stringliteral}{"{}SG"{}}   ,  \textcolor{stringliteral}{"{}XXX"{}} \},}
+\DoxyCodeLine{830       \{ \textcolor{stringliteral}{"{}BH"{}}   ,  \textcolor{stringliteral}{"{}XXX"{}} \},}
+\DoxyCodeLine{831       \{ \textcolor{stringliteral}{"{}MT"{}}   ,  \textcolor{stringliteral}{"{}XXX"{}} \} }
+\DoxyCodeLine{832     \}}
+\DoxyCodeLine{833   ); }
+\DoxyCodeLine{834 }
+\DoxyCodeLine{835   }
+\DoxyCodeLine{836   \textcolor{comment}{// Define Symbol + coordinate array constructor}}
+\DoxyCodeLine{837   \textcolor{keyword}{inline} \mbox{\hyperlink{structChronusQ_1_1Atom_a6b4a5cb4895f7b666e5b423f271ea4c6}{Atom::Atom}}(std::string symb, std::array<double,3> XYZ) :}
+\DoxyCodeLine{838     \mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}}(\mbox{\hyperlink{namespaceChronusQ_a75ec1b57ce29641740d7e737070defc9}{atomicReference}}[symb])\{ }
+\DoxyCodeLine{839       \mbox{\hyperlink{structChronusQ_1_1Atom_a523cfb92fd227059becf5360535813ea}{coord}} = XYZ; }
+\DoxyCodeLine{840       \mbox{\hyperlink{structChronusQ_1_1Atom_a240cab247b1cbb9358f193078eddcc52}{quantum}} = \textcolor{keyword}{false}; }
+\DoxyCodeLine{841     \};}
+\DoxyCodeLine{842 }
+\DoxyCodeLine{843 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{844 }
+
+\end{DoxyCode}

@@ -1,0 +1,73 @@
+\hypertarget{cibuilder_2rasci_2impl_8hpp}{}\doxysection{include/cibuilder/rasci/impl.hpp File Reference}
+\label{cibuilder_2rasci_2impl_8hpp}\index{include/cibuilder/rasci/impl.hpp@{include/cibuilder/rasci/impl.hpp}}
+{\ttfamily \#include $<$mcwavefunction.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/incore4indextpi.\+hpp$>$}\newline
+{\ttfamily \#include $<$detstringmanager.\+hpp$>$}\newline
+{\ttfamily \#include $<$cibuilder/rasci.\+hpp$>$}\newline
+{\ttfamily \#include $<$cqlinalg.\+hpp$>$}\newline
+{\ttfamily \#include $<$cqlinalg/matfunc.\+hpp$>$}\newline
+{\ttfamily \#include $<$cibuilder/rasci/sigma.\+hpp$>$}\newline
+{\ttfamily \#include $<$util/timer.\+hpp$>$}\newline
+{\ttfamily \#include $<$util/matout.\+hpp$>$}\newline
+{\ttfamily \#include $<$util/threads.\+hpp$>$}\newline
+Include dependency graph for impl.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cibuilder_2rasci_2impl_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cibuilder_2rasci_2impl_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{cibuilder_2rasci_2impl_8hpp_a13b5a376b5625cb6f973409042c070da}{RASCI\+\_\+\+LOOP\+\_\+\+INIT}}()
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::vector$<$ std\+::vector$<$ int $>$ $>$ \mbox{\hyperlink{namespaceChronusQ_a144dc6be8819e768735d0a039ffa30f6}{Chronus\+Q\+::int\+\_\+matrix}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{cibuilder_2rasci_2impl_8hpp_a13b5a376b5625cb6f973409042c070da}\label{cibuilder_2rasci_2impl_8hpp_a13b5a376b5625cb6f973409042c070da}} 
+\index{impl.hpp@{impl.hpp}!RASCI\_LOOP\_INIT@{RASCI\_LOOP\_INIT}}
+\index{RASCI\_LOOP\_INIT@{RASCI\_LOOP\_INIT}!impl.hpp@{impl.hpp}}
+\doxysubsubsection{\texorpdfstring{RASCI\_LOOP\_INIT}{RASCI\_LOOP\_INIT}}
+{\footnotesize\ttfamily \#define RASCI\+\_\+\+LOOP\+\_\+\+INIT(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \textcolor{keywordtype}{size\_t} nC = mcwfn.reference().nC; \(\backslash\)}
+\DoxyCodeLine{  auto RASString = std::dynamic\_pointer\_cast< \(\backslash\)}
+\DoxyCodeLine{    RASStringManager>(mcwfn.detStr); \(\backslash\)}
+\DoxyCodeLine{  auto RASStringBeta = (nC == 1) ? std::dynamic\_pointer\_cast< \(\backslash\)}
+\DoxyCodeLine{    RASStringManager>(mcwfn.detStrBeta) : \textcolor{keyword}{nullptr}; \(\backslash\)}
+\DoxyCodeLine{  std::vector<size\_t> nActO = mcwfn.MOPartition.nActOs; \(\backslash\)}
+\DoxyCodeLine{  std::vector<int> fCat = mcwfn.MOPartition.fCat; \(\backslash\)}
+\DoxyCodeLine{  size\_t nCorrE = RASString-\/>nElectron(); \(\backslash\)}
+\DoxyCodeLine{  size\_t nStr = RASString-\/>nString(); \(\backslash\)}
+\DoxyCodeLine{  size\_t nStr\_b = (nC == 1) ? RASStringBeta-\/>nString() : 1; \(\backslash\)}
+\DoxyCodeLine{  size\_t nCat = RASString-\/>nCategory(); \(\backslash\)}
+\DoxyCodeLine{  size\_t mxHole = RASString-\/>maxHole(); \(\backslash\)}
+\DoxyCodeLine{  size\_t mxElec = RASString-\/>maxElectron(); \(\backslash\)}
+\DoxyCodeLine{  std::vector<std::vector<size\_t>> LCat = RASString-\/>LCategory(); \(\backslash\)}
+\DoxyCodeLine{  CQMemManager \& mem = mcwfn.memManager; \(\backslash\)}
+\DoxyCodeLine{  auto \& hCoreP = *(mcwfn.moints.template getIntegral<OnePInts, MatsT>(\textcolor{stringliteral}{"{}hCoreP\_Correlated\_Space"{}})); \(\backslash\)}
+\DoxyCodeLine{  auto \& moERI  = *(mcwfn.moints.template getIntegral<InCore4indexTPI, MatsT>(\textcolor{stringliteral}{"{}ERI\_Correlated\_Space"{}}));}
+
+\end{DoxyCode}

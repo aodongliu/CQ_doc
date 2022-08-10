@@ -1,0 +1,326 @@
+\hypertarget{structChronusQ_1_1RealTimeBase}{}\doxysection{ChronusQ\+::Real\+Time\+Base Struct Reference}
+\label{structChronusQ_1_1RealTimeBase}\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+
+
+{\ttfamily \#include $<$realtime.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::Real\+Time\+Base\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=211pt]{structChronusQ_1_1RealTimeBase__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::Real\+Time\+Base\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1RealTimeBase__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a3c895cd2d4520888d4cb1e921fa2a566}{Real\+Time\+Base}} ()=delete
+\item 
+\mbox{\hyperlink{structChronusQ_1_1RealTimeBase_af24803cbd01dce15e8e7f18f01e722bf}{Real\+Time\+Base}} (const \mbox{\hyperlink{structChronusQ_1_1RealTimeBase}{Real\+Time\+Base}} \&)=delete
+\item 
+\mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a7612bab9932a7faa754234b6fa5ee4cb}{Real\+Time\+Base}} (\mbox{\hyperlink{structChronusQ_1_1RealTimeBase}{Real\+Time\+Base}} \&\&)=delete
+\item 
+\mbox{\hyperlink{structChronusQ_1_1RealTimeBase_adb0ea7551675c874b154c7ec23fce93d}{Real\+Time\+Base}} (\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem\+Manager)
+\item 
+virtual void \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a2cc7a3ef38020289da3e0a1244f6b515}{do\+Propagation}} ()=0
+\item 
+virtual double \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a7313192c22263fded1402b4b012f7865}{total\+Energy}} ()=0
+\item 
+virtual std\+::vector$<$ double $>$ \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_ae00702e135416b44130078a9c871a6e3}{get\+Grad}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&)=0
+\item 
+virtual void \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_ae2af848f9b623e5490b420c229b6343b}{form\+CoreH}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&)=0
+\item 
+virtual void \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_aaaad89f2aba4f726eb70caa093069e54}{update\+AOProperties}} (double)=0
+\item 
+virtual void \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_ac60bd7e936753e98208174af3a2f79aa}{create\+RTData\+Sets}} (size\+\_\+t max\+Points)=0
+\item 
+void \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a50af8a7a480369f841e0ef4eb205e8b8}{print\+RTHeader}} ()
+\item 
+void \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a6824c3d89d29c45431b6fe750984ca3c}{print\+RTStep}} ()
+\item 
+void \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a1af7ee64ddf656f171adf4deae84538e}{append\+Step\+Record}} ()
+\item 
+{\footnotesize template$<$typename... Args$>$ }\\void \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_aaeab1355699a11d801edddf71e586cbd}{add\+Field}} (Args... args)
+\begin{DoxyCompactList}\small\item\em Adds a field to the time-\/dependent electromagnetic perturbation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_ae89698eb7bd59d19387b24f598b8fb7a}{set\+SCFPerturbation}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&scfp)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1SafeFile}{Safe\+File}} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_ad17495c774692d51f30b42febc1e4b8c}{sav\+File}}
+\begin{DoxyCompactList}\small\item\em Data File. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structChronusQ_1_1IntegrationScheme}{Integration\+Scheme}} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_af1b37a73f717884c3924b3bff64fd5f8}{int\+Scheme}}
+\begin{DoxyCompactList}\small\item\em Integration scheme (MMUT, etc) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation}{TDEMPerturbation}} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_ab0e9363e359650ea03bc13c939a71f2a}{pert}}
+\begin{DoxyCompactList}\small\item\em TD field perturbation. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a0df68b5bbd42c18d47079ea6c5de8731}{scf\+Pert}}
+\begin{DoxyCompactList}\small\item\em SCF Perturbation. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structChronusQ_1_1IntegrationProgress}{Integration\+Progress}} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a7ba101d5f6482ff37601ca9b79568227}{cur\+State}}
+\begin{DoxyCompactList}\small\item\em Current state of the time propagation. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structChronusQ_1_1IntegrationData}{Integration\+Data}} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_af9e80230e0e3e4b5c6b5ef4057567045}{data}}
+\begin{DoxyCompactList}\small\item\em Data collection. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a7e426d6be3a9b3389c30da721ff742f5}{print\+Level}} = 1
+\begin{DoxyCompactList}\small\item\em Amount of printing in RT calc. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_abb8bd1dc09bd61c33bb726ed7d73332a}{orbital\+Pop\+Freq}} = 0
+\begin{DoxyCompactList}\small\item\em Amount of printing in RT calc. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a105fd661d9c1558a5733014bc3a5b00b}{restart}} = false
+\begin{DoxyCompactList}\small\item\em Restarting calc from bin file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a0452975c020971c71d53d89c32fb8c2f}{mem\+Manager\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Memory manager. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_a3c895cd2d4520888d4cb1e921fa2a566}\label{structChronusQ_1_1RealTimeBase_a3c895cd2d4520888d4cb1e921fa2a566}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!RealTimeBase@{RealTimeBase}}
+\index{RealTimeBase@{RealTimeBase}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{RealTimeBase()}{RealTimeBase()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Real\+Time\+Base\+::\+Real\+Time\+Base (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_af24803cbd01dce15e8e7f18f01e722bf}\label{structChronusQ_1_1RealTimeBase_af24803cbd01dce15e8e7f18f01e722bf}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!RealTimeBase@{RealTimeBase}}
+\index{RealTimeBase@{RealTimeBase}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{RealTimeBase()}{RealTimeBase()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Real\+Time\+Base\+::\+Real\+Time\+Base (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structChronusQ_1_1RealTimeBase}{Real\+Time\+Base}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_a7612bab9932a7faa754234b6fa5ee4cb}\label{structChronusQ_1_1RealTimeBase_a7612bab9932a7faa754234b6fa5ee4cb}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!RealTimeBase@{RealTimeBase}}
+\index{RealTimeBase@{RealTimeBase}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{RealTimeBase()}{RealTimeBase()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Real\+Time\+Base\+::\+Real\+Time\+Base (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1RealTimeBase}{Real\+Time\+Base}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_adb0ea7551675c874b154c7ec23fce93d}\label{structChronusQ_1_1RealTimeBase_adb0ea7551675c874b154c7ec23fce93d}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!RealTimeBase@{RealTimeBase}}
+\index{RealTimeBase@{RealTimeBase}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{RealTimeBase()}{RealTimeBase()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Real\+Time\+Base\+::\+Real\+Time\+Base (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem\+Manager }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_aaeab1355699a11d801edddf71e586cbd}\label{structChronusQ_1_1RealTimeBase_aaeab1355699a11d801edddf71e586cbd}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!addField@{addField}}
+\index{addField@{addField}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{addField()}{addField()}}
+{\footnotesize\ttfamily template$<$typename... Args$>$ \\
+void Chronus\+Q\+::\+Real\+Time\+Base\+::add\+Field (\begin{DoxyParamCaption}\item[{Args...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds a field to the time-\/dependent electromagnetic perturbation. 
+
+Calls \mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation_a5598a70330bf423f7064103baec1178e}{TDEMPerturbation\+::add\+Field}}. See \mbox{\hyperlink{realtime_2fields_8hpp}{include/realtime/fields.\+hpp}} for proper documentation. Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1RealTimeBase_aaeab1355699a11d801edddf71e586cbd_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_a1af7ee64ddf656f171adf4deae84538e}\label{structChronusQ_1_1RealTimeBase_a1af7ee64ddf656f171adf4deae84538e}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!appendStepRecord@{appendStepRecord}}
+\index{appendStepRecord@{appendStepRecord}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{appendStepRecord()}{appendStepRecord()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Real\+Time\+Base\+::append\+Step\+Record (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_ac60bd7e936753e98208174af3a2f79aa}\label{structChronusQ_1_1RealTimeBase_ac60bd7e936753e98208174af3a2f79aa}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!createRTDataSets@{createRTDataSets}}
+\index{createRTDataSets@{createRTDataSets}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{createRTDataSets()}{createRTDataSets()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Real\+Time\+Base\+::create\+RTData\+Sets (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{max\+Points }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1RealTime_aa351c67c6be25bb384c3c50ab1fb78f4}{Chronus\+Q\+::\+Real\+Time$<$ \+\_\+\+SSTyp, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_a2cc7a3ef38020289da3e0a1244f6b515}\label{structChronusQ_1_1RealTimeBase_a2cc7a3ef38020289da3e0a1244f6b515}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!doPropagation@{doPropagation}}
+\index{doPropagation@{doPropagation}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{doPropagation()}{doPropagation()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Real\+Time\+Base\+::do\+Propagation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1RealTime_a6a62715806dc1f2e4408eb4c40350001}{Chronus\+Q\+::\+Real\+Time$<$ \+\_\+\+SSTyp, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_ae2af848f9b623e5490b420c229b6343b}\label{structChronusQ_1_1RealTimeBase_ae2af848f9b623e5490b420c229b6343b}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!formCoreH@{formCoreH}}
+\index{formCoreH@{formCoreH}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{formCoreH()}{formCoreH()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Real\+Time\+Base\+::form\+CoreH (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1RealTime_afcea453011973c9640546de8e5c7380c}{Chronus\+Q\+::\+Real\+Time$<$ \+\_\+\+SSTyp, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_ae00702e135416b44130078a9c871a6e3}\label{structChronusQ_1_1RealTimeBase_ae00702e135416b44130078a9c871a6e3}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!getGrad@{getGrad}}
+\index{getGrad@{getGrad}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{getGrad()}{getGrad()}}
+{\footnotesize\ttfamily virtual std\+::vector$<$ double $>$ Chronus\+Q\+::\+Real\+Time\+Base\+::get\+Grad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1RealTime_af0321a98973adf42d4dad38b884e9439}{Chronus\+Q\+::\+Real\+Time$<$ \+\_\+\+SSTyp, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_a50af8a7a480369f841e0ef4eb205e8b8}\label{structChronusQ_1_1RealTimeBase_a50af8a7a480369f841e0ef4eb205e8b8}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!printRTHeader@{printRTHeader}}
+\index{printRTHeader@{printRTHeader}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{printRTHeader()}{printRTHeader()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Real\+Time\+Base\+::print\+RTHeader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_a6824c3d89d29c45431b6fe750984ca3c}\label{structChronusQ_1_1RealTimeBase_a6824c3d89d29c45431b6fe750984ca3c}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!printRTStep@{printRTStep}}
+\index{printRTStep@{printRTStep}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{printRTStep()}{printRTStep()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Real\+Time\+Base\+::print\+RTStep (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_ae89698eb7bd59d19387b24f598b8fb7a}\label{structChronusQ_1_1RealTimeBase_ae89698eb7bd59d19387b24f598b8fb7a}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!setSCFPerturbation@{setSCFPerturbation}}
+\index{setSCFPerturbation@{setSCFPerturbation}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{setSCFPerturbation()}{setSCFPerturbation()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Real\+Time\+Base\+::set\+SCFPerturbation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{scfp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_a7313192c22263fded1402b4b012f7865}\label{structChronusQ_1_1RealTimeBase_a7313192c22263fded1402b4b012f7865}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!totalEnergy@{totalEnergy}}
+\index{totalEnergy@{totalEnergy}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{totalEnergy()}{totalEnergy()}}
+{\footnotesize\ttfamily virtual double Chronus\+Q\+::\+Real\+Time\+Base\+::total\+Energy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1RealTime_adc1d5f292b66c38d20313f556c46e910}{Chronus\+Q\+::\+Real\+Time$<$ \+\_\+\+SSTyp, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_aaaad89f2aba4f726eb70caa093069e54}\label{structChronusQ_1_1RealTimeBase_aaaad89f2aba4f726eb70caa093069e54}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!updateAOProperties@{updateAOProperties}}
+\index{updateAOProperties@{updateAOProperties}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{updateAOProperties()}{updateAOProperties()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Real\+Time\+Base\+::update\+AOProperties (\begin{DoxyParamCaption}\item[{double}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1RealTime_ac2df269edf9551c1da16b5f4265d33a8}{Chronus\+Q\+::\+Real\+Time$<$ \+\_\+\+SSTyp, Ints\+T $>$}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_a7ba101d5f6482ff37601ca9b79568227}\label{structChronusQ_1_1RealTimeBase_a7ba101d5f6482ff37601ca9b79568227}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!curState@{curState}}
+\index{curState@{curState}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{curState}{curState}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1IntegrationProgress}{Integration\+Progress}} Chronus\+Q\+::\+Real\+Time\+Base\+::cur\+State}
+
+
+
+Current state of the time propagation. 
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_af9e80230e0e3e4b5c6b5ef4057567045}\label{structChronusQ_1_1RealTimeBase_af9e80230e0e3e4b5c6b5ef4057567045}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!data@{data}}
+\index{data@{data}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1IntegrationData}{Integration\+Data}} Chronus\+Q\+::\+Real\+Time\+Base\+::data}
+
+
+
+Data collection. 
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_af1b37a73f717884c3924b3bff64fd5f8}\label{structChronusQ_1_1RealTimeBase_af1b37a73f717884c3924b3bff64fd5f8}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!intScheme@{intScheme}}
+\index{intScheme@{intScheme}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{intScheme}{intScheme}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1IntegrationScheme}{Integration\+Scheme}} Chronus\+Q\+::\+Real\+Time\+Base\+::int\+Scheme}
+
+
+
+Integration scheme (MMUT, etc) 
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_a0452975c020971c71d53d89c32fb8c2f}\label{structChronusQ_1_1RealTimeBase_a0452975c020971c71d53d89c32fb8c2f}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!memManager\_@{memManager\_}}
+\index{memManager\_@{memManager\_}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{memManager\_}{memManager\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}}\& Chronus\+Q\+::\+Real\+Time\+Base\+::mem\+Manager\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Memory manager. 
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_abb8bd1dc09bd61c33bb726ed7d73332a}\label{structChronusQ_1_1RealTimeBase_abb8bd1dc09bd61c33bb726ed7d73332a}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!orbitalPopFreq@{orbitalPopFreq}}
+\index{orbitalPopFreq@{orbitalPopFreq}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{orbitalPopFreq}{orbitalPopFreq}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Real\+Time\+Base\+::orbital\+Pop\+Freq = 0}
+
+
+
+Amount of printing in RT calc. 
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_ab0e9363e359650ea03bc13c939a71f2a}\label{structChronusQ_1_1RealTimeBase_ab0e9363e359650ea03bc13c939a71f2a}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!pert@{pert}}
+\index{pert@{pert}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{pert}{pert}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation}{TDEMPerturbation}} Chronus\+Q\+::\+Real\+Time\+Base\+::pert}
+
+
+
+TD field perturbation. 
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_a7e426d6be3a9b3389c30da721ff742f5}\label{structChronusQ_1_1RealTimeBase_a7e426d6be3a9b3389c30da721ff742f5}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!printLevel@{printLevel}}
+\index{printLevel@{printLevel}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{printLevel}{printLevel}}
+{\footnotesize\ttfamily int Chronus\+Q\+::\+Real\+Time\+Base\+::print\+Level = 1}
+
+
+
+Amount of printing in RT calc. 
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_a105fd661d9c1558a5733014bc3a5b00b}\label{structChronusQ_1_1RealTimeBase_a105fd661d9c1558a5733014bc3a5b00b}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!restart@{restart}}
+\index{restart@{restart}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{restart}{restart}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+Real\+Time\+Base\+::restart = false}
+
+
+
+Restarting calc from bin file. 
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_ad17495c774692d51f30b42febc1e4b8c}\label{structChronusQ_1_1RealTimeBase_ad17495c774692d51f30b42febc1e4b8c}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!savFile@{savFile}}
+\index{savFile@{savFile}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{savFile}{savFile}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1SafeFile}{Safe\+File}} Chronus\+Q\+::\+Real\+Time\+Base\+::sav\+File}
+
+
+
+Data File. 
+
+\mbox{\Hypertarget{structChronusQ_1_1RealTimeBase_a0df68b5bbd42c18d47079ea6c5de8731}\label{structChronusQ_1_1RealTimeBase_a0df68b5bbd42c18d47079ea6c5de8731}} 
+\index{ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}!scfPert@{scfPert}}
+\index{scfPert@{scfPert}!ChronusQ::RealTimeBase@{ChronusQ::RealTimeBase}}
+\doxysubsubsection{\texorpdfstring{scfPert}{scfPert}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} Chronus\+Q\+::\+Real\+Time\+Base\+::scf\+Pert}
+
+
+
+SCF Perturbation. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{realtime_8hpp}{realtime.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,93 @@
+\hypertarget{optOrbitals_8hpp_source}{}\doxysection{opt\+Orbitals.\+hpp}
+\label{optOrbitals_8hpp_source}\index{include/modifyorbitals/optOrbitals.hpp@{include/modifyorbitals/optOrbitals.hpp}}
+\mbox{\hyperlink{optOrbitals_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{modifyorbitals_8hpp}{modifyorbitals.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1SCFConvergence}{SCFConvergence}} \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1SCFConvergence_a715dc832df13d4f5497271d50bffe472}{deltaEnergy}};   }
+\DoxyCodeLine{33     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1SCFConvergence_a7f8903fb01b31a7292806b1fb26cb453}{RMSDen}};        }
+\DoxyCodeLine{34     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1SCFConvergence_a76479cd42450e25d0ca1df4f5fd0600d}{nrmFDC}};        }
+\DoxyCodeLine{35     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1SCFConvergence_a176c378719b1b4e98ee94e4036758fa6}{maxFDC}};        }
+\DoxyCodeLine{36     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1SCFConvergence_ad5f8669ce5dfe5f9ec0e6d8e000cc045}{nSCFIter}} = 0;  }
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \};   \textcolor{comment}{// SCFConvergence struct}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{comment}{/*}}
+\DoxyCodeLine{41 \textcolor{comment}{ *     Brief: Object to holds the overlapping functions for orbital optimization}}
+\DoxyCodeLine{42 \textcolor{comment}{ *            such as printing the header and iteration progress. Thus, getNewOrbitals}}
+\DoxyCodeLine{43 \textcolor{comment}{ *            is modified depending on which step is used. ie. SCF or Newton-\/Raphson}}
+\DoxyCodeLine{44 \textcolor{comment}{ */}}
+\DoxyCodeLine{45 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{46 \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{OptimizeOrbitals}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals}{ModifyOrbitals}}<MatsT> \{}
+\DoxyCodeLine{47   \textcolor{keyword}{private}:}
+\DoxyCodeLine{48     std::vector<SquareMatrix<MatsT>> \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a39881d763fe50396aa032e73d56ea968}{prevOnePDM}};   }
+\DoxyCodeLine{49     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a725a7159aa57fa6ae1b3723d1790d0d0}{prevEnergy}};                             }
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51   \textcolor{keyword}{public}:}
+\DoxyCodeLine{52     \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1SCFControls}{SCFControls}} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a1c2583249553f15ab9bfefa73efac407}{scfControls}};}
+\DoxyCodeLine{53     \mbox{\hyperlink{structChronusQ_1_1SCFConvergence}{SCFConvergence}} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a4469ba54598945a7ef9d8bd4f70531d6}{scfConv}};}
+\DoxyCodeLine{54     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a9efd1db9dc7f5d0f3d69979739a31457}{doingDamp}};                                }
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{57     \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_abc603a23de5ac94ef2af03f744907ca0}{OptimizeOrbitals}}(\mbox{\hyperlink{structChronusQ_1_1SCFControls}{SCFControls}} sC, \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}}, \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{ModifyOrbitalsOptions<MatsT>}} modOpt, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& mem):}
+\DoxyCodeLine{58         \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a1c2583249553f15ab9bfefa73efac407}{scfControls}}(sC), \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals}{ModifyOrbitals}}<MatsT>(\mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}}, modOpt, mem) \{}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60         \textcolor{comment}{// Allocate prevOnePDM}}
+\DoxyCodeLine{61         \mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} den = this-\/>\mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}}.getOnePDM();}
+\DoxyCodeLine{62         \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} a = 0; a < den.size(); a++ ) \{}
+\DoxyCodeLine{63             \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a39881d763fe50396aa032e73d56ea968}{prevOnePDM}}.emplace\_back(den[a]-\/>\mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a3e3f5db2db8211af00ab2491e32caa11}{memManager}}(), den[a]-\/>dimension());}
+\DoxyCodeLine{64             \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a39881d763fe50396aa032e73d56ea968}{prevOnePDM}}[a] = *den[a];}
+\DoxyCodeLine{65         \}}
+\DoxyCodeLine{66     \};}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     \textcolor{comment}{// Destructor}}
+\DoxyCodeLine{69     \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a327d4b45f0b7b434699914d5e1801d9a}{\string~OptimizeOrbitals}}() \{\};}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{comment}{// Perform an SCF procedure (see include/singleslater/scf.hpp for docs)}}
+\DoxyCodeLine{72     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a32fae69494b34b86682693025b5d8cc5}{runModifyOrbitals}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&, \mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\&, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}}\&);}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74     \textcolor{comment}{// Evaluate convergence}}
+\DoxyCodeLine{75     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a01207a5315d12d6bb2f011de042570fa}{evalProgress}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&);}
+\DoxyCodeLine{76     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a08cd18f21b24690d1b40d5e898c9638e}{computeDensityConv}}();}
+\DoxyCodeLine{77     \textcolor{keyword}{virtual} \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a12721b322a76a804f8198e54f04542ff}{computeFDCConv}}() \{ \textcolor{keywordflow}{return} 0.; \};}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \textcolor{comment}{//   Print SCF header, footer and progress}}
+\DoxyCodeLine{80     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a682c902ef78a1e67340a4ccb76a6f6c3}{printRunHeader}}(std::ostream\& out, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{81     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_aeff894193a561903d4db5c77560a4d26}{printHeaderFinal}}(std::ostream\& out) \textcolor{keyword}{const};}
+\DoxyCodeLine{82     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_aac8295c1fe0cd43df697fa80fec961d3}{printIteration}}(std::ostream\& out = std::cout, \textcolor{keywordtype}{bool} printDiff = \textcolor{keyword}{true}) \textcolor{keyword}{const};}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     \textcolor{comment}{// Common SCF Functions}}
+\DoxyCodeLine{85     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a68d405fd27d1f96fb4d995e10d084c2a}{computeEigenvalues}}(\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\&, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}}\&);}
+\DoxyCodeLine{86 \};}
+\DoxyCodeLine{87 \};   \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

@@ -1,0 +1,159 @@
+\hypertarget{mpi_8hpp_source}{}\doxysection{mpi.\+hpp}
+\label{mpi_8hpp_source}\index{include/util/mpi.hpp@{include/util/mpi.hpp}}
+\mbox{\hyperlink{mpi_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#ifndef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} \{ }
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     \textcolor{keywordtype}{int} \mbox{\hyperlink{structChronusQ_1_1MPI__Comm_a60bee548ced2462e83ab3d7431ff496c}{internal}} = 0;}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm_a396680de89a9a3e936c5e44b477d9d28}{MPI\_Comm}}(\textcolor{keywordtype}{int} c) : \mbox{\hyperlink{structChronusQ_1_1MPI__Comm_a60bee548ced2462e83ab3d7431ff496c}{internal}}(c)\{ \}}
+\DoxyCodeLine{38     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm_a95e819636cca9c1dffe3600df34a5e7b}{MPI\_Comm}}() : \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}(0) \{ \} ;}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{structChronusQ_1_1MPI__Comm_ac4d97100c0836497905a0dd3e51bd85f}{size}}() \{ \textcolor{keywordflow}{return} 1; \}}
+\DoxyCodeLine{41     \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{structChronusQ_1_1MPI__Comm_a86f0aea1d22bc0b07282d0542ce6f01f}{rank}}() \{ \textcolor{keywordflow}{return} 0; \}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keyword}{operator} int()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{structChronusQ_1_1MPI__Comm_a60bee548ced2462e83ab3d7431ff496c}{internal}}; \}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45   \};}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47   \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespaceChronusQ_a2587b9f820cc08d2715050244f2ae3e9}{operator==}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} d)\{ }
+\DoxyCodeLine{48     \textcolor{keywordflow}{return} c.\mbox{\hyperlink{structChronusQ_1_1MPI__Comm_a60bee548ced2462e83ab3d7431ff496c}{internal}} == d.\mbox{\hyperlink{structChronusQ_1_1MPI__Comm_a60bee548ced2462e83ab3d7431ff496c}{internal}}; \}}
+\DoxyCodeLine{49   \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespaceChronusQ_ad5f13f8b6f97d4a400b95cb6d5c53857}{operator!=}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} d)\{ }
+\DoxyCodeLine{50     \textcolor{keywordflow}{return} c.\mbox{\hyperlink{structChronusQ_1_1MPI__Comm_a60bee548ced2462e83ab3d7431ff496c}{internal}} != d.\mbox{\hyperlink{structChronusQ_1_1MPI__Comm_a60bee548ced2462e83ab3d7431ff496c}{internal}}; \}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52   \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespaceChronusQ_a2587b9f820cc08d2715050244f2ae3e9}{operator==}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \textcolor{keywordtype}{int} x)\{ }
+\DoxyCodeLine{53     \textcolor{keywordflow}{return} c.\mbox{\hyperlink{structChronusQ_1_1MPI__Comm_a60bee548ced2462e83ab3d7431ff496c}{internal}} == x; \}}
+\DoxyCodeLine{54   \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespaceChronusQ_ad5f13f8b6f97d4a400b95cb6d5c53857}{operator!=}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \textcolor{keywordtype}{int} x)\{ }
+\DoxyCodeLine{55     \textcolor{keywordflow}{return} not \mbox{\hyperlink{namespaceChronusQ_a2587b9f820cc08d2715050244f2ae3e9}{operator==}}(c,x); \}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57   \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespaceChronusQ_a2587b9f820cc08d2715050244f2ae3e9}{operator==}}(\textcolor{keywordtype}{int} x, \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c)\{ }
+\DoxyCodeLine{58     \textcolor{keywordflow}{return} \mbox{\hyperlink{namespaceChronusQ_a2587b9f820cc08d2715050244f2ae3e9}{operator==}}(c,x); \}}
+\DoxyCodeLine{59   \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespaceChronusQ_ad5f13f8b6f97d4a400b95cb6d5c53857}{operator!=}}(\textcolor{keywordtype}{int} x, \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c)\{ }
+\DoxyCodeLine{60     \textcolor{keywordflow}{return} \mbox{\hyperlink{namespaceChronusQ_ad5f13f8b6f97d4a400b95cb6d5c53857}{operator!=}}(c,x); \}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62   \textcolor{keyword}{static} \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} \mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\_COMM\_WORLD}}\{0 \};}
+\DoxyCodeLine{63   \textcolor{keyword}{static} \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} \mbox{\hyperlink{namespaceChronusQ_a64b7658dac48bb68d8e0e82c988202fd}{MPI\_COMM\_NULL}} \{-\/1\};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 \textcolor{preprocessor}{\#define MPI\_UNDEFINED 1}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67   \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a23c2e4eb26f9455d90831342328f3b91}{MPI\_Barrier}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c) \{ \};}
+\DoxyCodeLine{68 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71   \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm = \mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\_COMM\_WORLD}}) \{}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{74     \textcolor{keywordtype}{int} rank;}
+\DoxyCodeLine{75     MPI\_Comm\_rank(comm,\&rank);}
+\DoxyCodeLine{76     \textcolor{keywordflow}{return} rank;}
+\DoxyCodeLine{77 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{78     \textcolor{keywordflow}{return} comm.rank();}
+\DoxyCodeLine{79 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81   \}}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85   \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm = \mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\_COMM\_WORLD}}) \{}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{88     \textcolor{keywordtype}{int} size;}
+\DoxyCodeLine{89     MPI\_Comm\_size(comm,\&size);}
+\DoxyCodeLine{90     \textcolor{keywordflow}{return} size;}
+\DoxyCodeLine{91 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{92     \textcolor{keywordflow}{return} comm.size();}
+\DoxyCodeLine{93 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95   \}}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98   \textcolor{keyword}{static} \textcolor{keyword}{inline} \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} \mbox{\hyperlink{namespaceChronusQ_a25b765abdb845e0ca3adb846155b3878}{MPICommSplit}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm, \textcolor{keywordtype}{int} color, \textcolor{keywordtype}{int} key) \{}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c;}
+\DoxyCodeLine{101 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{102     MPI\_Comm\_split(comm,color,key,\&c);}
+\DoxyCodeLine{103 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{104     \textcolor{keywordflow}{return} c;}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106   \}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108   \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ae9c2c6f04046395ca738d3adb27543d7}{MPICommFree}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} \&comm) \{}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{111     \textcolor{keywordflow}{if}( comm != \mbox{\hyperlink{namespaceChronusQ_a64b7658dac48bb68d8e0e82c988202fd}{MPI\_COMM\_NULL}}) MPI\_Comm\_free(\&comm);}
+\DoxyCodeLine{112 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114   \}}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116 \textcolor{preprocessor}{\#ifdef ENABLE\_BCAST\_COUNTER}}
+\DoxyCodeLine{117   \textcolor{keyword}{extern} \textcolor{keywordtype}{int} bcastCounter;}
+\DoxyCodeLine{118 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{121   \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(T* msg, \textcolor{keywordtype}{int} count, \textcolor{keywordtype}{int} root, \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c) \{}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125 \textcolor{preprocessor}{\#ifdef ENABLE\_BCAST\_COUNTER}}
+\DoxyCodeLine{126     bcastCounter++;}
+\DoxyCodeLine{127 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{128     mxx::bcast(msg,count,root,c);}
+\DoxyCodeLine{129     \mbox{\hyperlink{namespaceChronusQ_a23c2e4eb26f9455d90831342328f3b91}{MPI\_Barrier}}(c);}
+\DoxyCodeLine{130 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132   \}}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{135   \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(T\& msg, \textcolor{keywordtype}{int} root, \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c) \{}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137     \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(\&msg,1,root,c);}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139   \}}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 \textcolor{preprocessor}{\#define ROOT\_ONLY(comm) if(MPIRank(comm) != 0) return;}}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143   \textcolor{keyword}{static} \textcolor{keyword}{inline} \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} \mbox{\hyperlink{namespaceChronusQ_aa7b3d8958bb1647c8cbaa87f062b2243}{CreateRootComm}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c) \{}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{146     \textcolor{keywordflow}{return} \mbox{\hyperlink{namespaceChronusQ_a25b765abdb845e0ca3adb846155b3878}{MPICommSplit}}(c, (\mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(c) == 0) ? 1 : \mbox{\hyperlink{mpi_8hpp_aff6b3ceb2c22396e5eab7f509b3da0dc}{MPI\_UNDEFINED}}, 0);}
+\DoxyCodeLine{147 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{148     \textcolor{keywordflow}{return} \mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\_COMM\_WORLD}};}
+\DoxyCodeLine{149 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151   \}}
+\DoxyCodeLine{152 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{153 }
+
+\end{DoxyCode}

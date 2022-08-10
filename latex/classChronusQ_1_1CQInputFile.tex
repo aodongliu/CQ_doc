@@ -1,0 +1,391 @@
+\hypertarget{classChronusQ_1_1CQInputFile}{}\doxysection{ChronusQ\+::CQInput\+File Class Reference}
+\label{classChronusQ_1_1CQInputFile}\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+
+
+A class to handle the parsing a data fetching from a \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} input file.  
+
+
+
+
+{\ttfamily \#include $<$input.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQInputFile_ab824606074ca937a329f1d4d3474c6f8}{CQInput\+File}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQInputFile_a837831d0577ff75a64e5dd954cd67635}{CQInput\+File}} (const \mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \&)=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQInputFile_a4fb0044270d890d77c626bf5e99afef3}{CQInput\+File}} (\mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \&\&)=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \& \mbox{\hyperlink{classChronusQ_1_1CQInputFile_a743698e0eaec73679d7820bf0e1c27e3}{operator=}} (const \mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \&)=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \& \mbox{\hyperlink{classChronusQ_1_1CQInputFile_ac720c8a69245b7e4e9b2429820dd143e}{operator=}} (\mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \&\&)=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQInputFile_a8a4a1ddaab279a1e8816183451651c64}{CQInput\+File}} (std\+::string in\+File\+Name)
+\item 
+{\footnotesize template$<$typename T $>$ }\\T \mbox{\hyperlink{classChronusQ_1_1CQInputFile_a0ad36107bbb9f6107da5f86080049aa4}{get\+Data}} (std\+::string)
+\begin{DoxyCompactList}\small\item\em Template function which returns the value of a data field from the input file in a specified datatype given a formatted query string. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classChronusQ_1_1CQInputFile_acd2bea8f068949268836cc772ec9c861}{contains\+Section}} (std\+::string str) const
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1CQInputFile_ae9948f592217c71efa54dd186ff6b4eb}{contains\+Data}} (std\+::string str) const
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{classChronusQ_1_1CQInputFile_ad06b16690eed524279a9ee4e017e8486}{get\+Data\+In\+Section}} (std\+::string section)
+\item 
+template$<$$>$ std\+::string \mbox{\hyperlink{classChronusQ_1_1CQInputFile_a89716321f353f60b5340cfa9821d9b92}{get\+Data}} (std\+::string query)
+\begin{DoxyCompactList}\small\item\em Specialization of get\+Data to return std\+::string of query data field. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1CQInputFile_a61de63edaebf15413e6f77ed81489d39}{parse}} ()
+\begin{DoxyCompactList}\small\item\em Parses a \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} input file. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classChronusQ_1_1CQInputFile_ab1b5dcec5cdc9ceb9a79875c5e8963af}{CQInput\+File}} (std\+::shared\+\_\+ptr$<$ std\+::ifstream $>$ in\+File)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::pair$<$ std\+::string, std\+::string $>$ \mbox{\hyperlink{classChronusQ_1_1CQInputFile_aeea88bec5888a9fdedf2860dd56a2ef8}{split\+Query}} (const std\+::string \&)
+\begin{DoxyCompactList}\small\item\em Splits a query string on a period \char`\"{}.\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::shared\+\_\+ptr$<$ std\+::ifstream $>$ \mbox{\hyperlink{classChronusQ_1_1CQInputFile_aa0019ea406335d307e7265fd619f4097}{in\+File\+\_\+}} = nullptr
+\begin{DoxyCompactList}\small\item\em Input file. \end{DoxyCompactList}\item 
+std\+::unordered\+\_\+map$<$ std\+::string, std\+::unordered\+\_\+map$<$ std\+::string, std\+::string $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1CQInputFile_afd16ac353d51fb7da242f0a5592d7845}{dict\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Input data fields partitioned by section headings. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class to handle the parsing a data fetching from a \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} input file. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_ab1b5dcec5cdc9ceb9a79875c5e8963af}\label{classChronusQ_1_1CQInputFile_ab1b5dcec5cdc9ceb9a79875c5e8963af}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!CQInputFile@{CQInputFile}}
+\index{CQInputFile@{CQInputFile}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{CQInputFile()}{CQInputFile()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+CQInput\+File\+::\+CQInput\+File (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ std\+::ifstream $>$}]{in\+File }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+std\+::ofstream constructor.
+
+Sets and parses input file from std\+::ofstream object 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em in\+File} & File object to parse \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQInputFile_ab1b5dcec5cdc9ceb9a79875c5e8963af_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_ab824606074ca937a329f1d4d3474c6f8}\label{classChronusQ_1_1CQInputFile_ab824606074ca937a329f1d4d3474c6f8}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!CQInputFile@{CQInputFile}}
+\index{CQInputFile@{CQInputFile}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{CQInputFile()}{CQInputFile()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+CQInput\+File\+::\+CQInput\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_a837831d0577ff75a64e5dd954cd67635}\label{classChronusQ_1_1CQInputFile_a837831d0577ff75a64e5dd954cd67635}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!CQInputFile@{CQInputFile}}
+\index{CQInputFile@{CQInputFile}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{CQInputFile()}{CQInputFile()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+CQInput\+File\+::\+CQInput\+File (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_a4fb0044270d890d77c626bf5e99afef3}\label{classChronusQ_1_1CQInputFile_a4fb0044270d890d77c626bf5e99afef3}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!CQInputFile@{CQInputFile}}
+\index{CQInputFile@{CQInputFile}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{CQInputFile()}{CQInputFile()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+CQInput\+File\+::\+CQInput\+File (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_a8a4a1ddaab279a1e8816183451651c64}\label{classChronusQ_1_1CQInputFile_a8a4a1ddaab279a1e8816183451651c64}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!CQInputFile@{CQInputFile}}
+\index{CQInputFile@{CQInputFile}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{CQInputFile()}{CQInputFile()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+CQInput\+File\+::\+CQInput\+File (\begin{DoxyParamCaption}\item[{std\+::string}]{in\+File\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Filename constructor.
+
+Sets and parses CQ input file given a file name 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em in\+File\+Name} & Name of CQ input file \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_ae9948f592217c71efa54dd186ff6b4eb}\label{classChronusQ_1_1CQInputFile_ae9948f592217c71efa54dd186ff6b4eb}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!containsData@{containsData}}
+\index{containsData@{containsData}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{containsData()}{containsData()}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+CQInput\+File\+::contains\+Data (\begin{DoxyParamCaption}\item[{std\+::string}]{str }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Checks whether or not the parsed CQ input file contains a query data field.
+
+\textbackslash{}paral \mbox{[}in\mbox{]} str Query string of a data field (includes section heading) \begin{DoxyReturn}{Returns}
+True if input file contains that data field 
+\end{DoxyReturn}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQInputFile_ae9948f592217c71efa54dd186ff6b4eb_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQInputFile_ae9948f592217c71efa54dd186ff6b4eb_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_acd2bea8f068949268836cc772ec9c861}\label{classChronusQ_1_1CQInputFile_acd2bea8f068949268836cc772ec9c861}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!containsSection@{containsSection}}
+\index{containsSection@{containsSection}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{containsSection()}{containsSection()}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+CQInput\+File\+::contains\+Section (\begin{DoxyParamCaption}\item[{std\+::string}]{str }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Checks whether or not the parsed CQ input file contains a query section.
+
+\textbackslash{}paral \mbox{[}in\mbox{]} str Query string of a section heading \begin{DoxyReturn}{Returns}
+True if input file contains that heading 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQInputFile_acd2bea8f068949268836cc772ec9c861_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_a89716321f353f60b5340cfa9821d9b92}\label{classChronusQ_1_1CQInputFile_a89716321f353f60b5340cfa9821d9b92}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!getData@{getData}}
+\index{getData@{getData}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{getData()}{getData()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+double Chronus\+Q\+::\+CQInput\+File\+::get\+Data (\begin{DoxyParamCaption}\item[{std\+::string}]{query }\end{DoxyParamCaption})}
+
+
+
+Specialization of get\+Data to return std\+::string of query data field. 
+
+Specialization of get\+Data to return double of query data field.
+
+Specialization of get\+Data to return size\+\_\+t of query data field.
+
+Specialization of get\+Data to return bool of query data field.
+
+Specialization of get\+Data to return int of query data field.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em query} & Formatted query string to be parsed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Value of query data field as a std\+::string
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em query} & Formatted query string to be parsed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Value of query data field as a int
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em query} & Formatted query string to be parsed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Value of query data field as a bool
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em query} & Formatted query string to be parsed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Value of query data field as a size\+\_\+t
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em query} & Formatted query string to be parsed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Value of query data field as a double 
+\end{DoxyReturn}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQInputFile_a89716321f353f60b5340cfa9821d9b92_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_a0ad36107bbb9f6107da5f86080049aa4}\label{classChronusQ_1_1CQInputFile_a0ad36107bbb9f6107da5f86080049aa4}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!getData@{getData}}
+\index{getData@{getData}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{getData()}{getData()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T Chronus\+Q\+::\+CQInput\+File\+::get\+Data (\begin{DoxyParamCaption}\item[{std\+::string}]{ }\end{DoxyParamCaption})}
+
+
+
+Template function which returns the value of a data field from the input file in a specified datatype given a formatted query string. 
+
+i.\+e.
+
+Input entry\+: \mbox{[}SCF\mbox{]} DENTOL = 1E-\/6
+
+Query double tol = input.\+get\+Data$<$double$>$(\char`\"{}\+SCF.\+DENTOL\char`\"{});
+
+This example returns the value of the string data field \char`\"{}\+SCF.\+DENTOL\char`\"{} as a double precision number. Various specializations of this function exist for various datatypes
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & Formatted query string to be parsed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Value of query data field as specified datatype 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQInputFile_a0ad36107bbb9f6107da5f86080049aa4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_ad06b16690eed524279a9ee4e017e8486}\label{classChronusQ_1_1CQInputFile_ad06b16690eed524279a9ee4e017e8486}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!getDataInSection@{getDataInSection}}
+\index{getDataInSection@{getDataInSection}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{getDataInSection()}{getDataInSection()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::string $>$ Chronus\+Q\+::\+CQInput\+File\+::get\+Data\+In\+Section (\begin{DoxyParamCaption}\item[{std\+::string}]{section }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQInputFile_ad06b16690eed524279a9ee4e017e8486_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQInputFile_ad06b16690eed524279a9ee4e017e8486_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_a743698e0eaec73679d7820bf0e1c27e3}\label{classChronusQ_1_1CQInputFile_a743698e0eaec73679d7820bf0e1c27e3}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!operator=@{operator=}}
+\index{operator=@{operator=}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \& Chronus\+Q\+::\+CQInput\+File\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_ac720c8a69245b7e4e9b2429820dd143e}\label{classChronusQ_1_1CQInputFile_ac720c8a69245b7e4e9b2429820dd143e}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!operator=@{operator=}}
+\index{operator=@{operator=}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \& Chronus\+Q\+::\+CQInput\+File\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_a61de63edaebf15413e6f77ed81489d39}\label{classChronusQ_1_1CQInputFile_a61de63edaebf15413e6f77ed81489d39}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!parse@{parse}}
+\index{parse@{parse}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{parse()}{parse()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+CQInput\+File\+::parse (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Parses a \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} input file. 
+
+Parses the file and populates the dict\+\_\+ map which holds the input data fields to control the \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} calculation Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQInputFile_a61de63edaebf15413e6f77ed81489d39_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQInputFile_a61de63edaebf15413e6f77ed81489d39_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_aeea88bec5888a9fdedf2860dd56a2ef8}\label{classChronusQ_1_1CQInputFile_aeea88bec5888a9fdedf2860dd56a2ef8}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!splitQuery@{splitQuery}}
+\index{splitQuery@{splitQuery}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{splitQuery()}{splitQuery()}}
+{\footnotesize\ttfamily std\+::pair$<$ std\+::string, std\+::string $>$ Chronus\+Q\+::\+CQInput\+File\+::split\+Query (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{query }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Splits a query string on a period \char`\"{}.\char`\"{}. 
+
+This is a helpder function for the get\+Data function which takes a formatted string and splits it into a section and data field.
+
+i.\+e. \char`\"{}\+QM.\+REFERENCE\char`\"{} -\/\texorpdfstring{$>$}{>} \{ \char`\"{}\+QM\char`\"{}, \char`\"{}\+REFERENCE\char`\"{} \}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em query} & Query string to be split \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::pair containing the two fields separated by a \char`\"{}.\char`\"{} 
+\end{DoxyReturn}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQInputFile_aeea88bec5888a9fdedf2860dd56a2ef8_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQInputFile_aeea88bec5888a9fdedf2860dd56a2ef8_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_afd16ac353d51fb7da242f0a5592d7845}\label{classChronusQ_1_1CQInputFile_afd16ac353d51fb7da242f0a5592d7845}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!dict\_@{dict\_}}
+\index{dict\_@{dict\_}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{dict\_}{dict\_}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, std\+::unordered\+\_\+map$<$std\+::string,std\+::string$>$ $>$ Chronus\+Q\+::\+CQInput\+File\+::dict\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Input data fields partitioned by section headings. 
+
+\mbox{\Hypertarget{classChronusQ_1_1CQInputFile_aa0019ea406335d307e7265fd619f4097}\label{classChronusQ_1_1CQInputFile_aa0019ea406335d307e7265fd619f4097}} 
+\index{ChronusQ::CQInputFile@{ChronusQ::CQInputFile}!inFile\_@{inFile\_}}
+\index{inFile\_@{inFile\_}!ChronusQ::CQInputFile@{ChronusQ::CQInputFile}}
+\doxysubsubsection{\texorpdfstring{inFile\_}{inFile\_}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$std\+::ifstream$>$ Chronus\+Q\+::\+CQInput\+File\+::in\+File\+\_\+ = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Input file. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/cxxapi/\mbox{\hyperlink{input_8hpp}{input.\+hpp}}\item 
+src/cxxapi/input/\mbox{\hyperlink{parse_8cxx}{parse.\+cxx}}\end{DoxyCompactItemize}

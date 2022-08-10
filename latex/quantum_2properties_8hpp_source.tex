@@ -1,0 +1,77 @@
+\hypertarget{quantum_2properties_8hpp_source}{}\doxysection{properties.\+hpp}
+\label{quantum_2properties_8hpp_source}\index{include/quantum/properties.hpp@{include/quantum/properties.hpp}}
+\mbox{\hyperlink{quantum_2properties_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you ca redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <quantum.hpp>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{34   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{35   \textcolor{keyword}{template} <DENSITY\_TYPE DenTyp, \textcolor{keyword}{typename} Op>}
+\DoxyCodeLine{36   \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1Quantum_af6869f1ccd5313e3cada40e1eed8d7d0}{Quantum<MatsT>::OperatorSpinCombine}}(\textcolor{keyword}{const} Op \&op) \{}
+\DoxyCodeLine{37     \textcolor{keywordtype}{double} rZero(0.);}
+\DoxyCodeLine{38     \textcolor{keywordtype}{bool} isReal = std::is\_same<double,MatsT>::value;}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keywordtype}{size\_t} NB = onePDM-\/>dimension();}
+\DoxyCodeLine{41     \textcolor{keywordtype}{size\_t} DSize = NB * NB;}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{comment}{// Scalar trace option always valid}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{comment}{// Zero eval if 1C, closed shell and not scalar trace}}
+\DoxyCodeLine{46     \textcolor{keywordtype}{bool} isZero = (nC == 1 and iCS) and (DenTyp != \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{DENSITY\_TYPE::SCALAR}});}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{comment}{// Zero eval if 1C, open shell and MX / MY trace}}
+\DoxyCodeLine{49     isZero = isZero or ( }
+\DoxyCodeLine{50       (nC == 1 and not iCS) and}
+\DoxyCodeLine{51       (DenTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5a91a026eba35b718e654608234c1878ba}{DENSITY\_TYPE::MY}} or DenTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5ab22d2789fda102ddabdacdb49af83bbf}{DENSITY\_TYPE::MX}}) }
+\DoxyCodeLine{52     );}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{comment}{// Zero eval is 2C, real and MY trace}}
+\DoxyCodeLine{55     isZero = isZero or (}
+\DoxyCodeLine{56       (nC > 1) and (DenTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5a91a026eba35b718e654608234c1878ba}{DENSITY\_TYPE::MY}} and isReal)}
+\DoxyCodeLine{57     );}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{comment}{// Catch zero evals}}
+\DoxyCodeLine{60     \textcolor{keywordflow}{if}(isZero)}
+\DoxyCodeLine{61       \textcolor{keywordflow}{return} rZero;}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \textcolor{comment}{// Sanity checks}}
+\DoxyCodeLine{64     assert( memManager.template getSize(op) == DSize );}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \textcolor{comment}{// Perform proper trace}}
+\DoxyCodeLine{67     MatsT *Dptr = (*onePDM)[\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8f}{PAULI\_SPINOR\_COMPS}}\textcolor{keyword}{>}(DenTyp)].pointer();}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69     \textcolor{keywordflow}{return} \mbox{\hyperlink{namespaceChronusQ_aa856d84bb9b96b7795a666a14a84b120}{OperatorTrace}}(DSize,Dptr,op);}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71   \}; \textcolor{comment}{// Quantum<T>::OperatorSpinCombine}}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{75 }
+
+\end{DoxyCode}

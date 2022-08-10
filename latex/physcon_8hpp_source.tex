@@ -1,0 +1,73 @@
+\hypertarget{physcon_8hpp_source}{}\doxysection{physcon.\+hpp}
+\label{physcon_8hpp_source}\index{include/physcon.hpp@{include/physcon.hpp}}
+\mbox{\hyperlink{physcon_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <cmath>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   \textcolor{comment}{// Physical Constants }}
+\DoxyCodeLine{31   \textcolor{comment}{// XXX: Could use some citations / more accurate values here}}
+\DoxyCodeLine{32   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}    = 0.52917721092;}
+\DoxyCodeLine{33   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a7aaaa4fa77a38067ace51e28fdc6d6ee}{KgPerAMU}}      = 1.6650538921e-\/27;}
+\DoxyCodeLine{34   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a6f7880ba8e3004cc9c16da9df1e31004}{CouPerEl}}      = 1.602176565e-\/19;}
+\DoxyCodeLine{35   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_abacdf34174eb3e24eec70fd3e6e85306}{PlanckConst}}   = 6.62606957e-\/34;}
+\DoxyCodeLine{36   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a5a775b389fe332abf7feb46ba2f63459}{AvogConst}}     = 6.02214129e+23;}
+\DoxyCodeLine{37   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} = 0.393430307;}
+\DoxyCodeLine{38   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_ad886cd941f1239c3db41e3b9df6e68b6}{EVPerHartree}}  = 27.211396132;}
+\DoxyCodeLine{39   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a5aff7c8d4d7abc25b35bb3cc19acf100}{NMPerHartree}}  = 45.56335;}
+\DoxyCodeLine{40   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a387c8ccd4e18ad322b87f75f51fd008d}{SpeedOfLight}}  = 137.035999074;}
+\DoxyCodeLine{41   \textcolor{comment}{//constexpr double SpeedOfLight  = 137.03599967994; // PySCF}}
+\DoxyCodeLine{42   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a5eb23f7f0b92e7527a5509138f761432}{FSPerAUTime}}   = 2.4188843265857e-\/2;}
+\DoxyCodeLine{43   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a68c95254930ea066c4a7b2c4389205dc}{JPerHartree}}   = 4.35974434e-\/18;}
+\DoxyCodeLine{44   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_aeac42d4d1c76214d7374f67ad65af2ef}{ProtMassPerE}}  = 1836.15267343;}
+\DoxyCodeLine{45   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a02ab1bfed3cb5cc36b1dedcbfc7594ae}{AUPerAMU}}      = 1822.888486217313;}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47   \textcolor{comment}{// Things in odd unit systems / derived}}
+\DoxyCodeLine{48   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_ab401d59cf9f25a07b030df70b25740ba}{SpeedOfLight\_CM}} = 2.99792458e+10; }
+\DoxyCodeLine{49   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_aac3b49c8c0bda1dcf3bd21eef28ca856}{CouPerEl\_ESU}} = }
+\DoxyCodeLine{50     \mbox{\hyperlink{namespaceChronusQ_a6f7880ba8e3004cc9c16da9df1e31004}{CouPerEl}} * \mbox{\hyperlink{namespaceChronusQ_ab401d59cf9f25a07b030df70b25740ba}{SpeedOfLight\_CM}} / 10.;}
+\DoxyCodeLine{51   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a3d2e364ce1ac0f9676c1f166a735589b}{MassEl\_KG}} = }
+\DoxyCodeLine{52     1e4 * \mbox{\hyperlink{namespaceChronusQ_a68c95254930ea066c4a7b2c4389205dc}{JPerHartree}} / \mbox{\hyperlink{namespaceChronusQ_ab401d59cf9f25a07b030df70b25740ba}{SpeedOfLight\_CM}} / \mbox{\hyperlink{namespaceChronusQ_ab401d59cf9f25a07b030df70b25740ba}{SpeedOfLight\_CM}} *}
+\DoxyCodeLine{53     \mbox{\hyperlink{namespaceChronusQ_a387c8ccd4e18ad322b87f75f51fd008d}{SpeedOfLight}} * \mbox{\hyperlink{namespaceChronusQ_a387c8ccd4e18ad322b87f75f51fd008d}{SpeedOfLight}};}
+\DoxyCodeLine{54   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a892e7595f5088172241164eebc511331}{HBar}} = \mbox{\hyperlink{namespaceChronusQ_abacdf34174eb3e24eec70fd3e6e85306}{PlanckConst}} / 2. / M\_PI;}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57   \textcolor{comment}{// Unit conversions}}
+\DoxyCodeLine{58   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a7e4422ebf97d31fb1a237d73b4a7d237}{Rotatory\_CGS\_Length}} = }
+\DoxyCodeLine{59     1e40 * \mbox{\hyperlink{namespaceChronusQ_aac3b49c8c0bda1dcf3bd21eef28ca856}{CouPerEl\_ESU}} * \mbox{\hyperlink{namespaceChronusQ_aac3b49c8c0bda1dcf3bd21eef28ca856}{CouPerEl\_ESU}} * \mbox{\hyperlink{namespaceChronusQ_a892e7595f5088172241164eebc511331}{HBar}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} *}
+\DoxyCodeLine{60     1e7 * 1e-\/8 / (1e3 * \mbox{\hyperlink{namespaceChronusQ_a3d2e364ce1ac0f9676c1f166a735589b}{MassEl\_KG}} * \mbox{\hyperlink{namespaceChronusQ_ab401d59cf9f25a07b030df70b25740ba}{SpeedOfLight\_CM}});   }
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62   \textcolor{keyword}{constexpr} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a4748760d11165484c9a3d0104a92bbf4}{Rotatory\_CGS\_Vel}} = }
+\DoxyCodeLine{63     1e40 * \mbox{\hyperlink{namespaceChronusQ_aac3b49c8c0bda1dcf3bd21eef28ca856}{CouPerEl\_ESU}} * \mbox{\hyperlink{namespaceChronusQ_aac3b49c8c0bda1dcf3bd21eef28ca856}{CouPerEl\_ESU}} * \mbox{\hyperlink{namespaceChronusQ_a892e7595f5088172241164eebc511331}{HBar}}*\mbox{\hyperlink{namespaceChronusQ_a892e7595f5088172241164eebc511331}{HBar}}*\mbox{\hyperlink{namespaceChronusQ_a892e7595f5088172241164eebc511331}{HBar}} * }
+\DoxyCodeLine{64     1e21 / ( \mbox{\hyperlink{namespaceChronusQ_a3d2e364ce1ac0f9676c1f166a735589b}{MassEl\_KG}} * \mbox{\hyperlink{namespaceChronusQ_a3d2e364ce1ac0f9676c1f166a735589b}{MassEl\_KG}} * \mbox{\hyperlink{namespaceChronusQ_ab401d59cf9f25a07b030df70b25740ba}{SpeedOfLight\_CM}} * }
+\DoxyCodeLine{65         \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a68c95254930ea066c4a7b2c4389205dc}{JPerHartree}} * 1e5 );}
+\DoxyCodeLine{66 \};}
+\DoxyCodeLine{67 }
+
+\end{DoxyCode}

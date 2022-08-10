@@ -1,0 +1,465 @@
+\hypertarget{classChronusQ_1_1BeckeIntegrator}{}\doxysection{ChronusQ\+::Becke\+Integrator\texorpdfstring{$<$}{<} \+\_\+\+QTyp1 \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1BeckeIntegrator}\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+
+
+Becke Molecular Integrator.  
+
+
+
+
+{\ttfamily \#include $<$integrator.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::Becke\+Integrator\texorpdfstring{$<$}{<} \+\_\+\+QTyp1 \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=219pt]{classChronusQ_1_1BeckeIntegrator__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::Becke\+Integrator\texorpdfstring{$<$}{<} \+\_\+\+QTyp1 \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BeckeIntegrator__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a7965903ade7c55b17f78d313f84855ef}{Becke\+Integrator}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a4cd58274e1811871ff09cfe35224e41e}{Becke\+Integrator}} (const \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Becke\+Integrator}} \&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_aa0dc69d160090624f24a43fd29cb4d6d}{Becke\+Integrator}} (\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Becke\+Integrator}} \&\&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a4f4b5ffc004ea9b707311f51baf4bb2f}{Becke\+Integrator}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&basis, \+\_\+\+QTyp1 g, size\+\_\+t NAng, size\+\_\+t NRad\+Per\+Macro\+Batch, \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\+\_\+\+EVAL\+\_\+\+TYPE}} typ, double eps\+Screen)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Becke\+Integrator}} constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae9e287d64a3b497262829f2362968370}{Becke\+Integrator}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&basis1, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&basis2, \+\_\+\+QTyp1 g, size\+\_\+t NAng, size\+\_\+t NRad\+Per\+Macro\+Batch, \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\+\_\+\+EVAL\+\_\+\+TYPE}} typ1, \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\+\_\+\+EVAL\+\_\+\+TYPE}} typ2, double eps\+Screen)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Becke\+Integrator}} constructor. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ab1fa536e40a48ecc62fbfec145cbbc11}{h\+Becke}} (double x)
+\item 
+double \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a3161e01e6d42b66aa1938f8e0b9ddb88}{g\+Becke}} (double x)
+\item 
+double \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a39942e1579e585066707c88475981c10}{eval\+Partition\+Weights}} (size\+\_\+t i\+Current, double $\ast$R, std\+::vector$<$ double $>$ \&batchW)
+\begin{DoxyCompactList}\small\item\em Evaluates the form the U variables given the V variables. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_acaeca5366e49aa412158af4cd0a69518}{RAB}} (size\+\_\+t a\+Center, size\+\_\+t b\+Center)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a3e62c6b11c7100c19cb4c1cca8cd38ba}{eval\+Frisch\+Partition\+Weights}} (const size\+\_\+t i\+Current, const std\+::vector$<$ std\+::array$<$ double, 3 $>$ $>$ \&points, std\+::vector$<$ double $>$ \&\mbox{\hyperlink{lebedev__974_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}})
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0f370d15d4a455517fce02121cc1dd9a}{calc\+Cen\+Dist}} (std\+::vector$<$ \mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\+\_\+t}} $>$ \&batch\+Pt, double $\ast$r\+Sq, double $\ast$R, double $\ast$cen\+XYZ)
+\begin{DoxyCompactList}\small\item\em Evaluate the squared distances for all cart\+\_\+t points in the batch\+Pt from all atoms in the molecule and their cartisian compoents. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T , class F , typename... Args$>$ }\\void \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a1a8bb5e114b7d23d8998efc86146b1ca}{integrate}} (T \&res, const F \&func, Args... args)
+\begin{DoxyCompactList}\small\item\em Integration function according the Becke scheme. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T , class F , typename... Args$>$ }\\T \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a80e2a5ef151187c174937281497fca94}{integrate}} (const F \&func, Args... args)
+\begin{DoxyCompactList}\small\item\em Generalization of the integrate function which constructs the result internally and passes to the integrate function to be incremented by reference. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a97d8c994ea8684bb96cbed1eba4b6f08}{comm}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}{mem\+Manager\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Memory managment. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \& \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\+\_\+}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} object for nuclear potential. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \& \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basis\+Set\+\_\+}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} for the GTO basis defintion. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\+\_\+\+EVAL\+\_\+\+TYPE}} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a3d526ded299e9ac8500dff63dd5ac033}{typ\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Specification of basis evaluatio requirements. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae6c267d8acb3569ec5215f94629f4497}{eps\+Screen\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Raw screening tolerance. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae6dd5183295e564e7925098bc1ff4933}{NDer}}
+\begin{DoxyCompactList}\small\item\em Number of required basis set derivatives. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \& \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basis\+Set2\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Second \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} for the GTO basis defintion. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\+\_\+\+EVAL\+\_\+\+TYPE}} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a6f71856fe847969edd00383030372c84}{typ2\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Specification of second basis evaluation requirements. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ab9f5b475b0b805c7ec5fe94325fdc907}{NDer2}}
+\begin{DoxyCompactList}\small\item\em Number of required basis set derivatives for 2nd basis. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}{Int2nd}} = false
+\begin{DoxyCompactList}\small\item\em Whether to integrate second basis set. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}{i\+Atm}}
+\begin{DoxyCompactList}\small\item\em Current center for integral. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class \+\_\+\+QTyp1$>$\newline
+class Chronus\+Q\+::\+Becke\+Integrator$<$ \+\_\+\+QTyp1 $>$}
+Becke Molecular Integrator. 
+
+Integrates a molecular integrand using the Becke sphere integration scheme. Specializes \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator}{Sphere\+Integrator}}
+
+See J. Chem. Phys. 88, 2547 (1988) 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a7965903ade7c55b17f78d313f84855ef}\label{classChronusQ_1_1BeckeIntegrator_a7965903ade7c55b17f78d313f84855ef}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!BeckeIntegrator@{BeckeIntegrator}}
+\index{BeckeIntegrator@{BeckeIntegrator}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{BeckeIntegrator()}{BeckeIntegrator()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::\+Becke\+Integrator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a4cd58274e1811871ff09cfe35224e41e}\label{classChronusQ_1_1BeckeIntegrator_a4cd58274e1811871ff09cfe35224e41e}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!BeckeIntegrator@{BeckeIntegrator}}
+\index{BeckeIntegrator@{BeckeIntegrator}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{BeckeIntegrator()}{BeckeIntegrator()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::\+Becke\+Integrator (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$ \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_aa0dc69d160090624f24a43fd29cb4d6d}\label{classChronusQ_1_1BeckeIntegrator_aa0dc69d160090624f24a43fd29cb4d6d}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!BeckeIntegrator@{BeckeIntegrator}}
+\index{BeckeIntegrator@{BeckeIntegrator}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{BeckeIntegrator()}{BeckeIntegrator()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::\+Becke\+Integrator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$ \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a4f4b5ffc004ea9b707311f51baf4bb2f}\label{classChronusQ_1_1BeckeIntegrator_a4f4b5ffc004ea9b707311f51baf4bb2f}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!BeckeIntegrator@{BeckeIntegrator}}
+\index{BeckeIntegrator@{BeckeIntegrator}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{BeckeIntegrator()}{BeckeIntegrator()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::\+Becke\+Integrator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{c,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem,  }\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{mol,  }\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{basis,  }\item[{\+\_\+\+QTyp1}]{g,  }\item[{size\+\_\+t}]{NAng,  }\item[{size\+\_\+t}]{NRad\+Per\+Macro\+Batch,  }\item[{\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\+\_\+\+EVAL\+\_\+\+TYPE}}}]{typ,  }\item[{double}]{eps\+Screen }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Becke\+Integrator}} constructor. 
+
+Constructs a \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Becke\+Integrator}} object from a \mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} scheme for the radial integration \mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_ae9e287d64a3b497262829f2362968370}\label{classChronusQ_1_1BeckeIntegrator_ae9e287d64a3b497262829f2362968370}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!BeckeIntegrator@{BeckeIntegrator}}
+\index{BeckeIntegrator@{BeckeIntegrator}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{BeckeIntegrator()}{BeckeIntegrator()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::\+Becke\+Integrator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{c,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem,  }\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{mol,  }\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{basis1,  }\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{basis2,  }\item[{\+\_\+\+QTyp1}]{g,  }\item[{size\+\_\+t}]{NAng,  }\item[{size\+\_\+t}]{NRad\+Per\+Macro\+Batch,  }\item[{\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\+\_\+\+EVAL\+\_\+\+TYPE}}}]{typ1,  }\item[{\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\+\_\+\+EVAL\+\_\+\+TYPE}}}]{typ2,  }\item[{double}]{eps\+Screen }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Becke\+Integrator}} constructor. 
+
+Constructs a \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Becke\+Integrator}} object from a \mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} scheme for the radial integration by taking two basis sets as input 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a0f370d15d4a455517fce02121cc1dd9a}\label{classChronusQ_1_1BeckeIntegrator_a0f370d15d4a455517fce02121cc1dd9a}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!calcCenDist@{calcCenDist}}
+\index{calcCenDist@{calcCenDist}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{calcCenDist()}{calcCenDist()}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::calc\+Cen\+Dist (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\+\_\+t}} $>$ \&}]{batch\+Pt,  }\item[{double $\ast$}]{r\+Sq,  }\item[{double $\ast$}]{R,  }\item[{double $\ast$}]{cen\+XYZ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Evaluate the squared distances for all cart\+\_\+t points in the batch\+Pt from all atoms in the molecule and their cartisian compoents. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em batch\+Pt} & Pointer to the x,y,z coordinated for all points in the batch \\
+\hline
+\mbox{\texttt{ out}}  & {\em r\+Sq} & Pointer to the square values of the distances from all points to the centers \\
+\hline
+\mbox{\texttt{ out}}  & {\em cen\+XYZ} & Pointer to the components of the distances from all points to the centers \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BeckeIntegrator_a0f370d15d4a455517fce02121cc1dd9a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a3e62c6b11c7100c19cb4c1cca8cd38ba}\label{classChronusQ_1_1BeckeIntegrator_a3e62c6b11c7100c19cb4c1cca8cd38ba}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!evalFrischPartitionWeights@{evalFrischPartitionWeights}}
+\index{evalFrischPartitionWeights@{evalFrischPartitionWeights}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{evalFrischPartitionWeights()}{evalFrischPartitionWeights()}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::eval\+Frisch\+Partition\+Weights (\begin{DoxyParamCaption}\item[{const size\+\_\+t}]{i\+Current,  }\item[{const std\+::vector$<$ std\+::array$<$ double, 3 $>$ $>$ \&}]{points,  }\item[{std\+::vector$<$ double $>$ \&}]{weights }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BeckeIntegrator_a3e62c6b11c7100c19cb4c1cca8cd38ba_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a39942e1579e585066707c88475981c10}\label{classChronusQ_1_1BeckeIntegrator_a39942e1579e585066707c88475981c10}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!evalPartitionWeights@{evalPartitionWeights}}
+\index{evalPartitionWeights@{evalPartitionWeights}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{evalPartitionWeights()}{evalPartitionWeights()}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::eval\+Partition\+Weights (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{i\+Current,  }\item[{double $\ast$}]{R,  }\item[{std\+::vector$<$ double $>$ \&}]{batchW }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Evaluates the form the U variables given the V variables. 
+
+Function for the multicenter numerical integration from J. Chem. Phys. 88, 2547(1988).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em i\+Current} & index for the current atomic center on which the shere is centered \\
+\hline
+\mbox{\texttt{ in}}  & {\em r\+Sq} & Pointer to the square values of the distances of all points to the centers \\
+\hline
+ & {\em \mbox{[}in/out\mbox{]}} & Raw/\+Updated grid weights\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the max weight for the batch. 
+\end{DoxyReturn}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BeckeIntegrator_a39942e1579e585066707c88475981c10_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BeckeIntegrator_a39942e1579e585066707c88475981c10_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a3161e01e6d42b66aa1938f8e0b9ddb88}\label{classChronusQ_1_1BeckeIntegrator_a3161e01e6d42b66aa1938f8e0b9ddb88}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!gBecke@{gBecke}}
+\index{gBecke@{gBecke}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{gBecke()}{gBecke()}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::g\+Becke (\begin{DoxyParamCaption}\item[{double}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BeckeIntegrator_a3161e01e6d42b66aa1938f8e0b9ddb88_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BeckeIntegrator_a3161e01e6d42b66aa1938f8e0b9ddb88_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_ab1fa536e40a48ecc62fbfec145cbbc11}\label{classChronusQ_1_1BeckeIntegrator_ab1fa536e40a48ecc62fbfec145cbbc11}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!hBecke@{hBecke}}
+\index{hBecke@{hBecke}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{hBecke()}{hBecke()}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::h\+Becke (\begin{DoxyParamCaption}\item[{double}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Functions for the multicenter numerical integration from J. Chem. Phys. 88, 2547(1988). The following h\+Becke, g\+Becke and eval\+Partition\+Weights are base on the Ref above. Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BeckeIntegrator_ab1fa536e40a48ecc62fbfec145cbbc11_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a80e2a5ef151187c174937281497fca94}\label{classChronusQ_1_1BeckeIntegrator_a80e2a5ef151187c174937281497fca94}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!integrate@{integrate}}
+\index{integrate@{integrate}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{integrate()}{integrate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+template$<$typename T , class F , typename... Args$>$ \\
+T \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::integrate (\begin{DoxyParamCaption}\item[{const F \&}]{func,  }\item[{Args...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Generalization of the integrate function which constructs the result internally and passes to the integrate function to be incremented by reference. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a1a8bb5e114b7d23d8998efc86146b1ca}\label{classChronusQ_1_1BeckeIntegrator_a1a8bb5e114b7d23d8998efc86146b1ca}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!integrate@{integrate}}
+\index{integrate@{integrate}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{integrate()}{integrate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+template$<$typename T , class F , typename... Args$>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::integrate (\begin{DoxyParamCaption}\item[{T \&}]{res,  }\item[{const F \&}]{func,  }\item[{Args...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Integration function according the Becke scheme. 
+
+See J. Chem. Phys. 88, 2547(1988). ~\newline
+
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em res} & VXC submatrix for the current batch \\
+\hline
+\mbox{\texttt{ in}}  & {\em func} & funtion to be integrated (form\+VXC) \\
+\hline
+\mbox{\texttt{ in}}  & {\em arg} & several arguments to be passed in \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BeckeIntegrator_a1a8bb5e114b7d23d8998efc86146b1ca_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1BeckeIntegrator_a1a8bb5e114b7d23d8998efc86146b1ca_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_acaeca5366e49aa412158af4cd0a69518}\label{classChronusQ_1_1BeckeIntegrator_acaeca5366e49aa412158af4cd0a69518}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!RAB@{RAB}}
+\index{RAB@{RAB}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{RAB()}{RAB()}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::\+RAB (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{a\+Center,  }\item[{size\+\_\+t}]{b\+Center }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}\label{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!basisSet2\_@{basisSet2\_}}
+\index{basisSet2\_@{basisSet2\_}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{basisSet2\_}{basisSet2\_}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}}\& \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::basis\+Set2\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Second \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} for the GTO basis defintion. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}\label{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!basisSet\_@{basisSet\_}}
+\index{basisSet\_@{basisSet\_}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{basisSet\_}{basisSet\_}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}}\& \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::basis\+Set\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} for the GTO basis defintion. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a97d8c994ea8684bb96cbed1eba4b6f08}\label{classChronusQ_1_1BeckeIntegrator_a97d8c994ea8684bb96cbed1eba4b6f08}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!comm@{comm}}
+\index{comm@{comm}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{comm}{comm}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::comm\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_ae6c267d8acb3569ec5215f94629f4497}\label{classChronusQ_1_1BeckeIntegrator_ae6c267d8acb3569ec5215f94629f4497}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!epsScreen\_@{epsScreen\_}}
+\index{epsScreen\_@{epsScreen\_}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{epsScreen\_}{epsScreen\_}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::eps\+Screen\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Raw screening tolerance. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}\label{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!iAtm@{iAtm}}
+\index{iAtm@{iAtm}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{iAtm}{iAtm}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::i\+Atm\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Current center for integral. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}\label{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!Int2nd@{Int2nd}}
+\index{Int2nd@{Int2nd}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{Int2nd}{Int2nd}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::\+Int2nd = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Whether to integrate second basis set. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}\label{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!memManager\_@{memManager\_}}
+\index{memManager\_@{memManager\_}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{memManager\_}{memManager\_}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}}\& \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::mem\+Manager\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Memory managment. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}\label{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!molecule\_@{molecule\_}}
+\index{molecule\_@{molecule\_}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{molecule\_}{molecule\_}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::molecule\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} object for nuclear potential. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_ae6dd5183295e564e7925098bc1ff4933}\label{classChronusQ_1_1BeckeIntegrator_ae6dd5183295e564e7925098bc1ff4933}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!NDer@{NDer}}
+\index{NDer@{NDer}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{NDer}{NDer}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::\+NDer\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Number of required basis set derivatives. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_ab9f5b475b0b805c7ec5fe94325fdc907}\label{classChronusQ_1_1BeckeIntegrator_ab9f5b475b0b805c7ec5fe94325fdc907}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!NDer2@{NDer2}}
+\index{NDer2@{NDer2}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{NDer2}{NDer2}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::\+NDer2\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Number of required basis set derivatives for 2nd basis. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a6f71856fe847969edd00383030372c84}\label{classChronusQ_1_1BeckeIntegrator_a6f71856fe847969edd00383030372c84}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!typ2\_@{typ2\_}}
+\index{typ2\_@{typ2\_}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{typ2\_}{typ2\_}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\+\_\+\+EVAL\+\_\+\+TYPE}} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::typ2\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Specification of second basis evaluation requirements. 
+
+\mbox{\Hypertarget{classChronusQ_1_1BeckeIntegrator_a3d526ded299e9ac8500dff63dd5ac033}\label{classChronusQ_1_1BeckeIntegrator_a3d526ded299e9ac8500dff63dd5ac033}} 
+\index{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}!typ\_@{typ\_}}
+\index{typ\_@{typ\_}!ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$@{ChronusQ::BeckeIntegrator$<$ \_QTyp1 $>$}}
+\doxysubsubsection{\texorpdfstring{typ\_}{typ\_}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 $>$ \\
+\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\+\_\+\+EVAL\+\_\+\+TYPE}} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{Chronus\+Q\+::\+Becke\+Integrator}}$<$ \+\_\+\+QTyp1 $>$\+::typ\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Specification of basis evaluatio requirements. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/grid/\mbox{\hyperlink{integrator_8hpp}{integrator.\+hpp}}\end{DoxyCompactItemize}

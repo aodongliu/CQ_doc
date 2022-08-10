@@ -1,0 +1,984 @@
+\hypertarget{integrator_8hpp_source}{}\doxysection{integrator.\+hpp}
+\label{integrator_8hpp_source}\index{include/grid/integrator.hpp@{include/grid/integrator.hpp}}
+\mbox{\hyperlink{integrator_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{comment}{// TODO: Increment docs on quadrature / integrators}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{quadrature_8hpp}{grid/quadrature.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{basisset_8hpp}{basisset.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{molecule_8hpp}{molecule.hpp}}>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{physcon_8hpp}{physcon.hpp}}>}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{threads_8hpp}{util/threads.hpp}}>}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mpi_8hpp}{util/mpi.hpp}}>}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg__config_8hpp}{cqlinalg/cqlinalg\_config.hpp}}>}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{comment}{// INT\_DEBUG\_LEVEL == 1 -\/ Timing}}
+\DoxyCodeLine{42 \textcolor{comment}{// INT\_DEBUG\_LEVEL >= 3 -\/ Print EVERYTHING and turn off screening}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#ifndef INT\_DEBUG\_LEVEL}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#  define INT\_DEBUG\_LEVEL 0}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 \textcolor{keyword}{using }\mbox{\hyperlink{integrator_8hpp_a93e5e2ec9477b0f26d2595f37bef369f}{cart\_t}} = std::array<double,3>;}
+\DoxyCodeLine{48 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{55   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_RetType, \textcolor{keyword}{typename} \_PtTyp, \textcolor{keyword}{typename} \_Func, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{56   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a6205ebda41419461da6da5782a3f0e97}{BatchIntegrator}}(\_RetType \&res, \textcolor{keyword}{const} \_Func \&F, std::vector<\_PtTyp> \&batch, }
+\DoxyCodeLine{57     std::vector<double> \&\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}, Args... args) \{}
+\DoxyCodeLine{58     F(res,batch,\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}},args...);}
+\DoxyCodeLine{59   \}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61   }
+\DoxyCodeLine{68   \textcolor{keyword}{template} <\textcolor{keyword}{class} \_QTyp>}
+\DoxyCodeLine{69   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1Integrator1D}{Integrator1D}} \{}
+\DoxyCodeLine{70   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \_QTyp \mbox{\hyperlink{classChronusQ_1_1Integrator1D_a721725bbdabb68d42675c59f15e66b6e}{q}}; }
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74   \textcolor{keyword}{public}:}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \textcolor{comment}{// Defaulted / Deleted ctors}}
+\DoxyCodeLine{77     \mbox{\hyperlink{classChronusQ_1_1Integrator1D_a776da4413bd57c3acfeff46fd2b2fb54}{Integrator1D}}()                     = \textcolor{keyword}{delete};}
+\DoxyCodeLine{78     \mbox{\hyperlink{classChronusQ_1_1Integrator1D_a3174820a451370b28b060df4bc11bcad}{Integrator1D}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1Integrator1D}{Integrator1D}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{79     \mbox{\hyperlink{classChronusQ_1_1Integrator1D_acc13768c11465784a86d2e0b2af758b6}{Integrator1D}}(\mbox{\hyperlink{classChronusQ_1_1Integrator1D}{Integrator1D}} \&\&)      = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{86     \mbox{\hyperlink{classChronusQ_1_1Integrator1D_afbb19db738f89b5e5d2c620f1612abf1}{Integrator1D}}( \_QTyp g ) : \mbox{\hyperlink{classChronusQ_1_1Integrator1D_a721725bbdabb68d42675c59f15e66b6e}{q}}(std::move(g)) \{}
+\DoxyCodeLine{87       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1Integrator1D_a721725bbdabb68d42675c59f15e66b6e}{q}}.pts.size() == 0) \mbox{\hyperlink{classChronusQ_1_1Integrator1D_a721725bbdabb68d42675c59f15e66b6e}{q}}.generateQuadrature();}
+\DoxyCodeLine{88     \};}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{96     \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{97     \mbox{\hyperlink{classChronusQ_1_1Integrator1D_ab591e2b50710ce2522eaf999eaf8ca7f}{Integrator1D}}(\textcolor{keywordtype}{size\_t} N, Args... args) :}
+\DoxyCodeLine{98       \mbox{\hyperlink{classChronusQ_1_1Integrator1D_a721725bbdabb68d42675c59f15e66b6e}{q}}(N,args...)\{ assert(N != 0); \mbox{\hyperlink{classChronusQ_1_1Integrator1D_a721725bbdabb68d42675c59f15e66b6e}{q}}.generateQuadrature(); \}}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100  }
+\DoxyCodeLine{106     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{class} F>}
+\DoxyCodeLine{107     T \mbox{\hyperlink{classChronusQ_1_1Integrator1D_a03091eb3d2e4d1308ef7370e1f252ef3}{integrate}}(\textcolor{keyword}{const} F \&func) \{}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 3}}
+\DoxyCodeLine{110       std::cerr << \textcolor{stringliteral}{"{}1D"{}} << std::endl;}
+\DoxyCodeLine{111 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113       T res(0.);}
+\DoxyCodeLine{114       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < \mbox{\hyperlink{classChronusQ_1_1Integrator1D_a721725bbdabb68d42675c59f15e66b6e}{q}}.nPts; i++) \{}
+\DoxyCodeLine{115         res += \mbox{\hyperlink{classChronusQ_1_1Integrator1D_a721725bbdabb68d42675c59f15e66b6e}{q}}.weights[i] * func(\mbox{\hyperlink{classChronusQ_1_1Integrator1D_a721725bbdabb68d42675c59f15e66b6e}{q}}.pts[i]);}
+\DoxyCodeLine{116       \}}
+\DoxyCodeLine{117       \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{118     \}; \textcolor{comment}{// integrate}}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120   \}; \textcolor{comment}{// class Integrator1D}}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{129   \textcolor{keyword}{template} <\textcolor{keyword}{class} \_QTyp1, \textcolor{keyword}{class} \_QTyp2>}
+\DoxyCodeLine{130   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1Integrator2D}{Integrator2D}} \{}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{133  }
+\DoxyCodeLine{134      \_QTyp1 \mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4b1c78dd101b1b4321fff20d69f3caff}{q1}}; }
+\DoxyCodeLine{135      \_QTyp2 \mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}; }
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137   \textcolor{keyword}{public}:}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139     \textcolor{comment}{// Defaulted / Deleted ctors}}
+\DoxyCodeLine{140     \mbox{\hyperlink{classChronusQ_1_1Integrator2D_aa6644271d31918e4fe4385168c56ee2b}{Integrator2D}}()                     = \textcolor{keyword}{delete};}
+\DoxyCodeLine{141     \mbox{\hyperlink{classChronusQ_1_1Integrator2D_a2338baf724f8599196f512497235f9ff}{Integrator2D}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1Integrator2D}{Integrator2D}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{142     \mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4a915faf19c2474e8649ffa924db5ee9}{Integrator2D}}(\mbox{\hyperlink{classChronusQ_1_1Integrator2D}{Integrator2D}} \&\&)      = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{149     \mbox{\hyperlink{classChronusQ_1_1Integrator2D_a3287e34b4670c1dd7b6c3c37cf140366}{Integrator2D}}(\_QTyp1 g1, \_QTyp2 g2) : }
+\DoxyCodeLine{150       \mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4b1c78dd101b1b4321fff20d69f3caff}{q1}}(std::move(g1)), \mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}(std::move(g2)) \{}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4b1c78dd101b1b4321fff20d69f3caff}{q1}}.pts.size() == 0) \mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4b1c78dd101b1b4321fff20d69f3caff}{q1}}.generateQuadrature();}
+\DoxyCodeLine{153       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.pts.size() == 0) \mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.generateQuadrature();}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155     \};}
+\DoxyCodeLine{156     }
+\DoxyCodeLine{162     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{class} F>}
+\DoxyCodeLine{163     T \mbox{\hyperlink{classChronusQ_1_1Integrator2D_a8b4dd917a7f5645e3021ce9c0438cb00}{integrate}}(\textcolor{keyword}{const} F \&func) \{}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 3}}
+\DoxyCodeLine{166       std::cerr << \textcolor{stringliteral}{"{}2D"{}} << std::endl;}
+\DoxyCodeLine{167 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{168       T res(0.);}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < \mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4b1c78dd101b1b4321fff20d69f3caff}{q1}}.nPts; i++) }
+\DoxyCodeLine{171       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} j = 0; j < \mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.nPts; j++) \{}
+\DoxyCodeLine{172         res += \mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4b1c78dd101b1b4321fff20d69f3caff}{q1}}.weights[i] * \mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.weights[j] * }
+\DoxyCodeLine{173           func(\mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4b1c78dd101b1b4321fff20d69f3caff}{q1}}.pts[i],\mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.pts[j]);}
+\DoxyCodeLine{174       \}}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176       \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178     \}; \textcolor{comment}{// integrate}}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180   \}; \textcolor{comment}{// class Integrator2D}}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{190   \textcolor{keyword}{template} <\textcolor{keyword}{class} \_QTyp1, \textcolor{keyword}{class} \_QTyp2, \textcolor{keyword}{class} \_QTyp3>}
+\DoxyCodeLine{191   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Integrator3D}} \{}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{194  }
+\DoxyCodeLine{195      \_QTyp1 \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a3194409905cbf8996d21949ccab110de}{q1}}; }
+\DoxyCodeLine{196      \_QTyp2 \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a62ed6f2348e0aa2f4924b8475a4a5f23}{q2}}; }
+\DoxyCodeLine{197      \_QTyp3 \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a1d96e08ac3efd1fc11d1f17150c496fd}{q3}}; }
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199   \textcolor{keyword}{public}:}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201     \textcolor{comment}{// Defaulted / Deleted ctors}}
+\DoxyCodeLine{202     \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a41e87408b97c92b52adc961c4024f2ee}{Integrator3D}}()                     = \textcolor{keyword}{delete};}
+\DoxyCodeLine{203     \mbox{\hyperlink{classChronusQ_1_1Integrator3D_ab97dfbe6de5f744814947e3fd3fd5913}{Integrator3D}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Integrator3D}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{204     \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a60ae32ff72e8d061a2d3cbf2dbfb9375}{Integrator3D}}(\mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Integrator3D}} \&\&)      = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{211     \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a0b5fcbfce2c581f808f872909497ddb4}{Integrator3D}}(\_QTyp1 g1, \_QTyp2 g2, \_QTyp3 g3) : }
+\DoxyCodeLine{212       \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a3194409905cbf8996d21949ccab110de}{q1}}(std::move(g1)), \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a62ed6f2348e0aa2f4924b8475a4a5f23}{q2}}(std::move(g2)), \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a1d96e08ac3efd1fc11d1f17150c496fd}{q3}}(std::move(g3)) \{}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a3194409905cbf8996d21949ccab110de}{q1}}.pts.size() == 0) \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a3194409905cbf8996d21949ccab110de}{q1}}.generateQuadrature();}
+\DoxyCodeLine{215       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a62ed6f2348e0aa2f4924b8475a4a5f23}{q2}}.pts.size() == 0) \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a62ed6f2348e0aa2f4924b8475a4a5f23}{q2}}.generateQuadrature();}
+\DoxyCodeLine{216       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a1d96e08ac3efd1fc11d1f17150c496fd}{q3}}.pts.size() == 0) \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a1d96e08ac3efd1fc11d1f17150c496fd}{q3}}.generateQuadrature();}
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218     \};}
+\DoxyCodeLine{219      }
+\DoxyCodeLine{220 }
+\DoxyCodeLine{230     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a76d592f387eb741184fe1c38971548ce}{generateBatch}}(\textcolor{keywordtype}{size\_t} ist, \textcolor{keywordtype}{size\_t} iend, }
+\DoxyCodeLine{231       std::vector<cart\_t> \&batchPt, std::vector<double> \&batchW) \{}
+\DoxyCodeLine{232 }
+\DoxyCodeLine{233       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = ist; i <= iend; i++) }
+\DoxyCodeLine{234       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} j = 0; j < \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a62ed6f2348e0aa2f4924b8475a4a5f23}{q2}}.nPts; j++) }
+\DoxyCodeLine{235       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} k = 0; k < \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a1d96e08ac3efd1fc11d1f17150c496fd}{q3}}.nPts; k++) \{}
+\DoxyCodeLine{236         \mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\_t}} pt\{\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a3194409905cbf8996d21949ccab110de}{q1}}.pts[i],\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a62ed6f2348e0aa2f4924b8475a4a5f23}{q2}}.pts[j],\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a1d96e08ac3efd1fc11d1f17150c496fd}{q3}}.pts[k]\}; }
+\DoxyCodeLine{237         \textcolor{keywordtype}{double} weight = \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a3194409905cbf8996d21949ccab110de}{q1}}.weights[i] * \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a62ed6f2348e0aa2f4924b8475a4a5f23}{q2}}.weights[j] * \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a1d96e08ac3efd1fc11d1f17150c496fd}{q3}}.weights[k] ; }
+\DoxyCodeLine{238         batchPt[(i -\/ ist)*\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a62ed6f2348e0aa2f4924b8475a4a5f23}{q2}}.nPts*\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a1d96e08ac3efd1fc11d1f17150c496fd}{q3}}.nPts + j*\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a1d96e08ac3efd1fc11d1f17150c496fd}{q3}}.nPts + k] = pt;}
+\DoxyCodeLine{239         batchW [(i -\/ ist)*\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a62ed6f2348e0aa2f4924b8475a4a5f23}{q2}}.nPts*\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a1d96e08ac3efd1fc11d1f17150c496fd}{q3}}.nPts + j*\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a1d96e08ac3efd1fc11d1f17150c496fd}{q3}}.nPts + k] = weight;}
+\DoxyCodeLine{240       \}}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242     \}; \textcolor{comment}{// generateBatch}}
+\DoxyCodeLine{243 }
+\DoxyCodeLine{244 }
+\DoxyCodeLine{252     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{class }F, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{253     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Integrator3D_af8aabdb242af23e442c23dd46ff805c9}{integrate}}(\textcolor{keywordtype}{double} SCALE, T \&res, \textcolor{keyword}{const} F \&func, Args... args) \{}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 3}}
+\DoxyCodeLine{256       std::cerr << \textcolor{stringliteral}{"{}3D"{}} << std::endl;}
+\DoxyCodeLine{257 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{258 }
+\DoxyCodeLine{259       \textcolor{keywordtype}{size\_t} n1DPerMacroBatch = 4;}
+\DoxyCodeLine{260       \textcolor{keywordtype}{size\_t} nMicroBatches = 1;}
+\DoxyCodeLine{261       \textcolor{keywordtype}{size\_t} nMacroBatches   = this-\/>q1.nPts / n1DPerMacroBatch;}
+\DoxyCodeLine{262       \textcolor{keywordtype}{size\_t} nBatches = nMacroBatches * nMicroBatches;}
+\DoxyCodeLine{263       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iBatch = 0; iBatch < nBatches; iBatch++)\{}
+\DoxyCodeLine{264         \textcolor{keywordtype}{size\_t} Jst = iBatch * n1DPerMacroBatch;}
+\DoxyCodeLine{265         \textcolor{keywordtype}{size\_t} Jend = Jst + n1DPerMacroBatch -\/ 1;}
+\DoxyCodeLine{266         std::vector<cart\_t> batchPt((Jend -\/ Jst + 1) * this-\/>q2.nPts*this-\/>q3.nPts,\mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\_t}}(\{0,0,0\}));}
+\DoxyCodeLine{267         std::vector<double> batchW((Jend -\/ Jst + 1) * this-\/>q2.nPts*this-\/>q3.nPts,0);}
+\DoxyCodeLine{268         \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a76d592f387eb741184fe1c38971548ce}{generateBatch}}(Jst,Jend,batchPt,batchW);}
+\DoxyCodeLine{269         \mbox{\hyperlink{namespaceChronusQ_a6205ebda41419461da6da5782a3f0e97}{BatchIntegrator}}(res,func,batchPt,batchW,args...);}
+\DoxyCodeLine{270       \}}
+\DoxyCodeLine{271       res *= SCALE;}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273     \}; \textcolor{comment}{// integrate}}
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275 }
+\DoxyCodeLine{280     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{class }F, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{281     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Integrator3D_aeb1607921af840ab46fb0535e9470480}{integrate}}(T \&res, \textcolor{keyword}{const} F \&func, Args... args) \{}
+\DoxyCodeLine{282       integrate<T>(1.0,res,func,args...);}
+\DoxyCodeLine{283     \} \textcolor{comment}{// integrate}}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285 }
+\DoxyCodeLine{292     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{class }F, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{293     \textcolor{keyword}{inline} T \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a6c1367fcad051671a695be23d00238a5}{integrate}}(\textcolor{keyword}{const} F \&func, Args... args) \{}
+\DoxyCodeLine{294       T res(0.);}
+\DoxyCodeLine{295       integrate<T>(res,func,args...);}
+\DoxyCodeLine{296       \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{297     \} \textcolor{comment}{// integrate}}
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299   \}; \textcolor{comment}{// class Integrator3D}}
+\DoxyCodeLine{300 }
+\DoxyCodeLine{301 }
+\DoxyCodeLine{322   \textcolor{keyword}{template} <\textcolor{keyword}{class} \_QTyp1>}
+\DoxyCodeLine{323   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1SphereIntegrator}{SphereIntegrator}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1Integrator2D}{Integrator2D}}<\_QTyp1,Lebedev> \{}
+\DoxyCodeLine{324 }
+\DoxyCodeLine{325   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{326     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a4d2e05fc41f991778fd1a583eb65f612}{Scale}};             }
+\DoxyCodeLine{327     \mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\_t}} \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a75bafa765193d1c528c9a3d244467b3e}{Center}};            }
+\DoxyCodeLine{328     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a168bec6b46c73378b09ea54ebe78806c}{nRadPerMacroBatch}}; }
+\DoxyCodeLine{329 }
+\DoxyCodeLine{330   \textcolor{keyword}{public}:}
+\DoxyCodeLine{331 }
+\DoxyCodeLine{332     \textcolor{comment}{// Defaulted / Deleted ctors}}
+\DoxyCodeLine{333     \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a1e4f98cebe15a0a449ac29ef04b8a99a}{SphereIntegrator}}()                         = \textcolor{keyword}{delete};}
+\DoxyCodeLine{334     \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a2f29d92596de1e6bc228f4ad1fe909fe}{SphereIntegrator}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator}{SphereIntegrator}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{335     \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_aaf9454dbc0128a6ff2282933f53a1528}{SphereIntegrator}}(\mbox{\hyperlink{classChronusQ_1_1SphereIntegrator}{SphereIntegrator}} \&\&)      = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{336 }
+\DoxyCodeLine{343     \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_af740925ef876284abdd9c718e978e608}{SphereIntegrator}}( \_QTyp1 g, \textcolor{keywordtype}{size\_t} NAng , \mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\_t}} center, \textcolor{keywordtype}{double} scale,}
+\DoxyCodeLine{344       \textcolor{keywordtype}{size\_t} nRadPerMacroBatch\_ = 4) :}
+\DoxyCodeLine{345       \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a4d2e05fc41f991778fd1a583eb65f612}{Scale}}(scale),\mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a75bafa765193d1c528c9a3d244467b3e}{Center}}(center), \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a168bec6b46c73378b09ea54ebe78806c}{nRadPerMacroBatch}}(nRadPerMacroBatch\_),}
+\DoxyCodeLine{346       \mbox{\hyperlink{classChronusQ_1_1Integrator2D}{Integrator2D}}<\_QTyp1,Lebedev> (g,Lebedev(NAng))\{ }
+\DoxyCodeLine{347 }
+\DoxyCodeLine{348       assert(g.nPts \% \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a168bec6b46c73378b09ea54ebe78806c}{nRadPerMacroBatch}} == 0);}
+\DoxyCodeLine{349       }
+\DoxyCodeLine{350      \};}
+\DoxyCodeLine{351 }
+\DoxyCodeLine{352 }
+\DoxyCodeLine{362     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a59a93f3ff8f6e24a1e693d223ade31f7}{generateBatch}}(\textcolor{keywordtype}{size\_t} Jst, \textcolor{keywordtype}{size\_t} Jend, }
+\DoxyCodeLine{363       std::vector<cart\_t> \&batchPt, std::vector<double> \&batchW) \{}
+\DoxyCodeLine{364 }
+\DoxyCodeLine{365       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} J = Jst; J <= Jend; J++) \{}
+\DoxyCodeLine{366         \textcolor{comment}{// FIXME: Screen on maximal spatial extent}}
+\DoxyCodeLine{367         \textcolor{keywordtype}{double} R = this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4b1c78dd101b1b4321fff20d69f3caff}{q1}}.pts[J] * \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a4d2e05fc41f991778fd1a583eb65f612}{Scale}}; }
+\DoxyCodeLine{368       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.nPts; i++) \{}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370         \textcolor{comment}{// INT = W1(i) * W2(j) * R(i) * R(i) * }}
+\DoxyCodeLine{371         \textcolor{comment}{//       func(R(i)*x(j),R(i)*y(j),R(i)*z(j))}}
+\DoxyCodeLine{372           }
+\DoxyCodeLine{373         \mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\_t}} pt;}
+\DoxyCodeLine{374         pt[0] = (R*this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.pts[i][0] + \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a75bafa765193d1c528c9a3d244467b3e}{Center}}[0]);}
+\DoxyCodeLine{375         pt[1] = (R*this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.pts[i][1] + \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a75bafa765193d1c528c9a3d244467b3e}{Center}}[1]);}
+\DoxyCodeLine{376         pt[2] = (R*this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.pts[i][2] + \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a75bafa765193d1c528c9a3d244467b3e}{Center}}[2]);}
+\DoxyCodeLine{377         \textcolor{keywordtype}{double} weight = this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4b1c78dd101b1b4321fff20d69f3caff}{q1}}.weights[J] * this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.weights[i] * R * R * \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a4d2e05fc41f991778fd1a583eb65f612}{Scale}}; }
+\DoxyCodeLine{378         batchPt[(J -\/ Jst)*this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.nPts + i] = pt;}
+\DoxyCodeLine{379         batchW [(J -\/ Jst)*this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.nPts + i] = weight;}
+\DoxyCodeLine{380 }
+\DoxyCodeLine{381       \} \textcolor{comment}{// i loop}}
+\DoxyCodeLine{382       \} \textcolor{comment}{// J loop}}
+\DoxyCodeLine{383 }
+\DoxyCodeLine{384     \}; \textcolor{comment}{// generateBatch}}
+\DoxyCodeLine{385 }
+\DoxyCodeLine{386 }
+\DoxyCodeLine{387 }
+\DoxyCodeLine{395     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{class }F, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{396     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a56ac48aba0aae65ebe7f868b3fb6ebf9}{integrate}}(\textcolor{keywordtype}{double} SCALE, T \&res, \textcolor{keyword}{const} F \&func, Args... args) \{}
+\DoxyCodeLine{397       \textcolor{keywordtype}{size\_t} nMicroBatches = 1;}
+\DoxyCodeLine{398       \textcolor{keywordtype}{size\_t} nMacroBatches   = this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4b1c78dd101b1b4321fff20d69f3caff}{q1}}.nPts / \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a168bec6b46c73378b09ea54ebe78806c}{nRadPerMacroBatch}};}
+\DoxyCodeLine{399       \textcolor{keywordtype}{size\_t} nBatches = nMacroBatches * nMicroBatches;}
+\DoxyCodeLine{400 }
+\DoxyCodeLine{401 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 3}}
+\DoxyCodeLine{402       std::cerr << \textcolor{stringliteral}{"{}NBatch "{}} << nBatches << std::endl;}
+\DoxyCodeLine{403       std::cerr << \textcolor{stringliteral}{"{}SPHERE OF NRAD "{}} <<  this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4b1c78dd101b1b4321fff20d69f3caff}{q1}}.nPts << \textcolor{stringliteral}{"{} AND NANG "{}} <<  this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.nPts << std::endl;}
+\DoxyCodeLine{404       std::cerr << \textcolor{stringliteral}{"{}SCALE "{}} <<  \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a4d2e05fc41f991778fd1a583eb65f612}{Scale}} << std::endl;}
+\DoxyCodeLine{405       std::cerr << \textcolor{stringliteral}{"{}CENTER \{ "{}}<< \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a75bafa765193d1c528c9a3d244467b3e}{Center}}[0] <<\textcolor{stringliteral}{"{} , "{}} << \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a75bafa765193d1c528c9a3d244467b3e}{Center}}[1] <<\textcolor{stringliteral}{"{} , "{}} << \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a75bafa765193d1c528c9a3d244467b3e}{Center}}[2] <<\textcolor{stringliteral}{"{} \}, "{}} << std::endl; }
+\DoxyCodeLine{406 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{407 }
+\DoxyCodeLine{408       \textcolor{keywordtype}{size\_t} nthreads = \mbox{\hyperlink{namespaceChronusQ_a3320ee560c87921c8d84885db82e9917}{GetNumThreads}}();}
+\DoxyCodeLine{409 }
+\DoxyCodeLine{410 \textcolor{preprocessor}{      \#pragma omp parallel}}
+\DoxyCodeLine{411       \{}
+\DoxyCodeLine{412       }
+\DoxyCodeLine{413       \textcolor{keywordtype}{size\_t} thread\_id = \mbox{\hyperlink{namespaceChronusQ_aa348a017ee78c3450480773ddc542e5c}{GetThreadID}}();}
+\DoxyCodeLine{414 }
+\DoxyCodeLine{415       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iBatch = 0; iBatch < nBatches; iBatch++)\{}
+\DoxyCodeLine{416 }
+\DoxyCodeLine{417         \textcolor{keywordflow}{if}( iBatch \% nthreads != thread\_id ) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{418 }
+\DoxyCodeLine{419         \textcolor{keywordtype}{size\_t} Jst = iBatch * \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a168bec6b46c73378b09ea54ebe78806c}{nRadPerMacroBatch}};}
+\DoxyCodeLine{420         \textcolor{keywordtype}{size\_t} Jend = Jst + \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a168bec6b46c73378b09ea54ebe78806c}{nRadPerMacroBatch}} -\/ 1;}
+\DoxyCodeLine{421         std::vector<cart\_t> batchPt((Jend -\/ Jst + 1) * this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.nPts,\mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\_t}}(\{0,0,0\}));}
+\DoxyCodeLine{422         std::vector<double> batchW((Jend -\/ Jst + 1) * this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.nPts,0);}
+\DoxyCodeLine{423         \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a59a93f3ff8f6e24a1e693d223ade31f7}{generateBatch}}(Jst,Jend,batchPt,batchW);}
+\DoxyCodeLine{424 }
+\DoxyCodeLine{425         std::pair<double,double> rBounds\{\mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a4d2e05fc41f991778fd1a583eb65f612}{Scale}}*this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4b1c78dd101b1b4321fff20d69f3caff}{q1}}.pts[Jst], \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a4d2e05fc41f991778fd1a583eb65f612}{Scale}}*this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4b1c78dd101b1b4321fff20d69f3caff}{q1}}.pts[Jend]\};}
+\DoxyCodeLine{426 }
+\DoxyCodeLine{427         \textcolor{comment}{// FIXME: This will cause a race condition for scalar integration}}
+\DoxyCodeLine{428         \mbox{\hyperlink{namespaceChronusQ_a6205ebda41419461da6da5782a3f0e97}{BatchIntegrator}}(res,func,batchPt,batchW,rBounds,args...);}
+\DoxyCodeLine{429 }
+\DoxyCodeLine{430       \}}
+\DoxyCodeLine{431       \}}
+\DoxyCodeLine{432       res *= SCALE;}
+\DoxyCodeLine{433     \}; \textcolor{comment}{// Integrate}}
+\DoxyCodeLine{434 }
+\DoxyCodeLine{439     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{class }F, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{440     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_ab2e1d69460bc741a71885fabf0b9b6fb}{integrate}}(T \&res, \textcolor{keyword}{const} F \&func, Args... args) \{}
+\DoxyCodeLine{441       integrate<T>(4.*M\_PI,res,func,args...);}
+\DoxyCodeLine{442     \}; \textcolor{comment}{// integrate}}
+\DoxyCodeLine{443 }
+\DoxyCodeLine{450     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{class }F, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{451     T \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a370990f479758fa59e01a0515ae0c7af}{integrate}}(\textcolor{keyword}{const} F \&func, Args... args) \{}
+\DoxyCodeLine{452       T res(0.);}
+\DoxyCodeLine{453       integrate<T>(res,func,args...);}
+\DoxyCodeLine{454       \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{455     \}; \textcolor{comment}{// integrate}}
+\DoxyCodeLine{456 }
+\DoxyCodeLine{457   \}; \textcolor{comment}{// class SphereIntegrator}}
+\DoxyCodeLine{458 }
+\DoxyCodeLine{459 }
+\DoxyCodeLine{460 }
+\DoxyCodeLine{469   \textcolor{keyword}{template} <\textcolor{keyword}{class} \_QTyp1>}
+\DoxyCodeLine{470   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{BeckeIntegrator}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator}{SphereIntegrator}}<\_QTyp1> \{}
+\DoxyCodeLine{471 }
+\DoxyCodeLine{472     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}{iAtm}}; }
+\DoxyCodeLine{473 }
+\DoxyCodeLine{474   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{475  }
+\DoxyCodeLine{476     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}         \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a97d8c994ea8684bb96cbed1eba4b6f08}{comm}};}
+\DoxyCodeLine{477 }
+\DoxyCodeLine{478     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}     \&\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}{memManager\_}}; }
+\DoxyCodeLine{479     \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}         \&\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}};   }
+\DoxyCodeLine{480     \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}         \&\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}};   }
+\DoxyCodeLine{481     \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\_EVAL\_TYPE}}  \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a3d526ded299e9ac8500dff63dd5ac033}{typ\_}}      ;   }
+\DoxyCodeLine{482     \textcolor{keywordtype}{double}           \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae6c267d8acb3569ec5215f94629f4497}{epsScreen\_}};   }
+\DoxyCodeLine{483     \textcolor{keywordtype}{size\_t}           \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae6dd5183295e564e7925098bc1ff4933}{NDer}};         }
+\DoxyCodeLine{484 }
+\DoxyCodeLine{485     \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}         \&\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}};  }
+\DoxyCodeLine{486     \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\_EVAL\_TYPE}}  \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a6f71856fe847969edd00383030372c84}{typ2\_}}      ;  }
+\DoxyCodeLine{487     \textcolor{keywordtype}{size\_t}           \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ab9f5b475b0b805c7ec5fe94325fdc907}{NDer2}};        }
+\DoxyCodeLine{488     \textcolor{keywordtype}{bool}             \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}{Int2nd}} = \textcolor{keyword}{false}; }
+\DoxyCodeLine{489 }
+\DoxyCodeLine{490   \textcolor{keyword}{public}:}
+\DoxyCodeLine{491 }
+\DoxyCodeLine{492     \textcolor{comment}{// Defaulted / Deleted ctors}}
+\DoxyCodeLine{493     \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a7965903ade7c55b17f78d313f84855ef}{BeckeIntegrator}}()                     = \textcolor{keyword}{delete};}
+\DoxyCodeLine{494     \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a4cd58274e1811871ff09cfe35224e41e}{BeckeIntegrator}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{BeckeIntegrator}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{495     \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_aa0dc69d160090624f24a43fd29cb4d6d}{BeckeIntegrator}}(\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{BeckeIntegrator}} \&\&)      = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{496 }
+\DoxyCodeLine{503     \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a4f4b5ffc004ea9b707311f51baf4bb2f}{BeckeIntegrator}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol,}
+\DoxyCodeLine{504       \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis, \_QTyp1 g, \textcolor{keywordtype}{size\_t} NAng, \textcolor{keywordtype}{size\_t} NRadPerMacroBatch, }
+\DoxyCodeLine{505       \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\_EVAL\_TYPE}} typ, \textcolor{keywordtype}{double} epsScreen) :}
+\DoxyCodeLine{506       \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a97d8c994ea8684bb96cbed1eba4b6f08}{comm}}(c), \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}{memManager\_}}(mem),\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}(mol),\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}(basis),\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a3d526ded299e9ac8500dff63dd5ac033}{typ\_}}(typ),}
+\DoxyCodeLine{507       \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}(basis),\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae6c267d8acb3569ec5215f94629f4497}{epsScreen\_}}(epsScreen),}
+\DoxyCodeLine{508       \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator}{SphereIntegrator}}<\_QTyp1>(g,NAng,\{0.,0.,0.\},1.,NRadPerMacroBatch),}
+\DoxyCodeLine{509       \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae6dd5183295e564e7925098bc1ff4933}{NDer}}((\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a3d526ded299e9ac8500dff63dd5ac033}{typ\_}} == \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}}) ? 4:1)\{ \};}
+\DoxyCodeLine{510 }
+\DoxyCodeLine{517     \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae9e287d64a3b497262829f2362968370}{BeckeIntegrator}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol,}
+\DoxyCodeLine{518       \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis1, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis2, \_QTyp1 g, \textcolor{keywordtype}{size\_t} NAng, \textcolor{keywordtype}{size\_t} NRadPerMacroBatch, }
+\DoxyCodeLine{519       \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\_EVAL\_TYPE}} typ1, \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\_EVAL\_TYPE}} typ2, \textcolor{keywordtype}{double} epsScreen) : }
+\DoxyCodeLine{520       \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a97d8c994ea8684bb96cbed1eba4b6f08}{comm}}(c), \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}{memManager\_}}(mem),\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}(mol),\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}(basis1),\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a3d526ded299e9ac8500dff63dd5ac033}{typ\_}}(typ1),}
+\DoxyCodeLine{521       \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae6c267d8acb3569ec5215f94629f4497}{epsScreen\_}}(epsScreen),\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}(basis2),\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a6f71856fe847969edd00383030372c84}{typ2\_}}(typ2),}
+\DoxyCodeLine{522       \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator}{SphereIntegrator}}<\_QTyp1>(g,NAng,\{0.,0.,0.\},1.,NRadPerMacroBatch),}
+\DoxyCodeLine{523       \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae6dd5183295e564e7925098bc1ff4933}{NDer}}((\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a3d526ded299e9ac8500dff63dd5ac033}{typ\_}} == \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}}) ? 4:1),\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ab9f5b475b0b805c7ec5fe94325fdc907}{NDer2}}((\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a6f71856fe847969edd00383030372c84}{typ2\_}} == \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}}) ? 4:1),}
+\DoxyCodeLine{524       \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}{Int2nd}}(\textcolor{keyword}{true}) \{ \};}
+\DoxyCodeLine{525 }
+\DoxyCodeLine{532     \textcolor{keyword}{inline} \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ab1fa536e40a48ecc62fbfec145cbbc11}{hBecke}}(\textcolor{keywordtype}{double} x) \{\textcolor{keywordflow}{return} 1.5 * x -\/ 0.5 * x * x * x;\}; \textcolor{comment}{// Eq. 19}}
+\DoxyCodeLine{533     \textcolor{keyword}{inline} \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a3161e01e6d42b66aa1938f8e0b9ddb88}{gBecke}}(\textcolor{keywordtype}{double} x) \{\textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ab1fa536e40a48ecc62fbfec145cbbc11}{hBecke}}(\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ab1fa536e40a48ecc62fbfec145cbbc11}{hBecke}}(\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ab1fa536e40a48ecc62fbfec145cbbc11}{hBecke}}(x)));\}; \textcolor{comment}{// Eq. 20 f\_3}}
+\DoxyCodeLine{534 }
+\DoxyCodeLine{535     \textcolor{comment}{// TODO: Put member functions in CXX file}}
+\DoxyCodeLine{536           }
+\DoxyCodeLine{537 }
+\DoxyCodeLine{538     \textcolor{comment}{// TODO: revist use of raw memory for batchW}}
+\DoxyCodeLine{539     \textcolor{comment}{// FIXME: critical for NAtoms>40}}
+\DoxyCodeLine{554 \textcolor{comment}{}    \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a39942e1579e585066707c88475981c10}{evalPartitionWeights}}(\textcolor{keywordtype}{size\_t} iCurrent, }
+\DoxyCodeLine{555       \textcolor{keywordtype}{double} *R, std::vector<double> \&batchW)\{}
+\DoxyCodeLine{556 }
+\DoxyCodeLine{557       std::vector<double> partitionScratch(this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}});}
+\DoxyCodeLine{558 }
+\DoxyCodeLine{559       \textcolor{keywordtype}{size\_t} nPointsPerBatch = batchW.size();}
+\DoxyCodeLine{560 }
+\DoxyCodeLine{561       \textcolor{comment}{//double curRMin, curRMax;}}
+\DoxyCodeLine{562       \textcolor{keywordtype}{double} weightMax = 0.0;}
+\DoxyCodeLine{563       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iPt = 0; iPt < nPointsPerBatch; iPt++)\{ }
+\DoxyCodeLine{564 }
+\DoxyCodeLine{565         std::fill(partitionScratch.begin(),partitionScratch.end(),1.);}
+\DoxyCodeLine{566         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iCenter = 0; iCenter < \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}}; iCenter++) \{}
+\DoxyCodeLine{567 }
+\DoxyCodeLine{568           \textcolor{keywordtype}{double} RA = R[iCenter + iPt*\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}}];}
+\DoxyCodeLine{569 }
+\DoxyCodeLine{570           \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} jCenter = 0; jCenter < \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}}; jCenter++)\{}
+\DoxyCodeLine{571             \textcolor{keywordflow}{if}(iCenter == jCenter) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{572             \textcolor{keywordtype}{double} RB = R[jCenter + iPt*\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}}];}
+\DoxyCodeLine{573             \textcolor{keywordtype}{double} mu = (RA -\/ RB) / (this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_ae7e15a2ce0a8cb300fe7b94312e4834d}{RIJ}}[iCenter][jCenter]);}
+\DoxyCodeLine{574             partitionScratch[iCenter] *= 0.5 * (1.0 -\/ \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a3161e01e6d42b66aa1938f8e0b9ddb88}{gBecke}}(mu)); \textcolor{comment}{//Eq. 21}}
+\DoxyCodeLine{575           \}}
+\DoxyCodeLine{576 }
+\DoxyCodeLine{577         \}}
+\DoxyCodeLine{578 }
+\DoxyCodeLine{579         \textcolor{comment}{// Normalization}}
+\DoxyCodeLine{580         \textcolor{keywordtype}{double} sum = 0.0;}
+\DoxyCodeLine{581         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iCenter = 0; iCenter < \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}}; iCenter++)}
+\DoxyCodeLine{582           sum += partitionScratch[iCenter];}
+\DoxyCodeLine{583 }
+\DoxyCodeLine{584         \textcolor{comment}{// Updating weights}}
+\DoxyCodeLine{585         batchW[iPt] *= (partitionScratch[iCurrent]/sum);  \textcolor{comment}{//Based on Eq. 22}}
+\DoxyCodeLine{586         weightMax = std::max(weightMax, batchW[iPt]);}
+\DoxyCodeLine{587 }
+\DoxyCodeLine{588       \} \textcolor{comment}{// loop iPt}}
+\DoxyCodeLine{589 }
+\DoxyCodeLine{590       \textcolor{keywordflow}{return} weightMax;}
+\DoxyCodeLine{591 }
+\DoxyCodeLine{592     \}; \textcolor{comment}{// evalPartitionWeights}}
+\DoxyCodeLine{593 }
+\DoxyCodeLine{594 }
+\DoxyCodeLine{595     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_acaeca5366e49aa412158af4cd0a69518}{RAB}}(\textcolor{keywordtype}{size\_t} aCenter, \textcolor{keywordtype}{size\_t} bCenter) \{}
+\DoxyCodeLine{596 }
+\DoxyCodeLine{597       \textcolor{keywordtype}{double} abDistance = 0.0;}
+\DoxyCodeLine{598       \mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\_t}} rA(\{0.,0.,0.\});}
+\DoxyCodeLine{599 }
+\DoxyCodeLine{600       rA[0] = this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[aCenter].coord[0]  -\/ this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[bCenter].coord[0];}
+\DoxyCodeLine{601       rA[1] = this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[aCenter].coord[1]  -\/ this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[bCenter].coord[1];}
+\DoxyCodeLine{602       rA[2] = this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[bCenter].coord[2]  -\/ this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[bCenter].coord[2];}
+\DoxyCodeLine{603 }
+\DoxyCodeLine{604       abDistance = std::sqrt(rA[0]*rA[0] +rA[1]*rA[1] + rA[2]*rA[2]);}
+\DoxyCodeLine{605 }
+\DoxyCodeLine{606       \textcolor{keywordflow}{return} abDistance;}
+\DoxyCodeLine{607 }
+\DoxyCodeLine{608     \}; \textcolor{comment}{// RAB}}
+\DoxyCodeLine{609 }
+\DoxyCodeLine{610     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a3e62c6b11c7100c19cb4c1cca8cd38ba}{evalFrischPartitionWeights}}(}
+\DoxyCodeLine{611       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t}                            iCurrent,}
+\DoxyCodeLine{612       \textcolor{keyword}{const} std::vector<std::array<double,3>> \&points,}
+\DoxyCodeLine{613       std::vector<double>                     \&\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}} }
+\DoxyCodeLine{614     ) \{}
+\DoxyCodeLine{615 }
+\DoxyCodeLine{616       \textcolor{keywordtype}{size\_t} nAtoms = this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}};}
+\DoxyCodeLine{617       \textcolor{keyword}{const} \textcolor{keywordtype}{double} magic\_ssf\_factor = 0.64;}
+\DoxyCodeLine{618       \textcolor{keyword}{auto} hFrisch = [\&](\textcolor{keywordtype}{double} x) \{}
+\DoxyCodeLine{619 \textcolor{preprocessor}{\#if 1}}
+\DoxyCodeLine{620         \textcolor{keyword}{const} \textcolor{keywordtype}{double} s\_x  = x / magic\_ssf\_factor;}
+\DoxyCodeLine{621         \textcolor{keyword}{const} \textcolor{keywordtype}{double} s\_x2 = s\_x  * s\_x;}
+\DoxyCodeLine{622         \textcolor{keyword}{const} \textcolor{keywordtype}{double} s\_x3 = s\_x  * s\_x2;}
+\DoxyCodeLine{623         \textcolor{keyword}{const} \textcolor{keywordtype}{double} s\_x5 = s\_x3 * s\_x2;}
+\DoxyCodeLine{624         \textcolor{keyword}{const} \textcolor{keywordtype}{double} s\_x7 = s\_x5 * s\_x2;}
+\DoxyCodeLine{625 }
+\DoxyCodeLine{626         \textcolor{keywordflow}{return} (35.*(s\_x -\/ s\_x3) + 21.*s\_x5 -\/ 5.*s\_x7) / 16.;}
+\DoxyCodeLine{627 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{628         \textcolor{keyword}{const} \textcolor{keywordtype}{double} s\_x = x / magic\_ssf\_factor;}
+\DoxyCodeLine{629 }
+\DoxyCodeLine{630         \textcolor{keywordflow}{return} ( 35. * ( s\_x -\/ std::pow(s\_x,3) ) + 21. * std::pow(s\_x,5) -\/}
+\DoxyCodeLine{631              5.  * std::pow(s\_x, 7) ) / 16.;}
+\DoxyCodeLine{632 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{633       \};}
+\DoxyCodeLine{634 }
+\DoxyCodeLine{635 }
+\DoxyCodeLine{636       \textcolor{comment}{//auto gFrisch = [\&](double x)\{ return hFrisch(hFrisch(hFrisch(x))); \};}}
+\DoxyCodeLine{637       \textcolor{keyword}{auto} gFrisch = [\&](\textcolor{keywordtype}{double} x)\{ \textcolor{keywordflow}{return} hFrisch(x); \};}
+\DoxyCodeLine{638 }
+\DoxyCodeLine{639       std::vector<double> partitionScratch(nAtoms);}
+\DoxyCodeLine{640       std::vector<double> atomsDist(nAtoms);}
+\DoxyCodeLine{641 }
+\DoxyCodeLine{642       \textcolor{comment}{// Find nearest neighbor}}
+\DoxyCodeLine{643       \textcolor{keywordtype}{size\_t} iClosest;}
+\DoxyCodeLine{644       \textcolor{keywordtype}{double} cur\_dist = std::numeric\_limits<double>::infinity();}
+\DoxyCodeLine{645       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iCenter = 0; iCenter < nAtoms; ++iCenter )}
+\DoxyCodeLine{646       \textcolor{keywordflow}{if}( iCenter != iCurrent and this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_ae7e15a2ce0a8cb300fe7b94312e4834d}{RIJ}}[iCenter][iCurrent] < cur\_dist ) \{}
+\DoxyCodeLine{647         iClosest = iCenter;}
+\DoxyCodeLine{648         cur\_dist = this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_ae7e15a2ce0a8cb300fe7b94312e4834d}{RIJ}}[iCenter][iCurrent];}
+\DoxyCodeLine{649       \}}
+\DoxyCodeLine{650 }
+\DoxyCodeLine{651       \textcolor{keyword}{const} \textcolor{keywordtype}{double} dist\_cutoff = 0.5 * (1-\/magic\_ssf\_factor) * cur\_dist;}
+\DoxyCodeLine{652 }
+\DoxyCodeLine{653       \textcolor{keywordtype}{double} weightMax = 0.0;}
+\DoxyCodeLine{654       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iPt = 0; iPt < \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}.size(); iPt++)\{ }
+\DoxyCodeLine{655 }
+\DoxyCodeLine{656         \textcolor{keyword}{const} \textcolor{keywordtype}{double} da\_x\_cur = points[iPt][0] -\/ this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[iCurrent].coord[0];}
+\DoxyCodeLine{657         \textcolor{keyword}{const} \textcolor{keywordtype}{double} da\_y\_cur = points[iPt][1] -\/ this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[iCurrent].coord[1];}
+\DoxyCodeLine{658         \textcolor{keyword}{const} \textcolor{keywordtype}{double} da\_z\_cur = points[iPt][2] -\/ this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[iCurrent].coord[2];}
+\DoxyCodeLine{659 }
+\DoxyCodeLine{660         atomsDist[iCurrent] = }
+\DoxyCodeLine{661           std::sqrt(da\_x\_cur*da\_x\_cur + da\_y\_cur*da\_y\_cur + da\_z\_cur*da\_z\_cur);}
+\DoxyCodeLine{662 }
+\DoxyCodeLine{663         \textcolor{keywordflow}{if}( atomsDist[iCurrent] < dist\_cutoff ) \textcolor{keywordflow}{continue}; \textcolor{comment}{// Partition weight = 1}}
+\DoxyCodeLine{664 }
+\DoxyCodeLine{665         \textcolor{comment}{// Compute distances of each center to point}}
+\DoxyCodeLine{666         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iCenter = 0; iCenter < nAtoms; iCenter++) \{}
+\DoxyCodeLine{667 }
+\DoxyCodeLine{668           \textcolor{keywordflow}{if}( iCenter == iCurrent ) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{669 }
+\DoxyCodeLine{670           \textcolor{keyword}{const} \textcolor{keywordtype}{double} da\_x = points[iPt][0] -\/ this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[iCenter].coord[0];}
+\DoxyCodeLine{671           \textcolor{keyword}{const} \textcolor{keywordtype}{double} da\_y = points[iPt][1] -\/ this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[iCenter].coord[1];}
+\DoxyCodeLine{672           \textcolor{keyword}{const} \textcolor{keywordtype}{double} da\_z = points[iPt][2] -\/ this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[iCenter].coord[2];}
+\DoxyCodeLine{673 }
+\DoxyCodeLine{674           atomsDist[iCenter] = std::sqrt(da\_x*da\_x + da\_y*da\_y + da\_z*da\_z);}
+\DoxyCodeLine{675 }
+\DoxyCodeLine{676         \}}
+\DoxyCodeLine{677 }
+\DoxyCodeLine{678         std::fill(partitionScratch.begin(),partitionScratch.end(),1.);}
+\DoxyCodeLine{679         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iCenter = 0; iCenter < nAtoms; iCenter++) \{}
+\DoxyCodeLine{680 }
+\DoxyCodeLine{681         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} jCenter = 0; jCenter < iCenter; jCenter++)\{}
+\DoxyCodeLine{682 }
+\DoxyCodeLine{683           \textcolor{comment}{//if( partitionScratch[iCenter] <= 0. and partitionScratch[jCenter] <= 0. ) continue;}}
+\DoxyCodeLine{684 }
+\DoxyCodeLine{685           \textcolor{keyword}{const} \textcolor{keywordtype}{double} mu = (atomsDist[iCenter] -\/ atomsDist[jCenter]) / }
+\DoxyCodeLine{686                             this-\/>molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_ae7e15a2ce0a8cb300fe7b94312e4834d}{RIJ}}[iCenter][jCenter];}
+\DoxyCodeLine{687 }
+\DoxyCodeLine{688           \textcolor{keywordflow}{if}( mu <= -\/magic\_ssf\_factor ) \{}
+\DoxyCodeLine{689             partitionScratch[jCenter] = 0.;}
+\DoxyCodeLine{690           \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (mu >= magic\_ssf\_factor) \{}
+\DoxyCodeLine{691             partitionScratch[iCenter] = 0.;}
+\DoxyCodeLine{692           \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{693             \textcolor{keywordtype}{double} g = 0.5 * ( 1. -\/ gFrisch(mu) );}
+\DoxyCodeLine{694             partitionScratch[iCenter] *= g;}
+\DoxyCodeLine{695             partitionScratch[jCenter] *= 1. -\/ g;}
+\DoxyCodeLine{696           \}}
+\DoxyCodeLine{697 }
+\DoxyCodeLine{698         \}}
+\DoxyCodeLine{699         \}}
+\DoxyCodeLine{700 }
+\DoxyCodeLine{701         \textcolor{comment}{// Normalization}}
+\DoxyCodeLine{702         \textcolor{keywordtype}{double} sum = 0.0;}
+\DoxyCodeLine{703         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iCenter = 0; iCenter < nAtoms; iCenter++)}
+\DoxyCodeLine{704           sum += partitionScratch[iCenter];}
+\DoxyCodeLine{705 }
+\DoxyCodeLine{706         \textcolor{comment}{// Updating weights}}
+\DoxyCodeLine{707         \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[iPt] *= partitionScratch[iCurrent] / sum;}
+\DoxyCodeLine{708         weightMax = std::max(weightMax, \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[iPt]);}
+\DoxyCodeLine{709 }
+\DoxyCodeLine{710       \} \textcolor{comment}{// loop iPt}}
+\DoxyCodeLine{711     \}}
+\DoxyCodeLine{712 }
+\DoxyCodeLine{722     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0f370d15d4a455517fce02121cc1dd9a}{calcCenDist}}(std::vector<cart\_t> \&batchPt, \textcolor{keywordtype}{double} *rSq, \textcolor{keywordtype}{double} *R,  }
+\DoxyCodeLine{723       \textcolor{keywordtype}{double}* cenXYZ) \{}
+\DoxyCodeLine{724   }
+\DoxyCodeLine{725       \textcolor{keywordtype}{size\_t} nPointsPerBatch = batchPt.size();}
+\DoxyCodeLine{726 }
+\DoxyCodeLine{727       \mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\_t}} rA(\{0.,0.,0.\});}
+\DoxyCodeLine{728       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0;       i < nPointsPerBatch;        i++      ) }
+\DoxyCodeLine{729       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iCenter = 0; iCenter < \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}}; iCenter++) \{}
+\DoxyCodeLine{730 }
+\DoxyCodeLine{731         rA[0] = batchPt[i][0]  -\/ \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[iCenter].coord[0];}
+\DoxyCodeLine{732         rA[1] = batchPt[i][1]  -\/ \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[iCenter].coord[1];}
+\DoxyCodeLine{733         rA[2] = batchPt[i][2]  -\/ \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[iCenter].coord[2];}
+\DoxyCodeLine{734 }
+\DoxyCodeLine{735         rSq[iCenter + i*\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}} ] = }
+\DoxyCodeLine{736           rA[0]*rA[0] +rA[1]*rA[1] + rA[2]*rA[2];}
+\DoxyCodeLine{737         R[iCenter + i*\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}}] = std::sqrt(rSq[iCenter + i*\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}} ]);}
+\DoxyCodeLine{738 }
+\DoxyCodeLine{739         cenXYZ[3*iCenter + 3*i*\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}} + 0] = rA[0];}
+\DoxyCodeLine{740         cenXYZ[3*iCenter + 3*i*\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}} + 1] = rA[1];}
+\DoxyCodeLine{741         cenXYZ[3*iCenter + 3*i*\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}} + 2] = rA[2];}
+\DoxyCodeLine{742 }
+\DoxyCodeLine{743       \} \textcolor{comment}{// loop over points + centers}}
+\DoxyCodeLine{744 }
+\DoxyCodeLine{745     \}; \textcolor{comment}{// calcCenDist}}
+\DoxyCodeLine{746 }
+\DoxyCodeLine{756     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{class }F, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{757     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a1a8bb5e114b7d23d8998efc86146b1ca}{integrate}}(T \&res, \textcolor{keyword}{const} F \&func, Args... args) \{}
+\DoxyCodeLine{758 }
+\DoxyCodeLine{759 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 1}}
+\DoxyCodeLine{760     \textcolor{comment}{//TIMING}}
+\DoxyCodeLine{761       std::chrono::duration<double> durDist(0.)  ;}
+\DoxyCodeLine{762       std::chrono::duration<double> durWeight(0.)  ;}
+\DoxyCodeLine{763       std::chrono::duration<double> durBasis(0.) ;}
+\DoxyCodeLine{764       std::chrono::duration<double> durFunc(0.)  ;}
+\DoxyCodeLine{765 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{766 }
+\DoxyCodeLine{767       \textcolor{keywordtype}{size\_t} nthreads = \mbox{\hyperlink{namespaceChronusQ_a3320ee560c87921c8d84885db82e9917}{GetNumThreads}}();}
+\DoxyCodeLine{768       \textcolor{keywordtype}{size\_t} mpiRank  = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a97d8c994ea8684bb96cbed1eba4b6f08}{comm}});}
+\DoxyCodeLine{769       \textcolor{keywordtype}{size\_t} mpiSize  = \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a97d8c994ea8684bb96cbed1eba4b6f08}{comm}});}
+\DoxyCodeLine{770 }
+\DoxyCodeLine{771       assert( mpiSize <= \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}} );}
+\DoxyCodeLine{772 }
+\DoxyCodeLine{773       \textcolor{keywordtype}{size\_t} maxBatchSize      = this-\/>\mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a168bec6b46c73378b09ea54ebe78806c}{nRadPerMacroBatch}} * this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_ab40021dc2b938ba4bbad4ec0aee21cad}{q2}}.nPts;}
+\DoxyCodeLine{774       \textcolor{keywordtype}{size\_t} maxBatchSizeAtoms = maxBatchSize * \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}};}
+\DoxyCodeLine{775 }
+\DoxyCodeLine{776       \textcolor{comment}{// Allocate Basis scratch}}
+\DoxyCodeLine{777       \textcolor{keywordtype}{double} *BasisEval = }
+\DoxyCodeLine{778         \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}{memManager\_}}.template malloc<double>(nthreads*\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae6dd5183295e564e7925098bc1ff4933}{NDer}}*maxBatchSize*\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}});}
+\DoxyCodeLine{779 }
+\DoxyCodeLine{780       \textcolor{comment}{// Allocate Basis2 scratch}}
+\DoxyCodeLine{781       \textcolor{keywordtype}{double} *Basis2Eval;}
+\DoxyCodeLine{782       \textcolor{comment}{//std::cout << "{}In integrate "{} << Int2nd << std::endl;}}
+\DoxyCodeLine{783       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}{Int2nd}}) }
+\DoxyCodeLine{784         Basis2Eval = \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}{memManager\_}}.template malloc<double>(nthreads*\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ab9f5b475b0b805c7ec5fe94325fdc907}{NDer2}}*maxBatchSize*\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}});}
+\DoxyCodeLine{785 }
+\DoxyCodeLine{786       \textcolor{comment}{// Allocate Basis scratch (shell cartisian)}}
+\DoxyCodeLine{787       \textcolor{keywordtype}{int} LMax = 0;}
+\DoxyCodeLine{788       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iSh = 0; iSh < \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a936871b121472a416ee6f947ccdea4b4}{nShell}}; iSh++)}
+\DoxyCodeLine{789         LMax = std::max(\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[iSh].contr[0].l,LMax);}
+\DoxyCodeLine{790 }
+\DoxyCodeLine{791       \textcolor{keywordtype}{size\_t} shSizeCar = ((LMax+1)*(LMax+2))/2; }
+\DoxyCodeLine{792       \textcolor{keywordtype}{double} * SCR\_Car = }
+\DoxyCodeLine{793         \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}{memManager\_}}.template malloc<double>(nthreads*\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae6dd5183295e564e7925098bc1ff4933}{NDer}}*shSizeCar);}
+\DoxyCodeLine{794 }
+\DoxyCodeLine{795       \textcolor{comment}{// Allocate Basis2 scratch (shell cartisian)}}
+\DoxyCodeLine{796       \textcolor{keywordtype}{int} LMax2 = 0;}
+\DoxyCodeLine{797       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}{Int2nd}})}
+\DoxyCodeLine{798         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iSh = 0; iSh < \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a936871b121472a416ee6f947ccdea4b4}{nShell}}; iSh++)}
+\DoxyCodeLine{799           LMax2 = std::max(\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[iSh].contr[0].l,LMax2);}
+\DoxyCodeLine{800 }
+\DoxyCodeLine{801       \textcolor{keywordtype}{size\_t} shSizeCar2 = ((LMax2+1)*(LMax2+2))/2; }
+\DoxyCodeLine{802       \textcolor{keywordtype}{double} * SCR\_Car2;}
+\DoxyCodeLine{803       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}{Int2nd}}) }
+\DoxyCodeLine{804         SCR\_Car2 = \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}{memManager\_}}.template malloc<double>(nthreads*\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ab9f5b475b0b805c7ec5fe94325fdc907}{NDer2}}*shSizeCar2);}
+\DoxyCodeLine{805 }
+\DoxyCodeLine{806       \textcolor{comment}{// Allocate scratch for Point Distances (squared and components) from each atomic center}}
+\DoxyCodeLine{807 }
+\DoxyCodeLine{808       \textcolor{keywordtype}{double} * cenRSq = \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}{memManager\_}}.template malloc<double>(nthreads * maxBatchSizeAtoms);}
+\DoxyCodeLine{809       \textcolor{keywordtype}{double} * cenR   = \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}{memManager\_}}.template malloc<double>(nthreads * maxBatchSizeAtoms);}
+\DoxyCodeLine{810       \textcolor{keywordtype}{double} * cenXYZ = \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}{memManager\_}}.template malloc<double>(nthreads * 3*maxBatchSizeAtoms);}
+\DoxyCodeLine{811 }
+\DoxyCodeLine{812 }
+\DoxyCodeLine{813       \textcolor{comment}{// Populate cutoff Map (for each shell the distance beyond which the shell contribution is negligeble}}
+\DoxyCodeLine{814       std::vector<double> mapSh2Cut;}
+\DoxyCodeLine{815       std::vector<double> mapSh2Cut2;}
+\DoxyCodeLine{816 }
+\DoxyCodeLine{817       \textcolor{keywordtype}{double} epsilon = }
+\DoxyCodeLine{818         std::max((\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae6c267d8acb3569ec5215f94629f4497}{epsScreen\_}}/maxBatchSizeAtoms),std::numeric\_limits<double>::epsilon()); }
+\DoxyCodeLine{819 }
+\DoxyCodeLine{820       \textcolor{comment}{// Cutoff radius accordin Eq.20 in J. Chem. Theory Comput. 2011, 7, 3097-\/3104}}
+\DoxyCodeLine{821       \textcolor{keyword}{auto} cutFunc = [\&] (\textcolor{keywordtype}{double} alpha) -\/> \textcolor{keywordtype}{double}\{}
+\DoxyCodeLine{822         \textcolor{keywordflow}{return} std::sqrt((-\/std::log(epsilon) + 0.5 * std::log(alpha))/alpha);}
+\DoxyCodeLine{823       \};}
+\DoxyCodeLine{824 }
+\DoxyCodeLine{825       \textcolor{comment}{//Evaluate the Max for  each primitive in the shell and than push back in the mapSh2Cut vector}}
+\DoxyCodeLine{826       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iSh = 0; iSh < \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a936871b121472a416ee6f947ccdea4b4}{nShell}}; iSh++)}
+\DoxyCodeLine{827         mapSh2Cut.emplace\_back(}
+\DoxyCodeLine{828           cutFunc(}
+\DoxyCodeLine{829             *std::max\_element(}
+\DoxyCodeLine{830               \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[iSh].alpha.begin(),}
+\DoxyCodeLine{831               \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[iSh].alpha.end(),[\&](\textcolor{keywordtype}{double} x, \textcolor{keywordtype}{double} y)\{}
+\DoxyCodeLine{832                 return cutFunc(x) < cutFunc(y);}
+\DoxyCodeLine{833               \}}
+\DoxyCodeLine{834             )}
+\DoxyCodeLine{835           )}
+\DoxyCodeLine{836         );}
+\DoxyCodeLine{837 }
+\DoxyCodeLine{838       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}{Int2nd}}) }
+\DoxyCodeLine{839         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iSh = 0; iSh < \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a936871b121472a416ee6f947ccdea4b4}{nShell}}; iSh++)}
+\DoxyCodeLine{840           mapSh2Cut2.emplace\_back(}
+\DoxyCodeLine{841             cutFunc(}
+\DoxyCodeLine{842               *std::max\_element(}
+\DoxyCodeLine{843                 \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[iSh].alpha.begin(),}
+\DoxyCodeLine{844                 \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[iSh].alpha.end(),[\&](\textcolor{keywordtype}{double} x, \textcolor{keywordtype}{double} y)\{}
+\DoxyCodeLine{845                   return cutFunc(x) < cutFunc(y);}
+\DoxyCodeLine{846                 \}}
+\DoxyCodeLine{847               )}
+\DoxyCodeLine{848             )}
+\DoxyCodeLine{849           );}
+\DoxyCodeLine{850 }
+\DoxyCodeLine{851       \textcolor{comment}{// Function that it is finally integrated}}
+\DoxyCodeLine{852       \textcolor{keyword}{auto} g = [\&](T \&res, std::vector<cart\_t> \&batch, std::vector<double> \&\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}, }
+\DoxyCodeLine{853         \textcolor{keyword}{const} std::pair<double,double> \&rBounds, Args... args) -\/> \textcolor{keywordtype}{void} \{}
+\DoxyCodeLine{854 }
+\DoxyCodeLine{855 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 1}}
+\DoxyCodeLine{856         \textcolor{comment}{// Timing}}
+\DoxyCodeLine{857         \textcolor{keyword}{auto} topDist = std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{858 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{859 }
+\DoxyCodeLine{860         \textcolor{keywordtype}{size\_t} thread\_id = \mbox{\hyperlink{namespaceChronusQ_aa348a017ee78c3450480773ddc542e5c}{GetThreadID}}();       }
+\DoxyCodeLine{861 }
+\DoxyCodeLine{862         \textcolor{keywordtype}{double} * BasisEval\_loc = BasisEval + thread\_id * \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae6dd5183295e564e7925098bc1ff4933}{NDer}} * maxBatchSize * \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{863         \textcolor{keywordtype}{double} * SCR\_Car\_loc   = SCR\_Car   + thread\_id * \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae6dd5183295e564e7925098bc1ff4933}{NDer}} * shSizeCar;}
+\DoxyCodeLine{864 }
+\DoxyCodeLine{865         \textcolor{keywordtype}{double} * BasisEval2\_loc, * SCR\_Car2\_loc;}
+\DoxyCodeLine{866         \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}{Int2nd}}) \{}
+\DoxyCodeLine{867           BasisEval2\_loc = Basis2Eval + thread\_id * \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ab9f5b475b0b805c7ec5fe94325fdc907}{NDer2}} * maxBatchSize * \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{868           SCR\_Car2\_loc   = SCR\_Car2   + thread\_id * \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ab9f5b475b0b805c7ec5fe94325fdc907}{NDer2}} * shSizeCar2;  }
+\DoxyCodeLine{869         \}}
+\DoxyCodeLine{870 }
+\DoxyCodeLine{871         \textcolor{keywordtype}{double} * cenRSq\_loc = cenRSq + thread\_id * maxBatchSizeAtoms;}
+\DoxyCodeLine{872         \textcolor{keywordtype}{double} * cenR\_loc   = cenR   + thread\_id * maxBatchSizeAtoms;}
+\DoxyCodeLine{873         \textcolor{keywordtype}{double} * cenXYZ\_loc = cenXYZ + thread\_id * 3*maxBatchSizeAtoms;}
+\DoxyCodeLine{874 }
+\DoxyCodeLine{875         \textcolor{comment}{// Populate for each batch the distances vectors }}
+\DoxyCodeLine{876         \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0f370d15d4a455517fce02121cc1dd9a}{calcCenDist}}(batch,cenRSq\_loc,cenR\_loc,cenXYZ\_loc);}
+\DoxyCodeLine{877 }
+\DoxyCodeLine{878 }
+\DoxyCodeLine{879 }
+\DoxyCodeLine{880         \textcolor{keywordtype}{double} maxR = rBounds.second;}
+\DoxyCodeLine{881         \textcolor{keywordtype}{double} minR = rBounds.first;}
+\DoxyCodeLine{882 }
+\DoxyCodeLine{883         \textcolor{keywordtype}{double} epsilon = }
+\DoxyCodeLine{884           std::max((\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ae6c267d8acb3569ec5215f94629f4497}{epsScreen\_}}/maxBatchSizeAtoms),std::numeric\_limits<double>::epsilon()); }
+\DoxyCodeLine{885 }
+\DoxyCodeLine{886 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 1}}
+\DoxyCodeLine{887         \textcolor{comment}{// Timing}}
+\DoxyCodeLine{888         \textcolor{keyword}{auto} botDist = std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{889         durDist += botDist -\/ topDist;}
+\DoxyCodeLine{890 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{891         }
+\DoxyCodeLine{892 }
+\DoxyCodeLine{893         \textcolor{comment}{// Populating a vector of bool to know which shell need to }}
+\DoxyCodeLine{894         \textcolor{comment}{// be evaluated for the current batch of points according to }}
+\DoxyCodeLine{895         \textcolor{comment}{// the cutoff distances }}
+\DoxyCodeLine{896         std::vector<bool> evalShell;}
+\DoxyCodeLine{897         \textcolor{keywordtype}{size\_t} basisEvalDim(0);}
+\DoxyCodeLine{898         std::vector<size\_t> batchEvalShells;}
+\DoxyCodeLine{899 }
+\DoxyCodeLine{900         \textcolor{comment}{// SubMat Vector of pairs specifing the blocks of the super matrix to be used}}
+\DoxyCodeLine{901         std::vector<std::pair<size\_t,size\_t>> batchSubMat; }
+\DoxyCodeLine{902 }
+\DoxyCodeLine{903 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL > 0}}
+\DoxyCodeLine{904            std::cerr << \textcolor{stringliteral}{"{}Screen ON eps= "{}} << epsilon<<std::endl;}
+\DoxyCodeLine{905         }
+\DoxyCodeLine{906 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{907         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iSh = 0; iSh < \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a936871b121472a416ee6f947ccdea4b4}{nShell}}; iSh++) \{}
+\DoxyCodeLine{908 }
+\DoxyCodeLine{909           \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855a0df50d487b9483d2a3f3cb45d81e2ae7}{RAS}} = \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_ae7e15a2ce0a8cb300fe7b94312e4834d}{RIJ}}[\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}{iAtm}}][\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a2e39c31c653bccb44ec140148baa1ea0}{mapSh2Cen}}[iSh]];}
+\DoxyCodeLine{910           evalShell.emplace\_back(}
+\DoxyCodeLine{911 \#\textcolor{keywordflow}{if} \mbox{\hyperlink{integrator_8hpp_a4373e8fbb8e8d9c225f76c94e963856c}{INT\_DEBUG\_LEVEL}} < 3}
+\DoxyCodeLine{912            \textcolor{comment}{// Note. the spherical shell of point has to be within the shell cutoff }}
+\DoxyCodeLine{913            \textcolor{comment}{// if is on the center or inside the other shell cutoff }}
+\DoxyCodeLine{914             not (}
+\DoxyCodeLine{915               (\mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855a0df50d487b9483d2a3f3cb45d81e2ae7}{RAS}} >= (minR + mapSh2Cut[iSh])) or}
+\DoxyCodeLine{916               (\mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855a0df50d487b9483d2a3f3cb45d81e2ae7}{RAS}} <  (maxR -\/ mapSh2Cut[iSh]))  }
+\DoxyCodeLine{917             )}
+\DoxyCodeLine{918            \textcolor{comment}{//true}}
+\DoxyCodeLine{919 \#\textcolor{keywordflow}{else}}
+\DoxyCodeLine{920             \textcolor{keyword}{true}}
+\DoxyCodeLine{921 \#endif}
+\DoxyCodeLine{922           );}
+\DoxyCodeLine{923 }
+\DoxyCodeLine{924           \textcolor{keywordflow}{if}(evalShell.back()) \{}
+\DoxyCodeLine{925             basisEvalDim += \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[iSh].size();}
+\DoxyCodeLine{926             batchEvalShells.emplace\_back(iSh);}
+\DoxyCodeLine{927           \}}
+\DoxyCodeLine{928 }
+\DoxyCodeLine{929         \}}
+\DoxyCodeLine{930  }
+\DoxyCodeLine{931 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 3}}
+\DoxyCodeLine{932         std::cerr << \textcolor{stringliteral}{"{}BASIS DIM "{}} << basisEvalDim << std::endl;}
+\DoxyCodeLine{933 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{934 }
+\DoxyCodeLine{935         \textcolor{comment}{// Skyp the entire batch;}}
+\DoxyCodeLine{936         \textcolor{keywordflow}{if}(basisEvalDim == 0)\{ \textcolor{keywordflow}{return}; \}}
+\DoxyCodeLine{937 }
+\DoxyCodeLine{938         \textcolor{comment}{//FIXME (Write a function to handle this)}}
+\DoxyCodeLine{939         batchSubMat.emplace\_back(}
+\DoxyCodeLine{940           \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{mapSh2Bf}}[batchEvalShells[0]],}
+\DoxyCodeLine{941           \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{mapSh2Bf}}[batchEvalShells.back()] +}
+\DoxyCodeLine{942             \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[batchEvalShells.back()].size()}
+\DoxyCodeLine{943         );}
+\DoxyCodeLine{944 }
+\DoxyCodeLine{945         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iShell = batchEvalShells.begin(); }
+\DoxyCodeLine{946             iShell != batchEvalShells.end()-\/1;}
+\DoxyCodeLine{947             ++iShell)\{}
+\DoxyCodeLine{948 }
+\DoxyCodeLine{949           \textcolor{keywordflow}{if}(*(iShell+1) -\/ (*iShell) != 1)\{}
+\DoxyCodeLine{950             batchSubMat.back().second = }
+\DoxyCodeLine{951               \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{mapSh2Bf}}[*iShell] + \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[*iShell].size();}
+\DoxyCodeLine{952 }
+\DoxyCodeLine{953             batchSubMat.emplace\_back(}
+\DoxyCodeLine{954               \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{mapSh2Bf}}[*(iShell+1)],}
+\DoxyCodeLine{955               \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{mapSh2Bf}}[batchEvalShells.back()] +}
+\DoxyCodeLine{956                 \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[batchEvalShells.back()].size()}
+\DoxyCodeLine{957             );}
+\DoxyCodeLine{958           \}}
+\DoxyCodeLine{959        }
+\DoxyCodeLine{960         \}}
+\DoxyCodeLine{961 }
+\DoxyCodeLine{962         \textcolor{keywordflow}{if}(batchEvalShells.size() == 1) }
+\DoxyCodeLine{963           batchSubMat[0].second = }
+\DoxyCodeLine{964             batchSubMat[0].first + \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[batchEvalShells[0]].size();}
+\DoxyCodeLine{965 }
+\DoxyCodeLine{966         \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/NEO-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{967         std::vector<bool> evalShell2;}
+\DoxyCodeLine{968         \textcolor{keywordtype}{size\_t} basisEvalDim2(0);}
+\DoxyCodeLine{969         std::vector<size\_t> batchEvalShells2;}
+\DoxyCodeLine{970 }
+\DoxyCodeLine{971         \textcolor{comment}{// SubMat Vector of pairs specifing the blocks of the super matrix to be used}}
+\DoxyCodeLine{972         std::vector<std::pair<size\_t,size\_t>> batchSubMat2; }
+\DoxyCodeLine{973 }
+\DoxyCodeLine{974 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL > 0}}
+\DoxyCodeLine{975            \textcolor{comment}{//std::cerr << "{}Screen ON eps= "{} << epsilon<<std::endl;}}
+\DoxyCodeLine{976         }
+\DoxyCodeLine{977 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{978         \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}{Int2nd}})}
+\DoxyCodeLine{979           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iSh = 0; iSh < \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a936871b121472a416ee6f947ccdea4b4}{nShell}}; iSh++) \{}
+\DoxyCodeLine{980 }
+\DoxyCodeLine{981             \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855a0df50d487b9483d2a3f3cb45d81e2ae7}{RAS}} = \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_ae7e15a2ce0a8cb300fe7b94312e4834d}{RIJ}}[\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}{iAtm}}][\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a2e39c31c653bccb44ec140148baa1ea0}{mapSh2Cen}}[iSh]];}
+\DoxyCodeLine{982             \textcolor{comment}{// this is always set to be true since it is the main system that matters}}
+\DoxyCodeLine{983             evalShell2.emplace\_back(\textcolor{keyword}{true});}
+\DoxyCodeLine{984 }
+\DoxyCodeLine{985             \textcolor{keywordflow}{if}(evalShell2.back()) \{}
+\DoxyCodeLine{986               basisEvalDim2 += \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[iSh].size();}
+\DoxyCodeLine{987               batchEvalShells2.emplace\_back(iSh);}
+\DoxyCodeLine{988             \}}
+\DoxyCodeLine{989 }
+\DoxyCodeLine{990           \}}
+\DoxyCodeLine{991  }
+\DoxyCodeLine{992 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 3}}
+\DoxyCodeLine{993         \textcolor{comment}{//std::cerr << "{}AUX BASIS DIM "{} << aux\_basisEvalDim << std::endl;}}
+\DoxyCodeLine{994 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{995 }
+\DoxyCodeLine{996         \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}{Int2nd}}) \{}
+\DoxyCodeLine{997           \textcolor{comment}{//FIXME (Write a function to handle this)}}
+\DoxyCodeLine{998           batchSubMat2.emplace\_back(}
+\DoxyCodeLine{999             \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{mapSh2Bf}}[batchEvalShells2[0]],}
+\DoxyCodeLine{1000             \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{mapSh2Bf}}[batchEvalShells2.back()] +}
+\DoxyCodeLine{1001               \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[batchEvalShells2.back()].size()}
+\DoxyCodeLine{1002           );}
+\DoxyCodeLine{1003 }
+\DoxyCodeLine{1004           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iShell = batchEvalShells2.begin(); }
+\DoxyCodeLine{1005               iShell != batchEvalShells2.end()-\/1;}
+\DoxyCodeLine{1006               ++iShell)\{}
+\DoxyCodeLine{1007 }
+\DoxyCodeLine{1008             \textcolor{keywordflow}{if}(*(iShell+1) -\/ (*iShell) != 1)\{}
+\DoxyCodeLine{1009               batchSubMat2.back().second = }
+\DoxyCodeLine{1010                 \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{mapSh2Bf}}[*iShell] + \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[*iShell].size();}
+\DoxyCodeLine{1011 }
+\DoxyCodeLine{1012               batchSubMat2.emplace\_back(}
+\DoxyCodeLine{1013                 \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{mapSh2Bf}}[*(iShell+1)],}
+\DoxyCodeLine{1014                 \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{mapSh2Bf}}[batchEvalShells2.back()] +}
+\DoxyCodeLine{1015                   \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[batchEvalShells2.back()].size()}
+\DoxyCodeLine{1016               );}
+\DoxyCodeLine{1017             \}}
+\DoxyCodeLine{1018        }
+\DoxyCodeLine{1019           \}}
+\DoxyCodeLine{1020 }
+\DoxyCodeLine{1021           \textcolor{keywordflow}{if}(batchEvalShells2.size() == 1) }
+\DoxyCodeLine{1022             batchSubMat2[0].second = }
+\DoxyCodeLine{1023               batchSubMat2[0].first + \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[batchEvalShells2[0]].size();}
+\DoxyCodeLine{1024         \}}
+\DoxyCodeLine{1025         \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/end NEO-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{1026 }
+\DoxyCodeLine{1027 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 1}}
+\DoxyCodeLine{1028         \textcolor{comment}{// TIMING}}
+\DoxyCodeLine{1029         \textcolor{keyword}{auto} topBasis = std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{1030 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1031         }
+\DoxyCodeLine{1032         \mbox{\hyperlink{namespaceChronusQ_a8771d0c9717951111130fa2b68b2f19f}{evalShellSet}}(\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a3d526ded299e9ac8500dff63dd5ac033}{typ\_}},\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}},evalShell,cenRSq\_loc,cenXYZ\_loc,batch.size(),\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}},}
+\DoxyCodeLine{1033           \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a2e39c31c653bccb44ec140148baa1ea0}{mapSh2Cen}},basisEvalDim,BasisEval\_loc,SCR\_Car\_loc,shSizeCar,\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_ada5d97ccb92e3f2e7f14a07ea5615653}{basisSet\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a87bdf52af466b6675078a34788641774}{forceCart}});}
+\DoxyCodeLine{1034 }
+\DoxyCodeLine{1035         \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}{Int2nd}})}
+\DoxyCodeLine{1036           \mbox{\hyperlink{namespaceChronusQ_a8771d0c9717951111130fa2b68b2f19f}{evalShellSet}}(\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a6f71856fe847969edd00383030372c84}{typ2\_}},\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}},evalShell2,cenRSq\_loc,cenXYZ\_loc,batch.size(), \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}},}
+\DoxyCodeLine{1037             \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a2e39c31c653bccb44ec140148baa1ea0}{mapSh2Cen}},basisEvalDim2,BasisEval2\_loc,SCR\_Car2\_loc,shSizeCar2,\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a75331e0736cc1fb3f9edecb3208c3b16}{basisSet2\_}}.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a87bdf52af466b6675078a34788641774}{forceCart}});}
+\DoxyCodeLine{1038 }
+\DoxyCodeLine{1039 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 1}}
+\DoxyCodeLine{1040         \textcolor{comment}{// TIMNG}}
+\DoxyCodeLine{1041         \textcolor{keyword}{auto} botBasis = std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{1042         durBasis += botBasis -\/ topBasis;}
+\DoxyCodeLine{1043 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1044         }
+\DoxyCodeLine{1045 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 1}}
+\DoxyCodeLine{1046         \textcolor{comment}{// Timing}}
+\DoxyCodeLine{1047         \textcolor{keyword}{auto} topWeight = std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{1048 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1049 }
+\DoxyCodeLine{1050         \textcolor{comment}{// Modify weight according Becke scheme, get max weight}}
+\DoxyCodeLine{1051 \textcolor{preprocessor}{\#if 1}}
+\DoxyCodeLine{1052         \textcolor{keyword}{auto} maxWeight = \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a39942e1579e585066707c88475981c10}{evalPartitionWeights}}(\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}{iAtm}},cenR\_loc,\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}); }
+\DoxyCodeLine{1053 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL < 3}}
+\DoxyCodeLine{1054         \textcolor{keywordflow}{if} (std::abs(maxWeight) < epsilon) \{}
+\DoxyCodeLine{1055           \textcolor{comment}{//std::cerr << "{}batch screened"{} << std::endl;}}
+\DoxyCodeLine{1056           \textcolor{keywordflow}{return};}
+\DoxyCodeLine{1057         \}}
+\DoxyCodeLine{1058 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1059 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{1060         \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a3e62c6b11c7100c19cb4c1cca8cd38ba}{evalFrischPartitionWeights}}(\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}{iAtm}},batch,\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}});}
+\DoxyCodeLine{1061 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1062 }
+\DoxyCodeLine{1063 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 1}}
+\DoxyCodeLine{1064         \textcolor{comment}{// Timing}}
+\DoxyCodeLine{1065         \textcolor{keyword}{auto} botWeight = std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{1066         durWeight += botWeight -\/ topWeight;}
+\DoxyCodeLine{1067 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1068 }
+\DoxyCodeLine{1069 }
+\DoxyCodeLine{1070 }
+\DoxyCodeLine{1071 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 1}}
+\DoxyCodeLine{1072         \textcolor{keyword}{auto} topFunc = std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{1073 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1074 }
+\DoxyCodeLine{1075 }
+\DoxyCodeLine{1076         \textcolor{comment}{// Final call to be resambled ba the lambda function}}
+\DoxyCodeLine{1077         \textcolor{keywordflow}{if} (not \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}{Int2nd}}) \{}
+\DoxyCodeLine{1078           \textcolor{comment}{//std::cout << "{}before call to func "{} << std::endl;}}
+\DoxyCodeLine{1079           std::vector<size\_t> basisEvalDim\_vec\{basisEvalDim\};}
+\DoxyCodeLine{1080           std::vector<double*> BasisEval\_loc\_vec\{BasisEval\_loc\};}
+\DoxyCodeLine{1081           std::vector<std::vector<size\_t>> batchEvalShells\_vec;}
+\DoxyCodeLine{1082           batchEvalShells\_vec.push\_back(batchEvalShells);}
+\DoxyCodeLine{1083           std::vector<std::vector<std::pair<size\_t,size\_t>>> batchSubMat\_vec;}
+\DoxyCodeLine{1084           batchSubMat\_vec.push\_back(batchSubMat);}
+\DoxyCodeLine{1085 }
+\DoxyCodeLine{1086           func(res,batch,\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}},basisEvalDim\_vec,BasisEval\_loc\_vec,}
+\DoxyCodeLine{1087                batchEvalShells\_vec,batchSubMat\_vec,args...);}
+\DoxyCodeLine{1088         \}}
+\DoxyCodeLine{1089         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1090           std::vector<size\_t> basisEvalDim\_vec\{basisEvalDim, basisEvalDim2\};}
+\DoxyCodeLine{1091           std::vector<double*> BasisEval\_loc\_vec\{BasisEval\_loc, BasisEval2\_loc\};}
+\DoxyCodeLine{1092           std::vector<std::vector<size\_t>> batchEvalShells\_vec; }
+\DoxyCodeLine{1093           batchEvalShells\_vec.push\_back(batchEvalShells);}
+\DoxyCodeLine{1094           batchEvalShells\_vec.push\_back(batchEvalShells2);}
+\DoxyCodeLine{1095           std::vector<std::vector<std::pair<size\_t,size\_t>>> batchSubMat\_vec;}
+\DoxyCodeLine{1096           batchSubMat\_vec.push\_back(batchSubMat); }
+\DoxyCodeLine{1097           batchSubMat\_vec.push\_back(batchSubMat2);}
+\DoxyCodeLine{1098 }
+\DoxyCodeLine{1099           func(res,batch,\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}},basisEvalDim\_vec,BasisEval\_loc\_vec,}
+\DoxyCodeLine{1100                batchEvalShells\_vec,batchSubMat\_vec,args...);}
+\DoxyCodeLine{1101         \}}
+\DoxyCodeLine{1102 }
+\DoxyCodeLine{1103 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 1}}
+\DoxyCodeLine{1104         \textcolor{keyword}{auto} botFunc = std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{1105         \textcolor{comment}{// TIMNG}}
+\DoxyCodeLine{1106         durFunc += botFunc -\/ topFunc;}
+\DoxyCodeLine{1107 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1108         }
+\DoxyCodeLine{1109       \}; \textcolor{comment}{// End g function}}
+\DoxyCodeLine{1110 }
+\DoxyCodeLine{1111       \textcolor{comment}{// Perform integration over atomic centers, by using spherical Integrators}}
+\DoxyCodeLine{1112       \textcolor{keywordflow}{for}(\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}{iAtm}} = 0; \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}{iAtm}} < \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}}; \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}{iAtm}}++) \{}
+\DoxyCodeLine{1113 }
+\DoxyCodeLine{1114 }
+\DoxyCodeLine{1115         \textcolor{comment}{// Round robin on mpi processes}}
+\DoxyCodeLine{1116         \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}{iAtm}} \% mpiSize != mpiRank ) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{1117 }
+\DoxyCodeLine{1118         this-\/>\mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a75bafa765193d1c528c9a3d244467b3e}{Center}} = \{molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}{iAtm}}].coord[0],}
+\DoxyCodeLine{1119                         \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}{iAtm}}].coord[1],}
+\DoxyCodeLine{1120                         \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}{iAtm}}].coord[2]\};}
+\DoxyCodeLine{1121 }
+\DoxyCodeLine{1122         \textcolor{comment}{// The effective radius is chosen as half of the Bragg-\/Slater radius of the }}
+\DoxyCodeLine{1123         \textcolor{comment}{// respective atom (stored in the slaterRadius in Ang), except for}}
+\DoxyCodeLine{1124         \textcolor{comment}{// hydrogen in which case the factor of 0.5 is not applied (the stored value}}
+\DoxyCodeLine{1125         \textcolor{comment}{// for hydrogen is pre scaled by 2 to prevent scaling).}}
+\DoxyCodeLine{1126         \textcolor{comment}{// Procedure according J. Chem. Phys. 88, 2547(1988). pg 2550 }}
+\DoxyCodeLine{1127           }
+\DoxyCodeLine{1128         this-\/>\mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a4d2e05fc41f991778fd1a583eb65f612}{Scale}} = 0.5*molecule\_.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a37bb1a97b207f1b8a0f888fc0cc46cb1}{iAtm}}].slaterRadius/\mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}};}
+\DoxyCodeLine{1129         \mbox{\hyperlink{classChronusQ_1_1SphereIntegrator}{SphereIntegrator<\_QTyp1>::template}} integrate<T>(1.,res,g,args...);}
+\DoxyCodeLine{1130 }
+\DoxyCodeLine{1131       \} \textcolor{comment}{// loop over atoms}}
+\DoxyCodeLine{1132       res *= 4.* M\_PI;}
+\DoxyCodeLine{1133 }
+\DoxyCodeLine{1134       \textcolor{comment}{// clean memory}}
+\DoxyCodeLine{1135       \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}{memManager\_}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(BasisEval,cenRSq,cenXYZ,cenR,SCR\_Car);}
+\DoxyCodeLine{1136 }
+\DoxyCodeLine{1137       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a84615d7ba6237007e29afe72e0f7c0a5}{Int2nd}})}
+\DoxyCodeLine{1138        \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a0a3edac564775706cddbc137cb222e0b}{memManager\_}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(Basis2Eval,SCR\_Car2);}
+\DoxyCodeLine{1139 }
+\DoxyCodeLine{1140 \textcolor{preprocessor}{\#if INT\_DEBUG\_LEVEL >= 1}}
+\DoxyCodeLine{1141       \textcolor{comment}{//TIMING}}
+\DoxyCodeLine{1142       \textcolor{keywordtype}{double} d\_batch =  \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a32d06bdaaa05ca24ca4801dced6b6dde}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}} *  this-\/>\mbox{\hyperlink{classChronusQ_1_1Integrator2D_a4b1c78dd101b1b4321fff20d69f3caff}{q1}}.nPts /  this-\/>\mbox{\hyperlink{classChronusQ_1_1SphereIntegrator_a168bec6b46c73378b09ea54ebe78806c}{nRadPerMacroBatch}};}
+\DoxyCodeLine{1143       std::cerr << std::scientific << std::endl;}
+\DoxyCodeLine{1144       std::cerr << \textcolor{stringliteral}{"{}Total \# of Batch  "{}} << d\_batch << std::endl;}
+\DoxyCodeLine{1145       std::cerr << \textcolor{stringliteral}{"{}Total Dist "{}} << durDist.count() << std::endl;}
+\DoxyCodeLine{1146       std::cerr << \textcolor{stringliteral}{"{}Total Weight "{}} << durWeight.count() << std::endl;}
+\DoxyCodeLine{1147       std::cerr << \textcolor{stringliteral}{"{}Total Basis "{}} << durBasis.count() << std::endl;}
+\DoxyCodeLine{1148       std::cerr << \textcolor{stringliteral}{"{}Total Func "{}} << durFunc.count() << std::endl;}
+\DoxyCodeLine{1149       std::cerr << \textcolor{stringliteral}{"{}Total int the gfun "{}} <<  durDist.count()+ durBasis.count() +durFunc.count() }
+\DoxyCodeLine{1150                 << std::endl;}
+\DoxyCodeLine{1151 }
+\DoxyCodeLine{1152       std::cerr << \textcolor{stringliteral}{"{}Dist "{}} << durDist.count()/d\_batch << std::endl;}
+\DoxyCodeLine{1153       std::cerr << \textcolor{stringliteral}{"{}Weight "{}} << durWeight.count()/d\_batch << std::endl;}
+\DoxyCodeLine{1154       std::cerr << \textcolor{stringliteral}{"{}Basis "{}} << durBasis.count()/d\_batch << std::endl;}
+\DoxyCodeLine{1155       std::cerr << \textcolor{stringliteral}{"{}Func "{}} << durFunc.count()/d\_batch << std::endl;}
+\DoxyCodeLine{1156 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1157 }
+\DoxyCodeLine{1158     \};\textcolor{comment}{// integrate}}
+\DoxyCodeLine{1159 }
+\DoxyCodeLine{1166     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{class }F, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{1167     T \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a80e2a5ef151187c174937281497fca94}{integrate}}(\textcolor{keyword}{const} F \&func, Args... args) \{}
+\DoxyCodeLine{1168       T res(0.);}
+\DoxyCodeLine{1169       integrate<T>(res,func,args...);}
+\DoxyCodeLine{1170       \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{1171     \}}
+\DoxyCodeLine{1172 }
+\DoxyCodeLine{1173   \};\textcolor{comment}{// class BeckeIntegrator }}
+\DoxyCodeLine{1174 }
+\DoxyCodeLine{1175 }
+\DoxyCodeLine{1176 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{1177 }
+
+\end{DoxyCode}

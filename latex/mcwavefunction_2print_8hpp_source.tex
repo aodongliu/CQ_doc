@@ -1,0 +1,152 @@
+\hypertarget{mcwavefunction_2print_8hpp_source}{}\doxysection{print.\+hpp}
+\label{mcwavefunction_2print_8hpp_source}\index{include/mcwavefunction/print.hpp@{include/mcwavefunction/print.hpp}}
+\mbox{\hyperlink{mcwavefunction_2print_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcscf_8hpp}{mcscf.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{util_2print_8hpp}{util/print.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{output_8hpp}{cxxapi/output.hpp}}>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{34   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a662831de30a52985eb7fa0152671f751}{MCWaveFunction<MatsT,IntsT>::printMOSpacePatition}}() \{}
+\DoxyCodeLine{35       }
+\DoxyCodeLine{36     \textcolor{keyword}{auto} \& mopart = this-\/>MOPartition;}
+\DoxyCodeLine{37     \textcolor{keyword}{auto} \& ref = this-\/>reference();}
+\DoxyCodeLine{38   }
+\DoxyCodeLine{39     std::cout << std::left << std::endl;}
+\DoxyCodeLine{40     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}* MO Space Partition:"{}});}
+\DoxyCodeLine{41     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Electronic MOs:"{}}, mopart.nElecMO);}
+\DoxyCodeLine{42     \textcolor{keywordflow}{if} (ref.nC == 4)}
+\DoxyCodeLine{43       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Negative MOs:"{}}, mopart.nNegMO);}
+\DoxyCodeLine{44     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Electrons in Full Space:"{}},  ref.nO);}
+\DoxyCodeLine{45     }
+\DoxyCodeLine{46     std::cout << std::endl;}
+\DoxyCodeLine{47     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Inactive Orbitals:"{}},     mopart.nInact);}
+\DoxyCodeLine{48     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Frozen Virtual Orbitals:"{}},  mopart.nFVirt);}
+\DoxyCodeLine{49     }
+\DoxyCodeLine{50     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Correlated Orbitals:"{}},      mopart.nCorrO);}
+\DoxyCodeLine{51     \textcolor{keywordflow}{if} (mopart.scheme == \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855a0df50d487b9483d2a3f3cb45d81e2ae7}{RAS}}) \{}
+\DoxyCodeLine{52       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Orbitals in RAS 1:"{}},      mopart.nActOs[0]);}
+\DoxyCodeLine{53       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Orbitals in RAS 2:"{}},      mopart.nActOs[1]);}
+\DoxyCodeLine{54       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Orbitals in RAS 3:"{}},      mopart.nActOs[2]);}
+\DoxyCodeLine{55       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Maximum Number of Holes in RAS 1:"{}},      mopart.mxHole);}
+\DoxyCodeLine{56       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Maximum Number of Electrons in RAS 3:"{}},  mopart.mxElec);}
+\DoxyCodeLine{57     \}}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     std::cout << std::endl;}
+\DoxyCodeLine{60     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Correlated Electrons:"{}},     mopart.nCorrE);}
+\DoxyCodeLine{61     \textcolor{keywordflow}{if} (ref.nC == 1) \{}
+\DoxyCodeLine{62       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Correlated Alpha Electrons:"{}}, mopart.nCorrEA);}
+\DoxyCodeLine{63       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Correlated Beta Electrons:"{}},  mopart.nCorrEB);}
+\DoxyCodeLine{64     \}}
+\DoxyCodeLine{65     }
+\DoxyCodeLine{66     std::cout << std::endl;}
+\DoxyCodeLine{67     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Roots Requested:"{}},this-\/>NStates);}
+\DoxyCodeLine{68     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Determinants:"{}},   this-\/>NDet);}
+\DoxyCodeLine{69     }
+\DoxyCodeLine{70     std::cout << std::endl;}
+\DoxyCodeLine{71     std::cout << std::right << std::endl;}
+\DoxyCodeLine{72     this-\/>mointsTF-\/>printMORangesSummary();}
+\DoxyCodeLine{73     std::cout << std::left  << std::endl;}
+\DoxyCodeLine{74   }
+\DoxyCodeLine{75   \}; \textcolor{comment}{// MCWaveFunction::printMOSpacePatition}}
+\DoxyCodeLine{76   }
+\DoxyCodeLine{77   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{78   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a893a4f5edc1b70cabfeca023c046cd1a}{MCWaveFunction<MatsT,IntsT>::print1RDMs}}() \{}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{keywordflow}{if}( printRDMs==0 ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82     std::cout << std::endl << \textcolor{stringliteral}{"{}MCWaveFunction 1RDMs:"{}} << std::endl;}
+\DoxyCodeLine{83     std::cout << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}} << std::endl;}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     \textcolor{keywordtype}{size\_t} nCorrO = this-\/>MOPartition.nCorrO;}
+\DoxyCodeLine{86     \textcolor{keywordtype}{size\_t} nS     = this-\/>NStates;}
+\DoxyCodeLine{87     \textcolor{keywordtype}{size\_t} nRDMEle= 0; \textcolor{comment}{// used for line breaker}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \textcolor{comment}{//Print full 1RDM}}
+\DoxyCodeLine{90     \textcolor{keywordflow}{if}( printRDMs==1 )\{}
+\DoxyCodeLine{91       std::cout << \textcolor{stringliteral}{"{}Printing full 1-\/RDM"{}} << std::endl;}
+\DoxyCodeLine{92       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nS; i++) \{}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94         \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout, \textcolor{stringliteral}{"{}State "{}} + std::to\_string(i),}
+\DoxyCodeLine{95           this-\/>oneRDM[i].pointer(), nCorrO, nCorrO, nCorrO);}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97       \}}
+\DoxyCodeLine{98     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( printRDMs==2 )\{}
+\DoxyCodeLine{99       std::cout.precision(2);}
+\DoxyCodeLine{100       std::cout << \textcolor{stringliteral}{"{}Printing large (>"{}} << std::fixed << rdmCut << \textcolor{stringliteral}{"{}) diagonal elements of real 1-\/RDM"{}} << std::endl;}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nS; i++) \{}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104         std::cout << std::endl << \textcolor{stringliteral}{"{}State "{}} << i+1 << \textcolor{stringliteral}{"{}: "{}};}
+\DoxyCodeLine{105         nRDMEle = 0;}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107         \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} ipp = 0ul; ipp < nCorrO; ipp++)\{}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109           \textcolor{keywordflow}{if}( std::real(this-\/>oneRDM[i].pointer()[ipp*nCorrO+ipp]) > rdmCut )\{}
+\DoxyCodeLine{110             \textcolor{keywordflow}{if}( nRDMEle > 6 )\{}
+\DoxyCodeLine{111               std::cout << std::endl << \textcolor{stringliteral}{"{}         "{}};}
+\DoxyCodeLine{112               nRDMEle = 0;}
+\DoxyCodeLine{113             \}}
+\DoxyCodeLine{114             std::cout << std::setw(3) << ipp+1 << \textcolor{stringliteral}{"{}("{}} << std::real(this-\/>oneRDM[i].pointer()[ipp*nCorrO+ipp]) << \textcolor{stringliteral}{"{})"{}} << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{115             nRDMEle++;}
+\DoxyCodeLine{116           \}}
+\DoxyCodeLine{117         \}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119         std::cout << std::endl;}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121       \}}
+\DoxyCodeLine{122     \}}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124     std::cout << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}} << std::endl;}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126   \}; \textcolor{comment}{//MCWaveFunction::print1RDMs}}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{129   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a575beaf269cc740f4fd8708c770a00e3}{MCWaveFunction<MatsT,IntsT>::printMOInfo}}(std::ostream\& out, }
+\DoxyCodeLine{130                       \textcolor{keywordtype}{size\_t} printMOLevel) \{}
+\DoxyCodeLine{131     }
+\DoxyCodeLine{132     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} * ss\_ptr = \&reference(); }
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134     std::fill\_n(ss\_ptr-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a5d8efa6559700f8211961900a557f358}{eps1}}, ss\_ptr-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} * ss\_ptr-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a3830b10befd26044ea0cdcaed2342e17}{nAlphaOrbital}}(),\textcolor{keywordtype}{double}(0.));}
+\DoxyCodeLine{135     \textcolor{keywordflow}{if}( ss\_ptr-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunction_abbdbd414b7588dc41663f1f37753d247}{eps2}} != \textcolor{keyword}{nullptr} )}
+\DoxyCodeLine{136       std::fill\_n(ss\_ptr-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunction_abbdbd414b7588dc41663f1f37753d247}{eps2}}, ss\_ptr-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} * ss\_ptr-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a3830b10befd26044ea0cdcaed2342e17}{nAlphaOrbital}}(),\textcolor{keywordtype}{double}(0.));}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138     \textcolor{keywordflow}{if} (not printMOLevel)}
+\DoxyCodeLine{139       printMOLevel = printMOCoeffs;}
+\DoxyCodeLine{140     ss\_ptr-\/>WaveFunction<MatsT,IntsT>::printMOInfo(out, printMOLevel);}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142   \} \textcolor{comment}{//MCWaveFunction::printMOInfo}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

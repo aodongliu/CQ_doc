@@ -1,0 +1,334 @@
+\hypertarget{classChronusQ_1_1NumGradient}{}\doxysection{ChronusQ\+::Num\+Gradient Class Reference}
+\label{classChronusQ_1_1NumGradient}\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+
+
+{\ttfamily \#include $<$geomgrad.\+hpp$>$}
+
+
+
+Collaboration diagram for ChronusQ\+::Num\+Gradient\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NumGradient__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1NumGradient_ac19a9b1699ea4703fdfcffb2e5a2dd0e}{Num\+Gradient}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1NumGradient_ae7f683557b32fd25eda9546c67515375}{Num\+Gradient}} (\mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \&in, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{Single\+Slater\+Base}} $>$ \&ss, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} $>$ b)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1NumGradient_aa3a06171ed3f0b554a7952877786d387}{Num\+Gradient}} (const \mbox{\hyperlink{classChronusQ_1_1NumGradient}{Num\+Gradient}} \&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1NumGradient_a7a95383c653882fbbb1b10e5f7eb042e}{Num\+Gradient}} (\mbox{\hyperlink{classChronusQ_1_1NumGradient}{Num\+Gradient}} \&\&)=default
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1NumGradient_a65fd72136893f86a76030dfdfaf51eec}{do\+Grad}} (size\+\_\+t acc=2)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1NumGradient_a8d4cdec949e08ccae3a0bac0d2baddb7}{grid\+Grad}} (size\+\_\+t acc=2)
+\item 
+{\footnotesize template$<$typename IntsT $>$ }\\void \mbox{\hyperlink{classChronusQ_1_1NumGradient_a43aebb8ff651a610dde5cff708c67f95}{int\+Grad}} (size\+\_\+t acc=2)
+\item 
+{\footnotesize template$<$typename IntsT $>$ }\\void \mbox{\hyperlink{classChronusQ_1_1NumGradient_a7db2459f6ba20b135da9c96357e9ca9b}{eri\+Grad}} (size\+\_\+t acc=2)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1NumGradient_a910c14662f12cad8012c0ae586f61ea1}{print\+Results}} (std\+::string name, std\+::vector$<$ std\+::vector$<$ double $>$ $>$ res, size\+\_\+t res\+Index, double min\+Print=1e-\/8)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename MatsT , typename IntsT $>$ }\\bool \mbox{\hyperlink{classChronusQ_1_1NumGradient_a0a7e95d29051816de19d2d4274b97d67}{good\+Type}} ()
+\item 
+{\footnotesize template$<$typename MatsT , typename IntsT $>$ }\\void \mbox{\hyperlink{classChronusQ_1_1NumGradient_acdc9c25140c07fc50e18e65b6488ab64}{move\+Mol}} (size\+\_\+t i\+Atm, size\+\_\+t i\+XYZ, double diff)
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1NumGradient_a28c24bcb12038551449a2e029f878fea}{get\+Energies}} ()
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1NumGradient_a4fe1508be589222679ae5f0dca082e0b}{get\+Grid\+Vals}} (bool \mbox{\hyperlink{classChronusQ_1_1NumGradient_a65fd72136893f86a76030dfdfaf51eec}{do\+Grad}}, size\+\_\+t iA, size\+\_\+t i\+XYZ)
+\item 
+{\footnotesize template$<$typename IntsT $>$ }\\std\+::vector$<$ IntsT $>$ \mbox{\hyperlink{classChronusQ_1_1NumGradient_a3fc77bcccfa5d365092b15c3b0a215d0}{get\+One\+EInts}} ()
+\item 
+{\footnotesize template$<$typename IntsT $>$ }\\std\+::vector$<$ IntsT $>$ \mbox{\hyperlink{classChronusQ_1_1NumGradient_acfa0eadad4f9cb26dacdbaafb9db3cce}{get\+ERI}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \& \mbox{\hyperlink{classChronusQ_1_1NumGradient_a3dd56205cd5c4ae87f7460c9cf89e625}{input\+\_\+}}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{Single\+Slater\+Base}} $>$ \& \mbox{\hyperlink{classChronusQ_1_1NumGradient_aa8b34b35917b55ff4b2c135703cf4d8c}{ref\+\_\+}}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{Single\+Slater\+Base}} $>$ \mbox{\hyperlink{classChronusQ_1_1NumGradient_afa6f6997ab9083dfe4148693e5ea9579}{curr\+\_\+}}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \mbox{\hyperlink{classChronusQ_1_1NumGradient_ace56a60f1468cf583c910ac5597910ff}{em\+Pert}}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structChronusQ_1_1IntegralsBase}{Integrals\+Base}} $>$ \mbox{\hyperlink{classChronusQ_1_1NumGradient_a7787fda48d0c4fb5d58f5c6bb7cae765}{aoints}}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \mbox{\hyperlink{classChronusQ_1_1NumGradient_a6ec89a58bfe0159022722bf778b5d9c9}{mol}}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} $>$ \mbox{\hyperlink{classChronusQ_1_1NumGradient_a4a87e39b5cf3568d0df1e1e664734ab1}{basis}}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} $>$ \mbox{\hyperlink{classChronusQ_1_1NumGradient_af085fd2c2e6afd81db3a49dcd7526599}{dfbasis}}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} $>$ \mbox{\hyperlink{classChronusQ_1_1NumGradient_a3d7bc5d4ad8cb72955170ecc2cf71431}{prot\+\_\+basis}}
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1NumGradient_ac1ce40ac405c21efc16a25023f576e38}{n\+Atoms}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_ac19a9b1699ea4703fdfcffb2e5a2dd0e}\label{classChronusQ_1_1NumGradient_ac19a9b1699ea4703fdfcffb2e5a2dd0e}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!NumGradient@{NumGradient}}
+\index{NumGradient@{NumGradient}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{NumGradient()}{NumGradient()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Num\+Gradient\+::\+Num\+Gradient (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_ae7f683557b32fd25eda9546c67515375}\label{classChronusQ_1_1NumGradient_ae7f683557b32fd25eda9546c67515375}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!NumGradient@{NumGradient}}
+\index{NumGradient@{NumGradient}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{NumGradient()}{NumGradient()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Num\+Gradient\+::\+Num\+Gradient (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}} \&}]{in,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{Single\+Slater\+Base}} $>$ \&}]{ss,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} $>$}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NumGradient_ae7f683557b32fd25eda9546c67515375_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_aa3a06171ed3f0b554a7952877786d387}\label{classChronusQ_1_1NumGradient_aa3a06171ed3f0b554a7952877786d387}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!NumGradient@{NumGradient}}
+\index{NumGradient@{NumGradient}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{NumGradient()}{NumGradient()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Num\+Gradient\+::\+Num\+Gradient (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1NumGradient}{Num\+Gradient}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a7a95383c653882fbbb1b10e5f7eb042e}\label{classChronusQ_1_1NumGradient_a7a95383c653882fbbb1b10e5f7eb042e}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!NumGradient@{NumGradient}}
+\index{NumGradient@{NumGradient}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{NumGradient()}{NumGradient()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Num\+Gradient\+::\+Num\+Gradient (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1NumGradient}{Num\+Gradient}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a65fd72136893f86a76030dfdfaf51eec}\label{classChronusQ_1_1NumGradient_a65fd72136893f86a76030dfdfaf51eec}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!doGrad@{doGrad}}
+\index{doGrad@{doGrad}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{doGrad()}{doGrad()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Num\+Gradient\+::do\+Grad (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{acc = {\ttfamily 2} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NumGradient_a65fd72136893f86a76030dfdfaf51eec_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a7db2459f6ba20b135da9c96357e9ca9b}\label{classChronusQ_1_1NumGradient_a7db2459f6ba20b135da9c96357e9ca9b}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!eriGrad@{eriGrad}}
+\index{eriGrad@{eriGrad}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{eriGrad()}{eriGrad()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+void Chronus\+Q\+::\+Num\+Gradient\+::eri\+Grad (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{acc = {\ttfamily 2} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NumGradient_a7db2459f6ba20b135da9c96357e9ca9b_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a28c24bcb12038551449a2e029f878fea}\label{classChronusQ_1_1NumGradient_a28c24bcb12038551449a2e029f878fea}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!getEnergies@{getEnergies}}
+\index{getEnergies@{getEnergies}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{getEnergies()}{getEnergies()}}
+{\footnotesize\ttfamily std\+::vector$<$ double $>$ Chronus\+Q\+::\+Num\+Gradient\+::get\+Energies (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NumGradient_a28c24bcb12038551449a2e029f878fea_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_acfa0eadad4f9cb26dacdbaafb9db3cce}\label{classChronusQ_1_1NumGradient_acfa0eadad4f9cb26dacdbaafb9db3cce}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!getERI@{getERI}}
+\index{getERI@{getERI}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{getERI()}{getERI()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+template std\+::vector$<$ \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $>$ Chronus\+Q\+::\+Num\+Gradient\+::get\+ERI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NumGradient_acfa0eadad4f9cb26dacdbaafb9db3cce_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a4fe1508be589222679ae5f0dca082e0b}\label{classChronusQ_1_1NumGradient_a4fe1508be589222679ae5f0dca082e0b}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!getGridVals@{getGridVals}}
+\index{getGridVals@{getGridVals}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{getGridVals()}{getGridVals()}}
+{\footnotesize\ttfamily std\+::vector$<$ double $>$ Chronus\+Q\+::\+Num\+Gradient\+::get\+Grid\+Vals (\begin{DoxyParamCaption}\item[{bool}]{do\+Grad,  }\item[{size\+\_\+t}]{iA,  }\item[{size\+\_\+t}]{i\+XYZ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NumGradient_a4fe1508be589222679ae5f0dca082e0b_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NumGradient_a4fe1508be589222679ae5f0dca082e0b_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a3fc77bcccfa5d365092b15c3b0a215d0}\label{classChronusQ_1_1NumGradient_a3fc77bcccfa5d365092b15c3b0a215d0}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!getOneEInts@{getOneEInts}}
+\index{getOneEInts@{getOneEInts}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{getOneEInts()}{getOneEInts()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+std\+::vector$<$ IntsT $>$ Chronus\+Q\+::\+Num\+Gradient\+::get\+One\+EInts\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a0a7e95d29051816de19d2d4274b97d67}\label{classChronusQ_1_1NumGradient_a0a7e95d29051816de19d2d4274b97d67}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!goodType@{goodType}}
+\index{goodType@{goodType}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{goodType()}{goodType()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+bool Chronus\+Q\+::\+Num\+Gradient\+::good\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a8d4cdec949e08ccae3a0bac0d2baddb7}\label{classChronusQ_1_1NumGradient_a8d4cdec949e08ccae3a0bac0d2baddb7}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!gridGrad@{gridGrad}}
+\index{gridGrad@{gridGrad}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{gridGrad()}{gridGrad()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Num\+Gradient\+::grid\+Grad (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{acc = {\ttfamily 2} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NumGradient_a8d4cdec949e08ccae3a0bac0d2baddb7_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a43aebb8ff651a610dde5cff708c67f95}\label{classChronusQ_1_1NumGradient_a43aebb8ff651a610dde5cff708c67f95}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!intGrad@{intGrad}}
+\index{intGrad@{intGrad}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{intGrad()}{intGrad()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+void Chronus\+Q\+::\+Num\+Gradient\+::int\+Grad (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{acc = {\ttfamily 2} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NumGradient_a43aebb8ff651a610dde5cff708c67f95_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_acdc9c25140c07fc50e18e65b6488ab64}\label{classChronusQ_1_1NumGradient_acdc9c25140c07fc50e18e65b6488ab64}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!moveMol@{moveMol}}
+\index{moveMol@{moveMol}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{moveMol()}{moveMol()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template void Chronus\+Q\+::\+Num\+Gradient\+::move\+Mol$<$ \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $>$ (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{i\+Atm,  }\item[{size\+\_\+t}]{i\+XYZ,  }\item[{double}]{diff }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NumGradient_acdc9c25140c07fc50e18e65b6488ab64_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a910c14662f12cad8012c0ae586f61ea1}\label{classChronusQ_1_1NumGradient_a910c14662f12cad8012c0ae586f61ea1}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!printResults@{printResults}}
+\index{printResults@{printResults}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{printResults()}{printResults()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Num\+Gradient\+::print\+Results (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{std\+::vector$<$ std\+::vector$<$ double $>$ $>$}]{res,  }\item[{size\+\_\+t}]{res\+Index,  }\item[{double}]{min\+Print = {\ttfamily 1e-\/8} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NumGradient_a910c14662f12cad8012c0ae586f61ea1_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a7787fda48d0c4fb5d58f5c6bb7cae765}\label{classChronusQ_1_1NumGradient_a7787fda48d0c4fb5d58f5c6bb7cae765}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!aoints@{aoints}}
+\index{aoints@{aoints}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{aoints}{aoints}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{structChronusQ_1_1IntegralsBase}{Integrals\+Base}}$>$ Chronus\+Q\+::\+Num\+Gradient\+::aoints\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a4a87e39b5cf3568d0df1e1e664734ab1}\label{classChronusQ_1_1NumGradient_a4a87e39b5cf3568d0df1e1e664734ab1}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!basis@{basis}}
+\index{basis@{basis}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{basis}{basis}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}}$>$ Chronus\+Q\+::\+Num\+Gradient\+::basis\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_afa6f6997ab9083dfe4148693e5ea9579}\label{classChronusQ_1_1NumGradient_afa6f6997ab9083dfe4148693e5ea9579}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!curr\_@{curr\_}}
+\index{curr\_@{curr\_}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{curr\_}{curr\_}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{Single\+Slater\+Base}}$>$ Chronus\+Q\+::\+Num\+Gradient\+::curr\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_af085fd2c2e6afd81db3a49dcd7526599}\label{classChronusQ_1_1NumGradient_af085fd2c2e6afd81db3a49dcd7526599}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!dfbasis@{dfbasis}}
+\index{dfbasis@{dfbasis}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{dfbasis}{dfbasis}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}}$>$ Chronus\+Q\+::\+Num\+Gradient\+::dfbasis\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_ace56a60f1468cf583c910ac5597910ff}\label{classChronusQ_1_1NumGradient_ace56a60f1468cf583c910ac5597910ff}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!emPert@{emPert}}
+\index{emPert@{emPert}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{emPert}{emPert}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} Chronus\+Q\+::\+Num\+Gradient\+::em\+Pert\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a3dd56205cd5c4ae87f7460c9cf89e625}\label{classChronusQ_1_1NumGradient_a3dd56205cd5c4ae87f7460c9cf89e625}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!input\_@{input\_}}
+\index{input\_@{input\_}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{input\_}{input\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1CQInputFile}{CQInput\+File}}\& Chronus\+Q\+::\+Num\+Gradient\+::input\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a6ec89a58bfe0159022722bf778b5d9c9}\label{classChronusQ_1_1NumGradient_a6ec89a58bfe0159022722bf778b5d9c9}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!mol@{mol}}
+\index{mol@{mol}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{mol}{mol}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} Chronus\+Q\+::\+Num\+Gradient\+::mol\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_ac1ce40ac405c21efc16a25023f576e38}\label{classChronusQ_1_1NumGradient_ac1ce40ac405c21efc16a25023f576e38}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!nAtoms@{nAtoms}}
+\index{nAtoms@{nAtoms}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{nAtoms}{nAtoms}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Num\+Gradient\+::n\+Atoms\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_a3d7bc5d4ad8cb72955170ecc2cf71431}\label{classChronusQ_1_1NumGradient_a3d7bc5d4ad8cb72955170ecc2cf71431}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!prot\_basis@{prot\_basis}}
+\index{prot\_basis@{prot\_basis}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{prot\_basis}{prot\_basis}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}}$>$ Chronus\+Q\+::\+Num\+Gradient\+::prot\+\_\+basis\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NumGradient_aa8b34b35917b55ff4b2c135703cf4d8c}\label{classChronusQ_1_1NumGradient_aa8b34b35917b55ff4b2c135703cf4d8c}} 
+\index{ChronusQ::NumGradient@{ChronusQ::NumGradient}!ref\_@{ref\_}}
+\index{ref\_@{ref\_}!ChronusQ::NumGradient@{ChronusQ::NumGradient}}
+\doxysubsubsection{\texorpdfstring{ref\_}{ref\_}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{Single\+Slater\+Base}}$>$\& Chronus\+Q\+::\+Num\+Gradient\+::ref\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/findiff/\mbox{\hyperlink{geomgrad_8hpp}{geomgrad.\+hpp}}\item 
+src/findiff/\mbox{\hyperlink{geomgrad_8cxx}{geomgrad.\+cxx}}\end{DoxyCompactItemize}

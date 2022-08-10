@@ -1,0 +1,855 @@
+\hypertarget{classChronusQ_1_1NEOSS}{}\doxysection{ChronusQ\+::NEOSS\texorpdfstring{$<$}{<} MatsT, IntsT \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1NEOSS}\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+
+
+{\ttfamily \#include $<$neoss.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::NEOSS\texorpdfstring{$<$}{<} MatsT, IntsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::NEOSS\texorpdfstring{$<$}{<} MatsT, IntsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename... Args$>$ }\\\mbox{\hyperlink{classChronusQ_1_1NEOSS_a5805161d067e2a3fc17c4c78f7ced335}{NEOSS}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&basis, \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}}$<$ IntsT $>$ \&aoi, Args... args)
+\item 
+{\footnotesize template$<$typename MatsU $>$ }\\\mbox{\hyperlink{classChronusQ_1_1NEOSS_a32351f8d8ae363517fc8185e37e80ddd}{NEOSS}} (const \mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS}}$<$ MatsU, IntsT $>$ \&other, int dummy=0)
+\item 
+{\footnotesize template$<$typename MatsU $>$ }\\\mbox{\hyperlink{classChronusQ_1_1NEOSS_a1f8e96b3da8ec0a3ec57df7f5ad8251e}{NEOSS}} (\mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS}}$<$ MatsU, IntsT $>$ \&\&other, int dummy=0)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1NEOSS_a9ee5aabf4dacb31e2c710080b16d9c0f}{NEOSS}} (const \mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS}}$<$ MatsT, IntsT $>$ \&other)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1NEOSS_a1944a36dfc0d1768c090f029d00ce62c}{NEOSS}} (\mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS}}$<$ MatsT, IntsT $>$ \&\&other)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS_a15540fec7c2b614d75e7ac8627574f41}{add\+Subsystem}} (std\+::string label, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ $>$ ss, const \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$ std\+::pair$<$ bool, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsT $>$ $>$ $>$ $>$ \&ints)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS_a69cb9b0018f2a9cf181643b638a9279e}{add\+Gradient\+Integrals}} (std\+::string label1, std\+::string label2, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1GradInts}{Grad\+Ints}}$<$ \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}, IntsT $>$ $>$ ints, bool contract\+Second)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS_a87c75c6dd94e34359e799a5c4dd9b38f}{set\+Order}} (std\+::vector$<$ std\+::string $>$ labels)
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a3a28af9e234b89b673e3e59fbae430fd}{get\+Labels}} ()
+\item 
+std\+::pair$<$ bool, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a29ab1926b558913f78959bff1162d422}{get\+Cross\+TPIs}} (std\+::string label1, std\+::string label2)
+\item 
+{\footnotesize template$<$template$<$ typename, typename $>$ class T$>$ }\\std\+::shared\+\_\+ptr$<$ T$<$ MatsT, IntsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a069d1a4691ddf2e9f4f6502d08c06adb}{get\+Subsystem}} (std\+::string label)
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{Single\+Slater\+Base}} $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_ac83d6b1224102e0dce52f82baae85149}{get\+Sub\+SSBase}} (std\+::string label)
+\item 
+{\footnotesize template$<$template$<$ typename, typename $>$ class T$>$ }\\std\+::vector$<$ std\+::shared\+\_\+ptr$<$ T$<$ MatsT, IntsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a2544ca394404e422a32aebd558de1127}{get\+All\+Subsystems}} ()
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{Single\+Slater\+Base}} $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a6fe77347fba4d0cc520e128857d2f0e9}{get\+All\+Sub\+SSBase}} ()
+\item 
+const std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{Sub\+SSPtr}} $>$ \& \mbox{\hyperlink{classChronusQ_1_1NEOSS_a57900fd8600ee95bc74ce5a406f7cc97}{get\+Subsystem\+Map}} ()
+\item 
+const std\+::vector$<$ std\+::string $>$ \& \mbox{\hyperlink{classChronusQ_1_1NEOSS_a745d50da2a27b58312bd50ea9f39e21a}{get\+Order}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS_a859c93245c035d6a893469872662bc6b}{save\+Current\+State}} ()
+\begin{DoxyCompactList}\small\item\em Saves the current state of wave function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS_a38fe03294468592097a2d4f2785a37cc}{form\+Guess}} (const \mbox{\hyperlink{structChronusQ_1_1SingleSlaterOptions}{Single\+Slater\+Options}} \&ssopt)
+\begin{DoxyCompactList}\small\item\em Forms a set of guess orbitals for a single slater determininant SCF in various ways. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1NEOSS_ac21ec6233c5089921be2f015a8b9b669}{form\+Fock}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&em\+Pert, bool increment=false, double x\+HFX=1.)
+\begin{DoxyCompactList}\small\item\em Forms the Fock matrix for a single slater determinant using the 1PDM. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS_a55f3f8ac48d1b24cb829e3f30da9b94d}{form\+CoreH}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&em\+Pert, bool save)
+\begin{DoxyCompactList}\small\item\em Compute the Core Hamiltonian. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1NEOSS_aafd6cf5b6280d6cf599dc0e4fed577fd}{form\+Density}} ()
+\begin{DoxyCompactList}\small\item\em Forms the 1PDM using a set of orbitals. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS_a2af2bdecde0d6804abd8111838cdf68a}{set\+Sub\+Setup}} ()
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a6f1fe3f710358197b73e77a3fd997408}{get\+Grad}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, bool, bool)
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1NEOSS_a89867756aabd3ed30e33cfca28aa0e39}{run\+Modify\+Orbitals}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&)
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1NEOSS_abe3125969a334a169e30430b6b3a7ad2}{build\+Modify\+Orbitals}} ()
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1NEOSS_a5a1803c98b220f91ebaf493025c58263}{print\+Properties}} ()
+\item 
+virtual std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a1399ce34a4162ad93d944a6a86541b60}{get\+One\+PDM}} ()
+\item 
+virtual std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_ae34b2dbca37677a62479d1ce72cbd981}{get\+Fock}} ()
+\item 
+virtual std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1Orthogonalization}{Orthogonalization}}$<$ MatsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_ac091e791a1593220c892bce5d4bf1d0e}{get\+Ortho}} ()
+\item 
+virtual double \mbox{\hyperlink{classChronusQ_1_1NEOSS_a775b2d102a164eb71bce95811d655551}{get\+Total\+Energy}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS_af694b8107faa52ab5c5d1226f3a7a1c5}{compute\+Energy}} ()
+\begin{DoxyCompactList}\small\item\em Computes the total field free energy of a single slater determinent. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS_a789a1286c9c8ca336bc1598fc7c18446}{compute\+Multipole}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&em\+Pert)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS_a7ec88a61def36b30f1f84cbca0b48bf5}{compute\+Spin}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS_a42902ca6888a29c5bd0bffaec5901cfd}{method\+Specific\+Properties}} ()
+\item 
+MatsT $\ast$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a1d87ab5043b7a63e8ddf15b8b6ab52af}{get\+NRCoeffs}} ()
+\item 
+std\+::pair$<$ double, MatsT $\ast$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_aed2171f543b72627981a730d05730e43}{get\+Stab}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{Sub\+SSPtr}} = std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ $>$
+\item 
+{\footnotesize template$<$typename T $>$ }\\using \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}} = std\+::unordered\+\_\+map$<$ std\+::string, T $>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{Sub\+SSPtr}} $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}{subsystems}}
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_ac6b9bae91b84f379063c7262fc88ba49}{order\+\_\+}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_ab9f52e9034d9111d4a80b340cd4f37cb}{inter\+Coulomb}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$ std\+::pair$<$ bool, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsT $>$ $>$ $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a914e9a2f1878fa8edb1d13e0276fe6ee}{inter\+Integrals}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$ std\+::pair$<$ bool, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1GradInts}{Grad\+Ints}}$<$ \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}, IntsT $>$ $>$ $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_afc7f69477b7f9f2c276b50886801cb14}{grad\+Inter\+Ints}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$ std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{Fock\+Builder}}$<$ MatsT, IntsT $>$ $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c126a1a0b19fb1908fa95a0f40d3ba6}{fock\+Builders}}
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1DFTFunctional}{DFTFunctional}} $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS_a2d0e5d4edaa8bf18bb1d7d0fc17b5964}{functionals}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename F $>$ }\\void \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{apply\+To\+Each}} (F func)
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename MatsU , typename IntsU $>$ }\\class \mbox{\hyperlink{classChronusQ_1_1NEOSS_a4f388644056ac8d5db8c956b9a8d490d}{NEOSS}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}\label{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!LabeledMap@{LabeledMap}}
+\index{LabeledMap@{LabeledMap}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{LabeledMap}{LabeledMap}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename T $>$ \\
+using \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::\+Labeled\+Map =  std\+::unordered\+\_\+map$<$std\+::string, T$>$\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}\label{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!SubSSPtr@{SubSSPtr}}
+\index{SubSSPtr@{SubSSPtr}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{SubSSPtr}{SubSSPtr}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+using \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::\+Sub\+SSPtr =  std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$MatsT,IntsT$>$ $>$\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a5805161d067e2a3fc17c4c78f7ced335}\label{classChronusQ_1_1NEOSS_a5805161d067e2a3fc17c4c78f7ced335}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!NEOSS@{NEOSS}}
+\index{NEOSS@{NEOSS}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{NEOSS()}{NEOSS()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename... Args$>$ \\
+\mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::\+NEOSS (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{c,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem,  }\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{mol,  }\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{basis,  }\item[{\mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}}$<$ IntsT $>$ \&}]{aoi,  }\item[{Args...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a32351f8d8ae363517fc8185e37e80ddd}\label{classChronusQ_1_1NEOSS_a32351f8d8ae363517fc8185e37e80ddd}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!NEOSS@{NEOSS}}
+\index{NEOSS@{NEOSS}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{NEOSS()}{NEOSS()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename MatsU $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::\+NEOSS (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS}}$<$ MatsU, IntsT $>$ \&}]{other,  }\item[{int}]{dummy = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a32351f8d8ae363517fc8185e37e80ddd_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a1f8e96b3da8ec0a3ec57df7f5ad8251e}\label{classChronusQ_1_1NEOSS_a1f8e96b3da8ec0a3ec57df7f5ad8251e}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!NEOSS@{NEOSS}}
+\index{NEOSS@{NEOSS}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{NEOSS()}{NEOSS()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename MatsU $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::\+NEOSS (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS}}$<$ MatsU, IntsT $>$ \&\&}]{other,  }\item[{int}]{dummy = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a1f8e96b3da8ec0a3ec57df7f5ad8251e_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a9ee5aabf4dacb31e2c710080b16d9c0f}\label{classChronusQ_1_1NEOSS_a9ee5aabf4dacb31e2c710080b16d9c0f}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!NEOSS@{NEOSS}}
+\index{NEOSS@{NEOSS}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{NEOSS()}{NEOSS()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::\+NEOSS (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS}}$<$ MatsT, IntsT $>$ \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a1944a36dfc0d1768c090f029d00ce62c}\label{classChronusQ_1_1NEOSS_a1944a36dfc0d1768c090f029d00ce62c}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!NEOSS@{NEOSS}}
+\index{NEOSS@{NEOSS}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{NEOSS()}{NEOSS()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::\+NEOSS (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS}}$<$ MatsT, IntsT $>$ \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a69cb9b0018f2a9cf181643b638a9279e}\label{classChronusQ_1_1NEOSS_a69cb9b0018f2a9cf181643b638a9279e}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!addGradientIntegrals@{addGradientIntegrals}}
+\index{addGradientIntegrals@{addGradientIntegrals}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{addGradientIntegrals()}{addGradientIntegrals()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::add\+Gradient\+Integrals (\begin{DoxyParamCaption}\item[{std\+::string}]{label1,  }\item[{std\+::string}]{label2,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1GradInts}{Grad\+Ints}}$<$ \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}, IntsT $>$ $>$}]{ints,  }\item[{bool}]{contract\+Second }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a69cb9b0018f2a9cf181643b638a9279e_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a69cb9b0018f2a9cf181643b638a9279e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a15540fec7c2b614d75e7ac8627574f41}\label{classChronusQ_1_1NEOSS_a15540fec7c2b614d75e7ac8627574f41}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!addSubsystem@{addSubsystem}}
+\index{addSubsystem@{addSubsystem}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{addSubsystem()}{addSubsystem()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::add\+Subsystem (\begin{DoxyParamCaption}\item[{std\+::string}]{label,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ $>$}]{ss,  }\item[{const \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$ std\+::pair$<$ bool, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsT $>$ $>$ $>$ $>$ \&}]{ints }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a15540fec7c2b614d75e7ac8627574f41_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a15540fec7c2b614d75e7ac8627574f41_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}\label{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!applyToEach@{applyToEach}}
+\index{applyToEach@{applyToEach}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{applyToEach()}{applyToEach()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename F $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::apply\+To\+Each (\begin{DoxyParamCaption}\item[{F}]{func }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_abe3125969a334a169e30430b6b3a7ad2}\label{classChronusQ_1_1NEOSS_abe3125969a334a169e30430b6b3a7ad2}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!buildModifyOrbitals@{buildModifyOrbitals}}
+\index{buildModifyOrbitals@{buildModifyOrbitals}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{buildModifyOrbitals()}{buildModifyOrbitals()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::build\+Modify\+Orbitals\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a4d9aa2b6b7533efe6c1815893ce13984}{Chronus\+Q\+::\+Single\+Slater\+Base}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_abe3125969a334a169e30430b6b3a7ad2_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_af694b8107faa52ab5c5d1226f3a7a1c5}\label{classChronusQ_1_1NEOSS_af694b8107faa52ab5c5d1226f3a7a1c5}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!computeEnergy@{computeEnergy}}
+\index{computeEnergy@{computeEnergy}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeEnergy()}{computeEnergy()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::compute\+Energy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Computes the total field free energy of a single slater determinent. 
+
+Given a 1PDM and a Fock matrix (specifically the core Hamiltonian and G\mbox{[}D\mbox{]}), compute the energy.
+
+\begin{DoxyWarning}{Warning}
+Assumes that density and Fock matrix have the appropriate form
+\end{DoxyWarning}
+F(\+S) = F(\+A) + F(\+B) F(\+Z) = F(\+A) -\/ F(\+B) ...
+
+\[
+   E = \frac{1}{2} \mathrm{Tr}[\mathbf{P}(\mathbf{H} + \mathbf{F})] +
+   V_{NN}
+\]
+
+Specialization of \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a22dae7f7707d3e4db05b66a367d609d4}{Quantum$<$\+T$>$\+::compute\+Energy}}, populates / overwrites OBEnergy and MBEnergy 
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a18d2ba2b05e8b80f8ae57e28ae75a715}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_af694b8107faa52ab5c5d1226f3a7a1c5_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a789a1286c9c8ca336bc1598fc7c18446}\label{classChronusQ_1_1NEOSS_a789a1286c9c8ca336bc1598fc7c18446}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!computeMultipole@{computeMultipole}}
+\index{computeMultipole@{computeMultipole}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeMultipole()}{computeMultipole()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::compute\+Multipole (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{em\+Pert }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a67c95963a02d02dd6e7e7791b44b867e}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a789a1286c9c8ca336bc1598fc7c18446_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a7ec88a61def36b30f1f84cbca0b48bf5}\label{classChronusQ_1_1NEOSS_a7ec88a61def36b30f1f84cbca0b48bf5}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!computeSpin@{computeSpin}}
+\index{computeSpin@{computeSpin}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeSpin()}{computeSpin()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::compute\+Spin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a788a2f32f06c22a9dd21293747b2e4e4}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a7ec88a61def36b30f1f84cbca0b48bf5_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a55f3f8ac48d1b24cb829e3f30da9b94d}\label{classChronusQ_1_1NEOSS_a55f3f8ac48d1b24cb829e3f30da9b94d}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!formCoreH@{formCoreH}}
+\index{formCoreH@{formCoreH}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{formCoreH()}{formCoreH()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::form\+CoreH (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{em\+Pert,  }\item[{bool}]{save }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Compute the Core Hamiltonian. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em typ} & Which Hamiltonian to build \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a3e114991a7155171af777d2abac7dad1}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a55f3f8ac48d1b24cb829e3f30da9b94d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_aafd6cf5b6280d6cf599dc0e4fed577fd}\label{classChronusQ_1_1NEOSS_aafd6cf5b6280d6cf599dc0e4fed577fd}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!formDensity@{formDensity}}
+\index{formDensity@{formDensity}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{formDensity()}{formDensity()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::form\+Density (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Forms the 1PDM using a set of orbitals. 
+
+specialization of \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a9c786fcea80de9218a49b0640fc86c76}{Quantum\+::form\+Density}}. Populates / overwrites one\+PDM storage
+
+NOTE\+: This function assumes the MO\textquotesingle{}s are in the AO basis 
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a45669addf520b9615ef9575144c69eb9}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_aafd6cf5b6280d6cf599dc0e4fed577fd_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_ac21ec6233c5089921be2f015a8b9b669}\label{classChronusQ_1_1NEOSS_ac21ec6233c5089921be2f015a8b9b669}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!formFock@{formFock}}
+\index{formFock@{formFock}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{formFock()}{formFock()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::form\+Fock (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{bool}]{increment = {\ttfamily false},  }\item[{double}]{x\+HFX = {\ttfamily 1.} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Forms the Fock matrix for a single slater determinant using the 1PDM. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em increment} & Whether or not the Fock matrix is being incremented using a previous density\\
+\hline
+\end{DoxyParams}
+Populates / overwrites fock strorage 
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7da0fea35cf7e2337d36b35942ee24a2}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_ac21ec6233c5089921be2f015a8b9b669_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a38fe03294468592097a2d4f2785a37cc}\label{classChronusQ_1_1NEOSS_a38fe03294468592097a2d4f2785a37cc}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!formGuess@{formGuess}}
+\index{formGuess@{formGuess}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{formGuess()}{formGuess()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::form\+Guess (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structChronusQ_1_1SingleSlaterOptions}{Single\+Slater\+Options}} \&}]{ss\+Options }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Forms a set of guess orbitals for a single slater determininant SCF in various ways. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ad92d1fc80b60a5b26ceb4fb299fde3fd}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a38fe03294468592097a2d4f2785a37cc_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a6fe77347fba4d0cc520e128857d2f0e9}\label{classChronusQ_1_1NEOSS_a6fe77347fba4d0cc520e128857d2f0e9}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getAllSubSSBase@{getAllSubSSBase}}
+\index{getAllSubSSBase@{getAllSubSSBase}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getAllSubSSBase()}{getAllSubSSBase()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{Single\+Slater\+Base}} $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+All\+Sub\+SSBase (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a6fe77347fba4d0cc520e128857d2f0e9_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a2544ca394404e422a32aebd558de1127}\label{classChronusQ_1_1NEOSS_a2544ca394404e422a32aebd558de1127}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getAllSubsystems@{getAllSubsystems}}
+\index{getAllSubsystems@{getAllSubsystems}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getAllSubsystems()}{getAllSubsystems()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$template$<$ typename, typename $>$ class T$>$ \\
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ T$<$ MatsT, IntsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+All\+Subsystems (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a2544ca394404e422a32aebd558de1127_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a29ab1926b558913f78959bff1162d422}\label{classChronusQ_1_1NEOSS_a29ab1926b558913f78959bff1162d422}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getCrossTPIs@{getCrossTPIs}}
+\index{getCrossTPIs@{getCrossTPIs}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getCrossTPIs()}{getCrossTPIs()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::pair$<$ bool, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+Cross\+TPIs (\begin{DoxyParamCaption}\item[{std\+::string}]{label1,  }\item[{std\+::string}]{label2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a29ab1926b558913f78959bff1162d422_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_ae34b2dbca37677a62479d1ce72cbd981}\label{classChronusQ_1_1NEOSS_ae34b2dbca37677a62479d1ce72cbd981}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getFock@{getFock}}
+\index{getFock@{getFock}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getFock()}{getFock()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+Fock\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7556734bf28f7aebe4aa0248082b2247}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a6f1fe3f710358197b73e77a3fd997408}\label{classChronusQ_1_1NEOSS_a6f1fe3f710358197b73e77a3fd997408}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getGrad@{getGrad}}
+\index{getGrad@{getGrad}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getGrad()}{getGrad()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+Grad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{bool}]{equil,  }\item[{bool}]{save\+Ints }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_abe44a52a240974af91e25625e7337f33}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a3a28af9e234b89b673e3e59fbae430fd}\label{classChronusQ_1_1NEOSS_a3a28af9e234b89b673e3e59fbae430fd}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getLabels@{getLabels}}
+\index{getLabels@{getLabels}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getLabels()}{getLabels()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+Labels (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structChronusQ_1_1NEOBase_a25f7178b49a34449ffccf3700a26656e}{Chronus\+Q\+::\+NEOBase}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a3a28af9e234b89b673e3e59fbae430fd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a1d87ab5043b7a63e8ddf15b8b6ab52af}\label{classChronusQ_1_1NEOSS_a1d87ab5043b7a63e8ddf15b8b6ab52af}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getNRCoeffs@{getNRCoeffs}}
+\index{getNRCoeffs@{getNRCoeffs}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getNRCoeffs()}{getNRCoeffs()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+MatsT $\ast$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+NRCoeffs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_af659370e5b7d74c2a95c9a99ae2bc8af}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a1d87ab5043b7a63e8ddf15b8b6ab52af_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a1399ce34a4162ad93d944a6a86541b60}\label{classChronusQ_1_1NEOSS_a1399ce34a4162ad93d944a6a86541b60}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getOnePDM@{getOnePDM}}
+\index{getOnePDM@{getOnePDM}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getOnePDM()}{getOnePDM()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+One\+PDM\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a80edfd2174bc34cb12ea80e7b8075a68}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a745d50da2a27b58312bd50ea9f39e21a}\label{classChronusQ_1_1NEOSS_a745d50da2a27b58312bd50ea9f39e21a}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getOrder@{getOrder}}
+\index{getOrder@{getOrder}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getOrder()}{getOrder()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+const std\+::vector$<$ std\+::string $>$ \& \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+Order (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_ac091e791a1593220c892bce5d4bf1d0e}\label{classChronusQ_1_1NEOSS_ac091e791a1593220c892bce5d4bf1d0e}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getOrtho@{getOrtho}}
+\index{getOrtho@{getOrtho}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getOrtho()}{getOrtho()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1Orthogonalization}{Orthogonalization}}$<$ MatsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+Ortho\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa333eda574020f1709e7f53123e7041a}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_aed2171f543b72627981a730d05730e43}\label{classChronusQ_1_1NEOSS_aed2171f543b72627981a730d05730e43}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getStab@{getStab}}
+\index{getStab@{getStab}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getStab()}{getStab()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::pair$<$ double, MatsT $\ast$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+Stab (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a71bcbcbd2ff9ecb6ec7d897fca9da397}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_aed2171f543b72627981a730d05730e43_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_ac83d6b1224102e0dce52f82baae85149}\label{classChronusQ_1_1NEOSS_ac83d6b1224102e0dce52f82baae85149}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getSubSSBase@{getSubSSBase}}
+\index{getSubSSBase@{getSubSSBase}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getSubSSBase()}{getSubSSBase()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{Single\+Slater\+Base}} $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+Sub\+SSBase (\begin{DoxyParamCaption}\item[{std\+::string}]{label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structChronusQ_1_1NEOBase_a1b32dc712a8fabec88b5032be0f33002}{Chronus\+Q\+::\+NEOBase}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_ac83d6b1224102e0dce52f82baae85149_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a069d1a4691ddf2e9f4f6502d08c06adb}\label{classChronusQ_1_1NEOSS_a069d1a4691ddf2e9f4f6502d08c06adb}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getSubsystem@{getSubsystem}}
+\index{getSubsystem@{getSubsystem}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getSubsystem()}{getSubsystem()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$template$<$ typename, typename $>$ class T$>$ \\
+std\+::shared\+\_\+ptr$<$ T$<$ MatsT, IntsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+Subsystem (\begin{DoxyParamCaption}\item[{std\+::string}]{label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a57900fd8600ee95bc74ce5a406f7cc97}\label{classChronusQ_1_1NEOSS_a57900fd8600ee95bc74ce5a406f7cc97}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getSubsystemMap@{getSubsystemMap}}
+\index{getSubsystemMap@{getSubsystemMap}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getSubsystemMap()}{getSubsystemMap()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+const std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{Sub\+SSPtr}} $>$ \& \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+Subsystem\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a57900fd8600ee95bc74ce5a406f7cc97_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a775b2d102a164eb71bce95811d655551}\label{classChronusQ_1_1NEOSS_a775b2d102a164eb71bce95811d655551}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!getTotalEnergy@{getTotalEnergy}}
+\index{getTotalEnergy@{getTotalEnergy}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getTotalEnergy()}{getTotalEnergy()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+virtual double \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::get\+Total\+Energy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ae7d853588e7df8b213d5145d98c7e06d}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a42902ca6888a29c5bd0bffaec5901cfd}\label{classChronusQ_1_1NEOSS_a42902ca6888a29c5bd0bffaec5901cfd}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!methodSpecificProperties@{methodSpecificProperties}}
+\index{methodSpecificProperties@{methodSpecificProperties}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{methodSpecificProperties()}{methodSpecificProperties()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::method\+Specific\+Properties (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a459022353e4edb2a49c0e2a10c14b248}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a42902ca6888a29c5bd0bffaec5901cfd_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a5a1803c98b220f91ebaf493025c58263}\label{classChronusQ_1_1NEOSS_a5a1803c98b220f91ebaf493025c58263}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!printProperties@{printProperties}}
+\index{printProperties@{printProperties}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{printProperties()}{printProperties()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::print\+Properties\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a1fec0eae3fb5b0e4daeb6d626acf8c8b}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a5a1803c98b220f91ebaf493025c58263_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a89867756aabd3ed30e33cfca28aa0e39}\label{classChronusQ_1_1NEOSS_a89867756aabd3ed30e33cfca28aa0e39}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!runModifyOrbitals@{runModifyOrbitals}}
+\index{runModifyOrbitals@{runModifyOrbitals}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{runModifyOrbitals()}{runModifyOrbitals()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::run\+Modify\+Orbitals (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ae28c8bb18975bd6917fcb1fdfadec440}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a89867756aabd3ed30e33cfca28aa0e39_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a859c93245c035d6a893469872662bc6b}\label{classChronusQ_1_1NEOSS_a859c93245c035d6a893469872662bc6b}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!saveCurrentState@{saveCurrentState}}
+\index{saveCurrentState@{saveCurrentState}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{saveCurrentState()}{saveCurrentState()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::save\+Current\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Saves the current state of wave function. 
+
+Saves a copy of the current AO 1PDM and orthonormal Fock 
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a9c8bed99d471546dd604fb941dfe268c}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a859c93245c035d6a893469872662bc6b_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a87c75c6dd94e34359e799a5c4dd9b38f}\label{classChronusQ_1_1NEOSS_a87c75c6dd94e34359e799a5c4dd9b38f}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!setOrder@{setOrder}}
+\index{setOrder@{setOrder}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{setOrder()}{setOrder()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::set\+Order (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::string $>$}]{labels }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a2af2bdecde0d6804abd8111838cdf68a}\label{classChronusQ_1_1NEOSS_a2af2bdecde0d6804abd8111838cdf68a}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!setSubSetup@{setSubSetup}}
+\index{setSubSetup@{setSubSetup}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{setSubSetup()}{setSubSetup()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::set\+Sub\+Setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structChronusQ_1_1NEOBase_a1a8d8f15b17b761f5e2f6d5e99da88dd}{Chronus\+Q\+::\+NEOBase}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1NEOSS_a2af2bdecde0d6804abd8111838cdf68a_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a4f388644056ac8d5db8c956b9a8d490d}\label{classChronusQ_1_1NEOSS_a4f388644056ac8d5db8c956b9a8d490d}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!NEOSS@{NEOSS}}
+\index{NEOSS@{NEOSS}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{NEOSS}{NEOSS}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename MatsU , typename IntsU $>$ \\
+friend class \mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a9c126a1a0b19fb1908fa95a0f40d3ba6}\label{classChronusQ_1_1NEOSS_a9c126a1a0b19fb1908fa95a0f40d3ba6}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!fockBuilders@{fockBuilders}}
+\index{fockBuilders@{fockBuilders}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{fockBuilders}{fockBuilders}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$std\+::vector$<$std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{Fock\+Builder}}$<$MatsT,IntsT$>$ $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::fock\+Builders\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a2d0e5d4edaa8bf18bb1d7d0fc17b5964}\label{classChronusQ_1_1NEOSS_a2d0e5d4edaa8bf18bb1d7d0fc17b5964}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!functionals@{functionals}}
+\index{functionals@{functionals}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{functionals}{functionals}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1DFTFunctional}{DFTFunctional}}$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::functionals\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_afc7f69477b7f9f2c276b50886801cb14}\label{classChronusQ_1_1NEOSS_afc7f69477b7f9f2c276b50886801cb14}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!gradInterInts@{gradInterInts}}
+\index{gradInterInts@{gradInterInts}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{gradInterInts}{gradInterInts}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$\mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$std\+::pair$<$bool, std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1GradInts}{Grad\+Ints}}$<$\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}},IntsT$>$ $>$ $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::grad\+Inter\+Ints\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_ab9f52e9034d9111d4a80b340cd4f37cb}\label{classChronusQ_1_1NEOSS_ab9f52e9034d9111d4a80b340cd4f37cb}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!interCoulomb@{interCoulomb}}
+\index{interCoulomb@{interCoulomb}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{interCoulomb}{interCoulomb}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$\mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$MatsT$>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::inter\+Coulomb\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a914e9a2f1878fa8edb1d13e0276fe6ee}\label{classChronusQ_1_1NEOSS_a914e9a2f1878fa8edb1d13e0276fe6ee}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!interIntegrals@{interIntegrals}}
+\index{interIntegrals@{interIntegrals}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{interIntegrals}{interIntegrals}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$\mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{Labeled\+Map}}$<$std\+::pair$<$bool, std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$IntsT$>$ $>$ $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::inter\+Integrals\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_ac6b9bae91b84f379063c7262fc88ba49}\label{classChronusQ_1_1NEOSS_ac6b9bae91b84f379063c7262fc88ba49}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!order\_@{order\_}}
+\index{order\_@{order\_}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{order\_}{order\_}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$std\+::string$>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::order\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}\label{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}} 
+\index{ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}!subsystems@{subsystems}}
+\index{subsystems@{subsystems}!ChronusQ::NEOSS$<$ MatsT, IntsT $>$@{ChronusQ::NEOSS$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{subsystems}{subsystems}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::unordered\+\_\+map$<$std\+::string,\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{Sub\+SSPtr}}$>$ \mbox{\hyperlink{classChronusQ_1_1NEOSS}{Chronus\+Q\+::\+NEOSS}}$<$ MatsT, IntsT $>$\+::subsystems\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/singleslater/\mbox{\hyperlink{singleslater_2neoss_8hpp}{neoss.\+hpp}}\item 
+include/singleslater/neoss/\mbox{\hyperlink{singleslater_2neoss_2impl_8hpp}{impl.\+hpp}}\item 
+include/singleslater/neoss/\mbox{\hyperlink{neoss_2scf_8hpp}{scf.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,364 @@
+\hypertarget{detstringmanager_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{detstringmanager_2impl_8hpp_source}\index{include/detstringmanager/impl.hpp@{include/detstringmanager/impl.hpp}}
+\mbox{\hyperlink{detstringmanager_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{comment}{//\#define \_DEBUG\_DETSTRING}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{output_8hpp}{cxxapi/output.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{math_8hpp}{util/math.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{detstringmanager_8hpp}{detstringmanager.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{excitationlist_8hpp}{detstringmanager/excitationlist.hpp}}>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{stringpermutator_8hpp}{detstringmanager/stringpermutator.hpp}}>}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{37   }
+\DoxyCodeLine{38   \textcolor{keyword}{typedef} \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{DetStringManager::int\_matrix}} \mbox{\hyperlink{namespaceChronusQ_a144dc6be8819e768735d0a039ffa30f6}{int\_matrix}}; }
+\DoxyCodeLine{39   }
+\DoxyCodeLine{40   \textcolor{comment}{/*Generate and return the addrssing array for given number of}}
+\DoxyCodeLine{41 \textcolor{comment}{   * orbitals nOrb and number of electron nE}}
+\DoxyCodeLine{42 \textcolor{comment}{   */}}
+\DoxyCodeLine{43   }
+\DoxyCodeLine{44   \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \mbox{\hyperlink{classChronusQ_1_1DetStringManager_a390cab66bcf83529806795fae17dcbe7}{DetStringManager::buildAddressingArray}}(\textcolor{keywordtype}{size\_t} nE, \textcolor{keywordtype}{size\_t} nOrb)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{45     }
+\DoxyCodeLine{46     assert (nE <= nOrb and nOrb != 0 ); }
+\DoxyCodeLine{47     \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} addr\_array;}
+\DoxyCodeLine{48     }
+\DoxyCodeLine{49     \textcolor{keywordflow}{if} (nE == 0) addr\_array = \{\{\}\};}
+\DoxyCodeLine{50     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{51       addr\_array = this-\/>\mbox{\hyperlink{classChronusQ_1_1DetStringManager_af848ef6e170f4e711fde15f3a765a96b}{init\_int\_matrix}}(nE, nOrb, 0);}
+\DoxyCodeLine{52       }
+\DoxyCodeLine{53       \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} k = 1ul; k < nE; k++)}
+\DoxyCodeLine{54       \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} l = k  ; l < nOrb-\/nE+k+1; l++)}
+\DoxyCodeLine{55       \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} m = nOrb-\/l+1; m < nOrb-\/k+1; m++) \{}
+\DoxyCodeLine{56         addr\_array[k-\/1][l-\/1] += \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}}(m-\/1, nE-\/k);}
+\DoxyCodeLine{57       \}}
+\DoxyCodeLine{58       }
+\DoxyCodeLine{59       \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} l = nE; l < nOrb+1; l++) \{}
+\DoxyCodeLine{60         addr\_array[nE-\/1][l-\/1] = l -\/ nE;}
+\DoxyCodeLine{61       \}}
+\DoxyCodeLine{62     \}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{keywordflow}{return}  addr\_array;}
+\DoxyCodeLine{65   \}; \textcolor{comment}{// DetStringManager::buildAddressingArray}}
+\DoxyCodeLine{66   }
+\DoxyCodeLine{67   \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \mbox{\hyperlink{classChronusQ_1_1DetStringManager_aa85cb8ed73df523b0a83698fe546f7e0}{DetStringManager::buildDeAddressingArray}}(\mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \& addr\_array)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{68     }
+\DoxyCodeLine{69     \textcolor{keywordtype}{size\_t} nE   = addr\_array.size(); }
+\DoxyCodeLine{70     \textcolor{keywordtype}{size\_t} nOrb = addr\_array[0].size();}
+\DoxyCodeLine{71     \textcolor{keywordflow}{if} (nE == 0) \textcolor{keywordflow}{return} \{\{\}\};}
+\DoxyCodeLine{72     }
+\DoxyCodeLine{73     \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} de\_addr\_array = this-\/>\mbox{\hyperlink{classChronusQ_1_1DetStringManager_af848ef6e170f4e711fde15f3a765a96b}{init\_int\_matrix}}(nE, nOrb, 0);}
+\DoxyCodeLine{74     }
+\DoxyCodeLine{75     std::copy\_n(addr\_array[nE -\/ 1].begin(), nOrb, de\_addr\_array[nE -\/ 1].begin());}
+\DoxyCodeLine{76      }
+\DoxyCodeLine{77     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} iE = nE -\/ 2; iE >= 0; iE-\/-\/)}
+\DoxyCodeLine{78     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} iOrb = 1; iOrb < nOrb -\/ 1; iOrb++) }
+\DoxyCodeLine{79       de\_addr\_array[iE][iOrb] = addr\_array[iE][iOrb] + de\_addr\_array[iE + 1][iOrb + 1];}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{keywordflow}{return} de\_addr\_array;}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83   \}; \textcolor{comment}{// DetStringManager::buildDeAddressingArray(int\_matrix)}}
+\DoxyCodeLine{84   }
+\DoxyCodeLine{85   \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \mbox{\hyperlink{classChronusQ_1_1DetStringManager_aa85cb8ed73df523b0a83698fe546f7e0}{DetStringManager::buildDeAddressingArray}}(\textcolor{keywordtype}{size\_t} nE, \textcolor{keywordtype}{size\_t} nOrb)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{86     }
+\DoxyCodeLine{87     \textcolor{keyword}{auto} addr\_array = \mbox{\hyperlink{classChronusQ_1_1DetStringManager_a390cab66bcf83529806795fae17dcbe7}{buildAddressingArray}}(nE, nOrb);}
+\DoxyCodeLine{88     }
+\DoxyCodeLine{89     \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1DetStringManager_aa85cb8ed73df523b0a83698fe546f7e0}{buildDeAddressingArray}}(addr\_array);}
+\DoxyCodeLine{90    }
+\DoxyCodeLine{91   \}; \textcolor{comment}{//DetStringManager::buildDeAddressingArray(size\_t, size\_t)}}
+\DoxyCodeLine{92     }
+\DoxyCodeLine{93   }
+\DoxyCodeLine{94   \textcolor{comment}{// Determine the address of K, CPL 111 p137 }}
+\DoxyCodeLine{95   \textcolor{comment}{// !!address start from 0 in C++}}
+\DoxyCodeLine{96   \textcolor{comment}{// CAS type addressing}}
+\DoxyCodeLine{97   \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1DetStringManager_a88908fca6b9331be10089d657c345cc0}{DetStringManager::detString2Address}}(std::vector<size\_t> \& elecPos, }
+\DoxyCodeLine{98     \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \& addr\_array)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{99       }
+\DoxyCodeLine{100       \textcolor{keywordtype}{size\_t} addr = 0;}
+\DoxyCodeLine{101       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iE = 0ul; iE < elecPos.size(); iE++)}
+\DoxyCodeLine{102         addr += addr\_array[iE][elecPos[iE]];}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104       \textcolor{keywordflow}{return} addr;}
+\DoxyCodeLine{105   \};}
+\DoxyCodeLine{106   }
+\DoxyCodeLine{107   \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1DetStringManager_a88908fca6b9331be10089d657c345cc0}{DetStringManager::detString2Address}}(\textcolor{keywordtype}{bool} * detStr, }
+\DoxyCodeLine{108       \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \& addr\_array)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{109     }
+\DoxyCodeLine{110     \textcolor{keywordtype}{size\_t} nE   = addr\_array.size(); }
+\DoxyCodeLine{111     \textcolor{keywordtype}{size\_t} nOrb = addr\_array[0].size();}
+\DoxyCodeLine{112     \textcolor{keywordflow}{if} (nOrb == 0) \textcolor{keywordflow}{return} 0; }
+\DoxyCodeLine{113     }
+\DoxyCodeLine{114     std::vector<size\_t> elecPos;}
+\DoxyCodeLine{115     }
+\DoxyCodeLine{116     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iE = 0ul, iOrb = 0ul; iOrb < nOrb, iE < nE; iOrb++) \{}
+\DoxyCodeLine{117       \textcolor{keywordflow}{if} (detStr[iOrb]) \{}
+\DoxyCodeLine{118         elecPos.push\_back(iOrb);}
+\DoxyCodeLine{119         iE ++;}
+\DoxyCodeLine{120       \}   }
+\DoxyCodeLine{121     \}}
+\DoxyCodeLine{122     }
+\DoxyCodeLine{123     \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1DetStringManager_a88908fca6b9331be10089d657c345cc0}{detString2Address}}(elecPos, addr\_array);}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125   \}; \textcolor{comment}{// DetStringManager::detString2Address}}
+\DoxyCodeLine{126   }
+\DoxyCodeLine{127   std::vector<size\_t> \mbox{\hyperlink{classChronusQ_1_1DetStringManager_addbc4061fce03be5ead0046721ef5f3f}{DetStringManager::address2DetString}}(\textcolor{keywordtype}{size\_t} addr, }
+\DoxyCodeLine{128       \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \& addr\_array, \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \& de\_addr\_array)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130     \textcolor{keywordtype}{size\_t} nE   = addr\_array.size(); }
+\DoxyCodeLine{131     \textcolor{keywordflow}{if} (nE == 0) \textcolor{keywordflow}{return} \{\};}
+\DoxyCodeLine{132     }
+\DoxyCodeLine{133     \textcolor{keywordtype}{size\_t} nOrb = addr\_array[0].size();}
+\DoxyCodeLine{134     std::vector<size\_t> elecPos;}
+\DoxyCodeLine{135     std::pair<int, int> iOrb\_search = \{nOrb -\/ nE, 0\};}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} iE = 0; iE < nE; iE++)}
+\DoxyCodeLine{138     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} iOrb = iOrb\_search.first; iOrb >= iOrb\_search.second; iOrb-\/-\/) \{}
+\DoxyCodeLine{139       \textcolor{keywordflow}{if} (addr >= de\_addr\_array[iE][iOrb]) \{}
+\DoxyCodeLine{140         elecPos.push\_back(iOrb);}
+\DoxyCodeLine{141         addr -\/= addr\_array[iE][iOrb];}
+\DoxyCodeLine{142         iOrb\_search.first ++;}
+\DoxyCodeLine{143         iOrb\_search.second = iOrb + 1;}
+\DoxyCodeLine{144         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{145       \}}
+\DoxyCodeLine{146     \}}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148     \textcolor{keywordflow}{return} elecPos;}
+\DoxyCodeLine{149   \}; \textcolor{comment}{// DetStringManager::address2DetString}}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151   \mbox{\hyperlink{classChronusQ_1_1DetString}{DetString}} \mbox{\hyperlink{classChronusQ_1_1DetStringManager_addbc4061fce03be5ead0046721ef5f3f}{DetStringManager::address2DetString}}(\textcolor{keywordtype}{size\_t} addr, \textcolor{keywordtype}{size\_t} nOrb, }
+\DoxyCodeLine{152       \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \& addr\_array, \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \& de\_addr\_array)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{153    }
+\DoxyCodeLine{154     \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1DetString}{DetString}}(this-\/>\mbox{\hyperlink{classChronusQ_1_1DetStringManager_a7fb763fab6c4f858d23330a2f63163be}{memManager\_}}, nOrb, \mbox{\hyperlink{classChronusQ_1_1DetStringManager_addbc4061fce03be5ead0046721ef5f3f}{address2DetString}}(addr, addr\_array, de\_addr\_array));}
+\DoxyCodeLine{155      }
+\DoxyCodeLine{156   \}; \textcolor{comment}{// DetStringManager::address2DetString}}
+\DoxyCodeLine{157   }
+\DoxyCodeLine{158   \textcolor{comment}{/* }}
+\DoxyCodeLine{159 \textcolor{comment}{   * }}
+\DoxyCodeLine{160 \textcolor{comment}{   * compute all <K|Epq|L> for a given L }}
+\DoxyCodeLine{161 \textcolor{comment}{   * Configuration Driven 1e Excitation List: <K|a\_i\string^\(\backslash\)dagger a\_j |L> }}
+\DoxyCodeLine{162 \textcolor{comment}{   *               (1) nonzero excitation i, }}
+\DoxyCodeLine{163 \textcolor{comment}{   *               (2) nonzero excitation j, }}
+\DoxyCodeLine{164 \textcolor{comment}{   *               (3) address of excited string |K>}}
+\DoxyCodeLine{165 \textcolor{comment}{   *               (4) sign (+/-\/ 1)}}
+\DoxyCodeLine{166 \textcolor{comment}{   */} }
+\DoxyCodeLine{167   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DetStringManager_ace1be64161b45da7b5a81d0c7a91375a}{DetStringManager::computeSingleString1eExcitationList}}(}
+\DoxyCodeLine{168       \mbox{\hyperlink{classChronusQ_1_1DetString}{DetString}} \& detStr, \textcolor{keywordtype}{int} * exList, \textcolor{keywordtype}{size\_t} nOrb, }
+\DoxyCodeLine{169       \textcolor{keywordtype}{size\_t} nE, \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \& addrArray)\textcolor{keyword}{ const }\{ }
+\DoxyCodeLine{170     }
+\DoxyCodeLine{171     std::vector<size\_t> LOcc = detStr.\mbox{\hyperlink{classChronusQ_1_1DetString_a823e68194d598c7409a4b9f6a977d3b5}{occupationInfo}}();}
+\DoxyCodeLine{172     std::vector<size\_t> LVir = detStr.\mbox{\hyperlink{classChronusQ_1_1DetString_a13c53c66ce45d32acb7eba129ad0c0dc}{virtualInfo}}();}
+\DoxyCodeLine{173     \textcolor{comment}{/*}}
+\DoxyCodeLine{174 \textcolor{comment}{    std::cout << "{}LOcc.size() = "{} << LOcc.size() << std::endl;}}
+\DoxyCodeLine{175 \textcolor{comment}{    for(auto \& i: LOcc) std::cout << "{} "{} << i;}}
+\DoxyCodeLine{176 \textcolor{comment}{    std::cout << std::endl;}}
+\DoxyCodeLine{177 \textcolor{comment}{    std::cout << "{}LVir.size() = "{} << LVir.size() << std::endl;}}
+\DoxyCodeLine{178 \textcolor{comment}{    for(auto \& i: LVir) std::cout << "{} "{} << i;}}
+\DoxyCodeLine{179 \textcolor{comment}{    std::cout << std::endl;}}
+\DoxyCodeLine{180 \textcolor{comment}{    */}}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182     \textcolor{keywordtype}{int} * exList\_ptr = exList;}
+\DoxyCodeLine{183     \textcolor{keywordtype}{size\_t} p, q;}
+\DoxyCodeLine{184     \textcolor{keywordtype}{size\_t} LAddr = \mbox{\hyperlink{classChronusQ_1_1DetStringManager_a88908fca6b9331be10089d657c345cc0}{detString2Address}}(detStr.\mbox{\hyperlink{classChronusQ_1_1DetString_a03222d947fdf7b371ba0498237b51319}{pointer}}(), addrArray); }
+\DoxyCodeLine{185     }
+\DoxyCodeLine{186     \textcolor{comment}{// case 1: self-\/excitation, p=q == occ}}
+\DoxyCodeLine{187     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} pOcc = 0ul ; pOcc < nE; pOcc++) \{}
+\DoxyCodeLine{188           p = LOcc[pOcc];}
+\DoxyCodeLine{189       exList\_ptr[0] = p;}
+\DoxyCodeLine{190       exList\_ptr[1] = p;}
+\DoxyCodeLine{191       exList\_ptr[2] = LAddr;}
+\DoxyCodeLine{192       exList\_ptr[3] = 1;}
+\DoxyCodeLine{193       exList\_ptr += 4;}
+\DoxyCodeLine{194     \}}
+\DoxyCodeLine{195     }
+\DoxyCodeLine{196     \textcolor{comment}{// Case 2: q -\/> p, p=virtual, q=occupied in L}}
+\DoxyCodeLine{197     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} pVir = 0ul; pVir < nOrb -\/ nE; pVir++)}
+\DoxyCodeLine{198     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} qOcc = 0ul; qOcc < nE; qOcc++) \{}
+\DoxyCodeLine{199       p = LVir[pVir];}
+\DoxyCodeLine{200           q = LOcc[qOcc];}
+\DoxyCodeLine{201       exList\_ptr[0] = p;}
+\DoxyCodeLine{202       exList\_ptr[1] = q;}
+\DoxyCodeLine{203       detStr.\mbox{\hyperlink{classChronusQ_1_1DetString_ab2bb705fa1d3d0e1b745808791e51646}{excitation}}(q,p);}
+\DoxyCodeLine{204       exList\_ptr[2] = \mbox{\hyperlink{classChronusQ_1_1DetStringManager_a88908fca6b9331be10089d657c345cc0}{detString2Address}}(detStr.\mbox{\hyperlink{classChronusQ_1_1DetString_a03222d947fdf7b371ba0498237b51319}{pointer}}(), addrArray);}
+\DoxyCodeLine{205       exList\_ptr[3] = detStr.\mbox{\hyperlink{classChronusQ_1_1DetString_a9e223842fdbf84faccb3626679a27afd}{sign1e}}(p,q); }
+\DoxyCodeLine{206       detStr.\mbox{\hyperlink{classChronusQ_1_1DetString_ab2bb705fa1d3d0e1b745808791e51646}{excitation}}(p,q);}
+\DoxyCodeLine{207       exList\_ptr += 4;  }
+\DoxyCodeLine{208     \}}
+\DoxyCodeLine{209     }
+\DoxyCodeLine{210     \textcolor{comment}{//prettyPrintSmart(std::cout, "{}iStr = "{} + std::to\_string(LAddr), }}
+\DoxyCodeLine{211     \textcolor{comment}{//  exList, 4, (nOrb -\/ nE + 1)*nE, 4);//, 1, 10, 8);}}
+\DoxyCodeLine{212     }
+\DoxyCodeLine{213   \}; \textcolor{comment}{// DetStringManager::computeSingleString1eExcitationList}}
+\DoxyCodeLine{214 }
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216   \textcolor{comment}{/*}}
+\DoxyCodeLine{217 \textcolor{comment}{   * Compute the excitation list <K|Eij|L> }}
+\DoxyCodeLine{218 \textcolor{comment}{   *   L is formed from two DetStrings in difference spaces,}}
+\DoxyCodeLine{219 \textcolor{comment}{   *   i.e. detsp and detsq}}
+\DoxyCodeLine{220 \textcolor{comment}{   * Configuration Driven 1e Excitation List: }}
+\DoxyCodeLine{221 \textcolor{comment}{   *   <K|a\_i\string^\(\backslash\)dagger a\_j |L>}}
+\DoxyCodeLine{222 \textcolor{comment}{   *        (1) nonzero excitation i,}}
+\DoxyCodeLine{223 \textcolor{comment}{   *        (2) nonzero excitation j,}}
+\DoxyCodeLine{224 \textcolor{comment}{   *        (3) address of excited string |K> in p block,}}
+\DoxyCodeLine{225 \textcolor{comment}{   *        (4) address of excited string |K> in q block,}}
+\DoxyCodeLine{226 \textcolor{comment}{   *        (5) sign (+/-\/ 1)}}
+\DoxyCodeLine{227 \textcolor{comment}{   */}}
+\DoxyCodeLine{228   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DetStringManager_ab5f31d0108610b7309aaa3c447243b0a}{DetStringManager::computeTwoString1eExcitationList}}(}
+\DoxyCodeLine{229     \mbox{\hyperlink{classChronusQ_1_1DetString}{DetString}} \& detsp, \mbox{\hyperlink{classChronusQ_1_1DetString}{DetString}} \& detsq, \textcolor{keywordtype}{int} * exList, }
+\DoxyCodeLine{230     \textcolor{keywordtype}{int} Sgnoff, \textcolor{keywordtype}{bool} pqseq,}
+\DoxyCodeLine{231     \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \& addrArrayp, \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \& addrArrayq)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{232 }
+\DoxyCodeLine{233     std::vector<size\_t> qOcc = detsq.\mbox{\hyperlink{classChronusQ_1_1DetString_a823e68194d598c7409a4b9f6a977d3b5}{occupationInfo}}();}
+\DoxyCodeLine{234     std::vector<size\_t> pVir = detsp.\mbox{\hyperlink{classChronusQ_1_1DetString_a13c53c66ce45d32acb7eba129ad0c0dc}{virtualInfo}}();}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236     \textcolor{keywordtype}{int} * exList\_ptr = exList;}
+\DoxyCodeLine{237     \textcolor{keywordtype}{size\_t} i, j;}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} jq = 0ul; jq < detsq.\mbox{\hyperlink{classChronusQ_1_1DetString_a122e42a865c0163024563d7482254958}{n1s}}(); jq++)}
+\DoxyCodeLine{240     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} ip = 0ul; ip < detsp.\mbox{\hyperlink{classChronusQ_1_1DetString_af07a94f30041417a56e8327f755e97ab}{n0s}}(); ip++) \{}
+\DoxyCodeLine{241       j = qOcc[jq];}
+\DoxyCodeLine{242       i = pVir[ip];}
+\DoxyCodeLine{243       detsq.\mbox{\hyperlink{classChronusQ_1_1DetString_a12dfef7627c741c3d78e42263fa6e9ee}{flip}}(j);}
+\DoxyCodeLine{244       detsp.\mbox{\hyperlink{classChronusQ_1_1DetString_a12dfef7627c741c3d78e42263fa6e9ee}{flip}}(i);}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{246       \textcolor{keywordtype}{int} Sign1e;}
+\DoxyCodeLine{247       \textcolor{keywordflow}{if} (pqseq) \{}
+\DoxyCodeLine{248         \mbox{\hyperlink{classChronusQ_1_1DetString}{DetString}} tmp = detsp + detsq;}
+\DoxyCodeLine{249         Sign1e = Sgnoff * tmp.\mbox{\hyperlink{classChronusQ_1_1DetString_a9e223842fdbf84faccb3626679a27afd}{sign1e}}(i, j + detsp.\mbox{\hyperlink{classChronusQ_1_1DetString_a7ee5e8a75366f3cab432be358e2405c7}{size}}());}
+\DoxyCodeLine{250       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{251         \mbox{\hyperlink{classChronusQ_1_1DetString}{DetString}} tmp = detsq + detsp;}
+\DoxyCodeLine{252         Sign1e = Sgnoff * tmp.\mbox{\hyperlink{classChronusQ_1_1DetString_a9e223842fdbf84faccb3626679a27afd}{sign1e}}(j, i + detsq.\mbox{\hyperlink{classChronusQ_1_1DetString_a7ee5e8a75366f3cab432be358e2405c7}{size}}());}
+\DoxyCodeLine{253       \}}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255       exList\_ptr[0] = i;}
+\DoxyCodeLine{256       exList\_ptr[1] = j;}
+\DoxyCodeLine{257       exList\_ptr[2] = \mbox{\hyperlink{classChronusQ_1_1DetStringManager_a88908fca6b9331be10089d657c345cc0}{detString2Address}}(detsp.\mbox{\hyperlink{classChronusQ_1_1DetString_a03222d947fdf7b371ba0498237b51319}{pointer}}(), addrArrayp);}
+\DoxyCodeLine{258       exList\_ptr[3] = \mbox{\hyperlink{classChronusQ_1_1DetStringManager_a88908fca6b9331be10089d657c345cc0}{detString2Address}}(detsq.\mbox{\hyperlink{classChronusQ_1_1DetString_a03222d947fdf7b371ba0498237b51319}{pointer}}(), addrArrayq);}
+\DoxyCodeLine{259       exList\_ptr[4] = Sign1e;}
+\DoxyCodeLine{260       exList\_ptr += 5;}
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262       detsq.\mbox{\hyperlink{classChronusQ_1_1DetString_a12dfef7627c741c3d78e42263fa6e9ee}{flip}}(j);}
+\DoxyCodeLine{263       detsp.\mbox{\hyperlink{classChronusQ_1_1DetString_a12dfef7627c741c3d78e42263fa6e9ee}{flip}}(i);}
+\DoxyCodeLine{264     \}}
+\DoxyCodeLine{265   \} \textcolor{comment}{// DetStringManager::computeTwoString1eExcitationList}}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267   }
+\DoxyCodeLine{268   \mbox{\hyperlink{classChronusQ_1_1ExcitationList}{ExcitationList}} \mbox{\hyperlink{classChronusQ_1_1DetStringManager_ab1b6be9ea6979bd2b690fac17ee099a6}{DetStringManager::computeIntraCASExcitationList}}(}
+\DoxyCodeLine{269       \textcolor{keywordtype}{size\_t} nOrb, \textcolor{keywordtype}{size\_t} nE, \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \& addrArray)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{270      }
+\DoxyCodeLine{271     \textcolor{keywordtype}{size\_t} nNZ = nE * (nOrb -\/ nE + 1);}
+\DoxyCodeLine{272     \textcolor{keywordtype}{size\_t} nStr = \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}}(nOrb, nE);}
+\DoxyCodeLine{273     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \& mem = this-\/>\mbox{\hyperlink{classChronusQ_1_1DetStringManager_a7fb763fab6c4f858d23330a2f63163be}{memManager\_}};}
+\DoxyCodeLine{274     \mbox{\hyperlink{classChronusQ_1_1ExcitationList}{ExcitationList}} exList(mem, 4, nNZ, nStr);}
+\DoxyCodeLine{275     }
+\DoxyCodeLine{276     \mbox{\hyperlink{classChronusQ_1_1StringPermutator}{StringPermutator}} strList(nOrb, nE);}
+\DoxyCodeLine{277     }
+\DoxyCodeLine{278     \textcolor{keywordtype}{size\_t} iStr = 0;}
+\DoxyCodeLine{279     }
+\DoxyCodeLine{280     \textcolor{comment}{// TODO: Parallel this loop}}
+\DoxyCodeLine{281     \textcolor{keywordflow}{while} (iStr != nStr) \{ }
+\DoxyCodeLine{282       }
+\DoxyCodeLine{283       \textcolor{keyword}{const} std::vector<size\_t> \& eLocs = strList.\mbox{\hyperlink{classChronusQ_1_1StringPermutator_a0a9b161deec92e11d7b03fc2ac4d0652}{permutedPositions}}();  }
+\DoxyCodeLine{284       \mbox{\hyperlink{classChronusQ_1_1DetString}{DetString}} L(mem, nOrb, eLocs); }
+\DoxyCodeLine{285       }
+\DoxyCodeLine{286       \mbox{\hyperlink{classChronusQ_1_1DetStringManager_ace1be64161b45da7b5a81d0c7a91375a}{computeSingleString1eExcitationList}}(L, }
+\DoxyCodeLine{287         exList.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_ad88f893a9f509142cc045e5a7acba8ff}{pointerAtDet}}(iStr), nOrb, nE, addrArray);}
+\DoxyCodeLine{288       }
+\DoxyCodeLine{289       iStr = strList.\mbox{\hyperlink{classChronusQ_1_1StringPermutator_a353372b2c72d31ae91ebef78fd2d2a61}{next}}();}
+\DoxyCodeLine{290     \}}
+\DoxyCodeLine{291 }
+\DoxyCodeLine{292 \textcolor{preprocessor}{\#ifdef \_DEBUG\_DETSTRING}}
+\DoxyCodeLine{293     exList.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9a93eddc5c7dc09d6fcc5f7b157015a7}{output}}(std::cout);  }
+\DoxyCodeLine{294 \textcolor{preprocessor}{\#endif  }}
+\DoxyCodeLine{295     \textcolor{keywordflow}{return} exList;}
+\DoxyCodeLine{296   \};\textcolor{comment}{// DetStringManager::computeIntraCASExcitationList}}
+\DoxyCodeLine{297 }
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299   \textcolor{comment}{/*}}
+\DoxyCodeLine{300 \textcolor{comment}{   * Compute excitation list between spaces}}
+\DoxyCodeLine{301 \textcolor{comment}{   *   e.g off-\/diagonal block in RAS string}}
+\DoxyCodeLine{302 \textcolor{comment}{   *   exList dimensions: nStr2\_: q block |L> address,}}
+\DoxyCodeLine{303 \textcolor{comment}{   *                      nStr1\_: p block |L> address.}}
+\DoxyCodeLine{304 \textcolor{comment}{   */}}
+\DoxyCodeLine{305   \mbox{\hyperlink{classChronusQ_1_1ExcitationList}{ExcitationList}} \mbox{\hyperlink{classChronusQ_1_1DetStringManager_a91f494e197834eb29e2550cc7668328c}{DetStringManager::computeInterCASExcitationList}}(}
+\DoxyCodeLine{306                  \textcolor{keywordtype}{size\_t} nOp, \textcolor{keywordtype}{size\_t} nEp, \textcolor{keywordtype}{size\_t} nOq, \textcolor{keywordtype}{size\_t} nEq,}
+\DoxyCodeLine{307                  \textcolor{keywordtype}{int} Sgnoff, \textcolor{keywordtype}{bool} pqseq, \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \& addr\_array\_pK,}
+\DoxyCodeLine{308                  \mbox{\hyperlink{classChronusQ_1_1DetStringManager_add7e80b4b781e445a42a3fcf38c6ebc5}{int\_matrix}} \& addr\_array\_qK)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{309 }
+\DoxyCodeLine{310     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \& mem = this-\/>\mbox{\hyperlink{classChronusQ_1_1DetStringManager_a7fb763fab6c4f858d23330a2f63163be}{memManager\_}};}
+\DoxyCodeLine{311     \textcolor{keywordtype}{size\_t} nVp = nOp -\/ nEp;}
+\DoxyCodeLine{312     \textcolor{keywordtype}{size\_t} nNZ = nEq * nVp;}
+\DoxyCodeLine{313     \textcolor{keywordtype}{size\_t} nStrp = \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}}(nOp, nEp);}
+\DoxyCodeLine{314     \textcolor{keywordtype}{size\_t} nStrq = \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}}(nOq, nEq);}
+\DoxyCodeLine{315 }
+\DoxyCodeLine{316     \mbox{\hyperlink{classChronusQ_1_1ExcitationList}{ExcitationList}} exList(mem, 5, nNZ, nStrp, nStrq);}
+\DoxyCodeLine{317     }
+\DoxyCodeLine{318     \mbox{\hyperlink{classChronusQ_1_1StringPermutator}{StringPermutator}} strList\_qL(nOq, nEq); \textcolor{comment}{// SOqL}}
+\DoxyCodeLine{319     \mbox{\hyperlink{classChronusQ_1_1StringPermutator}{StringPermutator}} strList\_pL(nOp, nEp); \textcolor{comment}{// SOpL}}
+\DoxyCodeLine{320 }
+\DoxyCodeLine{321     \textcolor{keywordtype}{size\_t} iStr\_qL = 0;}
+\DoxyCodeLine{322     \textcolor{keywordtype}{size\_t} iStr\_pL = 0;}
+\DoxyCodeLine{323 }
+\DoxyCodeLine{324     \textcolor{comment}{// TODO: Parallel this loop}}
+\DoxyCodeLine{325     \textcolor{keywordflow}{while} (iStr\_qL != nStrq) \{}
+\DoxyCodeLine{326       \textcolor{keyword}{const} std::vector<size\_t> \& eLocs\_qL = strList\_qL.\mbox{\hyperlink{classChronusQ_1_1StringPermutator_a0a9b161deec92e11d7b03fc2ac4d0652}{permutedPositions}}();}
+\DoxyCodeLine{327       \mbox{\hyperlink{classChronusQ_1_1DetString}{DetString}} tmpQ(mem, nOq, eLocs\_qL);}
+\DoxyCodeLine{328 }
+\DoxyCodeLine{329       strList\_pL.\mbox{\hyperlink{classChronusQ_1_1StringPermutator_a6fec27cc65a11b9ebacadbb0168fe899}{reset\_seed}}();}
+\DoxyCodeLine{330       iStr\_pL = 0;}
+\DoxyCodeLine{331       }
+\DoxyCodeLine{332       \textcolor{keywordflow}{while} (iStr\_pL != nStrp) \{}
+\DoxyCodeLine{333         \textcolor{keyword}{const} std::vector<size\_t> \& eLocs\_pL = strList\_pL.\mbox{\hyperlink{classChronusQ_1_1StringPermutator_a0a9b161deec92e11d7b03fc2ac4d0652}{permutedPositions}}();}
+\DoxyCodeLine{334         \mbox{\hyperlink{classChronusQ_1_1DetString}{DetString}} tmpP(mem, nOp, eLocs\_pL);}
+\DoxyCodeLine{335 }
+\DoxyCodeLine{336         \mbox{\hyperlink{classChronusQ_1_1DetStringManager_ab5f31d0108610b7309aaa3c447243b0a}{computeTwoString1eExcitationList}}(tmpP, tmpQ,}
+\DoxyCodeLine{337           exList.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_ad88f893a9f509142cc045e5a7acba8ff}{pointerAtDet}}(iStr\_pL, iStr\_qL),}
+\DoxyCodeLine{338           Sgnoff, pqseq, addr\_array\_pK, addr\_array\_qK);}
+\DoxyCodeLine{339 }
+\DoxyCodeLine{340         iStr\_pL = strList\_pL.\mbox{\hyperlink{classChronusQ_1_1StringPermutator_a353372b2c72d31ae91ebef78fd2d2a61}{next}}();}
+\DoxyCodeLine{341       \}}
+\DoxyCodeLine{342       iStr\_qL = strList\_qL.\mbox{\hyperlink{classChronusQ_1_1StringPermutator_a353372b2c72d31ae91ebef78fd2d2a61}{next}}();}
+\DoxyCodeLine{343     \}}
+\DoxyCodeLine{344 }
+\DoxyCodeLine{345 \textcolor{preprocessor}{\#ifdef \_DEBUG\_DETSTRING}}
+\DoxyCodeLine{346     exList.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9a93eddc5c7dc09d6fcc5f7b157015a7}{output}}(std::cout);}
+\DoxyCodeLine{347 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{348     \textcolor{keywordflow}{return} exList;}
+\DoxyCodeLine{349 }
+\DoxyCodeLine{350   \} \textcolor{comment}{// DetStringManager::computeInterCASExcitationList}}
+\DoxyCodeLine{351   }
+\DoxyCodeLine{352 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354 \textcolor{comment}{// Other headers}}
+\DoxyCodeLine{355 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{casstringmanager_8hpp}{detstringmanager/casstringmanager.hpp}}>}}
+\DoxyCodeLine{356 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{rasstringmanager_8hpp}{detstringmanager/rasstringmanager.hpp}}>}}
+\DoxyCodeLine{357 }
+\DoxyCodeLine{358 }
+
+\end{DoxyCode}

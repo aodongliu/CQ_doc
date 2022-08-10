@@ -1,0 +1,250 @@
+\hypertarget{fdr_8hpp_source}{}\doxysection{fdr.\+hpp}
+\label{fdr_8hpp_source}\index{include/response/fdr.hpp@{include/response/fdr.hpp}}
+\mbox{\hyperlink{fdr_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{tbase_8hpp}{response/tbase.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{solve_8hpp}{cqlinalg/solve.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{itersolver_8hpp}{itersolver.hpp}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <lapack.hh>}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{38   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{39   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a97e2d1988d56a4e87c2d8a40df0858f5}{ResponseTBase<T>::runFullFDR}}(\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponseResults<T,U>}} \&results) \{}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Full FDR"{}});}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keywordtype}{bool} isRoot = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm\_) == 0;}
+\DoxyCodeLine{44     \textcolor{keywordtype}{bool} isDist = this-\/>genSettings.isDist();}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{keywordtype}{size\_t} N = nSingleDim\_;}
+\DoxyCodeLine{47     \textcolor{keywordtype}{size\_t} nOmega = fdrSettings.bFreq.size();}
+\DoxyCodeLine{48     \textcolor{keywordtype}{size\_t} nRHS   = fdrSettings.nRHS;}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     \textcolor{keywordflow}{if}( this-\/>genSettings.printLevel >= 0 and isRoot ) \{}
+\DoxyCodeLine{51       std::cout << \textcolor{stringliteral}{"{}  ** PERFORMING INCORE LINEAR SOLVES FOR "{}} << nOmega }
+\DoxyCodeLine{52                 << \textcolor{stringliteral}{"{} FREQUENCIES AND "{}} << nRHS << \textcolor{stringliteral}{"{} RHS\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{53       std::cout << \textcolor{stringliteral}{"{}    * PROBLEM DIMENSION = "{}} << N << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{54       std::cout << \textcolor{stringliteral}{"{}    * SOLVER            = "{}};}
+\DoxyCodeLine{55       \textcolor{keywordflow}{if}( isDist )}
+\DoxyCodeLine{56         std::cout << \textcolor{stringliteral}{"{}PXGESV (ScaLAPACK)"{}};}
+\DoxyCodeLine{57       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{58         std::cout << \textcolor{stringliteral}{"{}XGESV (LAPACK)"{}};}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60       std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{61     \}}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \textcolor{keywordtype}{size\_t} localDimM = N, localDimN = N;}
+\DoxyCodeLine{64 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{65     \textcolor{keywordflow}{if}( isDist ) }
+\DoxyCodeLine{66       std::tie(localDimM,localDimN) = fullMatGrid\_-\/>getLocalDims(N,N);}
+\DoxyCodeLine{67 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{68     }
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{comment}{// Allocate space for the shifted matrix}}
+\DoxyCodeLine{72     U* shiftedMat = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74     \textcolor{keywordflow}{if}( localDimM and localDimN )}
+\DoxyCodeLine{75       shiftedMat = memManager\_.template malloc<U>(localDimM*localDimN);}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     U* distSOL = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{79     \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} localRHS;}
+\DoxyCodeLine{80 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{81     CXXBLACS::ScaLAPACK\_Desc\_t DescA, DescB;}
+\DoxyCodeLine{82     \textcolor{keywordflow}{if}( isDist ) \{}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84       \textcolor{comment}{// Allocate space for distributed RHS / Solution}}
+\DoxyCodeLine{85       std::tie(localDimM, localRHS) = fullMatGrid\_-\/>getLocalDims(N,nRHS);}
+\DoxyCodeLine{86       \textcolor{keywordflow}{if}( localDimM and localRHS)}
+\DoxyCodeLine{87         distSOL = memManager\_.template malloc<U>(localDimM*localRHS);}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90       DescB = fullMatGrid\_-\/>descInit(N,nRHS,0,0,localDimM);}
+\DoxyCodeLine{91       DescA = fullMatGrid\_-\/>descInit(N,N,0,0,localDimM);}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \}}
+\DoxyCodeLine{94 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     T* fMatUse = formFullFromMemory();}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     \textcolor{comment}{// Loop over omegas}}
+\DoxyCodeLine{99     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iOmega = 0; iOmega < nOmega; iOmega++) \{}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Omega"{}});}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103       U omega = results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a01095970ecb51ddf0298343b4dc95775}{shifts}}[iOmega];}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105       \textcolor{keywordflow}{if}( this-\/>genSettings.printLevel >= 0 and isRoot )}
+\DoxyCodeLine{106       std::cout << \textcolor{stringliteral}{"{}  * SOLVING IOMEGA = "{}} << std::setw(5) << iOmega }
+\DoxyCodeLine{107                 << \textcolor{stringliteral}{"{}: W = "{}} << std::setprecision(8) << std::scientific}
+\DoxyCodeLine{108                 << omega << \textcolor{stringliteral}{"{} (AU) \(\backslash\)n"{}};}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110       U* SOL = results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a6539c55c18e9a475fb7fb412e40c85ad}{SOL}} + iOmega*nRHS*N;}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113       \textcolor{comment}{// Copy over the RHS into the solution storage}}
+\DoxyCodeLine{114       \textcolor{keywordflow}{if}( isRoot ) std::copy\_n(results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a5ff077f0815cad14070b942278e8dc4e}{RHS}},N*nRHS,SOL);}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{117       \textcolor{keywordflow}{if}( isDist ) }
+\DoxyCodeLine{118         fullMatGrid\_-\/>Scatter(N,nRHS,SOL,N,distSOL,localDimM,0,0);}
+\DoxyCodeLine{119 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121       \textcolor{comment}{// Copy over the full matrix and shift}}
+\DoxyCodeLine{122       \textcolor{keywordflow}{if}( shiftedMat ) std::copy\_n(fMatUse,localDimM*localDimN,shiftedMat);}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{125       \textcolor{keywordflow}{if}( isDist and shiftedMat )}
+\DoxyCodeLine{126         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0ul; j < localDimN; j++) }
+\DoxyCodeLine{127         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul; i < localDimM; i++) \{}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129           \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} I,J;}
+\DoxyCodeLine{130           std::tie(I,J) = fullMatGrid\_-\/>globalFromLocal(i,j);}
+\DoxyCodeLine{131           \textcolor{keywordflow}{if}(I == J)}
+\DoxyCodeLine{132             shiftedMat[i + j*localDimM] -\/= omega;}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134         \} }
+\DoxyCodeLine{135       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{136 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{137         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0ul; k < N; k++) shiftedMat[k*(N+1)] -\/= omega;}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139       \textcolor{comment}{/*}}
+\DoxyCodeLine{140 \textcolor{comment}{      if( isDist )}}
+\DoxyCodeLine{141 \textcolor{comment}{        prettyPrintSmart(std::cout,"{}RHS "{} + std::to\_string(iOmega),distSOL,}}
+\DoxyCodeLine{142 \textcolor{comment}{          N,nRHS,N);}}
+\DoxyCodeLine{143 \textcolor{comment}{      else}}
+\DoxyCodeLine{144 \textcolor{comment}{        prettyPrintSmart(std::cout,"{}RHS "{} + std::to\_string(iOmega),SOL,}}
+\DoxyCodeLine{145 \textcolor{comment}{          N,nRHS,N);}}
+\DoxyCodeLine{146 \textcolor{comment}{     // prettyPrintSmart(std::cout,"{}FM "{} + std::to\_string(iOmega),shiftedMat,}}
+\DoxyCodeLine{147 \textcolor{comment}{     //   N,N,N);}}
+\DoxyCodeLine{148 \textcolor{comment}{       */}}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152       \textcolor{comment}{// Solve the linear System}}
+\DoxyCodeLine{153       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Solve Linear System"{}});}
+\DoxyCodeLine{154 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{155       \textcolor{keywordflow}{if}( isDist )}
+\DoxyCodeLine{156         LinSolve(N,nRHS,shiftedMat,1,1,DescA,distSOL,1,1,DescB);}
+\DoxyCodeLine{157       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{158 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{159       \{ }
+\DoxyCodeLine{160         int64\_t* IPIV = memManager\_.malloc<int64\_t>(N);}
+\DoxyCodeLine{161         lapack::gesv(N,nRHS,shiftedMat,N,IPIV,SOL,N);}
+\DoxyCodeLine{162         memManager\_.free(IPIV);}
+\DoxyCodeLine{163       \}}
+\DoxyCodeLine{164       }
+\DoxyCodeLine{165       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Solve Linear System"{}});}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168       \textcolor{comment}{// Gather solution to root process}}
+\DoxyCodeLine{169 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{170       \textcolor{keywordflow}{if}( isDist )}
+\DoxyCodeLine{171         fullMatGrid\_-\/>Gather(N,nRHS,SOL,N,distSOL,localDimM,0,0);}
+\DoxyCodeLine{172 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174     \textcolor{comment}{//prettyPrintSmart(std::cout,"{}SOL "{} + std::to\_string(iOmega),SOL,}}
+\DoxyCodeLine{175     \textcolor{comment}{//  N,nRHS,N);}}
+\DoxyCodeLine{176       }
+\DoxyCodeLine{177       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Omega"{}});}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179     \}}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182     \textcolor{keywordflow}{if}( shiftedMat ) memManager\_.free(shiftedMat);}
+\DoxyCodeLine{183     \textcolor{keywordflow}{if}( fMatUse and (fMatUse != fullMatrix\_) ) memManager\_.free(fMatUse);}
+\DoxyCodeLine{184     \textcolor{keywordflow}{if}( isDist and distSOL ) memManager\_.free(distSOL);}
+\DoxyCodeLine{185 }
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Full FDR"{}});}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189   \}}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{192   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{193   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ac4044409a3c46f38331d2d1322cb738c}{ResponseTBase<T>::runIterFDR}}(\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponseResults<T,U>}} \&results,}
+\DoxyCodeLine{194       std::function< \textcolor{keywordtype}{void}(\textcolor{keywordtype}{size\_t},U,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}}\&,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}}\&) > \&preCond ) \{}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196     \textcolor{keywordtype}{bool} isRoot = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm\_) == 0;}
+\DoxyCodeLine{197     \textcolor{keywordtype}{bool} isDist = this-\/>genSettings.isDist();}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Iter FDR"{}});}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201     \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1GMRES_ad950b9ebab1d0ad53fc0ecb314ee70ba}{GMRES<U>::LinearTrans\_t}} lt = [\&](\textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&AV) \{}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203       iterLinearTrans(nVec,V,AV);}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205     \};}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208     \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1GMRES_a191de074c525bcca6dcc8c9bb9c84f3c}{GMRES<U>::Shift\_t}} pc = }
+\DoxyCodeLine{209       bool(preCond) ? preCond :}
+\DoxyCodeLine{210       [\&](\textcolor{keywordtype}{size\_t} nVec, U shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&AV) \{}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212       \textcolor{keywordflow}{if}( not this-\/>fullMatrix\_ ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}();}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214       AV.set\_data(0, nVec, V, 0);}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216     \};}
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} gmresComm = (isDist or not genSettings.formFullMat) }
+\DoxyCodeLine{219       ? comm\_ : rcomm\_;}
+\DoxyCodeLine{220     }
+\DoxyCodeLine{221     \mbox{\hyperlink{classChronusQ_1_1GMRES}{GMRES<U>}} gmres(gmresComm,this-\/>memManager\_,nSingleDim\_,}
+\DoxyCodeLine{222       genSettings.maxIter,genSettings.convCrit,lt,pc);}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224 }
+\DoxyCodeLine{225     \textcolor{comment}{// Set the RHS and shifts}}
+\DoxyCodeLine{226     gmres.\mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_ace4d488066bce1e7498963c25c851837}{setRHS}}(fdrSettings.nRHS,results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a5ff077f0815cad14070b942278e8dc4e}{RHS}},this-\/>nSingleDim\_);}
+\DoxyCodeLine{227     gmres.\mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a52324cc8479558cf677d7f23b923f819}{setShifts}}(results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a01095970ecb51ddf0298343b4dc95775}{shifts}}.size(),\&results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a01095970ecb51ddf0298343b4dc95775}{shifts}}[0]);}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229     gmres.\mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a89f344c0b12ae776da4c988a1e3df2d9}{rhsBS}}   = fdrSettings.nRHS;}
+\DoxyCodeLine{230     gmres.\mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_abb93e7f00502ae50a58bb5ec63d2f113}{shiftBS}} = results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a01095970ecb51ddf0298343b4dc95775}{shifts}}.size();}
+\DoxyCodeLine{231 }
+\DoxyCodeLine{232     gmres.\mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a4d91bbd0ba65ac02462af247efee00ef}{run}}();}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234     \textcolor{keywordflow}{if}( isRoot )}
+\DoxyCodeLine{235       std::copy\_n(gmres.\mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a5eecb03ded9306c4db81a5bbb35fa949}{getSol}}()-\/>getPtr(),}
+\DoxyCodeLine{236                   fdrSettings.nRHS * results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a01095970ecb51ddf0298343b4dc95775}{shifts}}.size() * nSingleDim\_,}
+\DoxyCodeLine{237                   results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a6539c55c18e9a475fb7fb412e40c85ad}{SOL}});}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Iter FDR"{}});}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{241   \}}
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243 \};}
+\DoxyCodeLine{244 }
+
+\end{DoxyCode}

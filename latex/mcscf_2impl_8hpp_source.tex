@@ -1,0 +1,263 @@
+\hypertarget{mcscf_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{mcscf_2impl_8hpp_source}\index{include/mcscf/impl.hpp@{include/mcscf/impl.hpp}}
+\mbox{\hyperlink{mcscf_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcwavefunction_8hpp}{mcwavefunction.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcscf_8hpp}{mcscf.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcscf_2print_8hpp}{mcscf/print.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcscf_2rdm_8hpp}{mcscf/rdm.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cisolver_8hpp}{mcscf/cisolver.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{orbitalrotation_8hpp}{orbitalrotation.hpp}}>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{comment}{// \#define DEBUG\_MCSCF\_IMPL}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{39   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_ae2b5040ab5221af280964057bf5d9a18}{MCSCF<MatsT,IntsT>::run}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert) \{}
+\DoxyCodeLine{40     }
+\DoxyCodeLine{41     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}MCSCF Total"{}});}
+\DoxyCodeLine{42     }
+\DoxyCodeLine{43     \textcolor{comment}{// allocating memeory}}
+\DoxyCodeLine{44     this-\/>alloc(); }
+\DoxyCodeLine{45     }
+\DoxyCodeLine{46     \textcolor{comment}{// Initial Printing}}
+\DoxyCodeLine{47     this-\/>printMCSCFHeader();}
+\DoxyCodeLine{48     }
+\DoxyCodeLine{49     \textcolor{comment}{// MCSCF Intial CI solution}}
+\DoxyCodeLine{50     std::cout << \textcolor{stringliteral}{"{}Cycle 0:\(\backslash\)n"{}} << std::endl;}
+\DoxyCodeLine{51     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout, \textcolor{stringliteral}{"{}AO to MO Intergral Transformation ..."{}});}
+\DoxyCodeLine{52     }
+\DoxyCodeLine{53     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Solve CI"{}});}
+\DoxyCodeLine{54     }
+\DoxyCodeLine{55     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Integral Trans"{}});}
+\DoxyCodeLine{56     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a700a1089f64411ed3356f2afa16ca128}{MCWaveFunction<MatsT,IntsT>::transformInts}}(pert);}
+\DoxyCodeLine{57     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Integral Trans"{}});}
+\DoxyCodeLine{58     }
+\DoxyCodeLine{59     std::cout << std::left << std::setprecision(10); }
+\DoxyCodeLine{60     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout, \textcolor{stringliteral}{"{}Inactive Energy:"{}}, this-\/>InactEnergy);}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Diagonalization"{}});}
+\DoxyCodeLine{63     this-\/>ciSolver-\/>solveCI(\textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsT,IntsT>}}\&\textcolor{keyword}{>}(*\textcolor{keyword}{this}));}
+\DoxyCodeLine{64     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Diagonalization"{}});}
+\DoxyCodeLine{65     }
+\DoxyCodeLine{66     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Solve CI"{}});}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     \textcolor{comment}{// Initial 1RDM construction}}
+\DoxyCodeLine{69     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_aff027a84dd40c741dde8adccdaf1154b}{MCWaveFunction<MatsT, IntsT>::computeOneRDM}}();}
+\DoxyCodeLine{70      }
+\DoxyCodeLine{71     \textcolor{comment}{// MCSCF Cycles }}
+\DoxyCodeLine{72     }
+\DoxyCodeLine{73     \textcolor{keywordflow}{if}(this-\/>settings.doSCF) \{}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75       this-\/>printStateEnergy();}
+\DoxyCodeLine{76       }
+\DoxyCodeLine{77       std::vector<double> EPrev = std::vector<double>(this-\/>NStates);}
+\DoxyCodeLine{78       std::fill\_n(EPrev.begin(), this-\/>NStates, 0.);}
+\DoxyCodeLine{79       \textcolor{keywordtype}{double} EDiff      = 0.;}
+\DoxyCodeLine{80       \textcolor{keywordtype}{bool}   converged  = \textcolor{keyword}{false};}
+\DoxyCodeLine{81       }
+\DoxyCodeLine{82       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iter = 0ul; iter < settings.maxSCFIter; iter++) \{}
+\DoxyCodeLine{83         }
+\DoxyCodeLine{84         \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Orbital Rotation"{}});}
+\DoxyCodeLine{85         \textcolor{comment}{// Exam Energy}}
+\DoxyCodeLine{86         \textcolor{keywordflow}{if}(this-\/>StateAverage) \{}
+\DoxyCodeLine{87           EDiff = 0.;}
+\DoxyCodeLine{88           std::vector<double> EDiff2 = std::vector<double>(this-\/>NStates);}
+\DoxyCodeLine{89           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < this-\/>NStates; i++)}
+\DoxyCodeLine{90             EDiff2[i] = this-\/>StateEnergy[i] -\/ EPrev[i];}
+\DoxyCodeLine{91           }
+\DoxyCodeLine{92           EDiff = *std::max\_element(EDiff2.begin(), EDiff2.end(), }
+\DoxyCodeLine{93             [\&] (\textcolor{keywordtype}{double} a, \textcolor{keywordtype}{double} b) \{ return std::abs(a) < std::abs(b); \});}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{96           EDiff = this-\/>StateEnergy.back() -\/ EPrev.back(); }
+\DoxyCodeLine{97         \}}
+\DoxyCodeLine{98         }
+\DoxyCodeLine{99         std::cout << \textcolor{stringliteral}{"{}  (Maximum) Energy Difference = "{}} << std::setw(18) }
+\DoxyCodeLine{100                   <<  std::right << EDiff << std::left << std::endl; }
+\DoxyCodeLine{101         \textcolor{keywordflow}{if}(std::abs(EDiff) <= settings.scfEnergyConv) converged = \textcolor{keyword}{true}; }
+\DoxyCodeLine{102         }
+\DoxyCodeLine{103         \textcolor{comment}{// compute RDMs}}
+\DoxyCodeLine{104         \textcolor{keywordflow}{if} (this-\/>StateAverage) \{}
+\DoxyCodeLine{105           this-\/>computeOneRDM(); }
+\DoxyCodeLine{106           this-\/>computeTwoRDM(); }
+\DoxyCodeLine{107         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{108           this-\/>computeOneRDM(this-\/>NStates -\/ 1); }
+\DoxyCodeLine{109           this-\/>computeTwoRDM(this-\/>NStates -\/ 1);}
+\DoxyCodeLine{110         \}}
+\DoxyCodeLine{111         }
+\DoxyCodeLine{112         \textcolor{comment}{// this-\/>print1RDMs();}}
+\DoxyCodeLine{113         }
+\DoxyCodeLine{114         \textcolor{comment}{// compute gradient }}
+\DoxyCodeLine{115         \textcolor{keywordtype}{double} orbitalGradientNorm = }
+\DoxyCodeLine{116           moRotator-\/>computeOrbGradient(pert, *oneRDMSOI, *twoRDMSOI);}
+\DoxyCodeLine{117         }
+\DoxyCodeLine{118         \textcolor{comment}{// Gradient Convergence exam}}
+\DoxyCodeLine{119         std::cout << \textcolor{stringliteral}{"{}  Orbital Gradient Residue   = "{}} << std::setw(18) }
+\DoxyCodeLine{120                   << std::right << orbitalGradientNorm << std::left << std::endl;}
+\DoxyCodeLine{121         }
+\DoxyCodeLine{122         \textcolor{keywordflow}{if}(converged and orbitalGradientNorm < settings.scfGradientConv) \textcolor{keywordflow}{break}; }
+\DoxyCodeLine{123           }
+\DoxyCodeLine{124         converged = \textcolor{keyword}{false};}
+\DoxyCodeLine{125         }
+\DoxyCodeLine{126         \textcolor{comment}{// start of the new cycle }}
+\DoxyCodeLine{127         std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nCycle "{}} << iter+1 << \textcolor{stringliteral}{"{}:\(\backslash\)n"{}} << std::endl;}
+\DoxyCodeLine{128         }
+\DoxyCodeLine{129         \textcolor{comment}{// compute hession diagonal and rotate orbitals}}
+\DoxyCodeLine{130         \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout, \textcolor{stringliteral}{"{}Performing Orbital Rotation ..."{}});}
+\DoxyCodeLine{131         }
+\DoxyCodeLine{132         moRotator-\/>rotateMO(pert, *oneRDMSOI, *twoRDMSOI);}
+\DoxyCodeLine{133         }
+\DoxyCodeLine{134         \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Orbital Rotation"{}});}
+\DoxyCodeLine{135         }
+\DoxyCodeLine{136         this-\/>mointsTF-\/>clearAllCache();}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138         \textcolor{comment}{// print energy and update EPrev}}
+\DoxyCodeLine{139         std::copy\_n(this-\/>StateEnergy.begin(), this-\/>NStates, EPrev.begin());}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141         \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Solve CI"{}});}
+\DoxyCodeLine{142         }
+\DoxyCodeLine{143         \textcolor{comment}{// Re-\/transform intgrals and solve new CI}}
+\DoxyCodeLine{144         \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout, \textcolor{stringliteral}{"{}Redo AO to MO Intergral Transformation ..."{}});}
+\DoxyCodeLine{145         \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Integral Trans"{}});}
+\DoxyCodeLine{146         \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a700a1089f64411ed3356f2afa16ca128}{MCWaveFunction<MatsT,IntsT>::transformInts}}(pert);}
+\DoxyCodeLine{147         \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Integral Trans"{}});}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149         std::cout << std::left << std::setprecision(10); }
+\DoxyCodeLine{150         \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout, \textcolor{stringliteral}{"{}Inactive Energy:"{}}, this-\/>InactEnergy);}
+\DoxyCodeLine{151         \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Diagonalization"{}});}
+\DoxyCodeLine{152         this-\/>ciSolver-\/>solveCI(\textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsT,IntsT>}}\&\textcolor{keyword}{>}(*\textcolor{keyword}{this}));}
+\DoxyCodeLine{153         \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Diagonalization"{}});}
+\DoxyCodeLine{154         }
+\DoxyCodeLine{155         \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Solve CI"{}});}
+\DoxyCodeLine{156       }
+\DoxyCodeLine{157         this-\/>printStateEnergy();}
+\DoxyCodeLine{158       }
+\DoxyCodeLine{159         saveCurrentStates();}
+\DoxyCodeLine{160       }
+\DoxyCodeLine{161       \} \textcolor{comment}{// SCF Iteration}}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163       \textcolor{keywordflow}{if}(not converged) }
+\DoxyCodeLine{164         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}\(\backslash\)n MCSCF failed to converged in "{}} + std::to\_string(settings.maxSCFIter) + \textcolor{stringliteral}{"{} cycles !"{}});}
+\DoxyCodeLine{165     }
+\DoxyCodeLine{166       \textcolor{comment}{// compute 1RDMs}}
+\DoxyCodeLine{167       \textcolor{keywordflow}{if} (this-\/>StateAverage) this-\/>computeOneRDM(); }
+\DoxyCodeLine{168       \textcolor{keywordflow}{else} this-\/>computeOneRDM(this-\/>NStates -\/ 1); }
+\DoxyCodeLine{169       }
+\DoxyCodeLine{170       \textcolor{comment}{// generate IVOs as needed}}
+\DoxyCodeLine{171       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Gen IVOs"{}});}
+\DoxyCodeLine{172       \textcolor{keywordflow}{if} (this-\/>settings.doIVOs) moRotator-\/>generateIVOs(pert, *oneRDMSOI);   }
+\DoxyCodeLine{173       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Gen IVOs"{}});}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175     \} \textcolor{comment}{// doSCF}}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177     \textcolor{comment}{// Final printing and save states for restart}}
+\DoxyCodeLine{178     std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nMCSCF Complete!"{}} << std::endl;}
+\DoxyCodeLine{179     std::cout << \mbox{\hyperlink{namespaceChronusQ_a7ec03a45c0666f106c60a4ee2fa36f0c}{bannerEnd}} << std::endl;}
+\DoxyCodeLine{180     }
+\DoxyCodeLine{181     this-\/>printMCSCFFooter();}
+\DoxyCodeLine{182  }
+\DoxyCodeLine{183     \textcolor{comment}{// property calculation}}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185     \textcolor{comment}{// mulliken analysis}}
+\DoxyCodeLine{186     \textcolor{keywordflow}{if} (this-\/>PopulationAnalysis) \{}
+\DoxyCodeLine{187       std::cout<<\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nPopulation analysis in mcscf."{}}<<std::endl;}
+\DoxyCodeLine{188       \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a8d7e553d88c2ce450ee6a2f78f23ed64}{MCWaveFunction<MatsT,IntsT>::populationAnalysis}}();}
+\DoxyCodeLine{189     \}}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191     \textcolor{comment}{// oscillator strength}}
+\DoxyCodeLine{192     \textcolor{keywordflow}{if} (this-\/>NosS1) \{}
+\DoxyCodeLine{193       }
+\DoxyCodeLine{194       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Property Eval"{}});}
+\DoxyCodeLine{195       }
+\DoxyCodeLine{196       this-\/>osc\_str = this-\/>memManager.template malloc<double>(this-\/>NosS1*this-\/>NStates);}
+\DoxyCodeLine{197       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} s1 = 0ul; s1 < this-\/>NosS1; s1++)}
+\DoxyCodeLine{198       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} s2 = 0ul; s2 < this-\/>NStates; s2++)\{}
+\DoxyCodeLine{199         \textcolor{keywordflow}{if} (s2 < this-\/>NosS1) this-\/>osc\_str[s2+s1*this-\/>NStates] = 0.;}
+\DoxyCodeLine{200         \textcolor{keywordflow}{else} this-\/>osc\_str[s2+s1*this-\/>NStates] = }
+\DoxyCodeLine{201                 \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a99a24b90879fa825515cda219c7b685a}{MCWaveFunction<MatsT,IntsT>::oscillator\_strength}}(s2,s1);}
+\DoxyCodeLine{202       \}}
+\DoxyCodeLine{203       }
+\DoxyCodeLine{204       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Property Eval"{}});}
+\DoxyCodeLine{205     \}}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207     saveCurrentStates();}
+\DoxyCodeLine{208 }
+\DoxyCodeLine{209     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}MCSCF Total"{}});}
+\DoxyCodeLine{210  }
+\DoxyCodeLine{211   \}; \textcolor{comment}{//MCSCF::run}}
+\DoxyCodeLine{212   }
+\DoxyCodeLine{213   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{214   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_a04a5b3bc7924b6ef9fa5df9d94f86477}{MCSCF<MatsT,IntsT>::saveCurrentStates}}() \{}
+\DoxyCodeLine{215     }
+\DoxyCodeLine{216     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_ab55737cc5e5196937814f00d328ffa8f}{MCWaveFunction<MatsT, IntsT>::saveCurrentStates}}();}
+\DoxyCodeLine{217     }
+\DoxyCodeLine{218     \textcolor{comment}{// only save MO when doing orbital rotation}}
+\DoxyCodeLine{219     \textcolor{keywordflow}{if} (settings.doSCF and this-\/>savFile.exists()) \{}
+\DoxyCodeLine{220       \textcolor{keyword}{auto} mo\_dim = this-\/>reference().mo[0].dimension();}
+\DoxyCodeLine{221       this-\/>savFile.safeWriteData(\textcolor{stringliteral}{"{}SCF/MO1"{}}, this-\/>reference().mo[0].pointer(), \{mo\_dim, mo\_dim\});}
+\DoxyCodeLine{222     \}}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224   \}; \textcolor{comment}{// MCSCF::saveCurrentStates}}
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{228   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_afdc550978789f57f0345ef37047a6ddb}{MCSCF<MatsT,IntsT>::alloc}}() \{}
+\DoxyCodeLine{229     }
+\DoxyCodeLine{230     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a2fb23d2d38b981c4f42b4fa9813dc74d}{MCWaveFunction<MatsT,IntsT>::alloc}}();}
+\DoxyCodeLine{231     }
+\DoxyCodeLine{232     ciSolver = std::make\_shared<CISolver<MatsT,IntsT>>(settings.ciAlg, }
+\DoxyCodeLine{233       settings.maxCIIter, settings.ciVectorConv,}
+\DoxyCodeLine{234       settings.maxDavidsonSpace, settings.nDavidsonGuess);}
+\DoxyCodeLine{235     }
+\DoxyCodeLine{236     \textcolor{keywordflow}{if} (this-\/>settings.doSCF) \{}
+\DoxyCodeLine{237       }
+\DoxyCodeLine{238       this-\/>cacheHalfTransTPI\_ = \textcolor{keyword}{true};}
+\DoxyCodeLine{239       }
+\DoxyCodeLine{240       \textcolor{keywordtype}{size\_t} nCorrO = this-\/>MOPartition.nCorrO;}
+\DoxyCodeLine{241       oneRDMSOI = std::make\_shared<SquareMatrix<MatsT>>(this-\/>memManager,nCorrO);}
+\DoxyCodeLine{242       twoRDMSOI = std::make\_shared<InCore4indexTPI<MatsT>>(this-\/>memManager, nCorrO);     }
+\DoxyCodeLine{243       }
+\DoxyCodeLine{244       moRotator = std::make\_shared<OrbitalRotation<MatsT, IntsT>>(}
+\DoxyCodeLine{245         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsT,IntsT>}}\&\textcolor{keyword}{>}(*this), settings.ORSettings);}
+\DoxyCodeLine{246     \}}
+\DoxyCodeLine{247   \}}
+\DoxyCodeLine{248 }
+\DoxyCodeLine{249   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{250   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_a7b124c8e84fb746c12cfd1a7c59b88c0}{MCSCF<MatsT,IntsT>::dealloc}}() \{}
+\DoxyCodeLine{251     oneRDMSOI = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{252     twoRDMSOI = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{253     ciSolver  = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{254     moRotator = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{255   \}}
+\DoxyCodeLine{256 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{257 }
+
+\end{DoxyCode}

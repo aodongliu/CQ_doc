@@ -1,0 +1,113 @@
+\hypertarget{files_8hpp}{}\doxysection{include/util/files.hpp File Reference}
+\label{files_8hpp}\index{include/util/files.hpp@{include/util/files.hpp}}
+{\ttfamily \#include $<$chronusq\+\_\+sys.\+hpp$>$}\newline
+{\ttfamily \#include $<$cxxapi/input.\+hpp$>$}\newline
+{\ttfamily \#include $<$cerr.\+hpp$>$}\newline
+{\ttfamily \#include $<$H5\+Cpp.\+h$>$}\newline
+Include dependency graph for files.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{files_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{files_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classChronusQ_1_1SafeFile}{Chronus\+Q\+::\+Safe\+File}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{files_8hpp_aa6924558786bd741fac654a6a6eb869e}{Open\+H5\+File}}(file,  type)
+\item 
+\#define \mbox{\hyperlink{files_8hpp_ab4cb3009540f23f5f6c86bd48d77b52d}{Create\+H5\+File}}(file)~  \mbox{\hyperlink{files_8hpp_aa6924558786bd741fac654a6a6eb869e}{Open\+H5\+File}}(file,H5\+F\+\_\+\+ACC\+\_\+\+TRUNC)
+\item 
+\#define \mbox{\hyperlink{files_8hpp_ae10437608754c2c587492ac77fec4338}{Create\+Data\+Set}}(file,  obj,  data,  type,  n\+Dims,  dims)
+\item 
+\#define \mbox{\hyperlink{files_8hpp_ad2095d1e78855d1b803daec96993fb01}{Open\+Data\+Set}}(file,  obj,  data)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\H5\+::\+Comp\+Type \mbox{\hyperlink{files_8hpp_ad665e8c92f5db7353268b2acff928096}{H5\+Pred\+Type}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{files_8hpp_ae10437608754c2c587492ac77fec4338}\label{files_8hpp_ae10437608754c2c587492ac77fec4338}} 
+\index{files.hpp@{files.hpp}!CreateDataSet@{CreateDataSet}}
+\index{CreateDataSet@{CreateDataSet}!files.hpp@{files.hpp}}
+\doxysubsubsection{\texorpdfstring{CreateDataSet}{CreateDataSet}}
+{\footnotesize\ttfamily \#define Create\+Data\+Set(\begin{DoxyParamCaption}\item[{}]{file,  }\item[{}]{obj,  }\item[{}]{data,  }\item[{}]{type,  }\item[{}]{n\+Dims,  }\item[{}]{dims }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \mbox{\hyperlink{files_8hpp_aa6924558786bd741fac654a6a6eb869e}{OpenH5File}}(file,H5F\_ACC\_RDWR); \(\backslash\)}
+\DoxyCodeLine{  H5::DataSpace space(nDims,dims); \(\backslash\)}
+\DoxyCodeLine{  H5::DataSet obj = file.createDataSet(data,type,space);}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{files_8hpp_ab4cb3009540f23f5f6c86bd48d77b52d}\label{files_8hpp_ab4cb3009540f23f5f6c86bd48d77b52d}} 
+\index{files.hpp@{files.hpp}!CreateH5File@{CreateH5File}}
+\index{CreateH5File@{CreateH5File}!files.hpp@{files.hpp}}
+\doxysubsubsection{\texorpdfstring{CreateH5File}{CreateH5File}}
+{\footnotesize\ttfamily \#define Create\+H5\+File(\begin{DoxyParamCaption}\item[{}]{file }\end{DoxyParamCaption})~  \mbox{\hyperlink{files_8hpp_aa6924558786bd741fac654a6a6eb869e}{Open\+H5\+File}}(file,H5\+F\+\_\+\+ACC\+\_\+\+TRUNC)}
+
+\mbox{\Hypertarget{files_8hpp_ad2095d1e78855d1b803daec96993fb01}\label{files_8hpp_ad2095d1e78855d1b803daec96993fb01}} 
+\index{files.hpp@{files.hpp}!OpenDataSet@{OpenDataSet}}
+\index{OpenDataSet@{OpenDataSet}!files.hpp@{files.hpp}}
+\doxysubsubsection{\texorpdfstring{OpenDataSet}{OpenDataSet}}
+{\footnotesize\ttfamily \#define Open\+Data\+Set(\begin{DoxyParamCaption}\item[{}]{file,  }\item[{}]{obj,  }\item[{}]{data }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \mbox{\hyperlink{files_8hpp_aa6924558786bd741fac654a6a6eb869e}{OpenH5File}}(file,H5F\_ACC\_RDWR); \(\backslash\)}
+\DoxyCodeLine{  H5::DataSet obj = file.openDataSet(data);}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{files_8hpp_aa6924558786bd741fac654a6a6eb869e}\label{files_8hpp_aa6924558786bd741fac654a6a6eb869e}} 
+\index{files.hpp@{files.hpp}!OpenH5File@{OpenH5File}}
+\index{OpenH5File@{OpenH5File}!files.hpp@{files.hpp}}
+\doxysubsubsection{\texorpdfstring{OpenH5File}{OpenH5File}}
+{\footnotesize\ttfamily \#define Open\+H5\+File(\begin{DoxyParamCaption}\item[{}]{file,  }\item[{}]{type }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  assert(not fName\_.empty()); \(\backslash\)}
+\DoxyCodeLine{  H5::H5File file(fName\_,type); \(\backslash\)}
+\DoxyCodeLine{  exists\_ = \textcolor{keyword}{true};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{files_8hpp_ad665e8c92f5db7353268b2acff928096}\label{files_8hpp_ad665e8c92f5db7353268b2acff928096}} 
+\index{files.hpp@{files.hpp}!H5PredType@{H5PredType}}
+\index{H5PredType@{H5PredType}!files.hpp@{files.hpp}}
+\doxysubsubsection{\texorpdfstring{H5PredType()}{H5PredType()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+H5\+::\+Comp\+Type H5\+Pred\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{files_8hpp_ad665e8c92f5db7353268b2acff928096_cgraph}
+\end{center}
+\end{figure}

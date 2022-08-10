@@ -1,0 +1,39 @@
+\hypertarget{factorization_8hpp}{}\doxysection{include/cqlinalg/factorization.hpp File Reference}
+\label{factorization_8hpp}\index{include/cqlinalg/factorization.hpp@{include/cqlinalg/factorization.hpp}}
+{\ttfamily \#include $<$cqlinalg/cqlinalg\+\_\+config.\+hpp$>$}\newline
+Include dependency graph for factorization.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{factorization_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{factorization_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename \+\_\+F $>$ }\\int \mbox{\hyperlink{namespaceChronusQ_a363e27c14db3c334b3a8e2a722b9128e}{Chronus\+Q\+::\+LUInv}} (int N, \+\_\+F $\ast$A, int LDA, CQMem\+Manager \&mem)
+\begin{DoxyCompactList}\small\item\em Computes the inverse of a non-\/singular matrix A. Initially computes the LU factorization then wraps DGETRI / ZGETRI for the matrix inversion depending on context. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename \+\_\+F $>$ }\\int \mbox{\hyperlink{namespaceChronusQ_a391751bfa1d1f1380c274a9a34b6656e}{Chronus\+Q\+::\+QR}} (int M, int N, \+\_\+F $\ast$A, int LDA, \+\_\+F $\ast$R, int LDR, CQMem\+Manager \&mem)
+\begin{DoxyCompactList}\small\item\em Computes the QR factorization of a general matrix A\+: returns Q in place of A and returns an upper triangular R. Smart wrapper around DGEQRF / DORGQR or ZGEQRF / ZUNGQR depending on the context. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename \+\_\+F $>$ }\\int \mbox{\hyperlink{namespaceChronusQ_a9e7455934398aa3f4e6a542b47886ff0}{Chronus\+Q\+::\+QR}} (int M, int N, \+\_\+F $\ast$A, int LDA, CQMem\+Manager \&mem)
+\begin{DoxyCompactList}\small\item\em Computes the QR factorization of a general matrix A\+: returns Q in place of A and discards R Smart wrapper around DGEQRF / DORGQR or ZGEQRF / ZUNGQR depending on the context. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename \+\_\+F $>$ }\\int \mbox{\hyperlink{namespaceChronusQ_a3ec03d6ca100eae94f52ab8378622893}{Chronus\+Q\+::\+Ord\+QZ}} (char JOBVSL, char JOBVSR, int N, \+\_\+F $\ast$A, int LDA, \+\_\+F $\ast$B, int LDB, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$ALPHA, \+\_\+F $\ast$BETA, double SIMGA, \+\_\+F $\ast$VSL, int LDVSL, \+\_\+F $\ast$VSR, int LDVSR, CQMem\+Manager \&mem)
+\item 
+{\footnotesize template$<$typename \+\_\+F $>$ }\\int \mbox{\hyperlink{namespaceChronusQ_a2ceeb21fc9097d04ef6c4214d831b173}{Chronus\+Q\+::\+Ord\+QZ2}} (char JOBVSL, char JOBVSR, int N, \+\_\+F $\ast$A, int LDA, \+\_\+F $\ast$B, int LDB, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$ALPHA, \+\_\+F $\ast$BETA, double h\+Lim, double SIMGA, \+\_\+F $\ast$VSL, int LDVSL, \+\_\+F $\ast$VSR, int LDVSR, CQMem\+Manager \&mem)
+\item 
+{\footnotesize template$<$typename MatsT $>$ }\\void \mbox{\hyperlink{namespaceChronusQ_afde78b48dbb3f1dfd2a35ef4a980e228}{Chronus\+Q\+::\+SVDInverse}} (const size\+\_\+t N, MatsT $\ast$A, const size\+\_\+t LDA, const double num, CQMem\+Manager \&mem\+Manager)
+\end{DoxyCompactItemize}

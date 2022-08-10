@@ -1,0 +1,365 @@
+\hypertarget{itersolver_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{itersolver_2impl_8hpp_source}\index{include/itersolver/impl.hpp@{include/itersolver/impl.hpp}}
+\mbox{\hyperlink{itersolver_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{itersolver_8hpp}{itersolver.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{iterlinearsolver_8hpp}{itersolver/iterlinearsolver.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{iterdiagonalizer_8hpp}{itersolver/iterdiagonalizer.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gmres_8hpp}{itersolver/gmres.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gplhr_8hpp}{itersolver/gplhr.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{davidson_8hpp}{itersolver/davidson.hpp}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{36   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a8d3e724092be35e29ca2ad49a93edef4}{RawVectors<\_F>::multiply\_matrix}}(\textcolor{keywordtype}{size\_t} shiftA, blas::Op transB, int64\_t n, int64\_t k,}
+\DoxyCodeLine{37                                        \_F alpha, \_F \textcolor{keyword}{const} *B, int64\_t ldb,}
+\DoxyCodeLine{38                                        \_F beta, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&C, \textcolor{keywordtype}{size\_t} shiftC)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{39     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keywordflow}{if} (k + shiftA > size() or n + shiftC > C.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a82c9eca0dade617ee6520d3ad50ab216}{size}}())}
+\DoxyCodeLine{42       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}RawVectors does not contain enough number of vectors"{}}}
+\DoxyCodeLine{43            \textcolor{stringliteral}{"{} to match requested matrix multiplication."{}}, std::cout);}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,transB,}
+\DoxyCodeLine{46                length(), n, k, alpha, getPtr(shiftA), length(),}
+\DoxyCodeLine{47                B, ldb, beta, C.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a7b3f8467612fd8fb970a05f6711ea2a4}{getPtr}}(shiftC), C.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_ae5a0ff127986dc2e1d6f26902eaccd62}{length}}());}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49   \}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{52   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a868df7d8079984b007613bafa653ef2b}{SolverVectorsView<\_F>::multiply\_matrix}}(\textcolor{keywordtype}{size\_t} shiftA, blas::Op transB, int64\_t n, int64\_t k,}
+\DoxyCodeLine{53                                               \_F alpha, \_F \textcolor{keyword}{const} *B, int64\_t ldb,}
+\DoxyCodeLine{54                                               \_F beta, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&C, \textcolor{keywordtype}{size\_t} shiftC)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     vecs\_.multiply\_matrix(shift() + shiftA, transB, n, k, alpha, B, ldb, beta, C, shiftC);}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58   \}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{61   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_ae3775a3a9b2887990f849c3f57704547}{RawVectors<\_F>::dot\_product}}(\textcolor{keywordtype}{size\_t} shiftA, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&B, \textcolor{keywordtype}{size\_t} shiftB,}
+\DoxyCodeLine{62                                    int64\_t m, int64\_t n, \_F *C, int64\_t ldc, \textcolor{keywordtype}{bool} conjA)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm\_) == 0)\{}
+\DoxyCodeLine{65       \textcolor{keywordflow}{if} (m + shiftA > size() or n + shiftB > B.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a82c9eca0dade617ee6520d3ad50ab216}{size}}())}
+\DoxyCodeLine{66         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}RawVectors does not contain enough number of vectors"{}}}
+\DoxyCodeLine{67              \textcolor{stringliteral}{"{} to match requested dot product."{}}, std::cout);}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69       \textcolor{keywordflow}{if} (length() != B.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_ae5a0ff127986dc2e1d6f26902eaccd62}{length}}())}
+\DoxyCodeLine{70         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Lengths of vectors does not match for dot product."{}});}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72       blas::gemm(blas::Layout::ColMajor,}
+\DoxyCodeLine{73                  conjA ? blas::Op::ConjTrans : blas::Op::Trans,}
+\DoxyCodeLine{74                  blas::Op::NoTrans,}
+\DoxyCodeLine{75                  m,n,length(),\_F(1.),getPtr(shiftA),length(),}
+\DoxyCodeLine{76                  B.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a7b3f8467612fd8fb970a05f6711ea2a4}{getPtr}}(shiftB),length(),\_F(0.),C,ldc);}
+\DoxyCodeLine{77     \}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{80     \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm\_) > 1) \{}
+\DoxyCodeLine{81       \textcolor{keywordtype}{bool} localC = C == \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{82       \textcolor{keywordflow}{if} (localC)}
+\DoxyCodeLine{83         C = memManager\_.template malloc<\_F>(ldc * n);}
+\DoxyCodeLine{84       \textcolor{keywordflow}{if} (ldc == m)}
+\DoxyCodeLine{85         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(C, m*n, 0, comm\_);}
+\DoxyCodeLine{86       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{87         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < n; i++)}
+\DoxyCodeLine{88           \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(C + i * ldc, m, 0, comm\_);}
+\DoxyCodeLine{89       \textcolor{keywordflow}{if} (localC)}
+\DoxyCodeLine{90         memManager\_.free(C);}
+\DoxyCodeLine{91     \}}
+\DoxyCodeLine{92 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94   \}}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{97   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a910e04c877a11815c0d67c46de977029}{SolverVectorsView<\_F>::dot\_product}}(\textcolor{keywordtype}{size\_t} shiftA, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&B, \textcolor{keywordtype}{size\_t} shiftB,}
+\DoxyCodeLine{98                                           int64\_t m, int64\_t n, \_F *C, int64\_t ldc, \textcolor{keywordtype}{bool} conjA)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100     vecs\_.dot\_product(shift() + shiftA, B, shiftB, m, n, C, ldc, conjA);}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102   \}}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{105   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a94dfc3c94bb62bec432c893101b2f542}{RawVectors<\_F>::set\_data}}(\textcolor{keywordtype}{size\_t} shiftA, \textcolor{keywordtype}{size\_t} nVec, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&B, \textcolor{keywordtype}{size\_t} shiftB) \{}
+\DoxyCodeLine{106     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108     \textcolor{keywordflow}{if} (length() != B.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_ae5a0ff127986dc2e1d6f26902eaccd62}{length}}())}
+\DoxyCodeLine{109       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Lengths of vectors does not match for set\_data."{}});}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     getPtr(shiftA + nVec -\/ 1);}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     std::copy\_n(B.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a7b3f8467612fd8fb970a05f6711ea2a4}{getPtr}}(shiftB), length() * nVec, getPtr(shiftA));}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115   \}}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{118   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a8612dbc29f2df7d7a6c8e96238678ae9}{SolverVectorsView<\_F>::set\_data}}(\textcolor{keywordtype}{size\_t} shiftA, \textcolor{keywordtype}{size\_t} nVec, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&B, \textcolor{keywordtype}{size\_t} shiftB) \{}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     vecs\_.set\_data(shift() + shiftA, nVec, B, shiftB);}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122   \}}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{125   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a6ba131f41b4c89edd5f86c76ca81d871}{RawVectors<\_F>::scale}}(\_F scalar, \textcolor{keywordtype}{size\_t} shiftA, \textcolor{keywordtype}{size\_t} nVec) \{}
+\DoxyCodeLine{126     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128     getPtr(shiftA + nVec -\/ 1);}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130     blas::scal(length()*nVec,scalar,getPtr(shiftA),1);}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132   \}}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{135   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a13aac7c707562ec0123c4b53da7d68a3}{SolverVectorsView<\_F>::scale}}(\_F scalar, \textcolor{keywordtype}{size\_t} shiftA, \textcolor{keywordtype}{size\_t} nVec) \{}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137     vecs\_.scale(scalar, shift() + shiftA, nVec);}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139   \}}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{142   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a76e46da3b82edc6adcc0ea836e80b70e}{RawVectors<\_F>::conjugate}}(\textcolor{keywordtype}{size\_t} shiftA, \textcolor{keywordtype}{size\_t} nVec) \{}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146     \textcolor{keywordflow}{if} (std::is\_same<\_F, double>::value) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148     getPtr(shiftA + nVec -\/ 1);}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150     std::for\_each(getPtr(shiftA), getPtr(shiftA) + length()*nVec, [](\_F \&v) \{}
+\DoxyCodeLine{151       v = \mbox{\hyperlink{namespaceChronusQ_afe3e41cf782d225ede67d9450e48aa34}{SmartConj}}(v);}
+\DoxyCodeLine{152     \});}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154   \}}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{157   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a2e3eaf8bb5dfec5fdef542616cdba8f5}{SolverVectorsView<\_F>::conjugate}}(\textcolor{keywordtype}{size\_t} shiftA, \textcolor{keywordtype}{size\_t} nVec) \{}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159     vecs\_.conjugate(shift() + shiftA, nVec);}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161   \}}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{164   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a6a3da9fc41354566fbbf5a09206cdf26}{RawVectors<\_F>::axpy}}(\textcolor{keywordtype}{size\_t} shiftY, \textcolor{keywordtype}{size\_t} nVec, \_F alpha, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&X, \textcolor{keywordtype}{size\_t} shiftX) \{}
+\DoxyCodeLine{165     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167     \textcolor{keywordflow}{if} (length() != \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}.length())}
+\DoxyCodeLine{168       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Lengths of vectors does not match for axpy."{}});}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170     getPtr(shiftY + nVec -\/ 1);}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172     blas::axpy(length() * nVec, alpha, \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}.getPtr(shiftX), 1, getPtr(shiftY), 1);}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174   \}}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{177   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a89e5ea1f351a4c5125e2b82fd798e302}{SolverVectorsView<\_F>::axpy}}(\textcolor{keywordtype}{size\_t} shiftY, \textcolor{keywordtype}{size\_t} nVec, \_F alpha, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&X, \textcolor{keywordtype}{size\_t} shiftX) \{}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179     vecs\_.axpy(shift() + shiftY, nVec, alpha, \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}, shiftX);}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181   \}}
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{184   \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_aa176cc046f301be286b2119b9c0493c0}{SolverVectors<\_F>::GramSchmidt}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} Mold, \textcolor{keywordtype}{size\_t} Mnew, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{185                                      \textcolor{keywordtype}{size\_t} NRe, \textcolor{keywordtype}{double} eps) \{}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187     \_F * SCR = mem.template malloc<\_F>(Mold + Mnew);}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189     \textcolor{keywordflow}{if}( Mold == 0 ) \{}
+\DoxyCodeLine{190       \textcolor{comment}{// Normalize the first vector}}
+\DoxyCodeLine{191       \textcolor{keywordtype}{double} inner = norm2F(shift, 1);}
+\DoxyCodeLine{192       \textcolor{keywordflow}{if}(std::abs(inner) < eps) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Zero inner product incurred!"{}});}
+\DoxyCodeLine{193       scale(1.0/inner, shift, 1);}
+\DoxyCodeLine{194     \}}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196     \textcolor{comment}{// Orthonormalize the rest of the matrix using GS}}
+\DoxyCodeLine{197     \textcolor{keywordtype}{size\_t} iOrtho = (Mold == 0) ? Mold + 1: Mold;}
+\DoxyCodeLine{198     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = iOrtho; k < (Mold + Mnew); k++) \{}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200       \textcolor{keywordflow}{if}( k != iOrtho ) set\_data(iOrtho + shift, 1, *\textcolor{keyword}{this}, k + shift);}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202       \textcolor{comment}{// Project out the inner products}}
+\DoxyCodeLine{203       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iRe = 0; iRe < (NRe+1); iRe++) \{}
+\DoxyCodeLine{204         dot\_product(shift, *\textcolor{keyword}{this}, shift + iOrtho, iOrtho,1, SCR, iOrtho);}
+\DoxyCodeLine{205         multiply\_matrix(shift, blas::Op::NoTrans, 1, iOrtho, \_F(-\/1.0), SCR, iOrtho, \_F(1.0), *\textcolor{keyword}{this}, shift + iOrtho);}
+\DoxyCodeLine{206       \}}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208       \textcolor{comment}{// Normalize the new vector}}
+\DoxyCodeLine{209       \textcolor{keywordtype}{double} inner = norm2F(iOrtho + shift, 1);}
+\DoxyCodeLine{210       std::cout << k << \textcolor{stringliteral}{"{} "{}} << inner << std::endl;}
+\DoxyCodeLine{211       \textcolor{keywordflow}{if}(std::abs(inner) < length()*eps) \{}
+\DoxyCodeLine{212         std::cout << \textcolor{stringliteral}{"{}Zero inner product incurred! "{}} << k << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{213         scale(0.0, iOrtho + shift, 1);}
+\DoxyCodeLine{214       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{215         scale(1.0 / inner, iOrtho + shift, 1);}
+\DoxyCodeLine{216         iOrtho++;}
+\DoxyCodeLine{217       \}}
+\DoxyCodeLine{218     \}}
+\DoxyCodeLine{219 }
+\DoxyCodeLine{220     mem.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(SCR);}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222     \textcolor{keywordflow}{return} iOrtho;}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224   \}}
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{227   \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a3c6ce922557ea2a44d17b121abdbc843}{RawVectors<\_F>::GramSchmidt}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} Mold, \textcolor{keywordtype}{size\_t} Mnew, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{228                                      \textcolor{keywordtype}{size\_t} NRe, \textcolor{keywordtype}{double} eps) \{}
+\DoxyCodeLine{229     \textcolor{keywordtype}{size\_t} n = 0;}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231     \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm\_) == 0) \{}
+\DoxyCodeLine{232       getPtr(shift + Mold + Mnew -\/ 1);}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234       n = \mbox{\hyperlink{namespaceChronusQ_a297df8c15de632b2649710f25e104d51}{ChronusQ::GramSchmidt}}(length(), Mold, Mnew, getPtr(shift), length(), mem, NRe, eps);}
+\DoxyCodeLine{235     \}}
+\DoxyCodeLine{236 }
+\DoxyCodeLine{237 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{238     \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm\_) > 1)}
+\DoxyCodeLine{239       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(n, 0, comm\_);}
+\DoxyCodeLine{240 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242     \textcolor{keywordflow}{return} n;}
+\DoxyCodeLine{243 }
+\DoxyCodeLine{244   \}}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{246   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{247   \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a291ef7079af7d820db622543ae828f5a}{SolverVectorsView<\_F>::GramSchmidt}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} Mold, \textcolor{keywordtype}{size\_t} Mnew, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{248                                             \textcolor{keywordtype}{size\_t} NRe, \textcolor{keywordtype}{double} eps) \{}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250     \textcolor{keywordflow}{return} vecs\_.GramSchmidt(this-\/>shift() + shift, Mold, Mnew, mem, NRe, eps);}
+\DoxyCodeLine{251 }
+\DoxyCodeLine{252   \}}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{254   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{255   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_ade835dcd98d0beaff24af6f9700bdd72}{RawVectors<\_F>::trsm}}(\textcolor{keywordtype}{size\_t} shift, int64\_t n, \_F alpha, \_F \textcolor{keyword}{const} *A, int64\_t lda) \{}
+\DoxyCodeLine{256     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258     getPtr(shift + n -\/ 1);}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260     blas::trsm(blas::Layout::ColMajor,blas::Side::Right,blas::Uplo::Upper,blas::Op::NoTrans,blas::Diag::NonUnit,}
+\DoxyCodeLine{261                length(), n, alpha, A, lda, getPtr(shift), length());}
+\DoxyCodeLine{262 }
+\DoxyCodeLine{263   \}}
+\DoxyCodeLine{264 }
+\DoxyCodeLine{265   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{266   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a7c28c5eb97b6e2f8bd88f672c2898c08}{SolverVectorsView<\_F>::trsm}}(\textcolor{keywordtype}{size\_t} shift, int64\_t n, \_F alpha, \_F \textcolor{keyword}{const} *A, int64\_t lda) \{}
+\DoxyCodeLine{267 }
+\DoxyCodeLine{268     vecs\_.trsm(this-\/>shift() + shift, n, alpha, A, lda);}
+\DoxyCodeLine{269 }
+\DoxyCodeLine{270   \}}
+\DoxyCodeLine{271 }
+\DoxyCodeLine{272   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{273   \textcolor{keywordtype}{int} \mbox{\hyperlink{classChronusQ_1_1RawVectors_add4640fe33cc53ad303614a30db5e1fa}{RawVectors<\_F>::QR}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \_F *R, \textcolor{keywordtype}{int} LDR) \{}
+\DoxyCodeLine{274     \textcolor{keywordtype}{int} n = 0;}
+\DoxyCodeLine{275 }
+\DoxyCodeLine{276     \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm\_) == 0) \{}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278       getPtr(shift + nVec -\/ 1);}
+\DoxyCodeLine{279 }
+\DoxyCodeLine{280       \textcolor{keywordflow}{if} (R)}
+\DoxyCodeLine{281         n = \mbox{\hyperlink{namespaceChronusQ_a391751bfa1d1f1380c274a9a34b6656e}{ChronusQ::QR}}(length(), nVec, getPtr(shift), length(), R, LDR, mem);}
+\DoxyCodeLine{282       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{283         n = \mbox{\hyperlink{namespaceChronusQ_a391751bfa1d1f1380c274a9a34b6656e}{ChronusQ::QR}}(length(), nVec, getPtr(shift), length(), mem);}
+\DoxyCodeLine{284     \}}
+\DoxyCodeLine{285 }
+\DoxyCodeLine{286 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{287     \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm\_) > 1)}
+\DoxyCodeLine{288       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(n, 0, comm\_);}
+\DoxyCodeLine{289 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291     \textcolor{keywordflow}{return} n;}
+\DoxyCodeLine{292 }
+\DoxyCodeLine{293   \}}
+\DoxyCodeLine{294 }
+\DoxyCodeLine{295   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{296   \textcolor{keywordtype}{int} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a5c53aae268919819903c6c37014f06b8}{SolverVectorsView<\_F>::QR}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \_F *R, \textcolor{keywordtype}{int} LDR) \{}
+\DoxyCodeLine{297 }
+\DoxyCodeLine{298     \textcolor{keywordflow}{return} vecs\_.QR(this-\/>shift() + shift, nVec, mem, R, LDR);}
+\DoxyCodeLine{299 }
+\DoxyCodeLine{300   \}}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{303   \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a49b7d8ec16ddab11813ada9af1d43947}{RawVectors<\_F>::norm2F}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{304     \textcolor{keywordtype}{double} v = 0.0;}
+\DoxyCodeLine{305 }
+\DoxyCodeLine{306     \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm\_) == 0) \{}
+\DoxyCodeLine{307 }
+\DoxyCodeLine{308       getPtr(shift + nVec -\/ 1);}
+\DoxyCodeLine{309 }
+\DoxyCodeLine{310       v = blas::nrm2(length() * nVec,getPtr(shift),1);}
+\DoxyCodeLine{311     \}}
+\DoxyCodeLine{312 }
+\DoxyCodeLine{313 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{314     \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm\_) > 1)}
+\DoxyCodeLine{315       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(v, 0, comm\_);}
+\DoxyCodeLine{316 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{317 }
+\DoxyCodeLine{318     \textcolor{keywordflow}{return} v;}
+\DoxyCodeLine{319 }
+\DoxyCodeLine{320   \}}
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{323   \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ab85ed62bc72a847688d2b87016cdb9aa}{SolverVectorsView<\_F>::norm2F}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{324 }
+\DoxyCodeLine{325     \textcolor{keywordflow}{return} vecs\_.norm2F(this-\/>shift() + shift, nVec);}
+\DoxyCodeLine{326 }
+\DoxyCodeLine{327   \}}
+\DoxyCodeLine{328 }
+\DoxyCodeLine{329   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{330   \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1RawVectors_ac4ddf8fdf956f0c81b3955ec686795de}{RawVectors<\_F>::maxNormElement}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{331     \textcolor{keywordtype}{double} v = 0.0;}
+\DoxyCodeLine{332 }
+\DoxyCodeLine{333     \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm\_) == 0) \{}
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335       getPtr(shift + nVec -\/ 1);}
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337       v = std::abs(*std::max\_element(getPtr(shift), getPtr(shift) + nVec * length(),}
+\DoxyCodeLine{338                                      [\&] (\_F A, \_F B) \{ \textcolor{keywordflow}{return} std::norm(A) < std::norm(B); \}));}
+\DoxyCodeLine{339     \}}
+\DoxyCodeLine{340 }
+\DoxyCodeLine{341 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{342     \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm\_) > 1)}
+\DoxyCodeLine{343       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(v, 0, comm\_);}
+\DoxyCodeLine{344 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{345 }
+\DoxyCodeLine{346     \textcolor{keywordflow}{return} v;}
+\DoxyCodeLine{347 }
+\DoxyCodeLine{348   \}}
+\DoxyCodeLine{349 }
+\DoxyCodeLine{350   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{351   \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a5200450d681e873f230cfce8b7a72a9c}{SolverVectorsView<\_F>::maxNormElement}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{352 }
+\DoxyCodeLine{353     \textcolor{keywordflow}{return} vecs\_.maxNormElement(this-\/>shift() + shift, nVec);}
+\DoxyCodeLine{354 }
+\DoxyCodeLine{355   \}}
+\DoxyCodeLine{356 }
+\DoxyCodeLine{357 \};}
+\DoxyCodeLine{358 }
+\DoxyCodeLine{359 }
+
+\end{DoxyCode}

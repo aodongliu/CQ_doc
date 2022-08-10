@@ -1,0 +1,28 @@
+var structChronusQ_1_1SCFControls =
+[
+    [ "cediisSwitch", "structChronusQ_1_1SCFControls.html#ab5376d5b7da47ef3c4c3cf1532967a74", null ],
+    [ "dampError", "structChronusQ_1_1SCFControls.html#afe2f86f80815613098ad2a05573781db", null ],
+    [ "dampParam", "structChronusQ_1_1SCFControls.html#a1c011aeb2e3cf2f221bbe2b5c15f7365", null ],
+    [ "dampStartParam", "structChronusQ_1_1SCFControls.html#afa14d561ca4f4670d69d98e0acb9c2da", null ],
+    [ "denConvTol", "structChronusQ_1_1SCFControls.html#ab35eddd86f51d5614999f7e000be9cd5", null ],
+    [ "diisAlg", "structChronusQ_1_1SCFControls.html#af8ed638262e0613be803a8785bd2ddf3", null ],
+    [ "doDamp", "structChronusQ_1_1SCFControls.html#af5d9e9223dcc74cf8ec5e088a9c57be1", null ],
+    [ "doExtrap", "structChronusQ_1_1SCFControls.html#a0b53583d66018a2437d4de8432e1a491", null ],
+    [ "doIncFock", "structChronusQ_1_1SCFControls.html#ada768f933e2b5d9c7b2575e908d6a2a8", null ],
+    [ "eneConvTol", "structChronusQ_1_1SCFControls.html#a79d77808a40e46f3bef02623a117c4d6", null ],
+    [ "FDCConvTol", "structChronusQ_1_1SCFControls.html#a153dfb5ca84637d006688129f41af1a4", null ],
+    [ "guess", "structChronusQ_1_1SCFControls.html#a3e9cc9aee1298d27ce5b8c0e45ba130d", null ],
+    [ "maxSCFIter", "structChronusQ_1_1SCFControls.html#ae3d1695a6fa9e866364f6bdd993ad23a", null ],
+    [ "nIncFock", "structChronusQ_1_1SCFControls.html#a81914bf24a382a8816bf7a049d5f5a7b", null ],
+    [ "nKeep", "structChronusQ_1_1SCFControls.html#a4bfbbd4a6e9fca206a003a8ec74a613c", null ],
+    [ "nrAlg", "structChronusQ_1_1SCFControls.html#ae5370cdbd352f8720730937ea3153842", null ],
+    [ "nrLevelShift", "structChronusQ_1_1SCFControls.html#aa0f1bca3be8f3098db49231815f8a0f0", null ],
+    [ "nrTrust", "structChronusQ_1_1SCFControls.html#a93d6ef7ed5b7d79d5ba74b1fe0f4c540", null ],
+    [ "printLevel", "structChronusQ_1_1SCFControls.html#accc6822cea5c15bc2c1b846a10224ee9", null ],
+    [ "printMOCoeffs", "structChronusQ_1_1SCFControls.html#ab9267b97c784ce843e28d8075e2063fb", null ],
+    [ "prot_guess", "structChronusQ_1_1SCFControls.html#a80a767472903aed147be0e4af5ef3461", null ],
+    [ "refLongName_", "structChronusQ_1_1SCFControls.html#a46eb49916af54fb511cb995f15901470", null ],
+    [ "refShortName_", "structChronusQ_1_1SCFControls.html#ab78575ee1d21e6341a58937fcb5dfada", null ],
+    [ "scfAlg", "structChronusQ_1_1SCFControls.html#aa6847e3ac1885322098e5930290a83bb", null ],
+    [ "scfStep", "structChronusQ_1_1SCFControls.html#a1a659381542516c966525453a5bedcfb", null ]
+];

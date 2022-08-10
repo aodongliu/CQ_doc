@@ -1,0 +1,107 @@
+\hypertarget{response_2base_8hpp_source}{}\doxysection{base.\+hpp}
+\label{response_2base_8hpp_source}\index{include/response/base.hpp@{include/response/base.hpp}}
+\mbox{\hyperlink{response_2base_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{files_8hpp}{util/files.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{response_2enums_8hpp}{response/enums.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{settings_8hpp}{response/settings.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{results_8hpp}{response/results.hpp}}>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{35   }
+\DoxyCodeLine{36                 \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1ResponseBase}{ResponseBase}} \{}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \mbox{\hyperlink{classChronusQ_1_1SafeFile}{SafeFile}} \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a57d6806d15dc73840716dce68940e935}{savFile}}; }
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \mbox{\hyperlink{structChronusQ_1_1ResponseSettings}{ResponseSettings}}         \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}};}
+\DoxyCodeLine{41     \mbox{\hyperlink{structChronusQ_1_1FDResponseSettings}{FDResponseSettings}}       \mbox{\hyperlink{structChronusQ_1_1ResponseBase_adc505a6986d8d434a7543091d097a131}{fdrSettings}};}
+\DoxyCodeLine{42     \mbox{\hyperlink{structChronusQ_1_1ResidueResponseSettings}{ResidueResponseSettings}}  \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a8c77d029998e858c2523b8c2687a8f96}{resSettings}};}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \mbox{\hyperlink{structChronusQ_1_1FDObservables}{FDObservables}}  \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a19a944021c98481df7e1fa7882e70c9c}{fdObs}};}
+\DoxyCodeLine{45     \mbox{\hyperlink{structChronusQ_1_1ResObservables}{ResObservables}} \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a7385972979ac166e42fc768526e3237c}{resObs}};}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a89b03b1f774058a0de48bc2fa774edc8}{ResponseBase}}( \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616}{ResponseType}} job = \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616a63c476c3263a43d31f0b25a0a52471ae}{RESIDUE}}) \{ \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ad69628e89f8f86c6b31579eca54d4e95}{jobType}} = job; \}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \mbox{\hyperlink{structChronusQ_1_1ResponseBase_add4a546094ff2159fc1286060279ddf3}{ResponseBase}}( \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1ResponseBase}{ResponseBase}} \& other ) :}
+\DoxyCodeLine{50       \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}(other.\mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}),}
+\DoxyCodeLine{51       \mbox{\hyperlink{structChronusQ_1_1ResponseBase_adc505a6986d8d434a7543091d097a131}{fdrSettings}}(other.\mbox{\hyperlink{structChronusQ_1_1ResponseBase_adc505a6986d8d434a7543091d097a131}{fdrSettings}}),}
+\DoxyCodeLine{52       \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a8c77d029998e858c2523b8c2687a8f96}{resSettings}}(other.\mbox{\hyperlink{structChronusQ_1_1ResponseBase_a8c77d029998e858c2523b8c2687a8f96}{resSettings}}) \{ \}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a1c8855a7026207630318d71f0d278397}{getNSingleDim}}( \textcolor{keyword}{const} \textcolor{keywordtype}{bool} doTDA = \textcolor{keyword}{false}) = 0;}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{comment}{// Memory allocation}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1ResponseBase_afe13d105b9b4f91cb813ba17c266f18b}{allocResults}}() \{}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63       \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ad69628e89f8f86c6b31579eca54d4e95}{jobType}} == \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616a63c476c3263a43d31f0b25a0a52471ae}{RESIDUE}} ) \mbox{\hyperlink{structChronusQ_1_1ResponseBase_ad58f4ac6e929cf4bb80ffa5831f6ff54}{allocResidueResults}}();}
+\DoxyCodeLine{64       \textcolor{keywordflow}{else}                                 \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a773100cd8a3cf081d1f730ff884270c2}{allocFDRResults}}(); }
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \};}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1ResponseBase_ad58f4ac6e929cf4bb80ffa5831f6ff54}{allocResidueResults}}() = 0; \textcolor{comment}{// Residue memory allocation}}
+\DoxyCodeLine{69     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a773100cd8a3cf081d1f730ff884270c2}{allocFDRResults}}()     = 0; \textcolor{comment}{// FDR memory allocation}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{comment}{// Procedural functions}}
+\DoxyCodeLine{74     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1ResponseBase_ae11ff7c98179382d91c49942824c380e}{run}}() = 0;}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \textcolor{comment}{// Property Evaluation}}
+\DoxyCodeLine{80     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a24793ab664bda217def5e9a8a10cc308}{residueProperties}}() = 0;}
+\DoxyCodeLine{81     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1ResponseBase_afb7ab6a00f757164e1d051a6502bdbee}{fdrProperties}}()     = 0;}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83     }
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     \textcolor{comment}{// Result Printing}}
+\DoxyCodeLine{86     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a69730898c1a61602dac2b94ba1c208ce}{printResults}}(std::ostream \&out) \{}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88       \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ad69628e89f8f86c6b31579eca54d4e95}{jobType}} == \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616a63c476c3263a43d31f0b25a0a52471ae}{RESIDUE}} ) \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0c0501aeac16a9629889587f344fc521}{printResidueResults}}(out);}
+\DoxyCodeLine{89       \textcolor{keywordflow}{else}                                 \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a33963a76d5a07777977d3f4739ba4aea}{printFDRResults}}(out);}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \};}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0c0501aeac16a9629889587f344fc521}{printResidueResults}}(std::ostream \&out) = 0;}
+\DoxyCodeLine{94     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a33963a76d5a07777977d3f4739ba4aea}{printFDRResults}}(std::ostream \&out)     = 0;}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98   \};}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100 \};}
+\DoxyCodeLine{101 }
+
+\end{DoxyCode}

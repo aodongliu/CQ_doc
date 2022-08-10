@@ -1,0 +1,151 @@
+\hypertarget{mcwavefunction_2base_8hpp_source}{}\doxysection{base.\+hpp}
+\label{mcwavefunction_2base_8hpp_source}\index{include/mcwavefunction/base.hpp@{include/mcwavefunction/base.hpp}}
+\mbox{\hyperlink{mcwavefunction_2base_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{math_8hpp}{util/math.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{detstringmanager_8hpp}{detstringmanager.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855}{DetScheme}} \{}
+\DoxyCodeLine{33     \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855ae5cf53c1e4b7d40256d436ef0b515aac}{CAS}},}
+\DoxyCodeLine{34     \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855a0df50d487b9483d2a3f3cb45d81e2ae7}{RAS}},}
+\DoxyCodeLine{35     \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855a9427a65643751b675b998e49cbe7ab48}{GAS}},}
+\DoxyCodeLine{36     \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855a95dfe9d486d9b7988a55d84720ff42d4}{GENERIC\_DET}}}
+\DoxyCodeLine{37   \};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition}{MOSpacePartition}} \{}
+\DoxyCodeLine{40     \textcolor{comment}{// TODO: make variables for cases beyound CAS}}
+\DoxyCodeLine{41     \textcolor{comment}{//Parameters for space partition}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855}{DetScheme}} \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a0cf66a1b90d6c5334d6f06a816ac9463}{scheme}} = \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855ae5cf53c1e4b7d40256d436ef0b515aac}{CAS}};}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a6e2dc8ebaf9bded1940af5b7ddc0bb1b}{nMO}}=0;     }
+\DoxyCodeLine{46     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a5d8954996f85b6bac00ac5314fa0b62a}{nElecMO}}=0; }
+\DoxyCodeLine{47     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a1b18045506a3f85d2f0e7395de0fa923}{nNegMO}}=0;  }
+\DoxyCodeLine{48     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a2fadec603056b6560e7d5d3f2f9aa5ab}{nInact}}=0;  }
+\DoxyCodeLine{49     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a995a21430af415c9652e617a9d789970}{nFVirt}}=0;  }
+\DoxyCodeLine{50     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a7de87290cee31f6db28aa7972a23b07a}{nFCore}}=0;  }
+\DoxyCodeLine{51     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a66a190be1bcf97f0fc2502bccffdecf0}{nDVirt}}=0;  }
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a01af3f55840fbbf39a5ec1164a5d95ab}{nCorrO}}=0;  }
+\DoxyCodeLine{54     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_af2b90318fe3c20ce9b56e9fa3e8c0c64}{nCorrE}}=0;  }
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     std::vector<char> \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a2e5e917c3faa8628b1f01caa248d9782}{orbIndices}}; }
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     std::vector<size\_t> \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_ad137773763a4b2b29902d15ac099ed28}{nActOs}};  }
+\DoxyCodeLine{59     std::vector<size\_t> \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a981f2488ca6caae04e7f45d821965272}{nActEs}};  }
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \textcolor{comment}{// only for 1C}}
+\DoxyCodeLine{62     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_abd087e0a18e7838113dcc8b4e8c805b1}{nCorrEA}}=0;                 }
+\DoxyCodeLine{63     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a1eaccf8d4cfc1db255ad236c8c865be2}{nCorrEB}}=0;                 }
+\DoxyCodeLine{64     std::vector<size\_t> \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a3f49a4910bb1543050e56f3ebdd40a11}{nActEAs}}; }
+\DoxyCodeLine{65     std::vector<size\_t> \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_afe9711defbdf37a1dcdeb8097c390af1}{nActEBs}}; }
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \textcolor{comment}{// for RAS}}
+\DoxyCodeLine{68     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a8410a4b0858622428848a26abe240bbe}{mxHole}}=0;  }
+\DoxyCodeLine{69     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_af74cc539c2a39c840723045d48cc47b3}{mxElec}}=0;  }
+\DoxyCodeLine{70     std::vector<int> \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_adc5b7bf1342b198241482f6b6d3e1280}{fCat}};  }
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a167f5dbf3e406445270438663f5b6496}{MOSpacePartition}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{73   \};}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{83   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWaveFunctionBase}} \{}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85   \textcolor{keyword}{public}:}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87     \textcolor{keyword}{typedef} std::vector<std::vector<int>> \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a9eae42a5906d1386456a2762fb5792dd}{int\_matrix}};}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \mbox{\hyperlink{classChronusQ_1_1SafeFile}{SafeFile}} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aca03345351a2ad806274c4adddc7afd3}{savFile}};    }
+\DoxyCodeLine{90     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \& \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}};}
+\DoxyCodeLine{91     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aa29310d86ed737acb570d160dc971f1f}{comm}};}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \mbox{\hyperlink{structChronusQ_1_1MOSpacePartition}{MOSpacePartition}} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}};}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0ad25ed51be67666dfec4df8b3de6bce}{NDet}};         }
+\DoxyCodeLine{96     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a933e57263d7a49bfe655de67b8590cff}{NStates}} = 1;  }
+\DoxyCodeLine{97     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a90324093ea0d7e66a965d984402de5c5}{FourCompNoPair}} = \textcolor{keyword}{true}; }
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99     \textcolor{comment}{// TODO: DetString now only works for CASCI String}}
+\DoxyCodeLine{100     std::shared\_ptr<DetStringManager> \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0b502bfda30330beb9beefff3429f1bd}{detStr}}     = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{101     std::shared\_ptr<DetStringManager> \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a48a2f2a849d1eb8ccd057bb17e20dc55}{detStrBeta}} = \textcolor{keyword}{nullptr}; \textcolor{comment}{// only for 1C}}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0d37a12d6d2dbb7b99e67e5285eef04a}{InactEnergy}};}
+\DoxyCodeLine{104     std::vector<double> \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_ad94c23274a04fba12703fbaa1af5e177}{StateEnergy}};}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a40086fd454521b05c4e6bbc01d8048e9}{StateAverage}}    = \textcolor{keyword}{false};}
+\DoxyCodeLine{107     std::vector<double> \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aad6387c4a9d7d2ac1f201f08d86fdb06}{SAWeight}};}
+\DoxyCodeLine{108     }
+\DoxyCodeLine{109     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aada5dccca5fffcd7f68255e14e7c6226}{PopulationAnalysis}} = \textcolor{keyword}{false}; \textcolor{comment}{// default is do not do Mulliken analysis}}
+\DoxyCodeLine{110     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a8e2e2665ce1f808db2d8d965dda7844c}{NosS1}} = 0; \textcolor{comment}{// number of initial states s1 for oscillator strength}}
+\DoxyCodeLine{111     \textcolor{keywordtype}{double} * \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a21f69973fa990bbfa8cea7ec197ce12e}{osc\_str}} = \textcolor{keyword}{nullptr}; \textcolor{comment}{// matrix to save oscillator strength}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     \textcolor{comment}{// Print Settings}}
+\DoxyCodeLine{114     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a1244a4d477bd6d31b92d0d97a77f6a7d}{printMOCoeffs}} = 0;}
+\DoxyCodeLine{115     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0e3a2c2f4025b9e3fc8690a8fcbea819}{printRDMs}} = 0;}
+\DoxyCodeLine{116     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a9cb2f6a72001ea131ffe004da012bc55}{rdmCut}} = 0.10;}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a588fde23402eb50d1ccc138a7ba06014}{MCWaveFunctionBase}}()                           = \textcolor{keyword}{delete};}
+\DoxyCodeLine{119     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aa6409514bed7dbd143b8e323f79c03db}{MCWaveFunctionBase}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWaveFunctionBase}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{120     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a708a1bad222925f2725ff3293db7a403}{MCWaveFunctionBase}}(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWaveFunctionBase}} \&\&)      = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{127     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_af218cf17aa36db827039ec4419b32fed}{MCWaveFunctionBase}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} NS): }
+\DoxyCodeLine{128       \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aa29310d86ed737acb570d160dc971f1f}{comm}}(c), \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}(mem), \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a933e57263d7a49bfe655de67b8590cff}{NStates}}(NS) \{}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130       \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aa0b05c2b1dc273c57f4940eb6b2671ab}{alloc}}();}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132     \}; \textcolor{comment}{// MCWaveFunctionBase Constructor.}}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a5ee4354c52c14c5f533863debc3799c5}{\string~MCWaveFunctionBase}}() \{ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a647635843b7ee3053fc943aa3c1f2e9f}{dealloc}}(); \};}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_ac5073b869ad227eb39c78063e20e053f}{partitionMOSpace}}(std::vector<size\_t>, \textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{137     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a2894352a39545d5f1433a42f15656649}{turnOnStateAverage}}(\textcolor{keyword}{const} std::vector<double> \&);}
+\DoxyCodeLine{138     std::vector<int> \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_ad73a35950136899844b16c5344082296}{genfCat}}(std::vector<std::vector<size\_t>>,}
+\DoxyCodeLine{139       std::vector<std::vector<size\_t>>, \textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{140     std::vector<int> \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_ad73a35950136899844b16c5344082296}{genfCat}}(std::vector<std::vector<size\_t>>, \textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142     \textcolor{comment}{// Virtural Run function}}
+\DoxyCodeLine{143     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a27c499158c3e19c5342088c58ebf6fb2}{run}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&) = 0;}
+\DoxyCodeLine{144     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a7631c0cf10b0d7c19d96f526b30299be}{setMORanges}}() = 0;}
+\DoxyCodeLine{145     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{WaveFunctionBase}} \& \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a426e18e72ad8c5671ca65a42fc3500fe}{referenceWaveFunction}}() = 0;}
+\DoxyCodeLine{146     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a7d3be045939df179ddc8faf398360b47}{swapMOs}}(std::vector<std::vector<std::pair<size\_t, size\_t>>>\&, \mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19d}{SpinType}}) = 0;}
+\DoxyCodeLine{147     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a3e11a00592d57ba3810ce2236ef50936}{setActiveSpaceAndReOrder}}();}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aa0b05c2b1dc273c57f4940eb6b2671ab}{alloc}}() \{}
+\DoxyCodeLine{150       this-\/>StateEnergy.clear();}
+\DoxyCodeLine{151       this-\/>StateEnergy.resize(this-\/>NStates, 0.);}
+\DoxyCodeLine{152     \}}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a647635843b7ee3053fc943aa3c1f2e9f}{dealloc}} () \{ \}}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156   \}; \textcolor{comment}{// class MCWaveFunctionBase}}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

@@ -1,0 +1,134 @@
+\hypertarget{options_8hpp}{}\doxysection{include/cxxapi/options.hpp File Reference}
+\label{options_8hpp}\index{include/cxxapi/options.hpp@{include/cxxapi/options.hpp}}
+{\ttfamily \#include $<$cxxapi/input.\+hpp$>$}\newline
+{\ttfamily \#include $<$cxxapi/procedural.\+hpp$>$}\newline
+{\ttfamily \#include $<$molecule.\+hpp$>$}\newline
+{\ttfamily \#include $<$basisset.\+hpp$>$}\newline
+{\ttfamily \#include $<$integrals.\+hpp$>$}\newline
+{\ttfamily \#include $<$singleslater.\+hpp$>$}\newline
+{\ttfamily \#include $<$realtime.\+hpp$>$}\newline
+{\ttfamily \#include $<$response.\+hpp$>$}\newline
+{\ttfamily \#include $<$coupledcluster.\+hpp$>$}\newline
+{\ttfamily \#include $<$mcscf.\+hpp$>$}\newline
+Include dependency graph for options.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{options_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{options_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{options_8hpp_af285cc9721f3a648cf31acceab675beb}{OPTOPT}}(x)~try\{ x; \} catch(...) \{ ; \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49c}{Chronus\+Q\+::\+Job\+Type}} \{ \newline
+\mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49cad664bf1141d3a9456b7ef300576c8ce7}{Chronus\+Q\+::\+SCF}}
+, \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49cad5e352f6c90f020973b0642158b5bd72}{Chronus\+Q\+::\+RT}}
+, \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca766a9729b84ffe88364678cc206fa6a8}{Chronus\+Q\+::\+RESP}}
+, \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca97722c431158a7a7f2c470ef1c3b08e7}{Chronus\+Q\+::\+CC}}
+, \newline
+\mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca320f98db8f8cb1b64a285eff4abf83e8}{Chronus\+Q\+::\+MR}}
+, \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca7dc2e2de9c9b700fcffe2078d89a6671}{Chronus\+Q\+::\+BOMD}}
+, \mbox{\hyperlink{namespaceChronusQ_ab46c341fb26f460c0cc160e82a10e49ca9f22cb4d57faf35fdba2ffbac38f8650}{Chronus\+Q\+::\+EHRENFEST}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Job\+Type \mbox{\hyperlink{namespaceChronusQ_a43a1986c2900b5975af3ff14d45d2686}{Chronus\+Q\+::parse\+Job}} (std\+::string job\+Str)
+\item 
+Molecule \mbox{\hyperlink{namespaceChronusQ_ad675c677ac5e37f484a3c44b57f2c6be}{Chronus\+Q\+::\+CQMolecule\+Options}} (std\+::ostream \&, CQInput\+File \&, std\+::string \&)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a78ad4b49e28a7f44e9e74715eb501baf}{Chronus\+Q\+::\+CQMOLECULE\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a91bb065a96f2f3497f951072ee2235ca}{Chronus\+Q\+::parse\+Geom\+Inp}} (Molecule \&, std\+::string \&, std\+::ostream \&, bool)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a268403a9fd7b03e2264426f95a264c90}{Chronus\+Q\+::parse\+Geom\+Fchk}} (Molecule \&, std\+::string \&, std\+::ostream \&)
+\item 
+Ref\+Options \mbox{\hyperlink{namespaceChronusQ_a93d35c12a7e248b8eff086f5d9111f17}{Chronus\+Q\+::parse\+Ref}} (std\+::ostream \&out, Molecule \&mol, std\+::vector$<$ std\+::string $>$ \&tokens)
+\begin{DoxyCompactList}\small\item\em Parse the \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}} Referece information using the input file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_acc241eaa10d9bc4bea98ff80b5ebd28d}{Chronus\+Q\+::build\+Funclist}} (std\+::vector$<$ std\+::shared\+\_\+ptr$<$ DFTFunctional $>$ $>$ \&func\+List, std\+::string func\+Name)
+\begin{DoxyCompactList}\small\item\em Construct a list of DFT Functional objects based on input name. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_a62f31ced96035f658faab49abd20f1ac}{Chronus\+Q\+::parse\+Int\+Param}} (std\+::ostream \&out, CQInput\+File \&input, Integration\+Param \&int\+Param)
+\begin{DoxyCompactList}\small\item\em Parse the Integration information using the input file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_a5db57f35ec7cbdcd299dd60349c9f082}{Chronus\+Q\+::parse\+Hamiltonian\+Options}} (std\+::ostream \&out, CQInput\+File \&input, Basis\+Set \&basis, std\+::shared\+\_\+ptr$<$ Integrals\+Base $>$ aoints, Ref\+Options \&ref\+Options, Hamiltonian\+Options \&hamiltonian\+Options, std\+::string section)
+\begin{DoxyCompactList}\small\item\em Parse Hamiltonian options using the input file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespaceChronusQ_ab9a93d62b54318c59ae43900f8d2d0a5}{Chronus\+Q\+::parse\+Atomic\+Type}} (std\+::ostream \&out, CQInput\+File \&input, ATOMIC\+\_\+\+X2\+C\+\_\+\+TYPE \&atomic\+X2\+CType, std\+::string section)
+\begin{DoxyCompactList}\small\item\em Parse atomic \mbox{\hyperlink{classChronusQ_1_1X2C}{X2C}} options using the input file. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ Basis\+Set $>$ \mbox{\hyperlink{namespaceChronusQ_a7b7a33f68936fbe25cb52940a20bb569}{Chronus\+Q\+::\+CQBasis\+Set\+Options}} (std\+::ostream \&, CQInput\+File \&, Molecule \&, std\+::string)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a5de84345ef0d86b35289f129ef836909}{Chronus\+Q\+::\+CQBASIS\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&, std\+::string)
+\item 
+Single\+Slater\+Options \mbox{\hyperlink{namespaceChronusQ_a0b9580122cf79d829f1bb8acef8244bc}{Chronus\+Q\+::\+CQSingle\+Slater\+Options}} (std\+::ostream \&, CQInput\+File \&, Molecule \&, Basis\+Set \&, std\+::shared\+\_\+ptr$<$ Integrals\+Base $>$)
+\item 
+std\+::pair$<$ std\+::shared\+\_\+ptr$<$ Single\+Slater\+Base $>$, Single\+Slater\+Options $>$ \mbox{\hyperlink{namespaceChronusQ_a4ab693f751da1ad27afe7ecad8a0f63c}{Chronus\+Q\+::\+CQNEOSSOptions}} (std\+::ostream \&, CQInput\+File \&, CQMem\+Manager \&mem, Molecule \&mol, Basis\+Set \&ebasis, Basis\+Set \&pbasis, std\+::shared\+\_\+ptr$<$ Integrals\+Base $>$ eaoints, std\+::shared\+\_\+ptr$<$ Integrals\+Base $>$ paoints, std\+::shared\+\_\+ptr$<$ Integrals\+Base $>$ epaoints)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a611b7ae3a2176a1887185370794079b4}{Chronus\+Q\+::\+CQQM\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a2bc556eaefc17fbe3f5f2f1ec12203f2}{Chronus\+Q\+::\+CQDFTINT\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+std\+::shared\+\_\+ptr$<$ Real\+Time\+Base $>$ \mbox{\hyperlink{namespaceChronusQ_aea523910e009a64f20c62424046c3f01}{Chronus\+Q\+::\+CQReal\+Time\+Options}} (std\+::ostream \&out, CQInput\+File \&input, std\+::shared\+\_\+ptr$<$ Single\+Slater\+Base $>$ \&ss, EMPerturbation \&scf\+Pert)
+\begin{DoxyCompactList}\small\item\em Construct a \mbox{\hyperlink{classChronusQ_1_1RealTime}{Real\+Time}} object using the input file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_a0e9f851e4c1d7c68ca3b2acee7575391}{Chronus\+Q\+::\+CQRT\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+std\+::shared\+\_\+ptr$<$ Response\+Base $>$ \mbox{\hyperlink{namespaceChronusQ_a0b8ed2228df752f38ce14baec9929bca}{Chronus\+Q\+::\+CQResponse\+Options}} (std\+::ostream \&out, CQInput\+File \&input, std\+::shared\+\_\+ptr$<$ Single\+Slater\+Base $>$ ss)
+\begin{DoxyCompactList}\small\item\em Construct a Response object using the input file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_ab68b016e84626b2fd6a6b37643960259}{Chronus\+Q\+::\+CQRESPONSE\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a0e2c584c794d8627e32494cdedc70573}{Chronus\+Q\+::\+CQMOR\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+std\+::shared\+\_\+ptr$<$ Integrals\+Base $>$ \mbox{\hyperlink{namespaceChronusQ_a682d3f06462c3c9ff6736aaff9f16cf4}{Chronus\+Q\+::\+CQInts\+Options}} (std\+::ostream \&out, CQInput\+File \&input, CQMem\+Manager \&mem, Molecule \&mol, std\+::shared\+\_\+ptr$<$ Basis\+Set $>$ basis, std\+::shared\+\_\+ptr$<$ Basis\+Set $>$ dfbasis, std\+::shared\+\_\+ptr$<$ Basis\+Set $>$ basis2, std\+::string int\+\_\+sec)
+\begin{DoxyCompactList}\small\item\em Optionally set the control parameters for an AOIntegrals object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_a241ac9157b55d79095bef79688bf7994}{Chronus\+Q\+::\+CQINTS\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+SCFControls \mbox{\hyperlink{namespaceChronusQ_ae2e73d970f9bc1e0e863a97d9501227c}{Chronus\+Q\+::\+CQSCFOptions}} (std\+::ostream \&, CQInput\+File \&, EMPerturbation \&)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_add83af53ac897e80b1bdbe58c9e8310a}{Chronus\+Q\+::\+Handle\+Orbital\+Swaps}} (std\+::ostream \&, CQInput\+File \&, Single\+Slater\+Base \&)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_af549f0ef87f2381f385bc3d878182888}{Chronus\+Q\+::\+CQSCF\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_ab92af0483ad882491f9928cfd0b5f6c3}{Chronus\+Q\+::\+CQCC\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+Job\+Type \mbox{\hyperlink{namespaceChronusQ_a836c037859ec4dcfc183bd35fc9883d7}{Chronus\+Q\+::\+CQGeometry\+Options}} (std\+::ostream \&out, CQInput\+File \&input, Job\+Type job, Molecule \&mol, std\+::shared\+\_\+ptr$<$ Single\+Slater\+Base $>$ ss, std\+::shared\+\_\+ptr$<$ Real\+Time\+Base $>$ \&rt, std\+::shared\+\_\+ptr$<$ Integrals\+Base $>$ epints, EMPerturbation \&em\+Pert)
+\item 
+Job\+Type \mbox{\hyperlink{namespaceChronusQ_a4a96520df68c1c39c56fc3e6ce4647b8}{Chronus\+Q\+::\+CQDynamics\+Options}} (std\+::ostream \&out, CQInput\+File \&input, Job\+Type job, Molecule \&mol, std\+::shared\+\_\+ptr$<$ Single\+Slater\+Base $>$ ss, std\+::shared\+\_\+ptr$<$ Real\+Time\+Base $>$ \&rt, std\+::shared\+\_\+ptr$<$ Integrals\+Base $>$ epints, EMPerturbation \&em\+Pert)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a30f495ca1bdf11c13c3d026fb7e9d744}{Chronus\+Q\+::\+CQDYNAMICS\+\_\+\+VALID}} (std\+::ostream \&out, CQInput\+File \&input)
+\item 
+std\+::shared\+\_\+ptr$<$ MCWave\+Function\+Base $>$ \mbox{\hyperlink{namespaceChronusQ_a5db44cca14bf350d52aa511858a70402}{Chronus\+Q\+::\+CQMCSCFOptions}} (std\+::ostream \&out, CQInput\+File \&input, std\+::shared\+\_\+ptr$<$ Single\+Slater\+Base $>$ \&ss)
+\begin{DoxyCompactList}\small\item\em Construct a \mbox{\hyperlink{classChronusQ_1_1MCSCF}{MCSCF}} object using the input file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespaceChronusQ_a4e0583a06aba4d09f0a82b09d3e39b17}{Chronus\+Q\+::\+CQMCSCF\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+std\+::shared\+\_\+ptr$<$ CQMem\+Manager $>$ \mbox{\hyperlink{namespaceChronusQ_a7b8d46700d25cfb122c6dfefe0846f0f}{Chronus\+Q\+::\+CQMisc\+Options}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_ade066402f7f15072b5e4cc35eab62d39}{Chronus\+Q\+::\+CQMISC\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_ac5a458c597e4843dc31bd670b802793f}{Chronus\+Q\+::\+CQINPUT\+\_\+\+VALID}} (std\+::ostream \&out, CQInput\+File \&input)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{options_8hpp_af285cc9721f3a648cf31acceab675beb}\label{options_8hpp_af285cc9721f3a648cf31acceab675beb}} 
+\index{options.hpp@{options.hpp}!OPTOPT@{OPTOPT}}
+\index{OPTOPT@{OPTOPT}!options.hpp@{options.hpp}}
+\doxysubsubsection{\texorpdfstring{OPTOPT}{OPTOPT}}
+{\footnotesize\ttfamily \#define OPTOPT(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~try\{ x; \} catch(...) \{ ; \}}
+

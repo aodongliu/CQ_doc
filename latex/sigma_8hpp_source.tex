@@ -1,0 +1,770 @@
+\hypertarget{sigma_8hpp_source}{}\doxysection{sigma.\+hpp}
+\label{sigma_8hpp_source}\index{include/cibuilder/rasci/sigma.hpp@{include/cibuilder/rasci/sigma.hpp}}
+\mbox{\hyperlink{sigma_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{rasci_8hpp}{cibuilder/rasci.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{detstringmanager_8hpp}{detstringmanager.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg_8hpp}{cqlinalg.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matfunc_8hpp}{cqlinalg/matfunc.hpp}}>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{timer_8hpp}{util/timer.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{threads_8hpp}{util/threads.hpp}}>}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{comment}{//\#define \_DEBUG\_CIBUILDER\_RASCI\_IMPL}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{42   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{43   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RASCI_a0e125b548945e7518900edc4af42b2f2}{RASCI<MatsT,IntsT>::reassembleCatDet1RAS}}(std::vector<size\_t> \& LCat,}
+\DoxyCodeLine{44         std::vector<size\_t> \& nDet, \textcolor{keywordtype}{size\_t} e, std::vector<size\_t> \& LCatAlt,}
+\DoxyCodeLine{45         std::vector<size\_t> \& nDetAlt) \{}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     LCatAlt[0] = LCat[e];}
+\DoxyCodeLine{48     nDetAlt[0] = nDet[e];}
+\DoxyCodeLine{49     \textcolor{keywordtype}{size\_t} ii = 0;}
+\DoxyCodeLine{50     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < 3; i++)}
+\DoxyCodeLine{51       \textcolor{keywordflow}{if} (i != e) \{}
+\DoxyCodeLine{52         ii += 1;}
+\DoxyCodeLine{53         LCatAlt[ii] = LCat[i];}
+\DoxyCodeLine{54         nDetAlt[ii] = nDet[i];}
+\DoxyCodeLine{55       \}}
+\DoxyCodeLine{56   \} \textcolor{comment}{// RASCI::reassembleCatDet1RAS}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{61   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{62   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RASCI_a7aba8bc30131aaf02bab25b7abf90ca6}{RASCI<MatsT,IntsT>::reassembleCatDet2RAS}}(std::vector<size\_t> \& LCat,}
+\DoxyCodeLine{63         std::vector<size\_t> \& nDet, \textcolor{keywordtype}{size\_t} e1, \textcolor{keywordtype}{size\_t} e2, std::vector<size\_t> \& LCatAlt,}
+\DoxyCodeLine{64         std::vector<size\_t> \& nDetAlt, std::vector<size\_t> \& Jrs,}
+\DoxyCodeLine{65         std::vector<size\_t> \& LCat2) \{}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \textcolor{keywordflow}{if} (LCat2.size() > 0) \{}
+\DoxyCodeLine{68       Jrs[0] = LCat2[e1];}
+\DoxyCodeLine{69       Jrs[1] = LCat2[e2];}
+\DoxyCodeLine{70     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{71       Jrs[0] = e1;}
+\DoxyCodeLine{72       Jrs[1] = e2;}
+\DoxyCodeLine{73     \}}
+\DoxyCodeLine{74     LCatAlt[0] = LCat[e1];}
+\DoxyCodeLine{75     LCatAlt[1] = LCat[e2];}
+\DoxyCodeLine{76     nDetAlt[0] = nDet[e1];}
+\DoxyCodeLine{77     nDetAlt[1] = nDet[e2];}
+\DoxyCodeLine{78     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < 3; i++)}
+\DoxyCodeLine{79       \textcolor{keywordflow}{if} (i != e1 and i != e2) \{}
+\DoxyCodeLine{80         \textcolor{keywordflow}{if} (LCat2.size() > 0) Jrs[2] = LCat2[i];}
+\DoxyCodeLine{81         \textcolor{keywordflow}{else} Jrs[2] = i;}
+\DoxyCodeLine{82         LCatAlt[2] = LCat[i];}
+\DoxyCodeLine{83         nDetAlt[2] = nDet[i];}
+\DoxyCodeLine{84       \}}
+\DoxyCodeLine{85   \} \textcolor{comment}{// RASCI::reassembleCatDet2RAS}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{93   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{94   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RASCI_a0bc86dcf7aa8f0b87cef64b82224255a}{RASCI<MatsT,IntsT>::SigmaD\_diag}}(MatsT * C, MatsT * DBlk, \textcolor{keywordtype}{size\_t} nNZof,}
+\DoxyCodeLine{95         \textcolor{keywordtype}{size\_t} nNZB, std::shared\_ptr<const ExcitationList> exList, \textcolor{keywordtype}{size\_t} rsB,}
+\DoxyCodeLine{96         std::vector<size\_t> \& LCat,}
+\DoxyCodeLine{97         std::vector<size\_t> \& nDet) \{}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99     \textcolor{keywordtype}{size\_t} l1, l, j23off, j, p, q, j1, j2, j3, iNZ;}
+\DoxyCodeLine{100     \textcolor{keywordtype}{double} sign;}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102     \textcolor{comment}{// re-\/assemble LCat and nDet into LCatAlt and nDetAlt}}
+\DoxyCodeLine{103     std::vector<size\_t> LCatAlt(3, 0);}
+\DoxyCodeLine{104     std::vector<size\_t> nDetAlt(3, 0);}
+\DoxyCodeLine{105     reassembleCatDet1RAS(LCat, nDet, rsB, LCatAlt, nDetAlt);}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107 \textcolor{preprocessor}{    \#pragma omp parallel for schedule(static, 1) default(shared) private(j1, j2, j3, iNZ, l1, l, j23off, j, sign, p, q)}}
+\DoxyCodeLine{108     \textcolor{keywordflow}{for} (j3 = 0; j3 < nDetAlt[2]; j3++)}
+\DoxyCodeLine{109     \textcolor{keywordflow}{for} (j2 = 0; j2 < nDetAlt[1]; j2++)}
+\DoxyCodeLine{110     \textcolor{keywordflow}{for} (j1 = 0; j1 < nDetAlt[0]; j1++) \{}
+\DoxyCodeLine{111       j23off = j3 * LCatAlt[2] + j2 * LCatAlt[1];}
+\DoxyCodeLine{112       j = j1 * LCatAlt[0] + j23off;}
+\DoxyCodeLine{113       \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_j1 = exList-\/>pointerAtDet(j1) + nNZof * 4;}
+\DoxyCodeLine{114       \textcolor{keywordflow}{for} (iNZ = 0; iNZ < nNZB; iNZ++, exList\_j1+=4) \{}
+\DoxyCodeLine{115         \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_j1, p, q, l1, sign);}
+\DoxyCodeLine{116         l = l1 * LCatAlt[0] + j23off;}
+\DoxyCodeLine{117         DBlk[iNZ+j*nNZB] += sign * C[l];}
+\DoxyCodeLine{118       \}}
+\DoxyCodeLine{119     \}}
+\DoxyCodeLine{120     \textcolor{comment}{// End openMP}}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122 \textcolor{preprocessor}{\#ifdef \_DEBUG\_CIBUILDER\_RASCI\_IMPL}}
+\DoxyCodeLine{123     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}LL RASCI Sigma D diag -\/-\/"{}}, DBlk, nNZB, LCat[3], nNZB);}
+\DoxyCodeLine{124 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126   \} \textcolor{comment}{//RASCI::SigmaD\_diag}}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{134   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{135   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RASCI_a5bde541f4ba85b3b97d5cbab0aa2c354}{RASCI<MatsT,IntsT>::SigmaD\_offdiag}}(MatsT * C, MatsT * DBlk, \textcolor{keywordtype}{size\_t} nNZof,}
+\DoxyCodeLine{136         \textcolor{keywordtype}{size\_t} nNZB, std::shared\_ptr<const ExcitationList> exList, \textcolor{keywordtype}{size\_t} rB, \textcolor{keywordtype}{size\_t} sB,}
+\DoxyCodeLine{137         std::vector<size\_t> \& LCat1, std::vector<size\_t> \& LCat2,}
+\DoxyCodeLine{138         std::vector<size\_t> \& nDet) \{}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140     \textcolor{comment}{// re-\/assemble LCatAlt and NDAlt}}
+\DoxyCodeLine{141     std::vector<size\_t> LCatAlt1(3, 0);}
+\DoxyCodeLine{142     std::vector<size\_t> LCatAlt2(3, 0);}
+\DoxyCodeLine{143     std::vector<size\_t> nDetAlt(3, 0);}
+\DoxyCodeLine{144     reassembleCatDet2RAS(LCat1, nDet, sB, rB, LCatAlt1, nDetAlt, LCatAlt2, LCat2);}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146     \textcolor{keywordtype}{size\_t} j, l, l1, l2, p, q, j1, j2, j3, iNZ;}
+\DoxyCodeLine{147     \textcolor{keywordtype}{double} sign;}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149 \textcolor{preprocessor}{    \#pragma omp parallel for schedule(static, 1) default(shared) private(j1, j2, j3, iNZ, l1, l, l2, j, sign, p, q)}}
+\DoxyCodeLine{150     \textcolor{keywordflow}{for} (j3 = 0; j3 < nDetAlt[2]; j3++)}
+\DoxyCodeLine{151     \textcolor{keywordflow}{for} (j1 = 0; j1 < nDetAlt[0]; j1++)}
+\DoxyCodeLine{152     \textcolor{keywordflow}{for} (j2 = 0; j2 < nDetAlt[1]; j2++) \{}
+\DoxyCodeLine{153       j = j1*LCatAlt1[0] + j2*LCatAlt1[1] + j3*LCatAlt1[2];}
+\DoxyCodeLine{154       \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_j = exList-\/>pointerAtDet(j1, j2) + nNZof * 5;}
+\DoxyCodeLine{155       \textcolor{keywordflow}{for} (iNZ = 0; iNZ < nNZB; iNZ++, exList\_j+=5) \{}
+\DoxyCodeLine{156         \mbox{\hyperlink{excitationlist_8hpp_a7f799b221face34f0e62250433f74c32}{UNPACK\_EXCITATIONLIST\_5}}(exList\_j, p, q, l1, l2, sign);}
+\DoxyCodeLine{157         l = l1*LCatAlt2[0] + l2*LCatAlt2[1] + j3*LCatAlt2[2];}
+\DoxyCodeLine{158         DBlk[iNZ+j*nNZB] += sign * C[l];}
+\DoxyCodeLine{159       \}}
+\DoxyCodeLine{160     \}}
+\DoxyCodeLine{161     \textcolor{comment}{// End openMP}}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163 \textcolor{preprocessor}{\#ifdef \_DEBUG\_CIBUILDER\_RASCI\_IMPL}}
+\DoxyCodeLine{164     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}LL RASCI Sigma D off-\/diag -\/-\/"{}}, DBlk, nNZB, LCat1[3], nNZB);}
+\DoxyCodeLine{165 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167   \} \textcolor{comment}{// RASCI::SigmaD\_offdiag}}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{175   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{176   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RASCI_a57fde3569117dc12c67340b08cb5e95c}{RASCI<MatsT,IntsT>::Sigma1e\_diag}}(MatsT * Sigma, MatsT * Sscr, MatsT * DBlk,}
+\DoxyCodeLine{177         MatsT * Dscr, \mbox{\hyperlink{classChronusQ_1_1OnePInts}{OnePInts<MatsT>}} \& hCoreP, MatsT * hCPscr, \textcolor{keywordtype}{size\_t} nNZof,}
+\DoxyCodeLine{178         \textcolor{keywordtype}{size\_t} nNZB, std::shared\_ptr<const ExcitationList> exList, \textcolor{keywordtype}{size\_t} rsB,}
+\DoxyCodeLine{179         std::vector<size\_t> \& LCat,}
+\DoxyCodeLine{180         std::vector<size\_t> \& nDet, \textcolor{keywordtype}{int} rsoff) \{}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182     \textcolor{comment}{// re-\/assemble LCatAlt and NDAlt}}
+\DoxyCodeLine{183     std::vector<size\_t> LCatAlt(3, 0);}
+\DoxyCodeLine{184     std::vector<size\_t> nDetAlt(3, 0);}
+\DoxyCodeLine{185     reassembleCatDet1RAS(LCat, nDet, rsB, LCatAlt, nDetAlt);}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187     \textcolor{keywordtype}{size\_t} n23 = LCat[3] / nDetAlt[0];}
+\DoxyCodeLine{188     \textcolor{keywordtype}{size\_t} j1off, j23, j13off, j, r, s, l1;}
+\DoxyCodeLine{189     \textcolor{keywordtype}{double} sign;}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191 \textcolor{preprocessor}{    \#pragma omp for schedule(static, 1)}}
+\DoxyCodeLine{192     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j1 = 0ul; j1 < nDetAlt[0]; j1++) \{}
+\DoxyCodeLine{193       j1off = j1 * LCatAlt[0];}
+\DoxyCodeLine{194       \textcolor{comment}{// Gathering D, implicitly J\_rs = j1;}}
+\DoxyCodeLine{195       j23 = 0;}
+\DoxyCodeLine{196       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDetAlt[2]; j3++) \{}
+\DoxyCodeLine{197         j13off = j1off + j3 * LCatAlt[2];}
+\DoxyCodeLine{198         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j2 = 0ul; j2 < nDetAlt[1]; j2++, j23++) \{}
+\DoxyCodeLine{199           j = j13off + j2 * LCatAlt[1];}
+\DoxyCodeLine{200           std::copy\_n(DBlk+j*nNZB, nNZB, Dscr+j23*nNZB);}
+\DoxyCodeLine{201         \}}
+\DoxyCodeLine{202       \}}
+\DoxyCodeLine{203       \textcolor{comment}{// Gathering HCorePrime}}
+\DoxyCodeLine{204       \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_j1 = exList-\/>pointerAtDet(j1) + nNZof * 4;}
+\DoxyCodeLine{205       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZ = 0ul; iNZ < nNZB; iNZ++, exList\_j1+=4) \{}
+\DoxyCodeLine{206         \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_j1, s, r, l1, sign);}
+\DoxyCodeLine{207         s += rsoff;}
+\DoxyCodeLine{208         r += rsoff;}
+\DoxyCodeLine{209         hCPscr[iNZ] = hCoreP(r, s);}
+\DoxyCodeLine{210       \}}
+\DoxyCodeLine{211       blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans,}
+\DoxyCodeLine{212         1,n23,nNZB,MatsT(1.),hCPscr,1,Dscr,nNZB,}
+\DoxyCodeLine{213         MatsT(0.),Sscr,1);}
+\DoxyCodeLine{214       \textcolor{comment}{// Scattering back to Sigma}}
+\DoxyCodeLine{215       j23 = 0;}
+\DoxyCodeLine{216       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDetAlt[2]; j3++) \{}
+\DoxyCodeLine{217         j13off = j1off + j3 * LCatAlt[2];}
+\DoxyCodeLine{218         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j2 = 0ul; j2 < nDetAlt[1]; j2++, j23++) \{}
+\DoxyCodeLine{219           j = j13off + j2 * LCatAlt[1];}
+\DoxyCodeLine{220           Sigma[j] += Sscr[j23];}
+\DoxyCodeLine{221         \}}
+\DoxyCodeLine{222       \}}
+\DoxyCodeLine{223     \}}
+\DoxyCodeLine{224     \textcolor{comment}{// End omp for}}
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226   \} \textcolor{comment}{//RASCI::Sigma1e\_diag}}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{234   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{235   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RASCI_ab49cc4457b0663136263988356737fea}{RASCI<MatsT,IntsT>::Sigma1e\_offdiag}}(MatsT * Sigma, MatsT * Sscr, MatsT * DBlk,}
+\DoxyCodeLine{236         MatsT * Dscr, \mbox{\hyperlink{classChronusQ_1_1OnePInts}{OnePInts<MatsT>}} \& hCoreP, MatsT * hCPscr, \textcolor{keywordtype}{size\_t} nNZof,}
+\DoxyCodeLine{237         \textcolor{keywordtype}{size\_t} nNZB, std::shared\_ptr<const ExcitationList> exList, \textcolor{keywordtype}{size\_t} rB, \textcolor{keywordtype}{size\_t} sB,}
+\DoxyCodeLine{238         std::vector<size\_t> \& LCat, std::vector<size\_t> \& nDet,}
+\DoxyCodeLine{239         \textcolor{keywordtype}{int} roff, \textcolor{keywordtype}{int} soff) \{}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{241     \textcolor{comment}{// locate the RAS space involved in excitation}}
+\DoxyCodeLine{242     \textcolor{keywordtype}{size\_t} exBlk1 = std::min(rB, sB);}
+\DoxyCodeLine{243     \textcolor{keywordtype}{size\_t} exBlk2 = std::max(rB, sB);}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245     \textcolor{comment}{// re-\/assemble LCatAlt and nDetAlt}}
+\DoxyCodeLine{246     std::vector<size\_t> Jrs(3, 0);}
+\DoxyCodeLine{247     std::vector<size\_t> LCatAlt(3, 0);}
+\DoxyCodeLine{248     std::vector<size\_t> nDetAlt(3, 0);}
+\DoxyCodeLine{249     std::vector<size\_t> LCat2 = \{\};}
+\DoxyCodeLine{250     reassembleCatDet2RAS(LCat, nDet, exBlk1, exBlk2, LCatAlt, nDetAlt, Jrs, LCat2);}
+\DoxyCodeLine{251 }
+\DoxyCodeLine{252     std::vector<size\_t> Jras(3, 0);}
+\DoxyCodeLine{253     \textcolor{keywordtype}{size\_t} j, j12off, s, r, l1, l2;}
+\DoxyCodeLine{254     \textcolor{keywordtype}{double} sign;}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256 \textcolor{preprocessor}{    \#pragma omp for schedule(static, 1)}}
+\DoxyCodeLine{257     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j1 = 0ul; j1 < nDetAlt[0]; j1++)}
+\DoxyCodeLine{258     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j2 = 0ul; j2 < nDetAlt[1]; j2++) \{}
+\DoxyCodeLine{259       j12off = j2 * LCatAlt[1] + j1 * LCatAlt[0];}
+\DoxyCodeLine{260       Jras[Jrs[0]] = j1;}
+\DoxyCodeLine{261       Jras[Jrs[1]] = j2;}
+\DoxyCodeLine{262       \textcolor{comment}{// Gathering D}}
+\DoxyCodeLine{263       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDetAlt[2]; j3++) \{}
+\DoxyCodeLine{264         j = j12off + j3 * LCatAlt[2];}
+\DoxyCodeLine{265         std::copy\_n(DBlk+j*nNZB, nNZB, Dscr+j3*nNZB);}
+\DoxyCodeLine{266       \}}
+\DoxyCodeLine{267       \textcolor{comment}{// Gathering HCorePrime}}
+\DoxyCodeLine{268       \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_j = exList-\/>pointerAtDet(Jras[sB], Jras[rB]) + nNZof * 5;}
+\DoxyCodeLine{269       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZ = 0ul; iNZ < nNZB; iNZ++, exList\_j+=5) \{}
+\DoxyCodeLine{270         \mbox{\hyperlink{excitationlist_8hpp_a7f799b221face34f0e62250433f74c32}{UNPACK\_EXCITATIONLIST\_5}}(exList\_j, s, r, l1, l2, sign);}
+\DoxyCodeLine{271         s += soff;}
+\DoxyCodeLine{272         r += roff;}
+\DoxyCodeLine{273         hCPscr[iNZ] = hCoreP(r, s);}
+\DoxyCodeLine{274       \}}
+\DoxyCodeLine{275       blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans,}
+\DoxyCodeLine{276         1,nDetAlt[2],nNZB,MatsT(1.),hCPscr,1,}
+\DoxyCodeLine{277         Dscr,nNZB,MatsT(0.),Sscr,1);}
+\DoxyCodeLine{278       \textcolor{comment}{// Scattering back to Sigma}}
+\DoxyCodeLine{279       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDetAlt[2]; j3++) \{}
+\DoxyCodeLine{280         j = j12off + j3 * LCatAlt[2];}
+\DoxyCodeLine{281         Sigma[j] += Sscr[j3];}
+\DoxyCodeLine{282       \}}
+\DoxyCodeLine{283     \}}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285   \} \textcolor{comment}{// RASCI::Sigma1e\_offdiag}}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{294   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{295   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RASCI_a1ba8531d8a3ee633048f9b26ee8d676f}{RASCI<MatsT,IntsT>::SigmaG\_dd}}(MatsT * GBlk, MatsT * Gscr, MatsT * DBlk,}
+\DoxyCodeLine{296         MatsT * Dscr, MatsT * ERIscr, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<MatsT>}} \& moERI,}
+\DoxyCodeLine{297         \textcolor{keywordtype}{size\_t} nNZrsof, \textcolor{keywordtype}{size\_t} nNZrsB, \textcolor{keywordtype}{size\_t} nNZpqof, \textcolor{keywordtype}{size\_t} nNZpqB,}
+\DoxyCodeLine{298         std::shared\_ptr<const ExcitationList> pqList, std::shared\_ptr<const ExcitationList> rsList,}
+\DoxyCodeLine{299         \textcolor{keywordtype}{size\_t} rsB, \textcolor{keywordtype}{size\_t} pqB,}
+\DoxyCodeLine{300         std::vector<size\_t> \& LCat, std::vector<size\_t> \& nDet, \textcolor{keywordtype}{int} rsoff, \textcolor{keywordtype}{int} pqoff) \{}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302     \textcolor{comment}{// determine excitation cases:}}
+\DoxyCodeLine{303     \textcolor{comment}{//   1. one RAS space is involved in excitation}}
+\DoxyCodeLine{304     \textcolor{comment}{//   2. two RAS spaces are involved in excitation}}
+\DoxyCodeLine{305 }
+\DoxyCodeLine{306     \textcolor{keywordtype}{size\_t} exBlk1, exBlk2, j, p, q, r, s;}
+\DoxyCodeLine{307     \textcolor{keywordtype}{double} sign;}
+\DoxyCodeLine{308     std::vector<size\_t> Jrs(3, 0);}
+\DoxyCodeLine{309     std::vector<size\_t> LCatAlt(3, 0);}
+\DoxyCodeLine{310     std::vector<size\_t> nDetAlt(3, 0);}
+\DoxyCodeLine{311 }
+\DoxyCodeLine{312     \textcolor{comment}{// Case 1: one RAS space is involved in excitation}}
+\DoxyCodeLine{313     \textcolor{keywordflow}{if} (rsB == pqB) \{}
+\DoxyCodeLine{314       \textcolor{comment}{// locate the RAS space involved in excitation}}
+\DoxyCodeLine{315       exBlk1 = rsB;}
+\DoxyCodeLine{316       \textcolor{comment}{// re-\/assemble LCatAlt and nDetAlt}}
+\DoxyCodeLine{317       reassembleCatDet1RAS(LCat, nDet, exBlk1, LCatAlt, nDetAlt);}
+\DoxyCodeLine{318 }
+\DoxyCodeLine{319       \textcolor{keywordtype}{size\_t} n23 = LCat[3]/nDetAlt[0];}
+\DoxyCodeLine{320       \textcolor{keywordtype}{size\_t} j1off, j23, j13off,l1;}
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322 \textcolor{preprocessor}{      \#pragma omp for schedule(static, 1)}}
+\DoxyCodeLine{323       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j1 = 0ul; j1 < nDetAlt[0]; j1++) \{}
+\DoxyCodeLine{324         \textcolor{comment}{// Gathering D, implicitly jrs = jpq = j1}}
+\DoxyCodeLine{325         j1off = j1 * LCatAlt[0];}
+\DoxyCodeLine{326         j23 = 0;}
+\DoxyCodeLine{327         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDetAlt[2]; j3++) \{}
+\DoxyCodeLine{328           j13off = j1off + j3 * LCatAlt[2];}
+\DoxyCodeLine{329           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j2 = 0ul; j2 < nDetAlt[1]; j2++, j23++) \{}
+\DoxyCodeLine{330             j = j13off + j2 * LCatAlt[1];}
+\DoxyCodeLine{331             std::copy\_n(DBlk+j*nNZrsB, nNZrsB, Dscr+j23*nNZrsB);}
+\DoxyCodeLine{332           \}}
+\DoxyCodeLine{333         \}}
+\DoxyCodeLine{334         \textcolor{comment}{// Gathering moERI}}
+\DoxyCodeLine{335         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_pq = pqList-\/>pointerAtDet(j1) + nNZpqof * 4;}
+\DoxyCodeLine{336         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZpq = 0ul; iNZpq < nNZpqB; iNZpq++, exList\_pq+=4) \{}
+\DoxyCodeLine{337           \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_pq, p, q, l1, sign);}
+\DoxyCodeLine{338           p += pqoff;}
+\DoxyCodeLine{339           q += pqoff;}
+\DoxyCodeLine{340           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_rs = rsList-\/>pointerAtDet(j1) + nNZrsof * 4;}
+\DoxyCodeLine{341           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZrs = 0ul; iNZrs < nNZrsB; iNZrs++, exList\_rs+=4) \{}
+\DoxyCodeLine{342             \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_rs, s, r, l1, sign);}
+\DoxyCodeLine{343             s += rsoff;}
+\DoxyCodeLine{344             r += rsoff;}
+\DoxyCodeLine{345             ERIscr[iNZrs+iNZpq*nNZrsB] = moERI(r, s, p, q);}
+\DoxyCodeLine{346           \}}
+\DoxyCodeLine{347         \}}
+\DoxyCodeLine{348         blas::gemm(blas::Layout::ColMajor, blas::Op::Trans, blas::Op::NoTrans,}
+\DoxyCodeLine{349             nNZpqB,n23,nNZrsB,MatsT(1.),ERIscr,nNZrsB,}
+\DoxyCodeLine{350             Dscr,nNZrsB,MatsT(0.),Gscr,nNZpqB);}
+\DoxyCodeLine{351         \textcolor{comment}{// Scattering back to GBlk}}
+\DoxyCodeLine{352         j23 = 0;}
+\DoxyCodeLine{353         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDetAlt[2]; j3++) \{}
+\DoxyCodeLine{354           j13off = j1off + j3 * LCatAlt[2];}
+\DoxyCodeLine{355           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j2 = 0ul; j2 < nDetAlt[1]; j2++, j23++) \{}
+\DoxyCodeLine{356             j = j13off + j2 * LCatAlt[1];}
+\DoxyCodeLine{357             \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'N'},\textcolor{charliteral}{'N'},nNZpqB,1,MatsT(1.),Gscr+j23*nNZpqB,nNZpqB,}
+\DoxyCodeLine{358                 MatsT(1.),GBlk+j*nNZpqB,nNZpqB,GBlk+j*nNZpqB,nNZpqB);}
+\DoxyCodeLine{359           \}}
+\DoxyCodeLine{360         \}}
+\DoxyCodeLine{361       \}}
+\DoxyCodeLine{362     \textcolor{comment}{// Case 2: two RAS spaces are involved in excitation}}
+\DoxyCodeLine{363     \textcolor{comment}{//         implicitly pBlk < rBlk}}
+\DoxyCodeLine{364     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{365       \textcolor{comment}{// locate the RAS space involved in excitation}}
+\DoxyCodeLine{366       exBlk1 = std::min(rsB, pqB);}
+\DoxyCodeLine{367       exBlk2 = std::max(rsB, pqB);}
+\DoxyCodeLine{368 }
+\DoxyCodeLine{369       \textcolor{comment}{// re-\/assemble LCatAlt and nDetAlt}}
+\DoxyCodeLine{370       std::vector<size\_t> LCat2 = \{\};}
+\DoxyCodeLine{371       reassembleCatDet2RAS(LCat, nDet, exBlk1, exBlk2, LCatAlt, nDetAlt, Jrs, LCat2);}
+\DoxyCodeLine{372 }
+\DoxyCodeLine{373       std::vector<size\_t> Jras(3, 0);}
+\DoxyCodeLine{374       \textcolor{keywordtype}{size\_t} j12off, l1;}
+\DoxyCodeLine{375 }
+\DoxyCodeLine{376 \textcolor{preprocessor}{      \#pragma omp for schedule(static, 1)}}
+\DoxyCodeLine{377       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j1 = 0ul; j1 < nDetAlt[0]; j1++)}
+\DoxyCodeLine{378       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j2 = 0ul; j2 < nDetAlt[1]; j2++) \{}
+\DoxyCodeLine{379         j12off = j2 * LCatAlt[1] + j1 * LCatAlt[0];}
+\DoxyCodeLine{380         Jras[Jrs[0]] = j1;}
+\DoxyCodeLine{381         Jras[Jrs[1]] = j2;}
+\DoxyCodeLine{382         \textcolor{comment}{// Gathering D}}
+\DoxyCodeLine{383         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDetAlt[2]; j3++) \{}
+\DoxyCodeLine{384           j = j12off + j3 * LCatAlt[2];}
+\DoxyCodeLine{385           std::copy\_n(DBlk+j*nNZrsB, nNZrsB, Dscr+j3*nNZrsB);}
+\DoxyCodeLine{386         \}}
+\DoxyCodeLine{387         \textcolor{comment}{// Gathering moERI, implicitly pBlk < rBlk}}
+\DoxyCodeLine{388         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_pq = pqList-\/>pointerAtDet(Jras[pqB]) + nNZpqof * 4;}
+\DoxyCodeLine{389         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZpq = 0ul; iNZpq < nNZpqB; iNZpq++, exList\_pq+=4) \{}
+\DoxyCodeLine{390           \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_pq, p, q, l1, sign);}
+\DoxyCodeLine{391           p += pqoff;}
+\DoxyCodeLine{392           q += pqoff;}
+\DoxyCodeLine{393           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_rs = rsList-\/>pointerAtDet(Jras[rsB]) + nNZrsof * 4;}
+\DoxyCodeLine{394           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZrs = 0ul; iNZrs < nNZrsB; iNZrs++, exList\_rs+=4) \{}
+\DoxyCodeLine{395             \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_rs, s, r, l1, sign);}
+\DoxyCodeLine{396             s += rsoff;}
+\DoxyCodeLine{397             r += rsoff;}
+\DoxyCodeLine{398             ERIscr[iNZrs+iNZpq*nNZrsB] = moERI(r, s, p, q) -\/ moERI(p, s, r, q);}
+\DoxyCodeLine{399           \}}
+\DoxyCodeLine{400         \}}
+\DoxyCodeLine{401 }
+\DoxyCodeLine{402         blas::gemm(blas::Layout::ColMajor, blas::Op::Trans, blas::Op::NoTrans,}
+\DoxyCodeLine{403             nNZpqB,nDetAlt[2],nNZrsB,MatsT(1.),ERIscr,nNZrsB,}
+\DoxyCodeLine{404             Dscr,nNZrsB,MatsT(0.),Gscr,nNZpqB);}
+\DoxyCodeLine{405         \textcolor{comment}{// Scattering back to GBlk}}
+\DoxyCodeLine{406         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDetAlt[2]; j3++) \{}
+\DoxyCodeLine{407           j = j12off + j3 * LCatAlt[2];}
+\DoxyCodeLine{408           \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'N'},\textcolor{charliteral}{'N'},nNZpqB,1,MatsT(1.),Gscr+j3*nNZpqB,nNZpqB,}
+\DoxyCodeLine{409                 MatsT(1.),GBlk+j*nNZpqB,nNZpqB,GBlk+j*nNZpqB,nNZpqB);}
+\DoxyCodeLine{410         \}}
+\DoxyCodeLine{411       \}}
+\DoxyCodeLine{412     \}}
+\DoxyCodeLine{413 \textcolor{preprocessor}{\#ifdef \_DEBUG\_CIBUILDER\_RASCI\_IMPL}}
+\DoxyCodeLine{414     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}LL RASCI Sigma G diag-\/diag -\/-\/"{}}, GBlk, nNZpqB, LCat[3], nNZpqB);}
+\DoxyCodeLine{415 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{416   \} \textcolor{comment}{// RASCI::SigmaG\_dd}}
+\DoxyCodeLine{417 }
+\DoxyCodeLine{425   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{426   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RASCI_a05c2593245b70354b4c2c0106ac0d373}{RASCI<MatsT,IntsT>::SigmaG\_do}}(MatsT * GBlk, MatsT * Gscr, MatsT * DBlk,}
+\DoxyCodeLine{427         MatsT * Dscr, MatsT * ERIscr, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<MatsT>}} \& moERI, \textcolor{keywordtype}{size\_t} nNZrsof,}
+\DoxyCodeLine{428         \textcolor{keywordtype}{size\_t} nNZrsB, \textcolor{keywordtype}{size\_t} nNZpqof, \textcolor{keywordtype}{size\_t} nNZpqB,}
+\DoxyCodeLine{429         std::shared\_ptr<const ExcitationList> pqList,}
+\DoxyCodeLine{430         std::shared\_ptr<const ExcitationList> rsList, \textcolor{keywordtype}{size\_t} rsB, \textcolor{keywordtype}{size\_t} pB, \textcolor{keywordtype}{size\_t} qB,}
+\DoxyCodeLine{431         std::vector<size\_t> \& LCat, std::vector<size\_t> \& nDet,}
+\DoxyCodeLine{432         \textcolor{keywordtype}{int} rsoff, \textcolor{keywordtype}{int} poff, \textcolor{keywordtype}{int} qoff) \{}
+\DoxyCodeLine{433 }
+\DoxyCodeLine{434     std::vector<size\_t> exRAS(3, 0);}
+\DoxyCodeLine{435     std::vector<size\_t> Jrs(3, 0);}
+\DoxyCodeLine{436     std::vector<size\_t> LCatAlt(3, 0);}
+\DoxyCodeLine{437     std::vector<size\_t> nDetAlt(3, 0);}
+\DoxyCodeLine{438     std::vector<size\_t> Jras(3, 0);}
+\DoxyCodeLine{439     \textcolor{keywordtype}{size\_t} exBlk1, exBlk2, j, p, q, r, s, l1, l2;}
+\DoxyCodeLine{440     \textcolor{keywordtype}{double} sign;}
+\DoxyCodeLine{441 }
+\DoxyCodeLine{442     \textcolor{comment}{// determine excitation cases:}}
+\DoxyCodeLine{443     \textcolor{comment}{//  2. two RAS spaces are involved in excitation}}
+\DoxyCodeLine{444     \textcolor{comment}{//  3. three RAS spaces are involved in excitation}}
+\DoxyCodeLine{445     exRAS[rsB] = 1;}
+\DoxyCodeLine{446     exRAS[pB] = 1;}
+\DoxyCodeLine{447     exRAS[qB] = 1;}
+\DoxyCodeLine{448     \textcolor{keywordtype}{int} eCase = std::accumulate(exRAS.begin(), exRAS.end(), 0);}
+\DoxyCodeLine{449     \textcolor{comment}{// Case 2: two RAS spaces are involved in excitation}}
+\DoxyCodeLine{450     \textcolor{keywordflow}{if} (eCase == 2) \{}
+\DoxyCodeLine{451       \textcolor{comment}{// locate the RAS space involved in excitation}}
+\DoxyCodeLine{452       exBlk1 = std::min(\{rsB, pB, qB\});}
+\DoxyCodeLine{453       exBlk2 = std::max(\{rsB, pB, qB\});}
+\DoxyCodeLine{454       std::vector<size\_t> LCat2 = \{\};}
+\DoxyCodeLine{455       reassembleCatDet2RAS(LCat, nDet, exBlk1, exBlk2, LCatAlt, nDetAlt, Jrs, LCat2);}
+\DoxyCodeLine{456 }
+\DoxyCodeLine{457 \textcolor{preprocessor}{      \#pragma omp for schedule(static, 1)}}
+\DoxyCodeLine{458       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j1 = 0ul; j1 < nDetAlt[0]; j1++)}
+\DoxyCodeLine{459       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j2 = 0ul; j2 < nDetAlt[1]; j2++) \{}
+\DoxyCodeLine{460         \textcolor{keywordtype}{size\_t} j12off = j2 * LCatAlt[1] + j1 * LCatAlt[0];}
+\DoxyCodeLine{461         Jras[Jrs[0]] = j1;}
+\DoxyCodeLine{462         Jras[Jrs[1]] = j2;}
+\DoxyCodeLine{463         \textcolor{comment}{// Gathering D}}
+\DoxyCodeLine{464         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDetAlt[2]; j3++) \{}
+\DoxyCodeLine{465           j = j12off + j3 * LCatAlt[2];}
+\DoxyCodeLine{466           std::copy\_n(DBlk+j*nNZrsB, nNZrsB, Dscr+j3*nNZrsB);}
+\DoxyCodeLine{467         \}}
+\DoxyCodeLine{468         \textcolor{comment}{// Scattering moERI}}
+\DoxyCodeLine{469         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_pq = pqList-\/>pointerAtDet(Jras[pB], Jras[qB]) + nNZpqof * 5;}
+\DoxyCodeLine{470         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZpq = 0ul; iNZpq < nNZpqB; iNZpq++, exList\_pq+=5) \{}
+\DoxyCodeLine{471           \mbox{\hyperlink{excitationlist_8hpp_a7f799b221face34f0e62250433f74c32}{UNPACK\_EXCITATIONLIST\_5}}(exList\_pq, p, q, l1, l2, sign);}
+\DoxyCodeLine{472           p += poff;}
+\DoxyCodeLine{473           q += qoff;}
+\DoxyCodeLine{474           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_rs = rsList-\/>pointerAtDet(Jras[rsB]) + nNZrsof * 4;}
+\DoxyCodeLine{475           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZrs = 0ul; iNZrs < nNZrsB; iNZrs++, exList\_rs+=4) \{}
+\DoxyCodeLine{476             \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_rs, s, r, l1, sign);}
+\DoxyCodeLine{477             s += rsoff;}
+\DoxyCodeLine{478             r += rsoff;}
+\DoxyCodeLine{479             ERIscr[iNZrs+iNZpq*nNZrsB] = moERI(r, s, p, q);}
+\DoxyCodeLine{480           \}}
+\DoxyCodeLine{481         \}}
+\DoxyCodeLine{482         blas::gemm(blas::Layout::ColMajor, blas::Op::Trans, blas::Op::NoTrans,}
+\DoxyCodeLine{483             nNZpqB,nDetAlt[2],nNZrsB,MatsT(1.),ERIscr,nNZrsB,}
+\DoxyCodeLine{484             Dscr,nNZrsB,MatsT(0.),Gscr,nNZpqB);}
+\DoxyCodeLine{485         \textcolor{comment}{// Scattering back to GBlk}}
+\DoxyCodeLine{486         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDetAlt[2]; j3++) \{}
+\DoxyCodeLine{487           j = j12off + j3 * LCatAlt[2];}
+\DoxyCodeLine{488           \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'N'},\textcolor{charliteral}{'N'},nNZpqB,1,MatsT(1.),Gscr+j3*nNZpqB,nNZpqB,}
+\DoxyCodeLine{489                 MatsT(1.),GBlk+j*nNZpqB,nNZpqB,GBlk+j*nNZpqB,nNZpqB);}
+\DoxyCodeLine{490         \}}
+\DoxyCodeLine{491       \}}
+\DoxyCodeLine{492     \textcolor{comment}{// Case 3: three RAS spaces are involved in excitation}}
+\DoxyCodeLine{493     \textcolor{comment}{//         implicitly that pBlk != rBlk, qBlk != sBlk}}
+\DoxyCodeLine{494     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (eCase == 3) \{}
+\DoxyCodeLine{495       \textcolor{comment}{// LCatAlt == LCat, nDetAlt == nDet}}
+\DoxyCodeLine{496 \textcolor{preprocessor}{      \#pragma omp for schedule(static, 1)}}
+\DoxyCodeLine{497       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDet[2]; j3++)}
+\DoxyCodeLine{498       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j2 = 0ul; j2 < nDet[1]; j2++)}
+\DoxyCodeLine{499       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j1 = 0ul; j1 < nDet[0]; j1++) \{}
+\DoxyCodeLine{500         Jras[0] = j1;}
+\DoxyCodeLine{501         Jras[1] = j2;}
+\DoxyCodeLine{502         Jras[2] = j3;}
+\DoxyCodeLine{503         j = j1 * LCat[0] + j2 * LCat[1] + j3 * LCat[2];}
+\DoxyCodeLine{504         \textcolor{comment}{// assemble moERI}}
+\DoxyCodeLine{505         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_pq = pqList-\/>pointerAtDet(Jras[pB], Jras[qB]) + nNZpqof * 5;}
+\DoxyCodeLine{506         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZpq = 0ul; iNZpq < nNZpqB; iNZpq++, exList\_pq+=5) \{}
+\DoxyCodeLine{507           \mbox{\hyperlink{excitationlist_8hpp_a7f799b221face34f0e62250433f74c32}{UNPACK\_EXCITATIONLIST\_5}}(exList\_pq, p, q, l1, l2, sign);}
+\DoxyCodeLine{508           p += poff;}
+\DoxyCodeLine{509           q += qoff;}
+\DoxyCodeLine{510           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_rs = rsList-\/>pointerAtDet(Jras[rsB]) + nNZrsof * 4;}
+\DoxyCodeLine{511           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZrs = 0ul; iNZrs < nNZrsB; iNZrs++, exList\_rs+=4) \{}
+\DoxyCodeLine{512             \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_rs, s, r, l1, sign);}
+\DoxyCodeLine{513             s += rsoff;}
+\DoxyCodeLine{514             r += rsoff;}
+\DoxyCodeLine{515             ERIscr[iNZrs+iNZpq*nNZrsB] = moERI(r, s, p, q) -\/ moERI(p, s, r, q);}
+\DoxyCodeLine{516           \}}
+\DoxyCodeLine{517         \}}
+\DoxyCodeLine{518         blas::gemm(blas::Layout::ColMajor, blas::Op::Trans, blas::Op::NoTrans,}
+\DoxyCodeLine{519             nNZpqB,1,nNZrsB,MatsT(1.),ERIscr,nNZrsB,}
+\DoxyCodeLine{520             DBlk+j*nNZrsB,nNZrsB,MatsT(1.),GBlk+j*nNZpqB,nNZpqB);}
+\DoxyCodeLine{521       \}}
+\DoxyCodeLine{522     \}}
+\DoxyCodeLine{523 \textcolor{preprocessor}{\#ifdef \_DEBUG\_CIBUILDER\_RASCI\_IMPL}}
+\DoxyCodeLine{524     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}LL RASCI Sigma G diag-\/off -\/-\/"{}}, GBlk, nNZpqB, LCat[3], nNZpqB);}
+\DoxyCodeLine{525 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{526   \} \textcolor{comment}{// RASCI::SigmaG\_do}}
+\DoxyCodeLine{527 }
+\DoxyCodeLine{535   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{536   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RASCI_a603bc4329f5de64a617343d77916a0da}{RASCI<MatsT,IntsT>::SigmaG\_od}}(MatsT * GBlk, MatsT * Gscr, MatsT * DBlk,}
+\DoxyCodeLine{537         MatsT * Dscr, MatsT * ERIscr, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<MatsT>}} \& moERI, \textcolor{keywordtype}{size\_t} nNZrsof,}
+\DoxyCodeLine{538         \textcolor{keywordtype}{size\_t} nNZrsB, \textcolor{keywordtype}{size\_t} nNZpqof, \textcolor{keywordtype}{size\_t} nNZpqB,}
+\DoxyCodeLine{539         std::shared\_ptr<const ExcitationList> pqList,}
+\DoxyCodeLine{540         std::shared\_ptr<const ExcitationList> rsList, \textcolor{keywordtype}{size\_t} rB, \textcolor{keywordtype}{size\_t} sB, \textcolor{keywordtype}{size\_t} pqB,}
+\DoxyCodeLine{541         std::vector<size\_t> \& LCat, std::vector<size\_t> \& nDet,}
+\DoxyCodeLine{542         \textcolor{keywordtype}{int} roff, \textcolor{keywordtype}{int} soff, \textcolor{keywordtype}{int} pqoff) \{}
+\DoxyCodeLine{543 }
+\DoxyCodeLine{544     std::vector<size\_t> exRAS(3, 0);}
+\DoxyCodeLine{545     std::vector<size\_t> Jrs(3, 0);}
+\DoxyCodeLine{546     std::vector<size\_t> LCatAlt(3, 0);}
+\DoxyCodeLine{547     std::vector<size\_t> nDetAlt(3, 0);}
+\DoxyCodeLine{548     std::vector<size\_t> Jras(3, 0);}
+\DoxyCodeLine{549     \textcolor{keywordtype}{size\_t} exBlk1, exBlk2, j, p, q, r, s, l1, l2;}
+\DoxyCodeLine{550     \textcolor{keywordtype}{double} sign;}
+\DoxyCodeLine{551 }
+\DoxyCodeLine{552     \textcolor{comment}{// determine excitation cases:}}
+\DoxyCodeLine{553     \textcolor{comment}{//  2. two RAS spaces are involved in excitation}}
+\DoxyCodeLine{554     \textcolor{comment}{//  3. three RAS spaces are involved in excitation}}
+\DoxyCodeLine{555     exRAS[rB] = 1;}
+\DoxyCodeLine{556     exRAS[sB] = 1;}
+\DoxyCodeLine{557     exRAS[pqB] = 1;}
+\DoxyCodeLine{558     \textcolor{keywordtype}{int} eCase = std::accumulate(exRAS.begin(), exRAS.end(), 0);}
+\DoxyCodeLine{559     \textcolor{comment}{// Case 2: two RAS spaces are involved in excitation}}
+\DoxyCodeLine{560     \textcolor{keywordflow}{if} (eCase == 2) \{}
+\DoxyCodeLine{561       \textcolor{comment}{// locate the RAS space involved in excitation}}
+\DoxyCodeLine{562       exBlk1 = std::min(\{rB, sB, pqB\});}
+\DoxyCodeLine{563       exBlk2 = std::max(\{rB, sB, pqB\});}
+\DoxyCodeLine{564       std::vector<size\_t> LCat2 = \{\};}
+\DoxyCodeLine{565       reassembleCatDet2RAS(LCat, nDet, exBlk1, exBlk2, LCatAlt, nDetAlt, Jrs, LCat2);}
+\DoxyCodeLine{566 }
+\DoxyCodeLine{567 \textcolor{preprocessor}{      \#pragma omp for schedule(static, 1)}}
+\DoxyCodeLine{568       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j1 = 0ul; j1 < nDetAlt[0]; j1++)}
+\DoxyCodeLine{569       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j2 = 0ul; j2 < nDetAlt[1]; j2++) \{}
+\DoxyCodeLine{570         \textcolor{keywordtype}{size\_t} j12off = j2 * LCatAlt[1] + j1 * LCatAlt[0];}
+\DoxyCodeLine{571         Jras[Jrs[0]] = j1;}
+\DoxyCodeLine{572         Jras[Jrs[1]] = j2;}
+\DoxyCodeLine{573         \textcolor{comment}{// Gathering D}}
+\DoxyCodeLine{574         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDetAlt[2]; j3++) \{}
+\DoxyCodeLine{575           j = j12off + j3 * LCatAlt[2];}
+\DoxyCodeLine{576           std::copy\_n(DBlk+j*nNZrsB, nNZrsB, Dscr+j3*nNZrsB);}
+\DoxyCodeLine{577         \}}
+\DoxyCodeLine{578         \textcolor{comment}{// Scattering moERI}}
+\DoxyCodeLine{579         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_pq = pqList-\/>pointerAtDet(Jras[pqB]) + nNZpqof * 4;}
+\DoxyCodeLine{580         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZpq = 0ul; iNZpq < nNZpqB; iNZpq++, exList\_pq+=4) \{}
+\DoxyCodeLine{581           \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_pq, p, q, l1, sign);}
+\DoxyCodeLine{582           p += pqoff;}
+\DoxyCodeLine{583           q += pqoff;}
+\DoxyCodeLine{584           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_rs = rsList-\/>pointerAtDet(Jras[sB], Jras[rB]) + nNZrsof * 5;}
+\DoxyCodeLine{585           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZrs = 0ul; iNZrs < nNZrsB; iNZrs++, exList\_rs+=5) \{}
+\DoxyCodeLine{586             \mbox{\hyperlink{excitationlist_8hpp_a7f799b221face34f0e62250433f74c32}{UNPACK\_EXCITATIONLIST\_5}}(exList\_rs, s, r, l1, l2, sign);}
+\DoxyCodeLine{587             s += soff;}
+\DoxyCodeLine{588             r += roff;}
+\DoxyCodeLine{589             ERIscr[iNZrs+iNZpq*nNZrsB] = moERI(r, s, p, q);}
+\DoxyCodeLine{590           \}}
+\DoxyCodeLine{591         \}}
+\DoxyCodeLine{592         blas::gemm(blas::Layout::ColMajor, blas::Op::Trans, blas::Op::NoTrans,}
+\DoxyCodeLine{593             nNZpqB,nDetAlt[2],nNZrsB,MatsT(1.),ERIscr,nNZrsB,}
+\DoxyCodeLine{594             Dscr,nNZrsB,MatsT(0.),Gscr,nNZpqB);}
+\DoxyCodeLine{595         \textcolor{comment}{// Scattering back to GBlk}}
+\DoxyCodeLine{596         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDetAlt[2]; j3++) \{}
+\DoxyCodeLine{597           j = j12off + j3 * LCatAlt[2];}
+\DoxyCodeLine{598           \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'N'},\textcolor{charliteral}{'N'},nNZpqB,1,MatsT(1.),Gscr+j3*nNZpqB,nNZpqB,}
+\DoxyCodeLine{599                 MatsT(1.),GBlk+j*nNZpqB,nNZpqB,GBlk+j*nNZpqB,nNZpqB);}
+\DoxyCodeLine{600         \}}
+\DoxyCodeLine{601       \}}
+\DoxyCodeLine{602     \textcolor{comment}{// Case 3: three RAS spaces are involved in excitation}}
+\DoxyCodeLine{603     \textcolor{comment}{//         implicitly that pBlk != rBlk, qBlk != sBlk}}
+\DoxyCodeLine{604     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (eCase == 3) \{}
+\DoxyCodeLine{605       \textcolor{comment}{// LCatAlt == LCat, nDetAlt == nDet}}
+\DoxyCodeLine{606 \textcolor{preprocessor}{      \#pragma omp for schedule(static, 1)}}
+\DoxyCodeLine{607       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDet[2]; j3++)}
+\DoxyCodeLine{608       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j2 = 0ul; j2 < nDet[1]; j2++)}
+\DoxyCodeLine{609       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j1 = 0ul; j1 < nDet[0]; j1++) \{}
+\DoxyCodeLine{610         Jras[0] = j1;}
+\DoxyCodeLine{611         Jras[1] = j2;}
+\DoxyCodeLine{612         Jras[2] = j3;}
+\DoxyCodeLine{613         j = j1 * LCat[0] + j2 * LCat[1] + j3 * LCat[2];}
+\DoxyCodeLine{614         \textcolor{comment}{// assemble moERI}}
+\DoxyCodeLine{615         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_pq = pqList-\/>pointerAtDet(Jras[pqB]) + nNZpqof * 4;}
+\DoxyCodeLine{616         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZpq = 0ul; iNZpq < nNZpqB; iNZpq++, exList\_pq+=4) \{}
+\DoxyCodeLine{617           \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_pq, p, q, l1, sign);}
+\DoxyCodeLine{618           p += pqoff;}
+\DoxyCodeLine{619           q += pqoff;}
+\DoxyCodeLine{620           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_rs = rsList-\/>pointerAtDet(Jras[sB], Jras[rB]) + nNZrsof * 5;}
+\DoxyCodeLine{621           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZrs = 0ul; iNZrs < nNZrsB; iNZrs++, exList\_rs+=5) \{}
+\DoxyCodeLine{622             \mbox{\hyperlink{excitationlist_8hpp_a7f799b221face34f0e62250433f74c32}{UNPACK\_EXCITATIONLIST\_5}}(exList\_rs, s, r, l1, l2, sign);}
+\DoxyCodeLine{623             s += soff;}
+\DoxyCodeLine{624             r += roff;}
+\DoxyCodeLine{625             ERIscr[iNZrs+iNZpq*nNZrsB] = moERI(r, s, p, q) -\/ moERI(p, s, r, q);}
+\DoxyCodeLine{626           \}}
+\DoxyCodeLine{627         \}}
+\DoxyCodeLine{628         blas::gemm(blas::Layout::ColMajor, blas::Op::Trans, blas::Op::NoTrans,}
+\DoxyCodeLine{629             nNZpqB,1,nNZrsB,MatsT(1.),ERIscr,nNZrsB,}
+\DoxyCodeLine{630             DBlk+j*nNZrsB,nNZrsB,MatsT(1.),GBlk+j*nNZpqB,nNZpqB);}
+\DoxyCodeLine{631       \}}
+\DoxyCodeLine{632     \}}
+\DoxyCodeLine{633 \textcolor{preprocessor}{\#ifdef \_DEBUG\_CIBUILDER\_RASCI\_IMPL}}
+\DoxyCodeLine{634     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}LL RASCI Sigma G off-\/diag -\/-\/"{}}, GBlk, nNZpqB, LCat[3], nNZpqB);}
+\DoxyCodeLine{635 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{636   \} \textcolor{comment}{// RASCI::SigmaG\_od}}
+\DoxyCodeLine{637 }
+\DoxyCodeLine{645   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{646   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RASCI_a9eb1861526d2fda88da13c61540e7679}{RASCI<MatsT,IntsT>::SigmaG\_oo}}(MatsT * GBlk, MatsT * Gscr, MatsT * DBlk,}
+\DoxyCodeLine{647         MatsT * Dscr, MatsT * ERIscr, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<MatsT>}} \& moERI, \textcolor{keywordtype}{size\_t} nNZrsof,}
+\DoxyCodeLine{648         \textcolor{keywordtype}{size\_t} nNZrsB, \textcolor{keywordtype}{size\_t} nNZpqof, \textcolor{keywordtype}{size\_t} nNZpqB,}
+\DoxyCodeLine{649         std::shared\_ptr<const ExcitationList> pqList,}
+\DoxyCodeLine{650         std::shared\_ptr<const ExcitationList> rsList, \textcolor{keywordtype}{size\_t} rB, \textcolor{keywordtype}{size\_t} sB, \textcolor{keywordtype}{size\_t} pB, \textcolor{keywordtype}{size\_t} qB,}
+\DoxyCodeLine{651         std::vector<size\_t> \& LCat, std::vector<size\_t> \& nDet,}
+\DoxyCodeLine{652         \textcolor{keywordtype}{int} roff, \textcolor{keywordtype}{int} soff, \textcolor{keywordtype}{int} poff, \textcolor{keywordtype}{int} qoff) \{}
+\DoxyCodeLine{653 }
+\DoxyCodeLine{654     std::vector<size\_t> exRAS(3, 0);}
+\DoxyCodeLine{655     std::vector<size\_t> Jrs(3, 0);}
+\DoxyCodeLine{656     std::vector<size\_t> LCatAlt(3, 0);}
+\DoxyCodeLine{657     std::vector<size\_t> nDetAlt(3, 0);}
+\DoxyCodeLine{658     std::vector<size\_t> Jras(3, 0);}
+\DoxyCodeLine{659     \textcolor{keywordtype}{size\_t} exBlk1, exBlk2, j, p, q, r, s, l1, l2;}
+\DoxyCodeLine{660     \textcolor{keywordtype}{double} sign;}
+\DoxyCodeLine{661 }
+\DoxyCodeLine{662     \textcolor{comment}{// determine excitation cases:}}
+\DoxyCodeLine{663     \textcolor{comment}{//  2. two RAS spaces are involved in excitation}}
+\DoxyCodeLine{664     \textcolor{comment}{//  3. three RAS spaces are involved in excitation}}
+\DoxyCodeLine{665     exRAS[rB] = 1;}
+\DoxyCodeLine{666     exRAS[sB] = 1;}
+\DoxyCodeLine{667     exRAS[pB] = 1;}
+\DoxyCodeLine{668     exRAS[qB] = 1;}
+\DoxyCodeLine{669     \textcolor{keywordtype}{int} eCase = std::accumulate(exRAS.begin(), exRAS.end(), 0);}
+\DoxyCodeLine{670     \textcolor{comment}{// Case 2: two RAS spaces are involved in excitation}}
+\DoxyCodeLine{671     \textcolor{keywordflow}{if} (eCase == 2) \{}
+\DoxyCodeLine{672       \textcolor{comment}{// locate the RAS space involved in excitation}}
+\DoxyCodeLine{673       exBlk1 = std::min(\{rB, sB, pB, qB\});}
+\DoxyCodeLine{674       exBlk2 = std::max(\{rB, sB, pB, qB\});}
+\DoxyCodeLine{675       std::vector<size\_t> LCat2 = \{\};}
+\DoxyCodeLine{676       reassembleCatDet2RAS(LCat, nDet, exBlk1, exBlk2, LCatAlt, nDetAlt, Jrs, LCat2);}
+\DoxyCodeLine{677 }
+\DoxyCodeLine{678 \textcolor{preprocessor}{      \#pragma omp for schedule(static, 1)}}
+\DoxyCodeLine{679       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j1 = 0ul; j1 < nDetAlt[0]; j1++)}
+\DoxyCodeLine{680       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j2 = 0ul; j2 < nDetAlt[1]; j2++) \{}
+\DoxyCodeLine{681         \textcolor{keywordtype}{size\_t} j12off = j2 * LCatAlt[1] + j1 * LCatAlt[0];}
+\DoxyCodeLine{682         Jras[Jrs[0]] = j1;}
+\DoxyCodeLine{683         Jras[Jrs[1]] = j2;}
+\DoxyCodeLine{684         \textcolor{comment}{// Gathering D}}
+\DoxyCodeLine{685         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDetAlt[2]; j3++) \{}
+\DoxyCodeLine{686           j = j12off + j3 * LCatAlt[2];}
+\DoxyCodeLine{687           std::copy\_n(DBlk+j*nNZrsB, nNZrsB, Dscr+j3*nNZrsB);}
+\DoxyCodeLine{688         \}}
+\DoxyCodeLine{689         \textcolor{comment}{// Scattering moERI}}
+\DoxyCodeLine{690         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_pq = pqList-\/>pointerAtDet(Jras[pB], Jras[qB]) + nNZpqof * 5;}
+\DoxyCodeLine{691         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZpq = 0ul; iNZpq < nNZpqB; iNZpq++, exList\_pq+=5) \{}
+\DoxyCodeLine{692           \mbox{\hyperlink{excitationlist_8hpp_a7f799b221face34f0e62250433f74c32}{UNPACK\_EXCITATIONLIST\_5}}(exList\_pq, p, q, l1, l2, sign);}
+\DoxyCodeLine{693           p += poff;}
+\DoxyCodeLine{694           q += qoff;}
+\DoxyCodeLine{695           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_rs = rsList-\/>pointerAtDet(Jras[sB], Jras[rB]) + nNZrsof * 5;}
+\DoxyCodeLine{696           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZrs = 0ul; iNZrs < nNZrsB; iNZrs++, exList\_rs+=5) \{}
+\DoxyCodeLine{697             \mbox{\hyperlink{excitationlist_8hpp_a7f799b221face34f0e62250433f74c32}{UNPACK\_EXCITATIONLIST\_5}}(exList\_rs, s, r, l1, l2, sign);}
+\DoxyCodeLine{698             s += soff;}
+\DoxyCodeLine{699             r += roff;}
+\DoxyCodeLine{700             \textcolor{keywordflow}{if} (not (pB != rB and qB != sB))}
+\DoxyCodeLine{701               ERIscr[iNZrs+iNZpq*nNZrsB] = moERI(r, s, p, q);}
+\DoxyCodeLine{702             \textcolor{keywordflow}{else} ERIscr[iNZrs+iNZpq*nNZrsB] = moERI(r, s, p, q) -\/ moERI(p, s, r, q);}
+\DoxyCodeLine{703           \}}
+\DoxyCodeLine{704         \}}
+\DoxyCodeLine{705         blas::gemm(blas::Layout::ColMajor, blas::Op::Trans, blas::Op::NoTrans,}
+\DoxyCodeLine{706             nNZpqB,nDetAlt[2],nNZrsB,MatsT(1.),ERIscr,nNZrsB,}
+\DoxyCodeLine{707             Dscr,nNZrsB,MatsT(0.),Gscr,nNZpqB);}
+\DoxyCodeLine{708         \textcolor{comment}{// Scattering back to GBlk}}
+\DoxyCodeLine{709         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDetAlt[2]; j3++) \{}
+\DoxyCodeLine{710           j = j12off + j3 * LCatAlt[2];}
+\DoxyCodeLine{711           \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'N'},\textcolor{charliteral}{'N'},nNZpqB,1,MatsT(1.),Gscr+j3*nNZpqB,nNZpqB,}
+\DoxyCodeLine{712                 MatsT(1.),GBlk+j*nNZpqB,nNZpqB,GBlk+j*nNZpqB,nNZpqB);}
+\DoxyCodeLine{713         \}}
+\DoxyCodeLine{714       \}}
+\DoxyCodeLine{715     \textcolor{comment}{// Case 3: three RAS spaces are involved in excitation}}
+\DoxyCodeLine{716     \textcolor{comment}{//         implicitly that pBlk != rBlk, qBlk != sBlk}}
+\DoxyCodeLine{717     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (eCase == 3) \{}
+\DoxyCodeLine{718       \textcolor{comment}{// LCatAlt == LCat, nDetAlt == nDet}}
+\DoxyCodeLine{719 \textcolor{preprocessor}{      \#pragma omp for schedule(static, 1)}}
+\DoxyCodeLine{720       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j3 = 0ul; j3 < nDet[2]; j3++)}
+\DoxyCodeLine{721       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j2 = 0ul; j2 < nDet[1]; j2++)}
+\DoxyCodeLine{722       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j1 = 0ul; j1 < nDet[0]; j1++) \{}
+\DoxyCodeLine{723         Jras[0] = j1;}
+\DoxyCodeLine{724         Jras[1] = j2;}
+\DoxyCodeLine{725         Jras[2] = j3;}
+\DoxyCodeLine{726         j = j1 * LCat[0] + j2 * LCat[1] + j3 * LCat[2];}
+\DoxyCodeLine{727         \textcolor{comment}{// assemble moERI}}
+\DoxyCodeLine{728         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_pq = pqList-\/>pointerAtDet(Jras[pB], Jras[qB]) + nNZpqof * 5;}
+\DoxyCodeLine{729         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZpq = 0ul; iNZpq < nNZpqB; iNZpq++, exList\_pq+=5) \{}
+\DoxyCodeLine{730           \mbox{\hyperlink{excitationlist_8hpp_a7f799b221face34f0e62250433f74c32}{UNPACK\_EXCITATIONLIST\_5}}(exList\_pq, p, q, l1, l2, sign);}
+\DoxyCodeLine{731           p += poff;}
+\DoxyCodeLine{732           q += qoff;}
+\DoxyCodeLine{733           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_rs = rsList-\/>pointerAtDet(Jras[sB], Jras[rB]) + nNZrsof * 5;}
+\DoxyCodeLine{734           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iNZrs = 0ul; iNZrs < nNZrsB; iNZrs++, exList\_rs+=5) \{}
+\DoxyCodeLine{735             \mbox{\hyperlink{excitationlist_8hpp_a7f799b221face34f0e62250433f74c32}{UNPACK\_EXCITATIONLIST\_5}}(exList\_rs, s, r, l1, l2, sign);}
+\DoxyCodeLine{736             s += soff;}
+\DoxyCodeLine{737             r += roff;}
+\DoxyCodeLine{738             \textcolor{keywordflow}{if} (not (pB != rB and qB != sB))}
+\DoxyCodeLine{739               ERIscr[iNZrs+iNZpq*nNZrsB] = moERI(r, s, p, q);}
+\DoxyCodeLine{740             \textcolor{keywordflow}{else} ERIscr[iNZrs+iNZpq*nNZrsB] = moERI(r, s, p, q) -\/ moERI(p, s, r, q);}
+\DoxyCodeLine{741           \}}
+\DoxyCodeLine{742         \}}
+\DoxyCodeLine{743         blas::gemm(blas::Layout::ColMajor, blas::Op::Trans, blas::Op::NoTrans,}
+\DoxyCodeLine{744             nNZpqB,1,nNZrsB,MatsT(1.),ERIscr,nNZrsB,}
+\DoxyCodeLine{745             DBlk+j*nNZrsB,nNZrsB,MatsT(1.),GBlk+j*nNZpqB,nNZpqB);}
+\DoxyCodeLine{746       \}}
+\DoxyCodeLine{747     \}}
+\DoxyCodeLine{748 \textcolor{preprocessor}{\#ifdef \_DEBUG\_CIBUILDER\_RASCI\_IMPL}}
+\DoxyCodeLine{749     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}LL RASCI Sigma G off-\/off -\/-\/"{}}, GBlk, nNZpqB, LCat[3], nNZpqB);}
+\DoxyCodeLine{750 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{751   \} \textcolor{comment}{// RASCI::SigmaG\_oo}}
+\DoxyCodeLine{752 }
+\DoxyCodeLine{759   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{760   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RASCI_ae09ca1ce6af9d50f0b520905f8094676}{RASCI<MatsT,IntsT>::Sigma2e\_diag}}(MatsT * Sigma, MatsT * GBlk, \textcolor{keywordtype}{size\_t} nNZof,}
+\DoxyCodeLine{761         \textcolor{keywordtype}{size\_t} nNZB, std::shared\_ptr<const ExcitationList> exList, \textcolor{keywordtype}{size\_t} pqB,}
+\DoxyCodeLine{762         std::vector<size\_t> \& LCat,}
+\DoxyCodeLine{763         std::vector<size\_t> \& nDet, \textcolor{keywordtype}{double} symmFc) \{}
+\DoxyCodeLine{764 }
+\DoxyCodeLine{765     \textcolor{comment}{// re-\/assemble LCatAlt and NDAlt}}
+\DoxyCodeLine{766     std::vector<size\_t> LCatAlt(3, 0);}
+\DoxyCodeLine{767     std::vector<size\_t> nDetAlt(3, 0);}
+\DoxyCodeLine{768     reassembleCatDet1RAS(LCat, nDet, pqB, LCatAlt, nDetAlt);}
+\DoxyCodeLine{769 }
+\DoxyCodeLine{770     \textcolor{keywordtype}{size\_t} j23off, k1, k, j, p, q, j1, j2, j3, iNZ;}
+\DoxyCodeLine{771     \textcolor{keywordtype}{double} sign;}
+\DoxyCodeLine{772 }
+\DoxyCodeLine{773 \textcolor{preprocessor}{    \#pragma omp parallel for schedule(static, 1) default(shared) private(j1, j2, j3, iNZ, k1, k, j23off, j, sign, p, q)}}
+\DoxyCodeLine{774     \textcolor{keywordflow}{for} (j3 = 0; j3 < nDetAlt[2]; j3++)}
+\DoxyCodeLine{775     \textcolor{keywordflow}{for} (j2 = 0; j2 < nDetAlt[1]; j2++)}
+\DoxyCodeLine{776     \textcolor{keywordflow}{for} (j1 = 0; j1 < nDetAlt[0]; j1++) \{}
+\DoxyCodeLine{777       j23off = j3 * LCatAlt[2] + j2 * LCatAlt[1];}
+\DoxyCodeLine{778       j = j1 * LCatAlt[0] + j23off;}
+\DoxyCodeLine{779       \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_j1 = exList-\/>pointerAtDet(j1) + nNZof * 4;}
+\DoxyCodeLine{780       \textcolor{keywordflow}{for} (iNZ = 0; iNZ < nNZB; iNZ++, exList\_j1+=4) \{}
+\DoxyCodeLine{781         \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_j1, p, q, k1, sign);}
+\DoxyCodeLine{782         sign = sign * symmFc;}
+\DoxyCodeLine{783         k = k1 * LCatAlt[0] + j23off;}
+\DoxyCodeLine{784         Sigma[k] += sign * GBlk[iNZ + j * nNZB];}
+\DoxyCodeLine{785       \}}
+\DoxyCodeLine{786     \}}
+\DoxyCodeLine{787     \textcolor{comment}{// End openMP}}
+\DoxyCodeLine{788   \} \textcolor{comment}{// RASCI::Sigma2e\_diag}}
+\DoxyCodeLine{789 }
+\DoxyCodeLine{796   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{797   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RASCI_a6f1f1738c24b31fdce2b56cb775c7bd7}{RASCI<MatsT,IntsT>::Sigma2e\_offdiag}}(MatsT * Sigma, MatsT * GBlk, \textcolor{keywordtype}{size\_t} nNZof,}
+\DoxyCodeLine{798         \textcolor{keywordtype}{size\_t} nNZB, std::shared\_ptr<const ExcitationList> exList, \textcolor{keywordtype}{size\_t} pB, \textcolor{keywordtype}{size\_t} qB,}
+\DoxyCodeLine{799         std::vector<size\_t> \& LCat1, std::vector<size\_t> \& LCat2,}
+\DoxyCodeLine{800         std::vector<size\_t> \& nDet, \textcolor{keywordtype}{double} symmFc) \{}
+\DoxyCodeLine{801 }
+\DoxyCodeLine{802     \textcolor{comment}{// re-\/assemble LCatAlt and NDAlt}}
+\DoxyCodeLine{803     std::vector<size\_t> LCatAlt1(3, 0);}
+\DoxyCodeLine{804     std::vector<size\_t> LCatAlt2(3, 0);}
+\DoxyCodeLine{805     std::vector<size\_t> nDetAlt(3, 0);}
+\DoxyCodeLine{806     reassembleCatDet2RAS(LCat1, nDet, pB, qB, LCatAlt1, nDetAlt, LCatAlt2, LCat2);}
+\DoxyCodeLine{807 }
+\DoxyCodeLine{808     \textcolor{keywordtype}{size\_t} j, k, k1, k2, p, q, j1, j2, j3, iNZ;}
+\DoxyCodeLine{809     \textcolor{keywordtype}{double} sign;}
+\DoxyCodeLine{810 }
+\DoxyCodeLine{811 \textcolor{preprocessor}{    \#pragma omp parallel for schedule(static, 1) default(shared) private(j1, j2, j3, iNZ, k1, k, k2, j, sign, p, q)}}
+\DoxyCodeLine{812     \textcolor{keywordflow}{for} (j3 = 0; j3 < nDetAlt[2]; j3++)}
+\DoxyCodeLine{813     \textcolor{keywordflow}{for} (j1 = 0; j1 < nDetAlt[0]; j1++)}
+\DoxyCodeLine{814     \textcolor{keywordflow}{for} (j2 = 0; j2 < nDetAlt[1]; j2++) \{}
+\DoxyCodeLine{815       j = j1*LCatAlt1[0] + j2*LCatAlt1[1] + j3*LCatAlt1[2];}
+\DoxyCodeLine{816       \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_j = exList-\/>pointerAtDet(j1, j2) + nNZof * 5;}
+\DoxyCodeLine{817       \textcolor{keywordflow}{for} (iNZ = 0; iNZ < nNZB; iNZ++, exList\_j+=5) \{}
+\DoxyCodeLine{818         \mbox{\hyperlink{excitationlist_8hpp_a7f799b221face34f0e62250433f74c32}{UNPACK\_EXCITATIONLIST\_5}}(exList\_j, p, q, k1, k2, sign);}
+\DoxyCodeLine{819         k = k1*LCatAlt2[0] + k2*LCatAlt2[1] + j3*LCatAlt2[2];}
+\DoxyCodeLine{820         sign = sign * symmFc;}
+\DoxyCodeLine{821         Sigma[k] += sign * GBlk[iNZ + j * nNZB];}
+\DoxyCodeLine{822       \}}
+\DoxyCodeLine{823     \}}
+\DoxyCodeLine{824     \textcolor{comment}{// End openMP}}
+\DoxyCodeLine{825   \} \textcolor{comment}{// RASCI::Sigma2e\_offdiag}}
+\DoxyCodeLine{826 }
+\DoxyCodeLine{827 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{828 }
+\DoxyCodeLine{829 }
+\DoxyCodeLine{830 }
+\DoxyCodeLine{831 }
+\DoxyCodeLine{832 }
+\DoxyCodeLine{833 }
+\DoxyCodeLine{834 }
+
+\end{DoxyCode}

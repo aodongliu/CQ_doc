@@ -1,0 +1,939 @@
+\hypertarget{timer_8hpp_source}{}\doxysection{timer.\+hpp}
+\label{timer_8hpp_source}\index{include/util/timer.hpp@{include/util/timer.hpp}}
+\mbox{\hyperlink{timer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{comment}{// Basically this timer is a graph of nodes that have up children separated}}
+\DoxyCodeLine{26 \textcolor{comment}{// by thread. All children only have one parent.}}
+\DoxyCodeLine{27 \textcolor{comment}{//}}
+\DoxyCodeLine{28 \textcolor{comment}{// A known issue with this design is that it does not allow for two overlapping}}
+\DoxyCodeLine{29 \textcolor{comment}{// timed regions with the same nested region -\/ you will need to assign it to }}
+\DoxyCodeLine{30 \textcolor{comment}{// one or the other.}}
+\DoxyCodeLine{31 \textcolor{comment}{//}}
+\DoxyCodeLine{32 \textcolor{comment}{// For example, if the execution graph looked like this:}}
+\DoxyCodeLine{33 \textcolor{comment}{//}}
+\DoxyCodeLine{34 \textcolor{comment}{//    Call level:  0   1}}
+\DoxyCodeLine{35 \textcolor{comment}{//                 -\/-\/-\/-\/-\/-\/-\/-\/-\/ foo tick}}
+\DoxyCodeLine{36 \textcolor{comment}{//                 |}}
+\DoxyCodeLine{37 \textcolor{comment}{//                 |   -\/-\/-\/-\/-\/ subfoo tick}}
+\DoxyCodeLine{38 \textcolor{comment}{//                 |   |}}
+\DoxyCodeLine{39 \textcolor{comment}{//                 |   -\/-\/-\/-\/-\/ subfoo tock}}
+\DoxyCodeLine{40 \textcolor{comment}{//                 |}}
+\DoxyCodeLine{41 \textcolor{comment}{//                 |-\/-\/-\/-\/-\/-\/-\/-\/ bar tick}}
+\DoxyCodeLine{42 \textcolor{comment}{//                 |}}
+\DoxyCodeLine{43 \textcolor{comment}{//                 |   -\/-\/-\/-\/-\/ baz tick}}
+\DoxyCodeLine{44 \textcolor{comment}{//                 |   |}}
+\DoxyCodeLine{45 \textcolor{comment}{//                 |   -\/-\/-\/-\/-\/ baz tock}}
+\DoxyCodeLine{46 \textcolor{comment}{//                 |}}
+\DoxyCodeLine{47 \textcolor{comment}{//                 |-\/-\/-\/-\/-\/-\/-\/-\/ foo tock}}
+\DoxyCodeLine{48 \textcolor{comment}{//                 |}}
+\DoxyCodeLine{49 \textcolor{comment}{//                 -\/-\/-\/-\/-\/-\/-\/-\/-\/ bar tock}}
+\DoxyCodeLine{50 \textcolor{comment}{//}}
+\DoxyCodeLine{51 \textcolor{comment}{// You would need to assign the baz subblock to the foo or the bar context,}}
+\DoxyCodeLine{52 \textcolor{comment}{// even though it is really part of both.}}
+\DoxyCodeLine{53 \textcolor{comment}{//}}
+\DoxyCodeLine{54 \textcolor{comment}{// In quantum chemistry programs, there aren't many reasons to have overlapping}}
+\DoxyCodeLine{55 \textcolor{comment}{// timing regions, so this issue shouldn't come up often.}}
+\DoxyCodeLine{56 \textcolor{comment}{//}}
+\DoxyCodeLine{57 \textcolor{comment}{// This timer also doesn't account for overhead. Experimentally, the overhead is}}
+\DoxyCodeLine{58 \textcolor{comment}{// in the tens of microseconds per tick/tock pair, but the exact number depends}}
+\DoxyCodeLine{59 \textcolor{comment}{// on your system and software environmental factors. In short, if you are}}
+\DoxyCodeLine{60 \textcolor{comment}{// optimizing/measuring something that takes microseconds and the overhead is}}
+\DoxyCodeLine{61 \textcolor{comment}{// substantial compared to your run time, you should use a timer more optimized}}
+\DoxyCodeLine{62 \textcolor{comment}{// for that case.}}
+\DoxyCodeLine{63 \textcolor{comment}{//}}
+\DoxyCodeLine{64 \textcolor{comment}{// Right now this timer can't handle nested OpenMP parallelism or other}}
+\DoxyCodeLine{65 \textcolor{comment}{// versions of SMP parallelism, but since the thread ids don't need to be}}
+\DoxyCodeLine{66 \textcolor{comment}{// sequential in each section, it can be extended to handle those cases.}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 \textcolor{preprocessor}{\#include <algorithm>}}
+\DoxyCodeLine{71 \textcolor{preprocessor}{\#include <cassert>}}
+\DoxyCodeLine{72 \textcolor{preprocessor}{\#include <chrono>}}
+\DoxyCodeLine{73 \textcolor{preprocessor}{\#include <functional>}}
+\DoxyCodeLine{74 \textcolor{preprocessor}{\#include <iomanip>}}
+\DoxyCodeLine{75 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{76 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{77 \textcolor{preprocessor}{\#include <mutex>}}
+\DoxyCodeLine{78 \textcolor{preprocessor}{\#include <queue>}}
+\DoxyCodeLine{79 \textcolor{preprocessor}{\#include <sstream>}}
+\DoxyCodeLine{80 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{81 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{82 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 \textcolor{preprocessor}{\#include <omp.h>}}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleton_8hpp}{util/singleton.hpp}}>}}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91   \textcolor{comment}{// Old time.hpp definitions -\/ may want to phase out}}
+\DoxyCodeLine{92 \textcolor{preprocessor}{\#ifndef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{93   \textcolor{keyword}{using }\mbox{\hyperlink{namespaceChronusQ_a82bc9a37542c897cd0eaa307e71c081d}{time\_point}} = \mbox{\hyperlink{namespaceChronusQ_a82bc9a37542c897cd0eaa307e71c081d}{std::chrono::high\_resolution\_clock::time\_point}};}
+\DoxyCodeLine{94 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{95   \textcolor{keyword}{using }\mbox{\hyperlink{namespaceChronusQ_a82bc9a37542c897cd0eaa307e71c081d}{time\_point}} = double;}
+\DoxyCodeLine{96 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99   \textcolor{keyword}{static} \textcolor{keyword}{inline} \mbox{\hyperlink{namespaceChronusQ_a82bc9a37542c897cd0eaa307e71c081d}{time\_point}} \mbox{\hyperlink{namespaceChronusQ_a715f671201f0f6e77216fcf1f72adbaf}{tick}}() \{}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101 \textcolor{preprocessor}{\#ifndef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{102     \textcolor{keywordflow}{return} std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{103 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{104     \textcolor{keywordflow}{return} MPI\_Wtime();}
+\DoxyCodeLine{105 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107   \}}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109   \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a3b2153e93af4532ff5b1e75d8af453b0}{tock}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespaceChronusQ_a82bc9a37542c897cd0eaa307e71c081d}{time\_point}}\& pt) \{}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     \mbox{\hyperlink{namespaceChronusQ_a82bc9a37542c897cd0eaa307e71c081d}{time\_point}} now = \mbox{\hyperlink{namespaceChronusQ_a715f671201f0f6e77216fcf1f72adbaf}{tick}}();}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113 \textcolor{preprocessor}{\#ifndef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{114     \textcolor{keywordflow}{return} std::chrono::duration<double>(now -\/ pt).count();}
+\DoxyCodeLine{115 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{116     \textcolor{keywordflow}{return} (now -\/ pt);}
+\DoxyCodeLine{117 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119   \}}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123   \textcolor{keyword}{using }\mbox{\hyperlink{namespaceChronusQ_acd002d6c7a030e5a931f4538359da0f7}{CQMillisecond}} = std::chrono::duration<double, std::milli>;}
+\DoxyCodeLine{124   \textcolor{keyword}{using }\mbox{\hyperlink{namespaceChronusQ_a06326801a6b18c977f13d2e666877dcd}{CQSecond}} = std::chrono::duration<double>;}
+\DoxyCodeLine{125   \textcolor{keyword}{using }\mbox{\hyperlink{namespaceChronusQ_a6772c18caaee12653596988f35f2be8c}{CQMinute}} = std::chrono::duration<double, std::ratio<60,1>>;}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127   \textcolor{comment}{// Forward declare}}
+\DoxyCodeLine{128   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1Timer}{Timer}};}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_a9ae304c55a155f3a9a1f87f1fb8888c1}{TimerUnit}} \{}
+\DoxyCodeLine{131     \mbox{\hyperlink{namespaceChronusQ_a9ae304c55a155f3a9a1f87f1fb8888c1ac9c83616b538e57d3eb42faddba23ccf}{MILLISECONDS}},}
+\DoxyCodeLine{132     \mbox{\hyperlink{namespaceChronusQ_a9ae304c55a155f3a9a1f87f1fb8888c1abb9784bbb79e064c58ea1bbfa4fec8de}{SECONDS}},}
+\DoxyCodeLine{133     \mbox{\hyperlink{namespaceChronusQ_a9ae304c55a155f3a9a1f87f1fb8888c1a66af4d739683ee24fdd89968e117a20b}{MINUTES}}}
+\DoxyCodeLine{134   \};}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1TimerOpts}{TimerOpts}} \{}
+\DoxyCodeLine{137     \mbox{\hyperlink{namespaceChronusQ_a9ae304c55a155f3a9a1f87f1fb8888c1}{TimerUnit}} \mbox{\hyperlink{structChronusQ_1_1TimerOpts_a3f28b2a87c0c34e760627cabc6b6c34e}{unit}}\{\mbox{\hyperlink{namespaceChronusQ_a9ae304c55a155f3a9a1f87f1fb8888c1abb9784bbb79e064c58ea1bbfa4fec8de}{SECONDS}}\};}
+\DoxyCodeLine{138     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1TimerOpts_a3b1689677163c01748b85f911b98822e}{dbgPrint}}\{0\};}
+\DoxyCodeLine{139     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1TimerOpts_a30d0b00e24a0ec7c6488b8472b505091}{doSummary}}\{\textcolor{keyword}{true}\};}
+\DoxyCodeLine{140   \};}
+\DoxyCodeLine{141   }
+\DoxyCodeLine{142   \textcolor{comment}{// Threadsafe wrapper around an unordered\_map that also offers threadsafe}}
+\DoxyCodeLine{143   \textcolor{comment}{// Id incrementing. }}
+\DoxyCodeLine{144   \textcolor{comment}{//}}
+\DoxyCodeLine{145   \textcolor{comment}{// 0 is treated as a sentinel value by the Timer class, so incrementing}}
+\DoxyCodeLine{146   \textcolor{comment}{//   starts at 1.}}
+\DoxyCodeLine{147   \textcolor{keyword}{template} <\textcolor{keyword}{typename} IdT, \textcolor{keyword}{typename} ValT>}
+\DoxyCodeLine{148   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1Registry}{Registry}} \{}
+\DoxyCodeLine{149   }
+\DoxyCodeLine{150     IdT \mbox{\hyperlink{classChronusQ_1_1Registry_a0778472648e89cd11889513bde276346}{nextId\_}} = 1;}
+\DoxyCodeLine{151     std::unordered\_map<IdT,ValT> \mbox{\hyperlink{classChronusQ_1_1Registry_afc2b8b4abb564c5e3930c88056f910cf}{registry\_}};}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     std::mutex \mbox{\hyperlink{classChronusQ_1_1Registry_a2f1d1e152f4f870dfde75382e5b19265}{id\_mutex\_}};}
+\DoxyCodeLine{154     std::mutex \mbox{\hyperlink{classChronusQ_1_1Registry_a21d09fefa8c294b2b96d6b480d766bf5}{reg\_mutex\_}};}
+\DoxyCodeLine{155   }
+\DoxyCodeLine{156     \textcolor{keyword}{public}:}
+\DoxyCodeLine{157   }
+\DoxyCodeLine{158     IdT \mbox{\hyperlink{classChronusQ_1_1Registry_a6bfd1cd9bde6c0f717d5108552e67cf1}{getId}}() \{}
+\DoxyCodeLine{159       \textcolor{keyword}{const} std::lock\_guard<std::mutex> lock(\mbox{\hyperlink{classChronusQ_1_1Registry_a2f1d1e152f4f870dfde75382e5b19265}{id\_mutex\_}});}
+\DoxyCodeLine{160       IdT temp = \mbox{\hyperlink{classChronusQ_1_1Registry_a0778472648e89cd11889513bde276346}{nextId\_}}++;}
+\DoxyCodeLine{161       \textcolor{keywordflow}{return} temp;}
+\DoxyCodeLine{162     \}}
+\DoxyCodeLine{163   }
+\DoxyCodeLine{164     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Registry_a4b28f9547bb12e8adf25db77c6dee1a3}{add}}(IdT \textcolor{keywordtype}{id}, ValT val) \{}
+\DoxyCodeLine{165       \textcolor{keyword}{const} std::lock\_guard<std::mutex> lock(\mbox{\hyperlink{classChronusQ_1_1Registry_a21d09fefa8c294b2b96d6b480d766bf5}{reg\_mutex\_}});}
+\DoxyCodeLine{166       \mbox{\hyperlink{classChronusQ_1_1Registry_afc2b8b4abb564c5e3930c88056f910cf}{registry\_}}.insert(\{id, val\});}
+\DoxyCodeLine{167     \}}
+\DoxyCodeLine{168   }
+\DoxyCodeLine{169     ValT \mbox{\hyperlink{classChronusQ_1_1Registry_a9c6237e2d4b56e88340f9a85396b382b}{operator[]}}(IdT \textcolor{keywordtype}{id}) \{}
+\DoxyCodeLine{170       \textcolor{keyword}{const} std::lock\_guard<std::mutex> lock(\mbox{\hyperlink{classChronusQ_1_1Registry_a21d09fefa8c294b2b96d6b480d766bf5}{reg\_mutex\_}});}
+\DoxyCodeLine{171       ValT retval = \mbox{\hyperlink{classChronusQ_1_1Registry_afc2b8b4abb564c5e3930c88056f910cf}{registry\_}}[id];}
+\DoxyCodeLine{172       \textcolor{keywordflow}{return} retval;}
+\DoxyCodeLine{173     \};}
+\DoxyCodeLine{174   }
+\DoxyCodeLine{175   \};}
+\DoxyCodeLine{176   }
+\DoxyCodeLine{177   \textcolor{comment}{// Basic node that represents a slice of time with a set of threaded sections}}
+\DoxyCodeLine{178   \textcolor{comment}{// underneath}}
+\DoxyCodeLine{179   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}} \{}
+\DoxyCodeLine{180   }
+\DoxyCodeLine{181     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{IdType}}    = size\_t;}
+\DoxyCodeLine{182     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1TimeSection_a5ce5881f661fe707e4b3151f51a0cb08}{Clock}}     = std::chrono::steady\_clock;}
+\DoxyCodeLine{183     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1TimeSection_a650c4d27eff248cde4577f2aae39a0aa}{TimePoint}} = std::chrono::time\_point<Clock>;}
+\DoxyCodeLine{184     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1Registry}{RegType}}   = \mbox{\hyperlink{classChronusQ_1_1Registry}{Registry<IdType,TimeSection*>}};}
+\DoxyCodeLine{185   }
+\DoxyCodeLine{186     \textcolor{comment}{// Human readable label for this section}}
+\DoxyCodeLine{187     std::string \mbox{\hyperlink{classChronusQ_1_1TimeSection_a245165e301c43dfb65b1c003852554df}{label\_}};}
+\DoxyCodeLine{188     \textcolor{comment}{// Unique Id for this section}}
+\DoxyCodeLine{189     \mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{IdType}} \mbox{\hyperlink{classChronusQ_1_1TimeSection_ae1625bac7287bfe0cb064398ef77f7c4}{id\_}};}
+\DoxyCodeLine{190   }
+\DoxyCodeLine{191     \textcolor{comment}{// Threads (outside) and subsections (inside)}}
+\DoxyCodeLine{192     \textcolor{comment}{// The value is a unique\_ptr so references to the object don't get}}
+\DoxyCodeLine{193     \textcolor{comment}{//   invalidated on reallocation of the unordered map. }}
+\DoxyCodeLine{194     \textcolor{comment}{// Multiple shared\_ptr would cause cyclical references, so we're not going to}}
+\DoxyCodeLine{195     \textcolor{comment}{// do that}}
+\DoxyCodeLine{196     std::unordered\_map<size\_t,std::unordered\_map<IdType,std::unique\_ptr<TimeSection>>> \mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}{children\_}};}
+\DoxyCodeLine{197     \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* \mbox{\hyperlink{classChronusQ_1_1TimeSection_ad62204a042ef69d91d58ff6a0b12b8db}{parent\_}};}
+\DoxyCodeLine{198   }
+\DoxyCodeLine{199     \textcolor{comment}{// Registry to get ids and add subsections}}
+\DoxyCodeLine{200     \mbox{\hyperlink{classChronusQ_1_1Registry}{RegType}}* \mbox{\hyperlink{classChronusQ_1_1TimeSection_a6deafef3cbe355f60b4e94d04c774a95}{registry\_}};}
+\DoxyCodeLine{201   }
+\DoxyCodeLine{202     \textcolor{comment}{// Wall times for this section}}
+\DoxyCodeLine{203     \mbox{\hyperlink{classChronusQ_1_1TimeSection_a650c4d27eff248cde4577f2aae39a0aa}{TimePoint}} \mbox{\hyperlink{classChronusQ_1_1TimeSection_a2569f4000122903e37ce8998b4aeb3ca}{start\_}};}
+\DoxyCodeLine{204     \mbox{\hyperlink{classChronusQ_1_1TimeSection_a650c4d27eff248cde4577f2aae39a0aa}{TimePoint}} \mbox{\hyperlink{classChronusQ_1_1TimeSection_a499aada3f7e7cc6c30e8653017a2eca0}{stop\_}};}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1TimeSection_ac28038723845ad52fb152c3ab4e537bc}{stopped\_}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208     std::mutex \mbox{\hyperlink{classChronusQ_1_1TimeSection_a00d11964f05f6995a938a442e1992527}{mutex\_}};}
+\DoxyCodeLine{209   }
+\DoxyCodeLine{210     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1Timer}{Timer}};}
+\DoxyCodeLine{211   }
+\DoxyCodeLine{212     \textcolor{keyword}{public}:}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214     \mbox{\hyperlink{classChronusQ_1_1TimeSection_ab5b243f3b33620396725910ee8ce0043}{TimeSection}}(): \mbox{\hyperlink{classChronusQ_1_1TimeSection_a245165e301c43dfb65b1c003852554df}{label\_}}(\textcolor{stringliteral}{"{}"{}}), \mbox{\hyperlink{classChronusQ_1_1TimeSection_ae1625bac7287bfe0cb064398ef77f7c4}{id\_}}(0), \mbox{\hyperlink{classChronusQ_1_1TimeSection_ad62204a042ef69d91d58ff6a0b12b8db}{parent\_}}(nullptr), \mbox{\hyperlink{classChronusQ_1_1TimeSection_a6deafef3cbe355f60b4e94d04c774a95}{registry\_}}(nullptr) \{}
+\DoxyCodeLine{215       \mbox{\hyperlink{classChronusQ_1_1TimeSection_a2569f4000122903e37ce8998b4aeb3ca}{start\_}} = Clock::now();}
+\DoxyCodeLine{216     \};}
+\DoxyCodeLine{217   }
+\DoxyCodeLine{218     \mbox{\hyperlink{classChronusQ_1_1TimeSection_a74a05389f7f1caa73bc496fbe990fc86}{TimeSection}}(}
+\DoxyCodeLine{219         std::string label,}
+\DoxyCodeLine{220         \mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{IdType}} \textcolor{keywordtype}{id},}
+\DoxyCodeLine{221         \mbox{\hyperlink{classChronusQ_1_1Registry}{RegType}}* reg,}
+\DoxyCodeLine{222         \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* parent) :}
+\DoxyCodeLine{223       \mbox{\hyperlink{classChronusQ_1_1TimeSection_a245165e301c43dfb65b1c003852554df}{label\_}}(label),}
+\DoxyCodeLine{224       \mbox{\hyperlink{classChronusQ_1_1TimeSection_ae1625bac7287bfe0cb064398ef77f7c4}{id\_}}(id),}
+\DoxyCodeLine{225       \mbox{\hyperlink{classChronusQ_1_1TimeSection_a6deafef3cbe355f60b4e94d04c774a95}{registry\_}}(reg),}
+\DoxyCodeLine{226       \mbox{\hyperlink{classChronusQ_1_1TimeSection_ad62204a042ef69d91d58ff6a0b12b8db}{parent\_}}(parent)}
+\DoxyCodeLine{227     \{ }
+\DoxyCodeLine{228       \mbox{\hyperlink{classChronusQ_1_1TimeSection_a2569f4000122903e37ce8998b4aeb3ca}{start\_}} = Clock::now();}
+\DoxyCodeLine{229     \}}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231     \textcolor{comment}{//}}
+\DoxyCodeLine{232     \textcolor{comment}{// Timing control}}
+\DoxyCodeLine{233     \textcolor{comment}{//}}
+\DoxyCodeLine{234   }
+\DoxyCodeLine{235     \textcolor{comment}{// Stop this section}}
+\DoxyCodeLine{236     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1TimeSection_aeb20a5693690833a2343c931596c5391}{stop}}() \{}
+\DoxyCodeLine{237   }
+\DoxyCodeLine{238       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1TimeSection_ac28038723845ad52fb152c3ab4e537bc}{stopped\_}}) \{}
+\DoxyCodeLine{239         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{240       \}}
+\DoxyCodeLine{241   }
+\DoxyCodeLine{242       \textcolor{comment}{// Stop all subsections}}
+\DoxyCodeLine{243       \textcolor{comment}{// Locked because tick can cause reallocation of children\_}}
+\DoxyCodeLine{244       \textcolor{comment}{//   on another thread -\/ this is \_very\_ unlikely to happen during}}
+\DoxyCodeLine{245       \textcolor{comment}{//   normal usage, but is possible.}}
+\DoxyCodeLine{246       \{}
+\DoxyCodeLine{247         \textcolor{keyword}{const} std::lock\_guard<std::mutex> lock(\mbox{\hyperlink{classChronusQ_1_1TimeSection_a00d11964f05f6995a938a442e1992527}{mutex\_}});}
+\DoxyCodeLine{248         \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto}\& thread: \mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}{children\_}} )}
+\DoxyCodeLine{249           \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto}\& section: thread.second )}
+\DoxyCodeLine{250             section.second-\/>stop();}
+\DoxyCodeLine{251       \}}
+\DoxyCodeLine{252   }
+\DoxyCodeLine{253       \mbox{\hyperlink{classChronusQ_1_1TimeSection_a499aada3f7e7cc6c30e8653017a2eca0}{stop\_}} = Clock::now();}
+\DoxyCodeLine{254       \mbox{\hyperlink{classChronusQ_1_1TimeSection_ac28038723845ad52fb152c3ab4e537bc}{stopped\_}} = \textcolor{keyword}{true};}
+\DoxyCodeLine{255   }
+\DoxyCodeLine{256     \}}
+\DoxyCodeLine{257   }
+\DoxyCodeLine{258     \textcolor{comment}{// Start a new subsection}}
+\DoxyCodeLine{259     \mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{IdType}} \mbox{\hyperlink{classChronusQ_1_1TimeSection_a1f98ad9e671c350b9be599171a8b2f76}{tick}}(std::string label, \textcolor{keywordtype}{size\_t} threadId = 0) \{}
+\DoxyCodeLine{260   }
+\DoxyCodeLine{261       \mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{IdType}} \textcolor{keywordtype}{id} = \mbox{\hyperlink{classChronusQ_1_1TimeSection_a6deafef3cbe355f60b4e94d04c774a95}{registry\_}}-\/>\mbox{\hyperlink{classChronusQ_1_1Registry_a6bfd1cd9bde6c0f717d5108552e67cf1}{getId}}();}
+\DoxyCodeLine{262   }
+\DoxyCodeLine{263       \textcolor{keyword}{auto} child = std::make\_unique<TimeSection>(label, \textcolor{keywordtype}{id}, \mbox{\hyperlink{classChronusQ_1_1TimeSection_a6deafef3cbe355f60b4e94d04c774a95}{registry\_}}, \textcolor{keyword}{this});}
+\DoxyCodeLine{264   }
+\DoxyCodeLine{265       \mbox{\hyperlink{classChronusQ_1_1TimeSection_a6deafef3cbe355f60b4e94d04c774a95}{registry\_}}-\/>\mbox{\hyperlink{classChronusQ_1_1Registry_a4b28f9547bb12e8adf25db77c6dee1a3}{add}}(\textcolor{keywordtype}{id}, child.get());}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267       \textcolor{comment}{// Locked due to insertion}}
+\DoxyCodeLine{268       \{}
+\DoxyCodeLine{269         \textcolor{keyword}{const} std::lock\_guard<std::mutex> lock(\mbox{\hyperlink{classChronusQ_1_1TimeSection_a00d11964f05f6995a938a442e1992527}{mutex\_}});}
+\DoxyCodeLine{270         \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}{children\_}}.find(threadId) == \mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}{children\_}}.end()) \{}
+\DoxyCodeLine{271           std::unordered\_map<IdType,std::unique\_ptr<TimeSection>> temp;}
+\DoxyCodeLine{272           \mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}{children\_}}.insert(std::move(std::make\_pair(threadId, std::move(temp))));}
+\DoxyCodeLine{273         \}}
+\DoxyCodeLine{274         \mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}{children\_}}[threadId].insert(std::move(std::make\_pair(\textcolor{keywordtype}{id}, std::move(child))));}
+\DoxyCodeLine{275       \}}
+\DoxyCodeLine{276   }
+\DoxyCodeLine{277       \textcolor{keywordflow}{return} id;}
+\DoxyCodeLine{278     \}}
+\DoxyCodeLine{279   }
+\DoxyCodeLine{280     \textcolor{comment}{// Stop a subsection}}
+\DoxyCodeLine{281     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1TimeSection_a9ef16697b71e3afc88dde7a2ee69bafe}{tock}}(\textcolor{keywordtype}{size\_t} \textcolor{keywordtype}{id}, \textcolor{keywordtype}{size\_t} threadId = 0) \{}
+\DoxyCodeLine{282       \textcolor{comment}{// Locked because tick can cause reallocation of children\_ on another}}
+\DoxyCodeLine{283       \textcolor{comment}{// thread}}
+\DoxyCodeLine{284       \textcolor{keyword}{const} std::lock\_guard<std::mutex> lock(\mbox{\hyperlink{classChronusQ_1_1TimeSection_a00d11964f05f6995a938a442e1992527}{mutex\_}});}
+\DoxyCodeLine{285       \mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}{children\_}}[threadId].find(\textcolor{keywordtype}{id})-\/>second-\/>stop();}
+\DoxyCodeLine{286     \}}
+\DoxyCodeLine{287   }
+\DoxyCodeLine{288     \textcolor{comment}{//}}
+\DoxyCodeLine{289     \textcolor{comment}{// Reporting}}
+\DoxyCodeLine{290     \textcolor{comment}{//}}
+\DoxyCodeLine{291     }
+\DoxyCodeLine{292     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{293     DurT \mbox{\hyperlink{classChronusQ_1_1TimeSection_a544dcc8803a85bd10291d7a31dab4f95}{duration}}() \{}
+\DoxyCodeLine{294       \textcolor{keywordflow}{return} std::chrono::duration\_cast<DurT>(\mbox{\hyperlink{classChronusQ_1_1TimeSection_a499aada3f7e7cc6c30e8653017a2eca0}{stop\_}} -\/ \mbox{\hyperlink{classChronusQ_1_1TimeSection_a2569f4000122903e37ce8998b4aeb3ca}{start\_}});}
+\DoxyCodeLine{295     \}}
+\DoxyCodeLine{296   }
+\DoxyCodeLine{297     \textcolor{comment}{//}}
+\DoxyCodeLine{298     \textcolor{comment}{// Searching ancestors (no recursion)}}
+\DoxyCodeLine{299     \textcolor{comment}{//}}
+\DoxyCodeLine{300   }
+\DoxyCodeLine{301     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1TimeSection_ab263aad75f33dfbf0bb2d01ae2e07e96}{isAncestor}}(\mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{IdType}} \textcolor{keywordtype}{id}) \{}
+\DoxyCodeLine{302       \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* curr = \textcolor{keyword}{this};}
+\DoxyCodeLine{303       \textcolor{keywordflow}{while} ( curr-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_ad62204a042ef69d91d58ff6a0b12b8db}{parent\_}} != \textcolor{keyword}{nullptr} ) \{}
+\DoxyCodeLine{304         curr = curr-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_ad62204a042ef69d91d58ff6a0b12b8db}{parent\_}};}
+\DoxyCodeLine{305         \textcolor{keywordflow}{if} ( curr-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_ae1625bac7287bfe0cb064398ef77f7c4}{id\_}} == \textcolor{keywordtype}{id} )}
+\DoxyCodeLine{306           \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{307       \}}
+\DoxyCodeLine{308       \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{309     \};}
+\DoxyCodeLine{310   }
+\DoxyCodeLine{311     \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* \mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ea5d1773173643d9bfd8cdfbe8ad573}{findAncestor}}(std::string label) \{}
+\DoxyCodeLine{312       \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* curr = \textcolor{keyword}{this};}
+\DoxyCodeLine{313       \textcolor{keywordflow}{while} ( curr-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_ad62204a042ef69d91d58ff6a0b12b8db}{parent\_}} != \textcolor{keyword}{nullptr} ) \{}
+\DoxyCodeLine{314         curr = curr-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_ad62204a042ef69d91d58ff6a0b12b8db}{parent\_}};}
+\DoxyCodeLine{315         \textcolor{keywordflow}{if} ( curr-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a245165e301c43dfb65b1c003852554df}{label\_}} == label )}
+\DoxyCodeLine{316           \textcolor{keywordflow}{return} curr;}
+\DoxyCodeLine{317       \}}
+\DoxyCodeLine{318       \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{319     \};}
+\DoxyCodeLine{320   }
+\DoxyCodeLine{321   \};}
+\DoxyCodeLine{322   }
+\DoxyCodeLine{323   \textcolor{comment}{//}}
+\DoxyCodeLine{324   \textcolor{comment}{// Main Timer class}}
+\DoxyCodeLine{325   \textcolor{comment}{//}}
+\DoxyCodeLine{326   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1Timer}{Timer}} \{}
+\DoxyCodeLine{327     \textcolor{keyword}{public}:}
+\DoxyCodeLine{328 }
+\DoxyCodeLine{329     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} = \mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{TimeSection::IdType}};}
+\DoxyCodeLine{330 }
+\DoxyCodeLine{331     \textcolor{keyword}{private}:}
+\DoxyCodeLine{332   }
+\DoxyCodeLine{333     \textcolor{comment}{// Thread independent contexts}}
+\DoxyCodeLine{334     std::vector<TimeSection*> \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}};}
+\DoxyCodeLine{335     \textcolor{comment}{// Thread independent call levels}}
+\DoxyCodeLine{336     std::vector<size\_t> \mbox{\hyperlink{classChronusQ_1_1Timer_a22aba9d7df45f34a80485994b7b92531}{levels\_}};}
+\DoxyCodeLine{337   }
+\DoxyCodeLine{338     \textcolor{comment}{// Root of the tree}}
+\DoxyCodeLine{339     \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}} \mbox{\hyperlink{classChronusQ_1_1Timer_a47cd4529a044b50c9bc12d1511c79670}{base\_}};}
+\DoxyCodeLine{340   }
+\DoxyCodeLine{341     \textcolor{comment}{// Registry of id to references}}
+\DoxyCodeLine{342     \mbox{\hyperlink{classChronusQ_1_1Registry}{Registry<IdType,TimeSection*>}} \mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\_}};}
+\DoxyCodeLine{343   }
+\DoxyCodeLine{344     \textcolor{keyword}{public}:}
+\DoxyCodeLine{345 }
+\DoxyCodeLine{346     \mbox{\hyperlink{structChronusQ_1_1TimerOpts}{TimerOpts}} \mbox{\hyperlink{classChronusQ_1_1Timer_ad60a04c79cba394f76c10b2183830489}{options}};}
+\DoxyCodeLine{347   }
+\DoxyCodeLine{348     \mbox{\hyperlink{classChronusQ_1_1Timer_aab80a10810210db16e5eebf48ab82f54}{Timer}}() = \textcolor{keywordflow}{default}; }
+\DoxyCodeLine{349 }
+\DoxyCodeLine{350     \textcolor{comment}{// Must call before use. Can't be in constructor because Timer must be}}
+\DoxyCodeLine{351     \textcolor{comment}{//   default constructable (for Singleton ProgramTimer)}}
+\DoxyCodeLine{352     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Timer_ae94bd7b8394b737e6de03d28481e8f7c}{initialize}}(std::string baseLabel, \textcolor{keywordtype}{size\_t} nThreads) \{}
+\DoxyCodeLine{353       \mbox{\hyperlink{classChronusQ_1_1Timer_a47cd4529a044b50c9bc12d1511c79670}{base\_}}.\mbox{\hyperlink{classChronusQ_1_1TimeSection_a245165e301c43dfb65b1c003852554df}{label\_}} = baseLabel;}
+\DoxyCodeLine{354       \mbox{\hyperlink{classChronusQ_1_1Timer_a47cd4529a044b50c9bc12d1511c79670}{base\_}}.\mbox{\hyperlink{classChronusQ_1_1TimeSection_ae1625bac7287bfe0cb064398ef77f7c4}{id\_}} = \mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\_}}.getId();}
+\DoxyCodeLine{355       \mbox{\hyperlink{classChronusQ_1_1Timer_a47cd4529a044b50c9bc12d1511c79670}{base\_}}.\mbox{\hyperlink{classChronusQ_1_1TimeSection_a6deafef3cbe355f60b4e94d04c774a95}{registry\_}} = \&\mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\_}};}
+\DoxyCodeLine{356 }
+\DoxyCodeLine{357       \mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\_}}.add(\mbox{\hyperlink{classChronusQ_1_1Timer_a47cd4529a044b50c9bc12d1511c79670}{base\_}}.\mbox{\hyperlink{classChronusQ_1_1TimeSection_ae1625bac7287bfe0cb064398ef77f7c4}{id\_}}, \&\mbox{\hyperlink{classChronusQ_1_1Timer_a47cd4529a044b50c9bc12d1511c79670}{base\_}});}
+\DoxyCodeLine{358 }
+\DoxyCodeLine{359       \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}.resize(nThreads, \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{360       \mbox{\hyperlink{classChronusQ_1_1Timer_a22aba9d7df45f34a80485994b7b92531}{levels\_}}.resize(nThreads, 1);}
+\DoxyCodeLine{361 }
+\DoxyCodeLine{362       \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[0] = \&\mbox{\hyperlink{classChronusQ_1_1Timer_a47cd4529a044b50c9bc12d1511c79670}{base\_}};}
+\DoxyCodeLine{363     \};}
+\DoxyCodeLine{364   }
+\DoxyCodeLine{365     \mbox{\hyperlink{classChronusQ_1_1Timer_a2ca08c669272c770c53b08b37b8b0f8e}{Timer}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1Timer}{Timer}}\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{366     \mbox{\hyperlink{classChronusQ_1_1Timer_afe82bcc339c831c38ba45d0d92acd0af}{Timer}}(\mbox{\hyperlink{classChronusQ_1_1Timer}{Timer}}\&\&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{367   }
+\DoxyCodeLine{368     \textcolor{comment}{//}}
+\DoxyCodeLine{369     \textcolor{comment}{// Section manipulation}}
+\DoxyCodeLine{370     \textcolor{comment}{//}}
+\DoxyCodeLine{371   }
+\DoxyCodeLine{372     \textcolor{comment}{// Start a new section}}
+\DoxyCodeLine{373     \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} \mbox{\hyperlink{classChronusQ_1_1Timer_ade19721dcb8191dce545ca01d5d124e8}{tick}}(std::string label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} parentId = 0, \textcolor{keywordtype}{bool} addContext = \textcolor{keyword}{true}) \{}
+\DoxyCodeLine{374   }
+\DoxyCodeLine{375       \textcolor{keywordtype}{size\_t} threadId = omp\_get\_thread\_num();}
+\DoxyCodeLine{376   }
+\DoxyCodeLine{377       \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* section = \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId];}
+\DoxyCodeLine{378       \textcolor{keywordflow}{if} (parentId != 0)}
+\DoxyCodeLine{379         section = \mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\_}}[parentId];}
+\DoxyCodeLine{380 }
+\DoxyCodeLine{381       \textcolor{comment}{// Increment call level}}
+\DoxyCodeLine{382       \mbox{\hyperlink{classChronusQ_1_1Timer_a22aba9d7df45f34a80485994b7b92531}{levels\_}}[threadId]++;}
+\DoxyCodeLine{383   }
+\DoxyCodeLine{384       \textcolor{comment}{// Add the new section}}
+\DoxyCodeLine{385       \textcolor{keyword}{auto} newId = section-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a1f98ad9e671c350b9be599171a8b2f76}{tick}}(label, threadId);}
+\DoxyCodeLine{386   }
+\DoxyCodeLine{387       \textcolor{keywordflow}{if} (addContext) }
+\DoxyCodeLine{388         \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId] = \mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\_}}[newId];}
+\DoxyCodeLine{389 }
+\DoxyCodeLine{390       \textcolor{keywordflow}{return} newId;}
+\DoxyCodeLine{391   }
+\DoxyCodeLine{392     \};}
+\DoxyCodeLine{393   }
+\DoxyCodeLine{394     \textcolor{comment}{// Stop a section by id}}
+\DoxyCodeLine{395     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Timer_a98232753212170fba9ba8a8e049e2949}{tock}}(\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} \textcolor{keywordtype}{id} = 0) \{}
+\DoxyCodeLine{396   }
+\DoxyCodeLine{397       \textcolor{keywordtype}{size\_t} threadId = omp\_get\_thread\_num();}
+\DoxyCodeLine{398   }
+\DoxyCodeLine{399       \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* section = \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId];}
+\DoxyCodeLine{400       \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id} != 0)}
+\DoxyCodeLine{401         section = \mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\_}}[id];}
+\DoxyCodeLine{402       section-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_aeb20a5693690833a2343c931596c5391}{stop}}();}
+\DoxyCodeLine{403   }
+\DoxyCodeLine{404       \textcolor{keywordtype}{size\_t} s\_id = section-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_ae1625bac7287bfe0cb064398ef77f7c4}{id\_}};}
+\DoxyCodeLine{405   }
+\DoxyCodeLine{406       \textcolor{keywordflow}{if} ( section-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_ad62204a042ef69d91d58ff6a0b12b8db}{parent\_}} != \textcolor{keyword}{nullptr} )}
+\DoxyCodeLine{407         \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId]-\/>id\_ == s\_id or}
+\DoxyCodeLine{408             \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId]-\/>isAncestor(s\_id))}
+\DoxyCodeLine{409           \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId] = \mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\_}}[section-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_ad62204a042ef69d91d58ff6a0b12b8db}{parent\_}}-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_ae1625bac7287bfe0cb064398ef77f7c4}{id\_}}];}
+\DoxyCodeLine{410 }
+\DoxyCodeLine{411       \textcolor{comment}{// Possibly print}}
+\DoxyCodeLine{412       \textcolor{comment}{// This is bad for performance, but it is useful for debugging}}
+\DoxyCodeLine{413       \textcolor{keywordflow}{if} ( \mbox{\hyperlink{classChronusQ_1_1Timer_a22aba9d7df45f34a80485994b7b92531}{levels\_}}[threadId] < \mbox{\hyperlink{classChronusQ_1_1Timer_ad60a04c79cba394f76c10b2183830489}{options}}.\mbox{\hyperlink{structChronusQ_1_1TimerOpts_a3b1689677163c01748b85f911b98822e}{dbgPrint}} ) \{}
+\DoxyCodeLine{414         std::stringstream message;}
+\DoxyCodeLine{415         std::string name = section-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a245165e301c43dfb65b1c003852554df}{label\_}} + \textcolor{stringliteral}{"{} duration: "{}};}
+\DoxyCodeLine{416         message << \textcolor{stringliteral}{"{}  || "{}} << std::left << std::setw(40) << name;}
+\DoxyCodeLine{417         message << std::right << std::setw(14) << std::fixed << std::setprecision(4);}
+\DoxyCodeLine{418         message << section-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a544dcc8803a85bd10291d7a31dab4f95}{duration}}<\mbox{\hyperlink{namespaceChronusQ_acd002d6c7a030e5a931f4538359da0f7}{CQMillisecond}}>().count() << \textcolor{stringliteral}{"{} ms ||\(\backslash\)n"{}};}
+\DoxyCodeLine{419         std::cout << message.str();}
+\DoxyCodeLine{420       \}}
+\DoxyCodeLine{421 }
+\DoxyCodeLine{422       \textcolor{comment}{// Decrement call level}}
+\DoxyCodeLine{423       \mbox{\hyperlink{classChronusQ_1_1Timer_a22aba9d7df45f34a80485994b7b92531}{levels\_}}[threadId]-\/-\/;}
+\DoxyCodeLine{424   }
+\DoxyCodeLine{425     \};}
+\DoxyCodeLine{426   }
+\DoxyCodeLine{427     \textcolor{comment}{// Stop a section by the best guess at which label it's referring to}}
+\DoxyCodeLine{428     \textcolor{comment}{//}}
+\DoxyCodeLine{429     \textcolor{comment}{// If current context matches label, stop that section, otherwise find the}}
+\DoxyCodeLine{430     \textcolor{comment}{//   first section that matches the label in the history}}
+\DoxyCodeLine{431     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Timer_affe4f6db0d8b60df4f0e252121cbd1e6}{tock}}(std::string label) \{}
+\DoxyCodeLine{432   }
+\DoxyCodeLine{433       \textcolor{keywordtype}{size\_t} threadId = omp\_get\_thread\_num();}
+\DoxyCodeLine{434   }
+\DoxyCodeLine{435       \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* section = \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId];}
+\DoxyCodeLine{436       \textcolor{keywordflow}{if} ( section-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a245165e301c43dfb65b1c003852554df}{label\_}} != label ) \{}
+\DoxyCodeLine{437         section = section-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ea5d1773173643d9bfd8cdfbe8ad573}{findAncestor}}(label);}
+\DoxyCodeLine{438         assert(section != \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{439       \}}
+\DoxyCodeLine{440   }
+\DoxyCodeLine{441       \mbox{\hyperlink{classChronusQ_1_1Timer_a98232753212170fba9ba8a8e049e2949}{tock}}(section-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_ae1625bac7287bfe0cb064398ef77f7c4}{id\_}});}
+\DoxyCodeLine{442     \};}
+\DoxyCodeLine{443 }
+\DoxyCodeLine{444 }
+\DoxyCodeLine{445     \textcolor{comment}{// Time a functor with the given label}}
+\DoxyCodeLine{446     \textcolor{keyword}{template} <\textcolor{keyword}{typename} F, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{447     \textcolor{keyword}{auto} \mbox{\hyperlink{classChronusQ_1_1Timer_ab6a8cc3977c7b144df69a042592468de}{timeOp}}(std::string label, \textcolor{keyword}{const} F\& func, Args\&\&... args) \{}
+\DoxyCodeLine{448       \mbox{\hyperlink{classChronusQ_1_1Timer_ade19721dcb8191dce545ca01d5d124e8}{tick}}(label);}
+\DoxyCodeLine{449       func(std::forward<Args>(args)...);}
+\DoxyCodeLine{450       \mbox{\hyperlink{classChronusQ_1_1Timer_a98232753212170fba9ba8a8e049e2949}{tock}}(label);}
+\DoxyCodeLine{451     \}}
+\DoxyCodeLine{452   }
+\DoxyCodeLine{453     \textcolor{comment}{// }}
+\DoxyCodeLine{454     \textcolor{comment}{// Direct manipulation of current context}}
+\DoxyCodeLine{455     \textcolor{comment}{//}}
+\DoxyCodeLine{456     \textcolor{comment}{// XXX: These methods can make your history confusing/messed up if you aren't}}
+\DoxyCodeLine{457     \textcolor{comment}{//   careful. If you choose to use these, you should keep track of the Ids}}
+\DoxyCodeLine{458     \textcolor{comment}{//   returned by tick.}}
+\DoxyCodeLine{459     \textcolor{comment}{//}}
+\DoxyCodeLine{460     }
+\DoxyCodeLine{461     \textcolor{comment}{// Get FIRST instance of label's Id, starting from base}}
+\DoxyCodeLine{462     \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} \mbox{\hyperlink{classChronusQ_1_1Timer_af8526e1e5ae01b988b79686352b6c9ae}{getLabelId}}(std::string label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} base = 0) \{}
+\DoxyCodeLine{463 }
+\DoxyCodeLine{464       std::queue<TimeSection*> working;}
+\DoxyCodeLine{465 }
+\DoxyCodeLine{466       std::function<\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}}(std::queue<TimeSection*>\&)> tryNextId;}
+\DoxyCodeLine{467       tryNextId = [\&](std::queue<TimeSection*>\& next) -\/> \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} \{}
+\DoxyCodeLine{468         \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* curr = next.front();}
+\DoxyCodeLine{469         next.pop();}
+\DoxyCodeLine{470         \textcolor{keywordflow}{if} ( curr-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a245165e301c43dfb65b1c003852554df}{label\_}} == label )}
+\DoxyCodeLine{471           \textcolor{keywordflow}{return} curr-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_ae1625bac7287bfe0cb064398ef77f7c4}{id\_}};}
+\DoxyCodeLine{472         }
+\DoxyCodeLine{473         \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto}\& thread: curr-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}{children\_}} )}
+\DoxyCodeLine{474         \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto}\& child: thread.second ) \{}
+\DoxyCodeLine{475           next.push(child.second.get());}
+\DoxyCodeLine{476         \}}
+\DoxyCodeLine{477 }
+\DoxyCodeLine{478         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{479       \};}
+\DoxyCodeLine{480 }
+\DoxyCodeLine{481       \textcolor{keywordtype}{size\_t} threadId = omp\_get\_thread\_num();}
+\DoxyCodeLine{482       \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* section = \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId];}
+\DoxyCodeLine{483       \textcolor{keywordflow}{if} (base != 0)}
+\DoxyCodeLine{484         section = \mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\_}}[base];}
+\DoxyCodeLine{485 }
+\DoxyCodeLine{486       working.push(section);}
+\DoxyCodeLine{487       \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} \textcolor{keywordtype}{id} = 0;}
+\DoxyCodeLine{488 }
+\DoxyCodeLine{489       \textcolor{keywordflow}{while} ( !working.empty() ) \{}
+\DoxyCodeLine{490         \textcolor{keywordtype}{id} = tryNextId(working);}
+\DoxyCodeLine{491         \textcolor{keywordflow}{if} ( \textcolor{keywordtype}{id} != 0 )}
+\DoxyCodeLine{492           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{493       \}}
+\DoxyCodeLine{494 }
+\DoxyCodeLine{495       \textcolor{keywordflow}{return} id;}
+\DoxyCodeLine{496 }
+\DoxyCodeLine{497     \};}
+\DoxyCodeLine{498     }
+\DoxyCodeLine{499     \textcolor{comment}{// Get Id of thread's current context}}
+\DoxyCodeLine{500     \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} \mbox{\hyperlink{classChronusQ_1_1Timer_a6379d230a1fa3c2215b8973d00bae65f}{getContextId}}() \{}
+\DoxyCodeLine{501       \textcolor{keywordtype}{size\_t} threadId = omp\_get\_thread\_num();}
+\DoxyCodeLine{502   }
+\DoxyCodeLine{503       assert(\mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId] != \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{504       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId]-\/>id\_;}
+\DoxyCodeLine{505     \};}
+\DoxyCodeLine{506 }
+\DoxyCodeLine{507     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1Timer_a842231dc006a931a56a6371fad206e0f}{getCallLevel}}() \{}
+\DoxyCodeLine{508       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Timer_a22aba9d7df45f34a80485994b7b92531}{levels\_}}[omp\_get\_thread\_num()];}
+\DoxyCodeLine{509     \};}
+\DoxyCodeLine{510   }
+\DoxyCodeLine{511     \textcolor{comment}{// Set context arbitrarily}}
+\DoxyCodeLine{512     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Timer_a3b488237cb390eb953159d2783a400aa}{setContext}}(\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} \textcolor{keywordtype}{id}, \textcolor{keywordtype}{size\_t} level) \{}
+\DoxyCodeLine{513       \textcolor{keywordtype}{size\_t} threadId = omp\_get\_thread\_num();}
+\DoxyCodeLine{514       \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId] = \mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\_}}[id];}
+\DoxyCodeLine{515       \mbox{\hyperlink{classChronusQ_1_1Timer_a22aba9d7df45f34a80485994b7b92531}{levels\_}}[threadId] = level;}
+\DoxyCodeLine{516     \};}
+\DoxyCodeLine{517   }
+\DoxyCodeLine{518     \textcolor{comment}{// Return context to parent}}
+\DoxyCodeLine{519     \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} \mbox{\hyperlink{classChronusQ_1_1Timer_a0c1ecd028af0ff0536756625bf768558}{popContext}}() \{}
+\DoxyCodeLine{520       \textcolor{keywordtype}{size\_t} threadId = omp\_get\_thread\_num();}
+\DoxyCodeLine{521       \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} \textcolor{keywordtype}{id} = \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId]-\/>id\_;}
+\DoxyCodeLine{522       \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId] = \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId]-\/>parent\_;}
+\DoxyCodeLine{523       \textcolor{keywordflow}{return} id;}
+\DoxyCodeLine{524     \};}
+\DoxyCodeLine{525   }
+\DoxyCodeLine{526     \textcolor{comment}{//}}
+\DoxyCodeLine{527     \textcolor{comment}{// Reporting}}
+\DoxyCodeLine{528     \textcolor{comment}{//}}
+\DoxyCodeLine{529   }
+\DoxyCodeLine{530     \textcolor{comment}{// Get duration of single section}}
+\DoxyCodeLine{531     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{532     DurT \mbox{\hyperlink{classChronusQ_1_1Timer_a673421f45833c4120f9e681655b45264}{getIdDuration}}(\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} \textcolor{keywordtype}{id}) \{}
+\DoxyCodeLine{533       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\_}}[id]-\/>duration<DurT>();}
+\DoxyCodeLine{534     \};}
+\DoxyCodeLine{535   }
+\DoxyCodeLine{536     \textcolor{comment}{// Get durations of all sections that match label}}
+\DoxyCodeLine{537     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{538     std::vector<DurT> \mbox{\hyperlink{classChronusQ_1_1Timer_a7b280ccbaa1e4f250df6a743bc079f99}{getDurations}}(std::string label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} base = 0,}
+\DoxyCodeLine{539       std::string filter = \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{540 }
+\DoxyCodeLine{541       \textcolor{keyword}{auto} tDurs = getThreadDurations<DurT>(label, base, filter);}
+\DoxyCodeLine{542   }
+\DoxyCodeLine{543       std::vector<DurT> results;}
+\DoxyCodeLine{544       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& thread: tDurs)}
+\DoxyCodeLine{545         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& dur: thread)}
+\DoxyCodeLine{546           results.push\_back(dur);}
+\DoxyCodeLine{547   }
+\DoxyCodeLine{548       \textcolor{keywordflow}{return} results;}
+\DoxyCodeLine{549   }
+\DoxyCodeLine{550     \};}
+\DoxyCodeLine{551   }
+\DoxyCodeLine{552     \textcolor{comment}{// Get (total, average) of all sections that match label}}
+\DoxyCodeLine{553     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{554     std::pair<DurT,DurT> \mbox{\hyperlink{classChronusQ_1_1Timer_ac27826bff9bbe11a57f590cb4a37ad27}{getDurationSummary}}(std::string label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} base = 0,}
+\DoxyCodeLine{555       std::string filter = \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{556 }
+\DoxyCodeLine{557       \textcolor{keyword}{auto} durations = getDurations<DurT>(label, base, filter);}
+\DoxyCodeLine{558 }
+\DoxyCodeLine{559       \textcolor{keywordflow}{if} (durations.size() == 0)}
+\DoxyCodeLine{560         \textcolor{keywordflow}{return} \{DurT(0.), DurT(0.)\};}
+\DoxyCodeLine{561 }
+\DoxyCodeLine{562       DurT sum(0);}
+\DoxyCodeLine{563       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& dur: durations)}
+\DoxyCodeLine{564         sum += dur;}
+\DoxyCodeLine{565 }
+\DoxyCodeLine{566       \textcolor{keywordflow}{return} \{sum, sum/durations.size()\};}
+\DoxyCodeLine{567     \}}
+\DoxyCodeLine{568 }
+\DoxyCodeLine{569     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{570     std::pair<DurT,DurT> \mbox{\hyperlink{classChronusQ_1_1Timer_a7578dc1fb70036f0f5584f90f31f963c}{getAggDurSummary}}(std::string label,}
+\DoxyCodeLine{571       std::string parentLabel, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} base = 0) \{}
+\DoxyCodeLine{572 }
+\DoxyCodeLine{573       \textcolor{keyword}{auto} durations = getAggregateDurations<DurT>(label, parentLabel, base);}
+\DoxyCodeLine{574 }
+\DoxyCodeLine{575       \textcolor{keywordflow}{if} (durations.size() == 0)}
+\DoxyCodeLine{576         \textcolor{keywordflow}{return} \{DurT(0.), DurT(0.)\};}
+\DoxyCodeLine{577 }
+\DoxyCodeLine{578       DurT sum(0.);}
+\DoxyCodeLine{579       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& section: durations) \{}
+\DoxyCodeLine{580         sum += *std::max\_element(section.begin(), section.end());}
+\DoxyCodeLine{581       \}}
+\DoxyCodeLine{582 }
+\DoxyCodeLine{583       \textcolor{keywordflow}{return} \{sum, sum/durations.size()\};}
+\DoxyCodeLine{584 }
+\DoxyCodeLine{585     \}}
+\DoxyCodeLine{586   }
+\DoxyCodeLine{587     \textcolor{comment}{// Get average of all sections that match label}}
+\DoxyCodeLine{588     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{589     DurT \mbox{\hyperlink{classChronusQ_1_1Timer_a071569aa8c0eee16583e6f92f001da60}{getDurationAvg}}(std::string label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} base = 0,}
+\DoxyCodeLine{590       std::string filter = \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{591 }
+\DoxyCodeLine{592       \textcolor{keyword}{auto} summary = getDurationSummary<DurT>(label, base, filter);}
+\DoxyCodeLine{593       \textcolor{keywordflow}{return} summary.second;}
+\DoxyCodeLine{594     \}}
+\DoxyCodeLine{595   }
+\DoxyCodeLine{596     \textcolor{comment}{// Get total of all sections that match label}}
+\DoxyCodeLine{597     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{598     DurT \mbox{\hyperlink{classChronusQ_1_1Timer_aea47628da469757115d93b16e5a4381e}{getDurationTotal}}(std::string label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} base = 0,}
+\DoxyCodeLine{599       std::string filter = \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{600 }
+\DoxyCodeLine{601       \textcolor{keyword}{auto} summary = getDurationSummary<DurT>(label, base, filter);}
+\DoxyCodeLine{602       \textcolor{keywordflow}{return} summary.first;}
+\DoxyCodeLine{603     \}}
+\DoxyCodeLine{604   }
+\DoxyCodeLine{605     \textcolor{comment}{// Main get duration method}}
+\DoxyCodeLine{606     \textcolor{comment}{//}}
+\DoxyCodeLine{607     \textcolor{comment}{// If filterLabel is not "{}"{}, it will only add durations that have an}}
+\DoxyCodeLine{608     \textcolor{comment}{//   ancestor with that label}}
+\DoxyCodeLine{609     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{610     std::vector<std::vector<DurT>> \mbox{\hyperlink{classChronusQ_1_1Timer_ae711e8b9091d7a040e1ccd92001ee781}{getThreadDurations}}(std::string label,}
+\DoxyCodeLine{611       \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} base = 0, std::string filterLabel = \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{612 }
+\DoxyCodeLine{613       std::function<void(\textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{bool}, \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}*,}
+\DoxyCodeLine{614                          std::vector<DurT>\&)> getTDurRecur;}
+\DoxyCodeLine{615       getTDurRecur =}
+\DoxyCodeLine{616         [\&](\textcolor{keywordtype}{size\_t} select, \textcolor{keywordtype}{size\_t} tId, \textcolor{keywordtype}{bool} addDur, \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* sect,}
+\DoxyCodeLine{617             std::vector<DurT>\& results) \{}
+\DoxyCodeLine{618     }
+\DoxyCodeLine{619           \textcolor{keywordflow}{if} (sect-\/>label\_ == label \&\& select == tId \&\& addDur) \{}
+\DoxyCodeLine{620             results.push\_back(sect-\/>duration<DurT>());}
+\DoxyCodeLine{621           \}}
+\DoxyCodeLine{622 }
+\DoxyCodeLine{623           addDur |= sect-\/>label\_ == filterLabel;}
+\DoxyCodeLine{624     }
+\DoxyCodeLine{625           \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto}\& thread: sect-\/>children\_ ) \{}
+\DoxyCodeLine{626     }
+\DoxyCodeLine{627             \textcolor{keywordflow}{if} ( thread.first != select )}
+\DoxyCodeLine{628               \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{629     }
+\DoxyCodeLine{630             \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto}\& child: thread.second ) \{}
+\DoxyCodeLine{631               getTDurRecur(select, thread.first, addDur, child.second.get(),}
+\DoxyCodeLine{632                            results);}
+\DoxyCodeLine{633             \}}
+\DoxyCodeLine{634     }
+\DoxyCodeLine{635           \}}
+\DoxyCodeLine{636     }
+\DoxyCodeLine{637         \};}
+\DoxyCodeLine{638     }
+\DoxyCodeLine{639       std::vector<std::vector<DurT>> results;}
+\DoxyCodeLine{640     }
+\DoxyCodeLine{641       \textcolor{keywordtype}{size\_t} threadId = omp\_get\_thread\_num();}
+\DoxyCodeLine{642       \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* sect = \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId];}
+\DoxyCodeLine{643       \textcolor{keywordflow}{if} ( base != 0 )}
+\DoxyCodeLine{644         sect = \mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\_}}[base];}
+\DoxyCodeLine{645     }
+\DoxyCodeLine{646       \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} iTh = 0; iTh < \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}.size(); iTh++ ) \{}
+\DoxyCodeLine{647         std::vector<DurT> tempRes;}
+\DoxyCodeLine{648 }
+\DoxyCodeLine{649         \textcolor{comment}{// Handle the fact that we don't know which thread this section came }}
+\DoxyCodeLine{650         \textcolor{comment}{//   from by putting it on the calling thread stack}}
+\DoxyCodeLine{651         getTDurRecur(iTh, threadId, filterLabel == \textcolor{stringliteral}{"{}"{}}, sect, tempRes);}
+\DoxyCodeLine{652 }
+\DoxyCodeLine{653         results.push\_back(std::move(tempRes));}
+\DoxyCodeLine{654       \}}
+\DoxyCodeLine{655     }
+\DoxyCodeLine{656       \textcolor{keywordflow}{return} results;}
+\DoxyCodeLine{657     }
+\DoxyCodeLine{658     \}}
+\DoxyCodeLine{659 }
+\DoxyCodeLine{660     \textcolor{comment}{// Aggregate the durations directly underneath parentLabel that match}}
+\DoxyCodeLine{661     \textcolor{comment}{//   label.}}
+\DoxyCodeLine{662     \textcolor{comment}{//}}
+\DoxyCodeLine{663     \textcolor{comment}{// This can be useful in highly looped regions where you want to know}}
+\DoxyCodeLine{664     \textcolor{comment}{//   how much time is spent in different parts of the loops but want to}}
+\DoxyCodeLine{665     \textcolor{comment}{//   separate it by entrances to the loop (e.g. direct J/K builds:}}
+\DoxyCodeLine{666     \textcolor{comment}{//   integral formation vs. density contraction)}}
+\DoxyCodeLine{667     \textcolor{comment}{//}}
+\DoxyCodeLine{668     \textcolor{comment}{// This does NOT give threads in the right order, so result[section[0]] may}}
+\DoxyCodeLine{669     \textcolor{comment}{//   not correspond to thread 0.}}
+\DoxyCodeLine{670     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{671     std::vector<std::vector<DurT>> \mbox{\hyperlink{classChronusQ_1_1Timer_a0608706dcc7ce83d55a3756a8ebb3c1a}{getAggregateDurations}}(std::string label,}
+\DoxyCodeLine{672       std::string parentLabel, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} base = 0) \{}
+\DoxyCodeLine{673 }
+\DoxyCodeLine{674       std::function<void(\mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}*,}
+\DoxyCodeLine{675                          std::vector<std::vector<DurT>>\&)> getAggDurRecur;}
+\DoxyCodeLine{676       getAggDurRecur =}
+\DoxyCodeLine{677         [\&](\mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* sect, std::vector<std::vector<DurT>>\& results) \{}
+\DoxyCodeLine{678 }
+\DoxyCodeLine{679           \textcolor{keywordtype}{bool} doAgg = sect-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a245165e301c43dfb65b1c003852554df}{label\_}} == parentLabel;}
+\DoxyCodeLine{680           std::vector<DurT> current;}
+\DoxyCodeLine{681 }
+\DoxyCodeLine{682           \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto}\& thread: sect-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}{children\_}} ) \{}
+\DoxyCodeLine{683             DurT aggDur(0.);}
+\DoxyCodeLine{684             \textcolor{keywordtype}{size\_t} tId = thread.first;}
+\DoxyCodeLine{685             \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto}\& child: thread.second ) \{}
+\DoxyCodeLine{686               \textcolor{keywordflow}{if} ( doAgg \&\& child.second-\/>label\_ == label ) \{}
+\DoxyCodeLine{687                 aggDur += child.second-\/>duration<DurT>();}
+\DoxyCodeLine{688               \}}
+\DoxyCodeLine{689               getAggDurRecur(child.second.get(), results);}
+\DoxyCodeLine{690             \}}
+\DoxyCodeLine{691             current.push\_back(aggDur);}
+\DoxyCodeLine{692           \}}
+\DoxyCodeLine{693 }
+\DoxyCodeLine{694           \textcolor{keywordflow}{if} ( doAgg )}
+\DoxyCodeLine{695             results.push\_back(current);}
+\DoxyCodeLine{696 }
+\DoxyCodeLine{697         \};}
+\DoxyCodeLine{698 }
+\DoxyCodeLine{699       std::vector<std::vector<DurT>> results;}
+\DoxyCodeLine{700 }
+\DoxyCodeLine{701       \textcolor{keywordtype}{size\_t} threadId = omp\_get\_thread\_num();}
+\DoxyCodeLine{702       \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* sect = \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[threadId];}
+\DoxyCodeLine{703       \textcolor{keywordflow}{if} ( base != 0 )}
+\DoxyCodeLine{704         sect = \mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\_}}[base];}
+\DoxyCodeLine{705 }
+\DoxyCodeLine{706       getAggDurRecur(sect, results);}
+\DoxyCodeLine{707       \textcolor{keywordflow}{return} results;}
+\DoxyCodeLine{708 }
+\DoxyCodeLine{709     \}}
+\DoxyCodeLine{710 }
+\DoxyCodeLine{711     \textcolor{comment}{//}}
+\DoxyCodeLine{712     \textcolor{comment}{// Printing}}
+\DoxyCodeLine{713     \textcolor{comment}{//}}
+\DoxyCodeLine{714   }
+\DoxyCodeLine{715     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{716     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Timer_a81e8894c1bca6bf589472aa2c2614316}{printTimings}}(std::ostream\& out, std::string unit = \textcolor{stringliteral}{"{}"{}}, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} \textcolor{keywordtype}{id} = 0,}
+\DoxyCodeLine{717       \textcolor{keywordtype}{int} maxDepth = 3) \{}
+\DoxyCodeLine{718   }
+\DoxyCodeLine{719       \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* printBase = \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}[0];}
+\DoxyCodeLine{720       \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id} != 0)}
+\DoxyCodeLine{721         printBase = \mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\_}}[id];}
+\DoxyCodeLine{722       \textcolor{keyword}{auto} total = printBase-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a544dcc8803a85bd10291d7a31dab4f95}{duration}}<DurT>();}
+\DoxyCodeLine{723   }
+\DoxyCodeLine{724       \textcolor{comment}{// Print header}}
+\DoxyCodeLine{725       std::string first = \textcolor{stringliteral}{"{}Section Label"{}};}
+\DoxyCodeLine{726       std::string second = \textcolor{stringliteral}{"{}  Duration ("{}};}
+\DoxyCodeLine{727       second += unit;}
+\DoxyCodeLine{728       second += \textcolor{stringliteral}{"{})  Percent"{}};}
+\DoxyCodeLine{729   }
+\DoxyCodeLine{730       \textcolor{comment}{// Use a "{}max rational section label length"{} of 20. If it's longer than}}
+\DoxyCodeLine{731       \textcolor{comment}{// that, the printing won't be pretty but will still work}}
+\DoxyCodeLine{732       \textcolor{keywordtype}{size\_t} fieldWidth = 20;}
+\DoxyCodeLine{733       \textcolor{keywordtype}{size\_t} width = maxDepth*2 + fieldWidth;}
+\DoxyCodeLine{734   }
+\DoxyCodeLine{735       \textcolor{comment}{// Size of the data fields}}
+\DoxyCodeLine{736       \textcolor{keywordtype}{size\_t} fixed = 22;}
+\DoxyCodeLine{737       \textcolor{keywordtype}{size\_t} dataw = std::max(fixed, second.size());}
+\DoxyCodeLine{738   }
+\DoxyCodeLine{739       \textcolor{comment}{// Size of max width}}
+\DoxyCodeLine{740       \textcolor{keywordtype}{size\_t} outw = width + dataw;}
+\DoxyCodeLine{741   }
+\DoxyCodeLine{742       \textcolor{comment}{//}}
+\DoxyCodeLine{743       \textcolor{comment}{// Recursive printing definition}}
+\DoxyCodeLine{744       \textcolor{comment}{//}}
+\DoxyCodeLine{745       std::function<void(\mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}*, \textcolor{keywordtype}{size\_t})> recursivePrint;}
+\DoxyCodeLine{746       recursivePrint = [\&](\mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* sect, \textcolor{keywordtype}{size\_t} level) \{}
+\DoxyCodeLine{747         \textcolor{keywordflow}{if} ( level > maxDepth )}
+\DoxyCodeLine{748           \textcolor{keywordflow}{return};}
+\DoxyCodeLine{749   }
+\DoxyCodeLine{750         DurT dur = sect-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a544dcc8803a85bd10291d7a31dab4f95}{duration}}<DurT>();}
+\DoxyCodeLine{751   }
+\DoxyCodeLine{752         \textcolor{comment}{// Print this section}}
+\DoxyCodeLine{753         std::stringstream ss;}
+\DoxyCodeLine{754         \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} i = 0; i < level; i++ )}
+\DoxyCodeLine{755           ss << \textcolor{stringliteral}{"{}| "{}};}
+\DoxyCodeLine{756         ss << sect-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a245165e301c43dfb65b1c003852554df}{label\_}} << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{757         out << std::setw(width);}
+\DoxyCodeLine{758         out << std::left << std::setfill(\textcolor{charliteral}{'-\/'}) << ss.str();}
+\DoxyCodeLine{759   }
+\DoxyCodeLine{760         out << std::right << std::setfill(\textcolor{charliteral}{' '});}
+\DoxyCodeLine{761         out << std::setw(outw -\/ width -\/ fixed) << \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{762   }
+\DoxyCodeLine{763         out << \textcolor{charliteral}{' '} << std::setw(12) << std::fixed << std::setprecision(4);}
+\DoxyCodeLine{764         out << dur.count();}
+\DoxyCodeLine{765   }
+\DoxyCodeLine{766         out << \textcolor{stringliteral}{"{}  "{}} << std::setw(7) << std::fixed << std::setprecision(3);}
+\DoxyCodeLine{767         out << dur.count()/total.count()*100;}
+\DoxyCodeLine{768   }
+\DoxyCodeLine{769         out << std::endl;}
+\DoxyCodeLine{770   }
+\DoxyCodeLine{771   }
+\DoxyCodeLine{772         \textcolor{keyword}{auto} sortByStart = [](\mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* a, \mbox{\hyperlink{classChronusQ_1_1TimeSection}{TimeSection}}* b) \{}
+\DoxyCodeLine{773           \textcolor{keywordflow}{return} (a-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a2569f4000122903e37ce8998b4aeb3ca}{start\_}} < b-\/>start\_);}
+\DoxyCodeLine{774         \};}
+\DoxyCodeLine{775   }
+\DoxyCodeLine{776         \textcolor{comment}{// Recurse into children}}
+\DoxyCodeLine{777         \textcolor{keywordtype}{bool} threaded = sect-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}{children\_}}.size() > 1;}
+\DoxyCodeLine{778   }
+\DoxyCodeLine{779         std::vector<TimeSection*> children;}
+\DoxyCodeLine{780   }
+\DoxyCodeLine{781         \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} iTh = 0; iTh < \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\_}}.size(); iTh++ ) \{}
+\DoxyCodeLine{782   }
+\DoxyCodeLine{783           \textcolor{keywordflow}{if} (sect-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}{children\_}}.find(iTh) == sect-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}{children\_}}.end())}
+\DoxyCodeLine{784             \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{785   }
+\DoxyCodeLine{786           children.clear();}
+\DoxyCodeLine{787   }
+\DoxyCodeLine{788           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& child: sect-\/>\mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}{children\_}}[iTh] ) \{}
+\DoxyCodeLine{789             children.push\_back(child.second.get());}
+\DoxyCodeLine{790           \}}
+\DoxyCodeLine{791   }
+\DoxyCodeLine{792           sort(children.begin(), children.end(), sortByStart);}
+\DoxyCodeLine{793   }
+\DoxyCodeLine{794           \textcolor{keywordflow}{if} (threaded) \{}
+\DoxyCodeLine{795             std::stringstream ss;}
+\DoxyCodeLine{796             \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} i = 0; i < level+1; i++ )}
+\DoxyCodeLine{797               ss << \textcolor{stringliteral}{"{}| "{}};}
+\DoxyCodeLine{798             ss << \textcolor{stringliteral}{"{}*** Thread "{}} << iTh << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{799             out << std::left << std::setfill(\textcolor{charliteral}{'*'});}
+\DoxyCodeLine{800             out << std::setw(outw) << ss.str() << std::endl;}
+\DoxyCodeLine{801           \}}
+\DoxyCodeLine{802   }
+\DoxyCodeLine{803           \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} child: children ) \{}
+\DoxyCodeLine{804             recursivePrint(child, level+1);}
+\DoxyCodeLine{805           \}}
+\DoxyCodeLine{806         \}}
+\DoxyCodeLine{807       \}; \textcolor{comment}{// Recursive printing definition}}
+\DoxyCodeLine{808   }
+\DoxyCodeLine{809       out << std::setw(width) << std::left << std::setfill(\textcolor{charliteral}{' '}) << first;}
+\DoxyCodeLine{810       out << std::right << std::setw(dataw-\/10) << second << std::endl;}
+\DoxyCodeLine{811       out << std::setw(outw) << std::setfill(\textcolor{charliteral}{'='}) << \textcolor{stringliteral}{"{}"{}} << std::endl;}
+\DoxyCodeLine{812       recursivePrint(printBase, 0);}
+\DoxyCodeLine{813       out << std::setw(outw) << std::setfill(\textcolor{charliteral}{'='}) << \textcolor{stringliteral}{"{}"{}} << std::endl;}
+\DoxyCodeLine{814       out << std::setfill(\textcolor{charliteral}{' '});}
+\DoxyCodeLine{815   }
+\DoxyCodeLine{816     \} \textcolor{comment}{// printTimings}}
+\DoxyCodeLine{817 }
+\DoxyCodeLine{818     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Timer_a2d125b32c6ebbb4a5d82b726355c9502}{printTimings}}(std::ostream\& out, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{IdType}} \textcolor{keywordtype}{id} = 0) \{}
+\DoxyCodeLine{819       \textcolor{keywordflow}{if} ( \mbox{\hyperlink{classChronusQ_1_1Timer_ad60a04c79cba394f76c10b2183830489}{options}}.\mbox{\hyperlink{structChronusQ_1_1TimerOpts_a3f28b2a87c0c34e760627cabc6b6c34e}{unit}} == \mbox{\hyperlink{namespaceChronusQ_a9ae304c55a155f3a9a1f87f1fb8888c1ac9c83616b538e57d3eb42faddba23ccf}{MILLISECONDS}} )}
+\DoxyCodeLine{820         printTimings<CQMillisecond>(out, \textcolor{stringliteral}{"{}ms"{}}, \textcolor{keywordtype}{id}, \mbox{\hyperlink{classChronusQ_1_1Timer_ad60a04c79cba394f76c10b2183830489}{options}}.\mbox{\hyperlink{structChronusQ_1_1TimerOpts_a3b1689677163c01748b85f911b98822e}{dbgPrint}});}
+\DoxyCodeLine{821       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( \mbox{\hyperlink{classChronusQ_1_1Timer_ad60a04c79cba394f76c10b2183830489}{options}}.\mbox{\hyperlink{structChronusQ_1_1TimerOpts_a3f28b2a87c0c34e760627cabc6b6c34e}{unit}} == \mbox{\hyperlink{namespaceChronusQ_a9ae304c55a155f3a9a1f87f1fb8888c1abb9784bbb79e064c58ea1bbfa4fec8de}{SECONDS}} )}
+\DoxyCodeLine{822         printTimings<CQSecond>(out, \textcolor{stringliteral}{"{}s"{}}, \textcolor{keywordtype}{id}, \mbox{\hyperlink{classChronusQ_1_1Timer_ad60a04c79cba394f76c10b2183830489}{options}}.\mbox{\hyperlink{structChronusQ_1_1TimerOpts_a3b1689677163c01748b85f911b98822e}{dbgPrint}});}
+\DoxyCodeLine{823       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( \mbox{\hyperlink{classChronusQ_1_1Timer_ad60a04c79cba394f76c10b2183830489}{options}}.\mbox{\hyperlink{structChronusQ_1_1TimerOpts_a3f28b2a87c0c34e760627cabc6b6c34e}{unit}} == \mbox{\hyperlink{namespaceChronusQ_a9ae304c55a155f3a9a1f87f1fb8888c1a66af4d739683ee24fdd89968e117a20b}{MINUTES}} )}
+\DoxyCodeLine{824         printTimings<CQMinute>(out, \textcolor{stringliteral}{"{}min"{}}, \textcolor{keywordtype}{id}, \mbox{\hyperlink{classChronusQ_1_1Timer_ad60a04c79cba394f76c10b2183830489}{options}}.\mbox{\hyperlink{structChronusQ_1_1TimerOpts_a3b1689677163c01748b85f911b98822e}{dbgPrint}});}
+\DoxyCodeLine{825     \};}
+\DoxyCodeLine{826   }
+\DoxyCodeLine{827   \}; \textcolor{comment}{// class Timer}}
+\DoxyCodeLine{828 }
+\DoxyCodeLine{829   \textcolor{comment}{// Singleton for the program-\/wide timer}}
+\DoxyCodeLine{830   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1ProgramTimer}{ProgramTimer}}: \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1Singleton}{Singleton}}<Timer> \{}
+\DoxyCodeLine{831 }
+\DoxyCodeLine{832     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} = \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Timer::IdType}};}
+\DoxyCodeLine{833 }
+\DoxyCodeLine{834     \textcolor{keyword}{public}:}
+\DoxyCodeLine{835 }
+\DoxyCodeLine{836     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a4f4e029367e5ab72912bb6c58eadb158}{initialize}}(std::string tag, \textcolor{keywordtype}{size\_t} nThreads) \{}
+\DoxyCodeLine{837       \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_ae94bd7b8394b737e6de03d28481e8f7c}{initialize}}(tag, nThreads);}
+\DoxyCodeLine{838     \}}
+\DoxyCodeLine{839 }
+\DoxyCodeLine{840     \textcolor{keyword}{static} \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{tick}}(std::string tag, \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} parentId = 0,}
+\DoxyCodeLine{841       \textcolor{keywordtype}{bool} addContext = \textcolor{keyword}{true}) \{}
+\DoxyCodeLine{842       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_ade19721dcb8191dce545ca01d5d124e8}{tick}}(tag, parentId, addContext);}
+\DoxyCodeLine{843     \}}
+\DoxyCodeLine{844 }
+\DoxyCodeLine{845     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{tock}}(\mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} \textcolor{keywordtype}{id} = 0) \{}
+\DoxyCodeLine{846       \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_a98232753212170fba9ba8a8e049e2949}{tock}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{847     \}}
+\DoxyCodeLine{848 }
+\DoxyCodeLine{849     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9c6853fb4aff68130821b9ed0b557b03}{tock}}(std::string tag) \{}
+\DoxyCodeLine{850       \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_a98232753212170fba9ba8a8e049e2949}{tock}}(tag);}
+\DoxyCodeLine{851     \}}
+\DoxyCodeLine{852 }
+\DoxyCodeLine{853     \textcolor{keyword}{template} <\textcolor{keyword}{typename} F, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{854     \textcolor{keyword}{static} \textcolor{keyword}{auto} \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9698b57cd81ca4095a7668b46683eb71}{timeOp}}(std::string tag, \textcolor{keyword}{const} F\& func, Args\&\&... args) \{}
+\DoxyCodeLine{855       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_ab6a8cc3977c7b144df69a042592468de}{timeOp}}(tag, func, std::forward<Args>(args)...);}
+\DoxyCodeLine{856     \}}
+\DoxyCodeLine{857 }
+\DoxyCodeLine{858     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a1b51674535d514e724cc3fa4401a161e}{setContext}}(\mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} \textcolor{keywordtype}{id}, \textcolor{keywordtype}{size\_t} level) \{}
+\DoxyCodeLine{859       \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_a3b488237cb390eb953159d2783a400aa}{setContext}}(\textcolor{keywordtype}{id}, level);}
+\DoxyCodeLine{860     \}}
+\DoxyCodeLine{861 }
+\DoxyCodeLine{862     \textcolor{keyword}{static} \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a6c39cf5b1ac72e47635f17665a8a9d2c}{getLabelId}}(std::string label, \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} base = 0) \{}
+\DoxyCodeLine{863       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_af8526e1e5ae01b988b79686352b6c9ae}{getLabelId}}(label, base);}
+\DoxyCodeLine{864     \}}
+\DoxyCodeLine{865 }
+\DoxyCodeLine{866     \textcolor{keyword}{static} \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a6d873d7e23b4d25e6554e7e215009b74}{getContextId}}() \{}
+\DoxyCodeLine{867       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_a6379d230a1fa3c2215b8973d00bae65f}{getContextId}}();}
+\DoxyCodeLine{868     \}}
+\DoxyCodeLine{869 }
+\DoxyCodeLine{870     \textcolor{keyword}{static} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a1658b05141e649497d20bb46d24f67aa}{getCallLevel}}() \{}
+\DoxyCodeLine{871       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_a842231dc006a931a56a6371fad206e0f}{getCallLevel}}();}
+\DoxyCodeLine{872     \}}
+\DoxyCodeLine{873 }
+\DoxyCodeLine{874     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{875     \textcolor{keyword}{static} DurT \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_acbacba482128b86150ca1cace2ca079e}{getIdDuration}}(\mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} \textcolor{keywordtype}{id}) \{}
+\DoxyCodeLine{876       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_a673421f45833c4120f9e681655b45264}{getIdDuration}}<DurT>(id);}
+\DoxyCodeLine{877     \}}
+\DoxyCodeLine{878 }
+\DoxyCodeLine{879     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{880     \textcolor{keyword}{static} std::vector<DurT> \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a8a150b5ee5ed845ffb008022e0fa66d0}{getDurations}}(std::string tag, \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} base = 0,}
+\DoxyCodeLine{881       std::string filter = \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{882       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_a7b280ccbaa1e4f250df6a743bc079f99}{getDurations}}<DurT>(tag, base, filter);}
+\DoxyCodeLine{883     \}}
+\DoxyCodeLine{884 }
+\DoxyCodeLine{885     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{886     \textcolor{keyword}{static} std::pair<DurT,DurT> \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_adca71641136608ff85a544f423f4d33d}{getDurationSummary}}(std::string tag,}
+\DoxyCodeLine{887       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} base = 0, std::string filter = \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{888       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_ac27826bff9bbe11a57f590cb4a37ad27}{getDurationSummary}}<DurT>(tag, base, filter);}
+\DoxyCodeLine{889     \}}
+\DoxyCodeLine{890 }
+\DoxyCodeLine{891     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{892     \textcolor{keyword}{static} DurT \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_ab6f8887ab614695000829c6e9a50029d}{getDurationTotal}}(std::string tag, \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} base = 0,}
+\DoxyCodeLine{893       std::string filter = \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{894       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_aea47628da469757115d93b16e5a4381e}{getDurationTotal}}<DurT>(tag, base, filter);}
+\DoxyCodeLine{895     \}}
+\DoxyCodeLine{896 }
+\DoxyCodeLine{897     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{898     \textcolor{keyword}{static} DurT \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a509fb9fe5dde17716c89d25377ced5c3}{getDurationAvg}}(std::string tag, \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} base = 0,}
+\DoxyCodeLine{899       std::string filter = \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{900       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_a071569aa8c0eee16583e6f92f001da60}{getDurationAvg}}<DurT>(tag, base, filter);}
+\DoxyCodeLine{901     \}}
+\DoxyCodeLine{902 }
+\DoxyCodeLine{903     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{904     \textcolor{keyword}{static} std::vector<std::vector<DurT>> \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_aff35ceda7d8d73d70a917f30626a9741}{getThreadDurations}}(std::string tag,}
+\DoxyCodeLine{905       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} base = 0, std::string filter = \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{906       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_a071569aa8c0eee16583e6f92f001da60}{getDurationAvg}}<DurT>(tag, base, filter);}
+\DoxyCodeLine{907     \}}
+\DoxyCodeLine{908 }
+\DoxyCodeLine{909     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{910     \textcolor{keyword}{static} std::vector<std::vector<DurT>> \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_ace417aba40c61c36e03f36e4de2dc0e1}{getAggregateDurations}}(std::string tag,}
+\DoxyCodeLine{911       std::string parentTag, \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} base = 0) \{}
+\DoxyCodeLine{912       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_a071569aa8c0eee16583e6f92f001da60}{getDurationAvg}}<DurT>(tag, parentTag, base);}
+\DoxyCodeLine{913     \}}
+\DoxyCodeLine{914 }
+\DoxyCodeLine{915     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{916     \textcolor{keyword}{static} std::pair<DurT,DurT> \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a229fcd9e327ff35988fd4ffa69409c96}{getAggDurSummary}}(std::string tag,}
+\DoxyCodeLine{917       std::string parentTag, \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} base = 0) \{}
+\DoxyCodeLine{918       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_a7578dc1fb70036f0f5584f90f31f963c}{getAggDurSummary}}<DurT>(tag, parentTag, base);}
+\DoxyCodeLine{919     \}}
+\DoxyCodeLine{920 }
+\DoxyCodeLine{921     \textcolor{keyword}{template} <\textcolor{keyword}{typename} DurT>}
+\DoxyCodeLine{922     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_ab1da0e891b514db3effb2afe61a5ff0d}{printTimings}}(std::ostream\& out, std::string unit = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{923       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} \textcolor{keywordtype}{id} = 0, \textcolor{keywordtype}{int} maxDepth = 3) \{}
+\DoxyCodeLine{924       \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_a81e8894c1bca6bf589472aa2c2614316}{printTimings}}<DurT>(out, unit, id, maxDepth);}
+\DoxyCodeLine{925     \}}
+\DoxyCodeLine{926 }
+\DoxyCodeLine{927     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_afaa96d0570436ee9506ba4b2bbd326d8}{printTimings}}(std::ostream\& out, \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a7d36a267cf80c342c28c476ed7e1a3af}{IdType}} \textcolor{keywordtype}{id} = 0) \{}
+\DoxyCodeLine{928       \mbox{\hyperlink{classChronusQ_1_1Singleton_a5e503ed824acc4e6abcbfbec2938aa30}{instance}}()-\/>\mbox{\hyperlink{classChronusQ_1_1Timer_a81e8894c1bca6bf589472aa2c2614316}{printTimings}}(out, \textcolor{keywordtype}{id});}
+\DoxyCodeLine{929     \}}
+\DoxyCodeLine{930 }
+\DoxyCodeLine{931   \};}
+\DoxyCodeLine{932 }
+\DoxyCodeLine{933 \} \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

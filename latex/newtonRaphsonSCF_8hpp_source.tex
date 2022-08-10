@@ -1,0 +1,146 @@
+\hypertarget{newtonRaphsonSCF_8hpp_source}{}\doxysection{newton\+Raphson\+SCF.\+hpp}
+\label{newtonRaphsonSCF_8hpp_source}\index{include/modifyorbitals/newtonRaphsonSCF.hpp@{include/modifyorbitals/newtonRaphsonSCF.hpp}}
+\mbox{\hyperlink{newtonRaphsonSCF_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{optOrbitals_8hpp}{modifyorbitals/optOrbitals.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matfunc_8hpp}{cqlinalg/matfunc.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{comment}{//\#define \_NRSCF\_DEBUG}}
+\DoxyCodeLine{30 \textcolor{comment}{//\#define \_NRSCF\_DEBUG\_GRAD}}
+\DoxyCodeLine{31 \textcolor{comment}{//\#define \_NRSCF\_DEBUG\_UNITARY}}
+\DoxyCodeLine{32 \textcolor{comment}{//\#define \_NRSCF\_DEBUG\_BFGS}}
+\DoxyCodeLine{33 \textcolor{comment}{//\#define \_NRSCF\_DEBUG\_SR1}}
+\DoxyCodeLine{34 \textcolor{comment}{//\#define \_NRSCF\_PRINT\_MOS}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{comment}{/*}}
+\DoxyCodeLine{41 \textcolor{comment}{ *    Brief: This is a struct to hold the information about the nonredundant }}
+\DoxyCodeLine{42 \textcolor{comment}{ *           rotations in NewtonRaphsonSCF}}
+\DoxyCodeLine{43 \textcolor{comment}{ */}}
+\DoxyCodeLine{44 \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1NRRotOptions}{NRRotOptions}}\{}
+\DoxyCodeLine{45   std::pair<std::set<size\_t>,std::set<size\_t>> \mbox{\hyperlink{structChronusQ_1_1NRRotOptions_aaa78b813259e550c89295e56a5bb6500}{rotIndices}};   }
+\DoxyCodeLine{46   \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1NRRotOptions_a884ecd495210f09455efc0fdd8a891fd}{spaceIndex}} = 0;                    }
+\DoxyCodeLine{47 \};}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 \textcolor{comment}{/*}}
+\DoxyCodeLine{50 \textcolor{comment}{ *  Brief: This is a simple function to compute the rotation indices for }}
+\DoxyCodeLine{51 \textcolor{comment}{ *         Slater determinant wave functions.  In the std::pair, the first set}}
+\DoxyCodeLine{52 \textcolor{comment}{ *         is the set of occupied indices, and the second set is the set of }}
+\DoxyCodeLine{53 \textcolor{comment}{ *         virtual indices. These are used to determine the nonredundant }}
+\DoxyCodeLine{54 \textcolor{comment}{ *         parameters in the NewtonRaphsonSCF object. The implementation}}
+\DoxyCodeLine{55 \textcolor{comment}{ *         is in include/modifyorbitals/newtonraphsonscf/impl.hpp}}
+\DoxyCodeLine{56 \textcolor{comment}{ */} }
+\DoxyCodeLine{57 std::pair<std::set<size\_t>,std::set<size\_t>> \mbox{\hyperlink{namespaceChronusQ_ac7ea9cf3c239097184f48433d8ca2701}{ssNRRotIndices}}( \textcolor{keywordtype}{size\_t} nOcc, \textcolor{keywordtype}{size\_t} NB, \textcolor{keywordtype}{size\_t} shift=0 );}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{60 \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF}{NewtonRaphsonSCF}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{OptimizeOrbitals}}<MatsT> \{}
+\DoxyCodeLine{61 \textcolor{keyword}{private}:}
+\DoxyCodeLine{62   \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a634c5c8aa8c6bdec33de4c5326312c50}{nParam}};                  }
+\DoxyCodeLine{63   \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a40223af9edb8e445b5bb6179ca1f0e52}{refMOsAllocated}} = \textcolor{keyword}{false};   }
+\DoxyCodeLine{64   \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a9e8aef925e76ce00d36c12239f0cd79e}{storedRef}}       = \textcolor{keyword}{false};   }
+\DoxyCodeLine{65   MatsT* \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a5ded9a9897ed9f0f75e58a0476ac70a8}{orbRot}};                  }
+\DoxyCodeLine{66   MatsT* \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a8c82e26b4d88dd5d1a64fad5a1b68290}{orbGrad}};                 }
+\DoxyCodeLine{67   MatsT* \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a1bd51778f6de8d8ac15a5c5e3ce87754}{orbDiagHess}};             }
+\DoxyCodeLine{68   std::vector<SquareMatrix<MatsT>> \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a9d1ff7fcad535f0c83a517651685635e}{refMO}};   }
+\DoxyCodeLine{69   std::vector<NRRotOptions> \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a72c04e4da503c17a24209befa9e1e347}{rotOpt}};         }
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71   \textcolor{comment}{// Quasi-\/Newton Data Structures}}
+\DoxyCodeLine{72   std::vector<MatsT*> \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a7c3e7ded2672d8805af6da1705175d82}{qnOrbRot}};             }
+\DoxyCodeLine{73   std::vector<MatsT*> \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a879ba262785ccf7fc292c43024de550d}{qnOrbGrad}};            }
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75 \textcolor{keyword}{public}:}
+\DoxyCodeLine{76   \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{77   \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a87888f88f589a9e5c12666f586a4a8e8}{NewtonRaphsonSCF}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{78   \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a066ffffc35602f73010e840263c4e074}{NewtonRaphsonSCF}}(std::vector<NRRotOptions> nrrot, \mbox{\hyperlink{structChronusQ_1_1SCFControls}{SCFControls}} sC, \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}}, \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{ModifyOrbitalsOptions<MatsT>}} modOpt, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& mem):}
+\DoxyCodeLine{79     \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{OptimizeOrbitals}}<MatsT>(sC, \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}}, modOpt, mem),\mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a72c04e4da503c17a24209befa9e1e347}{rotOpt}}(nrrot) \{}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a5666944253b9ac94e9f3d2989b34e577}{sanityChecks}}();}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83     \textcolor{comment}{// Compute the total number of nonredundant parameters}}
+\DoxyCodeLine{84     \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a634c5c8aa8c6bdec33de4c5326312c50}{nParam}} = 0;}
+\DoxyCodeLine{85     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& rO : \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a72c04e4da503c17a24209befa9e1e347}{rotOpt}} )}
+\DoxyCodeLine{86       \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a634c5c8aa8c6bdec33de4c5326312c50}{nParam}} += rO.rotIndices.first.size() * rO.rotIndices.second.size();}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88     \textcolor{comment}{// Alloc Quasi-\/Newton matrices}}
+\DoxyCodeLine{89     \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_acc471bbf82e3be8ecaf5716e80ed6d9f}{alloc}}();}
+\DoxyCodeLine{90   \}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92   \textcolor{comment}{// Destructor}}
+\DoxyCodeLine{93   \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a2190c24e7bb4854d41cce8986d048f5f}{\string~NewtonRaphsonSCF}}() \{}
+\DoxyCodeLine{94     this-\/>\mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a3e3f5db2db8211af00ab2491e32caa11}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(orbRot, \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a8c82e26b4d88dd5d1a64fad5a1b68290}{orbGrad}}, \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a1bd51778f6de8d8ac15a5c5e3ce87754}{orbDiagHess}});}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a1c2583249553f15ab9bfefa73efac407}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_ae5370cdbd352f8720730937ea3153842}{nrAlg}} == \mbox{\hyperlink{namespaceChronusQ_aff61a7e23880290b032e2c98a656e364a221402c6433c4602a0d81a3af5ebeaf7}{QUASI\_BFGS}} or this-\/>scfControls.nrAlg == \mbox{\hyperlink{namespaceChronusQ_aff61a7e23880290b032e2c98a656e364a9886bb52a10dc9bd75fc414e6accbde3}{QUASI\_SR1}} ) \{}
+\DoxyCodeLine{97       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}* p : \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a7c3e7ded2672d8805af6da1705175d82}{qnOrbRot}} )}
+\DoxyCodeLine{98         this-\/>\mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a3e3f5db2db8211af00ab2491e32caa11}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(p);}
+\DoxyCodeLine{99       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}* p : \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a879ba262785ccf7fc292c43024de550d}{qnOrbGrad}} )}
+\DoxyCodeLine{100         this-\/>\mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a3e3f5db2db8211af00ab2491e32caa11}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(p);}
+\DoxyCodeLine{101     \}}
+\DoxyCodeLine{102   \}}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104   \textcolor{comment}{// Functions}}
+\DoxyCodeLine{105   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a5666944253b9ac94e9f3d2989b34e577}{sanityChecks}}();}
+\DoxyCodeLine{106   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_acc471bbf82e3be8ecaf5716e80ed6d9f}{alloc}}();}
+\DoxyCodeLine{107   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a781b476c165372a4b555f9d5337846c5}{getNewOrbitals}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&, \mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\&, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}}\&);}
+\DoxyCodeLine{108   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_ad9d6f071a99cbd885fdab4fdaa70e743}{NewtonRaphsonIteration}}();}
+\DoxyCodeLine{109   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_ac54206e26cac741f29ab608543f6af27}{printRunHeader}}(std::ostream\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111   \textcolor{comment}{// Newton-\/Raphson Approximation Steps}}
+\DoxyCodeLine{112   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a52641978222ed047f0e5eb1fb657d5d8}{fullNRStep}}();}
+\DoxyCodeLine{113   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_aa44aa774b69265a766a1f671d9c95785}{qnBFGSStep}}();}
+\DoxyCodeLine{114   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a270c8a920945aee87df407382ea43c20}{qnSR1Step}}();}
+\DoxyCodeLine{115   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a2c805e4b0eea822fbb62c6d903543164}{gradDescentStep}}();}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117   \textcolor{comment}{// Common Functions}}
+\DoxyCodeLine{118   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a7f37c16ee17693edfbc2cb7a943224d8}{computeGradient}}(\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\&);}
+\DoxyCodeLine{119   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a218734fbdfd9e393a4241c6d40fe52a2}{computeDiagHess}}(\mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}}\&);}
+\DoxyCodeLine{120   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_acb3fb355328b48cfc58a10b1a67d97a0}{rotateMOs}}(\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\&);}
+\DoxyCodeLine{121   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_afef0f053f46660323d0be2ce25e384e2}{saveRefMOs}}(\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\& mo);}
+\DoxyCodeLine{122   std::vector<SquareMatrix<MatsT>> \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a8e06d6df533e04ceacc13d377c662639}{computeUnitary}}();}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125   \textcolor{comment}{// Line Search and step functions}}
+\DoxyCodeLine{126   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a28393e512f77ead84bb59487f8f9b681}{takeStep}}(MatsT*);}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128   \textcolor{comment}{// Quasi-\/Newton Functions}}
+\DoxyCodeLine{129   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_acd85a917250ba516dbe7c3d1f7c81821}{qnSetup}}();}
+\DoxyCodeLine{130   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_adbfe41588b763cb661fc0e19181d8026}{computeBFGS}}(\textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{const} std::vector<MatsT*>\& x, \textcolor{keyword}{const} std::vector<MatsT*>\& g, MatsT* dx);}
+\DoxyCodeLine{131   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_acaebc2a1a954b80f3e456482d9ce9046}{computeSR1}}(\textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{const} std::vector<MatsT*>\& x, \textcolor{keyword}{const} std::vector<MatsT*>\& g, MatsT* dx);}
+\DoxyCodeLine{132   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a46faef268371ac5637af1ff2a5d7fb31}{computeMatrixInverse}}(\textcolor{keyword}{const} \textcolor{keywordtype}{size\_t}, MatsT*, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t}, \textcolor{keyword}{const} \textcolor{keywordtype}{double});}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{135   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_abde19550edf2048ab3deb1572ec85b13}{printParamVec}}(std::string, MatsU*) \textcolor{keyword}{const};}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137   \textcolor{comment}{// Convergence Testing functions}}
+\DoxyCodeLine{138   \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a12db47837ba464940e4e5db18c846d63}{computeFDCConv}}();}
+\DoxyCodeLine{139 \};}
+\DoxyCodeLine{140 \};   \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

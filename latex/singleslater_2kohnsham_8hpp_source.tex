@@ -1,0 +1,282 @@
+\hypertarget{singleslater_2kohnsham_8hpp_source}{}\doxysection{kohnsham.\+hpp}
+\label{singleslater_2kohnsham_8hpp_source}\index{include/singleslater/kohnsham.hpp@{include/singleslater/kohnsham.hpp}}
+\mbox{\hyperlink{singleslater_2kohnsham_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{basisset__util_8hpp}{basisset/basisset\_util.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasext_8hpp}{cqlinalg/blasext.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{timer_8hpp}{util/timer.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{dft_8hpp}{dft.hpp}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{comment}{// KS\_DEBUG\_LEVEL == 1 -\/ Timing}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#ifndef KS\_DEBUG\_LEVEL}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#  define KS\_DEBUG\_LEVEL 0}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 }
+\DoxyCodeLine{47   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{48   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>,}
+\DoxyCodeLine{49     \textcolor{keyword}{public} std::enable\_shared\_from\_this<KohnSham<MatsT,IntsT>> \{}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{comment}{// Useful typedefs}}
+\DoxyCodeLine{54     \textcolor{keyword}{typedef} MatsT*                    \mbox{\hyperlink{classChronusQ_1_1KohnSham_a20095a98a003b7c9dea63f26bae7f738}{oper\_t}};}
+\DoxyCodeLine{55     \textcolor{keyword}{typedef} std::vector<oper\_t>       \mbox{\hyperlink{classChronusQ_1_1KohnSham_a59e8d61cf9cb6534c291c790f54d0008}{oper\_t\_coll}};}
+\DoxyCodeLine{56     \textcolor{keyword}{typedef} std::vector<oper\_t\_coll>  \mbox{\hyperlink{classChronusQ_1_1KohnSham_a46179681e7f57603aabda8e365a8de8c}{oper\_t\_coll2}};}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58   \textcolor{keyword}{public}:}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     std::shared\_ptr<KohnSham<MatsT,IntsT>> \mbox{\hyperlink{classChronusQ_1_1KohnSham_a8d00666eb1736d7d61e80e9c5fd0e4b0}{getPtr}}()\{ \textcolor{keywordflow}{return} this-\/>shared\_from\_this(); \}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     std::vector<std::shared\_ptr<DFTFunctional>> \mbox{\hyperlink{classChronusQ_1_1KohnSham_abb0e9c381fb8cb4ea6504b8c43012e67}{functionals}}; }
+\DoxyCodeLine{64     \mbox{\hyperlink{structChronusQ_1_1IntegrationParam}{IntegrationParam}} \mbox{\hyperlink{classChronusQ_1_1KohnSham_a8a13c0ebff93228ac5cd53fc15bca902}{intParam}}; }
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1KohnSham_af065f9385e7eb346a59757b39bd6165b}{doVXC\_}} = \textcolor{keyword}{true}; }
+\DoxyCodeLine{67     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1KohnSham_a5fe46a5c2f4f49e79dfcdbbb827204e2}{isGGA\_}}; }
+\DoxyCodeLine{68     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1KohnSham_ae3ab2e94608124d78ca6a0044bba165d}{XCEnergy}}; }
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     std::shared\_ptr<PauliSpinorSquareMatrices<double>> \mbox{\hyperlink{classChronusQ_1_1KohnSham_acad811487139c4b801f6d6b2c9cba9d8}{VXC}}; }
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \textcolor{comment}{// Current Timings}}
+\DoxyCodeLine{73     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1KohnSham_addf3ef2a1dcf4df391f0d815c605e152}{VXCDur}};}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \textcolor{comment}{// Inherit ctors from SingleSlater<T>}}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{78     \mbox{\hyperlink{classChronusQ_1_1KohnSham_aa135e5580d6d737674964c76b3e39e91}{KohnSham}}(std::string funcName,}
+\DoxyCodeLine{79       std::vector<std::shared\_ptr<DFTFunctional>> funclist,}
+\DoxyCodeLine{80       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{structChronusQ_1_1IntegrationParam}{IntegrationParam}} ip,}
+\DoxyCodeLine{81       \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis,}
+\DoxyCodeLine{82       \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals<IntsT>}} \&aoi, Args... args) : }
+\DoxyCodeLine{83       \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>(c,mem,mol,basis,aoi,args...),}
+\DoxyCodeLine{84       \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{WaveFunctionBase}}(c,mem,mol,basis,args...),}
+\DoxyCodeLine{85       \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}}(c,mem,args...), \mbox{\hyperlink{classChronusQ_1_1KohnSham_a5fe46a5c2f4f49e79dfcdbbb827204e2}{isGGA\_}}(false),}
+\DoxyCodeLine{86       \mbox{\hyperlink{classChronusQ_1_1KohnSham_abb0e9c381fb8cb4ea6504b8c43012e67}{functionals}}(std::move(funclist)),\mbox{\hyperlink{classChronusQ_1_1KohnSham_a8a13c0ebff93228ac5cd53fc15bca902}{intParam}}(ip)\{ }
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88       \textcolor{comment}{// Append HF tags to reference names}}
+\DoxyCodeLine{89       \textcolor{keywordflow}{if}(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 1) \{}
+\DoxyCodeLine{90         \textcolor{keywordflow}{if}(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}}) \{}
+\DoxyCodeLine{91           this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a0a49cbbc09f5076d671240b41b87158d}{refLongName\_}}  += \textcolor{stringliteral}{"{}Restricted "{}} + funcName;}
+\DoxyCodeLine{92           this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a531a032e4edaeffb1405a294e6da6b13}{refShortName\_}} += \textcolor{stringliteral}{"{}R"{}} + funcName;}
+\DoxyCodeLine{93         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{94           this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a0a49cbbc09f5076d671240b41b87158d}{refLongName\_}}  += \textcolor{stringliteral}{"{}Unrestricted "{}} + funcName;}
+\DoxyCodeLine{95           this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a531a032e4edaeffb1405a294e6da6b13}{refShortName\_}} += \textcolor{stringliteral}{"{}U"{}} + funcName;}
+\DoxyCodeLine{96         \}}
+\DoxyCodeLine{97       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{98         this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a0a49cbbc09f5076d671240b41b87158d}{refLongName\_}}  += \textcolor{stringliteral}{"{}Generalized "{}} + funcName;}
+\DoxyCodeLine{99         this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a531a032e4edaeffb1405a294e6da6b13}{refShortName\_}} += \textcolor{stringliteral}{"{}G"{}} + funcName;}
+\DoxyCodeLine{100       \}}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102       \textcolor{keywordtype}{size\_t} NB = this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5bb8768829c6a466209aae6e9e690ab3}{basisSet}}().\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{103       \textcolor{keywordflow}{if}(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} > 1)}
+\DoxyCodeLine{104         VXC = std::make\_shared<PauliSpinorSquareMatrices<double>>(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}, NB, \textcolor{keyword}{true});}
+\DoxyCodeLine{105       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (not this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}})}
+\DoxyCodeLine{106         VXC = std::make\_shared<PauliSpinorSquareMatrices<double>>(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}, NB, \textcolor{keyword}{false});}
+\DoxyCodeLine{107       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{108         \mbox{\hyperlink{classChronusQ_1_1KohnSham_acad811487139c4b801f6d6b2c9cba9d8}{VXC}} = std::make\_shared<PauliSpinorSquareMatrices<double>>(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}, NB, \textcolor{keyword}{false}, \textcolor{keyword}{false});}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     \}; \textcolor{comment}{// KohnSham constructor}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{115     \mbox{\hyperlink{classChronusQ_1_1KohnSham_a28c3e1e53fc255cc528ca200b79234ac}{KohnSham}}(std::string rL, std::string rS, std::string funcName,}
+\DoxyCodeLine{116       std::vector<std::shared\_ptr<DFTFunctional>> funclist,}
+\DoxyCodeLine{117       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{structChronusQ_1_1IntegrationParam}{IntegrationParam}} ip, }
+\DoxyCodeLine{118       \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis,}
+\DoxyCodeLine{119       \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals<IntsT>}} \&aoi, Args... args) : }
+\DoxyCodeLine{120       \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>(c,mem,mol,basis,aoi,args...),}
+\DoxyCodeLine{121       \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{WaveFunctionBase}}(c,mem,mol,basis,args...),}
+\DoxyCodeLine{122       \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}}(c,mem,args...), \mbox{\hyperlink{classChronusQ_1_1KohnSham_a5fe46a5c2f4f49e79dfcdbbb827204e2}{isGGA\_}}(false),}
+\DoxyCodeLine{123       \mbox{\hyperlink{classChronusQ_1_1KohnSham_abb0e9c381fb8cb4ea6504b8c43012e67}{functionals}}(std::move(funclist)),\mbox{\hyperlink{classChronusQ_1_1KohnSham_a8a13c0ebff93228ac5cd53fc15bca902}{intParam}}(ip) \{ }
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125       this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a0a49cbbc09f5076d671240b41b87158d}{refLongName\_}}  += rL + \textcolor{stringliteral}{"{} "{}} + funcName;}
+\DoxyCodeLine{126       this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a531a032e4edaeffb1405a294e6da6b13}{refShortName\_}} += rS + funcName;}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128       \textcolor{keywordtype}{size\_t} NB = this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5bb8768829c6a466209aae6e9e690ab3}{basisSet}}().\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{129       \textcolor{keywordflow}{if}(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} > 1)}
+\DoxyCodeLine{130         VXC = std::make\_shared<PauliSpinorSquareMatrices<double>>(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}, NB, \textcolor{keyword}{true});}
+\DoxyCodeLine{131       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (not this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}})}
+\DoxyCodeLine{132         VXC = std::make\_shared<PauliSpinorSquareMatrices<double>>(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}, NB, \textcolor{keyword}{false});}
+\DoxyCodeLine{133       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{134         \mbox{\hyperlink{classChronusQ_1_1KohnSham_acad811487139c4b801f6d6b2c9cba9d8}{VXC}} = std::make\_shared<PauliSpinorSquareMatrices<double>>(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}, NB, \textcolor{keyword}{false}, \textcolor{keyword}{false});}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137     \}; \textcolor{comment}{// KohnSham constructor}}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140     \textcolor{comment}{// Copy and Move ctors}}
+\DoxyCodeLine{141       }
+\DoxyCodeLine{142     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU> }
+\DoxyCodeLine{143       \mbox{\hyperlink{classChronusQ_1_1KohnSham_aa135e5580d6d737674964c76b3e39e91}{KohnSham}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham<MatsU,IntsT>}} \&other, \textcolor{keywordtype}{int} dummy = 0); }
+\DoxyCodeLine{144     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU> }
+\DoxyCodeLine{145       \mbox{\hyperlink{classChronusQ_1_1KohnSham_aa135e5580d6d737674964c76b3e39e91}{KohnSham}}(\mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham<MatsU,IntsT>}} \&\&other, \textcolor{keywordtype}{int} dummy = 0);}
+\DoxyCodeLine{146     \mbox{\hyperlink{classChronusQ_1_1KohnSham_aa135e5580d6d737674964c76b3e39e91}{KohnSham}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham<MatsT,IntsT>}} \&other);}
+\DoxyCodeLine{147     \mbox{\hyperlink{classChronusQ_1_1KohnSham_aa135e5580d6d737674964c76b3e39e91}{KohnSham}}(\mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham<MatsT,IntsT>}} \&\&other);}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149 }
+\DoxyCodeLine{155     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_a8d91bad6deb07fbe2f48ede018dc0b62}{formFock}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert, \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false}, \textcolor{keywordtype}{double} HFX = 0.) \{}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157       \textcolor{keywordtype}{double} xHFX = \mbox{\hyperlink{classChronusQ_1_1KohnSham_abb0e9c381fb8cb4ea6504b8c43012e67}{functionals}}.size() != 0 ? \mbox{\hyperlink{classChronusQ_1_1KohnSham_abb0e9c381fb8cb4ea6504b8c43012e67}{functionals}}.back()-\/>xHFX : 1.;}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159       \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7da0fea35cf7e2337d36b35942ee24a2}{SingleSlater<MatsT,IntsT>::formFock}}(pert,increment,xHFX);}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161       \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1KohnSham_af065f9385e7eb346a59757b39bd6165b}{doVXC\_}} ) \{}
+\DoxyCodeLine{162         \mbox{\hyperlink{classChronusQ_1_1KohnSham_aeff4ab0b88fedf74f78dca7903589360}{formVXC}}();}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164         \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}});}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166         \textcolor{comment}{// Add VXC in Fock matrix}}
+\DoxyCodeLine{167         *this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab82f1f8ad464a41f46f9ee508cf22b38}{fockMatrix}} += *\mbox{\hyperlink{classChronusQ_1_1KohnSham_acad811487139c4b801f6d6b2c9cba9d8}{VXC}};}
+\DoxyCodeLine{168       \}}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170     \}; \textcolor{comment}{// formFock}}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{177     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_aa64cd93643e8785577a28d2d5e519c3f}{computeEnergy}}() \{}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179       \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a18d2ba2b05e8b80f8ae57e28ae75a715}{SingleSlater<MatsT,IntsT>::computeEnergy}}();}
+\DoxyCodeLine{180       \textcolor{comment}{// Add EXC in the total energy}}
+\DoxyCodeLine{181       this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}{totalEnergy}} += \mbox{\hyperlink{classChronusQ_1_1KohnSham_ae3ab2e94608124d78ca6a0044bba165d}{XCEnergy}};}
+\DoxyCodeLine{182         }
+\DoxyCodeLine{183     \}; \textcolor{comment}{// computeEnergy}}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185 }
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_adf3f32454161a365fbf3198777bc01b2}{printFockTimings}}(std::ostream \&out) \{}
+\DoxyCodeLine{188   }
+\DoxyCodeLine{189       out << \textcolor{stringliteral}{"{}    Fock Timings:\(\backslash\)n"{}};}
+\DoxyCodeLine{190       out << \textcolor{stringliteral}{"{}      Wall time G[D] = "{}} << std::setw(8)}
+\DoxyCodeLine{191           << std::setprecision(5)  << std::scientific}
+\DoxyCodeLine{192           << this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a749dcc8871e79be69e5d2723b931ea0d}{GDDur}} << \textcolor{stringliteral}{"{} s\(\backslash\)n"{}};}
+\DoxyCodeLine{193       out << \textcolor{stringliteral}{"{}      Wall time VXC  = "{}} << std::setw(8)}
+\DoxyCodeLine{194           << std::setprecision(5)  << std::scientific}
+\DoxyCodeLine{195           << \mbox{\hyperlink{classChronusQ_1_1KohnSham_addf3ef2a1dcf4df391f0d815c605e152}{VXCDur}} << \textcolor{stringliteral}{"{} s\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{196   }
+\DoxyCodeLine{197   }
+\DoxyCodeLine{198     \}; \textcolor{comment}{// SingleSlater<T>::printFockTimings}}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204     \textcolor{comment}{// KS specific functions}}
+\DoxyCodeLine{205     \textcolor{comment}{// See include/singleslater/kohnsham/vxc.hpp for docs.}}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207     \textcolor{comment}{// VXC}}
+\DoxyCodeLine{208     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_aeff4ab0b88fedf74f78dca7903589360}{formVXC}}(); }
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210     \textcolor{comment}{// FXC Terms}}
+\DoxyCodeLine{211     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{212     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_acf41050f0847cef9a31776c1da1990cc}{evalTransDen}}(\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\_EVAL\_TYPE}} typ, \textcolor{keywordtype}{size\_t} NPts,\textcolor{keywordtype}{size\_t} NBE, \textcolor{keywordtype}{size\_t} NB, }
+\DoxyCodeLine{213       std::vector<std::pair<size\_t,size\_t>> \&subMatCut, U *SCR1,}
+\DoxyCodeLine{214       U *SCR2, U *DENMAT, U *Den, U *GDenX, U *GDenY, U *GDenZ,}
+\DoxyCodeLine{215       U *BasisScr);}
+\DoxyCodeLine{216 }
+\DoxyCodeLine{217     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_a07ea83f5e278d63dddcfca1e58334666}{loadFXCder}}(\textcolor{keywordtype}{size\_t} NPts, \textcolor{keywordtype}{double} *Den, \textcolor{keywordtype}{double} *sigma, \textcolor{keywordtype}{double} *EpsEval, \textcolor{keywordtype}{double} *VRhoEval, }
+\DoxyCodeLine{218       \textcolor{keywordtype}{double} *V2RhoEval, \textcolor{keywordtype}{double} *VsigmaEval, \textcolor{keywordtype}{double} *V2sigmaEval, \textcolor{keywordtype}{double} *V2RhosigmaEval, }
+\DoxyCodeLine{219       \textcolor{keywordtype}{double} *EpsSCR, \textcolor{keywordtype}{double} *VRhoSCR, \textcolor{keywordtype}{double} *VsigmaSCR, \textcolor{keywordtype}{double} *V2RhoEvalSCR, \textcolor{keywordtype}{double} *V2sigmaEvalSCR,}
+\DoxyCodeLine{220       \textcolor{keywordtype}{double} *V2RhosigmaEvalSCR); }
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{223     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_af523017d747fe8b6a87d6cda457300a0}{constructZVarsFXC}}(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\_TYPE}} denTyp, \textcolor{keywordtype}{bool} isGGA, \textcolor{keywordtype}{size\_t} NPts, }
+\DoxyCodeLine{224       \textcolor{keywordtype}{double}* GDenS, \textcolor{keywordtype}{double}* GDenZ, \textcolor{keywordtype}{double}* GDenY, \textcolor{keywordtype}{double}* GDenX,}
+\DoxyCodeLine{225       U* TS, U* TZ, U* TY, U* TX,}
+\DoxyCodeLine{226       U* GTS, U* GTZ, U* GTY, U* GTX,}
+\DoxyCodeLine{227       \textcolor{keywordtype}{double} *VrhoEval, \textcolor{keywordtype}{double} *VsigmaEval, }
+\DoxyCodeLine{228       \textcolor{keywordtype}{double} *V2rhoEval, \textcolor{keywordtype}{double} *V2sigmaEval, \textcolor{keywordtype}{double} *V2RhosigmaEval, }
+\DoxyCodeLine{229       U *ZrhoVar1, U *ZgammaVar1, U *ZgammaVar2, U *ZgammaVar3, U *ZgammaVar4);}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{232     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_af523017d747fe8b6a87d6cda457300a0}{constructZVarsFXC}}(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\_TYPE}} denTyp, \textcolor{keywordtype}{bool} isGGA, \textcolor{keywordtype}{size\_t} NPts, }
+\DoxyCodeLine{233       \textcolor{keywordtype}{double}* GDenS, \textcolor{keywordtype}{double}* GDenZ, \textcolor{keywordtype}{double}* GDenY, \textcolor{keywordtype}{double}* GDenX,}
+\DoxyCodeLine{234       \textcolor{keywordtype}{bool} * Msmall, \textcolor{keywordtype}{double} *Mnorm, }
+\DoxyCodeLine{235       \textcolor{keywordtype}{double} *Kx, \textcolor{keywordtype}{double} *Ky, \textcolor{keywordtype}{double} *Kz, }
+\DoxyCodeLine{236       \textcolor{keywordtype}{double} *Hx, \textcolor{keywordtype}{double} *Hy, \textcolor{keywordtype}{double} *Hz,}
+\DoxyCodeLine{237       U* TS, U* TZ, U* TY, U* TX,}
+\DoxyCodeLine{238       U* GTS, U* GTZ, U* GTY, U* GTX,}
+\DoxyCodeLine{239       U* gPTss, U* gPTsz, U* gPTsy, U* gPTsx, U* gPTzz, }
+\DoxyCodeLine{240       U* gPTyy, U* gPTxx,  }
+\DoxyCodeLine{241       \textcolor{keywordtype}{double} *VrhoEval, \textcolor{keywordtype}{double} *VsigmaEval, }
+\DoxyCodeLine{242       \textcolor{keywordtype}{double} *V2rhoEval, \textcolor{keywordtype}{double} *V2sigmaEval, \textcolor{keywordtype}{double} *V2RhosigmaEval, }
+\DoxyCodeLine{243       U *ZrhoVar1, U *ZgammaVar1, U *ZgammaVar2, U *ZgammaVar3, U *ZgammaVar4);}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{246     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_a46404109e3e9117c67084fe9461a6f5f}{formZ\_fxc}}(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\_TYPE}} denType, \textcolor{keywordtype}{bool} isGGA, \textcolor{keywordtype}{size\_t} NPts, \textcolor{keywordtype}{size\_t} NBE, \textcolor{keywordtype}{size\_t} IOff,}
+\DoxyCodeLine{247       \textcolor{keywordtype}{double} epsScreen, std::vector<double> \&\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}},}
+\DoxyCodeLine{248       U *ZrhoVar1, U *ZgammaVar1, U *ZgammaVar2, U *ZgammaVar3, U *ZgammaVar4,}
+\DoxyCodeLine{249       \textcolor{keywordtype}{double}* GDenS, \textcolor{keywordtype}{double}* GDenZ, \textcolor{keywordtype}{double}* GDenY, \textcolor{keywordtype}{double}* GDenX, U* GTS, U* GTZ, U* GTY, U* GTX,}
+\DoxyCodeLine{250       \textcolor{keywordtype}{double} *BasisScr, U* ZMAT);}
+\DoxyCodeLine{251 }
+\DoxyCodeLine{252     \textcolor{comment}{// GTO-\/based TDDFT}}
+\DoxyCodeLine{253     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{254     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_a46404109e3e9117c67084fe9461a6f5f}{formZ\_fxc}}(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\_TYPE}} denType, \textcolor{keywordtype}{bool} isGGA, \textcolor{keywordtype}{size\_t} NPts, \textcolor{keywordtype}{size\_t} NBE, \textcolor{keywordtype}{size\_t} IOff,}
+\DoxyCodeLine{255       \textcolor{keywordtype}{double} epsScreen, std::vector<double> \&\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}},}
+\DoxyCodeLine{256       U *ZrhoVar1, U *ZgammaVar1, U *ZgammaVar2, U *ZgammaVar3, U *ZgammaVar4,}
+\DoxyCodeLine{257       \textcolor{keywordtype}{bool} * Msmall, \textcolor{keywordtype}{double} *Mnorm, }
+\DoxyCodeLine{258       \textcolor{keywordtype}{double}* DSDMnorm, \textcolor{keywordtype}{double}* signMD, }
+\DoxyCodeLine{259       \textcolor{keywordtype}{double}* GDenS, \textcolor{keywordtype}{double}* GDenZ, \textcolor{keywordtype}{double}* GDenY, \textcolor{keywordtype}{double}* GDenX, }
+\DoxyCodeLine{260       \textcolor{keywordtype}{double} *Kx, \textcolor{keywordtype}{double} *Ky, \textcolor{keywordtype}{double} *Kz, }
+\DoxyCodeLine{261       \textcolor{keywordtype}{double} *Hx, \textcolor{keywordtype}{double} *Hy, \textcolor{keywordtype}{double} *Hz,}
+\DoxyCodeLine{262       U* GTS, U* GTZ, U* GTY, U* GTX,}
+\DoxyCodeLine{263       U* gPTss, U* gPTsz, U* gPTsy, U* gPTsx, U* gPTzz, }
+\DoxyCodeLine{264       U* gPTyy, U* gPTxx,  }
+\DoxyCodeLine{265       \textcolor{keywordtype}{double} *BasisScr, U* ZMAT);}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267     \textcolor{comment}{// Calculate gPTss,sx,sy,sz }}
+\DoxyCodeLine{268     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{269     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_ae0fb874b9f0f8a6dc12b1682efe38ff7}{mkgPTVar}}( }
+\DoxyCodeLine{270       \textcolor{keywordtype}{size\_t} NPts, }
+\DoxyCodeLine{271       \textcolor{keywordtype}{double}* GDenS, \textcolor{keywordtype}{double}* GDenZ, \textcolor{keywordtype}{double}* GDenY, \textcolor{keywordtype}{double}* GDenX, }
+\DoxyCodeLine{272       U* GTS, U* GTZ, U* GTY, U* GTX,}
+\DoxyCodeLine{273       U* gPTss, U* gPTsz, U* gPTsy, U* gPTsx, U* gPTzz, }
+\DoxyCodeLine{274       U* gPTyy, U* gPTxx  }
+\DoxyCodeLine{275       );}
+\DoxyCodeLine{276 }
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{279     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_a930f6552411a1e511f07aa3ca6c4bdab}{formFXC}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,  std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<U>}}> \&cList );}
+\DoxyCodeLine{280 }
+\DoxyCodeLine{281 }
+\DoxyCodeLine{282 }
+\DoxyCodeLine{283     \textcolor{comment}{// SCF Functions}}
+\DoxyCodeLine{284     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_afeb1fbe9d2e44d940a7ee4abdfa749a9}{buildModifyOrbitals}}();}
+\DoxyCodeLine{285     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_ad2d9f27310dc66f03c3462135c0a855a}{computeFullNRStep}}(MatsT*);}
+\DoxyCodeLine{286     std::pair<double,MatsT*> \mbox{\hyperlink{classChronusQ_1_1KohnSham_a31bf477e518bc872bbeba9f0575c118e}{getStab}}();}
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288   \}; \textcolor{comment}{// class KohnSham}}
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{292 }
+
+\end{DoxyCode}

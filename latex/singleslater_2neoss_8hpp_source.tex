@@ -1,0 +1,422 @@
+\hypertarget{singleslater_2neoss_8hpp_source}{}\doxysection{neoss.\+hpp}
+\label{singleslater_2neoss_8hpp_source}\index{include/singleslater/neoss.hpp@{include/singleslater/neoss.hpp}}
+\mbox{\hyperlink{singleslater_2neoss_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrix_8hpp}{matrix.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{neofock_8hpp}{fockbuilder/neofock.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{twopints_8hpp}{particleintegrals/twopints.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gtodirecttpi_8hpp}{particleintegrals/twopints/gtodirecttpi.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incore4indextpi_8hpp}{particleintegrals/twopints/incore4indextpi.hpp}}>}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38   \textcolor{comment}{// Pure virtual class for only interface functions}}
+\DoxyCodeLine{39   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1NEOBase}{NEOBase}} \{}
+\DoxyCodeLine{40     \textcolor{keyword}{virtual} std::shared\_ptr<SingleSlaterBase> \mbox{\hyperlink{structChronusQ_1_1NEOBase_a1b32dc712a8fabec88b5032be0f33002}{getSubSSBase}}(std::string label) = 0;}
+\DoxyCodeLine{41     \textcolor{keyword}{virtual} std::vector<std::string> \mbox{\hyperlink{structChronusQ_1_1NEOBase_a25f7178b49a34449ffccf3700a26656e}{getLabels}}() = 0;}
+\DoxyCodeLine{42     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1NEOBase_a1a8d8f15b17b761f5e2f6d5e99da88dd}{setSubSetup}}() = 0;}
+\DoxyCodeLine{43   \};}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{46   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS}}: \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>, \textcolor{keyword}{public} \mbox{\hyperlink{structChronusQ_1_1NEOBase}{NEOBase}} \{}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU, \textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{49     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS}};}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keyword}{template} <\textcolor{keyword}{typename} F>}
+\DoxyCodeLine{52     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{applyToEach}}(F func) \{}
+\DoxyCodeLine{53       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1NEOSS_ac6b9bae91b84f379063c7262fc88ba49}{order\_}}.size() == \mbox{\hyperlink{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}{subsystems}}.size()) \{}
+\DoxyCodeLine{54         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\& label: \mbox{\hyperlink{classChronusQ_1_1NEOSS_ac6b9bae91b84f379063c7262fc88ba49}{order\_}}) \{}
+\DoxyCodeLine{55           func(\mbox{\hyperlink{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}{subsystems}}.at(label));}
+\DoxyCodeLine{56         \}}
+\DoxyCodeLine{57       \}}
+\DoxyCodeLine{58       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{59         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\& system: \mbox{\hyperlink{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}{subsystems}})}
+\DoxyCodeLine{60           func(system.second);}
+\DoxyCodeLine{61       \}}
+\DoxyCodeLine{62     \}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66       \textcolor{comment}{// typedefs}}
+\DoxyCodeLine{67       \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}} = std::shared\_ptr<SingleSlater<MatsT,IntsT>>;}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69       \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{70       \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{LabeledMap}} = std::unordered\_map<std::string, T>;}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72       \textcolor{comment}{//}}
+\DoxyCodeLine{73       \textcolor{comment}{// MAIN STORAGE}}
+\DoxyCodeLine{74       \textcolor{comment}{//}}
+\DoxyCodeLine{75       std::unordered\_map<std::string,SubSSPtr> \mbox{\hyperlink{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}{subsystems}};}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77       \textcolor{comment}{// Optional order}}
+\DoxyCodeLine{78       std::vector<std::string> \mbox{\hyperlink{classChronusQ_1_1NEOSS_ac6b9bae91b84f379063c7262fc88ba49}{order\_}};}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80       \textcolor{comment}{// Subsystem coulomb interactions}}
+\DoxyCodeLine{81       \textcolor{comment}{// First map is the "{}external"{} particle and second map is the integrated}}
+\DoxyCodeLine{82       \textcolor{comment}{//   particle.}}
+\DoxyCodeLine{83       \textcolor{comment}{// EXAMPLE: interCoulomb["{}electron"{}]["{}proton"{}] is the coulomb matrix for}}
+\DoxyCodeLine{84       \textcolor{comment}{//   the electronic subsystem (in the electronic basis) coming from the}}
+\DoxyCodeLine{85       \textcolor{comment}{//   protonic coulomb potential.}}
+\DoxyCodeLine{86       \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{LabeledMap<LabeledMap<SquareMatrix<MatsT>}}>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_ab9f52e9034d9111d4a80b340cd4f37cb}{interCoulomb}};}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88       \textcolor{comment}{// Two particle integral objects (same storage scheme as above)}}
+\DoxyCodeLine{89       \textcolor{comment}{// Boolean is contractSecond}}
+\DoxyCodeLine{90       \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{LabeledMap<LabeledMap<std::pair<bool, std::shared\_ptr<TwoPInts<IntsT>}}>>>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_a914e9a2f1878fa8edb1d13e0276fe6ee}{interIntegrals}};}
+\DoxyCodeLine{91       \textcolor{comment}{// Two particle gradient integrals}}
+\DoxyCodeLine{92       \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{LabeledMap<LabeledMap<std::pair<bool, std::shared\_ptr<GradInts<TwoPInts,IntsT>}}>>>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_afc7f69477b7f9f2c276b50886801cb14}{gradInterInts}};}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94       \textcolor{comment}{// Storage for FockBuilders (determines lifetime)}}
+\DoxyCodeLine{95       \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{LabeledMap<std::vector<std::shared\_ptr<FockBuilder<MatsT,IntsT>}}>>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c126a1a0b19fb1908fa95a0f40d3ba6}{fockBuilders}};}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97       \textcolor{comment}{// Storage for functionals (only for constructing new NEOSS)}}
+\DoxyCodeLine{98       std::vector<std::shared\_ptr<DFTFunctional>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_a2d0e5d4edaa8bf18bb1d7d0fc17b5964}{functionals}};}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100     \textcolor{keyword}{public}:}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102       \textcolor{comment}{// Main constructor}}
+\DoxyCodeLine{103       \textcolor{comment}{// XXX: Does NOT construct electronic or protonic wavefunctions}}
+\DoxyCodeLine{104       \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{105       \mbox{\hyperlink{classChronusQ_1_1NEOSS_a5805161d067e2a3fc17c4c78f7ced335}{NEOSS}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis,}
+\DoxyCodeLine{106                   \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals<IntsT>}} \&aoi, Args... args) :}
+\DoxyCodeLine{107         \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>(c,mem,mol,basis,aoi,args...),}
+\DoxyCodeLine{108         \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{WaveFunctionBase}}(c,mem,mol,basis,args...),}
+\DoxyCodeLine{109         \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}}(c,mem,args...) \{ \};}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111       \textcolor{comment}{// Copy/move constructors}}
+\DoxyCodeLine{112       \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{113       \mbox{\hyperlink{classChronusQ_1_1NEOSS_a4f388644056ac8d5db8c956b9a8d490d}{NEOSS}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS<MatsU,IntsT>}}\& other, \textcolor{keywordtype}{int} dummy = 0);}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115       \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{116       \mbox{\hyperlink{classChronusQ_1_1NEOSS_a4f388644056ac8d5db8c956b9a8d490d}{NEOSS}}(\mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS<MatsU,IntsT>}}\&\& other, \textcolor{keywordtype}{int} dummy = 0);}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118       \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9ee5aabf4dacb31e2c710080b16d9c0f}{NEOSS}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS<MatsT,IntsT>}}\& other) : \mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS}}(other, 0) \{\};}
+\DoxyCodeLine{119       \mbox{\hyperlink{classChronusQ_1_1NEOSS_a1944a36dfc0d1768c090f029d00ce62c}{NEOSS}}(\mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS<MatsT,IntsT>}}\&\& other) : \mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS}}(other, 0) \{\};}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122       \textcolor{comment}{// Add a subsystem to the NEO object}}
+\DoxyCodeLine{123       \textcolor{comment}{//}}
+\DoxyCodeLine{124       \textcolor{comment}{// label  Unique name for this subsystem}}
+\DoxyCodeLine{125       \textcolor{comment}{// ss     SingleSlater object representing this subsystem}}
+\DoxyCodeLine{126       \textcolor{comment}{// ints   Two particle integrals for interacting with all other subsystems}}
+\DoxyCodeLine{127       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a15540fec7c2b614d75e7ac8627574f41}{addSubsystem}}(}
+\DoxyCodeLine{128         std::string label,}
+\DoxyCodeLine{129         std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}> ss,}
+\DoxyCodeLine{130         \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{LabeledMap}}<std::pair<\textcolor{keywordtype}{bool},std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts<IntsT>}}>>>\& ints);}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a69cb9b0018f2a9cf181643b638a9279e}{addGradientIntegrals}}(std::string label1, std::string label2,}
+\DoxyCodeLine{133         std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts<TwoPInts,IntsT>}}> ints, \textcolor{keywordtype}{bool} contractSecond);}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a87c75c6dd94e34359e799a5c4dd9b38f}{setOrder}}(std::vector<std::string> labels) \{}
+\DoxyCodeLine{136         \mbox{\hyperlink{classChronusQ_1_1NEOSS_ac6b9bae91b84f379063c7262fc88ba49}{order\_}} = labels;}
+\DoxyCodeLine{137       \}}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139       \textcolor{comment}{// Getters}}
+\DoxyCodeLine{140                         std::vector<std::string> \mbox{\hyperlink{classChronusQ_1_1NEOSS_a3a28af9e234b89b673e3e59fbae430fd}{getLabels}}() \{}
+\DoxyCodeLine{141                                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1NEOSS_ac6b9bae91b84f379063c7262fc88ba49}{order\_}}.size() == \mbox{\hyperlink{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}{subsystems}}.size()) \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1NEOSS_ac6b9bae91b84f379063c7262fc88ba49}{order\_}};}
+\DoxyCodeLine{142                                 std::vector<std::string> labels;}
+\DoxyCodeLine{143                                 \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\& entry:\mbox{\hyperlink{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}{subsystems}})\{}
+\DoxyCodeLine{144                                         labels.push\_back(entry.first);}
+\DoxyCodeLine{145                                 \}}
+\DoxyCodeLine{146                                 \textcolor{keywordflow}{return} labels;}
+\DoxyCodeLine{147                         \}}
+\DoxyCodeLine{148                         }
+\DoxyCodeLine{149                         std::pair<bool,std::shared\_ptr<TwoPInts<IntsT>>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_a29ab1926b558913f78959bff1162d422}{getCrossTPIs}}(std::string label1,std::string label2)\{}
+\DoxyCodeLine{150                         \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a914e9a2f1878fa8edb1d13e0276fe6ee}{interIntegrals}}.at(label1).at(label2);}
+\DoxyCodeLine{151                         \}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153       \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }T>}
+\DoxyCodeLine{154       std::shared\_ptr<T<MatsT,IntsT>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_a069d1a4691ddf2e9f4f6502d08c06adb}{getSubsystem}}(std::string label) \{}
+\DoxyCodeLine{155         \textcolor{keywordflow}{return} std::dynamic\_pointer\_cast<T<MatsT,IntsT>>(\mbox{\hyperlink{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}{subsystems}}.at(label));}
+\DoxyCodeLine{156       \}}
+\DoxyCodeLine{157       std::shared\_ptr<SingleSlaterBase> \mbox{\hyperlink{classChronusQ_1_1NEOSS_ac83d6b1224102e0dce52f82baae85149}{getSubSSBase}}(std::string label) \{}
+\DoxyCodeLine{158         \textcolor{keywordflow}{return} std::dynamic\_pointer\_cast<SingleSlaterBase>(\mbox{\hyperlink{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}{subsystems}}.at(label));}
+\DoxyCodeLine{159       \}}
+\DoxyCodeLine{160       \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }T>}
+\DoxyCodeLine{161       std::vector<std::shared\_ptr<T<MatsT,IntsT>>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_a2544ca394404e422a32aebd558de1127}{getAllSubsystems}}() \{}
+\DoxyCodeLine{162         std::vector<std::shared\_ptr<T<MatsT,IntsT>>> results;}
+\DoxyCodeLine{163         \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{applyToEach}}([\&](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss)\{}
+\DoxyCodeLine{164           results.push\_back(std::dynamic\_pointer\_cast<T<MatsT,IntsT>>(ss));}
+\DoxyCodeLine{165         \});}
+\DoxyCodeLine{166         \textcolor{keywordflow}{return} results;}
+\DoxyCodeLine{167       \}}
+\DoxyCodeLine{168       std::vector<std::shared\_ptr<SingleSlaterBase>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_a6fe77347fba4d0cc520e128857d2f0e9}{getAllSubSSBase}}() \{}
+\DoxyCodeLine{169         std::vector<std::shared\_ptr<SingleSlaterBase>> results;}
+\DoxyCodeLine{170         \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{applyToEach}}([\&](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss)\{}
+\DoxyCodeLine{171           results.push\_back(std::dynamic\_pointer\_cast<SingleSlaterBase>(ss));}
+\DoxyCodeLine{172         \});}
+\DoxyCodeLine{173         \textcolor{keywordflow}{return} results;}
+\DoxyCodeLine{174       \}}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176       \textcolor{keyword}{const} std::unordered\_map<std::string, SubSSPtr>\& \mbox{\hyperlink{classChronusQ_1_1NEOSS_a57900fd8600ee95bc74ce5a406f7cc97}{getSubsystemMap}}() \{}
+\DoxyCodeLine{177         \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}{subsystems}};}
+\DoxyCodeLine{178       \}}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180       \textcolor{keyword}{const} std::vector<std::string>\& \mbox{\hyperlink{classChronusQ_1_1NEOSS_a745d50da2a27b58312bd50ea9f39e21a}{getOrder}}() \{}
+\DoxyCodeLine{181         \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1NEOSS_ac6b9bae91b84f379063c7262fc88ba49}{order\_}};}
+\DoxyCodeLine{182       \}}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184       \textcolor{comment}{// Pass-\/through to each functions}}
+\DoxyCodeLine{185       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a859c93245c035d6a893469872662bc6b}{saveCurrentState}}() \{}
+\DoxyCodeLine{186         \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{applyToEach}}([](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss)\{ ss-\/>saveCurrentState(); \});}
+\DoxyCodeLine{187       \}}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a38fe03294468592097a2d4f2785a37cc}{formGuess}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1SingleSlaterOptions}{SingleSlaterOptions}}\& ssopt) \{}
+\DoxyCodeLine{190         \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{applyToEach}}([\&](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss)\{ ss-\/>formGuess(ssopt); \});}
+\DoxyCodeLine{191       \}}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_ac21ec6233c5089921be2f015a8b9b669}{formFock}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& emPert, \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false}, \textcolor{keywordtype}{double} xHFX = 1.) \{}
+\DoxyCodeLine{194         \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{applyToEach}}([\&](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss)\{ ss-\/>formFock(emPert, increment, xHFX); \});}
+\DoxyCodeLine{195       \}}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a55f3f8ac48d1b24cb829e3f30da9b94d}{formCoreH}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& emPert, \textcolor{keywordtype}{bool} save) \{}
+\DoxyCodeLine{198         \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{applyToEach}}([\&](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss)\{ ss-\/>formCoreH(emPert, save); \});}
+\DoxyCodeLine{199       \}}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_aafd6cf5b6280d6cf599dc0e4fed577fd}{formDensity}}() \{}
+\DoxyCodeLine{202         \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{applyToEach}}([\&](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss)\{ ss-\/>formDensity(); \});}
+\DoxyCodeLine{203       \}}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205       \textcolor{comment}{// Propagate options that were set by value in the *Options functions}}
+\DoxyCodeLine{206       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a2af2bdecde0d6804abd8111838cdf68a}{setSubSetup}}() \{}
+\DoxyCodeLine{207         \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{applyToEach}}([\&](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss)\{}
+\DoxyCodeLine{208           ss-\/>scfControls = this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}};}
+\DoxyCodeLine{209           ss-\/>savFile = this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_aa8b6cc1bf1be70c2f0d3dd0e4b046e68}{savFile}};}
+\DoxyCodeLine{210           ss-\/>fchkFileName = this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_abe1e98a86bf22188ce739e69f20ba915}{fchkFileName}};}
+\DoxyCodeLine{211         \});}
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213         subsystems[\textcolor{stringliteral}{"{}Protonic"{}}]-\/>scfControls.guess = this-\/>\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a7e8431008d2899ccbf98d204dd135cf4}{scfControls}}.\mbox{\hyperlink{structChronusQ_1_1SCFControls_a80a767472903aed147be0e4af5ef3461}{prot\_guess}};}
+\DoxyCodeLine{214       \}}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216       std::vector<double> \mbox{\hyperlink{classChronusQ_1_1NEOSS_a6f1fe3f710358197b73e77a3fd997408}{getGrad}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&, \textcolor{keywordtype}{bool}, \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218       \textcolor{comment}{// Functions for ModifyOrbitals}}
+\DoxyCodeLine{219       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a89867756aabd3ed30e33cfca28aa0e39}{runModifyOrbitals}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&);}
+\DoxyCodeLine{220       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_abe3125969a334a169e30430b6b3a7ad2}{buildModifyOrbitals}}();}
+\DoxyCodeLine{221       \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a5a1803c98b220f91ebaf493025c58263}{printProperties}}();}
+\DoxyCodeLine{222       \textcolor{keyword}{virtual} std::vector<std::shared\_ptr<SquareMatrix<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_a1399ce34a4162ad93d944a6a86541b60}{getOnePDM}}();}
+\DoxyCodeLine{223       \textcolor{keyword}{virtual} std::vector<std::shared\_ptr<SquareMatrix<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_ae34b2dbca37677a62479d1ce72cbd981}{getFock}}();}
+\DoxyCodeLine{224       \textcolor{keyword}{virtual} std::vector<std::shared\_ptr<Orthogonalization<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1NEOSS_ac091e791a1593220c892bce5d4bf1d0e}{getOrtho}}();}
+\DoxyCodeLine{225       \textcolor{keyword}{virtual} \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a775b2d102a164eb71bce95811d655551}{getTotalEnergy}}() \{ \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}{totalEnergy}}; \};}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228       \textcolor{comment}{// Properties}}
+\DoxyCodeLine{229       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_af694b8107faa52ab5c5d1226f3a7a1c5}{computeEnergy}}() \{}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231         this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}{totalEnergy}} = 0.;}
+\DoxyCodeLine{232         \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{applyToEach}}([\&](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss)\{}
+\DoxyCodeLine{233           ss-\/>computeEnergy(); }
+\DoxyCodeLine{234           this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}{totalEnergy}} += ss-\/>totalEnergy -\/ this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5f29f9a842c2d47c458e1388abb94874}{molecule}}().\mbox{\hyperlink{structChronusQ_1_1Molecule_a40c2bbba15ae391e4acad71ab1792547}{nucRepEnergy}};}
+\DoxyCodeLine{235         \});}
+\DoxyCodeLine{236 }
+\DoxyCodeLine{237         \textcolor{comment}{// If we're doing EPC, we've double counted the energy, so subtract it}}
+\DoxyCodeLine{238         \textcolor{comment}{//   for all non-\/electronic systems here...}}
+\DoxyCodeLine{239         \textcolor{comment}{// XXX: If we ever have particle-\/particle correlation that isn't}}
+\DoxyCodeLine{240         \textcolor{comment}{//   between electrons and nuclei, this will no longer work}}
+\DoxyCodeLine{241         \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{applyToEach}}([\&](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss) \{}
+\DoxyCodeLine{242           \textcolor{keyword}{auto} ks = std::dynamic\_pointer\_cast<KohnSham<MatsT,IntsT>>(ss);}
+\DoxyCodeLine{243           \textcolor{keywordflow}{if}( ss-\/>particle.charge < 0 || !ks ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{244           this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}{totalEnergy}} -\/= ks-\/>XCEnergy;}
+\DoxyCodeLine{245         \});}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{247         this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}{totalEnergy}} += this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5f29f9a842c2d47c458e1388abb94874}{molecule}}().\mbox{\hyperlink{structChronusQ_1_1Molecule_a40c2bbba15ae391e4acad71ab1792547}{nucRepEnergy}};}
+\DoxyCodeLine{248 }
+\DoxyCodeLine{249       \}}
+\DoxyCodeLine{250     }
+\DoxyCodeLine{251       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a789a1286c9c8ca336bc1598fc7c18446}{computeMultipole}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& emPert) \{}
+\DoxyCodeLine{252       \textcolor{comment}{// Zeroing our Dipole, Quadrupole, and Octopole}}
+\DoxyCodeLine{253         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iXYZ = 0; iXYZ < 3; iXYZ++) \{}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255           this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elecDipole}}[iXYZ] = 0.;}
+\DoxyCodeLine{256           }
+\DoxyCodeLine{257           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} jXYZ = 0; jXYZ < 3; jXYZ++)\{}
+\DoxyCodeLine{258 }
+\DoxyCodeLine{259             this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[iXYZ][jXYZ] = 0.;}
+\DoxyCodeLine{260 }
+\DoxyCodeLine{261             \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} kXYZ = 0; kXYZ < 3; kXYZ++)\{}
+\DoxyCodeLine{262 }
+\DoxyCodeLine{263               this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[iXYZ][jXYZ][kXYZ] = 0.;}
+\DoxyCodeLine{264 }
+\DoxyCodeLine{265             \}}
+\DoxyCodeLine{266           \}}
+\DoxyCodeLine{267         \}}
+\DoxyCodeLine{268 }
+\DoxyCodeLine{269         \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{applyToEach}}([\&](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss)\{}
+\DoxyCodeLine{270       \textcolor{comment}{// Computing the Multipole for each subsystem and then adding to the overall multipoles}}
+\DoxyCodeLine{271           ss-\/>computeMultipole(emPert);}
+\DoxyCodeLine{272           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iXYZ = 0; iXYZ < 3; iXYZ++) \{}
+\DoxyCodeLine{273             this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elecDipole}}[iXYZ] += ss-\/>elecDipole[iXYZ];}
+\DoxyCodeLine{274              }
+\DoxyCodeLine{275             \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} jXYZ = 0; jXYZ < 3; jXYZ++)\{}
+\DoxyCodeLine{276 }
+\DoxyCodeLine{277               this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[iXYZ][jXYZ] += ss-\/>elecQuadrupole[iXYZ][jXYZ];}
+\DoxyCodeLine{278 }
+\DoxyCodeLine{279               \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} kXYZ = 0; kXYZ < 3; kXYZ++)\{}
+\DoxyCodeLine{280 }
+\DoxyCodeLine{281                 this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[iXYZ][jXYZ][kXYZ] += ss-\/>elecOctupole[iXYZ][jXYZ][kXYZ];}
+\DoxyCodeLine{282 }
+\DoxyCodeLine{283               \}}
+\DoxyCodeLine{284             \}}
+\DoxyCodeLine{285           \}}
+\DoxyCodeLine{286         \});}
+\DoxyCodeLine{287       \textcolor{comment}{// Nuclear contributions to the dipoles}}
+\DoxyCodeLine{288         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&atom : this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5f29f9a842c2d47c458e1388abb94874}{molecule}}().atoms)\{}
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290           \textcolor{keywordflow}{if} (atom.quantum)\{}
+\DoxyCodeLine{291           \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{292           \} }
+\DoxyCodeLine{293           \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} iXYZ = 0; iXYZ < 3; iXYZ++)\{}
+\DoxyCodeLine{294             this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elecDipole}}[iXYZ] -\/= atom.nucCharge*atom.coord[iXYZ]*(\mbox{\hyperlink{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}{subsystems}}.size()-\/1);}
+\DoxyCodeLine{295         \}}
+\DoxyCodeLine{296         }
+\DoxyCodeLine{297         \}}
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299         \textcolor{comment}{// Nuclear contributions to the quadrupoles}}
+\DoxyCodeLine{300         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&atom : this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5f29f9a842c2d47c458e1388abb94874}{molecule}}().\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}})\{}
+\DoxyCodeLine{301           \textcolor{keywordflow}{if} (atom.quantum) \{}
+\DoxyCodeLine{302             \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{303           \}}
+\DoxyCodeLine{304 }
+\DoxyCodeLine{305         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iXYZ = 0; iXYZ < 3; iXYZ++)}
+\DoxyCodeLine{306         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} jXYZ = 0; jXYZ < 3; jXYZ++) }
+\DoxyCodeLine{307           this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[iXYZ][jXYZ] -\/=}
+\DoxyCodeLine{308              (\mbox{\hyperlink{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}{subsystems}}.size()-\/1) * atom.nucCharge * atom.coord[iXYZ] * atom.coord[jXYZ];}
+\DoxyCodeLine{309         \} }
+\DoxyCodeLine{310 }
+\DoxyCodeLine{311         \textcolor{comment}{// Nuclear contributions to the octupoles}}
+\DoxyCodeLine{312         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&atom : this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5f29f9a842c2d47c458e1388abb94874}{molecule}}().\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}})\{}
+\DoxyCodeLine{313           }
+\DoxyCodeLine{314           \textcolor{keywordflow}{if} (atom.quantum)\{}
+\DoxyCodeLine{315             \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{316           \}}
+\DoxyCodeLine{317      }
+\DoxyCodeLine{318         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iXYZ = 0; iXYZ < 3; iXYZ++)}
+\DoxyCodeLine{319         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} jXYZ = 0; jXYZ < 3; jXYZ++)}
+\DoxyCodeLine{320         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} kXYZ = 0; kXYZ < 3; kXYZ++)}
+\DoxyCodeLine{321           this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[iXYZ][jXYZ][kXYZ] -\/=}
+\DoxyCodeLine{322             (\mbox{\hyperlink{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}{subsystems}}.size()-\/1) * atom.nucCharge * atom.coord[iXYZ] * atom.coord[jXYZ] *}
+\DoxyCodeLine{323             atom.coord[kXYZ];}
+\DoxyCodeLine{324         \}}
+\DoxyCodeLine{325        }
+\DoxyCodeLine{326       \};}
+\DoxyCodeLine{327 }
+\DoxyCodeLine{328       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a7ec88a61def36b30f1f84cbca0b48bf5}{computeSpin}}() \{ }
+\DoxyCodeLine{329         \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{applyToEach}}([](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss)\{ ss-\/>computeSpin(); \});      }
+\DoxyCodeLine{330       \}}
+\DoxyCodeLine{331 }
+\DoxyCodeLine{332       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a42902ca6888a29c5bd0bffaec5901cfd}{methodSpecificProperties}}() \{}
+\DoxyCodeLine{333         \mbox{\hyperlink{classChronusQ_1_1NEOSS_aca8c4973c9bfcfe00a190d19df446ea6}{applyToEach}}([](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss)\{ ss-\/>methodSpecificProperties(); \});      }
+\DoxyCodeLine{334       \}}
+\DoxyCodeLine{335 }
+\DoxyCodeLine{336       \textcolor{comment}{// Overrides specific to a NEO-\/SCF}}
+\DoxyCodeLine{337       \textcolor{comment}{/*}}
+\DoxyCodeLine{338 \textcolor{comment}{      void printSCFProg(std::ostream\& out = std::cout, bool printDiff = true) \{}}
+\DoxyCodeLine{339 \textcolor{comment}{        if( this-\/>printLevel > 1 )}}
+\DoxyCodeLine{340 \textcolor{comment}{          for( auto\& x: subsystems ) \{}}
+\DoxyCodeLine{341 \textcolor{comment}{            out << "{}  "{} << std::setw(14) << std::left << x.first << "{} SCF: "{};}}
+\DoxyCodeLine{342 \textcolor{comment}{            auto nIter = x.second-\/>scfConv.nSCFIter;}}
+\DoxyCodeLine{343 \textcolor{comment}{            out << nIter << "{} iteration"{} << (nIter > 1 ? "{}s"{} : "{}"{}) << "{}; "{};}}
+\DoxyCodeLine{344 \textcolor{comment}{            out << "{}E = "{} << std::setw(14) << std::right << std::fixed;}}
+\DoxyCodeLine{345 \textcolor{comment}{            out << x.second-\/>totalEnergy -\/ this-\/>molecule().nucRepEnergy;}}
+\DoxyCodeLine{346 \textcolor{comment}{            out << std::endl;}}
+\DoxyCodeLine{347 \textcolor{comment}{          \}}}
+\DoxyCodeLine{348 \textcolor{comment}{}}
+\DoxyCodeLine{349 \textcolor{comment}{        out << "{}  SCFIt: "{} << std::setw(6) << std::left;}}
+\DoxyCodeLine{350 \textcolor{comment}{}}
+\DoxyCodeLine{351 \textcolor{comment}{        if( printDiff ) out << this-\/>scfConv.nSCFMacroIter + 1;}}
+\DoxyCodeLine{352 \textcolor{comment}{        else            out << 0;}}
+\DoxyCodeLine{353 \textcolor{comment}{}}
+\DoxyCodeLine{354 \textcolor{comment}{        // Current Total Energy}}
+\DoxyCodeLine{355 \textcolor{comment}{        out << std::setw(18) << std::fixed << std::setprecision(10)}}
+\DoxyCodeLine{356 \textcolor{comment}{                             << std::left << this-\/>totalEnergy;}}
+\DoxyCodeLine{357 \textcolor{comment}{}}
+\DoxyCodeLine{358 \textcolor{comment}{        if( printDiff ) \{}}
+\DoxyCodeLine{359 \textcolor{comment}{          out << std::scientific << std::setprecision(7);}}
+\DoxyCodeLine{360 \textcolor{comment}{          out << std::setw(14) << std::right << this-\/>scfConv.deltaEnergy;}}
+\DoxyCodeLine{361 \textcolor{comment}{          out << "{}   "{};}}
+\DoxyCodeLine{362 \textcolor{comment}{        \}}}
+\DoxyCodeLine{363 \textcolor{comment}{  }}
+\DoxyCodeLine{364 \textcolor{comment}{        out << std::endl;}}
+\DoxyCodeLine{365 \textcolor{comment}{      \}}}
+\DoxyCodeLine{366 \textcolor{comment}{}}
+\DoxyCodeLine{367 \textcolor{comment}{      bool evalConver(EMPerturbation\& pert) \{}}
+\DoxyCodeLine{368 \textcolor{comment}{}}
+\DoxyCodeLine{369 \textcolor{comment}{        bool isConverged;}}
+\DoxyCodeLine{370 \textcolor{comment}{}}
+\DoxyCodeLine{371 \textcolor{comment}{        // Compute all SCF convergence information on root process}}
+\DoxyCodeLine{372 \textcolor{comment}{        if( MPIRank(this-\/>comm) == 0 ) \{}}
+\DoxyCodeLine{373 \textcolor{comment}{          }}
+\DoxyCodeLine{374 \textcolor{comment}{          // Save copy of old energy}}
+\DoxyCodeLine{375 \textcolor{comment}{          double oldEnergy = this-\/>totalEnergy;}}
+\DoxyCodeLine{376 \textcolor{comment}{}}
+\DoxyCodeLine{377 \textcolor{comment}{          // Compute new energy}}
+\DoxyCodeLine{378 \textcolor{comment}{          this-\/>computeProperties(pert);}}
+\DoxyCodeLine{379 \textcolor{comment}{}}
+\DoxyCodeLine{380 \textcolor{comment}{          // Compute the difference between current and old energy}}
+\DoxyCodeLine{381 \textcolor{comment}{          this-\/>scfConv.deltaEnergy = this-\/>totalEnergy -\/ oldEnergy;}}
+\DoxyCodeLine{382 \textcolor{comment}{}}
+\DoxyCodeLine{383 \textcolor{comment}{          bool energyConv = std::abs(this-\/>scfConv.deltaEnergy) < }}
+\DoxyCodeLine{384 \textcolor{comment}{                            this-\/>scfControls.eneConvTol;}}
+\DoxyCodeLine{385 \textcolor{comment}{}}
+\DoxyCodeLine{386 \textcolor{comment}{          isConverged = energyConv;}}
+\DoxyCodeLine{387 \textcolor{comment}{        \}}}
+\DoxyCodeLine{388 \textcolor{comment}{}}
+\DoxyCodeLine{389 \textcolor{comment}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{390 \textcolor{comment}{        // Broadcast whether or not we're converged to ensure that all}}
+\DoxyCodeLine{391 \textcolor{comment}{        // MPI processes exit the NEO-\/SCF simultaneously}}
+\DoxyCodeLine{392 \textcolor{comment}{        if( MPISize(this-\/>comm) > 1 ) MPIBCast(isConverged,0,this-\/>comm);}}
+\DoxyCodeLine{393 \textcolor{comment}{\#endif}}
+\DoxyCodeLine{394 \textcolor{comment}{        }}
+\DoxyCodeLine{395 \textcolor{comment}{        return isConverged;}}
+\DoxyCodeLine{396 \textcolor{comment}{      \}}}
+\DoxyCodeLine{397 \textcolor{comment}{}}
+\DoxyCodeLine{398 \textcolor{comment}{      void SCF(EMPerturbation\& pert);}}
+\DoxyCodeLine{399 \textcolor{comment}{      */}}
+\DoxyCodeLine{400 }
+\DoxyCodeLine{401       \textcolor{comment}{// Disable NR/stability for now}}
+\DoxyCodeLine{402       MatsT* \mbox{\hyperlink{classChronusQ_1_1NEOSS_a1d87ab5043b7a63e8ddf15b8b6ab52af}{getNRCoeffs}}() \{}
+\DoxyCodeLine{403         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}NR NYI for NEO!"{}});}
+\DoxyCodeLine{404         \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{405       \}}
+\DoxyCodeLine{406 }
+\DoxyCodeLine{407       std::pair<double,MatsT*> \mbox{\hyperlink{classChronusQ_1_1NEOSS_aed2171f543b72627981a730d05730e43}{getStab}}() \{}
+\DoxyCodeLine{408         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}NR NYI for NEO!"{}});}
+\DoxyCodeLine{409         \textcolor{keywordflow}{return} \{0., \textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{410       \}}
+\DoxyCodeLine{411   \};}
+\DoxyCodeLine{412 }
+\DoxyCodeLine{413 \}}
+\DoxyCodeLine{414 }
+\DoxyCodeLine{415 \textcolor{comment}{//\#include <singleslater/neoss/scf.hpp>}}
+\DoxyCodeLine{416 }
+
+\end{DoxyCode}

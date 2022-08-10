@@ -1,0 +1,332 @@
+\hypertarget{classChronusQ_1_1Quantum}{}\doxysection{ChronusQ\+::Quantum\texorpdfstring{$<$}{<} MatsT \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1Quantum}\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+
+
+The \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} class. The typed abstract interface for all classes which can define a 1PDM and compute 1 and 2 body properties.  
+
+
+
+
+{\ttfamily \#include $<$quantum.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::Quantum\texorpdfstring{$<$}{<} MatsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Quantum__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::Quantum\texorpdfstring{$<$}{<} MatsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Quantum__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Quantum_a604e885c7d97511c625adb98d0e332c3}{Quantum}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Quantum_a7fe60e1ce6cc5f8092c60c0637a39bc9}{Quantum}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem, size\+\_\+t \+\_\+nC=1, bool \+\_\+i\+CS=true, \mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}} p=\{-\/1.\+0, 1.\+0\}, size\+\_\+t N=0, bool do\+Alloc=true)
+\item 
+{\footnotesize template$<$typename MatsU $>$ }\\\mbox{\hyperlink{classChronusQ_1_1Quantum_a7779560ca10c79d831e1fda4385aa793}{Quantum}} (const \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}}$<$ MatsU $>$ \&, int dummy=0)
+\item 
+{\footnotesize template$<$typename MatsU $>$ }\\\mbox{\hyperlink{classChronusQ_1_1Quantum_abe762e81199aa7e6d9ad920da38cd7dc}{Quantum}} (\mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}}$<$ MatsU $>$ \&\&, int dummy=0)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Quantum_a02f9505cc82fec1b2b0211468611f1db}{Quantum}} (const \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} \&)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Quantum_a8521ff1c75c609f8fc8864ebe91d54ec}{Quantum}} (\mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} \&\&)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Quantum_a0f380b1f2c48e43c75985d691dd1c303}{$\sim$\+Quantum}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1Quantum_a2eba0fb018dd2079a01ed655e43d448e}{alloc}} (size\+\_\+t)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1Quantum_a23932cd7153189eefe9fe1fd10578b28}{dealloc}} ()
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\+\_\+\+TYPE}} Den\+Typ, typename Op $>$ }\\double \mbox{\hyperlink{classChronusQ_1_1Quantum_aac3460cb350894b6569039577221daf8}{compute\+OBProperty}} (const Op \&op)
+\begin{DoxyCompactList}\small\item\em Computes a 1-\/body property through a trace with the proper components of the 1PDM. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\+\_\+\+TYPE}} Den\+Typ, typename Op $>$ }\\std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1Quantum_a553eb419674ae248c56f46b35340d109}{compute\+OBProperty}} (const std\+::vector$<$ Op $>$ \&opv)
+\begin{DoxyCompactList}\small\item\em Computes set of a 1-\/body properties through a traces with the proper components of the 1PDM. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1Quantum_af2b9998f2a08124daa19709b75765489}{print1\+PDM}} (std\+::ostream \&)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{Pauli\+Spinor\+Square\+Matrices}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{one\+PDM}}
+\begin{DoxyCompactList}\small\item\em 1PDM array (Scalar + Magnetization) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef MatsT $\ast$ \mbox{\hyperlink{classChronusQ_1_1Quantum_aaf9db7218128f9d2dd76cfd5aa0ada6c}{oper\+\_\+t}}
+\item 
+typedef std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1Quantum_aaf9db7218128f9d2dd76cfd5aa0ada6c}{oper\+\_\+t}} $>$ \mbox{\hyperlink{classChronusQ_1_1Quantum_a9c0316247ff01f17cc12bc240e35f417}{oper\+\_\+t\+\_\+coll}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\+\_\+\+TYPE}} Den\+Typ, typename Op $>$ }\\double \mbox{\hyperlink{classChronusQ_1_1Quantum_af6869f1ccd5313e3cada40e1eed8d7d0}{Operator\+Spin\+Combine}} (const Op \&)
+\begin{DoxyCompactList}\small\item\em Perform matrix trace with proper component of the density for property evaluation. Return zeros when necessacy. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename MatsT$>$\newline
+class Chronus\+Q\+::\+Quantum$<$ Mats\+T $>$}
+The \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} class. The typed abstract interface for all classes which can define a 1PDM and compute 1 and 2 body properties. 
+
+Adds knowledge of storage type and general property evaluation schemes to \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{Quantum\+Base}}. 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_aaf9db7218128f9d2dd76cfd5aa0ada6c}\label{classChronusQ_1_1Quantum_aaf9db7218128f9d2dd76cfd5aa0ada6c}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!oper\_t@{oper\_t}}
+\index{oper\_t@{oper\_t}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{oper\_t}{oper\_t}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+typedef MatsT$\ast$ \mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::oper\+\_\+t\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_a9c0316247ff01f17cc12bc240e35f417}\label{classChronusQ_1_1Quantum_a9c0316247ff01f17cc12bc240e35f417}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!oper\_t\_coll@{oper\_t\_coll}}
+\index{oper\_t\_coll@{oper\_t\_coll}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{oper\_t\_coll}{oper\_t\_coll}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+typedef std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1Quantum_aaf9db7218128f9d2dd76cfd5aa0ada6c}{oper\+\_\+t}}$>$ \mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::oper\+\_\+t\+\_\+coll\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_a604e885c7d97511c625adb98d0e332c3}\label{classChronusQ_1_1Quantum_a604e885c7d97511c625adb98d0e332c3}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!Quantum@{Quantum}}
+\index{Quantum@{Quantum}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{Quantum()}{Quantum()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::\+Quantum (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_a7fe60e1ce6cc5f8092c60c0637a39bc9}\label{classChronusQ_1_1Quantum_a7fe60e1ce6cc5f8092c60c0637a39bc9}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!Quantum@{Quantum}}
+\index{Quantum@{Quantum}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{Quantum()}{Quantum()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::\+Quantum (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{c,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem,  }\item[{size\+\_\+t}]{\+\_\+nC = {\ttfamily 1},  }\item[{bool}]{\+\_\+i\+CS = {\ttfamily true},  }\item[{\mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}}}]{p = {\ttfamily \{-\/1.0,~1.0\}},  }\item[{size\+\_\+t}]{N = {\ttfamily 0},  }\item[{bool}]{do\+Alloc = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} Constructor. Constructs a \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} object.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em mem} & \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} to handle to allocation of densities \\
+\hline
+\mbox{\texttt{ in}}  & {\em \+\_\+nC} & Number of spin components (1 and 2 are supported) \\
+\hline
+\mbox{\texttt{ in}}  & {\em \+\_\+i\+CS} & Whether or not system is closed shell (only used when \+\_\+nC == 1) \\
+\hline
+\mbox{\texttt{ in}}  & {\em N} & Dimension of the density matricies to be allocated \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_a7779560ca10c79d831e1fda4385aa793}\label{classChronusQ_1_1Quantum_a7779560ca10c79d831e1fda4385aa793}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!Quantum@{Quantum}}
+\index{Quantum@{Quantum}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{Quantum()}{Quantum()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+template$<$typename MatsU $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::\+Quantum (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}}$<$ MatsU $>$ \&}]{other,  }\item[{int}]{dummy = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Constructs a \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} object from another of a another (possibly the same) type by copy.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em other} & \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} object to copy \\
+\hline
+\mbox{\texttt{ in}}  & {\em dummy} & Dummy argument to fix calling signature for delegation to copy constructor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_abe762e81199aa7e6d9ad920da38cd7dc}\label{classChronusQ_1_1Quantum_abe762e81199aa7e6d9ad920da38cd7dc}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!Quantum@{Quantum}}
+\index{Quantum@{Quantum}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{Quantum()}{Quantum()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+template$<$typename MatsU $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::\+Quantum (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}}$<$ MatsU $>$ \&\&}]{other,  }\item[{int}]{dummy = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Constructs a \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} object from another of a another (possibly the same) type by move.
+
+\begin{DoxyWarning}{Warning}
+Deallocates the passed \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} object
+\end{DoxyWarning}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em other} & \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} object to move \\
+\hline
+\mbox{\texttt{ in}}  & {\em dummy} & Dummy argument to fix calling signature for delegation to move constructor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_a02f9505cc82fec1b2b0211468611f1db}\label{classChronusQ_1_1Quantum_a02f9505cc82fec1b2b0211468611f1db}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!Quantum@{Quantum}}
+\index{Quantum@{Quantum}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{Quantum()}{Quantum()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::\+Quantum (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}}$<$ MatsT $>$ \&}]{other }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_a8521ff1c75c609f8fc8864ebe91d54ec}\label{classChronusQ_1_1Quantum_a8521ff1c75c609f8fc8864ebe91d54ec}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!Quantum@{Quantum}}
+\index{Quantum@{Quantum}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{Quantum()}{Quantum()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::\+Quantum (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}}$<$ MatsT $>$ \&\&}]{other }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_a0f380b1f2c48e43c75985d691dd1c303}\label{classChronusQ_1_1Quantum_a0f380b1f2c48e43c75985d691dd1c303}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!````~Quantum@{$\sim$Quantum}}
+\index{````~Quantum@{$\sim$Quantum}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$Quantum()}{~Quantum()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::$\sim$\mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Deconstructor Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{classChronusQ_1_1Quantum_a0f380b1f2c48e43c75985d691dd1c303_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_a2eba0fb018dd2079a01ed655e43d448e}\label{classChronusQ_1_1Quantum_a2eba0fb018dd2079a01ed655e43d448e}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!alloc@{alloc}}
+\index{alloc@{alloc}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{alloc()}{alloc()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::alloc (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{N }\end{DoxyParamCaption})}
+
+Allocates the internal memory a \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} object
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em N} & Dimension of density matricies \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_aac3460cb350894b6569039577221daf8}\label{classChronusQ_1_1Quantum_aac3460cb350894b6569039577221daf8}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!computeOBProperty@{computeOBProperty}}
+\index{computeOBProperty@{computeOBProperty}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeOBProperty()}{computeOBProperty()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+template$<$\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\+\_\+\+TYPE}} Den\+Typ, typename Op $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::compute\+OBProperty (\begin{DoxyParamCaption}\item[{const Op \&}]{op }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes a 1-\/body property through a trace with the proper components of the 1PDM. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em \mbox{[}template\mbox{]}} & Den\+Typ Which spin component of the 1PDM to trace with \\
+\hline
+\mbox{\texttt{ in}}  & {\em op} & Square matrix to trace with 1PDM \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Trace of op with the Den\+Typ 1PDM (cast to type Ret\+Typ) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_a553eb419674ae248c56f46b35340d109}\label{classChronusQ_1_1Quantum_a553eb419674ae248c56f46b35340d109}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!computeOBProperty@{computeOBProperty}}
+\index{computeOBProperty@{computeOBProperty}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeOBProperty()}{computeOBProperty()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+template$<$\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\+\_\+\+TYPE}} Den\+Typ, typename Op $>$ \\
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::compute\+OBProperty (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ Op $>$ \&}]{opv }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes set of a 1-\/body properties through a traces with the proper components of the 1PDM. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em \mbox{[}template\mbox{]}} & Den\+Typ Which spin component of the 1PDM to trace with \\
+\hline
+\mbox{\texttt{ in}}  & {\em opv} & List of qquare matrices to trace with 1PDM \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of traces of opv with the Den\+Typ 1PDM (cast to type Ret\+Typ) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_a23932cd7153189eefe9fe1fd10578b28}\label{classChronusQ_1_1Quantum_a23932cd7153189eefe9fe1fd10578b28}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!dealloc@{dealloc}}
+\index{dealloc@{dealloc}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{dealloc()}{dealloc()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::dealloc}
+
+Deallocates the internal memory a \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} object Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{classChronusQ_1_1Quantum_a23932cd7153189eefe9fe1fd10578b28_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_af6869f1ccd5313e3cada40e1eed8d7d0}\label{classChronusQ_1_1Quantum_af6869f1ccd5313e3cada40e1eed8d7d0}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!OperatorSpinCombine@{OperatorSpinCombine}}
+\index{OperatorSpinCombine@{OperatorSpinCombine}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{OperatorSpinCombine()}{OperatorSpinCombine()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+template$<$\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\+\_\+\+TYPE}} Den\+Typ, typename Op $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::\+Operator\+Spin\+Combine (\begin{DoxyParamCaption}\item[{const Op \&}]{op }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Perform matrix trace with proper component of the density for property evaluation. Return zeros when necessacy. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Quantum_af6869f1ccd5313e3cada40e1eed8d7d0_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_af2b9998f2a08124daa19709b75765489}\label{classChronusQ_1_1Quantum_af2b9998f2a08124daa19709b75765489}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!print1PDM@{print1PDM}}
+\index{print1PDM@{print1PDM}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{print1PDM()}{print1PDM()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::print1\+PDM (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1QuantumBase_aabb2cfa1546838b8c9b783fcb88e4f91}{Chronus\+Q\+::\+Quantum\+Base}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Quantum_af2b9998f2a08124daa19709b75765489_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}\label{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}} 
+\index{ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}!onePDM@{onePDM}}
+\index{onePDM@{onePDM}!ChronusQ::Quantum$<$ MatsT $>$@{ChronusQ::Quantum$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{onePDM}{onePDM}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{Pauli\+Spinor\+Square\+Matrices}}$<$MatsT$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1Quantum}{Chronus\+Q\+::\+Quantum}}$<$ MatsT $>$\+::one\+PDM}
+
+
+
+1PDM array (Scalar + Magnetization) 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{quantum_8hpp}{quantum.\+hpp}}\item 
+include/quantum/\mbox{\hyperlink{quantum_2impl_8hpp}{impl.\+hpp}}\item 
+include/quantum/\mbox{\hyperlink{quantum_2print_8hpp}{print.\+hpp}}\item 
+include/quantum/\mbox{\hyperlink{quantum_2properties_8hpp}{properties.\+hpp}}\end{DoxyCompactItemize}

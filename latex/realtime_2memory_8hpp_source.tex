@@ -1,0 +1,97 @@
+\hypertarget{realtime_2memory_8hpp_source}{}\doxysection{memory.\+hpp}
+\label{realtime_2memory_8hpp_source}\index{include/realtime/memory.hpp@{include/realtime/memory.hpp}}
+\mbox{\hyperlink{realtime_2memory_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{realtime_8hpp}{realtime.hpp}}>}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }\_SSTyp, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{31   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{32   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_aef8688a2652c9a30d6838322935d1b6f}{RealTime<\_SSTyp,IntsT>::alloc}}() \{}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     \textcolor{comment}{// XXX: Member functions can't be partially specialized,}}
+\DoxyCodeLine{35     \textcolor{comment}{//   so we're just going to cram this all into a single if statement...}}
+\DoxyCodeLine{36     \textcolor{keywordflow}{if}( std::is\_same<\mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS<dcomplex,IntsT>}},\_SSTyp<dcomplex,IntsT>>::value ) \{}
+\DoxyCodeLine{37       \textcolor{keyword}{auto} prop\_c = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS<dcomplex,IntsT>}}*\textcolor{keyword}{>}(\&propagator\_);}
+\DoxyCodeLine{38       \textcolor{keyword}{auto} map = prop\_c-\/>\mbox{\hyperlink{classChronusQ_1_1NEOSS_a57900fd8600ee95bc74ce5a406f7cc97}{getSubsystemMap}}();}
+\DoxyCodeLine{39       \textcolor{keyword}{auto} order = prop\_c-\/>getOrder();}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41       assert( !map.empty() );}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43       \textcolor{comment}{// Loop over all subsystems}}
+\DoxyCodeLine{44       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& label: order ) \{}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46         \textcolor{comment}{// Easier to read name for the subsystem}}
+\DoxyCodeLine{47         \textcolor{keyword}{auto}\& system = map[label];}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49         \textcolor{comment}{// Information for RealTime only}}
+\DoxyCodeLine{50         \textcolor{keywordtype}{size\_t} NB = system-\/>\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>dimension();}
+\DoxyCodeLine{51         \textcolor{keywordtype}{bool} hasZ = system-\/>onePDM-\/>hasZ();}
+\DoxyCodeLine{52         \textcolor{keywordtype}{bool} hasXY= system-\/>onePDM-\/>hasXY();}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54         systems\_.push\_back(system.get());}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56         DOSav.push\_back(}
+\DoxyCodeLine{57           std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<dcomplex>}}>(}
+\DoxyCodeLine{58             memManager\_, NB, hasXY, hasZ}
+\DoxyCodeLine{59           ));}
+\DoxyCodeLine{60         UH.push\_back(}
+\DoxyCodeLine{61           std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<dcomplex>}}>(}
+\DoxyCodeLine{62             memManager\_, NB, hasXY, hasZ}
+\DoxyCodeLine{63           ));}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65       \}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \}}
+\DoxyCodeLine{68     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70       \textcolor{keywordtype}{size\_t} NB = propagator\_.onePDM-\/>dimension();}
+\DoxyCodeLine{71       \textcolor{keywordtype}{bool} hasZ = propagator\_.onePDM-\/>hasZ();}
+\DoxyCodeLine{72       \textcolor{keywordtype}{bool} hasXY= propagator\_.onePDM-\/>hasXY();}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74       systems\_.push\_back(\&propagator\_);}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76       DOSav.emplace\_back(}
+\DoxyCodeLine{77         std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<dcomplex>}}>(}
+\DoxyCodeLine{78           memManager\_, NB, hasXY, hasZ}
+\DoxyCodeLine{79         ));}
+\DoxyCodeLine{80       UH.emplace\_back(}
+\DoxyCodeLine{81         std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<dcomplex>}}>(}
+\DoxyCodeLine{82           memManager\_, NB, hasXY, hasZ}
+\DoxyCodeLine{83         ));}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     \}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87   \};}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91 }
+
+\end{DoxyCode}

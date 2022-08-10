@@ -1,0 +1,327 @@
+\hypertarget{DiskDIIS_8hpp_source}{}\doxysection{Disk\+DIIS.\+hpp}
+\label{DiskDIIS_8hpp_source}\index{include/coupledcluster/DiskDIIS.hpp@{include/coupledcluster/DiskDIIS.hpp}}
+\mbox{\hyperlink{DiskDIIS_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{solve_8hpp}{cqlinalg/solve.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{files_8hpp}{util/files.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{memmanager_8hpp}{memmanager.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{40   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{41   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{DiskDIIS}}\{}
+\DoxyCodeLine{42   }
+\DoxyCodeLine{43     \textcolor{keyword}{public}:}
+\DoxyCodeLine{44  }
+\DoxyCodeLine{53       \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_ac76a7bc5041404fa01b06a81f7eed176}{DiskDIIS}}(\textcolor{keywordtype}{int} n, \textcolor{keywordtype}{int} maxdiis, \mbox{\hyperlink{classChronusQ_1_1SafeFile}{SafeFile}} savFile, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \& memManager);}
+\DoxyCodeLine{54   }
+\DoxyCodeLine{55       \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a54b9e8fbb8a63abab3fed5a9e519dcae}{\string~DiskDIIS}}();}
+\DoxyCodeLine{56   }
+\DoxyCodeLine{64       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a4c3962c81f5a9a1a5e92f79c678bd9ab}{getVector}}(T * vector,\textcolor{keywordtype}{int} dim, \textcolor{keywordtype}{int} off);}
+\DoxyCodeLine{65   }
+\DoxyCodeLine{73       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_aad246d2aa7e3dbb4407b0fa678cc9b56}{setVector}}(T * vector,\textcolor{keywordtype}{int} dim, \textcolor{keywordtype}{int} off);}
+\DoxyCodeLine{74   }
+\DoxyCodeLine{82       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a58237ee0a6a74ebe719fd82079aff692}{setErrorVector}}(T * vector,\textcolor{keywordtype}{int} dim, \textcolor{keywordtype}{int} off);}
+\DoxyCodeLine{83   }
+\DoxyCodeLine{91       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a2d1a31b1215ae6efe8f96c45cfb58660}{extrapolate}}();}
+\DoxyCodeLine{92   }
+\DoxyCodeLine{93     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{94   }
+\DoxyCodeLine{96       \mbox{\hyperlink{classChronusQ_1_1SafeFile}{SafeFile}} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a9b5cfa673307d131bf5cf0040db85a54}{savFile\_}};}
+\DoxyCodeLine{97   }
+\DoxyCodeLine{99       \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \& \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a33b9f9b9039b4a39a69223ffd113ba99}{memManager\_}};}
+\DoxyCodeLine{100   }
+\DoxyCodeLine{102       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a6959231947822e4221006aae3fd734bf}{write\_error\_vector}}(T * vector);}
+\DoxyCodeLine{103   }
+\DoxyCodeLine{105       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a285ad7fe41ae51772118beea6820d191}{write\_vector}}(T * vector);}
+\DoxyCodeLine{106   }
+\DoxyCodeLine{107   }
+\DoxyCodeLine{109       T * \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_ab605c3cc9952d321a4a266c956935f12}{tmp1\_}};}
+\DoxyCodeLine{110   }
+\DoxyCodeLine{112       T * \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a4df989642d4806e60e1ac58d5dcb9dff}{tmp2\_}};}
+\DoxyCodeLine{113   }
+\DoxyCodeLine{115       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a413d03d1729d7b48b665ff76904ed42c}{DIISCoefficients}}(\textcolor{keywordtype}{int} nvec);}
+\DoxyCodeLine{116   }
+\DoxyCodeLine{118       \textcolor{keywordtype}{unsigned} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a9882de403d0a676fbfa164bb72781ba2}{maxdiis\_}};}
+\DoxyCodeLine{119   }
+\DoxyCodeLine{121       T * \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_af2ffb878fbc46645a52d3c2c34bafdab}{diisvec\_}};}
+\DoxyCodeLine{122   }
+\DoxyCodeLine{124       \textcolor{keywordtype}{unsigned} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_abc9ac46603ea7b19460e413a2fcd0a50}{dimdiis\_}};}
+\DoxyCodeLine{125   }
+\DoxyCodeLine{127       \textcolor{keywordtype}{unsigned} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_aed15cc393277020276d183bf39042f8b}{diis\_iter\_}};}
+\DoxyCodeLine{128   }
+\DoxyCodeLine{130       \textcolor{keywordtype}{unsigned} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_ac21e89a4eca17eab1d3f0e53b44249cd}{replace\_diis\_iter\_}};}
+\DoxyCodeLine{131   \};}
+\DoxyCodeLine{132   }
+\DoxyCodeLine{133   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{134   \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_ac76a7bc5041404fa01b06a81f7eed176}{DiskDIIS<T>::DiskDIIS}}(\textcolor{keywordtype}{int} n, \textcolor{keywordtype}{int} maxdiis, \mbox{\hyperlink{classChronusQ_1_1SafeFile}{SafeFile}} savFile, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \& memManager):}
+\DoxyCodeLine{135     savFile\_(savFile), memManager\_(memManager)}
+\DoxyCodeLine{136   \{}
+\DoxyCodeLine{137     \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_abc9ac46603ea7b19460e413a2fcd0a50}{dimdiis\_}}           = n;}
+\DoxyCodeLine{138     \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a9882de403d0a676fbfa164bb72781ba2}{maxdiis\_}}           = maxdiis;}
+\DoxyCodeLine{139     \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_aed15cc393277020276d183bf39042f8b}{diis\_iter\_}}         = 0;}
+\DoxyCodeLine{140     \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_ac21e89a4eca17eab1d3f0e53b44249cd}{replace\_diis\_iter\_}} = 1;}
+\DoxyCodeLine{141     \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_af2ffb878fbc46645a52d3c2c34bafdab}{diisvec\_}}           = \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a33b9f9b9039b4a39a69223ffd113ba99}{memManager\_}}.template malloc<T>(\mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a9882de403d0a676fbfa164bb72781ba2}{maxdiis\_}}+1);}
+\DoxyCodeLine{142     \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_ab605c3cc9952d321a4a266c956935f12}{tmp1\_}}              = \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a33b9f9b9039b4a39a69223ffd113ba99}{memManager\_}}.template malloc<T>(\mbox{\hyperlink{classChronusQ_1_1DiskDIIS_abc9ac46603ea7b19460e413a2fcd0a50}{dimdiis\_}});}
+\DoxyCodeLine{143     \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a4df989642d4806e60e1ac58d5dcb9dff}{tmp2\_}}              = \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a33b9f9b9039b4a39a69223ffd113ba99}{memManager\_}}.template malloc<T>(\mbox{\hyperlink{classChronusQ_1_1DiskDIIS_abc9ac46603ea7b19460e413a2fcd0a50}{dimdiis\_}});}
+\DoxyCodeLine{144   \}}
+\DoxyCodeLine{145   }
+\DoxyCodeLine{146   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{147   \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a54b9e8fbb8a63abab3fed5a9e519dcae}{DiskDIIS<T>::\string~DiskDIIS}}()\{}
+\DoxyCodeLine{148     memManager\_.free(diisvec\_);}
+\DoxyCodeLine{149     memManager\_.free(tmp1\_);}
+\DoxyCodeLine{150     memManager\_.free(tmp2\_);}
+\DoxyCodeLine{151   \}}
+\DoxyCodeLine{152   }
+\DoxyCodeLine{153   \textcolor{comment}{// Write current solution vector to disk}}
+\DoxyCodeLine{154   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{155   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a285ad7fe41ae51772118beea6820d191}{DiskDIIS<T>::write\_vector}}(T * vector)\{}
+\DoxyCodeLine{156   }
+\DoxyCodeLine{157     \textcolor{comment}{// Name the entry in according to the current DiskDIIS iteration.}}
+\DoxyCodeLine{158     \textcolor{comment}{// If we already have maxdiis\_ vectors, then replace one.}}
+\DoxyCodeLine{159   }
+\DoxyCodeLine{160     \textcolor{keywordtype}{char} * oldvector = memManager\_.template malloc<char>(1000);}
+\DoxyCodeLine{161   }
+\DoxyCodeLine{162     \textcolor{keywordflow}{if} ( diis\_iter\_ <= maxdiis\_ )\{}
+\DoxyCodeLine{163       sprintf(oldvector,\textcolor{stringliteral}{"{}/DIIS/VECTOR\%i"{}},diis\_iter\_);}
+\DoxyCodeLine{164     \}}
+\DoxyCodeLine{165     \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{166       sprintf(oldvector,\textcolor{stringliteral}{"{}/DIIS/VECTOR\%i"{}},replace\_diis\_iter\_);}
+\DoxyCodeLine{167     \}}
+\DoxyCodeLine{168   }
+\DoxyCodeLine{169     \textcolor{comment}{// Write the current solution vector.}}
+\DoxyCodeLine{170     savFile\_.safeWriteData(oldvector, vector, \{dimdiis\_\});}
+\DoxyCodeLine{171   }
+\DoxyCodeLine{172     memManager\_.free(oldvector);}
+\DoxyCodeLine{173   \}}
+\DoxyCodeLine{174   }
+\DoxyCodeLine{175   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{176   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a4c3962c81f5a9a1a5e92f79c678bd9ab}{DiskDIIS<T>::getVector}}(T * vector,\textcolor{keywordtype}{int} dim, \textcolor{keywordtype}{int} off) \{}
+\DoxyCodeLine{177     std::copy\_n(tmp1\_+off,dim,vector);}
+\DoxyCodeLine{178   \}}
+\DoxyCodeLine{179   }
+\DoxyCodeLine{180   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{181   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_aad246d2aa7e3dbb4407b0fa678cc9b56}{DiskDIIS<T>::setVector}}(T * vector,\textcolor{keywordtype}{int} dim, \textcolor{keywordtype}{int} off) \{}
+\DoxyCodeLine{182     std::copy\_n(vector,dim,tmp1\_+off);}
+\DoxyCodeLine{183   \}}
+\DoxyCodeLine{184   }
+\DoxyCodeLine{185   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{186   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a58237ee0a6a74ebe719fd82079aff692}{DiskDIIS<T>::setErrorVector}}(T * vector,\textcolor{keywordtype}{int} dim, \textcolor{keywordtype}{int} off) \{}
+\DoxyCodeLine{187     std::copy\_n(vector,dim,tmp2\_+off);}
+\DoxyCodeLine{188   \}}
+\DoxyCodeLine{189   }
+\DoxyCodeLine{190   \textcolor{comment}{// Write current error vector to disk }}
+\DoxyCodeLine{191   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{192   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a6959231947822e4221006aae3fd734bf}{DiskDIIS<T>::write\_error\_vector}}(T * vector)\{}
+\DoxyCodeLine{193   }
+\DoxyCodeLine{194     \textcolor{comment}{// Name the entry in according to the current DiskDIIS iteration.}}
+\DoxyCodeLine{195     \textcolor{comment}{// If we already have maxdiis\_ vectors, then replace one.}}
+\DoxyCodeLine{196   }
+\DoxyCodeLine{197     \textcolor{keywordtype}{char} * evector = memManager\_.template malloc<char>(1000);}
+\DoxyCodeLine{198     \textcolor{keywordflow}{if} ( diis\_iter\_ <= maxdiis\_ )\{}
+\DoxyCodeLine{199       sprintf(evector,\textcolor{stringliteral}{"{}/DIIS/ERROR\%i"{}},diis\_iter\_);}
+\DoxyCodeLine{200     \}}
+\DoxyCodeLine{201     \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{202       sprintf(evector,\textcolor{stringliteral}{"{}/DIIS/ERROR\%i"{}},replace\_diis\_iter\_);}
+\DoxyCodeLine{203     \}}
+\DoxyCodeLine{204   }
+\DoxyCodeLine{205     \textcolor{keywordflow}{if} ( diis\_iter\_ == 0 ) \{}
+\DoxyCodeLine{206       \textcolor{comment}{// On the first iteration, write an entry that will hold the error matrix}}
+\DoxyCodeLine{207       T * temp = (T*)malloc(maxdiis\_*maxdiis\_*\textcolor{keyword}{sizeof}(T));}
+\DoxyCodeLine{208       memset((\textcolor{keywordtype}{void}*)temp,\textcolor{charliteral}{'\(\backslash\)0'},maxdiis\_*maxdiis\_*\textcolor{keyword}{sizeof}(T));}
+\DoxyCodeLine{209       savFile\_.safeWriteData(\textcolor{stringliteral}{"{}/DIIS/ERROR\_MATRIX"{}}, temp, \{maxdiis\_*maxdiis\_\});}
+\DoxyCodeLine{210       free(temp);}
+\DoxyCodeLine{211     \}}
+\DoxyCodeLine{212   }
+\DoxyCodeLine{213     \textcolor{comment}{// Write current error vector.}}
+\DoxyCodeLine{214     savFile\_.safeWriteData(evector, vector, \{dimdiis\_\});}
+\DoxyCodeLine{215   }
+\DoxyCodeLine{216     memManager\_.free(evector);}
+\DoxyCodeLine{217   \}}
+\DoxyCodeLine{218   }
+\DoxyCodeLine{219   \textcolor{comment}{// Perform DIIS extrapolation. solution in tmp1\_}}
+\DoxyCodeLine{220   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{221   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a2d1a31b1215ae6efe8f96c45cfb58660}{DiskDIIS<T>::extrapolate}}() \{}
+\DoxyCodeLine{222     }
+\DoxyCodeLine{223     write\_vector(tmp1\_);}
+\DoxyCodeLine{224     write\_error\_vector(tmp2\_);}
+\DoxyCodeLine{225    }
+\DoxyCodeLine{226     \textcolor{keywordflow}{if} ( diis\_iter\_ > 1 ) \{}
+\DoxyCodeLine{227     }
+\DoxyCodeLine{228       \textcolor{comment}{// Compute coefficients for the extrapolation}}
+\DoxyCodeLine{229       DIISCoefficients( diis\_iter\_ < maxdiis\_ ? diis\_iter\_ : maxdiis\_ );}
+\DoxyCodeLine{230    }
+\DoxyCodeLine{231       memset((\textcolor{keywordtype}{void}*)tmp1\_,\textcolor{charliteral}{'\(\backslash\)0'},dimdiis\_*\textcolor{keyword}{sizeof}(T));}
+\DoxyCodeLine{232     }
+\DoxyCodeLine{233       \textcolor{keywordtype}{char} * oldvector = memManager\_.template malloc<char>(1000);}
+\DoxyCodeLine{234     }
+\DoxyCodeLine{235       \textcolor{keywordtype}{int} max = diis\_iter\_;}
+\DoxyCodeLine{236       \textcolor{keywordflow}{if} (max > maxdiis\_) max = maxdiis\_;}
+\DoxyCodeLine{237     }
+\DoxyCodeLine{238       \textcolor{comment}{// Read each of the old vectors from disk.}}
+\DoxyCodeLine{239       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 1; j <= max; j++)\{}
+\DoxyCodeLine{240     }
+\DoxyCodeLine{241         sprintf(oldvector,\textcolor{stringliteral}{"{}/DIIS/VECTOR\%i"{}},j);}
+\DoxyCodeLine{242         savFile\_.readData(oldvector,tmp2\_);}
+\DoxyCodeLine{243    }
+\DoxyCodeLine{244         \textcolor{comment}{// Accumulate extrapolated vector.}}
+\DoxyCodeLine{245         blas::axpy(dimdiis\_,diisvec\_[j-\/1],tmp2\_,1,tmp1\_,1);}
+\DoxyCodeLine{246       \}}
+\DoxyCodeLine{247       memManager\_.free(oldvector);}
+\DoxyCodeLine{248   }
+\DoxyCodeLine{249     \}}
+\DoxyCodeLine{250     }
+\DoxyCodeLine{251     \textcolor{keywordflow}{if} (diis\_iter\_ <= maxdiis\_)\{}
+\DoxyCodeLine{252       diis\_iter\_++;}
+\DoxyCodeLine{253     \}}
+\DoxyCodeLine{254     \textcolor{comment}{//else \{}}
+\DoxyCodeLine{255     \textcolor{comment}{//    // If we already have maxdiis\_ vectors, choose the one with}}
+\DoxyCodeLine{256     \textcolor{comment}{//    // the largest error as the one to replace.}}
+\DoxyCodeLine{257     \textcolor{comment}{//    int jmax   = 1;}}
+\DoxyCodeLine{258     \textcolor{comment}{//    double max = -\/1.0e99;}}
+\DoxyCodeLine{259     \textcolor{comment}{//    char * evector = memManager\_.template malloc<char>(1000);}}
+\DoxyCodeLine{260     \textcolor{comment}{//    for (int j = 1; j <= maxdiis\_; j++)\{}}
+\DoxyCodeLine{261     \textcolor{comment}{//        sprintf(evector,"{}/DIIS/ERROR\%i"{},j);}}
+\DoxyCodeLine{262     \textcolor{comment}{//        savFile\_.readData(evector,tmp2\_);}}
+\DoxyCodeLine{263     \textcolor{comment}{//        double nrm = sqrt(std::real(blas::dot(dimdiis\_,tmp2\_,1,tmp2\_,1)));  // couldn't get TwoNorm template to work...}}
+\DoxyCodeLine{264     \textcolor{comment}{//        if ( nrm > max ) \{}}
+\DoxyCodeLine{265     \textcolor{comment}{//            max  = nrm;}}
+\DoxyCodeLine{266     \textcolor{comment}{//            jmax = j;}}
+\DoxyCodeLine{267     \textcolor{comment}{//        \}}}
+\DoxyCodeLine{268     \textcolor{comment}{//    \}}}
+\DoxyCodeLine{269     \textcolor{comment}{//    replace\_diis\_iter\_ = jmax;}}
+\DoxyCodeLine{270     \textcolor{comment}{//    memManager\_.free(evector);}}
+\DoxyCodeLine{271     \textcolor{comment}{//\}}}
+\DoxyCodeLine{272     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (replace\_diis\_iter\_ < maxdiis\_) \{}
+\DoxyCodeLine{273       replace\_diis\_iter\_++;}
+\DoxyCodeLine{274     \}\textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{275       replace\_diis\_iter\_ = 1;}
+\DoxyCodeLine{276     \}}
+\DoxyCodeLine{277   }
+\DoxyCodeLine{278   \}}
+\DoxyCodeLine{279   }
+\DoxyCodeLine{280   \textcolor{comment}{// Evaluate extrapolation coefficients for DiskDIIS.}}
+\DoxyCodeLine{281   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{282   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a413d03d1729d7b48b665ff76904ed42c}{DiskDIIS<T>::DIISCoefficients}}(\textcolor{keywordtype}{int} nvec)\{}
+\DoxyCodeLine{283   }
+\DoxyCodeLine{284     \textcolor{comment}{// Allocate memory for small matrices/vectors.}}
+\DoxyCodeLine{285     int64\_t * ipiv    = memManager\_.template malloc<int64\_t>(nvec+1);}
+\DoxyCodeLine{286     }
+\DoxyCodeLine{287     T * temp = memManager\_.template malloc<T>(maxdiis\_*maxdiis\_);}
+\DoxyCodeLine{288     T * A    = memManager\_.template malloc<T>((nvec+1)*(nvec+1));}
+\DoxyCodeLine{289     T * B    = memManager\_.template malloc<T>(nvec+1);}
+\DoxyCodeLine{290     }
+\DoxyCodeLine{291     memset((\textcolor{keywordtype}{void}*)A,\textcolor{charliteral}{'\(\backslash\)0'},(nvec+1)*(nvec+1)*\textcolor{keyword}{sizeof}(T));}
+\DoxyCodeLine{292     memset((\textcolor{keywordtype}{void}*)B,\textcolor{charliteral}{'\(\backslash\)0'},(nvec+1)*\textcolor{keyword}{sizeof}(T));}
+\DoxyCodeLine{293     }
+\DoxyCodeLine{294     B[nvec] = -\/1.0;}
+\DoxyCodeLine{295     }
+\DoxyCodeLine{296     \textcolor{keywordtype}{char} * evector = memManager\_.template malloc<char>(1000);}
+\DoxyCodeLine{297     }
+\DoxyCodeLine{298     \textcolor{comment}{// Read in the previous error matrix, so we don't have }}
+\DoxyCodeLine{299     \textcolor{comment}{// to build the entire thing each iteration.}}
+\DoxyCodeLine{300     }
+\DoxyCodeLine{301     savFile\_.readData(\textcolor{stringliteral}{"{}/DIIS/ERROR\_MATRIX"{}},temp);}
+\DoxyCodeLine{302     }
+\DoxyCodeLine{303     \textcolor{comment}{// Reshape the error matrix, in case its dimension is less than maxdiis\_.}}
+\DoxyCodeLine{304     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < nvec; i++)\{}
+\DoxyCodeLine{305       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < nvec; j++)\{}
+\DoxyCodeLine{306         A[i*(nvec+1)+j] = temp[i*maxdiis\_+j];}
+\DoxyCodeLine{307       \}}
+\DoxyCodeLine{308     \}}
+\DoxyCodeLine{309     }
+\DoxyCodeLine{310     \textcolor{keywordflow}{if} (nvec <= 3) \{}
+\DoxyCodeLine{311       \textcolor{comment}{// At early iterations, just build the whole matrix.}}
+\DoxyCodeLine{312       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < nvec; i++) \{}
+\DoxyCodeLine{313         sprintf(evector,\textcolor{stringliteral}{"{}/DIIS/ERROR\%i"{}},i+1);}
+\DoxyCodeLine{314         savFile\_.readData(evector,tmp1\_);}
+\DoxyCodeLine{315         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = i+1; j < nvec; j++)\{}
+\DoxyCodeLine{316           sprintf(evector,\textcolor{stringliteral}{"{}/DIIS/ERROR\%i"{}},j+1);}
+\DoxyCodeLine{317           savFile\_.readData(evector,tmp2\_);}
+\DoxyCodeLine{318           T sum  = \mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(dimdiis\_,tmp1\_,1,tmp2\_,1);}
+\DoxyCodeLine{319           A[i*(nvec+1)+j] = sum;}
+\DoxyCodeLine{320           A[j*(nvec+1)+i] = sum;}
+\DoxyCodeLine{321         \}}
+\DoxyCodeLine{322         T sum  = \mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(dimdiis\_,tmp1\_,1,tmp1\_,1);}
+\DoxyCodeLine{323         A[i*(nvec+1)+i] = sum;}
+\DoxyCodeLine{324       \}}
+\DoxyCodeLine{325     \}\textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{326       \textcolor{comment}{// At later iterations, don't build the whote matrix.}}
+\DoxyCodeLine{327       \textcolor{comment}{// Just replace one row/column.}}
+\DoxyCodeLine{328     }
+\DoxyCodeLine{329       \textcolor{comment}{// Which row/column will be replaced?}}
+\DoxyCodeLine{330       \textcolor{keywordtype}{int} i = nvec < maxdiis\_ ? nvec -\/ 1 : replace\_diis\_iter\_ -\/ 1;}
+\DoxyCodeLine{331     }
+\DoxyCodeLine{332       sprintf(evector,\textcolor{stringliteral}{"{}/DIIS/ERROR\%i"{}},i+1);}
+\DoxyCodeLine{333       savFile\_.readData(evector,tmp1\_);}
+\DoxyCodeLine{334       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < nvec; j++)\{}
+\DoxyCodeLine{335         sprintf(evector,\textcolor{stringliteral}{"{}/DIIS/ERROR\%i"{}},j+1);}
+\DoxyCodeLine{336         savFile\_.readData(evector,tmp2\_);}
+\DoxyCodeLine{337         T sum  = \mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(dimdiis\_,tmp1\_,1,tmp2\_,1);}
+\DoxyCodeLine{338         A[i*(nvec+1)+j] = sum;}
+\DoxyCodeLine{339         A[j*(nvec+1)+i] = sum;}
+\DoxyCodeLine{340       \}}
+\DoxyCodeLine{341     \}}
+\DoxyCodeLine{342     }
+\DoxyCodeLine{343     \textcolor{keywordtype}{int} j = nvec;}
+\DoxyCodeLine{344     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < (nvec+1); i++)\{}
+\DoxyCodeLine{345       A[j*(nvec+1)+i] = -\/1.0;}
+\DoxyCodeLine{346       A[i*(nvec+1)+j] = -\/1.0;}
+\DoxyCodeLine{347     \}}
+\DoxyCodeLine{348     A[(nvec+1)*(nvec+1)-\/1] = 0.0;}
+\DoxyCodeLine{349     }
+\DoxyCodeLine{350     \textcolor{comment}{// Write error matrix for next iteration.}}
+\DoxyCodeLine{351     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < nvec; i++)\{}
+\DoxyCodeLine{352       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < nvec; j++)\{}
+\DoxyCodeLine{353         temp[i*maxdiis\_+j] = A[i*(nvec+1)+j];}
+\DoxyCodeLine{354       \}}
+\DoxyCodeLine{355     \}}
+\DoxyCodeLine{356     savFile\_.safeWriteData(\textcolor{stringliteral}{"{}/DIIS/ERROR\_MATRIX"{}}, temp, \{maxdiis\_*maxdiis\_\});}
+\DoxyCodeLine{357     }
+\DoxyCodeLine{358     memManager\_.free(temp);}
+\DoxyCodeLine{359     memManager\_.free(evector);}
+\DoxyCodeLine{360     }
+\DoxyCodeLine{361     \textcolor{comment}{// Solve the set of linear equations for the extrapolation coefficients}}
+\DoxyCodeLine{362     \textcolor{keywordtype}{int} nrhs = 1;}
+\DoxyCodeLine{363     \textcolor{keywordtype}{int} lda  = nvec+1;}
+\DoxyCodeLine{364     \textcolor{keywordtype}{int} ldb  = nvec+1;}
+\DoxyCodeLine{365     lapack::gesv(nvec+1,nrhs,A,lda,ipiv,B,ldb);}
+\DoxyCodeLine{366     std::copy\_n(B,nvec,diisvec\_);}
+\DoxyCodeLine{367     }
+\DoxyCodeLine{368     memManager\_.free(A);}
+\DoxyCodeLine{369     memManager\_.free(B);}
+\DoxyCodeLine{370     memManager\_.free(ipiv);}
+\DoxyCodeLine{371   \}}
+\DoxyCodeLine{372 }
+\DoxyCodeLine{373 \} \textcolor{comment}{// end of namespace}}
+\DoxyCodeLine{374 }
+\DoxyCodeLine{375 }
+
+\end{DoxyCode}

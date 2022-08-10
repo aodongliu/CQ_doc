@@ -1,0 +1,273 @@
+\hypertarget{custom__storage_8hpp_source}{}\doxysection{custom\+\_\+storage.\+hpp}
+\label{custom__storage_8hpp_source}\index{include/custom\_storage.hpp@{include/custom\_storage.hpp}}
+\mbox{\hyperlink{custom__storage_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <new>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <utility>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1CustomMemManager}{CustomMemManager}} \{}
+\DoxyCodeLine{36     }
+\DoxyCodeLine{37     \textcolor{keywordtype}{void} * \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}};  }
+\DoxyCodeLine{38     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_aaae5c4da53b7608061240d69364dc0b2}{align\_size}}; }
+\DoxyCodeLine{40     std::unordered\_map<void*,size\_t> \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab1bacf8286fd5dc5cf1a37c720e9c6bf}{alloc\_blocks}};}
+\DoxyCodeLine{42   }
+\DoxyCodeLine{49     \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{void} * \& \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(\textcolor{keywordtype}{void} * ptr) \{}
+\DoxyCodeLine{50       \textcolor{keywordflow}{return} *(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{void} **\textcolor{keyword}{>}(ptr));}
+\DoxyCodeLine{51     \};}
+\DoxyCodeLine{52   }
+\DoxyCodeLine{59     \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{size\_t} \& \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(\textcolor{keywordtype}{void} * ptr) \{}
+\DoxyCodeLine{60       \textcolor{keywordflow}{return} \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{size\_t}\&\textcolor{keyword}{>}(*(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{void} **\textcolor{keyword}{>}(ptr) + 1));}
+\DoxyCodeLine{61     \};}
+\DoxyCodeLine{62   }
+\DoxyCodeLine{68     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ada97fc70d35c97a6ba902dcfba21dccf}{check\_alignment}}(\textcolor{keywordtype}{void} * ptr) \{}
+\DoxyCodeLine{69       \textcolor{keywordflow}{if} (\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(ptr) \% \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_aaae5c4da53b7608061240d69364dc0b2}{align\_size}} != 0)}
+\DoxyCodeLine{70         \textcolor{keywordflow}{throw} \textcolor{stringliteral}{"{}Bad alignment of pointer in MemManager"{}};}
+\DoxyCodeLine{71     \};}
+\DoxyCodeLine{72   }
+\DoxyCodeLine{73 }
+\DoxyCodeLine{84     \textcolor{keywordtype}{void} * \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ae4b02abd5fb79f80e54abb41411fc661}{get\_prev}}(\textcolor{keywordtype}{void} * ptr) \{}
+\DoxyCodeLine{85   }
+\DoxyCodeLine{86       \textcolor{comment}{// Handle edge case that all blocks are after ptr}}
+\DoxyCodeLine{87       \textcolor{keywordflow}{if} ( \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}} > ptr )}
+\DoxyCodeLine{88         \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{89   }
+\DoxyCodeLine{90       \textcolor{keywordtype}{void} * ret = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}};}
+\DoxyCodeLine{91   }
+\DoxyCodeLine{92       \textcolor{keywordflow}{while} ( \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(ret) ) \{}
+\DoxyCodeLine{93         \textcolor{keywordflow}{if} ( \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(ret) > ptr ) }
+\DoxyCodeLine{94           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{95         ret = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(ret);}
+\DoxyCodeLine{96       \}}
+\DoxyCodeLine{97   }
+\DoxyCodeLine{98       \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{99     \};}
+\DoxyCodeLine{100   }
+\DoxyCodeLine{101   }
+\DoxyCodeLine{102     \textcolor{keyword}{public}:}
+\DoxyCodeLine{103   }
+\DoxyCodeLine{112     \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_aad9ad30b365b2bf9e3c4f3e2e2e825a6}{CustomMemManager}}(\textcolor{keywordtype}{size\_t} align\_size\_ = \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{size\_t})) :}
+\DoxyCodeLine{113       \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}}(nullptr), \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_aaae5c4da53b7608061240d69364dc0b2}{align\_size}}(align\_size\_) \{ \};}
+\DoxyCodeLine{114   }
+\DoxyCodeLine{126     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ac24fdcfabd72a8314a9ebc46fe4b9412}{add\_block}}(\textcolor{keywordtype}{void} * block, \textcolor{keywordtype}{size\_t} block\_size) \{}
+\DoxyCodeLine{127       \textcolor{keywordflow}{if} ( block\_size == 0 )}
+\DoxyCodeLine{128         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{129       \textcolor{keywordflow}{if} ( block\_size < (\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{void}*) + \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{size\_t})) ) \{}
+\DoxyCodeLine{130         \textcolor{keywordflow}{throw} \textcolor{stringliteral}{"{}Blocks need to be large enough to hold the linked list header"{}};}
+\DoxyCodeLine{131       \};}
+\DoxyCodeLine{132       \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ada97fc70d35c97a6ba902dcfba21dccf}{check\_alignment}}(block);}
+\DoxyCodeLine{133     }
+\DoxyCodeLine{134       \textcolor{comment}{// Handle edge case with empty free list}}
+\DoxyCodeLine{135       \textcolor{keywordflow}{if} ( !\mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}} ) \{}
+\DoxyCodeLine{136         \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(block) = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}};}
+\DoxyCodeLine{137         \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(block) = block\_size;}
+\DoxyCodeLine{138         \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}} = block;}
+\DoxyCodeLine{139         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{140       \}}
+\DoxyCodeLine{141     }
+\DoxyCodeLine{142       \textcolor{keywordtype}{void} * prev = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ae4b02abd5fb79f80e54abb41411fc661}{get\_prev}}(block);}
+\DoxyCodeLine{143       \textcolor{keywordtype}{void} * next = prev ? \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(prev) : \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}};}
+\DoxyCodeLine{144     }
+\DoxyCodeLine{145       \textcolor{comment}{// Append or link next to block}}
+\DoxyCodeLine{146       \textcolor{keywordflow}{if} ( \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(block) + block\_size == next ) \{}
+\DoxyCodeLine{147         \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(block) = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(next);}
+\DoxyCodeLine{148         \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(block) = block\_size + \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(next);}
+\DoxyCodeLine{149       \}}
+\DoxyCodeLine{150       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{151         \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(block) = next;}
+\DoxyCodeLine{152         \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(block) = block\_size;}
+\DoxyCodeLine{153       \}}
+\DoxyCodeLine{154     }
+\DoxyCodeLine{155       \textcolor{comment}{// Append or link block to prev}}
+\DoxyCodeLine{156       \textcolor{keywordflow}{if} ( !prev ) \{}
+\DoxyCodeLine{157         \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}} = block;}
+\DoxyCodeLine{158       \}}
+\DoxyCodeLine{159       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(prev) + \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(prev) == block ) \{}
+\DoxyCodeLine{160         \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(prev) = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(block);}
+\DoxyCodeLine{161         \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(prev) += \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(block);}
+\DoxyCodeLine{162       \}}
+\DoxyCodeLine{163       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{164         \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(prev) = block;}
+\DoxyCodeLine{165       \}}
+\DoxyCodeLine{166     }
+\DoxyCodeLine{167     \};}
+\DoxyCodeLine{168   }
+\DoxyCodeLine{179     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_acd8116a9dd59474931e3fee84a9d03b5}{add\_block\_fast}}(\textcolor{keywordtype}{void} * block, \textcolor{keywordtype}{size\_t} block\_size) \{}
+\DoxyCodeLine{180       \textcolor{keywordflow}{if} ( block\_size == 0 )}
+\DoxyCodeLine{181         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{182       \textcolor{keywordflow}{if} ( block\_size < \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{void}*) + \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{size\_t}) )}
+\DoxyCodeLine{183         \textcolor{keywordflow}{throw} \textcolor{stringliteral}{"{}Blocks need to be large enough to hold the linked list header"{}};}
+\DoxyCodeLine{184       \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ada97fc70d35c97a6ba902dcfba21dccf}{check\_alignment}}(block);}
+\DoxyCodeLine{185     }
+\DoxyCodeLine{186       \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(block) = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}};}
+\DoxyCodeLine{187       \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(block) = block\_size;}
+\DoxyCodeLine{188       \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}} = block;}
+\DoxyCodeLine{189     \};}
+\DoxyCodeLine{190   }
+\DoxyCodeLine{191   }
+\DoxyCodeLine{203     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{204     T* \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_aa349a76cedcbdd9a3f9c30eb420a5b5c}{malloc}}(\textcolor{keywordtype}{size\_t} N) \{}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206       \textcolor{comment}{// Add padding and make sure block is large enough for the header}}
+\DoxyCodeLine{207       \textcolor{comment}{// (for freeing later)}}
+\DoxyCodeLine{208       \textcolor{keywordtype}{size\_t} mod\_size = N * \textcolor{keyword}{sizeof}(T) \% \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_aaae5c4da53b7608061240d69364dc0b2}{align\_size}};}
+\DoxyCodeLine{209       \textcolor{keywordtype}{size\_t} req\_size = mod\_size == 0 ?}
+\DoxyCodeLine{210                         N * \textcolor{keyword}{sizeof}(T) : N*\textcolor{keyword}{sizeof}(T) + \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_aaae5c4da53b7608061240d69364dc0b2}{align\_size}} -\/ mod\_size;}
+\DoxyCodeLine{211       \textcolor{keywordtype}{size\_t} min\_size = \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{void}*) + \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{212       req\_size = req\_size > min\_size ? req\_size : min\_size;}
+\DoxyCodeLine{213     }
+\DoxyCodeLine{214       \textcolor{comment}{// Throw if no free list}}
+\DoxyCodeLine{215       \textcolor{keywordflow}{if} ( !\mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}} )}
+\DoxyCodeLine{216         \textcolor{keywordflow}{throw} std::bad\_alloc();}
+\DoxyCodeLine{217     }
+\DoxyCodeLine{218       \textcolor{comment}{// Search for block large enough}}
+\DoxyCodeLine{219       \textcolor{keywordtype}{void}* ptr(\mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}});}
+\DoxyCodeLine{220       \textcolor{keywordtype}{void}* prev(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{221       \textcolor{keywordtype}{size\_t} block\_size(\mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(ptr));}
+\DoxyCodeLine{222       \textcolor{keywordflow}{while} ( ptr \&\& block\_size < req\_size ) \{}
+\DoxyCodeLine{223         prev = ptr;}
+\DoxyCodeLine{224         ptr = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(ptr);}
+\DoxyCodeLine{225         block\_size = ptr ? \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(ptr) : 0;}
+\DoxyCodeLine{226       \};}
+\DoxyCodeLine{227     }
+\DoxyCodeLine{228       \textcolor{comment}{// Throw if no block large enough}}
+\DoxyCodeLine{229       \textcolor{keywordflow}{if} (!ptr)}
+\DoxyCodeLine{230         \textcolor{keywordflow}{throw} std::bad\_alloc();}
+\DoxyCodeLine{231     }
+\DoxyCodeLine{232       \textcolor{keywordflow}{if} (req\_size == block\_size) \{}
+\DoxyCodeLine{233         \textcolor{comment}{// Link prev to next if the found block is exactly large enough}}
+\DoxyCodeLine{234         \textcolor{keywordflow}{if} ( prev )\{}
+\DoxyCodeLine{235           \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(prev) = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(ptr);}
+\DoxyCodeLine{236         \}}
+\DoxyCodeLine{237         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ptr) \{}
+\DoxyCodeLine{238           \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}} = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(ptr);}
+\DoxyCodeLine{239         \}}
+\DoxyCodeLine{240         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{241           \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{242         \}}
+\DoxyCodeLine{243       \}}
+\DoxyCodeLine{244       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{245         \textcolor{comment}{// Link prev to remaining memory in current block}}
+\DoxyCodeLine{246         \textcolor{keywordtype}{void} * new\_free = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{void}*\textcolor{keyword}{>}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(ptr) + req\_size);}
+\DoxyCodeLine{247         \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(new\_free) = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(ptr);}
+\DoxyCodeLine{248         \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(new\_free) = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(ptr) -\/ req\_size;}
+\DoxyCodeLine{249         \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}} == ptr) \{}
+\DoxyCodeLine{250           \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}} = new\_free;}
+\DoxyCodeLine{251         \}}
+\DoxyCodeLine{252         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{253           \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(prev) = new\_free;}
+\DoxyCodeLine{254         \}}
+\DoxyCodeLine{255       \}}
+\DoxyCodeLine{256     }
+\DoxyCodeLine{257       \textcolor{comment}{// Record that this has been allocated}}
+\DoxyCodeLine{258       \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab1bacf8286fd5dc5cf1a37c720e9c6bf}{alloc\_blocks}}[ptr] = req\_size;}
+\DoxyCodeLine{259     }
+\DoxyCodeLine{260       \textcolor{keywordflow}{return} \textcolor{keyword}{static\_cast<}T*\textcolor{keyword}{>}(ptr);}
+\DoxyCodeLine{261     \}; }
+\DoxyCodeLine{262   }
+\DoxyCodeLine{263   }
+\DoxyCodeLine{273     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a9b06637bab04451157fcc290236e8f76}{free}}(\textcolor{keywordtype}{void} * ptr) \{}
+\DoxyCodeLine{274       \textcolor{keyword}{auto} entry = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab1bacf8286fd5dc5cf1a37c720e9c6bf}{alloc\_blocks}}.find(ptr);}
+\DoxyCodeLine{275     }
+\DoxyCodeLine{276       \textcolor{keywordflow}{if} (entry == \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab1bacf8286fd5dc5cf1a37c720e9c6bf}{alloc\_blocks}}.end())}
+\DoxyCodeLine{277         \textcolor{keywordflow}{throw} \textcolor{stringliteral}{"{}Pointer was not allocated by MemManager"{}};}
+\DoxyCodeLine{278     }
+\DoxyCodeLine{279       \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ac24fdcfabd72a8314a9ebc46fe4b9412}{add\_block}}(ptr, entry-\/>second);}
+\DoxyCodeLine{280     }
+\DoxyCodeLine{281       \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab1bacf8286fd5dc5cf1a37c720e9c6bf}{alloc\_blocks}}.erase(entry);}
+\DoxyCodeLine{282     \};}
+\DoxyCodeLine{283   }
+\DoxyCodeLine{293     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_abd3499a9865b5fe4105c52e8cd72981a}{free\_fast}}(\textcolor{keywordtype}{void} * ptr) \{}
+\DoxyCodeLine{294       \textcolor{keyword}{auto} entry = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab1bacf8286fd5dc5cf1a37c720e9c6bf}{alloc\_blocks}}.find(ptr);}
+\DoxyCodeLine{295     }
+\DoxyCodeLine{296       \textcolor{keywordflow}{if} (entry == \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab1bacf8286fd5dc5cf1a37c720e9c6bf}{alloc\_blocks}}.end())}
+\DoxyCodeLine{297         \textcolor{keywordflow}{throw} \textcolor{stringliteral}{"{}Pointer was not allocated by MemManager"{}};}
+\DoxyCodeLine{298     }
+\DoxyCodeLine{299       \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_acd8116a9dd59474931e3fee84a9d03b5}{add\_block\_fast}}(ptr, entry-\/>second);}
+\DoxyCodeLine{300     }
+\DoxyCodeLine{301       \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab1bacf8286fd5dc5cf1a37c720e9c6bf}{alloc\_blocks}}.erase(entry);}
+\DoxyCodeLine{302     \};}
+\DoxyCodeLine{303   }
+\DoxyCodeLine{310     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ae9255d102f47582ab195e2350e511a4b}{defrag}}() \{}
+\DoxyCodeLine{311       \textcolor{keywordtype}{void} * ptr(\mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}});}
+\DoxyCodeLine{312       \textcolor{keywordtype}{void} * next;}
+\DoxyCodeLine{313       }
+\DoxyCodeLine{314       \textcolor{comment}{// Delete free list}}
+\DoxyCodeLine{315       \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{316     }
+\DoxyCodeLine{317       \textcolor{comment}{// Traverse previous free list, adding blocks in an ordered manner}}
+\DoxyCodeLine{318       \textcolor{keywordflow}{while} ( ptr ) \{}
+\DoxyCodeLine{319         next = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(ptr);}
+\DoxyCodeLine{320         \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ac24fdcfabd72a8314a9ebc46fe4b9412}{add\_block}}(ptr, \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(ptr));}
+\DoxyCodeLine{321         ptr = next;}
+\DoxyCodeLine{322       \}}
+\DoxyCodeLine{323     \};}
+\DoxyCodeLine{324   }
+\DoxyCodeLine{325 \textcolor{preprocessor}{  \#ifdef MEMMANAGER\_DEBUG}}
+\DoxyCodeLine{326     \textcolor{keywordtype}{void} print\_free() \{}
+\DoxyCodeLine{327       \textcolor{keywordtype}{void} * ptr(\mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a4296e24a159c7f826bbcee06fd5b42b7}{top}});}
+\DoxyCodeLine{328   }
+\DoxyCodeLine{329       std::cout << \textcolor{stringliteral}{"{}                 MemManager Free List  \(\backslash\)n"{}};}
+\DoxyCodeLine{330       std::cout << \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}};}
+\DoxyCodeLine{331       \textcolor{keywordflow}{while} (ptr) \{}
+\DoxyCodeLine{332         std::cout << ptr << \textcolor{stringliteral}{"{} | "{}} << \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a1c3bdfdfde9de8ed5b7d38d6862691b1}{get\_size}}(ptr) << \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{333         ptr = \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ab28128bb1802dedbc79ab2d246f33762}{get\_next}}(ptr);}
+\DoxyCodeLine{334       \}}
+\DoxyCodeLine{335       std::cout << \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}};}
+\DoxyCodeLine{336     \};}
+\DoxyCodeLine{337 \textcolor{preprocessor}{  \#endif}}
+\DoxyCodeLine{338     }
+\DoxyCodeLine{339     \textcolor{comment}{//}}
+\DoxyCodeLine{340     \textcolor{comment}{// Mimic functions for boost::simple\_segregated\_storage}}
+\DoxyCodeLine{341     \textcolor{comment}{//}}
+\DoxyCodeLine{342 }
+\DoxyCodeLine{350     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a086f96d126c8002d7ed046dc50e757ac}{add\_ordered\_block}}(\textcolor{keywordtype}{void} * \textcolor{keyword}{const} block,}
+\DoxyCodeLine{351       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} nsz, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} dummy) \{}
+\DoxyCodeLine{352       \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_ac24fdcfabd72a8314a9ebc46fe4b9412}{add\_block}}(block, nsz);}
+\DoxyCodeLine{353     \};}
+\DoxyCodeLine{354 }
+\DoxyCodeLine{362     \textcolor{keywordtype}{void} * \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a174c9256a58fd2cf6c762b1d01d8b294}{malloc\_n}}(\textcolor{keywordtype}{size\_t} n, \textcolor{keywordtype}{size\_t} block\_size) \{}
+\DoxyCodeLine{363       \textcolor{keywordflow}{return} \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{void} *\textcolor{keyword}{>}(malloc<char>(n * block\_size));}
+\DoxyCodeLine{364     \};}
+\DoxyCodeLine{365 }
+\DoxyCodeLine{373     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_afcefdda031e1d68bc45e8f270442a006}{ordered\_free\_n}}(\textcolor{keywordtype}{void} * \textcolor{keyword}{const} chunks, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} dummy1,}
+\DoxyCodeLine{374       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} dummy2) \{}
+\DoxyCodeLine{375       \mbox{\hyperlink{classChronusQ_1_1CustomMemManager_a9b06637bab04451157fcc290236e8f76}{free}}(chunks);}
+\DoxyCodeLine{376     \};}
+\DoxyCodeLine{377   }
+\DoxyCodeLine{378   \}; \textcolor{comment}{// MemManager}}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{381 }
+
+\end{DoxyCode}

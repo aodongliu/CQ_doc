@@ -1,0 +1,113 @@
+\hypertarget{pop_8hpp_source}{}\doxysection{pop.\+hpp}
+\label{pop_8hpp_source}\index{include/singleslater/pop.hpp@{include/singleslater/pop.hpp}}
+\mbox{\hyperlink{pop_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{31   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7d730c8b8c684dc260c813730ed1004f}{SingleSlater<MatsT,IntsT>::populationAnalysis}}() \{}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NB = this-\/>basisSet().nBasis;}
+\DoxyCodeLine{34     MatsT* SCR  = this-\/>memManager.template malloc<MatsT>(NB*NB);}
+\DoxyCodeLine{35     MatsT* SCR2 = this-\/>memManager.template malloc<MatsT>(NB*NB);}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \textcolor{comment}{// Molecule object to use}}
+\DoxyCodeLine{38     \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} inputMol = this-\/>molecule();}
+\DoxyCodeLine{39     \textcolor{keywordflow}{if} (this-\/>particle.charge > 0)}
+\DoxyCodeLine{40       inputMol = inputMol.\mbox{\hyperlink{structChronusQ_1_1Molecule_a9a0412c41ae4ba09f7db77e8058bec04}{retainQNuc}}();}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{comment}{// Mulliken population analysis}}
+\DoxyCodeLine{43     mullikenCharges.clear();}
+\DoxyCodeLine{44     \textcolor{keywordflow}{if} (nC != 4) \{}
+\DoxyCodeLine{45       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(1.),this-\/>aoints.overlap-\/>pointer(),NB,}
+\DoxyCodeLine{46            this-\/>onePDM-\/>S().pointer(),NB,MatsT(0.),SCR,NB);}
+\DoxyCodeLine{47     \}}
+\DoxyCodeLine{48     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{49       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(1.),this-\/>aoints.kinetic-\/>pointer(),NB,}
+\DoxyCodeLine{50            this-\/>onePDM-\/>S().pointer()+2*NB*NB+NB,2*NB,MatsT(0.),SCR,NB);}
+\DoxyCodeLine{51       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(1.),this-\/>aoints.overlap-\/>pointer(),NB,}
+\DoxyCodeLine{52            this-\/>onePDM-\/>S().pointer(),2*NB,MatsT(1./(2.*\mbox{\hyperlink{namespaceChronusQ_a387c8ccd4e18ad322b87f75f51fd008d}{SpeedOfLight}}*\mbox{\hyperlink{namespaceChronusQ_a387c8ccd4e18ad322b87f75f51fd008d}{SpeedOfLight}})),SCR,NB);}
+\DoxyCodeLine{53     \}}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iAtm = 0; iAtm < inputMol.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}}; iAtm++) \{}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57       \textcolor{keywordtype}{size\_t} iEnd;}
+\DoxyCodeLine{58       \textcolor{keywordflow}{if}( iAtm == inputMol.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}}-\/1 )}
+\DoxyCodeLine{59         iEnd = NB;}
+\DoxyCodeLine{60       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{61         iEnd = this-\/>basisSet().mapCen2BfSt[iAtm+1];}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63       \textcolor{keywordtype}{size\_t} iSt = this-\/>basisSet().mapCen2BfSt[iAtm];}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65       mullikenCharges.emplace\_back(inputMol.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[iAtm].nucCharge);}
+\DoxyCodeLine{66       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = iSt; i < iEnd; i++)}
+\DoxyCodeLine{67         mullikenCharges.back() -\/= std::real(SCR[i*(NB+1)]);}
+\DoxyCodeLine{68     \} }
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{comment}{// Loewdin population analysis}}
+\DoxyCodeLine{72     lowdinCharges.clear();}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74 \textcolor{comment}{/*}}
+\DoxyCodeLine{75 \textcolor{comment}{    blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,T(1.),this-\/>aoints.ortho1,NB,this-\/>onePDM[SCALAR],NB,}}
+\DoxyCodeLine{76 \textcolor{comment}{      T(0.),SCR2,NB);}}
+\DoxyCodeLine{77 \textcolor{comment}{    blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::ConjTrans,NB,NB,NB,T(1.),this-\/>aoints.ortho1,NB,SCR2,NB,T(0.),SCR,NB);}}
+\DoxyCodeLine{78 \textcolor{comment}{*/}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iAtm = 0; iAtm < inputMol.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}}; iAtm++) \{}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82       \textcolor{keywordtype}{size\_t} iEnd;}
+\DoxyCodeLine{83       \textcolor{keywordflow}{if}( iAtm == inputMol.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}}-\/1 )\{}
+\DoxyCodeLine{84         \textcolor{keywordflow}{if}( nC == 4 )}
+\DoxyCodeLine{85           iEnd = 2*NB;}
+\DoxyCodeLine{86         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{87           iEnd = NB;}
+\DoxyCodeLine{88       \}}
+\DoxyCodeLine{89       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{90         iEnd = this-\/>basisSet().mapCen2BfSt[iAtm+1];}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92       \textcolor{keywordtype}{size\_t} iSt = this-\/>basisSet().mapCen2BfSt[iAtm];}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94       lowdinCharges.emplace\_back(inputMol.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}}[iAtm].nucCharge);}
+\DoxyCodeLine{95       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = iSt; i < iEnd; i++)}
+\DoxyCodeLine{96         lowdinCharges.back() -\/= std::real(this-\/>onePDMOrtho-\/>S()(i,i));}
+\DoxyCodeLine{97     \} }
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100     this-\/>memManager.free(SCR,SCR2);}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103   \};}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107 }
+
+\end{DoxyCode}

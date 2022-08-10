@@ -1,0 +1,74 @@
+\hypertarget{cibuilder_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{cibuilder_2impl_8hpp_source}\index{include/cibuilder/impl.hpp@{include/cibuilder/impl.hpp}}
+\mbox{\hyperlink{cibuilder_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you ca redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cibuilder_8hpp}{cibuilder.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cibuilder_2casci_2impl_8hpp}{cibuilder/casci/impl.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cibuilder_2rasci_2impl_8hpp}{cibuilder/rasci/impl.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{comment}{// \#define \_DEBUG\_CIBuilder\_IMPL}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34   \textcolor{comment}{// Different type}}
+\DoxyCodeLine{35   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{36   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{37   \mbox{\hyperlink{classChronusQ_1_1CIBuilder_a2465aac737636832624cb99229e17fc4}{CIBuilder<MatsT,IntsT>::CIBuilder}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1CIBuilder}{CIBuilder<MatsU,IntsT>}} \& other) \{\};}
+\DoxyCodeLine{38   }
+\DoxyCodeLine{39   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{40   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{41   \mbox{\hyperlink{classChronusQ_1_1CIBuilder_a2465aac737636832624cb99229e17fc4}{CIBuilder<MatsT,IntsT>::CIBuilder}}(\mbox{\hyperlink{classChronusQ_1_1CIBuilder}{CIBuilder<MatsU,IntsT>}} \&\& other) \{\};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{44   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{45   std::shared\_ptr<CIBuilder<MatsU,IntsT>>}
+\DoxyCodeLine{46   \mbox{\hyperlink{classChronusQ_1_1CIBuilder_af1e5b68d12880b504c6b98152eca8bf0}{CIBuilder<MatsT,IntsT>::convert}}(\textcolor{keyword}{const} std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1CIBuilder}{CIBuilder<MatsT,IntsT>}}> \& ci) \{}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keywordflow}{if} (not ci) \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     \textcolor{keyword}{const} std::type\_info \& tID(\textcolor{keyword}{typeid}(*ci));}
+\DoxyCodeLine{51     }
+\DoxyCodeLine{52     std::shared\_ptr<CIBuilder<MatsU,IntsT>> output\_ptr;}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{keywordflow}{if} (tID == \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1CASCI}{CASCI<MatsT,IntsT>}})) \{}
+\DoxyCodeLine{55       output\_ptr = std::dynamic\_pointer\_cast<CIBuilder<MatsU, IntsT>>(}
+\DoxyCodeLine{56                      std::make\_shared<CASCI<MatsU,IntsT>>(}
+\DoxyCodeLine{57                       *std::dynamic\_pointer\_cast<CASCI<MatsT,IntsT>>(ci)));}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tID == \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1RASCI}{RASCI<MatsT,IntsT>}})) \{}
+\DoxyCodeLine{60       output\_ptr = std::dynamic\_pointer\_cast<CIBuilder<MatsU, IntsT>>(}
+\DoxyCodeLine{61                      std::make\_shared<RASCI<MatsU,IntsT>>(}
+\DoxyCodeLine{62                        *std::dynamic\_pointer\_cast<RASCI<MatsT,IntsT>>(ci)));}
+\DoxyCodeLine{63     \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{keywordflow}{return} output\_ptr;}
+\DoxyCodeLine{66   \} \textcolor{comment}{//CIBuilder::convert}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

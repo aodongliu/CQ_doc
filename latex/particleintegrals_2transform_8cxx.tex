@@ -1,0 +1,53 @@
+\hypertarget{particleintegrals_2transform_8cxx}{}\doxysection{src/particleintegrals/transform.cxx File Reference}
+\label{particleintegrals_2transform_8cxx}\index{src/particleintegrals/transform.cxx@{src/particleintegrals/transform.cxx}}
+{\ttfamily \#include $<$particleintegrals.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/onepints.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/incore4indexreleri.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/incore4indextpi.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/incoreritpi.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/gtodirecttpi.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/onepints/relativisticints.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/multipoleints.\+hpp$>$}\newline
+{\ttfamily \#include $<$integrals.\+hpp$>$}\newline
+{\ttfamily \#include $<$cqlinalg.\+hpp$>$}\newline
+Include dependency graph for transform.\+cxx\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{particleintegrals_2transform_8cxx__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{particleintegrals_2transform_8cxx_ab8f11a43338320a28e0090c1ca38f245}{IF\+\_\+\+TRANSFORM\+\_\+\+INTS}}(EI)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{particleintegrals_2transform_8cxx_ab8f11a43338320a28e0090c1ca38f245}\label{particleintegrals_2transform_8cxx_ab8f11a43338320a28e0090c1ca38f245}} 
+\index{transform.cxx@{transform.cxx}!IF\_TRANSFORM\_INTS@{IF\_TRANSFORM\_INTS}}
+\index{IF\_TRANSFORM\_INTS@{IF\_TRANSFORM\_INTS}!transform.cxx@{transform.cxx}}
+\doxysubsubsection{\texorpdfstring{IF\_TRANSFORM\_INTS}{IF\_TRANSFORM\_INTS}}
+{\footnotesize\ttfamily \#define IF\+\_\+\+TRANSFORM\+\_\+\+INTS(\begin{DoxyParamCaption}\item[{}]{EI }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \textcolor{keywordflow}{if} (tID == \textcolor{keyword}{typeid}(EI<double>))\(\backslash\)}
+\DoxyCodeLine{    return std::dynamic\_pointer\_cast<ParticleIntegrals>(\(\backslash\)}
+\DoxyCodeLine{        std::make\_shared<EI<TransT>>(\(\backslash\)}
+\DoxyCodeLine{            \textcolor{keyword}{dynamic\_cast<}\textcolor{keyword}{const }EI<double>\&\textcolor{keyword}{>}(ints)\(\backslash\)}
+\DoxyCodeLine{                .transform(TRANS, T, NT, LDT)));\(\backslash\)}
+\DoxyCodeLine{  if (tID == \textcolor{keyword}{typeid}(EI<dcomplex>))\(\backslash\)}
+\DoxyCodeLine{    return std::dynamic\_pointer\_cast<ParticleIntegrals>(\(\backslash\)}
+\DoxyCodeLine{        std::make\_shared<EI<dcomplex>>(\(\backslash\)}
+\DoxyCodeLine{            \textcolor{keyword}{dynamic\_cast<}\textcolor{keyword}{const }EI<dcomplex>\&\textcolor{keyword}{>}(ints)\(\backslash\)}
+\DoxyCodeLine{                .transform(TRANS, T, NT, LDT)))}
+
+\end{DoxyCode}

@@ -1,0 +1,194 @@
+\hypertarget{mcwavefunction_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{mcwavefunction_2impl_8hpp_source}\index{include/mcwavefunction/impl.hpp@{include/mcwavefunction/impl.hpp}}
+\mbox{\hyperlink{mcwavefunction_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you ca redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcwavefunction_8hpp}{mcwavefunction.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{quantum_2preprocessor_8hpp}{quantum/preprocessor.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{util_2preprocessor_8hpp}{util/preprocessor.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{util_2print_8hpp}{util/print.hpp}}>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{comment}{// Template for a collective operation on the members of a }}
+\DoxyCodeLine{33 \textcolor{comment}{// MCWaveFunction object}}
+\DoxyCodeLine{34 \textcolor{comment}{// \#define DEBUG\_MULTISTATEWFN\_IMPL}}
+\DoxyCodeLine{35   }
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#define MCWaveFunction\_COLLECTIVE\_OP(OP\_OP,OP\_VEC\_OP) \(\backslash\)}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{  }\textcolor{comment}{/* Handle densities and vectors*/}\textcolor{preprocessor}{\(\backslash\)}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{  OP\_VEC\_OP(MatsT,this,other,this-\/>memManager,CIVecs); }}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{50   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{51   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU> }
+\DoxyCodeLine{52   \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a3525c6ecd5b2a1e0708d09114c3d04dd}{MCWaveFunction<MatsT,IntsT>::MCWaveFunction}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsU,IntsT>}} \&other,\textcolor{keywordtype}{int} dummy) :}
+\DoxyCodeLine{53     moints(other.moints),}
+\DoxyCodeLine{54     ciBuilder(\mbox{\hyperlink{classChronusQ_1_1CIBuilder}{CIBuilder}}<MatsU,IntsT>::template convert<MatsT>(other.ciBuilder)),}
+\DoxyCodeLine{55     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWaveFunctionBase}}(dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWaveFunctionBase}} \&>(other)),}
+\DoxyCodeLine{56     ref\_(dynamic\_cast<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>\&>(other.reference())) \{ }
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#ifdef DEBUG\_MULTISTATEWFN\_IMPL}}
+\DoxyCodeLine{59     std::cout << \textcolor{stringliteral}{"{}MCWaveFunction<T>::MCWaveFunction(const MCWaveFunction<U>\&) "{}}}
+\DoxyCodeLine{60               << \textcolor{stringliteral}{"{}(this = "{}} << \textcolor{keyword}{this} << \textcolor{stringliteral}{"{}, other = "{}} << \&other << \textcolor{stringliteral}{"{})"{}} }
+\DoxyCodeLine{61               << std::endl;}
+\DoxyCodeLine{62 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{63     }
+\DoxyCodeLine{64     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a1e610e885c5f05f263040f94b55bbffa}{mointsTF}} = \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_af6aa19f5ac94106585e5f843544a975f}{ref\_}}.generateMOIntsTransformer();}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a4a23bb371e383e7ab0aad2501cefbe7c}{oneRDM}}.reserve(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a933e57263d7a49bfe655de67b8590cff}{NStates}});}
+\DoxyCodeLine{67     \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \&mat : other.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a4a23bb371e383e7ab0aad2501cefbe7c}{oneRDM}}) }
+\DoxyCodeLine{68        \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a4a23bb371e383e7ab0aad2501cefbe7c}{oneRDM}}.emplace\_back(mat);}
+\DoxyCodeLine{69     }
+\DoxyCodeLine{70     \mbox{\hyperlink{mcwavefunction_2impl_8hpp_a1e370bb5aedf5bd7a147100fe6ecd4d0}{MCWaveFunction\_COLLECTIVE\_OP}}(\mbox{\hyperlink{util_2preprocessor_8hpp_a69e1609d55a307e9b56653cdd52cf9ce}{COPY\_OTHER\_MEMBER\_OP}}, \mbox{\hyperlink{util_2preprocessor_8hpp_a294145a45f5290d809e7bbec5cd4bf89}{COPY\_OTHER\_MEMBER\_VEC\_OP}});}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72   \}; \textcolor{comment}{// MCWaveFunction<T>::MCWaveFunction(const MCWaveFunction<U> \&)}}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{84   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{85   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU> }
+\DoxyCodeLine{86   \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a3525c6ecd5b2a1e0708d09114c3d04dd}{MCWaveFunction<MatsT,IntsT>::MCWaveFunction}}(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsU,IntsT>}} \&\&other, \textcolor{keywordtype}{int} dummy) : }
+\DoxyCodeLine{87     moints(other.moints), }
+\DoxyCodeLine{88     ciBuilder(\mbox{\hyperlink{classChronusQ_1_1CIBuilder}{CIBuilder}}<MatsU,IntsT>::template convert<MatsT>(other.ciBuilder)),}
+\DoxyCodeLine{89     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWaveFunctionBase}}(dynamic\_cast<\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWaveFunctionBase}} \&\&>(std::move(other))),}
+\DoxyCodeLine{90     ref\_(dynamic\_cast<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>\&>(other.reference())) \{}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92 \textcolor{preprocessor}{\#ifdef DEBUG\_MULTISTATEWFN\_IMPL}}
+\DoxyCodeLine{93     std::cout << \textcolor{stringliteral}{"{}MCWaveFunction<T>::MCWaveFunction(MCWaveFunction<U>\&\&) "{}}}
+\DoxyCodeLine{94               << \textcolor{stringliteral}{"{}(this = "{}} << \textcolor{keyword}{this} << \textcolor{stringliteral}{"{}, other = "{}} << \&other << \textcolor{stringliteral}{"{})"{}} }
+\DoxyCodeLine{95               << std::endl;}
+\DoxyCodeLine{96 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{97     }
+\DoxyCodeLine{98     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a1e610e885c5f05f263040f94b55bbffa}{mointsTF}} = \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_af6aa19f5ac94106585e5f843544a975f}{ref\_}}.generateMOIntsTransformer();}
+\DoxyCodeLine{99     }
+\DoxyCodeLine{100     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a4a23bb371e383e7ab0aad2501cefbe7c}{oneRDM}}.reserve(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a933e57263d7a49bfe655de67b8590cff}{NStates}});}
+\DoxyCodeLine{101     \textcolor{keywordflow}{for} (\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsU>}} \&mat : other.oneRDM) }
+\DoxyCodeLine{102        \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a4a23bb371e383e7ab0aad2501cefbe7c}{oneRDM}}.emplace\_back(std::move(mat));}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104     \mbox{\hyperlink{mcwavefunction_2impl_8hpp_a1e370bb5aedf5bd7a147100fe6ecd4d0}{MCWaveFunction\_COLLECTIVE\_OP}}(\mbox{\hyperlink{util_2preprocessor_8hpp_ac9a9182d42190ffb9aca133bb783e8e9}{MOVE\_OTHER\_MEMBER\_OP}}, \mbox{\hyperlink{util_2preprocessor_8hpp_ab24aca14512dc241f1d6802d72baef08}{MOVE\_OTHER\_MEMBER\_VEC\_OP}});}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106   \}; \textcolor{comment}{// MCWaveFunction<T>::MCWaveFunction(MCWaveFunction<U> \&\&)}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108   \textcolor{comment}{// Delagate the copy constructor to the conversion constructors}}
+\DoxyCodeLine{109   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{110   \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a3525c6ecd5b2a1e0708d09114c3d04dd}{MCWaveFunction<MatsT,IntsT>::MCWaveFunction}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsT, IntsT>}} \&other) : }
+\DoxyCodeLine{111     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction}}(other,0)\{ \};}
+\DoxyCodeLine{112   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{113   \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a3525c6ecd5b2a1e0708d09114c3d04dd}{MCWaveFunction<MatsT,IntsT>::MCWaveFunction}}(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsT, IntsT>}} \&\&other) : }
+\DoxyCodeLine{114     \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction}}(std::move(other),0)\{ \};}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{119   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{120   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a2fb23d2d38b981c4f42b4fa9813dc74d}{MCWaveFunction<MatsT,IntsT>::alloc}}() \{}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122 \textcolor{preprocessor}{\#ifdef DEBUG\_MULTISTATEWFN\_IMPL}}
+\DoxyCodeLine{123     std::cout << \textcolor{stringliteral}{"{}MCWaveFunction::alloc (this = "{}} << \textcolor{keyword}{this} << \textcolor{stringliteral}{"{})"{}} << std::endl;}
+\DoxyCodeLine{124 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126     \textcolor{keywordflow}{if} (reference().nC == 4 and not this-\/>FourCompNoPair) }
+\DoxyCodeLine{127       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}NYI for Four Component without NoPair Approximation"{}});}
+\DoxyCodeLine{128     }
+\DoxyCodeLine{129     \textcolor{keywordtype}{size\_t} NS     = this-\/>NStates;}
+\DoxyCodeLine{130     \textcolor{keywordtype}{size\_t} NDet   = this-\/>NDet;}
+\DoxyCodeLine{131     \textcolor{keywordtype}{size\_t} nCorrO = this-\/>MOPartition.nCorrO;}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133     CIVecs = std::vector<MatsT*>(NS);}
+\DoxyCodeLine{134     oneRDM.reserve(NS);}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     \textcolor{keywordflow}{if} (MOPartition.scheme == \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855ae5cf53c1e4b7d40256d436ef0b515aac}{CAS}}) \{}
+\DoxyCodeLine{137       ciBuilder = std::make\_shared<CASCI<MatsT,IntsT>>();}
+\DoxyCodeLine{138     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (MOPartition.scheme == \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855a0df50d487b9483d2a3f3cb45d81e2ae7}{RAS}}) \{}
+\DoxyCodeLine{139       ciBuilder = std::make\_shared<RASCI<MatsT,IntsT>>();}
+\DoxyCodeLine{140     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{141       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}();}
+\DoxyCodeLine{142     \}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{145       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < NS; i++) \{}
+\DoxyCodeLine{146         CIVecs[i] = this-\/>memManager.template malloc<MatsT>(NDet);}
+\DoxyCodeLine{147         oneRDM.emplace\_back(\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}(this-\/>memManager, nCorrO)); }
+\DoxyCodeLine{148       \}}
+\DoxyCodeLine{149     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{150       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Not enough Memory to allocate CIVector for the specified number of determiants"{}});}
+\DoxyCodeLine{151     \}}
+\DoxyCodeLine{152   }
+\DoxyCodeLine{153     \textcolor{comment}{// computing list for detstring }}
+\DoxyCodeLine{154     std::cout << std::endl;}
+\DoxyCodeLine{155     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout, \textcolor{stringliteral}{"{}Compute Excitation List(s) ..."{}});}
+\DoxyCodeLine{156     \textcolor{keywordflow}{if} (detStr)     detStr-\/>computeList();  }
+\DoxyCodeLine{157     \textcolor{keywordflow}{if} (detStrBeta) detStrBeta-\/>computeList();  }
+\DoxyCodeLine{158     std::cout << std::endl;}
+\DoxyCodeLine{159   }
+\DoxyCodeLine{160   \}; \textcolor{comment}{// MCWaveFunction<T>::alloc}}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{165   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{166   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a23002fe6341d08665594d2629e91c9a4}{MCWaveFunction<MatsT,IntsT>::dealloc}}() \{}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168 \textcolor{preprocessor}{\#ifdef DEBUG\_MULTISTATEWFN\_IMPL}}
+\DoxyCodeLine{169     std::cout << \textcolor{stringliteral}{"{}MCWaveFunction::dealloc (this = "{}} << \textcolor{keyword}{this} << \textcolor{stringliteral}{"{})"{}} << std::endl;}
+\DoxyCodeLine{170 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172     oneRDM.clear();}
+\DoxyCodeLine{173     ciBuilder  = \textcolor{keyword}{nullptr};    }
+\DoxyCodeLine{174     \mbox{\hyperlink{mcwavefunction_2impl_8hpp_a1e370bb5aedf5bd7a147100fe6ecd4d0}{MCWaveFunction\_COLLECTIVE\_OP}}(\mbox{\hyperlink{util_2preprocessor_8hpp_acf54d98998d38d6d08032d8fac98372e}{DEALLOC\_OP\_5}}, \mbox{\hyperlink{util_2preprocessor_8hpp_ac15adf6fab41311940cc863b96947b57}{DEALLOC\_VEC\_OP\_5}});}
+\DoxyCodeLine{175     }
+\DoxyCodeLine{176   \}; \textcolor{comment}{// MCWaveFunction<T>::dealloc}}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{180   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_ab55737cc5e5196937814f00d328ffa8f}{MCWaveFunction<MatsT,IntsT>::saveCurrentStates}}() \{}
+\DoxyCodeLine{181   }
+\DoxyCodeLine{182     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm); }
+\DoxyCodeLine{183   }
+\DoxyCodeLine{184     \textcolor{comment}{// Checkpoint if file exists}}
+\DoxyCodeLine{185     \textcolor{keywordflow}{if}( savFile.exists() ) \{}
+\DoxyCodeLine{186       }
+\DoxyCodeLine{187       \textcolor{keywordtype}{size\_t} NS = this-\/>NStates;}
+\DoxyCodeLine{188       savFile.safeWriteData(\textcolor{stringliteral}{"{}MCWFN/NSTATES"{}}, \&NS, \{1\});}
+\DoxyCodeLine{189       savFile.safeWriteData(\textcolor{stringliteral}{"{}MCWFN/INACT\_ENERGY"{}}, \&(this-\/>InactEnergy), \{1\});}
+\DoxyCodeLine{190       savFile.safeWriteData(\textcolor{stringliteral}{"{}MCWFN/STATE\_ENERGY"{}}, this-\/>StateEnergy.data(), \{NS\}); }
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192       \textcolor{keyword}{auto} \& mopart = this-\/>MOPartition;}
+\DoxyCodeLine{193       savFile.safeWriteData(\textcolor{stringliteral}{"{}MCWFN/ORB\_INDEX"{}}, \& (mopart.orbIndices[0]),\{mopart.nMO\});}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195       \textcolor{comment}{// Save oscillator strength}}
+\DoxyCodeLine{196       \textcolor{keywordflow}{if}(NosS1) \{}
+\DoxyCodeLine{197         savFile.safeWriteData(\textcolor{stringliteral}{"{}MCWFN/OSC\_STR"{}}, osc\_str, \{NosS1, NS\});      }
+\DoxyCodeLine{198       \}}
+\DoxyCodeLine{199     \}  }
+\DoxyCodeLine{200   }
+\DoxyCodeLine{201   \}; \textcolor{comment}{// MCWaveFunction<T>::saveCuurentStates}}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205 \textcolor{comment}{// Other headers}}
+\DoxyCodeLine{206 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcwavefunction_2base_2impl_8hpp}{mcwavefunction/base/impl.hpp}}>} \textcolor{comment}{// base implementation}}
+\DoxyCodeLine{207 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{detstringmanager_2impl_8hpp}{detstringmanager/impl.hpp}}>}   \textcolor{comment}{// detstringmanager implementaion}}
+\DoxyCodeLine{208 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{moints_8hpp}{mcwavefunction/moints.hpp}}>}    \textcolor{comment}{// MO integral transformation}}
+\DoxyCodeLine{209 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcwavefunction_2print_8hpp}{mcwavefunction/print.hpp}}>}     \textcolor{comment}{// print implementaion}}
+\DoxyCodeLine{210 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{property_8hpp}{mcwavefunction/property.hpp}}>}  \textcolor{comment}{// property implementation}}
+\DoxyCodeLine{211 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcwavefunction_2rdm_8hpp}{mcwavefunction/rdm.hpp}}>}       \textcolor{comment}{// density matrix}}
+\DoxyCodeLine{212 }
+
+\end{DoxyCode}

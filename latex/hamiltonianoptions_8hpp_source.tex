@@ -1,0 +1,106 @@
+\hypertarget{hamiltonianoptions_8hpp_source}{}\doxysection{hamiltonianoptions.\+hpp}
+\label{hamiltonianoptions_8hpp_source}\index{include/hamiltonianoptions.hpp@{include/hamiltonianoptions.hpp}}
+\mbox{\hyperlink{hamiltonianoptions_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{basisset_8hpp}{basisset.hpp}}>}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{particleintegrals_8hpp}{particleintegrals.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_a7fb1136cb62a99b101afecdf069d56e1}{KineticBalance}} \{\mbox{\hyperlink{namespaceChronusQ_a7fb1136cb62a99b101afecdf069d56e1aae904489bad387b02f7770d9299397fd}{RKBPauli}}, \mbox{\hyperlink{namespaceChronusQ_a7fb1136cb62a99b101afecdf069d56e1aca181335943dbfff8261d872e4f5d925}{RKBSpinor}}, \mbox{\hyperlink{namespaceChronusQ_a7fb1136cb62a99b101afecdf069d56e1ac8c8c896c3c0763db611caaa67a6ae05}{UKBScalar}}\};}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33   \textcolor{keyword}{enum class} \mbox{\hyperlink{namespaceChronusQ_a21b3794fd5bb9c06a835af7bdbbfa845}{X2C\_TYPE}} \{\mbox{\hyperlink{namespaceChronusQ_a21b3794fd5bb9c06a835af7bdbbfa845a88559a0cfd8250c9d65970cc145c92d4}{OFF}}, \mbox{\hyperlink{namespaceChronusQ_a21b3794fd5bb9c06a835af7bdbbfa845a217fcc10219f786c0ded5313ff587d06}{ONEE}}, \mbox{\hyperlink{namespaceChronusQ_a21b3794fd5bb9c06a835af7bdbbfa845a0b2f61e6730761458726e72e2956410c}{TWOE}}, \mbox{\hyperlink{namespaceChronusQ_a21b3794fd5bb9c06a835af7bdbbfa845aa957848d7db1138a7b40f57d9f0a8311}{FOCK}}\};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1ATOMIC__X2C__TYPE}{ATOMIC\_X2C\_TYPE}} \{}
+\DoxyCodeLine{36     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1ATOMIC__X2C__TYPE_ab1fe8968fdfbe8de1c307cc8ee882e42}{isolateAtom}};  }
+\DoxyCodeLine{37     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1ATOMIC__X2C__TYPE_a3b51f360e2bd465cc7d896fea7c655dd}{diagonalOnly}}; }
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     std::string \mbox{\hyperlink{structChronusQ_1_1ATOMIC__X2C__TYPE_ad87261fb5d4b186439483e630f05c37f}{toString}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{40       \textcolor{keywordflow}{if} (\mbox{\hyperlink{structChronusQ_1_1ATOMIC__X2C__TYPE_ab1fe8968fdfbe8de1c307cc8ee882e42}{isolateAtom}}) \{}
+\DoxyCodeLine{41         \textcolor{keywordflow}{if} (\mbox{\hyperlink{structChronusQ_1_1ATOMIC__X2C__TYPE_a3b51f360e2bd465cc7d896fea7c655dd}{diagonalOnly}})}
+\DoxyCodeLine{42           \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}ALH"{}};}
+\DoxyCodeLine{43         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{44           \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}ALU"{}};}
+\DoxyCodeLine{45       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{46         \textcolor{keywordflow}{if} (\mbox{\hyperlink{structChronusQ_1_1ATOMIC__X2C__TYPE_a3b51f360e2bd465cc7d896fea7c655dd}{diagonalOnly}})}
+\DoxyCodeLine{47           \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}DLH"{}};}
+\DoxyCodeLine{48         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{49           \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}DLU"{}};}
+\DoxyCodeLine{50       \}}
+\DoxyCodeLine{51     \}}
+\DoxyCodeLine{52   \};}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{57   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}} \{}
+\DoxyCodeLine{58     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1Particle_aac8b44e2392d5d5ccdee6b5963561683}{charge}} = -\/1.0; \textcolor{comment}{// particle charge}}
+\DoxyCodeLine{59     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1Particle_a39be1c35403b3f09ad0148ff31a18973}{mass}} = 1.0;    \textcolor{comment}{// particle mass}}
+\DoxyCodeLine{60   \};}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} \{}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{comment}{// Number of components}}
+\DoxyCodeLine{66 \textcolor{comment}{//    size\_t nComponents = 1; // 1, 2, or 4}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     \textcolor{comment}{// Time-\/reversal symmetry}}
+\DoxyCodeLine{69     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a3ad352f437fd959224f4afaae9a7c405}{KramersSymmetry}} = \textcolor{keyword}{false}; \textcolor{comment}{// Whether or not to use the Kramers' symmetry}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{comment}{// Integral Options}}
+\DoxyCodeLine{72     \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86}{BASIS\_FUNCTION\_TYPE}} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a16ea984e2af234724f3f3bb5b788ac1e}{basisType}} = \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86a9ae4d9d27a920589d9d4e4f718799a83}{REAL\_GTO}}; \textcolor{comment}{//GTO or GIAO}}
+\DoxyCodeLine{73     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a432b38315c583dab85d49c7b506a6b0b}{finiteWidthNuc}} = \textcolor{keyword}{false}; \textcolor{comment}{// Use finite nuclei in integral evaluations}}
+\DoxyCodeLine{74     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a866c61de43c70758e0f1a6929827ac4d}{Libcint}} = \textcolor{keyword}{false}; \textcolor{comment}{// Use Libcint library instead of Libint}}
+\DoxyCodeLine{75     \mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a47613325ad178432fb34e14bac03d206}{particle}}; \textcolor{comment}{// Particle type}}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77     \textcolor{comment}{// One-\/Component Options}}
+\DoxyCodeLine{78     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a43bd4910d83e017249a2a603d4e92f44}{PerturbativeScalarRelativity}} = \textcolor{keyword}{false}; \textcolor{comment}{// Add perturbative scalar relativity}}
+\DoxyCodeLine{79     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a9a7266ab60c50c722adb353cc7e3039f}{PerturbativeSpinOrbit}} = \textcolor{keyword}{false}; \textcolor{comment}{// Add perturbative spin-\/orbit}}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{comment}{// Two-\/Component Options}}
+\DoxyCodeLine{82     \mbox{\hyperlink{namespaceChronusQ_a21b3794fd5bb9c06a835af7bdbbfa845}{X2C\_TYPE}} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a16706953ca801da34b58509ceba0b333}{x2cType}} = \mbox{\hyperlink{namespaceChronusQ_a21b3794fd5bb9c06a835af7bdbbfa845a88559a0cfd8250c9d65970cc145c92d4}{X2C\_TYPE::OFF}}; \textcolor{comment}{//Type of X2C}}
+\DoxyCodeLine{83     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a183319f87f1106e4cc6345b9c0015d04}{OneEScalarRelativity}} = \textcolor{keyword}{true}; \textcolor{comment}{//scalar relativity}}
+\DoxyCodeLine{84     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_ae844f3a0c1130959297f483e282b65eb}{OneESpinOrbit}} = \textcolor{keyword}{true}; \textcolor{comment}{//spin-\/orbit relativity}}
+\DoxyCodeLine{85     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_af3ba7b3acfd9589084e9a647089796dc}{Boettger}} = \textcolor{keyword}{true}; \textcolor{comment}{// Use Boetteger factor to scale one-\/electron spin-\/orbit}}
+\DoxyCodeLine{86     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_ab5da97cd949216e8f5dc951da508b617}{AtomicMeanField}} = \textcolor{keyword}{false}; \textcolor{comment}{// Use atomic mean field two-\/electron spin-\/orbit}}
+\DoxyCodeLine{87     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1AtomicX2C}{AtomicX2C}} = \textcolor{keyword}{false}; \textcolor{comment}{// Use atomic X2C}}
+\DoxyCodeLine{88     \mbox{\hyperlink{structChronusQ_1_1ATOMIC__X2C__TYPE}{ATOMIC\_X2C\_TYPE}} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_acf92d31cb8e2f84302e2b678939cc7e7}{AtomicX2CType}}; \textcolor{comment}{// The type of atomic X2C}}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90     \textcolor{comment}{// Four-\/Component Options}}
+\DoxyCodeLine{91     \mbox{\hyperlink{namespaceChronusQ_a7fb1136cb62a99b101afecdf069d56e1}{KineticBalance}} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_ae8e8319f50225be68b0c15b09cdacffc}{kineticBalance}} = \mbox{\hyperlink{namespaceChronusQ_a7fb1136cb62a99b101afecdf069d56e1aae904489bad387b02f7770d9299397fd}{RKBPauli}}; \textcolor{comment}{// Choose the kinetic-\/balance condition; currently, only RKBPauli is implemented}}
+\DoxyCodeLine{92     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a0d5a18a3fabbb50ab503380c599c1b91}{BareCoulomb}} = \textcolor{keyword}{true}; \textcolor{comment}{// Do bare Coulomb only in Restricted-\/Kinetic balance (RKB)}}
+\DoxyCodeLine{93     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_aad60a13d42b60f4c5e4e9a22cc436da0}{DiracCoulomb}} = \textcolor{keyword}{true}; \textcolor{comment}{// Dirac-\/Coulomb without SSSS}}
+\DoxyCodeLine{94     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a6d83762dc96dc0bb5df252e18f105b42}{DiracCoulombSSSS}} = \textcolor{keyword}{false}; \textcolor{comment}{// SSSS to Dirac-\/Coulomb}}
+\DoxyCodeLine{95     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a312c6169880a73167a357f387b6c76e6}{Gaunt}} = \textcolor{keyword}{false}; \textcolor{comment}{// Gaunt}}
+\DoxyCodeLine{96     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a4a5c0851b9968ed8998ca03d3d258fd4}{Gauge}} = \textcolor{keyword}{false}; \textcolor{comment}{// Gauge}}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98   \}; \textcolor{comment}{// struct HamiltonianOptions}}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100   std::ostream\& \mbox{\hyperlink{namespaceChronusQ_ae965bd42e60432c83cec45044f21655a}{operator<<}}(std::ostream\&, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\&);}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{103 }
+
+\end{DoxyCode}

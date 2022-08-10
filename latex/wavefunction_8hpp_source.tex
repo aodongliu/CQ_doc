@@ -1,0 +1,153 @@
+\hypertarget{wavefunction_8hpp_source}{}\doxysection{wavefunction.\+hpp}
+\label{wavefunction_8hpp_source}\index{include/wavefunction.hpp@{include/wavefunction.hpp}}
+\mbox{\hyperlink{wavefunction_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2quantum_8hpp}{quantum.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <wavefunction/base.hpp>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{integrals_8hpp}{integrals.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrix_8hpp}{matrix.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{comment}{// Debug print triggered by Quantum}}
+\DoxyCodeLine{33   }
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#ifdef \_QuantumDebug}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{  \#define \_WaveFunctionDebug}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 }
+\DoxyCodeLine{49   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{50   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1WaveFunction}{WaveFunction}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{WaveFunctionBase}}, \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}}<MatsT> \{}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU, \textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{53     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1WaveFunction}{WaveFunction}};}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{comment}{// Useful typedefs}}
+\DoxyCodeLine{58     \textcolor{keyword}{typedef} MatsT*               \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a0e9955ae35f4bc1103272f87f57ac1bf}{oper\_t}};}
+\DoxyCodeLine{59     \textcolor{keyword}{typedef} std::vector<oper\_t>  \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8d91cc636c98a0c2581b8a5f4402425a}{oper\_t\_coll}};}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61   \textcolor{keyword}{public}:}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals<IntsT>}} \&\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a34841f96cd1e2bcdc2d3857db3d26163}{aoints}}; }
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{comment}{// Operator storage}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{72     std::vector<SquareMatrix<MatsT>> \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}};}
+\DoxyCodeLine{73     \textcolor{keywordtype}{double}* \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a5d8efa6559700f8211961900a557f358}{eps1}}; }
+\DoxyCodeLine{74     \textcolor{keywordtype}{double}* \mbox{\hyperlink{classChronusQ_1_1WaveFunction_abbdbd414b7588dc41663f1f37753d247}{eps2}}; }
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{comment}{// Disable default constructor}}
+\DoxyCodeLine{79     \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a7ee879cdfdf39416d6495eb138d8fd11}{WaveFunction}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{88     \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a9b8d55b6c1c6269faa74ef1da7eb4d19}{WaveFunction}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis,}
+\DoxyCodeLine{89                  \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals<IntsT>}} \&aoi, \textcolor{keywordtype}{size\_t} \_nC, \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}}, \mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}} p = \{-\/1.0,1.0\}) :}
+\DoxyCodeLine{90       \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6ed15d36d43fc3433f83c6a6a42a53a5}{QuantumBase}}(c, mem,\_nC,\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}},p),}
+\DoxyCodeLine{91       \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_ada0abbf37712e3a7c831f5a23ba7f1db}{WaveFunctionBase}}(c, mem, mol, basis,\_nC,\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}},p),}
+\DoxyCodeLine{92       \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum<MatsT>}}(c, mem,\_nC,\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}},p,basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}}),}
+\DoxyCodeLine{93       \textcolor{comment}{//molecule\_(mol), basisSet\_(basis), }}
+\DoxyCodeLine{94       \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a5d8efa6559700f8211961900a557f358}{eps1}}(\textcolor{keyword}{nullptr}), \mbox{\hyperlink{classChronusQ_1_1WaveFunction_abbdbd414b7588dc41663f1f37753d247}{eps2}}(\textcolor{keyword}{nullptr}), \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a34841f96cd1e2bcdc2d3857db3d26163}{aoints}}(aoi) \{}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96       \textcolor{comment}{// Compute meta data}}
+\DoxyCodeLine{97       \textcolor{keywordtype}{size\_t} nBasis = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99       \textcolor{keywordflow}{if} (p.charge < 0.) \{}
+\DoxyCodeLine{100         this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5ce0ca36b5a2d3f8d75a623cb53aa3c0}{nO}} = \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a3c3a239def5283368e93e9012c0a2cff}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_a0b0f8ac42552b3431549b613c65fbe27}{nTotalE}};}
+\DoxyCodeLine{101         this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_ac01f49f00e6cfe1ccf9c5ec08c3a6cbe}{nV}} = 2*nBasis -\/ \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5ce0ca36b5a2d3f8d75a623cb53aa3c0}{nO}};}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103         \textcolor{keywordflow}{if}( this-\/>iCS ) \{}
+\DoxyCodeLine{104           this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a34b0db62d517413e7bfb351eb3d69346}{nOA}} = this-\/>nO / 2; this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5de78fe4379af80569e1ed50e7881584}{nOB}} = this-\/>nO / 2;}
+\DoxyCodeLine{105           this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_af34bb3176b580c3092c0d06fc58a0d58}{nVA}} = this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_ac01f49f00e6cfe1ccf9c5ec08c3a6cbe}{nV}} / 2; this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a0c19916ec88a138e1d0f1c994016da0f}{nVB}} = this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_ac01f49f00e6cfe1ccf9c5ec08c3a6cbe}{nV}} / 2;}
+\DoxyCodeLine{106         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{107           \textcolor{keywordtype}{size\_t} nSingleE = \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a3c3a239def5283368e93e9012c0a2cff}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_a147b1e0e8f84252442e16c9f9bf0205c}{multip}} -\/ 1;}
+\DoxyCodeLine{108           this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5de78fe4379af80569e1ed50e7881584}{nOB}} = (this-\/>nO -\/ nSingleE) / 2;}
+\DoxyCodeLine{109           this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a34b0db62d517413e7bfb351eb3d69346}{nOA}} = this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5de78fe4379af80569e1ed50e7881584}{nOB}} + nSingleE;}
+\DoxyCodeLine{110           this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_af34bb3176b580c3092c0d06fc58a0d58}{nVA}} = nBasis -\/ this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a34b0db62d517413e7bfb351eb3d69346}{nOA}};}
+\DoxyCodeLine{111           this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a0c19916ec88a138e1d0f1c994016da0f}{nVB}} = nBasis -\/ this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5de78fe4379af80569e1ed50e7881584}{nOB}};}
+\DoxyCodeLine{112         \}}
+\DoxyCodeLine{113       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{114          this-\/>nO = \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a3c3a239def5283368e93e9012c0a2cff}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_aa51ed3a6e7ab4fe5453057bba23f917b}{nTotalP}};}
+\DoxyCodeLine{115          this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_ac01f49f00e6cfe1ccf9c5ec08c3a6cbe}{nV}} = 2*nBasis -\/ \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5ce0ca36b5a2d3f8d75a623cb53aa3c0}{nO}};}
+\DoxyCodeLine{116  }
+\DoxyCodeLine{117          \textcolor{keywordflow}{if}( this-\/>iCS ) \{}
+\DoxyCodeLine{118            this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a34b0db62d517413e7bfb351eb3d69346}{nOA}} = this-\/>nO / 2; this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5de78fe4379af80569e1ed50e7881584}{nOB}} = this-\/>nO / 2;}
+\DoxyCodeLine{119            this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_af34bb3176b580c3092c0d06fc58a0d58}{nVA}} = this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_ac01f49f00e6cfe1ccf9c5ec08c3a6cbe}{nV}} / 2; this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a0c19916ec88a138e1d0f1c994016da0f}{nVB}} = this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_ac01f49f00e6cfe1ccf9c5ec08c3a6cbe}{nV}} / 2;}
+\DoxyCodeLine{120          \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{121            \textcolor{keywordtype}{size\_t} nSingleP = \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a3c3a239def5283368e93e9012c0a2cff}{molecule\_}}.\mbox{\hyperlink{structChronusQ_1_1Molecule_a9e16fedb1450fa9ad5dba3b4acc3450a}{multip\_proton}} -\/ 1;}
+\DoxyCodeLine{122            this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5de78fe4379af80569e1ed50e7881584}{nOB}} = (this-\/>nO -\/ nSingleP) / 2;}
+\DoxyCodeLine{123            this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a34b0db62d517413e7bfb351eb3d69346}{nOA}} = this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5de78fe4379af80569e1ed50e7881584}{nOB}} + nSingleP;}
+\DoxyCodeLine{124            this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_af34bb3176b580c3092c0d06fc58a0d58}{nVA}} = nBasis -\/ this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a34b0db62d517413e7bfb351eb3d69346}{nOA}};}
+\DoxyCodeLine{125            this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a0c19916ec88a138e1d0f1c994016da0f}{nVB}} = nBasis -\/ this-\/>\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5de78fe4379af80569e1ed50e7881584}{nOB}};}
+\DoxyCodeLine{126          \}}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128       \}}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130       \textcolor{comment}{// Allocate internal memory}}
+\DoxyCodeLine{131       \textcolor{keywordflow}{if}(nBasis != 0) \mbox{\hyperlink{classChronusQ_1_1WaveFunction_ad80fbf44e9017092a95842a3db592801}{alloc}}();}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133     \};}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135     \textcolor{comment}{// See include/wavefunction/impl.hpp for documentation }}
+\DoxyCodeLine{136     \textcolor{comment}{// on the following constructors}}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138     \textcolor{comment}{// Different type}}
+\DoxyCodeLine{139     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU> }
+\DoxyCodeLine{140       \mbox{\hyperlink{classChronusQ_1_1WaveFunction_af54d67ca7a8b00a052fbbd962f657b81}{WaveFunction}}(\textcolor{keyword}{const} WaveFunction<MatsU,IntsT> \&, \textcolor{keywordtype}{int} dummy = 0);}
+\DoxyCodeLine{141     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU> }
+\DoxyCodeLine{142       \mbox{\hyperlink{classChronusQ_1_1WaveFunction_af54d67ca7a8b00a052fbbd962f657b81}{WaveFunction}}(WaveFunction<MatsU,IntsT> \&\&     , \textcolor{keywordtype}{int} dummy = 0);}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     \textcolor{comment}{// Same type}}
+\DoxyCodeLine{145     \mbox{\hyperlink{classChronusQ_1_1WaveFunction_af54d67ca7a8b00a052fbbd962f657b81}{WaveFunction}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1WaveFunction_af54d67ca7a8b00a052fbbd962f657b81}{WaveFunction}} \&);}
+\DoxyCodeLine{146     \mbox{\hyperlink{classChronusQ_1_1WaveFunction_af54d67ca7a8b00a052fbbd962f657b81}{WaveFunction}}(\mbox{\hyperlink{classChronusQ_1_1WaveFunction_af54d67ca7a8b00a052fbbd962f657b81}{WaveFunction}} \&\&);     }
+\DoxyCodeLine{147     }
+\DoxyCodeLine{148 }
+\DoxyCodeLine{152     \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a4fd1794295ffd7d4b2ea6c7f5e2e6c81}{\string~WaveFunction}}()\{ \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a9d4f049c9096652b70de53fbfddec884}{dealloc}}(); \}}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155     \textcolor{comment}{// Deallocation (see include/wavefunction/impl.hpp for docs)}}
+\DoxyCodeLine{156     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1WaveFunction_ad80fbf44e9017092a95842a3db592801}{alloc}}();}
+\DoxyCodeLine{157     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a9d4f049c9096652b70de53fbfddec884}{dealloc}}();}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159     \textcolor{comment}{// Print Functions}}
+\DoxyCodeLine{160     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a0817d7fb38162cdba6e4350a29a5278a}{printMO}}(std::ostream\&) ;}
+\DoxyCodeLine{161     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a6d387c926ec301e02bbe12563cd75b78}{printEPS}}(std::ostream\&);}
+\DoxyCodeLine{162     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a7ba29f2396149233f97d9b4ba0eff22e}{printMOInfo}}(std::ostream\&, \textcolor{keywordtype}{size\_t} a = 0);}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164     \textcolor{comment}{// Swap Function}}
+\DoxyCodeLine{165     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a514a425760cb452c3c6e7627fd00376b}{swapMOs}}(std::vector<std::vector<std::pair<size\_t, size\_t>>>\&, \mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19d}{SpinType}} sp);}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167   \}; \textcolor{comment}{// class WaveFunction}}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{170 }
+
+\end{DoxyCode}

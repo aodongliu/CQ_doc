@@ -1,0 +1,208 @@
+\hypertarget{hcore_8hpp_source}{}\doxysection{hcore.\+hpp}
+\label{hcore_8hpp_source}\index{include/mointstransformer/hcore.hpp@{include/mointstransformer/hcore.hpp}}
+\mbox{\hyperlink{hcore_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mointstransformer_8hpp}{mointstransformer.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{33   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{34   std::shared\_ptr<SquareMatrix<MatsT>> \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_af001e2e58c0decf0035289f79a136106}{MOIntsTransformer<MatsT,IntsT>::formInactDen}}(}
+\DoxyCodeLine{35     \textcolor{keyword}{const} \textcolor{keywordtype}{char} coreIndex) \{}
+\DoxyCodeLine{36   }
+\DoxyCodeLine{37       \textcolor{keywordtype}{size\_t} nAO  = ss\_.nAlphaOrbital() * ss\_.nC;}
+\DoxyCodeLine{38       \textcolor{keyword}{auto} Den = std::make\_shared<SquareMatrix<MatsT>>(memManager\_, nAO);}
+\DoxyCodeLine{39       }
+\DoxyCodeLine{40       \textcolor{keyword}{auto} off\_size = parseMOType(coreIndex);}
+\DoxyCodeLine{41       \textcolor{keywordtype}{size\_t} ioff = off\_size.first;}
+\DoxyCodeLine{42       \textcolor{keywordtype}{size\_t} ni   = off\_size.second;}
+\DoxyCodeLine{43       }
+\DoxyCodeLine{44       \textcolor{keywordflow}{if} (ni != 0) \{}
+\DoxyCodeLine{45         blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::ConjTrans, }
+\DoxyCodeLine{46           nAO, nAO, ni, MatsT(1.), ss\_.mo[0].pointer() + ioff*nAO, nAO,}
+\DoxyCodeLine{47           ss\_.mo[0].pointer() + ioff*nAO, nAO, MatsT(0.), Den-\/>pointer(), nAO);}
+\DoxyCodeLine{48       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{49         Den-\/>clear();}
+\DoxyCodeLine{50       \}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52       \textcolor{keywordflow}{return} Den;}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54   \}; \textcolor{comment}{// form inactive core density}}
+\DoxyCodeLine{55   }
+\DoxyCodeLine{59   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{60   std::shared\_ptr<OnePInts<MatsT>> \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_afde71376ce7f36bd3c745261e1024134}{MOIntsTransformer<MatsT,IntsT>::formAOGD}}(}
+\DoxyCodeLine{61     \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \& Den, \textcolor{keywordtype}{bool} HerDen, }
+\DoxyCodeLine{62     \textcolor{keywordtype}{bool} cacheAOGD, \textcolor{keyword}{const} std::string \& cacheId) \{  }
+\DoxyCodeLine{63      }
+\DoxyCodeLine{64       std::string cacheAOGDStr = \textcolor{stringliteral}{"{}AOGD-\/"{}} + cacheId; }
+\DoxyCodeLine{65       \textcolor{keyword}{auto} AOGD = ints\_cache\_.template getIntegral<OnePInts, MatsT>(cacheAOGDStr);}
+\DoxyCodeLine{66      }
+\DoxyCodeLine{67 \textcolor{preprocessor}{\#ifdef \_DEBUG\_MOINTSTRANSFORMER\_CACHE}}
+\DoxyCodeLine{68       std::cout << \textcolor{stringliteral}{"{}AOCache = "{}} << std::setw(20) << cacheAOGDStr; }
+\DoxyCodeLine{69       \textcolor{keywordflow}{if} (AOGD) std::cout << \textcolor{stringliteral}{"{}-\/-\/-\/-\/Find cache!!!"{}} << std::endl;}
+\DoxyCodeLine{70       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{71         std::cout << \textcolor{stringliteral}{"{}-\/-\/-\/-\/Not find cache, do transformation"{}} << std::endl;}
+\DoxyCodeLine{72 \textcolor{preprocessor}{\#else       }}
+\DoxyCodeLine{73       \textcolor{keywordflow}{if} (not AOGD) \{ }
+\DoxyCodeLine{74 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{75        }
+\DoxyCodeLine{76         \textcolor{keywordtype}{size\_t} nAO  = ss\_.nAlphaOrbital() * ss\_.nC;}
+\DoxyCodeLine{77         }
+\DoxyCodeLine{78         \textcolor{comment}{// hack thru ss\_.forkbuilder-\/>formGD}}
+\DoxyCodeLine{79         \textcolor{keywordflow}{if} (ss\_.nC == 1) \{}
+\DoxyCodeLine{80           *ss\_.onePDM = \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a13968b15aa05e3a94b74ca90415e6d04}{PauliSpinorSquareMatrices<MatsT>::spinBlockScatterBuild}}(Den);}
+\DoxyCodeLine{81         \} \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{82           *ss\_.onePDM = Den.template spinScatter<MatsT>();  }
+\DoxyCodeLine{83         \}}
+\DoxyCodeLine{84            }
+\DoxyCodeLine{85         ss\_.fockBuilder-\/>formGD(ss\_, pert, \textcolor{keyword}{false}, 1.0, HerDen);}
+\DoxyCodeLine{86          }
+\DoxyCodeLine{87         \textcolor{keywordflow}{if} (ss\_.nC == 1) \{}
+\DoxyCodeLine{88           AOGD = std::make\_shared<OnePInts<MatsT>>(0.5 * ss\_.twoeH-\/>S());}
+\DoxyCodeLine{89         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{90           AOGD = std::make\_shared<OnePInts<MatsT>>(}
+\DoxyCodeLine{91             ss\_.twoeH-\/>template spinGather<MatsT>()); }
+\DoxyCodeLine{92         \}  }
+\DoxyCodeLine{93         }
+\DoxyCodeLine{94         \textcolor{keywordflow}{if} (cacheAOGD) ints\_cache\_.addIntegral(cacheAOGDStr, AOGD);}
+\DoxyCodeLine{95       \}}
+\DoxyCodeLine{96        }
+\DoxyCodeLine{97       \textcolor{keywordflow}{return} AOGD; }
+\DoxyCodeLine{98   \}; \textcolor{comment}{// MOIntsTransformer::getAOHCoreInCore}}
+\DoxyCodeLine{99   }
+\DoxyCodeLine{103   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{104   std::shared\_ptr<OnePInts<MatsT>> \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a86ada10cceb410e317a786b3a761c77c}{MOIntsTransformer<MatsT,IntsT>::formAOHCore}}(}
+\DoxyCodeLine{105     \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert, \textcolor{keywordtype}{bool} cacheAOHCore, \textcolor{keyword}{const} \textcolor{keywordtype}{char} coreIndex) \{}
+\DoxyCodeLine{106     }
+\DoxyCodeLine{107       \textcolor{keywordtype}{bool} withInactiveCore = coreIndex != \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109       std::string cacheAOHCoreStr = \textcolor{stringliteral}{"{}AOHCore"{}};}
+\DoxyCodeLine{110       \textcolor{keywordflow}{if} (withInactiveCore) \{}
+\DoxyCodeLine{111         cacheAOHCoreStr += \textcolor{stringliteral}{"{}-\/WithInactive-\/"{}};}
+\DoxyCodeLine{112         cacheAOHCoreStr += coreIndex;}
+\DoxyCodeLine{113       \}}
+\DoxyCodeLine{114       }
+\DoxyCodeLine{115       \textcolor{keyword}{auto} AOHCore = ints\_cache\_.template getIntegral<OnePInts, MatsT>(cacheAOHCoreStr);}
+\DoxyCodeLine{116        }
+\DoxyCodeLine{117 \textcolor{preprocessor}{\#ifdef \_DEBUG\_MOINTSTRANSFORMER\_CACHE}}
+\DoxyCodeLine{118       std::cout << \textcolor{stringliteral}{"{}AOCache = "{}} << std::setw(20) << cacheAOHCoreStr; }
+\DoxyCodeLine{119       \textcolor{keywordflow}{if} (AOHCore) std::cout << \textcolor{stringliteral}{"{}-\/-\/-\/-\/Find cache!!!"{}} << std::endl;}
+\DoxyCodeLine{120       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{121         std::cout << \textcolor{stringliteral}{"{}-\/-\/-\/-\/Not find cache, do transformation"{}} << std::endl;}
+\DoxyCodeLine{122 \textcolor{preprocessor}{\#else       }}
+\DoxyCodeLine{123       \textcolor{keywordflow}{if} (not AOHCore) \{}
+\DoxyCodeLine{124 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{125         }
+\DoxyCodeLine{126         AOHCore = ints\_cache\_.template getIntegral<OnePInts, MatsT>(\textcolor{stringliteral}{"{}AOHCore"{}});}
+\DoxyCodeLine{127         }
+\DoxyCodeLine{128         \textcolor{keywordflow}{if} (not AOHCore) \{}
+\DoxyCodeLine{129           \textcolor{keywordflow}{if}(ss\_.nC == 1) \{}
+\DoxyCodeLine{130             AOHCore = std::make\_shared<OnePInts<MatsT>>(0.5*ss\_.coreH-\/>S());}
+\DoxyCodeLine{131           \} \textcolor{keywordflow}{else} \{ }
+\DoxyCodeLine{132             AOHCore = std::make\_shared<OnePInts<MatsT>>(}
+\DoxyCodeLine{133               ss\_.coreH-\/>template spinGather<MatsT>());}
+\DoxyCodeLine{134           \}}
+\DoxyCodeLine{135           \textcolor{keywordflow}{if} (cacheAOHCore) ints\_cache\_.addIntegral(\textcolor{stringliteral}{"{}AOHCore"{}}, AOHCore);}
+\DoxyCodeLine{136         \}}
+\DoxyCodeLine{137         }
+\DoxyCodeLine{138         \textcolor{keywordflow}{if} (withInactiveCore) \{}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140           \textcolor{keyword}{auto} AOH1e = ints\_cache\_.template getIntegral<OnePInts, MatsT>(\textcolor{stringliteral}{"{}AOHCore"{}});}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142           \textcolor{keyword}{auto} Den = formInactDen(coreIndex);}
+\DoxyCodeLine{143           std::string cacheAOGDStr = \textcolor{stringliteral}{"{}WithInactive-\/"{}};}
+\DoxyCodeLine{144           cacheAOGDStr += coreIndex;}
+\DoxyCodeLine{145           \textcolor{keyword}{auto} AOGD = formAOGD(pert, *Den, \textcolor{keyword}{true}, \textcolor{keyword}{true}, cacheAOGDStr); }
+\DoxyCodeLine{146           \textcolor{keywordtype}{size\_t} nAO  = ss\_.nAlphaOrbital() * ss\_.nC;}
+\DoxyCodeLine{147           }
+\DoxyCodeLine{148           AOHCore = std::make\_shared<OnePInts<MatsT>>(memManager\_, nAO);}
+\DoxyCodeLine{149           AOHCore-\/>matrix() = AOGD-\/>matrix() + AOH1e-\/>matrix(); }
+\DoxyCodeLine{150           }
+\DoxyCodeLine{151           \textcolor{keywordflow}{if} (cacheAOHCore) ints\_cache\_.addIntegral(cacheAOHCoreStr, AOHCore);}
+\DoxyCodeLine{152         \}}
+\DoxyCodeLine{153       \}}
+\DoxyCodeLine{154   }
+\DoxyCodeLine{155       \textcolor{keywordflow}{return} AOHCore; }
+\DoxyCodeLine{156   \}; \textcolor{comment}{// MOIntsTransformer::getAOHCoreInCore}}
+\DoxyCodeLine{157   }
+\DoxyCodeLine{161   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{162   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a56646c9c150b89242d2e3141d1acb9be}{MOIntsTransformer<MatsT,IntsT>::subsetTransformOPI}}(}
+\DoxyCodeLine{163     \textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&off\_sizes, }
+\DoxyCodeLine{164     \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1OnePInts}{OnePInts<MatsT>}} \& AOOPI, MatsT* MOOPI, \textcolor{keywordtype}{bool} deltaPQ) \{}
+\DoxyCodeLine{165     }
+\DoxyCodeLine{166       \textcolor{keywordtype}{size\_t} nAO = ss\_.nAlphaOrbital() * ss\_.nC;}
+\DoxyCodeLine{167       \textcolor{keywordflow}{if} (not deltaPQ) \{}
+\DoxyCodeLine{168         AOOPI.\mbox{\hyperlink{classChronusQ_1_1OnePInts_a3ef37bcaef5e93b5aa48cf501bbbd85f}{subsetTransform}}(\textcolor{charliteral}{'N'}, ss\_.mo[0].pointer(), nAO, off\_sizes, MOOPI, \textcolor{keyword}{false}); }
+\DoxyCodeLine{169       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{170         }
+\DoxyCodeLine{171         \textcolor{keywordtype}{size\_t} poff = off\_sizes[0].first; }
+\DoxyCodeLine{172         \textcolor{keywordtype}{size\_t} np   = off\_sizes[0].second; }
+\DoxyCodeLine{173         MatsT * SCR = memManager\_.malloc<MatsT>(nAO); }
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} p = 0ul; p < np; p++) \{}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177           \textcolor{keyword}{auto} pMO = ss\_.mo[0].pointer() + (p + poff) * nAO;      }
+\DoxyCodeLine{178           }
+\DoxyCodeLine{179           \textcolor{comment}{// SCR(nu) = MO(mu, p)\string^H  AOHCOre(mu, nu) }}
+\DoxyCodeLine{180           blas::gemm(blas::Layout::ColMajor, blas::Op::ConjTrans, blas::Op::NoTrans, }
+\DoxyCodeLine{181             1, nAO, nAO, MatsT(1.), pMO, nAO, AOOPI.\mbox{\hyperlink{classChronusQ_1_1OnePInts_aff740553fddd7ed72197c66aaf93585c}{pointer}}(), nAO,}
+\DoxyCodeLine{182             MatsT(0.), SCR, 1); }
+\DoxyCodeLine{183             }
+\DoxyCodeLine{184           \textcolor{comment}{// MOTPI(p,p) = SCR(nu) MO(nu, p)}}
+\DoxyCodeLine{185           MOOPI[p] = blas::dotu(nAO, SCR, 1, pMO, 1);}
+\DoxyCodeLine{186         \}}
+\DoxyCodeLine{187         memManager\_.free(SCR);}
+\DoxyCodeLine{188       \} }
+\DoxyCodeLine{189   }
+\DoxyCodeLine{190   \}; \textcolor{comment}{// MOIntsTransformer::subsetTransformOPI}}
+\DoxyCodeLine{191   }
+\DoxyCodeLine{192   }
+\DoxyCodeLine{196   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{197   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a363d1ee66be87b3896f5c31c123507bc}{MOIntsTransformer<MatsT,IntsT>::subsetTransformHCore}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert,}
+\DoxyCodeLine{198     \textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&off\_sizes, MatsT* MOHCore,}
+\DoxyCodeLine{199     \textcolor{keywordtype}{bool} deltaPQ, \textcolor{keyword}{const} \textcolor{keywordtype}{char} coreIndex) \{}
+\DoxyCodeLine{200     }
+\DoxyCodeLine{201       \textcolor{keyword}{auto} AOHCore = formAOHCore(pert, \textcolor{keyword}{true}, coreIndex);}
+\DoxyCodeLine{202       subsetTransformOPI(off\_sizes, *AOHCore, MOHCore, deltaPQ); }
+\DoxyCodeLine{203       }
+\DoxyCodeLine{204   \}; \textcolor{comment}{// MOIntsTransformer::subsetTransformHCore }}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{209   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{210   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_af3a936b38ca7efa1c05bbcca9f78493d}{MOIntsTransformer<MatsT,IntsT>::subsetTransformGD}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert,}
+\DoxyCodeLine{211     \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \& Den, \textcolor{keywordtype}{bool} HerDen, MatsT* MOGD,}
+\DoxyCodeLine{212     \textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&off\_sizes, }
+\DoxyCodeLine{213     \textcolor{keywordtype}{bool} deltaPQ, \textcolor{keywordtype}{bool} cacheAOGD, \textcolor{keyword}{const} std::string \& cacheId) \{}
+\DoxyCodeLine{214     }
+\DoxyCodeLine{215       \textcolor{keyword}{auto} AOGD = formAOGD(pert, Den, HerDen, cacheAOGD, cacheId);}
+\DoxyCodeLine{216       subsetTransformOPI(off\_sizes, *AOGD, MOGD, deltaPQ); }
+\DoxyCodeLine{217   }
+\DoxyCodeLine{218   \}; \textcolor{comment}{// MOIntsTransformer::subsetTransformAOGD }}
+\DoxyCodeLine{219 }
+\DoxyCodeLine{220 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

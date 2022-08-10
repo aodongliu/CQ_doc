@@ -1,0 +1,181 @@
+\hypertarget{mointstransformer_8hpp_source}{}\doxysection{mointstransformer.\+hpp}
+\label{mointstransformer_8hpp_source}\index{include/mointstransformer.hpp@{include/mointstransformer.hpp}}
+\mbox{\hyperlink{mointstransformer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incoreritpi_8hpp}{particleintegrals/twopints/incoreritpi.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{realtime_2fields_8hpp}{fields.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_8hpp}{singleslater.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrix_8hpp}{matrix.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcwavefunction_2base_8hpp}{mcwavefunction/base.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <type\_traits>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{comment}{// \#define \_DEBUG\_MOINTSTRANSFORMER\_CACHE}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{43   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\_TRANS\_DELTA\_TYPE}} \{}
+\DoxyCodeLine{44     \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\_KRONECKER\_DELTA}},     \textcolor{comment}{// outputs (pq|rs)}}
+\DoxyCodeLine{45     \textcolor{comment}{// Coulomb Type}}
+\DoxyCodeLine{46     \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}},     \textcolor{comment}{// outputs (pp|rs) as T(p,r,s)}}
+\DoxyCodeLine{47     \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a77e794165a2acc9091e1a10d69e64b5f}{KRONECKER\_DELTA\_RS}},     \textcolor{comment}{// outputs (pq|rr) as T(p,q,r)}}
+\DoxyCodeLine{48     \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}},  \textcolor{comment}{// outputs (pp|rr) as T(p,r)}}
+\DoxyCodeLine{49     \textcolor{comment}{// eXchange Type}}
+\DoxyCodeLine{50     \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a374916baf8a940c1e97f4edb1a1266e2}{KRONECKER\_DELTA\_PS}},     \textcolor{comment}{// outputs (pq|rp) as T(p,q,r)}}
+\DoxyCodeLine{51     \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3ab4168543d010a7d2fa10da5a1b96fdd7}{KRONECKER\_DELTA\_RQ}},     \textcolor{comment}{// outputs (pr|rs) as T(p,r,s)}}
+\DoxyCodeLine{52     \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a430294079b490936f721fce9c96540b4}{KRONECKER\_DELTA\_PS\_RQ}},  \textcolor{comment}{// outputs (pr|rp) as T(p,r)}}
+\DoxyCodeLine{53   \};}
+\DoxyCodeLine{54   }
+\DoxyCodeLine{63   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{64   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{MOIntsTransformer}} \{}
+\DoxyCodeLine{65   }
+\DoxyCodeLine{66   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a3ac9048fc6ed1d1995094428623c987e}{memManager\_}}; }
+\DoxyCodeLine{69     \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6e}{TPI\_TRANSFORMATION\_ALG}} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_aaa7ad431b415ab6fc89b767020b09f99}{TPITransAlg\_}};}
+\DoxyCodeLine{70     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \& \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a38f5aa7f6ca8b79517bf8fc0510656ad}{ss\_}};}
+\DoxyCodeLine{71     }
+\DoxyCodeLine{72     \textcolor{comment}{// storage of cache integral intermidates}}
+\DoxyCodeLine{73     \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{IntegralsCollection}} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a34c4bde20c6ca97324da7e64ceb7ca00}{ints\_cache\_}} = \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{IntegralsCollection}}(); }
+\DoxyCodeLine{74     }
+\DoxyCodeLine{75     \textcolor{comment}{// variables for moints type}}
+\DoxyCodeLine{76     std::vector<std::set<char>> \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ad0a6c41f57f2cbfa60dc7fe43b56a2db}{symbol\_sets\_}};}
+\DoxyCodeLine{77     std::vector<std::pair<size\_t, size\_t>> \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_accf73c478efc3401136f94350b0fcd38}{mo\_ranges\_}};}
+\DoxyCodeLine{78     }
+\DoxyCodeLine{79   \textcolor{keyword}{public}:}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{82     \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a87c476facbb2df55eadf6b350beacad6}{MOIntsTransformer}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{83     \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ac5750a13c80bf574dfbac96bb0820f04}{MOIntsTransformer}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{MOIntsTransformer}} \& ) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{84     \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a14e7389b732d4ced10f885fed98157d2}{MOIntsTransformer}}( \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{MOIntsTransformer}} \&\& ) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{85     }
+\DoxyCodeLine{95     \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_aaa8700ca46fdb190c6444ca9d5764fc5}{MOIntsTransformer}}( \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \& ss,}
+\DoxyCodeLine{96       \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6e}{TPI\_TRANSFORMATION\_ALG}} alg = \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea8b867f203314c3678405cb4c1217c24c}{DIRECT\_N6}}): \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a3ac9048fc6ed1d1995094428623c987e}{memManager\_}}(mem), }
+\DoxyCodeLine{97       \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a38f5aa7f6ca8b79517bf8fc0510656ad}{ss\_}}(ss), \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_aaa7ad431b415ab6fc89b767020b09f99}{TPITransAlg\_}}(alg) \{}
+\DoxyCodeLine{98         }
+\DoxyCodeLine{99         \textcolor{keywordflow}{if} (ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 4 and alg == \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea36b82d7f3d298fd8d0bb7c867d0b932a}{INCORE\_N5}}) \{}
+\DoxyCodeLine{100           \textcolor{keyword}{auto} \& hamiltonianOptions = ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a089ade292c642e182e74eef492fa6c80}{fockBuilder}}-\/>getHamiltonianOptions();}
+\DoxyCodeLine{101           \textcolor{keywordflow}{if} (hamiltonianOptions.Gaunt or}
+\DoxyCodeLine{102               hamiltonianOptions.DiracCoulombSSSS or }
+\DoxyCodeLine{103               hamiltonianOptions.Gauge) }
+\DoxyCodeLine{104           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}MOIntsTransformer for above Hamiltonian Options is NYI !"{}});}
+\DoxyCodeLine{105         \}}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107         \textcolor{keywordflow}{if} (alg == \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea9eb1f7e40eeaf05988e1ebd4d046fbc8}{DIRECT\_N5}}) \{}
+\DoxyCodeLine{108           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}DIRECT N5 MOIntsTransformer NYI !"{}});   }
+\DoxyCodeLine{109         \}}
+\DoxyCodeLine{110         }
+\DoxyCodeLine{111         \textcolor{comment}{// set default MO ranges as single slater}}
+\DoxyCodeLine{112         \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ac535ffe051f398de687f0709a03134ee}{setMORanges}}();}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114     \};}
+\DoxyCodeLine{115     }
+\DoxyCodeLine{116     \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a90815b3dc241efe426ce254461c9e6a9}{\string~MOIntsTransformer}}() \{ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ae25e40442169d457fab552830d651972}{clearAllCache}}(); \};}
+\DoxyCodeLine{117     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ae25e40442169d457fab552830d651972}{clearAllCache}}() \{ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a34c4bde20c6ca97324da7e64ceb7ca00}{ints\_cache\_}}.\mbox{\hyperlink{structChronusQ_1_1IntegralsCollection_a4face37fb35af532a8557345100c0316}{clear}}(); \};}
+\DoxyCodeLine{118     }
+\DoxyCodeLine{119     \textcolor{comment}{/* }}
+\DoxyCodeLine{120 \textcolor{comment}{     * helper functions to handles MO ranges through}}
+\DoxyCodeLine{121 \textcolor{comment}{     *   a map of index char sets with \{offset, N\}}}
+\DoxyCodeLine{122 \textcolor{comment}{     */}}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124     \textcolor{comment}{// setters }}
+\DoxyCodeLine{125     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a892df42539ac3983f7cadf75e7c7a47c}{resetMORanges}}() \{}
+\DoxyCodeLine{126         \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ad0a6c41f57f2cbfa60dc7fe43b56a2db}{symbol\_sets\_}}.clear();}
+\DoxyCodeLine{127         \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_accf73c478efc3401136f94350b0fcd38}{mo\_ranges\_}}.clear();}
+\DoxyCodeLine{128     \};}
+\DoxyCodeLine{129     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a8a3923450bdb64d2e6d133e284a3178d}{addMORanges}}(\textcolor{keyword}{const} std::set<char> \&, \textcolor{keyword}{const} std::pair<size\_t, size\_t> \&);}
+\DoxyCodeLine{130     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ac535ffe051f398de687f0709a03134ee}{setMORanges}}(\textcolor{keywordtype}{size\_t} nFrozenCore = 0, \textcolor{keywordtype}{size\_t} nFrozenVirt = 0);  }
+\DoxyCodeLine{131     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ac535ffe051f398de687f0709a03134ee}{setMORanges}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWaveFunctionBase}} \& ); \textcolor{comment}{// for MCWavefunction }}
+\DoxyCodeLine{132     }
+\DoxyCodeLine{133     \textcolor{comment}{// parsers}}
+\DoxyCodeLine{134     std::pair<size\_t,size\_t> \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ae293bbbb891eb7cc881ebba92aa7b73a}{parseMOType}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char});}
+\DoxyCodeLine{135     std::vector<std::pair<size\_t,size\_t>> \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ae293bbbb891eb7cc881ebba92aa7b73a}{parseMOType}}(\textcolor{keyword}{const} std::string \&);}
+\DoxyCodeLine{136     \textcolor{keywordtype}{char} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_afd7354aefaffa69920e5652296b3054a}{getUniqueSymbol}}(\textcolor{keywordtype}{char} type);}
+\DoxyCodeLine{137     }
+\DoxyCodeLine{138     \textcolor{comment}{// printers}}
+\DoxyCodeLine{139     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a7446f49cd3fe3c6340f3a580e8086038}{printOffSizes}}(\textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&);}
+\DoxyCodeLine{140     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a6e90d9bf4a5acfe8595b27ee0f4229d7}{printMORangesSummary}}();}
+\DoxyCodeLine{141     }
+\DoxyCodeLine{147     \textcolor{comment}{// Methods to transform HCore }}
+\DoxyCodeLine{148     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a535d62f50cc37b4c1823af89d120201e}{transformHCore}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, MatsT * MOHCore, }
+\DoxyCodeLine{149       \textcolor{keyword}{const} std::string \& moType = \textcolor{stringliteral}{"{}pq"{}}, }
+\DoxyCodeLine{150       \textcolor{keywordtype}{bool} deltaPQ = \textcolor{keyword}{false}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} coreIndex = \textcolor{charliteral}{'\(\backslash\)0'});}
+\DoxyCodeLine{151     }
+\DoxyCodeLine{152     \textcolor{comment}{// Methods to transform G(D)}}
+\DoxyCodeLine{153     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ad9708d1cbbac20bcbc08df8e826a9e49}{transformGD}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \&, \textcolor{keywordtype}{bool},}
+\DoxyCodeLine{154       MatsT *, \textcolor{keyword}{const} std::string \& moType = \textcolor{stringliteral}{"{}pq"{}}, \textcolor{keywordtype}{bool} deltaPQ = \textcolor{keyword}{false}, }
+\DoxyCodeLine{155       \textcolor{keywordtype}{bool} cacheAOGD = \textcolor{keyword}{false}, \textcolor{keyword}{const} std::string \& cacheId = \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{156     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ad9708d1cbbac20bcbc08df8e826a9e49}{transformGD}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, \textcolor{keyword}{const} \textcolor{keywordtype}{char}, }
+\DoxyCodeLine{157       MatsT *, \textcolor{keyword}{const} std::string \& moType = \textcolor{stringliteral}{"{}pq"{}}, \textcolor{keywordtype}{bool} deltaPQ = \textcolor{keyword}{false}, }
+\DoxyCodeLine{158       \textcolor{keywordtype}{bool} cacheAOGD = \textcolor{keyword}{false}, \textcolor{keyword}{const} std::string \& cacheId = \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{159     }
+\DoxyCodeLine{160     \textcolor{comment}{// Methods to transform TPI }}
+\DoxyCodeLine{161     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a57e7b9313396d2fb9df538eabcd48a29}{transformTPI}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert, MatsT* MOTPI, }
+\DoxyCodeLine{162       \textcolor{keyword}{const} std::string \& moType = \textcolor{stringliteral}{"{}pqrs"{}}, }
+\DoxyCodeLine{163       \textcolor{keywordtype}{bool} cacheIntermediates = \textcolor{keyword}{true}, \textcolor{keywordtype}{bool} withExchange = \textcolor{keyword}{false},}
+\DoxyCodeLine{164       \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\_TRANS\_DELTA\_TYPE}} delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\_KRONECKER\_DELTA}});}
+\DoxyCodeLine{165     }
+\DoxyCodeLine{166     }
+\DoxyCodeLine{167    \textcolor{comment}{// Helper function used during transformation }}
+\DoxyCodeLine{168     std::shared\_ptr<OnePInts<MatsT>> \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a86ada10cceb410e317a786b3a761c77c}{formAOHCore}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, }
+\DoxyCodeLine{169       \textcolor{keywordtype}{bool} cacheAOHCore = \textcolor{keyword}{true}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} coreIndex = \textcolor{charliteral}{'\(\backslash\)0'});}
+\DoxyCodeLine{170     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a363d1ee66be87b3896f5c31c123507bc}{subsetTransformHCore}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, }
+\DoxyCodeLine{171       \textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&, }
+\DoxyCodeLine{172       MatsT*, \textcolor{keywordtype}{bool}, \textcolor{keyword}{const} \textcolor{keywordtype}{char} coreIndex = \textcolor{charliteral}{'\(\backslash\)0'});}
+\DoxyCodeLine{173     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a56646c9c150b89242d2e3141d1acb9be}{subsetTransformOPI}}(\textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&,}
+\DoxyCodeLine{174       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1OnePInts}{OnePInts<MatsT>}} \& AOOPI, MatsT*, \textcolor{keywordtype}{bool}); }
+\DoxyCodeLine{175     }
+\DoxyCodeLine{176     std::shared\_ptr<OnePInts<MatsT>> \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_afde71376ce7f36bd3c745261e1024134}{formAOGD}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, }
+\DoxyCodeLine{177       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \&, \textcolor{keywordtype}{bool}, \textcolor{keywordtype}{bool} cacheAOGD = \textcolor{keyword}{false}, }
+\DoxyCodeLine{178       \textcolor{keyword}{const} std::string \& cacheId = \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{179     std::shared\_ptr<SquareMatrix<MatsT>> \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_af001e2e58c0decf0035289f79a136106}{formInactDen}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} coreIndex);}
+\DoxyCodeLine{180     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_af3a936b38ca7efa1c05bbcca9f78493d}{subsetTransformGD}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, }
+\DoxyCodeLine{181       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \&, \textcolor{keywordtype}{bool}, MatsT*, }
+\DoxyCodeLine{182       \textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&, }
+\DoxyCodeLine{183       \textcolor{keywordtype}{bool}, \textcolor{keywordtype}{bool} cacheAOGD = \textcolor{keyword}{false}, \textcolor{keyword}{const} std::string \& cacheId = \textcolor{stringliteral}{"{}"{}}); }
+\DoxyCodeLine{184     }
+\DoxyCodeLine{185     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a6c6b599b2d5bd89400c82bd799236a09}{subsetTransformTPISSFockN6}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, }
+\DoxyCodeLine{186       \textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&, }
+\DoxyCodeLine{187       MatsT*, \textcolor{keyword}{const} std::string \&, \textcolor{keywordtype}{bool},}
+\DoxyCodeLine{188       \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\_TRANS\_DELTA\_TYPE}} delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\_KRONECKER\_DELTA}});}
+\DoxyCodeLine{189     }
+\DoxyCodeLine{190     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a625262d53171a0bf11da09547df8c022}{performSubsetTransformTPISSFockN6}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, }
+\DoxyCodeLine{191       \textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&, }
+\DoxyCodeLine{192       MatsT*, \textcolor{keyword}{const} std::string \&, \textcolor{keywordtype}{bool},}
+\DoxyCodeLine{193       \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\_TRANS\_DELTA\_TYPE}} delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\_KRONECKER\_DELTA}});}
+\DoxyCodeLine{194     }
+\DoxyCodeLine{195     std::shared\_ptr<InCore4indexTPI<MatsT>> \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a8503c1239011ed8f8abcd4b0a30cec87}{formAOTPIInCore}}(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{196     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a49bfdde3f720d206f76ed5e218575cee}{subsetTransformTPIInCoreN5}}(\textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&, }
+\DoxyCodeLine{197       MatsT*, \textcolor{keywordtype}{bool}, \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\_TRANS\_DELTA\_TYPE}} delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\_KRONECKER\_DELTA}});}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200   \}; \textcolor{comment}{// class MOIntsTransformer}}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

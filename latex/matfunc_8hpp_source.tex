@@ -1,0 +1,60 @@
+\hypertarget{matfunc_8hpp_source}{}\doxysection{matfunc.\+hpp}
+\label{matfunc_8hpp_source}\index{include/cqlinalg/matfunc.hpp@{include/cqlinalg/matfunc.hpp}}
+\mbox{\hyperlink{matfunc_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg__config_8hpp}{cqlinalg/cqlinalg\_config.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasext_8hpp}{cqlinalg/blasext.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{factorization_8hpp}{cqlinalg/factorization.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keyword}{template} <\textcolor{keyword}{typename} F, \textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{33   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a866ac73b4a9c17175200c3ab5169ded9}{MatDiagFunc}}(\textcolor{keyword}{const} F \&func, \textcolor{keywordtype}{size\_t} N, \_F1 *A, \textcolor{keywordtype}{size\_t} LDA, \_F2 *B,}
+\DoxyCodeLine{34                    \textcolor{keywordtype}{size\_t} LDB, CQMemManager \&mem);}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_FExp, \textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{37   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ad5166b3a8d2e2a42bcf1b477f608eb34}{MatExp}}(\textcolor{keywordtype}{char} ALG, \textcolor{keywordtype}{size\_t} N, \_FExp ALPHA, \_F1 *A, \textcolor{keywordtype}{size\_t} LDA, }
+\DoxyCodeLine{38     \_F2 *ExpA, \textcolor{keywordtype}{size\_t} LDEXPA, CQMemManager \&mem);}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2, \textcolor{keyword}{typename} \_FC>}
+\DoxyCodeLine{41   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a3394b6fdb59bf659092d3f80a5212a95}{MatSeries}}(\textcolor{keywordtype}{size\_t} NC, \textcolor{keywordtype}{size\_t} N, \_F1 *A, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, \_F2 *B,}
+\DoxyCodeLine{42     \textcolor{keywordtype}{size\_t} LDB, \_FC *C);}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \textcolor{comment}{/*}}
+\DoxyCodeLine{45 \textcolor{comment}{     * Computes the unitary Matrix Exponential (ExpA) Using Taylor Expansion}}
+\DoxyCodeLine{46 \textcolor{comment}{     * from an antisymmetric matrix (A)}}
+\DoxyCodeLine{47 \textcolor{comment}{     */}}
+\DoxyCodeLine{48   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{49   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ad5166b3a8d2e2a42bcf1b477f608eb34}{MatExp}}( \textcolor{keywordtype}{size\_t} N, MatsU *A, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}},}
+\DoxyCodeLine{50     MatsU *ExpA, \textcolor{keywordtype}{size\_t} LDEXPA, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem);}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{54 }
+
+\end{DoxyCode}

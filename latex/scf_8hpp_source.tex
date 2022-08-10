@@ -1,0 +1,712 @@
+\hypertarget{scf_8hpp_source}{}\doxysection{scf.\+hpp}
+\label{scf_8hpp_source}\index{include/singleslater/scf.hpp@{include/singleslater/scf.hpp}}
+\mbox{\hyperlink{scf_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasutil_8hpp}{cqlinalg/blasutil.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matfunc_8hpp}{cqlinalg/matfunc.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{math_8hpp}{util/math.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{40 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{41 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a9c8bed99d471546dd604fb941dfe268c}{SingleSlater<MatsT, IntsT>::saveCurrentState}}() \{}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm);}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45   \textcolor{comment}{// Checkpoint if file exists}}
+\DoxyCodeLine{46   \textcolor{keywordflow}{if}( savFile.exists() ) \{}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keywordtype}{size\_t} NB  = this-\/>nAlphaOrbital();}
+\DoxyCodeLine{49     \textcolor{keywordtype}{size\_t} NBC = this-\/>nC * NB;}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keywordtype}{size\_t} t\_hash = std::is\_same<MatsT, double>::value ? 1 : 2;}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{comment}{// Save Field type}}
+\DoxyCodeLine{54     std::string prefix = \textcolor{stringliteral}{"{}SCF/"{}};}
+\DoxyCodeLine{55     \textcolor{keywordflow}{if}( this-\/>particle.charge == 1.0 ) prefix = \textcolor{stringliteral}{"{}PROT\_"{}} + prefix;}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}FIELD\_TYPE"{}}, \&t\_hash, \{1\});}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}1PDM"{}}, *this-\/>onePDM);}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}FOCK"{}}, *fockMatrix);}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}1PDM\_ORTHO"{}}, *onePDMOrtho);}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}FOCK\_ORTHO"{}}, *fockMatrixOrtho);}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     savFile.safeWriteData(\textcolor{stringliteral}{"{}SCF/ORTHO"{}}, orthoSpinor-\/>forwardPointer()-\/>pointer(), \{NB, NB\});}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69     savFile.safeWriteData(\textcolor{stringliteral}{"{}SCF/ORTHO\_INV"{}}, orthoSpinor-\/>backwardPointer()-\/>pointer(), \{NB, NB\});}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{comment}{// Save MOs}}
+\DoxyCodeLine{72     savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}MO1"{}}, this-\/>mo[0].pointer(), \{NBC, NBC\});}
+\DoxyCodeLine{73     \textcolor{keywordflow}{if}( this-\/>nC == 1 and not this-\/>iCS ) savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}MO2"{}}, this-\/>mo[1].pointer(), \{NBC, NBC\});}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \textcolor{comment}{// Save Energies}}
+\DoxyCodeLine{76     savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}TOTAL\_ENERGY"{}}, \&this-\/>totalEnergy, \{1\});}
+\DoxyCodeLine{77     savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}ONE\_BODY\_ENERGY"{}}, \&this-\/>OBEnergy, \{1\});}
+\DoxyCodeLine{78     savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}MANY\_BODY\_ENERGY"{}}, \&this-\/>MBEnergy, \{1\});}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{comment}{// Save Multipoles}}
+\DoxyCodeLine{81     savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}LEN\_ELECTRIC\_DIPOLE"{}}, \&this-\/>elecDipole[0], \{3\});}
+\DoxyCodeLine{82     savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}LEN\_ELECTRIC\_QUADRUPOLE"{}}, \&this-\/>elecQuadrupole[0][0], \{3, 3\});}
+\DoxyCodeLine{83     savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}LEN\_ELECTRIC\_OCTUPOLE"{}}, \&this-\/>elecOctupole[0][0][0], \{3, 3, 3\});}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     \textcolor{comment}{// Save Spin}}
+\DoxyCodeLine{86     savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}S\_EXPECT"{}}, \&this-\/>SExpect[0], \{3\});}
+\DoxyCodeLine{87     savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}S\_SQUARED"{}}, \&this-\/>SSq, \{1\});}
+\DoxyCodeLine{88   \}}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90 \};   \textcolor{comment}{// SingleSlater<MatsT>::saveCurrentState()}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{93   \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a45fc6ff0462842c3180d60532f202a4d}{SingleSlater<MatsT, IntsT>::checkStability}}() \{}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     \textcolor{keywordtype}{double} W;}
+\DoxyCodeLine{96     MatsT* J;}
+\DoxyCodeLine{97     std::tie(W,J) = this-\/>getStab();}
+\DoxyCodeLine{98     std::cout << \textcolor{stringliteral}{"{}  * LOWEST STABILITY EIGENVALUE "{}} << }
+\DoxyCodeLine{99       std::scientific << W << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101     \textcolor{keywordflow}{if}( W < 0. and std::abs(W) > 1e-\/08 )}
+\DoxyCodeLine{102       std::cout << \textcolor{stringliteral}{"{}  * LOWEST STABILITY EIGENVALUE NEGATIVE: "{}} }
+\DoxyCodeLine{103         << \textcolor{stringliteral}{"{}PERFORMING THOULESS ROTATION\(\backslash\)n"{}};}
+\DoxyCodeLine{104     \textcolor{keywordflow}{else} \{ }
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106       std::cout << \textcolor{stringliteral}{"{}  * LOWEST STABILITY EIGENVALUE POSITIVE: "{}} }
+\DoxyCodeLine{107         << \textcolor{stringliteral}{"{}WAVE FUNCTION 2nd ORDER STABLE\(\backslash\)n"{}};}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109       this-\/>memManager.free(J); \textcolor{keywordflow}{return} \textcolor{keyword}{true}; }
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     \}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NB   = this-\/>nAlphaOrbital();}
+\DoxyCodeLine{114     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NB2  = NB * NB;}
+\DoxyCodeLine{115     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NBC  = nC * NB;}
+\DoxyCodeLine{116     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NBC2 = NBC * NBC;}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NO    = (nC == 2) ? this-\/>nO : this-\/>nOA;}
+\DoxyCodeLine{119     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NV    = (nC == 2) ? this-\/>nV : this-\/>nVA;}
+\DoxyCodeLine{120     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} nOAVA = this-\/>nOA * this-\/>nVA;}
+\DoxyCodeLine{121     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} nOBVB = this-\/>nOB * this-\/>nVB;}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124     MatsT* ROT    = this-\/>memManager.template malloc<MatsT>(NBC2);}
+\DoxyCodeLine{125     MatsT* EXPROT = this-\/>memManager.template malloc<MatsT>(NBC2);}
+\DoxyCodeLine{126     std::fill\_n(ROT,NBC2,0.);}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul, ai = 0ul; i < NO;  i++)}
+\DoxyCodeLine{129     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} a = NO;            a < NBC; a++, ai++) \{}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131       ROT[a + i*NBC] =  J[ai];}
+\DoxyCodeLine{132       ROT[i + a*NBC] = -\/\mbox{\hyperlink{namespaceChronusQ_afe3e41cf782d225ede67d9450e48aa34}{SmartConj}}(J[ai]);}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134     \}      }
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     \textcolor{comment}{// FIXME: need to generalize MatExp to take non-\/hermetian and real}}
+\DoxyCodeLine{137     \textcolor{comment}{// matricies}}
+\DoxyCodeLine{138     \textcolor{comment}{//MatExp('D',NBC,T(-\/1.),ROT,NBC,EXPROT,NBC,this-\/>memManager);}}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140     \textcolor{comment}{// Taylor}}
+\DoxyCodeLine{141     MatsT s = 1.;}
+\DoxyCodeLine{142     std::copy\_n(ROT,NBC2,EXPROT); \textcolor{comment}{// n = 1}}
+\DoxyCodeLine{143     blas::scal(NBC2,-\/s,EXPROT,1);}
+\DoxyCodeLine{144     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0; j < NBC; j++) EXPROT[j*(NBC+1)] += 1.; \textcolor{comment}{// n = 0}}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146     MatsT* SCR  = this-\/>memManager.template malloc<MatsT>(NBC2);}
+\DoxyCodeLine{147     MatsT* SCR2 = this-\/>memManager.template malloc<MatsT>(NBC2);}
+\DoxyCodeLine{148     std::copy\_n(ROT,NBC2,SCR);}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150     \textcolor{keywordtype}{size\_t} tayMax = 30; }
+\DoxyCodeLine{151     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} n = 2; n <= tayMax; n++) \{}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153       MatsT* \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{154       \textcolor{keywordflow}{if}( n \% 2 ) \{}
+\DoxyCodeLine{155         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NBC,NBC,NBC,MatsT(1.),ROT,NBC,SCR2,NBC,MatsT(0.),SCR,NBC);}
+\DoxyCodeLine{156         \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}} = SCR;}
+\DoxyCodeLine{157       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{158         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NBC,NBC,NBC,MatsT(1.),ROT,NBC,SCR,NBC,MatsT(0.),SCR2,NBC);}
+\DoxyCodeLine{159         \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}} = SCR2;}
+\DoxyCodeLine{160       \}}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162       MatsT fact = std::pow(-\/s,n)/\mbox{\hyperlink{namespaceChronusQ_ac2574f5e65c048097af09cd0dbb3a593}{factorial}}(n);}
+\DoxyCodeLine{163       \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'N'},\textcolor{charliteral}{'N'},NBC,NBC,MatsT(1.),EXPROT,NBC,fact,\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},NBC,}
+\DoxyCodeLine{164         EXPROT,NBC);}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166     \}}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168     \textcolor{comment}{/*}}
+\DoxyCodeLine{169 \textcolor{comment}{    blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,NBC,NBC,NBC,T(1.),EXPROT,NBC,EXPROT,NBC,T(0.),SCR,NBC);}}
+\DoxyCodeLine{170 \textcolor{comment}{   // prettyPrintSmart(std::cerr,"{}ROT"{},ROT,NBC,NBC,NBC);}}
+\DoxyCodeLine{171 \textcolor{comment}{   // prettyPrintSmart(std::cerr,"{}EXPROT"{},EXPROT,NBC,NBC,NBC);}}
+\DoxyCodeLine{172 \textcolor{comment}{    prettyPrintSmart(std::cout,"{}SCR"{},SCR,NBC,NBC,NBC);}}
+\DoxyCodeLine{173 \textcolor{comment}{   // CErr();}}
+\DoxyCodeLine{174 \textcolor{comment}{   */}}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177     \textcolor{comment}{// MO1 = MO1 * EXPROT}}
+\DoxyCodeLine{178     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NBC,NBC,NBC,MatsT(1.),this-\/>mo[0].pointer(),NBC,EXPROT,NBC,MatsT(0.),}
+\DoxyCodeLine{179       ROT,NBC);}
+\DoxyCodeLine{180     std::copy\_n(ROT,NBC2,this-\/>mo[0].pointer());}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185     orthoAOMO();}
+\DoxyCodeLine{186     this-\/>formDensity();}
+\DoxyCodeLine{187     this-\/>memManager.free(J,ROT,EXPROT);}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191   \}}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193   }
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196 }
+\DoxyCodeLine{205   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{206   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a1728e00117bbe12c682ef6579d50cc04}{SingleSlater<MatsT,IntsT>::diagOrthoFock}}() \{}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm); }
+\DoxyCodeLine{209     \textcolor{keywordtype}{size\_t} NB = this-\/>nAlphaOrbital() * nC;}
+\DoxyCodeLine{210     \textcolor{keywordtype}{size\_t} NB2 = NB*NB;}
+\DoxyCodeLine{211     \textcolor{keywordtype}{bool} iRO = (std::dynamic\_pointer\_cast<ROFock<MatsT,IntsT>>(fockBuilder) != \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214     \textcolor{comment}{// Copy over the fockMatrixOrtho into MO storage}}
+\DoxyCodeLine{215     \textcolor{keywordflow}{if}(nC == 1 and iCS) }
+\DoxyCodeLine{216       this-\/>mo = fockMatrixOrtho-\/>template spinGatherToBlocks<MatsT>(\textcolor{keyword}{false},\textcolor{keyword}{false});}
+\DoxyCodeLine{217     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(iRO)}
+\DoxyCodeLine{218       this-\/>mo[0] = fockMatrixOrtho-\/>S();}
+\DoxyCodeLine{219     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(nC == 1)}
+\DoxyCodeLine{220       this-\/>mo = fockMatrixOrtho-\/>template spinGatherToBlocks<MatsT>(\textcolor{keyword}{false});}
+\DoxyCodeLine{221     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{222       this-\/>mo[0] = fockMatrixOrtho-\/>template spinGather<MatsT>();}
+\DoxyCodeLine{223     \}}
+\DoxyCodeLine{224 }
+\DoxyCodeLine{225     \textcolor{comment}{// Diagonalize the Fock Matrix}}
+\DoxyCodeLine{226     \textcolor{keywordtype}{int} INFO = \mbox{\hyperlink{namespaceChronusQ_a1153a882d53ef1052da6ede1f8fba24b}{HermetianEigen}}(\textcolor{charliteral}{'V'}, \textcolor{charliteral}{'L'}, NB, this-\/>mo[0].pointer(), NB, this-\/>eps1,}
+\DoxyCodeLine{227       memManager );}
+\DoxyCodeLine{228     \textcolor{keywordflow}{if}( INFO != 0 ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}HermetianEigen failed in Fock1"{}},std::cout);}
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230     \textcolor{keywordflow}{if}(iRO) \{}
+\DoxyCodeLine{231       this-\/>mo[1] = this-\/>mo[0]; \textcolor{comment}{// for ROHF}}
+\DoxyCodeLine{232       std::copy\_n(this-\/>eps1, NB, this-\/>eps2);}
+\DoxyCodeLine{233     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(nC == 1 and not iCS) \{}
+\DoxyCodeLine{234       INFO = \mbox{\hyperlink{namespaceChronusQ_a1153a882d53ef1052da6ede1f8fba24b}{HermetianEigen}}(\textcolor{charliteral}{'V'}, \textcolor{charliteral}{'L'}, NB, this-\/>mo[1].pointer(), NB, this-\/>eps2,}
+\DoxyCodeLine{235         memManager );}
+\DoxyCodeLine{236       \textcolor{keywordflow}{if}( INFO != 0 ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}HermetianEigen failed in Fock2"{}},std::cout);}
+\DoxyCodeLine{237     \}}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{240     printMO(std::cout);}
+\DoxyCodeLine{241 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243 \};   \textcolor{comment}{// SingleSlater<MatsT>::diagOrthoFock}}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{253 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{254 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_af3f0290638b5c84ea6689ea1e9c01cd3}{SingleSlater<MatsT, IntsT>::diagAOFock}}() \{}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256   \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm);}
+\DoxyCodeLine{257   \textcolor{keywordtype}{size\_t} NB  = this-\/>nAlphaOrbital() * nC;}
+\DoxyCodeLine{258   \textcolor{keywordtype}{size\_t} NB2 = NB * NB;}
+\DoxyCodeLine{259   \textcolor{keywordtype}{bool} iRO   = (std::dynamic\_pointer\_cast<ROFock<MatsT, IntsT>>(fockBuilder) != \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{260 }
+\DoxyCodeLine{261   \textcolor{comment}{// Copy over the fockMatrix into MO storage}}
+\DoxyCodeLine{262   \textcolor{keywordflow}{if}( nC == 1 and iCS )}
+\DoxyCodeLine{263     this-\/>mo = fockMatrix-\/>template spinGatherToBlocks<MatsT>(\textcolor{keyword}{false}, \textcolor{keyword}{false});}
+\DoxyCodeLine{264   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( iRO )}
+\DoxyCodeLine{265     this-\/>mo[0] = fockMatrix-\/>S();}
+\DoxyCodeLine{266   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( nC == 1 )}
+\DoxyCodeLine{267     this-\/>mo = fockMatrix-\/>template spinGatherToBlocks<MatsT>(\textcolor{keyword}{false});}
+\DoxyCodeLine{268   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{269     this-\/>mo[0] = fockMatrix-\/>template spinGather<MatsT>();}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout, \textcolor{stringliteral}{"{}AO Fock"{}}, this-\/>mo[0].pointer(), NB, NB, NB);}
+\DoxyCodeLine{272   \}}
+\DoxyCodeLine{273 }
+\DoxyCodeLine{274   \textcolor{comment}{// Diagonalize the Fock Matrix}}
+\DoxyCodeLine{275   \textcolor{keywordtype}{int} INFO = \mbox{\hyperlink{namespaceChronusQ_a1153a882d53ef1052da6ede1f8fba24b}{HermetianEigen}}(\textcolor{charliteral}{'V'}, \textcolor{charliteral}{'L'}, NB, this-\/>mo[0].pointer(), NB, this-\/>eps1, memManager);}
+\DoxyCodeLine{276   \textcolor{keywordflow}{if}( INFO != 0 ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}HermetianEigen failed in Fock1"{}}, std::cout);}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278   \textcolor{keywordflow}{if}( iRO ) \{}
+\DoxyCodeLine{279     this-\/>mo[1] = this-\/>mo[0];   \textcolor{comment}{// for ROHF}}
+\DoxyCodeLine{280     std::copy\_n(this-\/>eps1, NB, this-\/>eps2);}
+\DoxyCodeLine{281   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( nC == 1 and not iCS ) \{}
+\DoxyCodeLine{282     INFO = \mbox{\hyperlink{namespaceChronusQ_a1153a882d53ef1052da6ede1f8fba24b}{HermetianEigen}}(\textcolor{charliteral}{'V'}, \textcolor{charliteral}{'L'}, NB, this-\/>mo[1].pointer(), NB, this-\/>eps2, memManager);}
+\DoxyCodeLine{283     \textcolor{keywordflow}{if}( INFO != 0 ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}HermetianEigen failed in Fock2"{}}, std::cout);}
+\DoxyCodeLine{284   \}}
+\DoxyCodeLine{285 }
+\DoxyCodeLine{286 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{287     printMO(std::cout);}
+\DoxyCodeLine{288 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290 \};   \textcolor{comment}{// SingleSlater<MatsT>::diagOrthoFock}}
+\DoxyCodeLine{291 }
+\DoxyCodeLine{298 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{299 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_afae92faab20e49148202b152ffccdc61}{SingleSlater<MatsT, IntsT>::ao2orthoFock}}() \{}
+\DoxyCodeLine{300 }
+\DoxyCodeLine{301   \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm);}
+\DoxyCodeLine{302 }
+\DoxyCodeLine{303   *fockMatrixOrtho = orthoSpinor-\/>nonortho2ortho(*fockMatrix);}
+\DoxyCodeLine{304 }
+\DoxyCodeLine{305 \};   \textcolor{comment}{// SingleSlater<MatsT>::ao2orthoFock}}
+\DoxyCodeLine{306 }
+\DoxyCodeLine{313 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{314 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_abf6a809d2ba66674702c98014eed99ee}{SingleSlater<MatsT, IntsT>::ao2orthoDen}}() \{}
+\DoxyCodeLine{315 }
+\DoxyCodeLine{316   \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm);}
+\DoxyCodeLine{317 }
+\DoxyCodeLine{318   \textcolor{comment}{// NOTE: Density transforms the opposite way as operators, same as the coeffs}}
+\DoxyCodeLine{319   *onePDMOrtho = orthoSpinor-\/>ortho2nonortho(*this-\/>onePDM);}
+\DoxyCodeLine{320 }
+\DoxyCodeLine{321 \};   \textcolor{comment}{// SingleSlater<MatsT>::ao2orthoFock}}
+\DoxyCodeLine{322 }
+\DoxyCodeLine{329 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{330 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a6265d1b4ee885c4a5738a80a832eb4bd}{SingleSlater<MatsT, IntsT>::ortho2aoDen}}() \{}
+\DoxyCodeLine{331 }
+\DoxyCodeLine{332   \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm);}
+\DoxyCodeLine{333 }
+\DoxyCodeLine{334   \textcolor{comment}{// NOTE: Density transforms the opposite way as operators, same as the coeffs}}
+\DoxyCodeLine{335   *this-\/>onePDM = orthoSpinor-\/>nonortho2ortho(*onePDMOrtho);}
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{338     print1PDMOrtho(std::cout);}
+\DoxyCodeLine{339 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{340 }
+\DoxyCodeLine{341 \};   \textcolor{comment}{// SingleSlater<MatsT>::ao2orthoFock}}
+\DoxyCodeLine{342 }
+\DoxyCodeLine{343 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{344 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ae53e12f0e3b1ccd5ce30ab1d4fcf539c}{SingleSlater<MatsT, IntsT>::ortho2aoMOs}}() \{}
+\DoxyCodeLine{345 }
+\DoxyCodeLine{346   \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm) == 0 )}
+\DoxyCodeLine{347     orthoAB-\/>ortho2nonorthoCoeffs(this-\/>mo);}
+\DoxyCodeLine{348 }
+\DoxyCodeLine{349 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{350 }
+\DoxyCodeLine{351   \textcolor{comment}{// Broadcast the updated MOs to all MPI processes}}
+\DoxyCodeLine{352   \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm) > 1 ) \{}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354       std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering the AO-\/MOs ***\(\backslash\)n"{}};}
+\DoxyCodeLine{355       \textcolor{keywordtype}{size\_t} Nmo = this-\/>mo[0].dimension();}
+\DoxyCodeLine{356       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(this-\/>mo[0].pointer(),Nmo*Nmo,0,comm);}
+\DoxyCodeLine{357       \textcolor{keywordflow}{if}( nC == 1 and not iCS )}
+\DoxyCodeLine{358         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(this-\/>mo[1].pointer(),Nmo*Nmo,0,comm);}
+\DoxyCodeLine{359 }
+\DoxyCodeLine{360       std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering EPS ***\(\backslash\)n"{}};}
+\DoxyCodeLine{361       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(this-\/>eps1,Nmo,0,comm);}
+\DoxyCodeLine{362       \textcolor{keywordflow}{if}( nC == 1 and not iCS )}
+\DoxyCodeLine{363         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(this-\/>eps2,Nmo,0,comm);}
+\DoxyCodeLine{364 }
+\DoxyCodeLine{365       std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering FOCK ***\(\backslash\)n"{}};}
+\DoxyCodeLine{366       \textcolor{keywordtype}{size\_t} fockDim = fockMatrix-\/>dimension();}
+\DoxyCodeLine{367       \textcolor{keywordflow}{for}(MatsT *mat : fockMatrix-\/>SZYXPointers())}
+\DoxyCodeLine{368         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(mat,fockDim*fockDim,0,comm);}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370     \}}
+\DoxyCodeLine{371 }
+\DoxyCodeLine{372 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{373 }
+\DoxyCodeLine{374   MOFOCK();   \textcolor{comment}{// Form the MO fock matrix}}
+\DoxyCodeLine{375 }
+\DoxyCodeLine{376 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{377     \textcolor{comment}{// Check proper orthonormalized wrt overlap}}
+\DoxyCodeLine{378 }
+\DoxyCodeLine{379     \textcolor{keywordtype}{size\_t} NB = basisSet().nBasis;}
+\DoxyCodeLine{380     MatsT* SCR2 = this-\/>memManager.template malloc<MatsT>(this-\/>nC*this-\/>nC*NB*NB);}
+\DoxyCodeLine{381     MatsT* SCR3 = this-\/>memManager.template malloc<MatsT>(this-\/>nC*this-\/>nC*NB*NB);}
+\DoxyCodeLine{382 }
+\DoxyCodeLine{383 }
+\DoxyCodeLine{384     \textcolor{comment}{// MO1 inner product}}
+\DoxyCodeLine{385     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,this-\/>nC*NB,NB,T(1.),this-\/>aoints.overlap,NB,}
+\DoxyCodeLine{386       this-\/>mo[0].pointer(),this-\/>nC*NB,T(0.),SCR2,this-\/>nC*NB);}
+\DoxyCodeLine{387     \textcolor{keywordflow}{if}(this-\/>nC == 2)}
+\DoxyCodeLine{388       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,this-\/>nC*NB,NB,T(1.),this-\/>aoints.overlap,NB,}
+\DoxyCodeLine{389         this-\/>mo[0].pointer()+NB,this-\/>nC*NB,T(0.),SCR2+NB,this-\/>nC*NB);}
+\DoxyCodeLine{390    }
+\DoxyCodeLine{391     blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,this-\/>nC*NB,this-\/>nC*NB,this-\/>nC*NB,T(1.),this-\/>mo[0].pointer(),}
+\DoxyCodeLine{392       this-\/>nC*NB,SCR2,this-\/>nC*NB,T(0.),SCR3,this-\/>nC*NB);}
+\DoxyCodeLine{393 }
+\DoxyCodeLine{394     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < this-\/>nC*NB; i++)}
+\DoxyCodeLine{395       SCR3[i*(this-\/>nC*NB + 1)] -\/= 1.;}
+\DoxyCodeLine{396 }
+\DoxyCodeLine{397 }
+\DoxyCodeLine{398     std::cerr << \textcolor{stringliteral}{"{}Error in orthonormazation of MO1 = "{}} }
+\DoxyCodeLine{399       << lapack::lange(lapack::Norm::Fro,this-\/>nC*NB,this-\/>nC*NB,SCR3,this-\/>nC*NB)}
+\DoxyCodeLine{400       << std::endl;}
+\DoxyCodeLine{401              }
+\DoxyCodeLine{402 }
+\DoxyCodeLine{403 }
+\DoxyCodeLine{404     \textcolor{keywordflow}{if}(this-\/>nC == 1 and not this-\/>iCS) \{}
+\DoxyCodeLine{405       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,T(1.),this-\/>aoints.overlap,NB,this-\/>mo[1].pointer(),NB,T(0.),SCR2,NB);}
+\DoxyCodeLine{406       blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,NB,NB,NB,T(1.),this-\/>mo[1].pointer(),NB,SCR2,NB,T(0.),SCR3,NB);}
+\DoxyCodeLine{407 }
+\DoxyCodeLine{408       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < this-\/>nC*NB; i++)}
+\DoxyCodeLine{409         SCR3[i*(this-\/>nC*NB + 1)] -\/= 1.;}
+\DoxyCodeLine{410 }
+\DoxyCodeLine{411       std::cerr << \textcolor{stringliteral}{"{}Error in orthonormazation of MO2 = "{}} }
+\DoxyCodeLine{412         << lapack::lange(lapack::Norm::Fro,NB,NB,SCR3,NB) << std::endl;}
+\DoxyCodeLine{413     \}}
+\DoxyCodeLine{414 }
+\DoxyCodeLine{415     this-\/>memManager.free(SCR2,SCR3);}
+\DoxyCodeLine{416 }
+\DoxyCodeLine{417 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{418 }
+\DoxyCodeLine{419 \};   \textcolor{comment}{// SingleSlater<MatsT>::ortho2aoMOs}}
+\DoxyCodeLine{420 }
+\DoxyCodeLine{421 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{422 std::vector<NRRotOptions> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a0cfa807c8a2f7496ed831cd438269380}{SingleSlater<MatsT,IntsT>::buildRotOpt}}()\{}
+\DoxyCodeLine{423 }
+\DoxyCodeLine{424     \textcolor{comment}{// Generate NRRotationOptions}}
+\DoxyCodeLine{425     std::vector<NRRotOptions> rotOpt;}
+\DoxyCodeLine{426     \textcolor{keywordtype}{size\_t} NB = this-\/>nC*this-\/>basisSet().nBasis;}
+\DoxyCodeLine{427     \textcolor{keywordflow}{if}( this-\/>nC == 1 and this-\/>iCS )\{}
+\DoxyCodeLine{428       rotOpt.emplace\_back();}
+\DoxyCodeLine{429       rotOpt[0].spaceIndex = 0;}
+\DoxyCodeLine{430       rotOpt[0].rotIndices = \mbox{\hyperlink{namespaceChronusQ_ac7ea9cf3c239097184f48433d8ca2701}{ssNRRotIndices}}(this-\/>nOA, NB);}
+\DoxyCodeLine{431     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( this-\/>nC == 1 ) \{}
+\DoxyCodeLine{432       rotOpt.emplace\_back();}
+\DoxyCodeLine{433       rotOpt[0].spaceIndex = 0;}
+\DoxyCodeLine{434       rotOpt[0].rotIndices = \mbox{\hyperlink{namespaceChronusQ_ac7ea9cf3c239097184f48433d8ca2701}{ssNRRotIndices}}(this-\/>nOA, NB);}
+\DoxyCodeLine{435       rotOpt.emplace\_back();}
+\DoxyCodeLine{436       rotOpt[1].spaceIndex = 1;}
+\DoxyCodeLine{437       rotOpt[1].rotIndices = \mbox{\hyperlink{namespaceChronusQ_ac7ea9cf3c239097184f48433d8ca2701}{ssNRRotIndices}}(this-\/>nOB, NB);}
+\DoxyCodeLine{438     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( this-\/>nC == 2 )\{}
+\DoxyCodeLine{439       rotOpt.emplace\_back();}
+\DoxyCodeLine{440       rotOpt[0].spaceIndex = 0;}
+\DoxyCodeLine{441       rotOpt[0].rotIndices = \mbox{\hyperlink{namespaceChronusQ_ac7ea9cf3c239097184f48433d8ca2701}{ssNRRotIndices}}(this-\/>nO, NB);}
+\DoxyCodeLine{442     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( this-\/>nC == 4 )\{}
+\DoxyCodeLine{443       \textcolor{keywordtype}{size\_t} N = NB/2;}
+\DoxyCodeLine{444       rotOpt.emplace\_back();}
+\DoxyCodeLine{445       rotOpt[0].spaceIndex = 0;}
+\DoxyCodeLine{446       rotOpt[0].rotIndices = \mbox{\hyperlink{namespaceChronusQ_ac7ea9cf3c239097184f48433d8ca2701}{ssNRRotIndices}}(this-\/>nO, N, N); \textcolor{comment}{// only rotate the positive energy orbitals}}
+\DoxyCodeLine{447     \}}
+\DoxyCodeLine{448     \textcolor{keywordflow}{return} rotOpt;}
+\DoxyCodeLine{449 \}}
+\DoxyCodeLine{450 }
+\DoxyCodeLine{451 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{452 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ae28c8bb18975bd6917fcb1fdfadec440}{SingleSlater<MatsT, IntsT>::runModifyOrbitals}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert) \{}
+\DoxyCodeLine{453 }
+\DoxyCodeLine{454   \textcolor{keywordtype}{bool} iRO = (std::dynamic\_pointer\_cast<ROFock<MatsT, IntsT>>(this-\/>fockBuilder) != \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{455 }
+\DoxyCodeLine{456   \textcolor{comment}{// Initialize properties}}
+\DoxyCodeLine{457   \textcolor{keywordflow}{if}( not std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1SkipSCF}{SkipSCF<MatsT>}}>(this-\/>\mbox{\hyperlink{compositeSCF_8hpp_aa1b9cef53fedcd1b2b085bce117ae948}{modifyOrbitals}}) ) \mbox{\hyperlink{namespaceChronusQ_a3acaa28fc32531f8292672cf3e259b45}{getNewOrbitals}}();}
+\DoxyCodeLine{458   this-\/>computeProperties(pert);}
+\DoxyCodeLine{459 }
+\DoxyCodeLine{460   \textcolor{comment}{// Setup MO reference vector}}
+\DoxyCodeLine{461   std::vector<std::reference\_wrapper<SquareMatrix<MatsT>>> moRefs;}
+\DoxyCodeLine{462   \textcolor{keywordflow}{if}( iRO ) \{}
+\DoxyCodeLine{463     moRefs.emplace\_back(this-\/>mo[0]);}
+\DoxyCodeLine{464   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{465     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& m : this-\/>mo )}
+\DoxyCodeLine{466       moRefs.emplace\_back(m);}
+\DoxyCodeLine{467   \}}
+\DoxyCodeLine{468 }
+\DoxyCodeLine{469   \textcolor{comment}{// Setup Eigenvalue vector}}
+\DoxyCodeLine{470   std::vector<double*> epsVec;}
+\DoxyCodeLine{471   \textcolor{keywordflow}{if}( this-\/>nC == 1 and not(iCS or iRO) ) \{}
+\DoxyCodeLine{472     epsVec = \{this-\/>eps1, this-\/>eps2\};}
+\DoxyCodeLine{473   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{474     epsVec = \{this-\/>eps1\};}
+\DoxyCodeLine{475   \}}
+\DoxyCodeLine{476 }
+\DoxyCodeLine{477   \textcolor{comment}{// Run modify orbitals}}
+\DoxyCodeLine{478   this-\/>\mbox{\hyperlink{compositeSCF_8hpp_aa1b9cef53fedcd1b2b085bce117ae948}{modifyOrbitals}}-\/>runModifyOrbitals(pert, moRefs, epsVec);}
+\DoxyCodeLine{479 }
+\DoxyCodeLine{480   \textcolor{comment}{// Orthogonalize MO's for NewtonRaphsonSCF and check Stability}}
+\DoxyCodeLine{481   \textcolor{keywordflow}{if}( std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF}{NewtonRaphsonSCF<MatsT>}}>(this-\/>\mbox{\hyperlink{compositeSCF_8hpp_aa1b9cef53fedcd1b2b085bce117ae948}{modifyOrbitals}}) )\{}
+\DoxyCodeLine{482     this-\/>orthoAOMO();}
+\DoxyCodeLine{483     \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nrAlg == \mbox{\hyperlink{namespaceChronusQ_aff61a7e23880290b032e2c98a656e364a4944c03dee302f6afc592e826e970ba8}{FULL\_NR}} )\{}
+\DoxyCodeLine{484       \textcolor{keywordtype}{bool} converged = this-\/>checkStability();}
+\DoxyCodeLine{485       \textcolor{keywordflow}{if}( not converged ) \{}
+\DoxyCodeLine{486         this-\/>\mbox{\hyperlink{compositeSCF_8hpp_aa1b9cef53fedcd1b2b085bce117ae948}{modifyOrbitals}}-\/>runModifyOrbitals(pert, moRefs, epsVec);}
+\DoxyCodeLine{487         this-\/>orthoAOMO();}
+\DoxyCodeLine{488         converged = this-\/>checkStability();}
+\DoxyCodeLine{489         \textcolor{keywordflow}{if}( not converged ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Newton-\/Raphson SCF failed to converge to a minimum"{}});}
+\DoxyCodeLine{490       \}}
+\DoxyCodeLine{491     \}}
+\DoxyCodeLine{492   \}}
+\DoxyCodeLine{493 }
+\DoxyCodeLine{494   this-\/>ao2orthoFock();   \textcolor{comment}{// SCF Does not update the fockMatrixOrtho}}
+\DoxyCodeLine{495   this-\/>MOFOCK();}
+\DoxyCodeLine{496   saveCurrentState();}
+\DoxyCodeLine{497 }
+\DoxyCodeLine{498 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{499 }
+\DoxyCodeLine{500   \textcolor{comment}{// Broadcast the updated MOs to all MPI processes}}
+\DoxyCodeLine{501   \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm) > 1 ) \{}
+\DoxyCodeLine{502 }
+\DoxyCodeLine{503       std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering the AO-\/MOs ***\(\backslash\)n"{}};}
+\DoxyCodeLine{504       \textcolor{keywordtype}{size\_t} Nmo = this-\/>mo[0].dimension();}
+\DoxyCodeLine{505       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(this-\/>mo[0].pointer(),Nmo*Nmo,0,comm);}
+\DoxyCodeLine{506       \textcolor{keywordflow}{if}( nC == 1 and not iCS )}
+\DoxyCodeLine{507         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(this-\/>mo[1].pointer(),Nmo*Nmo,0,comm);}
+\DoxyCodeLine{508 }
+\DoxyCodeLine{509       std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering EPS ***\(\backslash\)n"{}};}
+\DoxyCodeLine{510       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(this-\/>eps1,Nmo,0,comm);}
+\DoxyCodeLine{511       \textcolor{keywordflow}{if}( nC == 1 and not iCS )}
+\DoxyCodeLine{512         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(this-\/>eps2,Nmo,0,comm);}
+\DoxyCodeLine{513 }
+\DoxyCodeLine{514       std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering FOCK ***\(\backslash\)n"{}};}
+\DoxyCodeLine{515       \textcolor{keywordtype}{size\_t} fockDim = fockMatrix-\/>dimension();}
+\DoxyCodeLine{516       \textcolor{keywordflow}{for}(MatsT *mat : fockMatrix-\/>SZYXPointers())}
+\DoxyCodeLine{517         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(mat,fockDim*fockDim,0,comm);}
+\DoxyCodeLine{518 }
+\DoxyCodeLine{519       std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering the 1PDM ***\(\backslash\)n"{}};}
+\DoxyCodeLine{520       \textcolor{keywordtype}{size\_t} denDim = this-\/>onePDM-\/>dimension();}
+\DoxyCodeLine{521       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} p : this-\/>onePDM-\/>SZYXPointers())}
+\DoxyCodeLine{522         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(p,denDim*denDim,0,comm);}
+\DoxyCodeLine{523     \}}
+\DoxyCodeLine{524 }
+\DoxyCodeLine{525 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{526 \};   \textcolor{comment}{// SingleSlater<MatsT,IntsT> :: runModifyOrbitals}}
+\DoxyCodeLine{527 }
+\DoxyCodeLine{528 \textcolor{comment}{/*}}
+\DoxyCodeLine{529 \textcolor{comment}{ *     Brief: Function to generate shared pointers to Fock Matrix for modify orbitals}}
+\DoxyCodeLine{530 \textcolor{comment}{ *            Here, the ModifyOrbitals object cannot modify the fockMatrix in SingleSlater}}
+\DoxyCodeLine{531 \textcolor{comment}{ *            since they are temporary objects. Additionally, the interface assumes the}}
+\DoxyCodeLine{532 \textcolor{comment}{ *            matrices are spin gathered.}}
+\DoxyCodeLine{533 \textcolor{comment}{ */}}
+\DoxyCodeLine{534 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{535 std::vector<std::shared\_ptr<SquareMatrix<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7556734bf28f7aebe4aa0248082b2247}{SingleSlater<MatsT, IntsT>::getFock}}() \{}
+\DoxyCodeLine{536 }
+\DoxyCodeLine{537   \textcolor{keywordtype}{bool} iRO = (std::dynamic\_pointer\_cast<ROFock<MatsT, IntsT>>(fockBuilder) != \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{538   \textcolor{keywordflow}{if}( this-\/>nC == 1 and iCS ) \{}
+\DoxyCodeLine{539     \textcolor{keywordflow}{return} \{std::make\_shared<SquareMatrix<MatsT>>(MatsT(0.5) * fockMatrix-\/>S())\};}
+\DoxyCodeLine{540   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( this-\/>nC == 1 and iRO ) \{}
+\DoxyCodeLine{541     \textcolor{keywordflow}{return} \{std::make\_shared<SquareMatrix<MatsT>>(MatsT(1.) * fockMatrix-\/>S())\};}
+\DoxyCodeLine{542   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( this-\/>nC == 1 ) \{}
+\DoxyCodeLine{543     std::shared\_ptr<SquareMatrix<MatsT>> fA = std::make\_shared<SquareMatrix<MatsT>>(}
+\DoxyCodeLine{544                     MatsT(0.5) * fockMatrix-\/>S() + MatsT(0.5) * fockMatrix-\/>Z()}
+\DoxyCodeLine{545                 );}
+\DoxyCodeLine{546     std::shared\_ptr<SquareMatrix<MatsT>> fB = std::make\_shared<SquareMatrix<MatsT>>(}
+\DoxyCodeLine{547                     MatsT(0.5) * fockMatrix-\/>S() -\/ MatsT(0.5) * fockMatrix-\/>Z()}
+\DoxyCodeLine{548                 );}
+\DoxyCodeLine{549     \textcolor{keywordflow}{return} \{fA, fB\};}
+\DoxyCodeLine{550   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{551     \textcolor{keywordflow}{return} \{std::make\_shared<SquareMatrix<MatsT>>(fockMatrix-\/>template spinGather<MatsT>())\};}
+\DoxyCodeLine{552   \}}
+\DoxyCodeLine{553 \};   \textcolor{comment}{// SingleSlater<MatsT,IntsT> :: getFock}}
+\DoxyCodeLine{554 }
+\DoxyCodeLine{555 \textcolor{comment}{/*}}
+\DoxyCodeLine{556 \textcolor{comment}{ *     Brief: Function to generate shared pointers to Fock Matrix for modify orbitals}}
+\DoxyCodeLine{557 \textcolor{comment}{ *            Here, the ModifyOrbitals object cannot modify the fockMatrix in SingleSlater}}
+\DoxyCodeLine{558 \textcolor{comment}{ *            since they are copies of the objects. Additionally, the interface assumes the}}
+\DoxyCodeLine{559 \textcolor{comment}{ *            matrices are spin gathered.}}
+\DoxyCodeLine{560 \textcolor{comment}{ */}}
+\DoxyCodeLine{561 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{562 std::vector<std::shared\_ptr<SquareMatrix<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a80edfd2174bc34cb12ea80e7b8075a68}{SingleSlater<MatsT, IntsT>::getOnePDM}}() \{}
+\DoxyCodeLine{563 }
+\DoxyCodeLine{564   \textcolor{keywordtype}{bool} iRO = (std::dynamic\_pointer\_cast<ROFock<MatsT, IntsT>>(fockBuilder) != \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{565   \textcolor{keywordflow}{if}( this-\/>nC == 1 and iCS ) \{}
+\DoxyCodeLine{566     \textcolor{keywordflow}{return} \{std::make\_shared<SquareMatrix<MatsT>>(MatsT(0.5) * this-\/>onePDM-\/>S())\};}
+\DoxyCodeLine{567   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( this-\/>nC == 1 and iRO ) \{}
+\DoxyCodeLine{568     \textcolor{keywordflow}{return} \{std::make\_shared<SquareMatrix<MatsT>>(MatsT(0.5) * this-\/>onePDM-\/>S() + MatsT(0.5)*this-\/>onePDM-\/>Z())\};}
+\DoxyCodeLine{569   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( this-\/>nC == 1 ) \{}
+\DoxyCodeLine{570     std::shared\_ptr<SquareMatrix<MatsT>> dA = std::make\_shared<SquareMatrix<MatsT>>(}
+\DoxyCodeLine{571             MatsT(0.5) * this-\/>onePDM-\/>S() + MatsT(0.5) * this-\/>onePDM-\/>Z()}
+\DoxyCodeLine{572          );}
+\DoxyCodeLine{573     std::shared\_ptr<SquareMatrix<MatsT>> dB = std::make\_shared<SquareMatrix<MatsT>>(}
+\DoxyCodeLine{574             MatsT(0.5) * this-\/>onePDM-\/>S() -\/ MatsT(0.5) * this-\/>onePDM-\/>Z()}
+\DoxyCodeLine{575          );}
+\DoxyCodeLine{576     \textcolor{keywordflow}{return} \{dA, dB\};}
+\DoxyCodeLine{577   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{578     \textcolor{keywordflow}{return} \{std::make\_shared<SquareMatrix<MatsT>>(this-\/>onePDM-\/>template spinGather<MatsT>())\};}
+\DoxyCodeLine{579   \}}
+\DoxyCodeLine{580 \};   \textcolor{comment}{// SingleSlater<MatsT,IntsT> :: getOnePDM}}
+\DoxyCodeLine{581 }
+\DoxyCodeLine{582 \textcolor{comment}{/*}}
+\DoxyCodeLine{583 \textcolor{comment}{ *     Brief: Function to return the orthogonalization pointers for SCF}}
+\DoxyCodeLine{584 \textcolor{comment}{ *}}
+\DoxyCodeLine{585 \textcolor{comment}{ */}}
+\DoxyCodeLine{586 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{587 std::vector<std::shared\_ptr<Orthogonalization<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa333eda574020f1709e7f53123e7041a}{SingleSlater<MatsT, IntsT>::getOrtho}}() \{}
+\DoxyCodeLine{588 }
+\DoxyCodeLine{589   \textcolor{keywordtype}{bool} iRO = (std::dynamic\_pointer\_cast<ROFock<MatsT, IntsT>>(fockBuilder) != \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{590   \textcolor{keywordflow}{if}( this-\/>nC == 1 and not(iCS or iRO) ) \{}
+\DoxyCodeLine{591     \textcolor{keywordflow}{return} \{orthoAB, orthoAB\};}
+\DoxyCodeLine{592   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{593     \textcolor{keywordflow}{return} \{orthoAB\};}
+\DoxyCodeLine{594   \}}
+\DoxyCodeLine{595 \};   \textcolor{comment}{// SingleSlater<MatsT,INtsT> :: getOrtho}}
+\DoxyCodeLine{596 }
+\DoxyCodeLine{597 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{598 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a1fec0eae3fb5b0e4daeb6d626acf8c8b}{SingleSlater<MatsT, IntsT>::printProperties}}() \{}
+\DoxyCodeLine{599   printMOInfo(std::cout);}
+\DoxyCodeLine{600   \textcolor{keywordflow}{if}( this-\/>nC != 4 ) this-\/>printMultipoles(std::cout);}
+\DoxyCodeLine{601   \textcolor{keywordflow}{if}( this-\/>nC != 4 ) this-\/>printSpin(std::cout);}
+\DoxyCodeLine{602   printMiscProperties(std::cout);}
+\DoxyCodeLine{603 \}}
+\DoxyCodeLine{604 }
+\DoxyCodeLine{605 \textcolor{preprocessor}{\#ifdef TEST\_MOINTSTRANSFORMER}}
+\DoxyCodeLine{606   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{607   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>::MOIntsTransformationTest}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert) \{}
+\DoxyCodeLine{608    }
+\DoxyCodeLine{609     \textcolor{comment}{// test on MO integral transfromations}}
+\DoxyCodeLine{610     \textcolor{comment}{// MOIntsTransformer<MatsT, IntsT> N5TF(memManager, *this, INCORE\_N5);}}
+\DoxyCodeLine{611     \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{MOIntsTransformer<MatsT, IntsT>}} N6TF(memManager, *\textcolor{keyword}{this}, \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea23f85e1ce32b3156975f33061df36077}{INCORE\_N6}});  }
+\DoxyCodeLine{612 }
+\DoxyCodeLine{613     std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n -\/-\/-\/-\/-\/-\/-\/-\/-\/ Test on MO Ints Transformation-\/-\/-\/-\/-\/ \(\backslash\)n"{}} << std::endl;}
+\DoxyCodeLine{614     }
+\DoxyCodeLine{615     \textcolor{keywordtype}{size\_t} NB  = this-\/>nAlphaOrbital() * nC;}
+\DoxyCodeLine{616     \textcolor{keywordtype}{size\_t} nMO = (this-\/>nC == 4) ? NB / 2: NB;}
+\DoxyCodeLine{617     \textcolor{keywordtype}{size\_t} nOcc = (this-\/>nC == 1) ? this-\/>nO/2: this-\/>nO; }
+\DoxyCodeLine{618 }
+\DoxyCodeLine{619     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<MatsT>}} N6MOERI(memManager, nOcc); }
+\DoxyCodeLine{620     \textcolor{comment}{// InCore4indexTPI<MatsT> N5MOERI(memManager, nMO); }}
+\DoxyCodeLine{621     \mbox{\hyperlink{classChronusQ_1_1OnePInts}{OnePInts<MatsT>}} hCore(memManager, nOcc); }
+\DoxyCodeLine{622 }
+\DoxyCodeLine{623 \textcolor{preprocessor}{\#if 1}}
+\DoxyCodeLine{624     std::cout << \textcolor{stringliteral}{"{}-\/-\/-\/-\/ Test: Reconstruct SCF Energy"{}} << std::endl; }
+\DoxyCodeLine{625     N6TF.transformHCore(pert, hCore.pointer(), \textcolor{stringliteral}{"{}ij"{}});}
+\DoxyCodeLine{626     \textcolor{keyword}{auto} timeIdN6 = \mbox{\hyperlink{namespaceChronusQ_a715f671201f0f6e77216fcf1f72adbaf}{tick}}();}
+\DoxyCodeLine{627     N6TF.transformTPI(pert, N6MOERI.pointer(), \textcolor{stringliteral}{"{}ijkl"{}}, \textcolor{keyword}{false}, \textcolor{keyword}{false});}
+\DoxyCodeLine{628     \textcolor{keyword}{auto} timeDur = \mbox{\hyperlink{namespaceChronusQ_a3b2153e93af4532ff5b1e75d8af453b0}{tock}}(timeIdN6);}
+\DoxyCodeLine{629     }
+\DoxyCodeLine{630     MatsT SCFEnergy = MatsT(0.);}
+\DoxyCodeLine{631     \textcolor{keywordflow}{if}(this-\/>nC > 1) \{}
+\DoxyCodeLine{632       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0; i < this-\/>nO; i++) \{}
+\DoxyCodeLine{633         SCFEnergy += hCore(i, i);}
+\DoxyCodeLine{634         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j = 0; j < this-\/>nO; j++)}
+\DoxyCodeLine{635           SCFEnergy += 0.5 * (N6MOERI(i, i, j, j) -\/ N6MOERI(i, j, j, i)); }
+\DoxyCodeLine{636       \}}
+\DoxyCodeLine{637     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{638       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0; i < this-\/>nO/2; i++) \{}
+\DoxyCodeLine{639         SCFEnergy += hCore(i, i);}
+\DoxyCodeLine{640         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j = 0; j < this-\/>nO/2; j++)}
+\DoxyCodeLine{641           SCFEnergy += N6MOERI(i, i, j, j) -\/ 0.5 * N6MOERI(i, j, j, i); }
+\DoxyCodeLine{642       \}}
+\DoxyCodeLine{643       SCFEnergy *= 2.0;}
+\DoxyCodeLine{644     \}}
+\DoxyCodeLine{645 }
+\DoxyCodeLine{646     std::cout << \textcolor{stringliteral}{"{}SSFOCK\_N6 SCF Energy:"{}} << std::setprecision(16) << SCFEnergy << std::endl;}
+\DoxyCodeLine{647     \textcolor{comment}{// N6MOERI.output(std::cout, "{}SSFOCK\_N6 ERI"{}, true);}}
+\DoxyCodeLine{648 }
+\DoxyCodeLine{649     std::cout << \textcolor{stringliteral}{"{} -\/ Time (N6) for transforming ijkl "{}} <<  \textcolor{stringliteral}{"{} = "{}} << timeDur << \textcolor{stringliteral}{"{} s\(\backslash\)n"{}}; }
+\DoxyCodeLine{650 }
+\DoxyCodeLine{651     MatsT * h1e\_ii  = this-\/>memManager.template malloc<MatsT>(nOcc);}
+\DoxyCodeLine{652     MatsT * GDjj\_ii = this-\/>memManager.template malloc<MatsT>(nOcc);}
+\DoxyCodeLine{653 }
+\DoxyCodeLine{654     \textcolor{keywordtype}{double} fc1C = (this-\/>nC == 1) ? 2.0 : 1.0;}
+\DoxyCodeLine{655 }
+\DoxyCodeLine{656     N6TF.transformHCore(pert, h1e\_ii, \textcolor{stringliteral}{"{}ii"{}}, \textcolor{keyword}{true});}
+\DoxyCodeLine{657     N6TF.transformGD(pert, \textcolor{charliteral}{'i'}, GDjj\_ii, \textcolor{stringliteral}{"{}jj"{}}, \textcolor{keyword}{true}, \textcolor{keyword}{true}, \textcolor{stringliteral}{"{}WithInactive-\/i"{}});  }
+\DoxyCodeLine{658 }
+\DoxyCodeLine{659     MatsT ECore = 0.;}
+\DoxyCodeLine{660     \textcolor{comment}{// compute core enenrgy}}
+\DoxyCodeLine{661     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nOcc; i++) \{}
+\DoxyCodeLine{662       ECore += h1e\_ii[i] + 0.5 * GDjj\_ii[i];}
+\DoxyCodeLine{663     \}}
+\DoxyCodeLine{664     }
+\DoxyCodeLine{665     SCFEnergy = ECore * fc1C;}
+\DoxyCodeLine{666 }
+\DoxyCodeLine{667     std::cout << \textcolor{stringliteral}{"{}SSFOCK\_N6 SCF Energy using formFock exchange:"{}} << std::setprecision(16) << SCFEnergy << std::endl;}
+\DoxyCodeLine{668 \textcolor{preprocessor}{\#else     }}
+\DoxyCodeLine{669     }
+\DoxyCodeLine{670     std::vector<std::string> testcases = \{\textcolor{stringliteral}{"{}ijkl"{}}, \textcolor{stringliteral}{"{}abcd"{}}, \textcolor{stringliteral}{"{}pqia"{}}, \textcolor{stringliteral}{"{}ipab"{}}, \textcolor{stringliteral}{"{}ijab"{}}, \textcolor{stringliteral}{"{}pqrs"{}}\};}
+\DoxyCodeLine{671     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \& moType: testcases) \{}
+\DoxyCodeLine{672       N6MOERI.clear();}
+\DoxyCodeLine{673       N5MOERI.clear();}
+\DoxyCodeLine{674 }
+\DoxyCodeLine{675       std::cout << \textcolor{stringliteral}{"{}-\/-\/-\/-\/ Test: "{}} << moType << std::endl; }
+\DoxyCodeLine{676       \textcolor{keyword}{auto} timeIdN6 = \mbox{\hyperlink{namespaceChronusQ_a715f671201f0f6e77216fcf1f72adbaf}{tick}}();}
+\DoxyCodeLine{677       N6TF.transformTPI(pert, N6MOERI.pointer(), moType, \textcolor{keyword}{true}, \textcolor{keyword}{false});}
+\DoxyCodeLine{678       \textcolor{keyword}{auto} timeDur = \mbox{\hyperlink{namespaceChronusQ_a3b2153e93af4532ff5b1e75d8af453b0}{tock}}(timeIdN6);}
+\DoxyCodeLine{679       }
+\DoxyCodeLine{680       std::cout << \textcolor{stringliteral}{"{} -\/ Time (N6) for transforming "{}} << moType  <<  \textcolor{stringliteral}{"{} = "{}} << timeDur << \textcolor{stringliteral}{"{} s\(\backslash\)n"{}}; }
+\DoxyCodeLine{681 }
+\DoxyCodeLine{682       \textcolor{keywordflow}{if} (this-\/>aoints.TPITransAlg == \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea23f85e1ce32b3156975f33061df36077}{TPI\_TRANSFORMATION\_ALG::INCORE\_N6}}) \{}
+\DoxyCodeLine{683         \textcolor{keyword}{auto} timeIdN5 = \mbox{\hyperlink{namespaceChronusQ_a715f671201f0f6e77216fcf1f72adbaf}{tick}}();}
+\DoxyCodeLine{684         N5TF.transformTPI(pert, N5MOERI.pointer(), moType, \textcolor{keyword}{true}, \textcolor{keyword}{false});}
+\DoxyCodeLine{685         \textcolor{keyword}{auto} timeDur = \mbox{\hyperlink{namespaceChronusQ_a3b2153e93af4532ff5b1e75d8af453b0}{tock}}(timeIdN5);}
+\DoxyCodeLine{686         std::cout << \textcolor{stringliteral}{"{} -\/ Time (N5) for transforming "{}} << moType  <<  \textcolor{stringliteral}{"{} = "{}} << timeDur << \textcolor{stringliteral}{"{} s\(\backslash\)n"{}}; }
+\DoxyCodeLine{687 \textcolor{preprocessor}{\#pragma omp parallel for schedule(static) collapse(4) default(shared)       }}
+\DoxyCodeLine{688         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0; i < nMO; i++) }
+\DoxyCodeLine{689         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j = 0; j < nMO; j++) }
+\DoxyCodeLine{690         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} k = 0; k < nMO; k++) }
+\DoxyCodeLine{691         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} l = 0; l < nMO; l++) }
+\DoxyCodeLine{692           N6MOERI(i, j, k, l) -\/= N5MOERI(i, j, k, l);}
+\DoxyCodeLine{693         }
+\DoxyCodeLine{694         N6TF.printOffSizes(N6TF.parseMOType(moType));}
+\DoxyCodeLine{695         N6MOERI.output(std::cout, \textcolor{stringliteral}{"{}INCORE\_N6 ERI -\/ INCORE\_N5 ERI"{}}, \textcolor{keyword}{true});}
+\DoxyCodeLine{696       \}}
+\DoxyCodeLine{697     \}}
+\DoxyCodeLine{698 }
+\DoxyCodeLine{699 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{700 }
+\DoxyCodeLine{701     std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n -\/-\/-\/-\/-\/-\/-\/-\/-\/ End of the Test (on MO Ints Transformation)-\/-\/-\/-\/-\/ \(\backslash\)n"{}} << std::endl;}
+\DoxyCodeLine{702   \}; \textcolor{comment}{// SingleSlater<MatsT>::MOIntsTransformationTest}}
+\DoxyCodeLine{703   }
+\DoxyCodeLine{704 \textcolor{preprocessor}{\#endif    }}
+\DoxyCodeLine{705   }
+\DoxyCodeLine{709   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{710   std::shared\_ptr<MOIntsTransformer<MatsT, IntsT>> }
+\DoxyCodeLine{711     \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a0acd43d9e908b566b9362ec6a8a41558}{SingleSlater<MatsT, IntsT>::generateMOIntsTransformer}}() \{}
+\DoxyCodeLine{712       \textcolor{keywordflow}{return} std::make\_shared<MOIntsTransformer<MatsT, IntsT>>(memManager, *\textcolor{keyword}{this}, this-\/>aoints.TPITransAlg);}
+\DoxyCodeLine{713   \}}
+\DoxyCodeLine{714 }
+\DoxyCodeLine{718 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{719 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a1ab7947386c3c4d10d4ec1d33fc24696}{SingleSlater<MatsT, IntsT>::orthoAOMO}}() \{}
+\DoxyCodeLine{720 }
+\DoxyCodeLine{721     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NB   = this-\/>nAlphaOrbital();}
+\DoxyCodeLine{722     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NB2  = NB * NB;}
+\DoxyCodeLine{723     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NBC  = this-\/>nC * NB;}
+\DoxyCodeLine{724     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NBC2 = NBC * NBC;}
+\DoxyCodeLine{725 }
+\DoxyCodeLine{726     \textcolor{comment}{// Compute MO orthogonalization on Root process then broadcast}}
+\DoxyCodeLine{727     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm) == 0 )\{}
+\DoxyCodeLine{728       \textcolor{keywordflow}{if}( this-\/>nC > 1 or this-\/>iCS )\{}
+\DoxyCodeLine{729         \textcolor{keywordtype}{size\_t} nOcc = this-\/>nC == 1 ? nOA : nO;}
+\DoxyCodeLine{730         \textcolor{keywordtype}{size\_t} disp = this-\/>nC==4 ? NBC/2 : 0;  \textcolor{comment}{// displace to positive energy states}}
+\DoxyCodeLine{731         orthoAB-\/>orthogonalizeStates(this-\/>mo[0], nOcc, disp);}
+\DoxyCodeLine{732       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{733         orthoAB-\/>orthogonalizeStates(this-\/>mo[0], nOA);}
+\DoxyCodeLine{734         orthoAB-\/>orthogonalizeStates(this-\/>mo[1], nOB);}
+\DoxyCodeLine{735       \}}
+\DoxyCodeLine{736     \}}
+\DoxyCodeLine{737 }
+\DoxyCodeLine{738 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{739 }
+\DoxyCodeLine{740   \textcolor{comment}{// Broadcast the updated MOs to all MPI processes}}
+\DoxyCodeLine{741   \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm) > 1 ) \{}
+\DoxyCodeLine{742 }
+\DoxyCodeLine{743     std::cerr << \textcolor{stringliteral}{"{}  *** Scattering the AO-\/MOs ***\(\backslash\)n"{}};}
+\DoxyCodeLine{744     \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(this-\/>mo[0].pointer(), nC * nC * NB * NB, 0, comm);}
+\DoxyCodeLine{745     \textcolor{keywordflow}{if}( nC == 1 and not iCS ) \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(this-\/>mo[1].pointer(), nC * nC * NB * NB, 0, comm);}
+\DoxyCodeLine{746   \}}
+\DoxyCodeLine{747 }
+\DoxyCodeLine{748 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{749 \}}
+\DoxyCodeLine{750 }
+\DoxyCodeLine{751 \};   \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

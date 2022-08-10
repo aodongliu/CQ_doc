@@ -1,0 +1,120 @@
+\hypertarget{quantum_8hpp_source}{}\doxysection{quantum.\+hpp}
+\label{quantum_8hpp_source}\index{include/quantum.hpp@{include/quantum.hpp}}
+\mbox{\hyperlink{quantum_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{quantum_2base_8hpp}{quantum/base.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrix_8hpp}{matrix.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{comment}{// Debug print (triggers WaveFunction, etc)}}
+\DoxyCodeLine{31 \textcolor{comment}{//\#define \_QuantumDebug}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{43   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{44   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} : \textcolor{keyword}{virtual} \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}} \{}
+\DoxyCodeLine{45   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{comment}{// Useful typedefs}}
+\DoxyCodeLine{48     \textcolor{keyword}{typedef} MatsT*               \mbox{\hyperlink{classChronusQ_1_1Quantum_aaf9db7218128f9d2dd76cfd5aa0ada6c}{oper\_t}};}
+\DoxyCodeLine{49     \textcolor{keyword}{typedef} std::vector<oper\_t>  \mbox{\hyperlink{classChronusQ_1_1Quantum_a9c0316247ff01f17cc12bc240e35f417}{oper\_t\_coll}};}
+\DoxyCodeLine{50     }
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52   \textcolor{keyword}{private}:}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{comment}{// Helper functions for the automatic evaluation of properties}}
+\DoxyCodeLine{55     \textcolor{comment}{// see include/quantum/properties.hpp for documentation}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{keyword}{template} <DENSITY\_TYPE DenTyp, \textcolor{keyword}{typename} Op>}
+\DoxyCodeLine{58     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1Quantum_af6869f1ccd5313e3cada40e1eed8d7d0}{OperatorSpinCombine}}(\textcolor{keyword}{const} Op\&);}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60   \textcolor{keyword}{public}:}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \textcolor{comment}{// 1PDM storage}}
+\DoxyCodeLine{64     std::shared\_ptr<PauliSpinorSquareMatrices<MatsT>> \mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}; }
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{67       }
+\DoxyCodeLine{68     \textcolor{comment}{// Disable default constructor}}
+\DoxyCodeLine{69     \mbox{\hyperlink{classChronusQ_1_1Quantum_a604e885c7d97511c625adb98d0e332c3}{Quantum}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{80     \mbox{\hyperlink{classChronusQ_1_1Quantum_a7fe60e1ce6cc5f8092c60c0637a39bc9}{Quantum}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} \_nC = 1, }
+\DoxyCodeLine{81       \textcolor{keywordtype}{bool} \_iCS = \textcolor{keyword}{true}, \mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}} p = \{-\/1.0, 1.0\}, \textcolor{keywordtype}{size\_t} N = 0, \textcolor{keywordtype}{bool} doAlloc = \textcolor{keyword}{true}): }
+\DoxyCodeLine{82       \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6ed15d36d43fc3433f83c6a6a42a53a5}{QuantumBase}}(c,mem,\_nC,\_iCS,p) \{}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84         \textcolor{comment}{// Allocate densities}}
+\DoxyCodeLine{85         \textcolor{keywordflow}{if}( N != 0 and doAlloc ) \mbox{\hyperlink{classChronusQ_1_1Quantum_a2eba0fb018dd2079a01ed655e43d448e}{alloc}}(N);}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87     \}; \textcolor{comment}{// Quantum::Quantum}}
+\DoxyCodeLine{88     }
+\DoxyCodeLine{89        }
+\DoxyCodeLine{90     \textcolor{comment}{// See include/quantum/impl.hpp for documentation }}
+\DoxyCodeLine{91     \textcolor{comment}{// on the following constructors}}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \textcolor{comment}{// Different type}}
+\DoxyCodeLine{94     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU> \mbox{\hyperlink{classChronusQ_1_1Quantum_a604e885c7d97511c625adb98d0e332c3}{Quantum}}(\textcolor{keyword}{const} Quantum<MatsU> \&, \textcolor{keywordtype}{int} dummy = 0);}
+\DoxyCodeLine{95     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU> \mbox{\hyperlink{classChronusQ_1_1Quantum_a604e885c7d97511c625adb98d0e332c3}{Quantum}}(Quantum<MatsU> \&\&     , \textcolor{keywordtype}{int} dummy = 0);}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97     \textcolor{comment}{// Same type}}
+\DoxyCodeLine{98     \mbox{\hyperlink{classChronusQ_1_1Quantum_a604e885c7d97511c625adb98d0e332c3}{Quantum}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1Quantum_a604e885c7d97511c625adb98d0e332c3}{Quantum}} \&);}
+\DoxyCodeLine{99     \mbox{\hyperlink{classChronusQ_1_1Quantum_a604e885c7d97511c625adb98d0e332c3}{Quantum}}(\mbox{\hyperlink{classChronusQ_1_1Quantum_a604e885c7d97511c625adb98d0e332c3}{Quantum}} \&\&);     }
+\DoxyCodeLine{100 }
+\DoxyCodeLine{104     \mbox{\hyperlink{classChronusQ_1_1Quantum_a0f380b1f2c48e43c75985d691dd1c303}{\string~Quantum}}()\{ \mbox{\hyperlink{classChronusQ_1_1Quantum_a23932cd7153189eefe9fe1fd10578b28}{dealloc}}(); \}}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106     \textcolor{comment}{// Member functions}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108     \textcolor{comment}{// Deallocation (see include/quantum/impl.hpp for docs)}}
+\DoxyCodeLine{109     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Quantum_a2eba0fb018dd2079a01ed655e43d448e}{alloc}}(\textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{110     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Quantum_a23932cd7153189eefe9fe1fd10578b28}{dealloc}}();}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     \textcolor{comment}{// Public interfaces for property evaluation}}
+\DoxyCodeLine{114       }
+\DoxyCodeLine{123     \textcolor{keyword}{template} <DENSITY\_TYPE DenTyp, \textcolor{keyword}{typename} Op>}
+\DoxyCodeLine{124     \textcolor{keyword}{inline} \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1Quantum_aac3460cb350894b6569039577221daf8}{computeOBProperty}}(\textcolor{keyword}{const} Op \&op) \{}
+\DoxyCodeLine{125       \textcolor{keywordflow}{return} OperatorSpinCombine<DenTyp>(op);}
+\DoxyCodeLine{126     \}; \textcolor{comment}{// Quantum<MatsT>::computeOBProperty (single operator)}}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{136     \textcolor{keyword}{template} <DENSITY\_TYPE DenTyp, \textcolor{keyword}{typename} Op>}
+\DoxyCodeLine{137     \textcolor{keyword}{inline} std::vector<double> \mbox{\hyperlink{classChronusQ_1_1Quantum_a553eb419674ae248c56f46b35340d109}{computeOBProperty}}(\textcolor{keyword}{const} std::vector<Op> \&opv) \{}
+\DoxyCodeLine{138       std::vector<double> results;}
+\DoxyCodeLine{139       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&op : opv) }
+\DoxyCodeLine{140         results.emplace\_back(computeOBProperty<DenTyp>(op));}
+\DoxyCodeLine{141       \textcolor{keywordflow}{return} results;}
+\DoxyCodeLine{142     \}; \textcolor{comment}{// Quantum<MatsT>::computeOBProperty (many operators)}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     \textcolor{comment}{// Print functions}}
+\DoxyCodeLine{145     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Quantum_af2b9998f2a08124daa19709b75765489}{print1PDM}}(std::ostream\&);}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147   \}; \textcolor{comment}{// class Quantum}}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{150 }
+
+\end{DoxyCode}

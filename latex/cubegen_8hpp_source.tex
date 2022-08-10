@@ -1,0 +1,403 @@
+\hypertarget{cubegen_8hpp_source}{}\doxysection{cubegen.\+hpp}
+\label{cubegen_8hpp_source}\index{include/cubegen.hpp@{include/cubegen.hpp}}
+\mbox{\hyperlink{cubegen_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2quantum_8hpp}{quantum.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_8hpp}{singleslater.hpp}}>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas3_8hpp}{cqlinalg/blas3.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasutil_8hpp}{cqlinalg/blasutil.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{physcon_8hpp}{physcon.hpp}}>}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50}{CUBE\_TYPE}} \{}
+\DoxyCodeLine{40     }
+\DoxyCodeLine{41     \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50a949852c5862f980dab09f1065cc1844e}{\_CHARGE\_DENSITY}},}
+\DoxyCodeLine{42     \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50ae0790326dab390345dfaa1b8a998b692}{\_SPIN\_DENSITY}},}
+\DoxyCodeLine{43     \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50a10e161ca4c317f872b3e71da8570ab73}{\_ELECTROSTATIC\_POTENTIAL}}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45   \};}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1CubeGenBase}{CubeGenBase}} \{}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ad4716928aaba4d2baa08924058ba7589}{evalCDCube}}() = 0;}
+\DoxyCodeLine{55     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a0fe32f5eba8ba65bbe533cae568d716d}{evalSDCube}}() = 0;}
+\DoxyCodeLine{56     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a03c29e623f05b0caede86ea5687c4312}{evalEPCube}}() = 0;}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a5faba0337b76d37096e389702875f256}{writePreamble}}() \{}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}OUTER LOOP: X, MIDDLE LOOP: Y, INNERLOOP: Z\(\backslash\)n"{}};}
+\DoxyCodeLine{61       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::fixed;}
+\DoxyCodeLine{62       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_aa72aed4ed765e32fd8da41c7727a0cb2}{cubeName}} << \textcolor{stringliteral}{"{}: "{}};}
+\DoxyCodeLine{63       \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a30edd3e4e68acf650685cb7b29391107}{cubeType}} == \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50a949852c5862f980dab09f1065cc1844e}{\_CHARGE\_DENSITY}} ) }
+\DoxyCodeLine{64         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}CHARGE DENSITY"{}};}
+\DoxyCodeLine{65       \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a30edd3e4e68acf650685cb7b29391107}{cubeType}} == \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50ae0790326dab390345dfaa1b8a998b692}{\_SPIN\_DENSITY}} ) }
+\DoxyCodeLine{66         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}SPIN DENSITY"{}};}
+\DoxyCodeLine{67       \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a30edd3e4e68acf650685cb7b29391107}{cubeType}} == \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50a10e161ca4c317f872b3e71da8570ab73}{\_ELECTROSTATIC\_POTENTIAL}} ) }
+\DoxyCodeLine{68         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}ELECTROSTATIC POTENTIAL"{}};}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{} : GENERATED BY CHRONUSQ\(\backslash\)n"{}};}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \}}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76   \textcolor{keyword}{public}:}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     std::string \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_aa72aed4ed765e32fd8da41c7727a0cb2}{cubeName}};}
+\DoxyCodeLine{81     std::shared\_ptr<std::ofstream> \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}};}
+\DoxyCodeLine{82     \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50}{CUBE\_TYPE}} \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a30edd3e4e68acf650685cb7b29391107}{cubeType}};}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     std::array<size\_t,3> \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}};}
+\DoxyCodeLine{85     std::array<double,3> \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}};}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88     \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a27a00a2342bde743a6132a74f8b0e89f}{CubeGenBase}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{89     \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a222ebffe84f0e56537e9f3c1f2d962c2}{CubeGenBase}}(std::string name, \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50}{CUBE\_TYPE}} ct, std::array<size\_t,3> npts) :}
+\DoxyCodeLine{90       \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_aa72aed4ed765e32fd8da41c7727a0cb2}{cubeName}}(name), \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a30edd3e4e68acf650685cb7b29391107}{cubeType}}(ct), \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}(npts), }
+\DoxyCodeLine{91       \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}}(std::make\_shared<std::ofstream>(name))\{ \} }
+\DoxyCodeLine{92     \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a2c93f6c015b428ae682f88bd1ea903c5}{CubeGenBase}}(std::string name, \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50}{CUBE\_TYPE}} ct, \textcolor{keywordtype}{size\_t} nx, \textcolor{keywordtype}{size\_t} ny, }
+\DoxyCodeLine{93       \textcolor{keywordtype}{size\_t} nz) : \mbox{\hyperlink{structChronusQ_1_1CubeGenBase}{CubeGenBase}}(name, ct, \{nx,ny,nz\})\{ \}}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_af4ca2d07dbb12149706e0627ba7ae985}{evalCube}}() \{}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98       \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a5faba0337b76d37096e389702875f256}{writePreamble}}();}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100       \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a30edd3e4e68acf650685cb7b29391107}{cubeType}} == \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50a949852c5862f980dab09f1065cc1844e}{\_CHARGE\_DENSITY}} )}
+\DoxyCodeLine{101         \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ad4716928aaba4d2baa08924058ba7589}{evalCDCube}}();}
+\DoxyCodeLine{102       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a30edd3e4e68acf650685cb7b29391107}{cubeType}} == \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50ae0790326dab390345dfaa1b8a998b692}{\_SPIN\_DENSITY}} )}
+\DoxyCodeLine{103         \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a0fe32f5eba8ba65bbe533cae568d716d}{evalSDCube}}();}
+\DoxyCodeLine{104       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a30edd3e4e68acf650685cb7b29391107}{cubeType}} == \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50a10e161ca4c317f872b3e71da8570ab73}{\_ELECTROSTATIC\_POTENTIAL}} )}
+\DoxyCodeLine{105         \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a03c29e623f05b0caede86ea5687c4312}{evalEPCube}}();}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     \};}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109   \};}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{113   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase}{WaveFunctionCubeGenBase}} : \textcolor{keyword}{public} \mbox{\hyperlink{structChronusQ_1_1CubeGenBase}{CubeGenBase}} \{}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     std::shared\_ptr<WaveFunction<T>> \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}};}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a1481a32b7b9d2a55d52e5cde7646cb76}{evalCDCube}}()\{}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121       \textcolor{keywordtype}{size\_t} NB = \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>nAlphaOrbital();}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123       std::vector<libint2::Shell> \&shells = \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>basisSet().shells;}
+\DoxyCodeLine{124       std::vector<double> BASIS(NB,0.);}
+\DoxyCodeLine{125       std::vector<T> SCR(NB,0.);}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} ix = 0l; ix < \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[0]; ix++)}
+\DoxyCodeLine{128       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iy = 0l; iy < \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[1]; iy++) \{}
+\DoxyCodeLine{129       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iz = 0l; iz < \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[2]; iz++) \{}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131         std::array<double,3> pt = }
+\DoxyCodeLine{132           \{(ix-\/(int)\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[0]/2) * \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[0],}
+\DoxyCodeLine{133            (iy-\/(int)\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[1]/2) * \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[1],}
+\DoxyCodeLine{134            (iz-\/(int)\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[2]/2) * \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[2]\};}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136         \mbox{\hyperlink{namespaceChronusQ_a8771d0c9717951111130fa2b68b2f19f}{evalShellSet}}(\mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>memManager,\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}},shells,\&pt[0],1,\&BASIS[0],\textcolor{keyword}{false});}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138         blas::gemm(blas::Layout::ColMajor,\textcolor{charliteral}{'T'},blas::Op::NoTrans,1,NB,NB,T(1.),\&BASIS[0],NB,\mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>onePDM-\/>S().pointer(),NB,}
+\DoxyCodeLine{139             T(0.),\&SCR[0],1);}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141         \textcolor{keywordtype}{double} val = \mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(NB,\&SCR[0],1,\&BASIS[0],1);}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::right << std::setw(15) << std::setprecision(5)}
+\DoxyCodeLine{144           << std::scientific << val;}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146         \textcolor{keywordflow}{if}( iz \% 6 == 5 ) *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149       \}}
+\DoxyCodeLine{150         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{151       \}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     \};}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_aecb6736c05dd2ada02a430cdcb1a1f37}{evalSDCube}}() \{}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158       \textcolor{keywordtype}{size\_t} NB = \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>nAlphaOrbital();}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160       std::vector<libint2::Shell> \&shells = \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>basisSet().shells;}
+\DoxyCodeLine{161       std::vector<double> BASIS(NB,0.);}
+\DoxyCodeLine{162       std::vector<T> SCR(NB,0.);}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} ix = 0l; ix < \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[0]; ix++)}
+\DoxyCodeLine{165       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iy = 0l; iy < \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[1]; iy++) \{}
+\DoxyCodeLine{166       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iz = 0l; iz < \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[2]; iz++) \{}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168         std::array<double,3> pt = }
+\DoxyCodeLine{169           \{(ix-\/(int)\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[0]/2) * \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[0],}
+\DoxyCodeLine{170            (iy-\/(int)\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[1]/2) * \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[1],}
+\DoxyCodeLine{171            (iz-\/(int)\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[2]/2) * \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[2]\};}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173         \textcolor{keywordtype}{double} val = 0;}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175         \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>onePDM.hasZ() ) \{}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177           \mbox{\hyperlink{namespaceChronusQ_a8771d0c9717951111130fa2b68b2f19f}{evalShellSet}}(\mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>memManager,\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}},shells,\&pt[0],1,\&BASIS[0],\textcolor{keyword}{false});}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179           \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 1; i < \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>onePDM-\/>nComponent(); i++) \{}
+\DoxyCodeLine{180             blas::gemm(blas::Layout::ColMajor,\textcolor{charliteral}{'T'},blas::Op::NoTrans,1,NB,NB,T(1.),\&BASIS[0],NB,}
+\DoxyCodeLine{181                 (*\mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>onePDM)[\textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8f}{PAULI\_SPINOR\_COMPS}}\textcolor{keyword}{>}(i)].pointer()],NB,}
+\DoxyCodeLine{182                 T(0.),\&SCR[0],1);}
+\DoxyCodeLine{183   }
+\DoxyCodeLine{184             \textcolor{keywordtype}{double} tmp = \mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(NB,\&SCR[0],1,\&BASIS[0],1);}
+\DoxyCodeLine{185             val += tmp*tmp;}
+\DoxyCodeLine{186           \}}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188           val = std::sqrt(val);}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190         \}}
+\DoxyCodeLine{191         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::right << std::setw(15) << std::setprecision(5)}
+\DoxyCodeLine{192           << std::scientific << val;}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194         \textcolor{keywordflow}{if}( iz \% 6 == 5 ) *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197       \}}
+\DoxyCodeLine{198         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{199       \}}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201     \};}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a1605d0566e0bf6fec5b0ce04212b4ddc}{evalEPCube}}()\{}
+\DoxyCodeLine{206     }
+\DoxyCodeLine{207     }
+\DoxyCodeLine{208       \textcolor{keywordtype}{size\_t} NB = \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>nAlphaOrbital();}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210       std::vector<libint2::Shell> \&shells = \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>basisSet().shells;}
+\DoxyCodeLine{211     }
+\DoxyCodeLine{212       std::vector<T> SCR(NB*NB,0.);}
+\DoxyCodeLine{213     }
+\DoxyCodeLine{214       \textcolor{comment}{// Determine the maximum angular momentum of the passed shell set}}
+\DoxyCodeLine{215       \textcolor{keywordtype}{int} maxL = std::max\_element(shells.begin(), shells.end(),}
+\DoxyCodeLine{216         [](libint2::Shell \&sh1, libint2::Shell \&sh2)\{}
+\DoxyCodeLine{217           return sh1.contr[0].l < sh2.contr[0].l;}
+\DoxyCodeLine{218         \}}
+\DoxyCodeLine{219       )-\/>contr[0].l;}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221       \textcolor{comment}{// Determine the maximum contraction depth of the passed shell set}}
+\DoxyCodeLine{222       \textcolor{keywordtype}{int} maxPrim = std::max\_element(shells.begin(), shells.end(),}
+\DoxyCodeLine{223         [](libint2::Shell \&sh1, libint2::Shell \&sh2)\{}
+\DoxyCodeLine{224           return sh1.alpha.size() < sh2.alpha.size();}
+\DoxyCodeLine{225         \}}
+\DoxyCodeLine{226       )-\/>alpha.size();}
+\DoxyCodeLine{227     }
+\DoxyCodeLine{228       libint2::Engine engine(libint2::Operator::nuclear,maxPrim,maxL,0);}
+\DoxyCodeLine{229       engine.set\_precision(0.);}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} ix = 0l; ix < \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[0]; ix++)}
+\DoxyCodeLine{232       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iy = 0l; iy < \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[1]; iy++) \{}
+\DoxyCodeLine{233       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iz = 0l; iz < \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[2]; iz++) \{}
+\DoxyCodeLine{234 }
+\DoxyCodeLine{235         std::array<double,3> pt = }
+\DoxyCodeLine{236           \{(ix-\/(int)\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[0]/2) * \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[0],}
+\DoxyCodeLine{237            (iy-\/(int)\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[1]/2) * \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[1],}
+\DoxyCodeLine{238            (iz-\/(int)\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[2]/2) * \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[2]\};}
+\DoxyCodeLine{239     }
+\DoxyCodeLine{240         std::vector<std::pair<double,std::array<double,3>>> q;}
+\DoxyCodeLine{241         q.push\_back( \{1., pt\} );}
+\DoxyCodeLine{242         engine.set\_params(q);}
+\DoxyCodeLine{243     }
+\DoxyCodeLine{244         \textcolor{keyword}{const} \textcolor{keyword}{auto}\& buf\_vec = engine.results();}
+\DoxyCodeLine{245         \textcolor{keywordtype}{size\_t} n1,n2;}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{247         \textcolor{comment}{// Loop over unique shell pairs}}
+\DoxyCodeLine{248         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} s1(0), bf1\_s(0), s12(0); s1 < shells.size(); }
+\DoxyCodeLine{249             bf1\_s+=n1, s1++)\{ }
+\DoxyCodeLine{250           n1 = shells[s1].size(); \textcolor{comment}{// Size of Shell 1}}
+\DoxyCodeLine{251         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} s2(0), bf2\_s(0); s2 <= s1; bf2\_s+=n2, s2++, s12++) \{}
+\DoxyCodeLine{252           n2 = shells[s2].size(); \textcolor{comment}{// Size of Shell 2}}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255           engine.compute(shells[s1],shells[s2]);}
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257           \textcolor{comment}{// If the integrals were screened, move on to the next batch}}
+\DoxyCodeLine{258           \textcolor{keywordflow}{if}(buf\_vec[0] == \textcolor{keyword}{nullptr}) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260           \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},n1,n2,1.,\textcolor{keyword}{const\_cast<}\textcolor{keywordtype}{double}*\textcolor{keyword}{>}(buf\_vec[0]),n1,}
+\DoxyCodeLine{261               \&SCR[bf1\_s + bf2\_s*NB],NB);}
+\DoxyCodeLine{262 }
+\DoxyCodeLine{263         \}}
+\DoxyCodeLine{264         \}}
+\DoxyCodeLine{265 }
+\DoxyCodeLine{266         \mbox{\hyperlink{namespaceChronusQ_a8de87c3f9b6b79c38f5be581c31dade9}{HerMat}}(\textcolor{charliteral}{'L'},NB,\&SCR[0],NB);}
+\DoxyCodeLine{267         \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}V"{}},\&SCR[0],NB,NB,NB);}
+\DoxyCodeLine{268 }
+\DoxyCodeLine{269         \textcolor{keywordtype}{double} val = \mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(NB*NB,\&SCR[0],1,\mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>onePDM-\/>S().pointer(),1);}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271         \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} \&atom : \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>molecule().atoms ) \{}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273           \textcolor{keyword}{auto} \&c = atom.coord;}
+\DoxyCodeLine{274           val += atom.atomicNumber / }
+\DoxyCodeLine{275             std::sqrt( std::pow(pt[0] -\/ c[0],2.) + }
+\DoxyCodeLine{276                        std::pow(pt[1] -\/ c[1],2.) + }
+\DoxyCodeLine{277                        std::pow(pt[2] -\/ c[2],2.) ); }
+\DoxyCodeLine{278 }
+\DoxyCodeLine{279         \}}
+\DoxyCodeLine{280 }
+\DoxyCodeLine{281 }
+\DoxyCodeLine{282         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::right << std::setw(15) << std::setprecision(5)}
+\DoxyCodeLine{283           << std::scientific << val;}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285         \textcolor{keywordflow}{if}( iz \% 6 == 5 ) *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288       \}}
+\DoxyCodeLine{289         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{290       \}}
+\DoxyCodeLine{291     }
+\DoxyCodeLine{292     \};}
+\DoxyCodeLine{293 }
+\DoxyCodeLine{294     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_aabc524e16e1417bded5636096c2d44de}{writePreamble}}() \{}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296       \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a5faba0337b76d37096e389702875f256}{CubeGenBase::writePreamble}}();}
+\DoxyCodeLine{297 }
+\DoxyCodeLine{298       \textcolor{keywordtype}{size\_t} nAtoms = \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>molecule().nAtoms;}
+\DoxyCodeLine{299       \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol = \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>molecule();}
+\DoxyCodeLine{300 }
+\DoxyCodeLine{301       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setprecision(6);}
+\DoxyCodeLine{302 }
+\DoxyCodeLine{303       \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}} = \{0.283459,0.283459,0.283459\};}
+\DoxyCodeLine{304       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(6) << std::right << nAtoms;}
+\DoxyCodeLine{305       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << -\/\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[0]*(double)\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[0]/2;}
+\DoxyCodeLine{306       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << -\/\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[1]*(double)\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[1]/2;}
+\DoxyCodeLine{307       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << -\/\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[2]*(double)\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[2]/2;}
+\DoxyCodeLine{308       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{309 }
+\DoxyCodeLine{310 }
+\DoxyCodeLine{311       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(6) << std::right << \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[0];}
+\DoxyCodeLine{312       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[0];}
+\DoxyCodeLine{313       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << 0.;}
+\DoxyCodeLine{314       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << 0.;}
+\DoxyCodeLine{315       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{316 }
+\DoxyCodeLine{317       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(6) << std::right << \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[1];}
+\DoxyCodeLine{318       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << 0.;}
+\DoxyCodeLine{319       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[1];}
+\DoxyCodeLine{320       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << 0.;}
+\DoxyCodeLine{321       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{322 }
+\DoxyCodeLine{323       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(6) << std::right << \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_acc1f0030ba6e76a6336426533b90603f}{nPts}}[2];}
+\DoxyCodeLine{324       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << 0.;}
+\DoxyCodeLine{325       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << 0.;}
+\DoxyCodeLine{326       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << \mbox{\hyperlink{structChronusQ_1_1CubeGenBase_ac1ca2cf35b5213deb14aa15d8658cb9d}{L}}[2];}
+\DoxyCodeLine{327       *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{328 }
+\DoxyCodeLine{329       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} \&atom : \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}-\/>molecule().atoms ) \{}
+\DoxyCodeLine{330 }
+\DoxyCodeLine{331         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(6) << atom.atomicNumber;}
+\DoxyCodeLine{332         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << 0.;}
+\DoxyCodeLine{333 }
+\DoxyCodeLine{334         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << atom.coord[0];}
+\DoxyCodeLine{335         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << atom.coord[1];}
+\DoxyCodeLine{336         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << std::setw(15) << atom.coord[2];}
+\DoxyCodeLine{337 }
+\DoxyCodeLine{338         *\mbox{\hyperlink{structChronusQ_1_1CubeGenBase_a105ec7f9210799c51e5ca0d21f794fc9}{cubeFile}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{339 }
+\DoxyCodeLine{340       \}}
+\DoxyCodeLine{341 }
+\DoxyCodeLine{342     \}}
+\DoxyCodeLine{343 }
+\DoxyCodeLine{344 }
+\DoxyCodeLine{345   \textcolor{keyword}{public}:}
+\DoxyCodeLine{346 }
+\DoxyCodeLine{347     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1WaveFunction}{ref\_type}} = \mbox{\hyperlink{classChronusQ_1_1WaveFunction}{WaveFunction<T>}};}
+\DoxyCodeLine{348 }
+\DoxyCodeLine{349     \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a85c8e3587ff0f1ff4d0d4351813fe3b8}{WaveFunctionCubeGenBase}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{350 }
+\DoxyCodeLine{351     \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_ab31bacacb58e9decea16d1bb9ff1da96}{WaveFunctionCubeGenBase}}(std::string name, \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50}{CUBE\_TYPE}} ct, }
+\DoxyCodeLine{352       std::array<size\_t,3> npts, std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1WaveFunction}{WaveFunction<T>}}> ref) :}
+\DoxyCodeLine{353       \mbox{\hyperlink{structChronusQ_1_1CubeGenBase}{CubeGenBase}}(name,ct,npts), \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a2b30c15a165da2bae5c4e0cce5c79d0d}{ref\_}}(ref)\{ \}}
+\DoxyCodeLine{354 }
+\DoxyCodeLine{355     \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase_a6d874c0bb243752da74b3f5ebc6bd091}{WaveFunctionCubeGenBase}}(std::string name, \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50}{CUBE\_TYPE}} ct, }
+\DoxyCodeLine{356       \textcolor{keywordtype}{size\_t} nx, \textcolor{keywordtype}{size\_t} ny, \textcolor{keywordtype}{size\_t} nz, std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1WaveFunction}{WaveFunction<T>}}> ref) :}
+\DoxyCodeLine{357       \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase}{WaveFunctionCubeGenBase}}(name,ct,\{nx,ny,nz\},ref)\{ \}}
+\DoxyCodeLine{358 }
+\DoxyCodeLine{359   \};}
+\DoxyCodeLine{360 }
+\DoxyCodeLine{361 }
+\DoxyCodeLine{362 }
+\DoxyCodeLine{363   \textcolor{keyword}{namespace }detail \{}
+\DoxyCodeLine{364 }
+\DoxyCodeLine{365     \textcolor{keyword}{template} <\textcolor{keyword}{typename} R, \textcolor{keyword}{typename} = \textcolor{keywordtype}{void}>}
+\DoxyCodeLine{366     \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1detail_1_1cube__gen__base__identity}{cube\_gen\_base\_identity}}\{ \};}
+\DoxyCodeLine{367 }
+\DoxyCodeLine{368     \textcolor{keyword}{template} <\textcolor{keyword}{typename} R>}
+\DoxyCodeLine{369     \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1detail_1_1cube__gen__base__identity}{cube\_gen\_base\_identity}}< R,}
+\DoxyCodeLine{370       typename std::enable\_if< }
+\DoxyCodeLine{371         std::is\_base\_of<WaveFunction<typename R::value\_type>,R>::value >::type}
+\DoxyCodeLine{372       > \{}
+\DoxyCodeLine{373 }
+\DoxyCodeLine{374         \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase}{base\_type}} = \mbox{\hyperlink{classChronusQ_1_1WaveFunctionCubeGenBase}{WaveFunctionCubeGenBase<typename R::value\_type>}};}
+\DoxyCodeLine{375 }
+\DoxyCodeLine{376     \};}
+\DoxyCodeLine{377 }
+\DoxyCodeLine{378   \};}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380   \textcolor{keyword}{template} < \textcolor{keyword}{typename} Reference, }
+\DoxyCodeLine{381              \textcolor{keyword}{typename} Base = }
+\DoxyCodeLine{382                \textcolor{keyword}{typename} \mbox{\hyperlink{structChronusQ_1_1detail_1_1cube__gen__base__identity}{detail::cube\_gen\_base\_identity<Reference>::base\_type}} >}
+\DoxyCodeLine{383   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1CubeGen}{CubeGen}} : \textcolor{keyword}{public} Base \{}
+\DoxyCodeLine{384 }
+\DoxyCodeLine{385 }
+\DoxyCodeLine{386     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1CubeGen_a6135fbaaa2df9b88d622fd004d40c783}{value\_type}} = \textcolor{keyword}{typename} Reference::value\_type;}
+\DoxyCodeLine{387 }
+\DoxyCodeLine{388     \textcolor{keyword}{public}:}
+\DoxyCodeLine{389 }
+\DoxyCodeLine{390       \mbox{\hyperlink{classChronusQ_1_1CubeGen_a22089ef680584f3505c439ce685e366e}{CubeGen}}( std::string name, \mbox{\hyperlink{namespaceChronusQ_af6b8cf0d9396e6aa3400969b5a15fa50}{CUBE\_TYPE}} ct, std::array<size\_t,3> npts,}
+\DoxyCodeLine{391         std::shared\_ptr<Reference> ref) :}
+\DoxyCodeLine{392         Base(name,ct,npts,std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1WaveFunction}{WaveFunction}}<\mbox{\hyperlink{classChronusQ_1_1CubeGen_a6135fbaaa2df9b88d622fd004d40c783}{value\_type}}>>(ref))\{ \}}
+\DoxyCodeLine{393 }
+\DoxyCodeLine{394   \};}
+\DoxyCodeLine{395 }
+\DoxyCodeLine{396 \};}
+\DoxyCodeLine{397 }
+
+\end{DoxyCode}

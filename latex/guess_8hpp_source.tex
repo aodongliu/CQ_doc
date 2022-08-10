@@ -1,0 +1,1213 @@
+\hypertarget{guess_8hpp_source}{}\doxysection{guess.\+hpp}
+\label{guess_8hpp_source}\index{include/singleslater/guess.hpp@{include/singleslater/guess.hpp}}
+\mbox{\hyperlink{guess_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg_8hpp}{cqlinalg.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrixfock_8hpp}{fockbuilder/matrixfock.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incore4indextpi_8hpp}{particleintegrals/twopints/incore4indextpi.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <wavefunction/base.hpp>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{41   \textcolor{keyword}{static} std::map<size\_t,size\_t> \mbox{\hyperlink{namespaceChronusQ_af6304b572fe9d370b4d1f1c8522604cd}{defaultMult}}(}
+\DoxyCodeLine{42     \{}
+\DoxyCodeLine{43       \{ 1  , 2 \}, \textcolor{comment}{// H}}
+\DoxyCodeLine{44       \{ 2  , 1 \}, \textcolor{comment}{// He}}
+\DoxyCodeLine{45       \{ 3  , 2 \}, \textcolor{comment}{// Li}}
+\DoxyCodeLine{46       \{ 4  , 1 \}, \textcolor{comment}{// Be}}
+\DoxyCodeLine{47       \{ 5  , 2 \}, \textcolor{comment}{// B}}
+\DoxyCodeLine{48       \{ 6  , 3 \}, \textcolor{comment}{// C}}
+\DoxyCodeLine{49       \{ 7  , 4 \}, \textcolor{comment}{// N}}
+\DoxyCodeLine{50       \{ 8  , 3 \}, \textcolor{comment}{// O}}
+\DoxyCodeLine{51       \{ 9  , 2 \}, \textcolor{comment}{// F}}
+\DoxyCodeLine{52       \{ 10 , 1 \}, \textcolor{comment}{// Ne}}
+\DoxyCodeLine{53       \{ 11 , 2 \}, \textcolor{comment}{// Na}}
+\DoxyCodeLine{54       \{ 12 , 1 \}, \textcolor{comment}{// Mg}}
+\DoxyCodeLine{55       \{ 13 , 2 \}, \textcolor{comment}{// Al}}
+\DoxyCodeLine{56       \{ 14 , 3 \}, \textcolor{comment}{// Si}}
+\DoxyCodeLine{57       \{ 15 , 4 \}, \textcolor{comment}{// P}}
+\DoxyCodeLine{58       \{ 16 , 3 \}, \textcolor{comment}{// S}}
+\DoxyCodeLine{59       \{ 17 , 2 \}, \textcolor{comment}{// Cl}}
+\DoxyCodeLine{60       \{ 18 , 1 \}, \textcolor{comment}{// Ar}}
+\DoxyCodeLine{61       \{ 19 , 2 \}, \textcolor{comment}{// K}}
+\DoxyCodeLine{62       \{ 20 , 1 \}, \textcolor{comment}{// Ca}}
+\DoxyCodeLine{63       \{ 21 , 2 \}, \textcolor{comment}{// Sc}}
+\DoxyCodeLine{64       \{ 22 , 3 \}, \textcolor{comment}{// Ti}}
+\DoxyCodeLine{65       \{ 23 , 4 \}, \textcolor{comment}{// V}}
+\DoxyCodeLine{66       \{ 24 , 7 \}, \textcolor{comment}{// Cr}}
+\DoxyCodeLine{67       \{ 25 , 6 \}, \textcolor{comment}{// Mn}}
+\DoxyCodeLine{68       \{ 26 , 5 \}, \textcolor{comment}{// Fe}}
+\DoxyCodeLine{69       \{ 27 , 4 \}, \textcolor{comment}{// Co}}
+\DoxyCodeLine{70       \{ 28 , 3 \}, \textcolor{comment}{// Ni}}
+\DoxyCodeLine{71       \{ 29 , 2 \}, \textcolor{comment}{// Cu}}
+\DoxyCodeLine{72       \{ 30 , 1 \}, \textcolor{comment}{// Zn}}
+\DoxyCodeLine{73       \{ 31 , 2 \}, \textcolor{comment}{// Ga}}
+\DoxyCodeLine{74       \{ 32 , 3 \}, \textcolor{comment}{// Ge}}
+\DoxyCodeLine{75       \{ 33 , 4 \}, \textcolor{comment}{// As}}
+\DoxyCodeLine{76       \{ 34 , 3 \}, \textcolor{comment}{// Se}}
+\DoxyCodeLine{77       \{ 35 , 2 \}, \textcolor{comment}{// Br}}
+\DoxyCodeLine{78       \{ 36 , 1 \}, \textcolor{comment}{// Kr}}
+\DoxyCodeLine{79       \{ 37 , 2 \}, \textcolor{comment}{// Rb}}
+\DoxyCodeLine{80       \{ 38 , 1 \}, \textcolor{comment}{// Sr}}
+\DoxyCodeLine{81       \{ 39 , 2 \}, \textcolor{comment}{// Y}}
+\DoxyCodeLine{82       \{ 40 , 3 \}, \textcolor{comment}{// Zr}}
+\DoxyCodeLine{83       \{ 41 , 6 \}, \textcolor{comment}{// Nb}}
+\DoxyCodeLine{84       \{ 42 , 7 \}, \textcolor{comment}{// Mo}}
+\DoxyCodeLine{85       \{ 43 , 6 \}, \textcolor{comment}{// Tc}}
+\DoxyCodeLine{86       \{ 44 , 5 \}, \textcolor{comment}{// Ru}}
+\DoxyCodeLine{87       \{ 45 , 4 \}, \textcolor{comment}{// Rh}}
+\DoxyCodeLine{88       \{ 46 , 1 \}, \textcolor{comment}{// Pd}}
+\DoxyCodeLine{89       \{ 47 , 2 \}, \textcolor{comment}{// Ag}}
+\DoxyCodeLine{90       \{ 48 , 1 \}, \textcolor{comment}{// Cd}}
+\DoxyCodeLine{91       \{ 49 , 2 \}, \textcolor{comment}{// In}}
+\DoxyCodeLine{92       \{ 50 , 3 \}, \textcolor{comment}{// Sn}}
+\DoxyCodeLine{93       \{ 51 , 4 \}, \textcolor{comment}{// Sb}}
+\DoxyCodeLine{94       \{ 52 , 3 \}, \textcolor{comment}{// Te}}
+\DoxyCodeLine{95       \{ 53 , 2 \}, \textcolor{comment}{// I}}
+\DoxyCodeLine{96       \{ 54 , 1 \}, \textcolor{comment}{// Xe}}
+\DoxyCodeLine{97       \{ 55 , 2 \}, \textcolor{comment}{// Cs}}
+\DoxyCodeLine{98       \{ 56 , 1 \}, \textcolor{comment}{// Ba}}
+\DoxyCodeLine{99       \{ 57 , 2 \}, \textcolor{comment}{// La}}
+\DoxyCodeLine{100       \{ 58 , 1 \}, \textcolor{comment}{// Ce}}
+\DoxyCodeLine{101       \{ 59 , 4 \}, \textcolor{comment}{// Pr}}
+\DoxyCodeLine{102       \{ 60 , 5 \}, \textcolor{comment}{// Nd}}
+\DoxyCodeLine{103       \{ 61 , 6 \}, \textcolor{comment}{// Pm}}
+\DoxyCodeLine{104       \{ 62 , 7 \}, \textcolor{comment}{// Sm}}
+\DoxyCodeLine{105       \{ 63 , 8 \}, \textcolor{comment}{// Eu}}
+\DoxyCodeLine{106       \{ 64 , 9 \}, \textcolor{comment}{// Gd}}
+\DoxyCodeLine{107       \{ 65 , 6 \}, \textcolor{comment}{// Tb}}
+\DoxyCodeLine{108       \{ 66 , 5 \}, \textcolor{comment}{// Dy}}
+\DoxyCodeLine{109       \{ 67 , 4 \}, \textcolor{comment}{// Ho}}
+\DoxyCodeLine{110       \{ 68 , 3 \}, \textcolor{comment}{// Er}}
+\DoxyCodeLine{111       \{ 69 , 2 \}, \textcolor{comment}{// Tm}}
+\DoxyCodeLine{112       \{ 70 , 1 \}, \textcolor{comment}{// Yb}}
+\DoxyCodeLine{113       \{ 71 , 2 \}, \textcolor{comment}{// Lu}}
+\DoxyCodeLine{114       \{ 72 , 3 \}, \textcolor{comment}{// Hf}}
+\DoxyCodeLine{115       \{ 73 , 4 \}, \textcolor{comment}{// Ta}}
+\DoxyCodeLine{116       \{ 74 , 5 \}, \textcolor{comment}{// W}}
+\DoxyCodeLine{117       \{ 75 , 6 \}, \textcolor{comment}{// Re}}
+\DoxyCodeLine{118       \{ 76 , 5 \}, \textcolor{comment}{// Os}}
+\DoxyCodeLine{119       \{ 77 , 4 \}, \textcolor{comment}{// Ir}}
+\DoxyCodeLine{120       \{ 78 , 3 \}, \textcolor{comment}{// Pt}}
+\DoxyCodeLine{121       \{ 79 , 2 \}, \textcolor{comment}{// Au}}
+\DoxyCodeLine{122       \{ 80 , 1 \}, \textcolor{comment}{// Hg}}
+\DoxyCodeLine{123       \{ 81 , 2 \}, \textcolor{comment}{// Tl}}
+\DoxyCodeLine{124       \{ 82 , 3 \}, \textcolor{comment}{// Pb}}
+\DoxyCodeLine{125       \{ 83 , 4 \}, \textcolor{comment}{// Bi}}
+\DoxyCodeLine{126       \{ 84 , 3 \}, \textcolor{comment}{// Po}}
+\DoxyCodeLine{127       \{ 85 , 2 \}, \textcolor{comment}{// At}}
+\DoxyCodeLine{128       \{ 86 , 1 \}, \textcolor{comment}{// Rn}}
+\DoxyCodeLine{129       \{ 87 , 2 \}, \textcolor{comment}{// Fr}}
+\DoxyCodeLine{130       \{ 88 , 1 \}, \textcolor{comment}{// Ra}}
+\DoxyCodeLine{131       \{ 89 , 2 \}, \textcolor{comment}{// Ac}}
+\DoxyCodeLine{132       \{ 90 , 3 \}, \textcolor{comment}{// Th}}
+\DoxyCodeLine{133       \{ 91 , 4 \}, \textcolor{comment}{// Pa}}
+\DoxyCodeLine{134       \{ 92 , 5 \}, \textcolor{comment}{// U}}
+\DoxyCodeLine{135       \{ 93 , 6 \}, \textcolor{comment}{// Np}}
+\DoxyCodeLine{136       \{ 94 , 7 \}, \textcolor{comment}{// Pu}}
+\DoxyCodeLine{137       \{ 95 , 8 \}, \textcolor{comment}{// Am}}
+\DoxyCodeLine{138       \{ 96 , 9 \}, \textcolor{comment}{// Cm}}
+\DoxyCodeLine{139       \{ 97 , 6 \}, \textcolor{comment}{// Bk}}
+\DoxyCodeLine{140       \{ 98 , 5 \}, \textcolor{comment}{// Cf}}
+\DoxyCodeLine{141       \{ 99 , 4 \}, \textcolor{comment}{// Es}}
+\DoxyCodeLine{142     \}}
+\DoxyCodeLine{143   );}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145 }
+\DoxyCodeLine{150   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{151   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ad92d1fc80b60a5b26ceb4fb299fde3fd}{SingleSlater<MatsT,IntsT>::formGuess}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1SingleSlaterOptions}{SingleSlaterOptions}} \&ssOptions) \{}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Form Guess"{}});}
+\DoxyCodeLine{154      }
+\DoxyCodeLine{155     \textcolor{comment}{// populate AO-\/fock Matrix}}
+\DoxyCodeLine{156     \textcolor{keywordflow}{if}( printLevel > 0 )}
+\DoxyCodeLine{157       std::cout << \textcolor{stringliteral}{"{}  *** Forming Initial Guess Density for SCF Procedure ***"{}}}
+\DoxyCodeLine{158                 << std::endl << std::endl;}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160     \textcolor{comment}{// Form initial density}}
+\DoxyCodeLine{161     \textcolor{comment}{// NOTE: The only postcondition that is necessarily satisfied by these}}
+\DoxyCodeLine{162     \textcolor{comment}{//   methods is that onePDM has been populated by a guess density. It does}}
+\DoxyCodeLine{163     \textcolor{comment}{//   NOT necessarily form an initial Fock matrix (sp. ReadMO/Read1PDM)}}
+\DoxyCodeLine{164     \textcolor{comment}{//}}
+\DoxyCodeLine{165     \textcolor{comment}{//   MO's are also initialized because they are needed before the first}}
+\DoxyCodeLine{166     \textcolor{comment}{//   fock build for RI/Cholesky.}}
+\DoxyCodeLine{167     \textcolor{keywordflow}{if} (std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1MatrixFock}{MatrixFock<MatsT,IntsT>}}>(fockBuilder)) \{}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} emPert;}
+\DoxyCodeLine{170       fockBuilder-\/>formFock(*\textcolor{keyword}{this}, emPert, \textcolor{keyword}{false}, 0.0);}
+\DoxyCodeLine{171       \mbox{\hyperlink{namespaceChronusQ_a3acaa28fc32531f8292672cf3e259b45}{getNewOrbitals}}();}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175       \textcolor{keywordflow}{if}( this-\/>molecule().nAtoms == 1  and \mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.guess == \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6ea23187c33c11d5287ae288934894b33c6}{SAD}} ) \{}
+\DoxyCodeLine{176         CoreGuess();}
+\DoxyCodeLine{177       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( \mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.guess == \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6eaf606ef2ee36ec22dbee81b070a28e645}{CORE}} ) CoreGuess();}
+\DoxyCodeLine{178       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( \mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.guess == \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6eac00c628c16ea3a39a8c72e546e5229b8}{TIGHT}} ) TightGuess();}
+\DoxyCodeLine{179       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( \mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.guess == \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6ea23187c33c11d5287ae288934894b33c6}{SAD}} ) SADGuess(ssOptions);}
+\DoxyCodeLine{180       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( \mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.guess == \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6eaf4a8b146b95f8d2f24a34fa6b40d3de8}{RANDOM}} ) RandomGuess();}
+\DoxyCodeLine{181       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( \mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.guess == \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6ea99decb997e36d57a8579964049d5e81f}{READMO}} ) ReadGuessMO();}
+\DoxyCodeLine{182       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( \mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.guess == \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6ea5b79049d2fa1198e905f475aa297fc0f}{READDEN}} ) ReadGuess1PDM();}
+\DoxyCodeLine{183       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( \mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.guess == \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6eadf5ba54495088700ef4dc5535df76401}{FCHKMO}} ) FchkGuessMO();}
+\DoxyCodeLine{184       \textcolor{keywordflow}{else} \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Unknown choice for SCF.GUESS"{}},std::cout);}
+\DoxyCodeLine{185     \}}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187     \textcolor{comment}{// If RANDOM guess, scale the densites appropriately}}
+\DoxyCodeLine{188     \textcolor{comment}{// *** Replicates on all MPI processes ***}}
+\DoxyCodeLine{189     \textcolor{keywordflow}{if}( \mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.guess == \mbox{\hyperlink{namespaceChronusQ_a972440766235868d33b9daf0f27a1b6eaf4a8b146b95f8d2f24a34fa6b40d3de8}{RANDOM}} ) \{}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191       \textcolor{keywordtype}{size\_t} NB = this-\/>basisSet().nBasis;}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193       \textcolor{keywordtype}{double} TS =}
+\DoxyCodeLine{194         this-\/>\textcolor{keyword}{template} computeOBProperty<SCALAR>(this-\/>aoints.overlap-\/>pointer());}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196       \textcolor{keywordtype}{double} TZ =}
+\DoxyCodeLine{197         this-\/>\textcolor{keyword}{template} computeOBProperty<MZ>(this-\/>aoints.overlap-\/>pointer());}
+\DoxyCodeLine{198       \textcolor{keywordtype}{double} TY =}
+\DoxyCodeLine{199         this-\/>\textcolor{keyword}{template} computeOBProperty<MY>(this-\/>aoints.overlap-\/>pointer());}
+\DoxyCodeLine{200       \textcolor{keywordtype}{double} TX =}
+\DoxyCodeLine{201         this-\/>\textcolor{keyword}{template} computeOBProperty<MX>(this-\/>aoints.overlap-\/>pointer());}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203       \textcolor{keywordtype}{double} magNorm = std::sqrt(TZ*TZ + TY*TY + TX*TX);}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205       this-\/>onePDM-\/>S() *= MatsT(this-\/>nO)/MatsT(TS);}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207       \textcolor{keywordtype}{double} factorXYZ = magNorm > 1e-\/10 ? (this-\/>nOA -\/ this-\/>nOB)/magNorm : 0.0;}
+\DoxyCodeLine{208       \textcolor{keywordflow}{if} (this-\/>onePDM-\/>hasZ())}
+\DoxyCodeLine{209         this-\/>onePDM-\/>Z() *= factorXYZ;}
+\DoxyCodeLine{210       \textcolor{keywordflow}{if} (this-\/>onePDM-\/>hasXY()) \{}
+\DoxyCodeLine{211         this-\/>onePDM-\/>Y() *= factorXYZ;}
+\DoxyCodeLine{212         this-\/>onePDM-\/>X() *= factorXYZ;}
+\DoxyCodeLine{213       \}}
+\DoxyCodeLine{214 }
+\DoxyCodeLine{215     \}}
+\DoxyCodeLine{216 }
+\DoxyCodeLine{217     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Form Guess"{}});}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219   \}; \textcolor{comment}{// SingleSlater<T>::formGuess}}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{225   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{226   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ad727bdcd5f516427e9ac81a240478273}{SingleSlater<MatsT,IntsT>::TightGuess}}() \{}
+\DoxyCodeLine{227     std::vector<size\_t> occ;}
+\DoxyCodeLine{228     \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\& basis = this-\/>basisSet();}
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230     this-\/>onePDM-\/>clear();}
+\DoxyCodeLine{231 }
+\DoxyCodeLine{232     \textcolor{comment}{// Get the shells on this atom}}
+\DoxyCodeLine{233     std::vector<size\_t> atShells;}
+\DoxyCodeLine{234     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iSh = 0; iSh < basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}.size(); iSh++ ) \{}
+\DoxyCodeLine{235       atShells.push\_back(iSh);}
+\DoxyCodeLine{236     \}}
+\DoxyCodeLine{237 }
+\DoxyCodeLine{238     \textcolor{comment}{// Shells in descending order of tightest primative}}
+\DoxyCodeLine{239     \textcolor{comment}{// XXX: This is not necessarily the "{}tightest"{} basis function;}}
+\DoxyCodeLine{240     \textcolor{comment}{//      We should also account for the coefficients for generalized contractions}}
+\DoxyCodeLine{241     std::stable\_sort(atShells.begin(), atShells.end(), }
+\DoxyCodeLine{242       [\&basis](\textcolor{keywordtype}{size\_t} sh1, \textcolor{keywordtype}{size\_t} sh2) \{}
+\DoxyCodeLine{243         libint2::Shell\& shell1 = basis.shells[sh1];}
+\DoxyCodeLine{244         libint2::Shell\& shell2 = basis.shells[sh2];}
+\DoxyCodeLine{245         auto sh1m = std::max\_element(shell1.alpha.begin(), shell1.alpha.end());}
+\DoxyCodeLine{246         auto sh2m = std::max\_element(shell2.alpha.begin(), shell2.alpha.end());}
+\DoxyCodeLine{247         return *sh1m > *sh2m;}
+\DoxyCodeLine{248       \}}
+\DoxyCodeLine{249     );}
+\DoxyCodeLine{250 }
+\DoxyCodeLine{251     \textcolor{comment}{// Occupy tightest basis functions}}
+\DoxyCodeLine{252     \textcolor{keywordtype}{size\_t} npart = this-\/>nOA;}
+\DoxyCodeLine{253     \textcolor{keywordtype}{size\_t} ishell = 0;}
+\DoxyCodeLine{254     \textcolor{keywordflow}{while}( npart > 0 ) \{}
+\DoxyCodeLine{255       std::cout << \textcolor{stringliteral}{"{}npart: "{}} << npart << std::endl;}
+\DoxyCodeLine{256       \textcolor{keywordtype}{size\_t} loc = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{mapSh2Bf}}[atShells[ishell]];}
+\DoxyCodeLine{257       \textcolor{keywordtype}{size\_t} nbas = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[atShells[ishell]].size();}
+\DoxyCodeLine{258       \textcolor{keywordtype}{size\_t} nadd = std::min(nbas, npart);}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iadd = 0; iadd < nadd; iadd++, npart-\/-\/) \{}
+\DoxyCodeLine{261           this-\/>onePDM-\/>S()(loc+iadd, loc+iadd) = 1.;}
+\DoxyCodeLine{262       \}}
+\DoxyCodeLine{263       ishell += 1;}
+\DoxyCodeLine{264     \}}
+\DoxyCodeLine{265 }
+\DoxyCodeLine{266     \textcolor{comment}{// Make charge and multiplicity correct}}
+\DoxyCodeLine{267     \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() and \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm) == 0 ) \{}
+\DoxyCodeLine{268       this-\/>onePDM-\/>Z() = (MatsT(this-\/>nOA -\/ this-\/>nOB) / MatsT(this-\/>nOA)) * this-\/>onePDM-\/>S();}
+\DoxyCodeLine{269     \}}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271     this-\/>onePDM-\/>output(std::cout, \textcolor{stringliteral}{"{}Guess PDM"{}}, \textcolor{keyword}{true});}
+\DoxyCodeLine{272   \};}
+\DoxyCodeLine{273 }
+\DoxyCodeLine{282   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{283   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a9d1dbf57bdb6c7135eaf3b512e887cd1}{SingleSlater<MatsT,IntsT>::CoreGuess}}() \{}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285     \textcolor{keywordflow}{if}( printLevel > 0 )}
+\DoxyCodeLine{286       std::cout << \textcolor{stringliteral}{"{}    * Forming the Core Hamiltonian Guess (F = H)\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288     \textcolor{comment}{// Form the core guess Fock matrix on the root MPI process}}
+\DoxyCodeLine{289     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm) == 0 )}
+\DoxyCodeLine{290       \textcolor{comment}{// Copy over the Core Hamiltonian}}
+\DoxyCodeLine{291       *fockMatrix = *coreH;}
+\DoxyCodeLine{292 }
+\DoxyCodeLine{293 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{294     \textcolor{comment}{// BCast random fock to all MPI processes}}
+\DoxyCodeLine{295     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm) > 1 ) \{}
+\DoxyCodeLine{296       std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering the CORE GUESS Fock ***\(\backslash\)n"{}};}
+\DoxyCodeLine{297       \textcolor{keywordtype}{size\_t} NB = this-\/>fockMatrix-\/>dimension();}
+\DoxyCodeLine{298       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} mat : this-\/>fockMatrix-\/>SZYXPointers())}
+\DoxyCodeLine{299         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(mat,NB*NB,0,comm);}
+\DoxyCodeLine{300     \}}
+\DoxyCodeLine{301 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{302 }
+\DoxyCodeLine{303     \textcolor{comment}{// Forming Orbitals from core guess}}
+\DoxyCodeLine{304     \mbox{\hyperlink{namespaceChronusQ_a3acaa28fc32531f8292672cf3e259b45}{getNewOrbitals}}();}
+\DoxyCodeLine{305 }
+\DoxyCodeLine{306   \}; \textcolor{comment}{// SingleSlater::CoreGuess}}
+\DoxyCodeLine{307 }
+\DoxyCodeLine{311   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{312   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a1b75ce41c298bf218fb2c3a7d6d32913}{SingleSlater<MatsT,IntsT>::SADGuess}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1SingleSlaterOptions}{SingleSlaterOptions}} \&ssOptions) \{}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314 }
+\DoxyCodeLine{315 }
+\DoxyCodeLine{316     \textcolor{comment}{// ROOT Communicator}}
+\DoxyCodeLine{317     \textcolor{keywordtype}{int} color = (\mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm) == 0) ? 1 : \mbox{\hyperlink{mpi_8hpp_aff6b3ceb2c22396e5eab7f509b3da0dc}{MPI\_UNDEFINED}};}
+\DoxyCodeLine{318     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} rcomm = \mbox{\hyperlink{namespaceChronusQ_a25b765abdb845e0ca3adb846155b3878}{MPICommSplit}}(comm,color,0);}
+\DoxyCodeLine{319 }
+\DoxyCodeLine{320     \textcolor{comment}{//std::cerr << "{}RCOMM "{} << rcomm << std::endl;}}
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322     \textcolor{keywordflow}{if}( printLevel > 0 )}
+\DoxyCodeLine{323       std::cout << \textcolor{stringliteral}{"{}    * Forming the Superposition of Atomic Densities Guess"{}}}
+\DoxyCodeLine{324                 << \textcolor{stringliteral}{"{} (SAD)\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{325 }
+\DoxyCodeLine{326     \textcolor{keywordtype}{size\_t} NB = this-\/>basisSet().nBasis;}
+\DoxyCodeLine{327     \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} pert;}
+\DoxyCodeLine{328 }
+\DoxyCodeLine{329     \textcolor{comment}{// Zero out the densities (For all MPI processes)}}
+\DoxyCodeLine{330     this-\/>onePDM-\/>clear();}
+\DoxyCodeLine{331 }
+\DoxyCodeLine{332 }
+\DoxyCodeLine{333     \textcolor{comment}{// Determine the unique atoms}}
+\DoxyCodeLine{334     std::vector<Atom> uniqueElements(this-\/>molecule().atoms);}
+\DoxyCodeLine{335 }
+\DoxyCodeLine{336     \textcolor{comment}{// Sort the Atoms by atomic number for std::unique}}
+\DoxyCodeLine{337     std::sort(uniqueElements.begin(),uniqueElements.end(),}
+\DoxyCodeLine{338       [](\mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}} \&a, \mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}} \&b) \{}
+\DoxyCodeLine{339         return a.atomicNumber < b.atomicNumber;}
+\DoxyCodeLine{340       \});}
+\DoxyCodeLine{341 }
+\DoxyCodeLine{342     \textcolor{comment}{// Obtain unique elements on sorted list}}
+\DoxyCodeLine{343     \textcolor{keyword}{auto} it = std::unique(uniqueElements.begin(),uniqueElements.end(),}
+\DoxyCodeLine{344                 [](\mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}} \&a, \mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}} \&b)\{}
+\DoxyCodeLine{345                   return a.atomicNumber == b.atomicNumber;}
+\DoxyCodeLine{346                 \});}
+\DoxyCodeLine{347 }
+\DoxyCodeLine{348     \textcolor{comment}{// Remove excess elements}}
+\DoxyCodeLine{349     uniqueElements.resize(std::distance(uniqueElements.begin(),it));}
+\DoxyCodeLine{350 }
+\DoxyCodeLine{351     \textcolor{keywordflow}{if}( printLevel > 0 )}
+\DoxyCodeLine{352       std::cout << \textcolor{stringliteral}{"{}  *** Found "{}} << uniqueElements.size()}
+\DoxyCodeLine{353                 << \textcolor{stringliteral}{"{} unique Atoms in Molecule Specification ***\(\backslash\)n"{}};}
+\DoxyCodeLine{354 }
+\DoxyCodeLine{355 }
+\DoxyCodeLine{356     \textcolor{comment}{// Set all atomic centers to origin and force classical}}
+\DoxyCodeLine{357     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&u : uniqueElements) \{}
+\DoxyCodeLine{358       u.coord = \{0.,0.,0.\};}
+\DoxyCodeLine{359       u.quantum = \textcolor{keyword}{false};}
+\DoxyCodeLine{360     \}}
+\DoxyCodeLine{361 }
+\DoxyCodeLine{362     \textcolor{comment}{// Create a map from atoms in molecule to unique atom index}}
+\DoxyCodeLine{363     std::map<size\_t,size\_t> mapAtom2Uniq;}
+\DoxyCodeLine{364     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iAtm = 0ul; iAtm < this-\/>molecule().nAtoms; iAtm++) \{}
+\DoxyCodeLine{365       \textcolor{keywordtype}{size\_t} curAtomicNumber = this-\/>molecule().atoms[iAtm].atomicNumber;}
+\DoxyCodeLine{366 }
+\DoxyCodeLine{367       \textcolor{keyword}{auto} el = std::find\_if(uniqueElements.begin(),uniqueElements.end(),}
+\DoxyCodeLine{368                   [\&](\mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}} \&a)\{return a.atomicNumber == curAtomicNumber;\});}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370       \textcolor{keywordflow}{if}( el == uniqueElements.end() )}
+\DoxyCodeLine{371         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Whoops! Can't find atom in unique list! Contact a developer!"{}});}
+\DoxyCodeLine{372 }
+\DoxyCodeLine{373       mapAtom2Uniq[iAtm] = std::distance(uniqueElements.begin(),el);}
+\DoxyCodeLine{374     \}}
+\DoxyCodeLine{375 }
+\DoxyCodeLine{376     \textcolor{keywordflow}{if}( printLevel > 0 )}
+\DoxyCodeLine{377       std::cout << \textcolor{stringliteral}{"{}  *** Running "{}} << uniqueElements.size()}
+\DoxyCodeLine{378                 << \textcolor{stringliteral}{"{} Atomic SCF calculations for SAD Guess ***\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380 }
+\DoxyCodeLine{381     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm) == 0 )}
+\DoxyCodeLine{382     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iUn = 0; iUn < uniqueElements.size(); iUn++) \{}
+\DoxyCodeLine{383 }
+\DoxyCodeLine{384       \textcolor{comment}{// Get default multiplicity for the Atom}}
+\DoxyCodeLine{385       \textcolor{keywordtype}{size\_t} defaultMultip;}
+\DoxyCodeLine{386       \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{387         defaultMultip = \mbox{\hyperlink{namespaceChronusQ_af6304b572fe9d370b4d1f1c8522604cd}{defaultMult}}[uniqueElements[iUn].atomicNumber];}
+\DoxyCodeLine{388       \} \textcolor{keywordflow}{catch}(...) \{}
+\DoxyCodeLine{389         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}AtomZ = "{}} + std::to\_string(uniqueElements[iUn].atomicNumber)}
+\DoxyCodeLine{390              + \textcolor{stringliteral}{"{} not supported for SAD Guess"{}});}
+\DoxyCodeLine{391       \}}
+\DoxyCodeLine{392 }
+\DoxyCodeLine{393 }
+\DoxyCodeLine{394       std::string multipName;}
+\DoxyCodeLine{395       \textcolor{keywordflow}{switch}( defaultMultip ) \{}
+\DoxyCodeLine{396 }
+\DoxyCodeLine{397         \textcolor{keywordflow}{case} 1: multipName = \textcolor{stringliteral}{"{}Singlet"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{398         \textcolor{keywordflow}{case} 2: multipName = \textcolor{stringliteral}{"{}Doublet"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{399         \textcolor{keywordflow}{case} 3: multipName = \textcolor{stringliteral}{"{}Triplet"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{400         \textcolor{keywordflow}{case} 4: multipName = \textcolor{stringliteral}{"{}Quadruplet"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{401         \textcolor{keywordflow}{case} 5: multipName = \textcolor{stringliteral}{"{}Quintuplet"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{402         \textcolor{keywordflow}{case} 6: multipName = \textcolor{stringliteral}{"{}Sextuplet"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{403         \textcolor{keywordflow}{case} 7: multipName = \textcolor{stringliteral}{"{}Septuplet"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{404         \textcolor{keywordflow}{case} 8: multipName = \textcolor{stringliteral}{"{}Octuplet"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{405 }
+\DoxyCodeLine{406         \textcolor{keywordflow}{default}: multipName = \textcolor{stringliteral}{"{}UNKNOWN"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{407 }
+\DoxyCodeLine{408       \}}
+\DoxyCodeLine{409 }
+\DoxyCodeLine{410 }
+\DoxyCodeLine{411       \textcolor{keywordflow}{if}( printLevel > 0 )}
+\DoxyCodeLine{412         std::cout << \textcolor{stringliteral}{"{}    * Running AtomZ = "{}}}
+\DoxyCodeLine{413                   << uniqueElements[iUn].atomicNumber << \textcolor{stringliteral}{"{} as a "{}}}
+\DoxyCodeLine{414                   << multipName << std::endl;}
+\DoxyCodeLine{415 }
+\DoxyCodeLine{416       \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86}{BASIS\_FUNCTION\_TYPE}} basisType = this-\/>basisSet().basisType;}
+\DoxyCodeLine{417 }
+\DoxyCodeLine{418       \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} atom(0,defaultMultip,\{ uniqueElements[iUn] \});}
+\DoxyCodeLine{419       \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} basis(this-\/>basisSet().basisName,}
+\DoxyCodeLine{420         this-\/>basisSet().basisDef, this-\/>basisSet().inputDef,}
+\DoxyCodeLine{421         atom, basisType, this-\/>basisSet().forceCart, \textcolor{keyword}{false});}
+\DoxyCodeLine{422 }
+\DoxyCodeLine{423       std::shared\_ptr<Integrals<IntsT>> aointsAtom =}
+\DoxyCodeLine{424           std::make\_shared<Integrals<IntsT>>();}
+\DoxyCodeLine{425       aointsAtom-\/>TPI = std::make\_shared<InCore4indexTPI<IntsT>>(}
+\DoxyCodeLine{426           memManager,basis.nBasis);}
+\DoxyCodeLine{427 }
+\DoxyCodeLine{428       \mbox{\hyperlink{structChronusQ_1_1SingleSlaterOptions}{SingleSlaterOptions}} guessSSOptions(ssOptions);}
+\DoxyCodeLine{429       guessSSOptions.refOptions.iCS = defaultMultip == 1;}
+\DoxyCodeLine{430 }
+\DoxyCodeLine{431       std::shared\_ptr<SingleSlater<MatsT,IntsT>> ss =}
+\DoxyCodeLine{432           std::dynamic\_pointer\_cast<SingleSlater<MatsT,IntsT>>(}
+\DoxyCodeLine{433               guessSSOptions.buildSingleSlater(std::cout, memManager,}
+\DoxyCodeLine{434                   atom, basis, aointsAtom));}
+\DoxyCodeLine{435 }
+\DoxyCodeLine{436       ss-\/>comm = rcomm;}
+\DoxyCodeLine{437       ss-\/>printLevel = 0;}
+\DoxyCodeLine{438       ss-\/>scfControls.scfAlg = \mbox{\hyperlink{namespaceChronusQ_a01fc09180142c9ef18c921fb1807c2d4a8ffcf4a789f0831f6b3cfa72fa81f216}{\_CONVENTIONAL\_SCF}};}
+\DoxyCodeLine{439       ss-\/>scfControls.doIncFock = \textcolor{keyword}{false};}
+\DoxyCodeLine{440       ss-\/>scfControls.dampError = 1e-\/4;}
+\DoxyCodeLine{441       ss-\/>scfControls.nKeep     = 8;}
+\DoxyCodeLine{442       ss-\/>buildModifyOrbitals();}
+\DoxyCodeLine{443 }
+\DoxyCodeLine{444       ss-\/>formCoreH(pert, \textcolor{keyword}{false});}
+\DoxyCodeLine{445       aointsAtom-\/>TPI-\/>computeAOInts(basis, atom, pert,}
+\DoxyCodeLine{446           \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554aafe7a7f3e7a054d992c707c63f674c08}{ELECTRON\_REPULSION}}, guessSSOptions.hamiltonianOptions);}
+\DoxyCodeLine{447 }
+\DoxyCodeLine{448 }
+\DoxyCodeLine{449       ss-\/>formGuess(ssOptions);}
+\DoxyCodeLine{450       ss-\/>runModifyOrbitals(pert);}
+\DoxyCodeLine{451 }
+\DoxyCodeLine{452       \textcolor{keywordtype}{size\_t} NBbasis = basis.nBasis;}
+\DoxyCodeLine{453 }
+\DoxyCodeLine{454       \textcolor{comment}{// Place the atomic densities into the guess density}}
+\DoxyCodeLine{455       \textcolor{comment}{// *** This only places it into root MPI process ***}}
+\DoxyCodeLine{456 }
+\DoxyCodeLine{457       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iAtm = 0; iAtm < mapAtom2Uniq.size(); iAtm++)}
+\DoxyCodeLine{458         \textcolor{keywordflow}{if}( mapAtom2Uniq[iAtm] == iUn ) \{}
+\DoxyCodeLine{459           \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},NBbasis,NBbasis,MatsT(1.),}
+\DoxyCodeLine{460               ss-\/>onePDM-\/>S().pointer(),NBbasis,}
+\DoxyCodeLine{461               this-\/>onePDM-\/>S().pointer() + this-\/>basisSet().mapCen2BfSt[iAtm]*(1+NB), NB);}
+\DoxyCodeLine{462         \}}
+\DoxyCodeLine{463 }
+\DoxyCodeLine{464     \}}
+\DoxyCodeLine{465 }
+\DoxyCodeLine{466     \textcolor{comment}{// Spin-\/Average the SAD density (on MPI root)}}
+\DoxyCodeLine{467     \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() and \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm) == 0 ) \{}
+\DoxyCodeLine{468       this-\/>onePDM-\/>Z() = (MatsT(this-\/>nOA -\/ this-\/>nOB) / MatsT(this-\/>nO)) * this-\/>onePDM-\/>S();}
+\DoxyCodeLine{469     \}}
+\DoxyCodeLine{470 }
+\DoxyCodeLine{471 }
+\DoxyCodeLine{472 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{473     \textcolor{comment}{// Broadcast the 1PDM to all MPI processes}}
+\DoxyCodeLine{474     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm) > 1 ) \{}
+\DoxyCodeLine{475       std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering the SAD Density ***\(\backslash\)n"{}};}
+\DoxyCodeLine{476       \textcolor{keywordflow}{for}(MatsT *mat : this-\/>onePDM-\/>SZYXPointers())}
+\DoxyCodeLine{477         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(mat,NB*NB,0,comm);}
+\DoxyCodeLine{478     \}}
+\DoxyCodeLine{479 }
+\DoxyCodeLine{480     \textcolor{comment}{// Free the ROOT communicator}}
+\DoxyCodeLine{481     \textcolor{keywordflow}{if}( rcomm != \mbox{\hyperlink{namespaceChronusQ_a64b7658dac48bb68d8e0e82c988202fd}{MPI\_COMM\_NULL}}) \mbox{\hyperlink{namespaceChronusQ_ae9c2c6f04046395ca738d3adb27543d7}{MPICommFree}}(rcomm);}
+\DoxyCodeLine{482 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{483 }
+\DoxyCodeLine{484 }
+\DoxyCodeLine{485     \textcolor{keywordflow}{if}( printLevel > 0 )}
+\DoxyCodeLine{486       std::cout << std::endl}
+\DoxyCodeLine{487                 << \textcolor{stringliteral}{"{}  *** Forming Initial Fock Matrix from SAD Density ***\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{488 }
+\DoxyCodeLine{489     ao2orthoDen();}
+\DoxyCodeLine{490     computeNaturalOrbitals();}
+\DoxyCodeLine{491 }
+\DoxyCodeLine{492   \}; \textcolor{comment}{// SingleSlater<T>::SADGuess}}
+\DoxyCodeLine{493 }
+\DoxyCodeLine{494 }
+\DoxyCodeLine{495 }
+\DoxyCodeLine{496   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{497   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab3cbcb35d2907570beba58b128ad8f08}{SingleSlater<MatsT,IntsT>::RandomGuess}}() \{}
+\DoxyCodeLine{498 }
+\DoxyCodeLine{499     \textcolor{keywordtype}{size\_t} NB = this-\/>basisSet().nBasis;}
+\DoxyCodeLine{500 }
+\DoxyCodeLine{501     \textcolor{comment}{// Set up random number generator}}
+\DoxyCodeLine{502     std::random\_device rd;}
+\DoxyCodeLine{503     std::mt19937 gen(rd());}
+\DoxyCodeLine{504 \textcolor{comment}{//  std::uniform\_real\_distribution<> dis(-\/5,5);}}
+\DoxyCodeLine{505     std::normal\_distribution<> dis(0,5);}
+\DoxyCodeLine{506 }
+\DoxyCodeLine{507     \textcolor{comment}{// Form the random Fock matrix on the root MPI process}}
+\DoxyCodeLine{508     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm) == 0 ) \{}
+\DoxyCodeLine{509 }
+\DoxyCodeLine{510       \textcolor{comment}{// Copy over the Core Hamiltonian}}
+\DoxyCodeLine{511       *fockMatrix = *coreH;}
+\DoxyCodeLine{512 }
+\DoxyCodeLine{513       \textcolor{comment}{// Randomize the Fock matricies}}
+\DoxyCodeLine{514       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} F : this-\/>fockMatrix-\/>SZYXPointers()) \{}
+\DoxyCodeLine{515         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0ul; k < NB*NB; k++) F[k] += dis(gen);}
+\DoxyCodeLine{516         \mbox{\hyperlink{namespaceChronusQ_a8de87c3f9b6b79c38f5be581c31dade9}{HerMat}}(\textcolor{charliteral}{'L'},NB,F,NB);}
+\DoxyCodeLine{517       \}}
+\DoxyCodeLine{518 }
+\DoxyCodeLine{519     \}}
+\DoxyCodeLine{520 }
+\DoxyCodeLine{521 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{522     \textcolor{comment}{// BCast random fock to all MPI processes}}
+\DoxyCodeLine{523     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm) > 1 ) \{}
+\DoxyCodeLine{524       std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering the RANDOM Fock ***\(\backslash\)n"{}};}
+\DoxyCodeLine{525       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} mat : this-\/>fockMatrix-\/>SZYXPointers())}
+\DoxyCodeLine{526         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(mat,NB*NB,0,comm);}
+\DoxyCodeLine{527     \}}
+\DoxyCodeLine{528 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{529 }
+\DoxyCodeLine{530     \textcolor{comment}{// Forming Orbitals from random guess}}
+\DoxyCodeLine{531     \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} pert; \textcolor{comment}{// Dummy EM perturbation}}
+\DoxyCodeLine{532     \mbox{\hyperlink{namespaceChronusQ_a3acaa28fc32531f8292672cf3e259b45}{getNewOrbitals}}();}
+\DoxyCodeLine{533 }
+\DoxyCodeLine{534   \}}
+\DoxyCodeLine{535 }
+\DoxyCodeLine{540   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{541   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_afcffe73c317de0688ce7c82e7071e724}{SingleSlater<MatsT,IntsT>::ReadGuess1PDM}}() \{}
+\DoxyCodeLine{542 }
+\DoxyCodeLine{543     \textcolor{comment}{//Check if 1PDM comes from save file or scratch file}}
+\DoxyCodeLine{544     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm) == 0 ) \{}
+\DoxyCodeLine{545 }
+\DoxyCodeLine{546       \textcolor{keywordflow}{if}( scrBinFileName.empty() )\{}
+\DoxyCodeLine{547 }
+\DoxyCodeLine{548         \textcolor{keywordflow}{if}( printLevel > 0 )}
+\DoxyCodeLine{549           std::cout << \textcolor{stringliteral}{"{}    * Reading in guess density (restart file) from file "{}}}
+\DoxyCodeLine{550             << savFile.fName() << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{551 }
+\DoxyCodeLine{552         readSameTypeDenBin();}
+\DoxyCodeLine{553 }
+\DoxyCodeLine{554       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{555 }
+\DoxyCodeLine{556         \textcolor{keywordflow}{if}( printLevel > 0 )}
+\DoxyCodeLine{557           std::cout << \textcolor{stringliteral}{"{}    * Reading in guess density (scratch file) from file "{}}}
+\DoxyCodeLine{558             << scrBinFileName << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{559 }
+\DoxyCodeLine{560         readDiffTypeDenBin(scrBinFileName);}
+\DoxyCodeLine{561 }
+\DoxyCodeLine{562       \}}
+\DoxyCodeLine{563 }
+\DoxyCodeLine{564     \}}
+\DoxyCodeLine{565 }
+\DoxyCodeLine{566     ao2orthoDen();}
+\DoxyCodeLine{567     computeNaturalOrbitals(); \textcolor{comment}{// Compute the natural orbitals so RI has an initial set of orbitals}}
+\DoxyCodeLine{568 }
+\DoxyCodeLine{569   \} \textcolor{comment}{// SingleSlater<T>::ReadGuess1PDM()}}
+\DoxyCodeLine{570 }
+\DoxyCodeLine{576   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{577   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a60ed1a84d937ddca44030fe69482effa}{SingleSlater<MatsT,IntsT>::readSameTypeDenBin}}() \{}
+\DoxyCodeLine{578 }
+\DoxyCodeLine{579     \textcolor{keywordtype}{size\_t} t\_hash = std::is\_same<MatsT,double>::value ? 1 : 2;}
+\DoxyCodeLine{580     \textcolor{keywordtype}{size\_t} d\_hash = 1;}
+\DoxyCodeLine{581     \textcolor{keywordtype}{size\_t} c\_hash = 2;}
+\DoxyCodeLine{582 }
+\DoxyCodeLine{583     \textcolor{keywordtype}{size\_t} savHash;}
+\DoxyCodeLine{584     std::string prefix = \textcolor{stringliteral}{"{}/SCF/"{}};}
+\DoxyCodeLine{585     \textcolor{keywordflow}{if} (this-\/>particle.charge == 1.0)}
+\DoxyCodeLine{586       prefix = \textcolor{stringliteral}{"{}/PROT\_SCF/"{}};}
+\DoxyCodeLine{587 }
+\DoxyCodeLine{588    \textcolor{keywordflow}{try}\{}
+\DoxyCodeLine{589       savFile.readData(prefix + \textcolor{stringliteral}{"{}FIELD\_TYPE"{}}, \&savHash);}
+\DoxyCodeLine{590     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{591       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cannot find "{}} + prefix + \textcolor{stringliteral}{"{}FIELD\_TYPE on rstFile!"{}},std::cout);}
+\DoxyCodeLine{592     \}}
+\DoxyCodeLine{593 }
+\DoxyCodeLine{594 }
+\DoxyCodeLine{595 }
+\DoxyCodeLine{596     \textcolor{keywordflow}{if}( t\_hash != savHash ) \{}
+\DoxyCodeLine{597 }
+\DoxyCodeLine{598       \textcolor{keywordtype}{bool} t\_is\_double  = t\_hash == d\_hash;}
+\DoxyCodeLine{599       \textcolor{keywordtype}{bool} t\_is\_complex = t\_hash == c\_hash;}
+\DoxyCodeLine{600 }
+\DoxyCodeLine{601       \textcolor{keywordtype}{bool} s\_is\_double  = savHash == d\_hash;}
+\DoxyCodeLine{602       \textcolor{keywordtype}{bool} s\_is\_complex = savHash == c\_hash;}
+\DoxyCodeLine{603 }
+\DoxyCodeLine{604       std::string t\_field = t\_is\_double ? \textcolor{stringliteral}{"{}REAL"{}} : \textcolor{stringliteral}{"{}COMPLEX"{}};}
+\DoxyCodeLine{605       std::string s\_field = s\_is\_double ? \textcolor{stringliteral}{"{}REAL"{}} : \textcolor{stringliteral}{"{}COMPLEX"{}};}
+\DoxyCodeLine{606 }
+\DoxyCodeLine{607       std::string message = prefix + \textcolor{stringliteral}{"{}FIELD\_TYPE on disk ("{}} + s\_field +}
+\DoxyCodeLine{608         \textcolor{stringliteral}{"{}) is incompatible with current FIELD\_TYPE ("{}} + t\_field + \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{609 }
+\DoxyCodeLine{610       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(message,std::cout);}
+\DoxyCodeLine{611     \}}
+\DoxyCodeLine{612 }
+\DoxyCodeLine{613 }
+\DoxyCodeLine{614 }
+\DoxyCodeLine{615     \textcolor{comment}{// dimension of 1PDM}}
+\DoxyCodeLine{616     \textcolor{keyword}{auto} NB = basisSet().nBasis;}
+\DoxyCodeLine{617     \textcolor{keywordflow}{if}( this-\/>nC == 4 ) NB=2*NB;}
+\DoxyCodeLine{618     \textcolor{keyword}{auto} NB2 = NB*NB;}
+\DoxyCodeLine{619 }
+\DoxyCodeLine{620     \textcolor{keyword}{auto} DSdims = savFile.getDims( prefix + \textcolor{stringliteral}{"{}1PDM\_SCALAR"{}} );}
+\DoxyCodeLine{621     \textcolor{keyword}{auto} DZdims = savFile.getDims( prefix + \textcolor{stringliteral}{"{}1PDM\_MZ"{}} );}
+\DoxyCodeLine{622     \textcolor{keyword}{auto} DYdims = savFile.getDims( prefix + \textcolor{stringliteral}{"{}1PDM\_MY"{}} );}
+\DoxyCodeLine{623     \textcolor{keyword}{auto} DXdims = savFile.getDims( prefix + \textcolor{stringliteral}{"{}1PDM\_MX"{}} ); }
+\DoxyCodeLine{624   }
+\DoxyCodeLine{625     \textcolor{keywordtype}{bool} hasDS = DSdims.size() != 0;}
+\DoxyCodeLine{626     \textcolor{keywordtype}{bool} hasDZ = DZdims.size() != 0;}
+\DoxyCodeLine{627     \textcolor{keywordtype}{bool} hasDY = DYdims.size() != 0;}
+\DoxyCodeLine{628     \textcolor{keywordtype}{bool} hasDX = DXdims.size() != 0;}
+\DoxyCodeLine{629 }
+\DoxyCodeLine{630     \textcolor{keywordtype}{bool} r2DS = DSdims.size() == 2;}
+\DoxyCodeLine{631     \textcolor{keywordtype}{bool} r2DZ = DZdims.size() == 2;}
+\DoxyCodeLine{632     \textcolor{keywordtype}{bool} r2DY = DYdims.size() == 2;}
+\DoxyCodeLine{633     \textcolor{keywordtype}{bool} r2DX = DXdims.size() == 2;}
+\DoxyCodeLine{634 }
+\DoxyCodeLine{635 }
+\DoxyCodeLine{636     \textcolor{comment}{// Errors in 1PDM SCALAR}}
+\DoxyCodeLine{637     \textcolor{keywordflow}{if}( not hasDS )}
+\DoxyCodeLine{638       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(prefix+\textcolor{stringliteral}{"{}1PDM\_SCALAR does not exist in "{}} + savFile.fName(), std::cout); }
+\DoxyCodeLine{639 }
+\DoxyCodeLine{640     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( not r2DS ) }
+\DoxyCodeLine{641       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(prefix + \textcolor{stringliteral}{"{}1PDM\_SCALAR not saved as a rank-\/2 tensor in "{}} + }
+\DoxyCodeLine{642           savFile.fName(), std::cout); }
+\DoxyCodeLine{643 }
+\DoxyCodeLine{644     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( DSdims[0] != NB or DSdims[1] != NB ) \{}
+\DoxyCodeLine{645 }
+\DoxyCodeLine{646       std::cout << \textcolor{stringliteral}{"{}    * Incompatible "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_SCALAR:"{}};}
+\DoxyCodeLine{647       std::cout << \textcolor{stringliteral}{"{}  Recieved ("{}} << DSdims[0] << \textcolor{stringliteral}{"{},"{}} << DSdims[1] << \textcolor{stringliteral}{"{})"{}}}
+\DoxyCodeLine{648         << \textcolor{stringliteral}{"{} :"{}};}
+\DoxyCodeLine{649       std::cout << \textcolor{stringliteral}{"{}  Expected ("{}} << NB << \textcolor{stringliteral}{"{},"{}} << NB << \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{650       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Wrong dimension of 1PDM SCALAR!"{}},std::cout);}
+\DoxyCodeLine{651 }
+\DoxyCodeLine{652     \}}
+\DoxyCodeLine{653 }
+\DoxyCodeLine{654     \textcolor{comment}{// Read in 1PDM SCALAR}}
+\DoxyCodeLine{655     std::cout << \textcolor{stringliteral}{"{}    * Found "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_SCALAR !"{}} << std::endl;}
+\DoxyCodeLine{656     savFile.readData(prefix + \textcolor{stringliteral}{"{}1PDM\_SCALAR"{}},this-\/>onePDM-\/>S().pointer());}
+\DoxyCodeLine{657 }
+\DoxyCodeLine{658 }
+\DoxyCodeLine{659     \textcolor{comment}{// Oddities in Restricted}}
+\DoxyCodeLine{660     \textcolor{keywordflow}{if}( this-\/>nC == 1 and this-\/>iCS ) \{}
+\DoxyCodeLine{661 }
+\DoxyCodeLine{662       \textcolor{keywordflow}{if}( hasDZ )}
+\DoxyCodeLine{663         std::cout << \textcolor{stringliteral}{"{}    * WARNING: Reading in "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_SCALAR as "{}}}
+\DoxyCodeLine{664           << \textcolor{stringliteral}{"{}restricted guess but "{}} << savFile.fName() }
+\DoxyCodeLine{665           << \textcolor{stringliteral}{"{} contains "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MZ"{}} << std::endl;}
+\DoxyCodeLine{666 }
+\DoxyCodeLine{667       \textcolor{keywordflow}{if}( hasDY )}
+\DoxyCodeLine{668         std::cout << \textcolor{stringliteral}{"{}    * WARNING: Reading in "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_SCALAR as "{}}}
+\DoxyCodeLine{669           << \textcolor{stringliteral}{"{}restricted guess but "{}} << savFile.fName() }
+\DoxyCodeLine{670           << \textcolor{stringliteral}{"{} contains SCF/1PDM\_MY"{}} << std::endl;}
+\DoxyCodeLine{671 }
+\DoxyCodeLine{672       \textcolor{keywordflow}{if}( hasDX )}
+\DoxyCodeLine{673         std::cout << \textcolor{stringliteral}{"{}    * WARNING: Reading in "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_SCALAR as "{}}}
+\DoxyCodeLine{674           << \textcolor{stringliteral}{"{}restricted guess but "{}} << savFile.fName() }
+\DoxyCodeLine{675           << \textcolor{stringliteral}{"{} contains SCF/1PDM\_MX"{}} << std::endl;}
+\DoxyCodeLine{676 }
+\DoxyCodeLine{677     \}}
+\DoxyCodeLine{678 }
+\DoxyCodeLine{679 }
+\DoxyCodeLine{680     \textcolor{comment}{// MZ}}
+\DoxyCodeLine{681     \textcolor{keywordflow}{if}( this-\/>nC == 2 or not this-\/>iCS ) \{}
+\DoxyCodeLine{682 }
+\DoxyCodeLine{683       \textcolor{keywordflow}{if}( not hasDZ ) \{}
+\DoxyCodeLine{684 }
+\DoxyCodeLine{685         std::cout <<  \textcolor{stringliteral}{"{}    * WARNING: "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MZ does not exist in "{}}}
+\DoxyCodeLine{686           << savFile.fName() << \textcolor{stringliteral}{"{} -\/-\/ Zeroing out "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MZ"{}} << std::endl;}
+\DoxyCodeLine{687 }
+\DoxyCodeLine{688         this-\/>onePDM-\/>Z().clear();}
+\DoxyCodeLine{689 }
+\DoxyCodeLine{690 }
+\DoxyCodeLine{691       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( not r2DZ ) }
+\DoxyCodeLine{692         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(prefix + \textcolor{stringliteral}{"{}1PDM\_MZ not saved as a rank-\/2 tensor in "{}} + }
+\DoxyCodeLine{693             savFile.fName(), std::cout); }
+\DoxyCodeLine{694 }
+\DoxyCodeLine{695       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( DZdims[0] != NB or DZdims[1] != NB ) \{}
+\DoxyCodeLine{696 }
+\DoxyCodeLine{697         std::cout << \textcolor{stringliteral}{"{}    * Incompatible "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MZ:"{}};}
+\DoxyCodeLine{698         std::cout << \textcolor{stringliteral}{"{}  Recieved ("{}} << DZdims[0] << \textcolor{stringliteral}{"{},"{}} << DZdims[1] << \textcolor{stringliteral}{"{})"{}}}
+\DoxyCodeLine{699           << \textcolor{stringliteral}{"{} :"{}};}
+\DoxyCodeLine{700         std::cout << \textcolor{stringliteral}{"{}  Expected ("{}} << NB << \textcolor{stringliteral}{"{},"{}} << NB << \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{701         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Wrong dimension of 1PDM MZ!"{}},std::cout);}
+\DoxyCodeLine{702 }
+\DoxyCodeLine{703       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{704 }
+\DoxyCodeLine{705         std::cout << \textcolor{stringliteral}{"{}    * Found "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MZ !"{}} << std::endl;}
+\DoxyCodeLine{706         savFile.readData(prefix + \textcolor{stringliteral}{"{}1PDM\_MZ"{}},this-\/>onePDM-\/>Z().pointer());}
+\DoxyCodeLine{707 }
+\DoxyCodeLine{708       \}}
+\DoxyCodeLine{709 }
+\DoxyCodeLine{710       \textcolor{comment}{// Oddities in Unrestricted}}
+\DoxyCodeLine{711       \textcolor{keywordflow}{if}( this-\/>nC == 2 ) \{}
+\DoxyCodeLine{712 }
+\DoxyCodeLine{713         \textcolor{keywordflow}{if}( hasDY )}
+\DoxyCodeLine{714           std::cout << \textcolor{stringliteral}{"{}    * WARNING: Reading in "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MZ as "{}}}
+\DoxyCodeLine{715             << \textcolor{stringliteral}{"{}unrestricted guess but "{}} << savFile.fName() }
+\DoxyCodeLine{716             << \textcolor{stringliteral}{"{} contains "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MY"{}} << std::endl;}
+\DoxyCodeLine{717 }
+\DoxyCodeLine{718         \textcolor{keywordflow}{if}( hasDX )}
+\DoxyCodeLine{719           std::cout << \textcolor{stringliteral}{"{}    * WARNING: Reading in "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MZ as "{}}}
+\DoxyCodeLine{720             << \textcolor{stringliteral}{"{}unrestricted guess but "{}} << savFile.fName() }
+\DoxyCodeLine{721             << \textcolor{stringliteral}{"{} contains "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MX"{}} << std::endl;}
+\DoxyCodeLine{722 }
+\DoxyCodeLine{723       \}}
+\DoxyCodeLine{724 }
+\DoxyCodeLine{725     \}}
+\DoxyCodeLine{726 }
+\DoxyCodeLine{727 }
+\DoxyCodeLine{728     \textcolor{keywordflow}{if}( this-\/>nC == 2 or this-\/>nC == 4 ) \{}
+\DoxyCodeLine{729 }
+\DoxyCodeLine{730       \textcolor{keywordflow}{if}( not hasDY ) \{}
+\DoxyCodeLine{731 }
+\DoxyCodeLine{732         std::cout <<  \textcolor{stringliteral}{"{}    * WARNING: "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MY does not exist in "{}}}
+\DoxyCodeLine{733           << savFile.fName() << \textcolor{stringliteral}{"{} -\/-\/ Zeroing out "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MY"{}} << std::endl;}
+\DoxyCodeLine{734 }
+\DoxyCodeLine{735         this-\/>onePDM-\/>Y().clear();}
+\DoxyCodeLine{736 }
+\DoxyCodeLine{737 }
+\DoxyCodeLine{738       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( not r2DY ) }
+\DoxyCodeLine{739         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(prefix + \textcolor{stringliteral}{"{}1PDM\_MY not saved as a rank-\/2 tensor in "{}} + }
+\DoxyCodeLine{740             savFile.fName(), std::cout); }
+\DoxyCodeLine{741 }
+\DoxyCodeLine{742       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( DYdims[0] != NB or DYdims[1] != NB ) \{}
+\DoxyCodeLine{743 }
+\DoxyCodeLine{744         std::cout << \textcolor{stringliteral}{"{}    * Incompatible "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MY:"{}};}
+\DoxyCodeLine{745         std::cout << \textcolor{stringliteral}{"{}  Recieved ("{}} << DYdims[0] << \textcolor{stringliteral}{"{},"{}} << DYdims[1] << \textcolor{stringliteral}{"{})"{}}}
+\DoxyCodeLine{746           << \textcolor{stringliteral}{"{} :"{}};}
+\DoxyCodeLine{747         std::cout << \textcolor{stringliteral}{"{}  Expected ("{}} << NB << \textcolor{stringliteral}{"{},"{}} << NB << \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{748         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Wrong dimension of 1PDM MY!"{}},std::cout);}
+\DoxyCodeLine{749 }
+\DoxyCodeLine{750       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{751 }
+\DoxyCodeLine{752         std::cout << \textcolor{stringliteral}{"{}    * Found "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MY !"{}} << std::endl;}
+\DoxyCodeLine{753         savFile.readData(prefix + \textcolor{stringliteral}{"{}1PDM\_MY"{}},this-\/>onePDM-\/>Y().pointer());}
+\DoxyCodeLine{754 }
+\DoxyCodeLine{755       \}}
+\DoxyCodeLine{756 }
+\DoxyCodeLine{757 }
+\DoxyCodeLine{758       \textcolor{keywordflow}{if}( not hasDX ) \{}
+\DoxyCodeLine{759 }
+\DoxyCodeLine{760         std::cout <<  \textcolor{stringliteral}{"{}    * WARNING: "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MX does not exist in "{}}}
+\DoxyCodeLine{761           << savFile.fName() << \textcolor{stringliteral}{"{} -\/-\/ Zeroing out "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MX"{}} << std::endl;}
+\DoxyCodeLine{762 }
+\DoxyCodeLine{763         this-\/>onePDM-\/>X().clear();}
+\DoxyCodeLine{764 }
+\DoxyCodeLine{765 }
+\DoxyCodeLine{766       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( not r2DX ) }
+\DoxyCodeLine{767         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(prefix + \textcolor{stringliteral}{"{}1PDM\_MX not saved as a rank-\/2 tensor in "{}} + }
+\DoxyCodeLine{768             savFile.fName(), std::cout); }
+\DoxyCodeLine{769 }
+\DoxyCodeLine{770       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( DXdims[0] != NB or DXdims[1] != NB ) \{}
+\DoxyCodeLine{771 }
+\DoxyCodeLine{772         std::cout << \textcolor{stringliteral}{"{}    * Incompatible "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MX:"{}};}
+\DoxyCodeLine{773         std::cout << \textcolor{stringliteral}{"{}  Recieved ("{}} << DXdims[0] << \textcolor{stringliteral}{"{},"{}} << DXdims[1] << \textcolor{stringliteral}{"{})"{}}}
+\DoxyCodeLine{774           << \textcolor{stringliteral}{"{} :"{}};}
+\DoxyCodeLine{775         std::cout << \textcolor{stringliteral}{"{}  Expected ("{}} << NB << \textcolor{stringliteral}{"{},"{}} << NB << \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{776         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Wrong dimension of 1PDM MX!"{}},std::cout);}
+\DoxyCodeLine{777 }
+\DoxyCodeLine{778       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{779 }
+\DoxyCodeLine{780         std::cout << \textcolor{stringliteral}{"{}    * Found "{}} + prefix + \textcolor{stringliteral}{"{}1PDM\_MX !"{}} << std::endl;}
+\DoxyCodeLine{781         savFile.readData(prefix + \textcolor{stringliteral}{"{}1PDM\_MX"{}},this-\/>onePDM-\/>X().pointer());}
+\DoxyCodeLine{782 }
+\DoxyCodeLine{783       \}}
+\DoxyCodeLine{784 }
+\DoxyCodeLine{785     \}}
+\DoxyCodeLine{786 }
+\DoxyCodeLine{787   \} \textcolor{comment}{// SingleSlater<T>::readSameTypeDenBin()}}
+\DoxyCodeLine{788 }
+\DoxyCodeLine{795   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{796   \textcolor{keyword}{template} <\textcolor{keyword}{typename} ScrMatsT>}
+\DoxyCodeLine{797   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a6d3185f330f7cae8cecc314a7d73c6f5}{SingleSlater<MatsT,IntsT>::getScr1PDM}}(\mbox{\hyperlink{classChronusQ_1_1SafeFile}{SafeFile}}\& scrBin) \{}
+\DoxyCodeLine{798 }
+\DoxyCodeLine{799     \textcolor{comment}{// dimension of 1PDM}}
+\DoxyCodeLine{800     \textcolor{keyword}{auto} NB = basisSet().nBasis;}
+\DoxyCodeLine{801     \textcolor{keywordflow}{if}( this-\/>nC == 4 ) NB=2*NB;}
+\DoxyCodeLine{802     \textcolor{keyword}{auto} NB2 = NB*NB;}
+\DoxyCodeLine{803 }
+\DoxyCodeLine{804     \textcolor{keyword}{auto} DSdims = scrBin.\mbox{\hyperlink{classChronusQ_1_1SafeFile_a8df80c13998de604f5bd7984de2edafa}{getDims}}( \textcolor{stringliteral}{"{}SCF/1PDM\_SCALAR"{}} );}
+\DoxyCodeLine{805     \textcolor{keyword}{auto} DZdims = scrBin.\mbox{\hyperlink{classChronusQ_1_1SafeFile_a8df80c13998de604f5bd7984de2edafa}{getDims}}( \textcolor{stringliteral}{"{}SCF/1PDM\_MZ"{}} );}
+\DoxyCodeLine{806     \textcolor{keyword}{auto} DYdims = scrBin.\mbox{\hyperlink{classChronusQ_1_1SafeFile_a8df80c13998de604f5bd7984de2edafa}{getDims}}( \textcolor{stringliteral}{"{}SCF/1PDM\_MY"{}} );}
+\DoxyCodeLine{807     \textcolor{keyword}{auto} DXdims = scrBin.\mbox{\hyperlink{classChronusQ_1_1SafeFile_a8df80c13998de604f5bd7984de2edafa}{getDims}}( \textcolor{stringliteral}{"{}SCF/1PDM\_MX"{}} );}
+\DoxyCodeLine{808 }
+\DoxyCodeLine{809     \textcolor{keywordtype}{bool} hasDS = DSdims.size() != 0;}
+\DoxyCodeLine{810     \textcolor{keywordtype}{bool} hasDZ = DZdims.size() != 0;}
+\DoxyCodeLine{811     \textcolor{keywordtype}{bool} hasDY = DYdims.size() != 0;}
+\DoxyCodeLine{812     \textcolor{keywordtype}{bool} hasDX = DXdims.size() != 0;}
+\DoxyCodeLine{813 }
+\DoxyCodeLine{814     \textcolor{keywordtype}{bool} r2DS = DSdims.size() == 2;}
+\DoxyCodeLine{815     \textcolor{keywordtype}{bool} r2DZ = DZdims.size() == 2;}
+\DoxyCodeLine{816     \textcolor{keywordtype}{bool} r2DY = DYdims.size() == 2;}
+\DoxyCodeLine{817     \textcolor{keywordtype}{bool} r2DX = DXdims.size() == 2;}
+\DoxyCodeLine{818 }
+\DoxyCodeLine{819     \textcolor{comment}{// onePDM on scr bin file}}
+\DoxyCodeLine{820     \textcolor{comment}{// assume square and same dimension between S,X,Y,Z}}
+\DoxyCodeLine{821     std::shared\_ptr<PauliSpinorSquareMatrices<ScrMatsT>> onePDMtmp;}
+\DoxyCodeLine{822     onePDMtmp = std::make\_shared<PauliSpinorSquareMatrices<ScrMatsT>>(memManager,DSdims[0],hasDY,hasDZ);}
+\DoxyCodeLine{823 }
+\DoxyCodeLine{824     \textcolor{comment}{// Errors in 1PDM SCALAR}}
+\DoxyCodeLine{825     \textcolor{keywordflow}{if}( not hasDS )}
+\DoxyCodeLine{826       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}SCF/1PDM\_SCALAR does not exist in "{}} + scrBin.\mbox{\hyperlink{classChronusQ_1_1SafeFile_adb5028407a90cde65935c7a279ce28f0}{fName}}(), std::cout);}
+\DoxyCodeLine{827 }
+\DoxyCodeLine{828     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( not r2DS )}
+\DoxyCodeLine{829       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}SCF/1PDM\_SCALAR not saved as a rank-\/2 tensor in "{}} +}
+\DoxyCodeLine{830           scrBin.\mbox{\hyperlink{classChronusQ_1_1SafeFile_adb5028407a90cde65935c7a279ce28f0}{fName}}(), std::cout);}
+\DoxyCodeLine{831 }
+\DoxyCodeLine{832     \textcolor{comment}{// Read in 1PDM SCALAR}}
+\DoxyCodeLine{833     std::cout << \textcolor{stringliteral}{"{}    * Looking for SCF/1PDM\_SCALAR !"{}} << std::endl;}
+\DoxyCodeLine{834     scrBin.\mbox{\hyperlink{classChronusQ_1_1SafeFile_a8b20f987a980e5b69eb2eb4ffd1c4be8}{readData}}(\textcolor{stringliteral}{"{}/SCF/1PDM\_SCALAR"{}},onePDMtmp-\/>S().pointer());}
+\DoxyCodeLine{835 }
+\DoxyCodeLine{836     \textcolor{comment}{// MZ}}
+\DoxyCodeLine{837     \textcolor{keywordflow}{if}( onePDMtmp-\/>hasZ() )\{}
+\DoxyCodeLine{838 }
+\DoxyCodeLine{839       std::cout << \textcolor{stringliteral}{"{}    * Looking for SCF/1PDM\_MZ !"{}} << std::endl;}
+\DoxyCodeLine{840       \textcolor{keywordflow}{if}( not r2DZ )}
+\DoxyCodeLine{841         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}SCF/1PDM\_MZ not saved as a rank-\/2 tensor in "{}} +}
+\DoxyCodeLine{842           scrBin.\mbox{\hyperlink{classChronusQ_1_1SafeFile_adb5028407a90cde65935c7a279ce28f0}{fName}}(), std::cout);}
+\DoxyCodeLine{843       scrBin.\mbox{\hyperlink{classChronusQ_1_1SafeFile_a8b20f987a980e5b69eb2eb4ffd1c4be8}{readData}}(\textcolor{stringliteral}{"{}SCF/1PDM\_MZ"{}},onePDMtmp-\/>Z().pointer());}
+\DoxyCodeLine{844 }
+\DoxyCodeLine{845     \}}
+\DoxyCodeLine{846 }
+\DoxyCodeLine{847     \textcolor{comment}{// MY}}
+\DoxyCodeLine{848     \textcolor{keywordflow}{if}( onePDMtmp-\/>hasXY() )\{}
+\DoxyCodeLine{849 }
+\DoxyCodeLine{850       std::cout << \textcolor{stringliteral}{"{}    * Looking for SCF/1PDM\_MX !"{}} << std::endl;}
+\DoxyCodeLine{851       \textcolor{keywordflow}{if}( not r2DX )}
+\DoxyCodeLine{852         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}SCF/1PDM\_MX not saved as a rank-\/2 tensor in "{}} +}
+\DoxyCodeLine{853           scrBin.\mbox{\hyperlink{classChronusQ_1_1SafeFile_adb5028407a90cde65935c7a279ce28f0}{fName}}(), std::cout);}
+\DoxyCodeLine{854       scrBin.\mbox{\hyperlink{classChronusQ_1_1SafeFile_a8b20f987a980e5b69eb2eb4ffd1c4be8}{readData}}(\textcolor{stringliteral}{"{}SCF/1PDM\_MX"{}},onePDMtmp-\/>X().pointer());}
+\DoxyCodeLine{855 }
+\DoxyCodeLine{856       std::cout << \textcolor{stringliteral}{"{}    * Looking for SCF/1PDM\_MY !"{}} << std::endl;}
+\DoxyCodeLine{857       \textcolor{keywordflow}{if}( not r2DY )}
+\DoxyCodeLine{858         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}SCF/1PDM\_MY not saved as a rank-\/2 tensor in "{}} +}
+\DoxyCodeLine{859           scrBin.\mbox{\hyperlink{classChronusQ_1_1SafeFile_adb5028407a90cde65935c7a279ce28f0}{fName}}(), std::cout);}
+\DoxyCodeLine{860       scrBin.\mbox{\hyperlink{classChronusQ_1_1SafeFile_a8b20f987a980e5b69eb2eb4ffd1c4be8}{readData}}(\textcolor{stringliteral}{"{}SCF/1PDM\_MY"{}},onePDMtmp-\/>Y().pointer());}
+\DoxyCodeLine{861 }
+\DoxyCodeLine{862     \}}
+\DoxyCodeLine{863 }
+\DoxyCodeLine{864     std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n"{}} << std::endl;}
+\DoxyCodeLine{865     \textcolor{comment}{// Initialize onePDM}}
+\DoxyCodeLine{866     \textcolor{keyword}{auto} scr1PDMSize = onePDMtmp-\/>dimension();}
+\DoxyCodeLine{867     \textcolor{comment}{// Guess 1PDM same size as calculation 1PDM}}
+\DoxyCodeLine{868     \textcolor{keywordflow}{if}( scr1PDMSize == NB ) *this-\/>onePDM = *onePDMtmp;}
+\DoxyCodeLine{869     \textcolor{comment}{// Guess 1PDM smaller than 1PDM}}
+\DoxyCodeLine{870     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( scr1PDMSize < NB )\{}
+\DoxyCodeLine{871       \textcolor{keyword}{auto} p1Comps = this-\/>onePDM-\/>SZYXPointers();}
+\DoxyCodeLine{872       \textcolor{keyword}{auto} p2Comps = onePDMtmp-\/>SZYXPointers();}
+\DoxyCodeLine{873       \textcolor{keyword}{auto} nComp = p1Comps.size();}
+\DoxyCodeLine{874       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iComp=0; iComp<nComp; iComp++ )\{}
+\DoxyCodeLine{875         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},scr1PDMSize,scr1PDMSize,MatsT(1.),}
+\DoxyCodeLine{876              p2Comps[iComp],scr1PDMSize,p1Comps[iComp],NB);}
+\DoxyCodeLine{877       \}}
+\DoxyCodeLine{878     \} \textcolor{keywordflow}{else} \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cannot use a guess of larger size."{}});}
+\DoxyCodeLine{879 }
+\DoxyCodeLine{880     onePDMtmp = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{881 }
+\DoxyCodeLine{882   \} \textcolor{comment}{// SingleSlater<T>::getScr1PDM()}}
+\DoxyCodeLine{883 }
+\DoxyCodeLine{884   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{885   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{886   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<double,double>::getScr1PDM<dcomplex>}}(\mbox{\hyperlink{classChronusQ_1_1SafeFile}{SafeFile}}\& scrBin) \{}
+\DoxyCodeLine{887 }
+\DoxyCodeLine{888     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cannot do complex guess density for real calculation."{}});}
+\DoxyCodeLine{889 }
+\DoxyCodeLine{890   \}}
+\DoxyCodeLine{891 }
+\DoxyCodeLine{892   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{893   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{894   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<double,dcomplex>::getScr1PDM<dcomplex>}}(\mbox{\hyperlink{classChronusQ_1_1SafeFile}{SafeFile}}\& scrBin) \{}
+\DoxyCodeLine{895 }
+\DoxyCodeLine{896     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cannot do complex guess density for real calculation."{}});}
+\DoxyCodeLine{897 }
+\DoxyCodeLine{898   \}}
+\DoxyCodeLine{899 }
+\DoxyCodeLine{905   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{906   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a2f07f4f6ecd1fc4f9a8098a2e9735692}{SingleSlater<MatsT,IntsT>::readDiffTypeDenBin}}(std::string binName) \{}
+\DoxyCodeLine{907 }
+\DoxyCodeLine{908     \textcolor{keywordtype}{bool} scrBinExists;}
+\DoxyCodeLine{909     \mbox{\hyperlink{classChronusQ_1_1SafeFile}{SafeFile}} binFile(binName, scrBinExists);}
+\DoxyCodeLine{910 }
+\DoxyCodeLine{911     \textcolor{keywordtype}{size\_t} t\_hash = std::is\_same<MatsT,double>::value ? 1 : 2;}
+\DoxyCodeLine{912     \textcolor{keywordtype}{size\_t} d\_hash = 1;}
+\DoxyCodeLine{913     \textcolor{keywordtype}{size\_t} c\_hash = 2;}
+\DoxyCodeLine{914     \textcolor{keywordtype}{size\_t} savHash; }
+\DoxyCodeLine{915 }
+\DoxyCodeLine{916     std::string prefix = \textcolor{stringliteral}{"{}/SCF/"{}};}
+\DoxyCodeLine{917     \textcolor{keywordflow}{if} (this-\/>particle.charge == 1.0)}
+\DoxyCodeLine{918       prefix = \textcolor{stringliteral}{"{}/PROT\_SCF/"{}};}
+\DoxyCodeLine{919 }
+\DoxyCodeLine{920     \textcolor{keywordflow}{try}\{}
+\DoxyCodeLine{921       binFile.\mbox{\hyperlink{classChronusQ_1_1SafeFile_a8b20f987a980e5b69eb2eb4ffd1c4be8}{readData}}(\textcolor{stringliteral}{"{}/SCF/FIELD\_TYPE"{}}, \&savHash);}
+\DoxyCodeLine{922     \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{923       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cannot find /SCF/FIELD\_TYPE on rstFile!"{}},std::cout);}
+\DoxyCodeLine{924     \}}
+\DoxyCodeLine{925 }
+\DoxyCodeLine{926     \textcolor{comment}{// type of 1PDM}}
+\DoxyCodeLine{927     \textcolor{keywordtype}{bool} t\_is\_double  = t\_hash == d\_hash;}
+\DoxyCodeLine{928     \textcolor{keywordtype}{bool} t\_is\_complex = t\_hash == c\_hash;}
+\DoxyCodeLine{929 }
+\DoxyCodeLine{930     \textcolor{keywordtype}{bool} s\_is\_double  = savHash == d\_hash;}
+\DoxyCodeLine{931     \textcolor{keywordtype}{bool} s\_is\_complex = savHash == c\_hash;}
+\DoxyCodeLine{932 }
+\DoxyCodeLine{933     std::string t\_field = t\_is\_double ? \textcolor{stringliteral}{"{}REAL"{}} : \textcolor{stringliteral}{"{}COMPLEX"{}};}
+\DoxyCodeLine{934     std::string s\_field = s\_is\_double ? \textcolor{stringliteral}{"{}REAL"{}} : \textcolor{stringliteral}{"{}COMPLEX"{}};}
+\DoxyCodeLine{935 }
+\DoxyCodeLine{936     std::string message = \textcolor{stringliteral}{"{}Going from /SCF/FIELD\_TYPE on disk ("{}} + s\_field +}
+\DoxyCodeLine{937       \textcolor{stringliteral}{"{}) to current FIELD\_TYPE ("{}} + t\_field + \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{938 }
+\DoxyCodeLine{939     std::cout << message << std::endl;}
+\DoxyCodeLine{940 }
+\DoxyCodeLine{941     \textcolor{comment}{// dimension of 1PDM}}
+\DoxyCodeLine{942     \textcolor{keyword}{auto} NB = basisSet().nBasis;}
+\DoxyCodeLine{943     \textcolor{keywordflow}{if}( this-\/>nC == 4 ) NB=2*NB;}
+\DoxyCodeLine{944     \textcolor{keyword}{auto} NB2 = NB*NB;}
+\DoxyCodeLine{945 }
+\DoxyCodeLine{946     \textcolor{comment}{// Determine storage of 1PDM on scr bin file}}
+\DoxyCodeLine{947     \textcolor{comment}{// Assumes scalar 1PDM is same size as MX, MY, MZ}}
+\DoxyCodeLine{948     \textcolor{comment}{// Assumes square 1PDM}}
+\DoxyCodeLine{949     \textcolor{keywordflow}{if}( s\_is\_double )\{}
+\DoxyCodeLine{950 }
+\DoxyCodeLine{951       getScr1PDM<double>(binFile);}
+\DoxyCodeLine{952 }
+\DoxyCodeLine{953     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( s\_is\_complex )\{}
+\DoxyCodeLine{954 }
+\DoxyCodeLine{955       getScr1PDM<dcomplex>(binFile);}
+\DoxyCodeLine{956 }
+\DoxyCodeLine{957     \} \textcolor{keywordflow}{else} \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Could not determine type of scratch bin file"{}});}
+\DoxyCodeLine{958 }
+\DoxyCodeLine{959 }
+\DoxyCodeLine{960   \} \textcolor{comment}{// SingleSlater<T>::readDiffTypeDenBin()}}
+\DoxyCodeLine{961 }
+\DoxyCodeLine{962 }
+\DoxyCodeLine{967   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{968   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a5edafba5821bbea649227d7ccd8134a6}{SingleSlater<MatsT,IntsT>::ReadGuessMO}}() \{}
+\DoxyCodeLine{969 }
+\DoxyCodeLine{970     \textcolor{keywordflow}{if}( printLevel > 0 )}
+\DoxyCodeLine{971       std::cout << \textcolor{stringliteral}{"{}    * Reading in guess orbitals from file "{}}}
+\DoxyCodeLine{972         << savFile.fName() << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{973 }
+\DoxyCodeLine{974     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm) == 0 ) \{}
+\DoxyCodeLine{975 }
+\DoxyCodeLine{976       \textcolor{keywordtype}{size\_t} t\_hash = std::is\_same<MatsT,double>::value ? 1 : 2;}
+\DoxyCodeLine{977       \textcolor{keywordtype}{size\_t} d\_hash = 1;}
+\DoxyCodeLine{978       \textcolor{keywordtype}{size\_t} c\_hash = 2;}
+\DoxyCodeLine{979 }
+\DoxyCodeLine{980       \textcolor{keywordtype}{size\_t} savHash;}
+\DoxyCodeLine{981 }
+\DoxyCodeLine{982       std::string prefix = \textcolor{stringliteral}{"{}/SCF/"{}};}
+\DoxyCodeLine{983       \textcolor{keywordflow}{if} (this-\/>particle.charge == 1.0)}
+\DoxyCodeLine{984         prefix = \textcolor{stringliteral}{"{}/PROT\_SCF/"{}};}
+\DoxyCodeLine{985 }
+\DoxyCodeLine{986       \textcolor{keywordflow}{try}\{}
+\DoxyCodeLine{987         savFile.readData(prefix + \textcolor{stringliteral}{"{}FIELD\_TYPE"{}}, \&savHash);}
+\DoxyCodeLine{988       \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{989         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cannot find /SCF/FIELD\_TYPE on rstFile!"{}},std::cout);}
+\DoxyCodeLine{990       \}}
+\DoxyCodeLine{991 }
+\DoxyCodeLine{992 }
+\DoxyCodeLine{993       \textcolor{keywordflow}{if}( t\_hash != savHash ) \{}
+\DoxyCodeLine{994 }
+\DoxyCodeLine{995         \textcolor{keywordtype}{bool} t\_is\_double  = t\_hash == d\_hash;}
+\DoxyCodeLine{996         \textcolor{keywordtype}{bool} t\_is\_complex = t\_hash == c\_hash;}
+\DoxyCodeLine{997 }
+\DoxyCodeLine{998         \textcolor{keywordtype}{bool} s\_is\_double  = savHash == d\_hash;}
+\DoxyCodeLine{999         \textcolor{keywordtype}{bool} s\_is\_complex = savHash == c\_hash;}
+\DoxyCodeLine{1000 }
+\DoxyCodeLine{1001         std::string t\_field = t\_is\_double ? \textcolor{stringliteral}{"{}REAL"{}} : \textcolor{stringliteral}{"{}COMPLEX"{}};}
+\DoxyCodeLine{1002         std::string s\_field = s\_is\_double ? \textcolor{stringliteral}{"{}REAL"{}} : \textcolor{stringliteral}{"{}COMPLEX"{}};}
+\DoxyCodeLine{1003 }
+\DoxyCodeLine{1004         std::string message = prefix + \textcolor{stringliteral}{"{}FIELD\_TYPE on disk ("{}} + s\_field +}
+\DoxyCodeLine{1005           \textcolor{stringliteral}{"{}) is incompatible with current FIELD\_TYPE ("{}} + t\_field + \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{1006 }
+\DoxyCodeLine{1007         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(message,std::cout);}
+\DoxyCodeLine{1008       \}}
+\DoxyCodeLine{1009 }
+\DoxyCodeLine{1010       \textcolor{comment}{// dimension of mo1 and mo2}}
+\DoxyCodeLine{1011       \textcolor{keyword}{auto} NB = this-\/>nC * this-\/>nAlphaOrbital();}
+\DoxyCodeLine{1012       \textcolor{keyword}{auto} NB2 = NB*NB;}
+\DoxyCodeLine{1013 }
+\DoxyCodeLine{1014       \textcolor{keyword}{auto} MO1dims = savFile.getDims( prefix + \textcolor{stringliteral}{"{}MO1"{}} );}
+\DoxyCodeLine{1015       \textcolor{keyword}{auto} MO2dims = savFile.getDims( prefix + \textcolor{stringliteral}{"{}MO2"{}} );}
+\DoxyCodeLine{1016 }
+\DoxyCodeLine{1017 }
+\DoxyCodeLine{1018       \textcolor{comment}{// Find errors in MO1}}
+\DoxyCodeLine{1019       \textcolor{keywordflow}{if}( MO1dims.size() == 0 )}
+\DoxyCodeLine{1020         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(prefix + \textcolor{stringliteral}{"{}MO1 does not exist in "{}} + savFile.fName(), std::cout);}
+\DoxyCodeLine{1021 }
+\DoxyCodeLine{1022       \textcolor{keywordflow}{if}( MO1dims.size() != 2 )}
+\DoxyCodeLine{1023         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(prefix + \textcolor{stringliteral}{"{}MO1 not saved as a rank-\/2 tensor in "{}} + savFile.fName(),}
+\DoxyCodeLine{1024             std::cout);}
+\DoxyCodeLine{1025 }
+\DoxyCodeLine{1026       \textcolor{keywordflow}{if}( MO1dims[0] != NB or MO1dims[1] != NB ) \{}
+\DoxyCodeLine{1027 }
+\DoxyCodeLine{1028         std::cout << \textcolor{stringliteral}{"{}    * Incompatible SCF/MO1:"{}};}
+\DoxyCodeLine{1029         std::cout << \textcolor{stringliteral}{"{}  Recieved ("{}} << MO1dims[0] << \textcolor{stringliteral}{"{},"{}} << MO1dims[1] << \textcolor{stringliteral}{"{})"{}}}
+\DoxyCodeLine{1030           << \textcolor{stringliteral}{"{} :"{}};}
+\DoxyCodeLine{1031         std::cout << \textcolor{stringliteral}{"{}  Expected ("{}} << NB << \textcolor{stringliteral}{"{},"{}} << NB << \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{1032         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Wrong number of MO coefficients!"{}},std::cout);}
+\DoxyCodeLine{1033 }
+\DoxyCodeLine{1034       \}}
+\DoxyCodeLine{1035 }
+\DoxyCodeLine{1036 }
+\DoxyCodeLine{1037 }
+\DoxyCodeLine{1038       \textcolor{comment}{// MO2 + RHF is odd, print warning}}
+\DoxyCodeLine{1039       \textcolor{keywordflow}{if}( MO2dims.size() != 0 and this-\/>nC == 1 and this-\/>iCS )}
+\DoxyCodeLine{1040         std::cout << \textcolor{stringliteral}{"{}    * WARNING: Reading in SCF/MO1 as restricted guess "{}}}
+\DoxyCodeLine{1041                   << \textcolor{stringliteral}{"{}but "{}} << savFile.fName() << \textcolor{stringliteral}{"{} contains SCF/MO2"{}}}
+\DoxyCodeLine{1042                   << std::endl;}
+\DoxyCodeLine{1043 }
+\DoxyCodeLine{1044 }
+\DoxyCodeLine{1045       \textcolor{comment}{// Read in MO1}}
+\DoxyCodeLine{1046       std::cout << \textcolor{stringliteral}{"{}    * Found SCF/MO1 !"{}} << std::endl;}
+\DoxyCodeLine{1047       savFile.readData(prefix + \textcolor{stringliteral}{"{}MO1"{}},this-\/>mo[0].pointer());}
+\DoxyCodeLine{1048 }
+\DoxyCodeLine{1049       \textcolor{comment}{// Unrestricted calculations}}
+\DoxyCodeLine{1050       \textcolor{keywordflow}{if}( this-\/>nC == 1 and not this-\/>iCS ) \{}
+\DoxyCodeLine{1051 }
+\DoxyCodeLine{1052         \textcolor{keywordflow}{if}( MO2dims.size() == 0 )}
+\DoxyCodeLine{1053           std::cout << \textcolor{stringliteral}{"{}    * WARNING: SCF/MO2 does not exist in "{}}}
+\DoxyCodeLine{1054             << savFile.fName() << \textcolor{stringliteral}{"{} -\/-\/ Copying SCF/MO1 -\/> SCF/MO2 "{}} << std::endl;}
+\DoxyCodeLine{1055 }
+\DoxyCodeLine{1056         \textcolor{keywordflow}{if}( MO2dims.size() > 2  )}
+\DoxyCodeLine{1057 }
+\DoxyCodeLine{1058           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}SCF/MO2 not saved as a rank-\/2 tensor in "{}} + savFile.fName(),}
+\DoxyCodeLine{1059               std::cout);}
+\DoxyCodeLine{1060 }
+\DoxyCodeLine{1061         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( MO2dims[0] != NB or MO2dims[1] != NB ) \{}
+\DoxyCodeLine{1062 }
+\DoxyCodeLine{1063           std::cout << \textcolor{stringliteral}{"{}    * Incompatible SCF/MO2:"{}};}
+\DoxyCodeLine{1064           std::cout << \textcolor{stringliteral}{"{}  Recieved ("{}} << MO2dims[0] << \textcolor{stringliteral}{"{},"{}} << MO2dims[1] << \textcolor{stringliteral}{"{})"{}}}
+\DoxyCodeLine{1065             << \textcolor{stringliteral}{"{} :"{}};}
+\DoxyCodeLine{1066           std::cout << \textcolor{stringliteral}{"{}  Expected ("{}} << NB << \textcolor{stringliteral}{"{},"{}} << NB << \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{1067           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Wrong number of MO coefficients!"{}},std::cout);}
+\DoxyCodeLine{1068 }
+\DoxyCodeLine{1069         \}}
+\DoxyCodeLine{1070 }
+\DoxyCodeLine{1071 }
+\DoxyCodeLine{1072         \textcolor{comment}{// Read in MO2}}
+\DoxyCodeLine{1073         \textcolor{keywordflow}{if}( MO2dims.size() == 0 )}
+\DoxyCodeLine{1074           this-\/>mo[1] = this-\/>mo[0];}
+\DoxyCodeLine{1075         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1076           std::cout << \textcolor{stringliteral}{"{}    * Found SCF/MO2 !"{}} << std::endl;}
+\DoxyCodeLine{1077           savFile.readData(prefix + \textcolor{stringliteral}{"{}MO2"{}},this-\/>mo[1].pointer());}
+\DoxyCodeLine{1078         \}}
+\DoxyCodeLine{1079 }
+\DoxyCodeLine{1080       \}}
+\DoxyCodeLine{1081 }
+\DoxyCodeLine{1082     \}}
+\DoxyCodeLine{1083 }
+\DoxyCodeLine{1084     \textcolor{comment}{// MO coefficients from AO to othonormalized basis}}
+\DoxyCodeLine{1085     orthoAOMO();}
+\DoxyCodeLine{1086 }
+\DoxyCodeLine{1087     \textcolor{comment}{// MO swapping if requested}}
+\DoxyCodeLine{1088     \textcolor{keywordflow}{if}( this-\/>moPairs[0].size() != 0 ) this-\/>swapMOs(this-\/>moPairs,\mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19da40231985d0fe1ed584790ad3486b046f}{SpinType::isAlpha}});}
+\DoxyCodeLine{1089     \textcolor{keywordflow}{if}( this-\/>moPairs[1].size() != 0 ) this-\/>swapMOs(this-\/>moPairs,\mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19da5bc43759ddaa1e8da9405a90a0047626}{SpinType::isBeta}});}
+\DoxyCodeLine{1090 }
+\DoxyCodeLine{1091     \textcolor{comment}{// Form density from MOs}}
+\DoxyCodeLine{1092     formDensity();}
+\DoxyCodeLine{1093 }
+\DoxyCodeLine{1094   \} \textcolor{comment}{// SingleSlater<T>::ReadGuessMO()}}
+\DoxyCodeLine{1095 }
+\DoxyCodeLine{1100   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{1101   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_afc5dfd3c9be5e45debb5b6fb959692cf}{SingleSlater<MatsT,IntsT>::FchkGuessMO}}() \{}
+\DoxyCodeLine{1102 }
+\DoxyCodeLine{1103     \textcolor{keywordflow}{if}( printLevel > 0 )\{}
+\DoxyCodeLine{1104       std::cout << \textcolor{stringliteral}{"{}    * Reading in guess orbitals from file "{}} << fchkFileName << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{1105       std::cout << \textcolor{stringliteral}{"{}      Please check that IOp(3/60=-\/1) was included in your Gaussian calculation."{}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{1106     \}}
+\DoxyCodeLine{1107 }
+\DoxyCodeLine{1108     \textcolor{keywordflow}{if}( this-\/>nC == 4 ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}FCHKMO NYI for 4c"{}},std::cout);}
+\DoxyCodeLine{1109 }
+\DoxyCodeLine{1110     std::vector<int> shellList;}
+\DoxyCodeLine{1111 }
+\DoxyCodeLine{1112     \textcolor{comment}{// Parsing fchk file and populating mo1(mo2)}}
+\DoxyCodeLine{1113     \textcolor{comment}{// Outputs shell listing needed for angular momentum reorganization}}
+\DoxyCodeLine{1114     shellList=fchkToCQMO();}
+\DoxyCodeLine{1115 }
+\DoxyCodeLine{1116     \textcolor{comment}{// Dimension of mo1 and mo2}}
+\DoxyCodeLine{1117     \textcolor{keyword}{auto} NB = this-\/>nC * this-\/>basisSet().nBasis;}
+\DoxyCodeLine{1118     \textcolor{keyword}{auto} NB2 = NB*NB;}
+\DoxyCodeLine{1119 }
+\DoxyCodeLine{1120     \textcolor{comment}{// Reorders shells of mo1 to Chronus ordering}}
+\DoxyCodeLine{1121     MatsT* mo1tmp = memManager.malloc<MatsT>(NB2);}
+\DoxyCodeLine{1122     \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},NB,NB,MatsT(1.),this-\/>mo[0].pointer(),NB,mo1tmp,NB);}
+\DoxyCodeLine{1123     reorderAngMO(shellList,mo1tmp,0);}
+\DoxyCodeLine{1124     memManager.free(mo1tmp);}
+\DoxyCodeLine{1125 }
+\DoxyCodeLine{1126     \textcolor{comment}{// Reorders shells of mo2 to Chronus ordering}}
+\DoxyCodeLine{1127     \textcolor{keywordflow}{if}( this-\/>nC == 1 and not this-\/>iCS)\{}
+\DoxyCodeLine{1128       MatsT* mo2tmp = memManager.malloc<MatsT>(NB2);}
+\DoxyCodeLine{1129       \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},NB,NB,MatsT(1.),this-\/>mo[1].pointer(),NB,mo2tmp,NB);}
+\DoxyCodeLine{1130       reorderAngMO(shellList,mo2tmp,1);}
+\DoxyCodeLine{1131       memManager.free(mo2tmp);}
+\DoxyCodeLine{1132     \}}
+\DoxyCodeLine{1133 }
+\DoxyCodeLine{1134     \textcolor{comment}{// Reorder spin components}}
+\DoxyCodeLine{1135     \textcolor{keywordflow}{if}( this-\/>nC == 2 ) reorderSpinMO();}
+\DoxyCodeLine{1136 }
+\DoxyCodeLine{1137     \textcolor{comment}{// Orthogonalize MOs}}
+\DoxyCodeLine{1138     orthoAOMO();}
+\DoxyCodeLine{1139 }
+\DoxyCodeLine{1140     \textcolor{comment}{// Form density from MOs}}
+\DoxyCodeLine{1141     formDensity();}
+\DoxyCodeLine{1142 }
+\DoxyCodeLine{1143   \} \textcolor{comment}{// SingleSlater<T>::FchkGuessMO()}}
+\DoxyCodeLine{1144 }
+\DoxyCodeLine{1145   \textcolor{comment}{/*}}
+\DoxyCodeLine{1146 \textcolor{comment}{   * Brief: Computes the Natural orbitals from the orthogonal}}
+\DoxyCodeLine{1147 \textcolor{comment}{   *        density}}
+\DoxyCodeLine{1148 \textcolor{comment}{   */}}
+\DoxyCodeLine{1149   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT,\textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{1150   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a453da0cc606b4722c8af97d4194fd52e}{SingleSlater<MatsT,IntsT> :: computeNaturalOrbitals}}() \{}
+\DoxyCodeLine{1151 }
+\DoxyCodeLine{1152     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm) == 0) \{}
+\DoxyCodeLine{1153 }
+\DoxyCodeLine{1154     \textcolor{keywordflow}{if}( printLevel > 0 ) std::cout << \textcolor{stringliteral}{"{}  *** Computing Natural Orbitals from Guess Density ***"{}} << std::endl << std::endl;}
+\DoxyCodeLine{1155 }
+\DoxyCodeLine{1156     \textcolor{keywordtype}{size\_t} NBC = this-\/>nC*basisSet().nBasis;}
+\DoxyCodeLine{1157     \textcolor{keywordtype}{bool} iRO = (std::dynamic\_pointer\_cast<ROFock<MatsT, IntsT>>(this-\/>fockBuilder) != \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{1158 }
+\DoxyCodeLine{1159     \textcolor{keywordflow}{if}( this-\/>nC == 1 )\{}
+\DoxyCodeLine{1160       \textcolor{comment}{// Allocate Local Matrices}}
+\DoxyCodeLine{1161       std::vector<SquareMatrix<MatsT>> SCR = this-\/>onePDMOrtho-\/>template spinGatherToBlocks<MatsT>(\textcolor{keyword}{false});}
+\DoxyCodeLine{1162       \textcolor{keywordtype}{double}* eVals = this-\/>memManager.template malloc<double>(NBC);}
+\DoxyCodeLine{1163 }
+\DoxyCodeLine{1164 }
+\DoxyCodeLine{1165       \textcolor{comment}{// Diagonalize Density}}
+\DoxyCodeLine{1166       \textcolor{keywordtype}{int} INFO  = \mbox{\hyperlink{namespaceChronusQ_a1153a882d53ef1052da6ede1f8fba24b}{HermetianEigen}}(\textcolor{charliteral}{'V'}, \textcolor{charliteral}{'L'}, NBC, SCR[0].pointer(), NBC, eVals, this-\/>memManager);}
+\DoxyCodeLine{1167       \textcolor{keywordflow}{if}( INFO != 0 )}
+\DoxyCodeLine{1168         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}HermetianEigen failed in computing Natural Orbitals"{}}, std::cout);}
+\DoxyCodeLine{1169 }
+\DoxyCodeLine{1170       \textcolor{comment}{// Copy in reverse order to MO's}}
+\DoxyCodeLine{1171       \textcolor{comment}{// Because the highest occupation numbers are last}}
+\DoxyCodeLine{1172       \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=0; i<NBC; i++ )\{}
+\DoxyCodeLine{1173          \textcolor{keywordtype}{size\_t} disp = ((NBC -\/ 1) -\/ i)*NBC;}
+\DoxyCodeLine{1174          std::copy\_n(SCR[0].pointer()+disp,NBC,this-\/>mo[0].pointer()+i*NBC);}
+\DoxyCodeLine{1175       \}}
+\DoxyCodeLine{1176       \textcolor{keywordflow}{if}( iRO ) std::copy\_n(this-\/>mo[0].pointer(),NBC*NBC,this-\/>mo[1].pointer());}
+\DoxyCodeLine{1177 }
+\DoxyCodeLine{1178 \textcolor{preprocessor}{\#ifdef \_SINGLESLATER\_NATURAL\_ORBITALS}}
+\DoxyCodeLine{1179       std::cout << \textcolor{stringliteral}{"{}Alpha Natural Orbital Occupations:"{}} << std::endl;}
+\DoxyCodeLine{1180       \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=0; i<NBC; i++ )}
+\DoxyCodeLine{1181         std::cout << \textcolor{stringliteral}{"{}  "{}} << eVals[i] << std::endl;}
+\DoxyCodeLine{1182       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout, \textcolor{stringliteral}{"{}Natural Orbitals (Alpha)"{}}, this-\/>mo[0].pointer(),NBC,NBC,NBC);}
+\DoxyCodeLine{1183 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1184 }
+\DoxyCodeLine{1185       \textcolor{comment}{// Compute Beta Orbitals for Unrestricted}}
+\DoxyCodeLine{1186       \textcolor{keywordflow}{if}( not (this-\/>iCS) )\{}
+\DoxyCodeLine{1187         INFO  = \mbox{\hyperlink{namespaceChronusQ_a1153a882d53ef1052da6ede1f8fba24b}{HermetianEigen}}(\textcolor{charliteral}{'V'}, \textcolor{charliteral}{'L'}, NBC, SCR[1].pointer(), NBC, eVals, this-\/>memManager);}
+\DoxyCodeLine{1188         \textcolor{keywordflow}{if}( INFO != 0 )}
+\DoxyCodeLine{1189           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}HermetianEigen failed in computing Natural Orbitals"{}}, std::cout);}
+\DoxyCodeLine{1190 }
+\DoxyCodeLine{1191         \textcolor{comment}{// Copy in reverse order}}
+\DoxyCodeLine{1192         \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=0; i<NBC; i++ )\{}
+\DoxyCodeLine{1193            \textcolor{keywordtype}{size\_t} disp = ((NBC -\/ 1) -\/ i)*NBC;}
+\DoxyCodeLine{1194            std::copy\_n(SCR[1].pointer()+disp,NBC,this-\/>mo[1].pointer()+i*NBC);}
+\DoxyCodeLine{1195         \}}
+\DoxyCodeLine{1196 }
+\DoxyCodeLine{1197 \textcolor{preprocessor}{\#ifdef \_SINGLESLATER\_NATURAL\_ORBITALS}}
+\DoxyCodeLine{1198       std::cout << \textcolor{stringliteral}{"{}Beta Natural Orbital Occupations:"{}} << std::endl;}
+\DoxyCodeLine{1199       \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=0; i<NBC; i++ )}
+\DoxyCodeLine{1200         std::cout << \textcolor{stringliteral}{"{}  "{}} << eVals[i] << std::endl;}
+\DoxyCodeLine{1201       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout, \textcolor{stringliteral}{"{}Natural Orbitals (Beta)"{}}, this-\/>mo[1].pointer(),NBC,NBC,NBC);}
+\DoxyCodeLine{1202 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1203       \}}
+\DoxyCodeLine{1204       this-\/>memManager.free(eVals);}
+\DoxyCodeLine{1205 }
+\DoxyCodeLine{1206     \textcolor{comment}{// 2C and 4C}}
+\DoxyCodeLine{1207     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1208 }
+\DoxyCodeLine{1209       \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} SCR = this-\/>onePDMOrtho-\/>template spinGather<MatsT>();}
+\DoxyCodeLine{1210       \textcolor{keywordtype}{double}* eVals = this-\/>memManager.template malloc<double>(NBC);}
+\DoxyCodeLine{1211 }
+\DoxyCodeLine{1212       \textcolor{comment}{// Diagonalize Density}}
+\DoxyCodeLine{1213       \textcolor{keywordtype}{int} INFO  = \mbox{\hyperlink{namespaceChronusQ_a1153a882d53ef1052da6ede1f8fba24b}{HermetianEigen}}(\textcolor{charliteral}{'V'}, \textcolor{charliteral}{'L'}, NBC, SCR.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), NBC, eVals, this-\/>memManager);}
+\DoxyCodeLine{1214       \textcolor{keywordflow}{if}( INFO != 0 )}
+\DoxyCodeLine{1215         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}HermetianEigen failed in computing Natural Orbitals"{}}, std::cout);}
+\DoxyCodeLine{1216 }
+\DoxyCodeLine{1217       \textcolor{comment}{// Copy in reverse order to MOs}}
+\DoxyCodeLine{1218       \textcolor{keywordflow}{if}( this-\/>nC == 4 )\{}
+\DoxyCodeLine{1219         \textcolor{keywordtype}{size\_t} nPos = NBC/2;}
+\DoxyCodeLine{1220         \textcolor{comment}{// Copy Positive energy orbitals}}
+\DoxyCodeLine{1221         \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=0; i<nPos; ++i )\{}
+\DoxyCodeLine{1222             \textcolor{keywordtype}{size\_t} disp = ((NBC-\/1) -\/ i)*NBC;}
+\DoxyCodeLine{1223            std::copy\_n(SCR.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}()+disp,NBC,this-\/>mo[0].pointer()+(i+nPos)*NBC);}
+\DoxyCodeLine{1224         \}}
+\DoxyCodeLine{1225         \textcolor{comment}{// Copy Negative energy orbitals}}
+\DoxyCodeLine{1226         \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=nPos; i<NBC; ++i )\{}
+\DoxyCodeLine{1227           \textcolor{keywordtype}{size\_t} disp = ((NBC-\/1) -\/ i)*NBC;}
+\DoxyCodeLine{1228           std::copy\_n(SCR.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}()+disp,NBC,this-\/>mo[0].pointer()+(i-\/nPos)*NBC);}
+\DoxyCodeLine{1229         \}}
+\DoxyCodeLine{1230       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1231         \textcolor{comment}{// 2C Copy natural orbitals}}
+\DoxyCodeLine{1232         \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=0; i<NBC; ++i )\{}
+\DoxyCodeLine{1233            \textcolor{keywordtype}{size\_t} disp = ((NBC -\/ 1) -\/ i)*NBC;}
+\DoxyCodeLine{1234            std::copy\_n(SCR.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}()+disp,NBC,this-\/>mo[0].pointer()+i*NBC);}
+\DoxyCodeLine{1235         \}}
+\DoxyCodeLine{1236       \}}
+\DoxyCodeLine{1237 }
+\DoxyCodeLine{1238 \textcolor{preprocessor}{\#ifdef \_SINGLESLATER\_NATURAL\_ORBITALS}}
+\DoxyCodeLine{1239       std::cout << \textcolor{stringliteral}{"{}Natural Orbital Occupations:"{}} << std::endl;}
+\DoxyCodeLine{1240       \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=0; i<NBC; i++ )}
+\DoxyCodeLine{1241         std::cout << \textcolor{stringliteral}{"{}  "{}} << eVals[i] << std::endl;}
+\DoxyCodeLine{1242       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout, \textcolor{stringliteral}{"{}Natural Orbitals"{}}, this-\/>mo[0].pointer(),NBC,NBC,NBC);}
+\DoxyCodeLine{1243 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1244       this-\/>memManager.free(eVals);}
+\DoxyCodeLine{1245     \}}
+\DoxyCodeLine{1246     \} \textcolor{comment}{// MPIRank == 0}}
+\DoxyCodeLine{1247     ortho2aoMOs();}
+\DoxyCodeLine{1248   \}}
+\DoxyCodeLine{1249 }
+\DoxyCodeLine{1250   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{1251   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a5523ec655b83625f0eae12aac5d7bd79}{SingleSlater<MatsT,IntsT> :: getNewOrbitals}}() \{}
+\DoxyCodeLine{1252       ao2orthoFock();}
+\DoxyCodeLine{1253       diagOrthoFock();}
+\DoxyCodeLine{1254       ortho2aoMOs();}
+\DoxyCodeLine{1255       formDensity();}
+\DoxyCodeLine{1256       saveCurrentState();}
+\DoxyCodeLine{1257   \}}
+\DoxyCodeLine{1258 }
+\DoxyCodeLine{1259 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{1260 }
+
+\end{DoxyCode}

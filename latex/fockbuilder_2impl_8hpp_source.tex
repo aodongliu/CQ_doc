@@ -1,0 +1,421 @@
+\hypertarget{fockbuilder_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{fockbuilder_2impl_8hpp_source}\index{include/fockbuilder/impl.hpp@{include/fockbuilder/impl.hpp}}
+\mbox{\hyperlink{fockbuilder_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{fockbuilder_8hpp}{fockbuilder.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{timer_8hpp}{util/timer.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg_8hpp}{cqlinalg.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrix_8hpp}{matrix.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incoreritpi_8hpp}{particleintegrals/twopints/incoreritpi.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gtodirecttpi_8hpp}{particleintegrals/twopints/gtodirecttpi.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gradints_2incore_8hpp}{particleintegrals/gradints/incore.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gradints_2direct_8hpp}{particleintegrals/gradints/direct.hpp}}>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{fockbuilder_2rofock_2impl_8hpp}{fockbuilder/rofock/impl.hpp}}>}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{quantum_2properties_8hpp}{quantum/properties.hpp}}>}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{neofock_8hpp}{fockbuilder/neofock.hpp}}>}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{fockbuilder_2fourcompfock_2impl_8hpp}{fockbuilder/fourcompfock/impl.hpp}}>}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{batchgd_8hpp}{fockbuilder/fourcompfock/batchgd.hpp}}>}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrixfock_8hpp}{fockbuilder/matrixfock.hpp}}>}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#include <typeinfo>}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{51   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{52   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{53   \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a508b030b59772725b1b38cc70a0ff5db}{FockBuilder<MatsT,IntsT>::FockBuilder}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder<MatsU,IntsT>}} \&other):}
+\DoxyCodeLine{54       hamiltonianOptions\_(other.hamiltonianOptions\_)\{\}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{64   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{65   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{66   \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a508b030b59772725b1b38cc70a0ff5db}{FockBuilder<MatsT,IntsT>::FockBuilder}}(\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder<MatsU,IntsT>}} \&\&other):}
+\DoxyCodeLine{67       hamiltonianOptions\_(other.hamiltonianOptions\_)\{\}}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{74   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{75   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FockBuilder_abd221d78f5019318b38eadd94ecc9030}{FockBuilder<MatsT,IntsT>::formGD}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&ss,}
+\DoxyCodeLine{76     \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert, \textcolor{keywordtype}{bool} increment, \textcolor{keywordtype}{double} xHFX, \textcolor{keywordtype}{bool} HerDen) \{}
+\DoxyCodeLine{77   }
+\DoxyCodeLine{78     \textcolor{comment}{// Decide list of onePDMs to use}}
+\DoxyCodeLine{79     \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}} \&contract1PDM}
+\DoxyCodeLine{80         = increment ? *ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a0d97aa6f39994dcd32a0b4f7a4498620}{deltaOnePDM}} : *ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}};}
+\DoxyCodeLine{81     }
+\DoxyCodeLine{82     std::vector<std::shared\_ptr<PauliSpinorSquareMatrices<MatsT>>> }
+\DoxyCodeLine{83       onePDMs, coulombMatrices, exchangeMatrices, twoeHs;}
+\DoxyCodeLine{84     }
+\DoxyCodeLine{85     \textcolor{comment}{// setup pointers }}
+\DoxyCodeLine{86     \textcolor{keywordflow}{if} (increment) onePDMs.push\_back(ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a0d97aa6f39994dcd32a0b4f7a4498620}{deltaOnePDM}});}
+\DoxyCodeLine{87     \textcolor{keywordflow}{else} onePDMs.push\_back(ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}});}
+\DoxyCodeLine{88      }
+\DoxyCodeLine{89     exchangeMatrices.push\_back(ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_afaff266c8eab1fb6cdecf429fbb3de7d}{exchangeMatrix}});}
+\DoxyCodeLine{90     twoeHs.push\_back(ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa5b6666e06adbd12fdd3cc534f2d297b}{twoeH}});}
+\DoxyCodeLine{91     }
+\DoxyCodeLine{92     coulombMatrices.push\_back(}
+\DoxyCodeLine{93       std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}>(}
+\DoxyCodeLine{94       ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}, ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a84e451a406430cbd59294c212c2fa4ab}{coulombMatrix}}-\/>dimension(), \textcolor{keyword}{false}, \textcolor{keyword}{false})}
+\DoxyCodeLine{95     );}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97     formRawGDInBatches(ss, pert, increment, xHFX, HerDen, onePDMs, coulombMatrices, exchangeMatrices, twoeHs);}
+\DoxyCodeLine{98     }
+\DoxyCodeLine{99     * ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a84e451a406430cbd59294c212c2fa4ab}{coulombMatrix}} = coulombMatrices[0]-\/>S(); }
+\DoxyCodeLine{100     }
+\DoxyCodeLine{101   \} \textcolor{comment}{// FockBuilder::formGD }}
+\DoxyCodeLine{102   }
+\DoxyCodeLine{108   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{109   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a61db2a06441a1b0b8788683afbef0f75}{FockBuilder<MatsT,IntsT>::formRawGDInBatches}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&ss,}
+\DoxyCodeLine{110     \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert, \textcolor{keywordtype}{bool} increment, \textcolor{keywordtype}{double} xHFX, \textcolor{keywordtype}{bool} HerDen, }
+\DoxyCodeLine{111     std::vector<std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}>> \& onePDMs, }
+\DoxyCodeLine{112     std::vector<std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}>> \& coulombMatrices, }
+\DoxyCodeLine{113     std::vector<std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}>> \& exchangeMatrices,}
+\DoxyCodeLine{114     std::vector<std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}>> \& twoeHs) \{}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116     \textcolor{keywordtype}{size\_t} NB = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5bb8768829c6a466209aae6e9e690ab3}{basisSet}}().\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{117     \textcolor{keywordtype}{size\_t} nBatch = onePDMs.size();}
+\DoxyCodeLine{118     \textcolor{keywordtype}{bool} computeCoulomb  = coulombMatrices.size() > 0;}
+\DoxyCodeLine{119     \textcolor{keywordtype}{bool} computeExchange = (std::abs(xHFX) > 1e-\/12) and exchangeMatrices.size() > 0;}
+\DoxyCodeLine{120     \textcolor{keywordtype}{bool} computeTwoeHs   = twoeHs.size() > 0;}
+\DoxyCodeLine{121     }
+\DoxyCodeLine{122     \textcolor{keywordflow}{if} (not computeCoulomb and not computeExchange and not computeTwoeHs) \{}
+\DoxyCodeLine{123      \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Nothing specified to compute in FockBuilder::formRawGDInBatches"{}});}
+\DoxyCodeLine{124     \}  }
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126     \textcolor{keywordflow}{if}( ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 4 )}
+\DoxyCodeLine{127       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}4C formGD is implemented in class FourCompFock."{}});}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129     \textcolor{comment}{// Zero out J and K[i]}}
+\DoxyCodeLine{130     \textcolor{keywordflow}{if}(not increment) \{}
+\DoxyCodeLine{131       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nBatch; i++) \{}
+\DoxyCodeLine{132         \textcolor{keywordflow}{if} (computeCoulomb)  coulombMatrices[i]-\/>clear();}
+\DoxyCodeLine{133         \textcolor{keywordflow}{if} (computeExchange) exchangeMatrices[i]-\/>clear();}
+\DoxyCodeLine{134         \textcolor{keywordflow}{if} (computeTwoeHs)   twoeHs[i]-\/>clear();}
+\DoxyCodeLine{135       \}}
+\DoxyCodeLine{136     \}}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138     std::vector<TwoBodyContraction<MatsT>> contract;}
+\DoxyCodeLine{139     }
+\DoxyCodeLine{140     \textcolor{keywordflow}{if} (computeCoulomb or computeTwoeHs) \{}
+\DoxyCodeLine{141       \textcolor{keyword}{auto} \& coulombContainers = computeCoulomb ? coulombMatrices: twoeHs;}
+\DoxyCodeLine{142       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nBatch; i++) \{}
+\DoxyCodeLine{143         contract.push\_back(}
+\DoxyCodeLine{144           \{onePDMs[i]-\/>S().pointer(), coulombContainers[i]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}}().pointer(), HerDen, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cba973881f532185390135a2845f80eb3ae}{COULOMB}}\}}
+\DoxyCodeLine{145         );}
+\DoxyCodeLine{146       \}}
+\DoxyCodeLine{147     \}}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149     \textcolor{comment}{// Determine how many (if any) exchange terms to calculate}}
+\DoxyCodeLine{150     \textcolor{keywordflow}{if}( std::abs(xHFX) > 1e-\/12 and not increment and ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} == 1 and}
+\DoxyCodeLine{151 \textcolor{comment}{//        (ss.scfControls.guess != SAD or ss.modifyOrbitals-\/>scfConv.nSCFIter != 0) and}}
+\DoxyCodeLine{152         std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1InCoreRITPIContraction}{InCoreRITPIContraction<MatsT, IntsT>}}>(ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a22300da3375f3b5d49b467c9b4ae143f}{TPI}})) \{}
+\DoxyCodeLine{153       \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}});}
+\DoxyCodeLine{154       \textcolor{keyword}{auto} ritpi = std::dynamic\_pointer\_cast<InCoreRITPIContraction<MatsT, IntsT>>(ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a22300da3375f3b5d49b467c9b4ae143f}{TPI}});}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156       \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} AAblock(exchangeMatrices[0]-\/>memManager(), NB);}
+\DoxyCodeLine{157       ritpi-\/>KCoefContract(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}}, ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a34b0db62d517413e7bfb351eb3d69346}{nOA}}, ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[0].pointer(), AAblock.pointer());}
+\DoxyCodeLine{158       \textcolor{keywordflow}{if}(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}}) \{}
+\DoxyCodeLine{159         }
+\DoxyCodeLine{160         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nBatch; i++) }
+\DoxyCodeLine{161           *exchangeMatrices[i] = \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>::spinBlockScatterBuild}}(AAblock);}
+\DoxyCodeLine{162       }
+\DoxyCodeLine{163       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{164         \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} BBblock(exchangeMatrices[0]-\/>memManager(), NB);}
+\DoxyCodeLine{165         ritpi-\/>KCoefContract(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}}, ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5de78fe4379af80569e1ed50e7881584}{nOB}}, ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a8a75e3fdb13a73257821516a4f86479e}{mo}}[1].pointer(), BBblock.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}());}
+\DoxyCodeLine{166         }
+\DoxyCodeLine{167         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nBatch; i++) }
+\DoxyCodeLine{168           *exchangeMatrices[i] = \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>::spinBlockScatterBuild}}(AAblock, BBblock);}
+\DoxyCodeLine{169       \}}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(computeExchange) \{}
+\DoxyCodeLine{172       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nBatch; i++) \{ }
+\DoxyCodeLine{173         contract.push\_back(}
+\DoxyCodeLine{174             \{onePDMs[i]-\/>S().pointer(), exchangeMatrices[i]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}}().pointer(), HerDen, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaa095106eab8e9a7a1e33352295d00093}{EXCHANGE}}\}}
+\DoxyCodeLine{175         );}
+\DoxyCodeLine{176         \textcolor{keywordflow}{if} (exchangeMatrices[i]-\/>hasZ())}
+\DoxyCodeLine{177           contract.push\_back(}
+\DoxyCodeLine{178             \{onePDMs[i]-\/>Z().pointer(), exchangeMatrices[i]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa21c2e59531c8710156d34a3c30ac81d5}{Z}}().pointer(), HerDen, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaa095106eab8e9a7a1e33352295d00093}{EXCHANGE}}\}}
+\DoxyCodeLine{179           );}
+\DoxyCodeLine{180         \textcolor{keywordflow}{if} (exchangeMatrices[i]-\/>hasXY()) \{}
+\DoxyCodeLine{181           contract.push\_back(}
+\DoxyCodeLine{182             \{onePDMs[i]-\/>Y().pointer(), exchangeMatrices[i]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa57cec4137b614c87cb4e24a3d003a3e0}{Y}}().pointer(), HerDen, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaa095106eab8e9a7a1e33352295d00093}{EXCHANGE}}\}}
+\DoxyCodeLine{183           );}
+\DoxyCodeLine{184           contract.push\_back(}
+\DoxyCodeLine{185             \{onePDMs[i]-\/>X().pointer(), exchangeMatrices[i]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}().pointer(), HerDen, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaa095106eab8e9a7a1e33352295d00093}{EXCHANGE}}\}}
+\DoxyCodeLine{186           );}
+\DoxyCodeLine{187         \}}
+\DoxyCodeLine{188       \}}
+\DoxyCodeLine{189     \}}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191     ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a22300da3375f3b5d49b467c9b4ae143f}{TPI}}-\/>twoBodyContract(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}}, contract, pert);}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}}); \textcolor{comment}{// Return if not root (J/K only valid on root process)}}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195     \textcolor{keywordflow}{if} (computeTwoeHs) \{}
+\DoxyCodeLine{196       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nBatch; i++) \{ }
+\DoxyCodeLine{197         \textcolor{comment}{// G[D] += 2*J[D]}}
+\DoxyCodeLine{198         \textcolor{keywordflow}{if} (computeCoulomb) \{}
+\DoxyCodeLine{199           *twoeHs[i] += 2.0 * *coulombMatrices[i];}
+\DoxyCodeLine{200         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{201           *twoeHs[i] *= 2.0;}
+\DoxyCodeLine{202         \}}
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204         \textcolor{comment}{// Form GD: G[D] = 2.0*J[D] -\/ K[D]}}
+\DoxyCodeLine{205         \textcolor{keywordflow}{if} (computeExchange) \{}
+\DoxyCodeLine{206           *twoeHs[i] -\/= xHFX * *exchangeMatrices[i];}
+\DoxyCodeLine{207         \} }
+\DoxyCodeLine{208       \}}
+\DoxyCodeLine{209     \}}
+\DoxyCodeLine{210 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{211   \textcolor{comment}{//printJ(std::cout);}}
+\DoxyCodeLine{212     printK(std::cout);}
+\DoxyCodeLine{213   \textcolor{comment}{//printGD(std::cout);}}
+\DoxyCodeLine{214 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216   \} \textcolor{comment}{// FockBuilder::formGD}}
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218 \textcolor{comment}{  /*******************************************************************************/}}
+\DoxyCodeLine{219   \textcolor{comment}{/* Compute memory requirement for build 4C GD in Batches                       */}}
+\DoxyCodeLine{220   \textcolor{comment}{/* Returns:                                                                    */}}
+\DoxyCodeLine{221   \textcolor{comment}{/*   size\_t SCR size needed for one batch                                      */}}
+\DoxyCodeLine{222   \textcolor{comment}{/*   IMPORTANT HERE: size are all in MatsT                                     */}}
+\DoxyCodeLine{223 \textcolor{comment}{  /*******************************************************************************/}}
+\DoxyCodeLine{224   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{225   \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1FockBuilder_aba0a6fed16d77e3f7e113cb89c3be662}{FockBuilder<MatsT,IntsT>::formRawGDSCRSizePerBatch}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&ss,}
+\DoxyCodeLine{226     \textcolor{keywordtype}{bool} computeExchange, \textcolor{keywordtype}{bool} HerDen)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{227   }
+\DoxyCodeLine{228       \textcolor{keywordtype}{size\_t} SCRSize  = 0ul;}
+\DoxyCodeLine{229   }
+\DoxyCodeLine{230       \textcolor{keywordflow}{if}( std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1GTODirectTPIContraction}{GTODirectTPIContraction<MatsT,IntsT>}}>(ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a22300da3375f3b5d49b467c9b4ae143f}{TPI}}) ) \{}
+\DoxyCodeLine{231         }
+\DoxyCodeLine{232         \mbox{\hyperlink{classChronusQ_1_1GTODirectTPIContraction}{GTODirectTPIContraction<MatsT,IntsT>}} \&ERICon =}
+\DoxyCodeLine{233             *std::dynamic\_pointer\_cast<GTODirectTPIContraction<MatsT,IntsT>>(ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a22300da3375f3b5d49b467c9b4ae143f}{TPI}});}
+\DoxyCodeLine{234         }
+\DoxyCodeLine{235         \textcolor{keywordtype}{size\_t} nConPerBatch = computeExchange ? 5: 1;}
+\DoxyCodeLine{236 }
+\DoxyCodeLine{237         SCRSize += ERICon.\mbox{\hyperlink{classChronusQ_1_1GTODirectTPIContraction_a2e5c59ef65e5b40e5fb3a48edd2e492e}{directScaffoldNewSCRSize}}() * nConPerBatch;}
+\DoxyCodeLine{238       \} }
+\DoxyCodeLine{239       }
+\DoxyCodeLine{240       \textcolor{keywordflow}{return} SCRSize;}
+\DoxyCodeLine{241   \} \textcolor{comment}{// FockBuilder::formRawGDSCRSizePerBatch}}
+\DoxyCodeLine{242 }
+\DoxyCodeLine{252   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{253   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a4242ef13cf11b05ad75b9acd3604bf6d}{FockBuilder<MatsT,IntsT>::formFock}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&ss,}
+\DoxyCodeLine{254     \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert, \textcolor{keywordtype}{bool} increment, \textcolor{keywordtype}{double} xHFX) \{}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256     \textcolor{keyword}{auto} GDStart = \mbox{\hyperlink{namespaceChronusQ_a715f671201f0f6e77216fcf1f72adbaf}{tick}}(); \textcolor{comment}{// Start time for G[D]}}
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258     \textcolor{comment}{// Form G[D]}}
+\DoxyCodeLine{259     formGD(ss,pert,increment,xHFX);}
+\DoxyCodeLine{260 }
+\DoxyCodeLine{261     ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a749dcc8871e79be69e5d2723b931ea0d}{GDDur}} = \mbox{\hyperlink{namespaceChronusQ_a3b2153e93af4532ff5b1e75d8af453b0}{tock}}(GDStart); \textcolor{comment}{// G[D] Duraction}}
+\DoxyCodeLine{262     \textcolor{comment}{//std::cout <<"{}formGD time = "{}<<ss.GDDur <<std::endl;}}
+\DoxyCodeLine{263 }
+\DoxyCodeLine{264     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}});}
+\DoxyCodeLine{265 }
+\DoxyCodeLine{266     \textcolor{comment}{// Form Fock}}
+\DoxyCodeLine{267     *ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab82f1f8ad464a41f46f9ee508cf22b38}{fockMatrix}} = *ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a6b7685f816cf01f8af699951274e62a6}{coreH}} + *ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa5b6666e06adbd12fdd3cc534f2d297b}{twoeH}};}
+\DoxyCodeLine{268 }
+\DoxyCodeLine{269     \textcolor{comment}{// Add in the electric field contributions}}
+\DoxyCodeLine{270     \textcolor{comment}{// FIXME: the magnetic field contribution should go here as well to allow for RT}}
+\DoxyCodeLine{271     \textcolor{comment}{// manipulation}}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a0f814f3c29fcd820aea53f9d3e317e42}{pert\_has\_type}}(pert,\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9affb099f0286d43119e7134902486543e}{Electric}}) ) \{}
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275       \textcolor{keyword}{auto} dipAmp = pert.\mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a074c4e7a01eb60481943b4c96a9c9749}{getDipoleAmp}}(\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9affb099f0286d43119e7134902486543e}{Electric}});}
+\DoxyCodeLine{276 }
+\DoxyCodeLine{277       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0;    i < 3;     i++)}
+\DoxyCodeLine{278         ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab82f1f8ad464a41f46f9ee508cf22b38}{fockMatrix}}-\/>S() -\/=}
+\DoxyCodeLine{279           2. * dipAmp[i] * (*ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a34841f96cd1e2bcdc2d3857db3d26163}{aoints}}.lenElectric)[i].matrix();}
+\DoxyCodeLine{280 }
+\DoxyCodeLine{281     \}}
+\DoxyCodeLine{282 }
+\DoxyCodeLine{283 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{284     ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a298071838cacfdf694198b365c5d7afe}{printFock}}(std::cout);}
+\DoxyCodeLine{285 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{286   \}}
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288 }
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{291   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MatrixFock_ad86169ac8746a3e18a59f465172bfed9}{MatrixFock<MatsT,IntsT>::formFock}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&ss,}
+\DoxyCodeLine{292                                          \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert, \textcolor{keywordtype}{bool} increment, \textcolor{keywordtype}{double} xHFX) \{}
+\DoxyCodeLine{293 }
+\DoxyCodeLine{294     *ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab82f1f8ad464a41f46f9ee508cf22b38}{fockMatrix}} = fockMatrix;}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}});}
+\DoxyCodeLine{297     *ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa5b6666e06adbd12fdd3cc534f2d297b}{twoeH}} = fockMatrix -\/ *ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a6b7685f816cf01f8af699951274e62a6}{coreH}};}
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299   \}}
+\DoxyCodeLine{300 }
+\DoxyCodeLine{307   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{308   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{309   std::shared\_ptr<FockBuilder<MatsU,IntsT>>}
+\DoxyCodeLine{310   \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a8e56c30a51e9e104d6fb010b274d8c14}{FockBuilder<MatsT,IntsT>::convert}}(\textcolor{keyword}{const} std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder<MatsT,IntsT>}}>\& fb) \{}
+\DoxyCodeLine{311 }
+\DoxyCodeLine{312     \textcolor{keywordflow}{if} (not fb) \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314     \textcolor{keyword}{const} std::type\_info \&tID(\textcolor{keyword}{typeid}(*fb));}
+\DoxyCodeLine{315 }
+\DoxyCodeLine{316     \textcolor{keywordflow}{if} (tID == \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1ROFock}{ROFock<MatsT,IntsT>}})) \{}
+\DoxyCodeLine{317       \textcolor{keywordflow}{return} std::make\_shared<ROFock<MatsU,IntsT>>(}
+\DoxyCodeLine{318                *std::dynamic\_pointer\_cast<ROFock<MatsT,IntsT>>(fb));}
+\DoxyCodeLine{319     \}}
+\DoxyCodeLine{320     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tID == \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{NEOFockBuilder<MatsT,IntsT>}})) \{}
+\DoxyCodeLine{321       \textcolor{keywordflow}{return} std::make\_shared<NEOFockBuilder<MatsU,IntsT>>(}
+\DoxyCodeLine{322                *std::dynamic\_pointer\_cast<NEOFockBuilder<MatsT,IntsT>>(fb));}
+\DoxyCodeLine{323     \} }
+\DoxyCodeLine{324     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tID == \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1FourCompFock}{FourCompFock<MatsT,IntsT>}})) \{}
+\DoxyCodeLine{325       \textcolor{keywordflow}{return} std::make\_shared<FourCompFock<MatsU,IntsT>>(}
+\DoxyCodeLine{326           *std::dynamic\_pointer\_cast<FourCompFock<MatsT,IntsT>>(fb));}
+\DoxyCodeLine{327 }
+\DoxyCodeLine{328     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tID == \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1MatrixFock}{MatrixFock<MatsT,IntsT>}})) \{}
+\DoxyCodeLine{329       \textcolor{keywordflow}{return} std::make\_shared<MatrixFock<MatsU,IntsT>>(}
+\DoxyCodeLine{330           *std::dynamic\_pointer\_cast<MatrixFock<MatsT,IntsT>>(fb));}
+\DoxyCodeLine{331 }
+\DoxyCodeLine{332     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{333       \textcolor{keywordflow}{return} std::make\_shared<FockBuilder<MatsU,IntsT>>(}
+\DoxyCodeLine{334                *std::dynamic\_pointer\_cast<FockBuilder<MatsT,IntsT>>(fb));}
+\DoxyCodeLine{335     \}}
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337   \} \textcolor{comment}{// FockBuilder<MatsT,IntsT>::convert}}
+\DoxyCodeLine{338 }
+\DoxyCodeLine{339   }
+\DoxyCodeLine{340   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{341   std::vector<double> \mbox{\hyperlink{classChronusQ_1_1FockBuilder_a2fd0a49b321ae23f8c386c10297935b7}{FockBuilder<MatsT,IntsT>::getGDGrad}}(}
+\DoxyCodeLine{342     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\& ss, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert, \textcolor{keywordtype}{double} xHFX) \{}
+\DoxyCodeLine{343 }
+\DoxyCodeLine{344     \textcolor{keywordtype}{size\_t} NB = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5bb8768829c6a466209aae6e9e690ab3}{basisSet}}().\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{345     \textcolor{keywordtype}{size\_t} nGrad = 3*ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5f29f9a842c2d47c458e1388abb94874}{molecule}}().\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}};}
+\DoxyCodeLine{346     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& mem = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}};}
+\DoxyCodeLine{347 }
+\DoxyCodeLine{348     \textcolor{keywordtype}{bool} hasXY = ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_afaff266c8eab1fb6cdecf429fbb3de7d}{exchangeMatrix}}-\/>hasXY();}
+\DoxyCodeLine{349     \textcolor{keywordtype}{bool} hasZ = ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_afaff266c8eab1fb6cdecf429fbb3de7d}{exchangeMatrix}}-\/>hasZ();}
+\DoxyCodeLine{350 }
+\DoxyCodeLine{351     \textcolor{keywordflow}{if}( not ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a34841f96cd1e2bcdc2d3857db3d26163}{aoints}}.gradERI )}
+\DoxyCodeLine{352       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Gradient ERI missing in FockBuilder::getGDGrad!"{}});}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354     \mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts<TwoPInts,IntsT>}}\& gradERI = *ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunction_a34841f96cd1e2bcdc2d3857db3d26163}{aoints}}.gradERI;}
+\DoxyCodeLine{355 }
+\DoxyCodeLine{356     \textcolor{comment}{// Form contraction}}
+\DoxyCodeLine{357     \textcolor{comment}{// TODO: There's gotta be a better way to do this...}}
+\DoxyCodeLine{358     std::unique\_ptr<GradContractions<MatsT,IntsT>> contract = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{359     \textcolor{keywordflow}{if} ( std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsT>}}>(gradERI[0]) ) \{}
+\DoxyCodeLine{360       contract = std::make\_unique<InCore4indexGradContraction<MatsT,IntsT>>(gradERI);}
+\DoxyCodeLine{361     \}}
+\DoxyCodeLine{362     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1DirectTPI}{DirectTPI<IntsT>}}>(gradERI[0]) ) \{}
+\DoxyCodeLine{363       contract = std::make\_unique<DirectGradContraction<MatsT,IntsT>>(gradERI);}
+\DoxyCodeLine{364     \}}
+\DoxyCodeLine{365     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{366       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Gradients of RI NYI!"{}});}
+\DoxyCodeLine{367 }
+\DoxyCodeLine{368     \textcolor{comment}{// Create contraction list}}
+\DoxyCodeLine{369     std::vector<std::vector<TwoBodyContraction<MatsT>>> cList;}
+\DoxyCodeLine{370 }
+\DoxyCodeLine{371     std::vector<SquareMatrix<MatsT>> JList;}
+\DoxyCodeLine{372     std::vector<PauliSpinorSquareMatrices<MatsT>> KList;}
+\DoxyCodeLine{373 }
+\DoxyCodeLine{374     JList.reserve(nGrad);}
+\DoxyCodeLine{375     KList.reserve(nGrad);}
+\DoxyCodeLine{376 }
+\DoxyCodeLine{377     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iGrad = 0; iGrad < nGrad; iGrad++ ) \{}
+\DoxyCodeLine{378       std::vector<TwoBodyContraction<MatsT>> tempCont;}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380       \textcolor{comment}{// Coulomb}}
+\DoxyCodeLine{381       JList.emplace\_back(mem, NB);}
+\DoxyCodeLine{382       JList.back().clear();}
+\DoxyCodeLine{383       tempCont.push\_back(}
+\DoxyCodeLine{384          \{ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>S().pointer(), JList.back().pointer(), \textcolor{keyword}{true}, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cba973881f532185390135a2845f80eb3ae}{COULOMB}}\}}
+\DoxyCodeLine{385       );}
+\DoxyCodeLine{386 }
+\DoxyCodeLine{387       \textcolor{comment}{// Exchange}}
+\DoxyCodeLine{388       \textcolor{keywordflow}{if}( std::abs(xHFX) > 1e-\/12 ) \{}
+\DoxyCodeLine{389 }
+\DoxyCodeLine{390         KList.emplace\_back(mem, NB, hasXY, hasZ);}
+\DoxyCodeLine{391         KList.back().clear();}
+\DoxyCodeLine{392 }
+\DoxyCodeLine{393         tempCont.push\_back(}
+\DoxyCodeLine{394           \{ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>S().pointer(), KList.back().S().pointer(), \textcolor{keyword}{true}, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaa095106eab8e9a7a1e33352295d00093}{EXCHANGE}}\}}
+\DoxyCodeLine{395         );}
+\DoxyCodeLine{396 }
+\DoxyCodeLine{397         \textcolor{keywordflow}{if} (hasZ) \{}
+\DoxyCodeLine{398           tempCont.push\_back(}
+\DoxyCodeLine{399             \{ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>Z().pointer(), KList.back().Z().pointer(), \textcolor{keyword}{true}, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaa095106eab8e9a7a1e33352295d00093}{EXCHANGE}}\}}
+\DoxyCodeLine{400           );}
+\DoxyCodeLine{401         \}}
+\DoxyCodeLine{402         \textcolor{keywordflow}{if} (hasXY) \{}
+\DoxyCodeLine{403           tempCont.push\_back(}
+\DoxyCodeLine{404             \{ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>Y().pointer(), KList.back().Y().pointer(), \textcolor{keyword}{true}, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaa095106eab8e9a7a1e33352295d00093}{EXCHANGE}}\}}
+\DoxyCodeLine{405           );}
+\DoxyCodeLine{406           tempCont.push\_back(}
+\DoxyCodeLine{407             \{ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>X().pointer(), KList.back().X().pointer(), \textcolor{keyword}{true}, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaa095106eab8e9a7a1e33352295d00093}{EXCHANGE}}\}}
+\DoxyCodeLine{408           );}
+\DoxyCodeLine{409         \}}
+\DoxyCodeLine{410       \}}
+\DoxyCodeLine{411 }
+\DoxyCodeLine{412 }
+\DoxyCodeLine{413       cList.push\_back(tempCont);}
+\DoxyCodeLine{414     \}}
+\DoxyCodeLine{415 }
+\DoxyCodeLine{416     \textcolor{comment}{// Contract to J/K}}
+\DoxyCodeLine{417     contract-\/>gradTwoBodyContract(\mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\_COMM\_WORLD}}, \textcolor{keyword}{true}, cList, pert);}
+\DoxyCodeLine{418 }
+\DoxyCodeLine{419     \textcolor{comment}{// Contract to gradient}}
+\DoxyCodeLine{420     std::vector<double> gradient;}
+\DoxyCodeLine{421     \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}} twoEGrad(mem, NB, hasXY, hasZ);}
+\DoxyCodeLine{422 }
+\DoxyCodeLine{423     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iGrad = 0; iGrad < nGrad; iGrad++ ) \{}
+\DoxyCodeLine{424 }
+\DoxyCodeLine{425       \textcolor{comment}{// Scale K by alpha}}
+\DoxyCodeLine{426       twoEGrad = -\/xHFX * KList[iGrad];}
+\DoxyCodeLine{427 }
+\DoxyCodeLine{428       \textcolor{comment}{// G[S] = 2 * J[S] + alpha * K[S]}}
+\DoxyCodeLine{429       twoEGrad.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a56bd65283837c1fbdbc7d23ddde2f558}{S}}() += 2. * JList[iGrad];}
+\DoxyCodeLine{430 }
+\DoxyCodeLine{431       \textcolor{keywordtype}{double} gradVal = ss.template computeOBProperty<SCALAR>(}
+\DoxyCodeLine{432         twoEGrad.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a56bd65283837c1fbdbc7d23ddde2f558}{S}}().pointer()}
+\DoxyCodeLine{433       );}
+\DoxyCodeLine{434       \textcolor{keywordflow}{if}( hasZ )}
+\DoxyCodeLine{435         gradVal += ss.template computeOBProperty<MZ>(}
+\DoxyCodeLine{436           twoEGrad.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a3a28e0412cb54a27d8ffba809401f9ce}{Z}}().pointer()}
+\DoxyCodeLine{437         );}
+\DoxyCodeLine{438       \textcolor{keywordflow}{if}( hasXY ) \{}
+\DoxyCodeLine{439         gradVal += ss.template computeOBProperty<MY>(}
+\DoxyCodeLine{440           twoEGrad.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a14e85342ad97e0528459b6eed0760830}{Y}}().pointer()}
+\DoxyCodeLine{441         );}
+\DoxyCodeLine{442         gradVal += ss.template computeOBProperty<MX>(}
+\DoxyCodeLine{443           twoEGrad.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a8dfc4001aea70d05758fc95d33f5862e}{X}}().pointer()}
+\DoxyCodeLine{444         );}
+\DoxyCodeLine{445       \}}
+\DoxyCodeLine{446       gradient.push\_back(0.25*gradVal);}
+\DoxyCodeLine{447 }
+\DoxyCodeLine{448     \}}
+\DoxyCodeLine{449 }
+\DoxyCodeLine{450     \textcolor{keywordflow}{return} gradient;}
+\DoxyCodeLine{451 }
+\DoxyCodeLine{452   \} \textcolor{comment}{// FockBuilder::getGDGrad}}
+\DoxyCodeLine{453 }
+\DoxyCodeLine{454 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

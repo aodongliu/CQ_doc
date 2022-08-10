@@ -1,0 +1,973 @@
+\hypertarget{direct4C__libint_8hpp_source}{}\doxysection{direct4\+C\+\_\+libint.\+hpp}
+\label{direct4C__libint_8hpp_source}\index{include/particleintegrals/contract/direct4C\_libint.hpp@{include/particleintegrals/contract/direct4C\_libint.hpp}}
+\mbox{\hyperlink{direct4C__libint_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{integrals_8hpp}{integrals.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{inhouseaointegral_8hpp}{particleintegrals/inhouseaointegral.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasext_8hpp}{cqlinalg/blasext.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasutil_8hpp}{cqlinalg/blasutil.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{physcon_8hpp}{physcon.hpp}}>}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{threads_8hpp}{util/threads.hpp}}>}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mpi_8hpp}{util/mpi.hpp}}>}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{timer_8hpp}{util/timer.hpp}}>}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{math_8hpp}{util/math.hpp}}>}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gtodirectreleri_8hpp}{particleintegrals/twopints/gtodirectreleri.hpp}}>}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{contract_2direct_8hpp}{particleintegrals/contract/direct.hpp}}>}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#include <chrono>}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#define \_PRECOMPUTE\_SHELL\_PAIRS}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 \textcolor{comment}{//\#define \_SHZ\_SCREEN\_4C}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#define \_CONTRACTION\_}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{libcint_8hpp}{libcint.hpp}}>}}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57   \textcolor{comment}{// For DCB Hamitlonian, }}
+\DoxyCodeLine{58   \textcolor{comment}{// 12 density matrices upon input stored as}}
+\DoxyCodeLine{59   \textcolor{comment}{// LL(MS,MX,MY,MZ), SS(MS,MX,MY,MZ), LS(MS,MX,MY,MZ)}}
+\DoxyCodeLine{60   \textcolor{comment}{//}}
+\DoxyCodeLine{61   \textcolor{comment}{// 12 contrated matrices upon output stored as}}
+\DoxyCodeLine{62   \textcolor{comment}{// LL(MS,MX,MY,MZ), SS(MS,MX,MY,MZ), LS(MS,MX,MY,MZ)}}
+\DoxyCodeLine{63   \textcolor{comment}{//}}
+\DoxyCodeLine{64  }
+\DoxyCodeLine{65   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{66   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_a1cd97cf0101c08cfd8a4b297a6bece3f}{GTODirectRelERIContraction<MatsT,IntsT>::directScaffold}}(}
+\DoxyCodeLine{67     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm, \textcolor{keyword}{const} \textcolor{keywordtype}{bool} screen,}
+\DoxyCodeLine{68     std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}> \&matList)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     \mbox{\hyperlink{classChronusQ_1_1DirectTPI}{DirectTPI<IntsT>}} \&eri =}
+\DoxyCodeLine{71         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1DirectTPI}{DirectTPI<IntsT>}}\&\textcolor{keyword}{>}(this-\/>ints\_);}
+\DoxyCodeLine{72     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& memManager\_ = eri.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}();}
+\DoxyCodeLine{73     \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\& basisSet\_ = eri.\mbox{\hyperlink{classChronusQ_1_1DirectTPI_a4a476a2dc5e606ee34f0a973b9ddce5c}{basisSet}}();}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75  }
+\DoxyCodeLine{76     \textcolor{comment}{// Determine the number of OpenMP threads}}
+\DoxyCodeLine{77     \textcolor{keywordtype}{size\_t} nThreads  = \mbox{\hyperlink{namespaceChronusQ_a3320ee560c87921c8d84885db82e9917}{GetNumThreads}}();}
+\DoxyCodeLine{78     \textcolor{keywordtype}{size\_t} LAThreads = \mbox{\hyperlink{namespaceChronusQ_a3152808c4819d6cbf8a29aef92728866}{GetLAThreads}}();}
+\DoxyCodeLine{79     \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(1); \textcolor{comment}{// Turn off parallelism in LA functions}}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{comment}{// There are 78 2nd Derivatives per ERI}}
+\DoxyCodeLine{82     \textcolor{keyword}{enum} ERI\_2ND\_DERIV\_IDX \{}
+\DoxyCodeLine{83       AxBx = 3,}
+\DoxyCodeLine{84       AxBy = 4,}
+\DoxyCodeLine{85       AxBz = 5,}
+\DoxyCodeLine{86       AyBx = 14,}
+\DoxyCodeLine{87       AyBy = 15,}
+\DoxyCodeLine{88       AyBz = 16,}
+\DoxyCodeLine{89       AzBx = 24,}
+\DoxyCodeLine{90       AzBy = 25,}
+\DoxyCodeLine{91       AzBz = 26,}
+\DoxyCodeLine{92       CxDx = 60,}
+\DoxyCodeLine{93       CxDy = 61,}
+\DoxyCodeLine{94       CxDz = 62,}
+\DoxyCodeLine{95       CyDx = 65,}
+\DoxyCodeLine{96       CyDy = 66,}
+\DoxyCodeLine{97       CyDz = 67,}
+\DoxyCodeLine{98       CzDx = 69,}
+\DoxyCodeLine{99       CzDy = 70,}
+\DoxyCodeLine{100       CzDz = 71,}
+\DoxyCodeLine{101       AxCx = 6,}
+\DoxyCodeLine{102       AxCy = 7,}
+\DoxyCodeLine{103       AxCz = 8,}
+\DoxyCodeLine{104       AyCx = 17,}
+\DoxyCodeLine{105       AyCy = 18,}
+\DoxyCodeLine{106       AyCz = 19,}
+\DoxyCodeLine{107       AzCx = 27,}
+\DoxyCodeLine{108       AzCy = 28,}
+\DoxyCodeLine{109       AzCz = 29,}
+\DoxyCodeLine{110       AxDx = 9,}
+\DoxyCodeLine{111       AxDy = 10,}
+\DoxyCodeLine{112       AxDz = 11,}
+\DoxyCodeLine{113       AyDx = 20,}
+\DoxyCodeLine{114       AyDy = 21,}
+\DoxyCodeLine{115       AyDz = 22,}
+\DoxyCodeLine{116       AzDx = 30,}
+\DoxyCodeLine{117       AzDy = 31,}
+\DoxyCodeLine{118       AzDz = 32,}
+\DoxyCodeLine{119       BxCx = 36,}
+\DoxyCodeLine{120       BxCy = 37,}
+\DoxyCodeLine{121       BxCz = 38,}
+\DoxyCodeLine{122       ByCx = 44,}
+\DoxyCodeLine{123       ByCy = 45,}
+\DoxyCodeLine{124       ByCz = 46,}
+\DoxyCodeLine{125       BzCx = 51,}
+\DoxyCodeLine{126       BzCy = 52,}
+\DoxyCodeLine{127       BzCz = 53,}
+\DoxyCodeLine{128       BxDx = 39,}
+\DoxyCodeLine{129       BxDy = 40,}
+\DoxyCodeLine{130       BxDz = 41,}
+\DoxyCodeLine{131       ByDx = 47,}
+\DoxyCodeLine{132       ByDy = 48,}
+\DoxyCodeLine{133       ByDz = 49,}
+\DoxyCodeLine{134       BzDx = 54,}
+\DoxyCodeLine{135       BzDy = 55,}
+\DoxyCodeLine{136       BzDz = 56}
+\DoxyCodeLine{137     \};}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} nBasis   = basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{141     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} nMat     = matList.size();}
+\DoxyCodeLine{142     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} nShell   = basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a936871b121472a416ee6f947ccdea4b4}{nShell}};}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     \textcolor{comment}{// Allocate scratch for raw integral batches}}
+\DoxyCodeLine{145     \textcolor{comment}{//size\_t maxShellSize = }}
+\DoxyCodeLine{146     \textcolor{comment}{//  std::max\_element(basisSet\_.shells.begin(),basisSet\_.shells.end(),}}
+\DoxyCodeLine{147     \textcolor{comment}{//    [](libint2::Shell \&sh1, libint2::Shell \&sh2) \{}}
+\DoxyCodeLine{148     \textcolor{comment}{//      return sh1.size() < sh2.size();}}
+\DoxyCodeLine{149     \textcolor{comment}{//    \})-\/>size();}}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151     \textcolor{keywordtype}{size\_t} maxShellSize = (basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a90bfe80774a23ae70d381783a1d275ac}{maxL}}+1)*(basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a90bfe80774a23ae70d381783a1d275ac}{maxL}}+2)/2;}
+\DoxyCodeLine{152     \textcolor{keywordtype}{size\_t} NB  = maxShellSize*4;}
+\DoxyCodeLine{153     \textcolor{keywordtype}{size\_t} NB2 = NB*NB;}
+\DoxyCodeLine{154     \textcolor{keywordtype}{size\_t} NB3 = NB2*NB;}
+\DoxyCodeLine{155     \textcolor{keywordtype}{size\_t} NB4 = NB2*NB2;}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157     \textcolor{keywordtype}{double} *ERIBuffer = memManager\_.malloc<\textcolor{keywordtype}{double}>(2*4*NB4*nThreads);}
+\DoxyCodeLine{158  }
+\DoxyCodeLine{159     \textcolor{comment}{// Create a vector of libint2::Engines for possible threading}}
+\DoxyCodeLine{160     std::vector<libint2::Engine> engines(nThreads);}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162     \textcolor{comment}{// Initialize the first engine for the integral evaluation}}
+\DoxyCodeLine{163     engines[0] = libint2::Engine(libint2::Operator::coulomb,}
+\DoxyCodeLine{164       basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_aee354d7cf0e3268aed3a136409c23662}{maxPrim}},basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a90bfe80774a23ae70d381783a1d275ac}{maxL}},2);}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166     \textcolor{comment}{// For DCB Hamitlonian, }}
+\DoxyCodeLine{167     \textcolor{comment}{// 12 density matrices upon input stored as}}
+\DoxyCodeLine{168     \textcolor{comment}{// LL(MS,MX,MY,MZ), SS(MS,MX,MY,MZ), LS(MS,MX,MY,MZ)}}
+\DoxyCodeLine{169     \textcolor{comment}{//}}
+\DoxyCodeLine{170     \textcolor{comment}{// 12 contrated matrices upon output stored as}}
+\DoxyCodeLine{171     \textcolor{comment}{// LL(MS,MX,MY,MZ), SS(MS,MX,MY,MZ), LS(MS,MX,MY,MZ)}}
+\DoxyCodeLine{172     \textcolor{comment}{//}}
+\DoxyCodeLine{173     \textcolor{comment}{// Allocate thread local storage to store integral contractions}}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175     \textcolor{keyword}{enum} DIRAC\_PAULI\_SPINOR\_COMP \{}
+\DoxyCodeLine{176       LLMS,}
+\DoxyCodeLine{177       LLMX,}
+\DoxyCodeLine{178       LLMY,}
+\DoxyCodeLine{179       LLMZ,}
+\DoxyCodeLine{180       SSMS,}
+\DoxyCodeLine{181       SSMX,}
+\DoxyCodeLine{182       SSMY,}
+\DoxyCodeLine{183       SSMZ,}
+\DoxyCodeLine{184       LSMS,}
+\DoxyCodeLine{185       LSMX,}
+\DoxyCodeLine{186       LSMY,}
+\DoxyCodeLine{187       LSMZ}
+\DoxyCodeLine{188     \};}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iMat = 0; iMat < nMat; iMat++)}
+\DoxyCodeLine{191       memset(matList[iMat].AX,0.,nBasis*nBasis*\textcolor{keyword}{sizeof}(MatsT));}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193     std::vector<std::vector<MatsT*>> AXthreads;}
+\DoxyCodeLine{194     MatsT *AXRaw = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{195     \textcolor{keywordflow}{if}(nThreads != 1) \{}
+\DoxyCodeLine{196       AXRaw = memManager\_.malloc<MatsT>(nThreads*nMat*nBasis*nBasis);    }
+\DoxyCodeLine{197       memset(AXRaw,0,nThreads*nMat*nBasis*nBasis*\textcolor{keyword}{sizeof}(MatsT));}
+\DoxyCodeLine{198     \}}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200     \textcolor{keywordflow}{if}(nThreads == 1) \{}
+\DoxyCodeLine{201       AXthreads.emplace\_back();}
+\DoxyCodeLine{202       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iMat = 0; iMat < nMat; iMat++)}
+\DoxyCodeLine{203         AXthreads.back().push\_back(matList[iMat].AX);}
+\DoxyCodeLine{204     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{205       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iThread = 0; iThread < nThreads; iThread++) \{}
+\DoxyCodeLine{206         AXthreads.emplace\_back();}
+\DoxyCodeLine{207         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iMat = 0; iMat < nMat; iMat++) }
+\DoxyCodeLine{208           AXthreads.back().push\_back(AXRaw + iThread*nMat*nBasis*nBasis + iMat*nBasis*nBasis);}
+\DoxyCodeLine{209       \}}
+\DoxyCodeLine{210     \}}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212 \textcolor{preprocessor}{\#ifdef \_SHZ\_SCREEN\_4C}}
+\DoxyCodeLine{213     \textcolor{comment}{// Compute shell block norms (∞-\/norm) of matList.X}}
+\DoxyCodeLine{214     \textcolor{keywordflow}{if}(eri.\mbox{\hyperlink{classChronusQ_1_1DirectTPI_a5fe8f1b07ffeec39f48faae7987cdfdf}{schwarz}}() == \textcolor{keyword}{nullptr}) eri.\mbox{\hyperlink{classChronusQ_1_1DirectTPI_ac90ba6c59e4593db8986495779bea090}{computeSchwarz}}();}
+\DoxyCodeLine{215     \textcolor{keywordtype}{double} *ShBlkNorms\_raw = memManager\_.malloc<\textcolor{keywordtype}{double}>(nMat*nShell*nShell);}
+\DoxyCodeLine{216     std::vector<double*> ShBlkNorms;}
+\DoxyCodeLine{217     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iMat = 0, iOff = 0; iMat < nMat; iMat++, iOff += nShell*nShell ) \{}
+\DoxyCodeLine{218       \mbox{\hyperlink{namespaceChronusQ_ade3d6fad69f4d04c7a642580c77ddb1b}{ShellBlockNorm}}(basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}},matList[iMat].X,nBasis,ShBlkNorms\_raw + iOff);}
+\DoxyCodeLine{219       ShBlkNorms.emplace\_back(ShBlkNorms\_raw + iOff);}
+\DoxyCodeLine{220     \}}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222     \textcolor{comment}{// Find the max value of shell block ∞-\/norms of all matList.X}}
+\DoxyCodeLine{223     \textcolor{keywordtype}{double} maxShBlkNorm = 0.;}
+\DoxyCodeLine{224     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iMat = 0; iMat < nMat; iMat++)}
+\DoxyCodeLine{225       maxShBlkNorm = std::max(maxShBlkNorm,}
+\DoxyCodeLine{226         *std::max\_element(ShBlkNorms[iMat],ShBlkNorms[iMat] + nShell*nShell) ); }
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228     \textcolor{keywordtype}{size\_t} maxnPrim4 = }
+\DoxyCodeLine{229       basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_aee354d7cf0e3268aed3a136409c23662}{maxPrim}} * basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_aee354d7cf0e3268aed3a136409c23662}{maxPrim}} * basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_aee354d7cf0e3268aed3a136409c23662}{maxPrim}} * }
+\DoxyCodeLine{230       basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_aee354d7cf0e3268aed3a136409c23662}{maxPrim}};}
+\DoxyCodeLine{231 }
+\DoxyCodeLine{232     \textcolor{comment}{// Set Libint precision}}
+\DoxyCodeLine{233     engines[0].set\_precision(}
+\DoxyCodeLine{234       std::min(}
+\DoxyCodeLine{235         std::numeric\_limits<double>::epsilon(),}
+\DoxyCodeLine{236         eri.\mbox{\hyperlink{classChronusQ_1_1DirectTPI_a51ce753ee588706401406d4216c1ba74}{threshSchwarz}}()/maxShBlkNorm}
+\DoxyCodeLine{237       )/maxnPrim4}
+\DoxyCodeLine{238     );}
+\DoxyCodeLine{239 \textcolor{comment}{//    engines[0].set\_precision(0.);}}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{241     \textcolor{comment}{// Get the max over all the matricies for the shell block ∞-\/norms}}
+\DoxyCodeLine{242     \textcolor{comment}{// OVERWRITES ShBlkNorms[0]}}
+\DoxyCodeLine{243     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < nShell*nShell; k++) \{}
+\DoxyCodeLine{244       \textcolor{keywordtype}{double} mx = std::abs(ShBlkNorms[0][k]);}
+\DoxyCodeLine{245       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iMat = 1; iMat < nMat; iMat++)}
+\DoxyCodeLine{246         mx = std::max(mx,std::abs(ShBlkNorms[iMat][k]));}
+\DoxyCodeLine{247       ShBlkNorms[0][k] = mx;}
+\DoxyCodeLine{248     \}}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250 }
+\DoxyCodeLine{251 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{252     \textcolor{comment}{// Set Libint precision}}
+\DoxyCodeLine{253     engines[0].set\_precision(0.);}
+\DoxyCodeLine{254 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256     \textcolor{comment}{// Copy master thread engine to other threads}}
+\DoxyCodeLine{257     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 1; i < nThreads; i++) engines[i] = engines[0];}
+\DoxyCodeLine{258 }
+\DoxyCodeLine{259     \textcolor{comment}{// Keeping track of number of integrals skipped}}
+\DoxyCodeLine{260     std::vector<size\_t> nSkip(nThreads,0);}
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} iscale = \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.0, 1.0);}
+\DoxyCodeLine{263 }
+\DoxyCodeLine{264     \textcolor{keyword}{auto} topDirect = \mbox{\hyperlink{namespaceChronusQ_a715f671201f0f6e77216fcf1f72adbaf}{tick}}();}
+\DoxyCodeLine{265 }
+\DoxyCodeLine{266 \textcolor{preprocessor}{    \#pragma omp parallel}}
+\DoxyCodeLine{267     \{}
+\DoxyCodeLine{268 }
+\DoxyCodeLine{269       \textcolor{keywordtype}{size\_t} thread\_id = \mbox{\hyperlink{namespaceChronusQ_aa348a017ee78c3450480773ddc542e5c}{GetThreadID}}();}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271       \textcolor{keyword}{auto} \&AX\_loc = AXthreads[thread\_id];}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273       \textcolor{keywordtype}{double} *ERIBuffAB = \&ERIBuffer[thread\_id*4*NB4];}
+\DoxyCodeLine{274       \textcolor{keywordtype}{double} *ERIBuffCD = \&ERIBuffer[nThreads*4*NB4 + thread\_id*4*NB4];}
+\DoxyCodeLine{275 }
+\DoxyCodeLine{276       \textcolor{keywordtype}{size\_t} n1,n2,n3,n4,m,n,k,l,mnkl,bf1,bf2,bf3,bf4;}
+\DoxyCodeLine{277       \textcolor{keywordtype}{size\_t} s4\_max;}
+\DoxyCodeLine{278 }
+\DoxyCodeLine{279       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} s1(0), bf1\_s(0), s1234(0); s1 < basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a936871b121472a416ee6f947ccdea4b4}{nShell}}; }
+\DoxyCodeLine{280           bf1\_s+=n1, s1++) \{ }
+\DoxyCodeLine{281 }
+\DoxyCodeLine{282         n1 = basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[s1].size(); \textcolor{comment}{// Size of Shell 1}}
+\DoxyCodeLine{283 }
+\DoxyCodeLine{284       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} s2(0), bf2\_s(0); s2 <= s1; bf2\_s+=n2, s2++) \{}
+\DoxyCodeLine{285 }
+\DoxyCodeLine{286         n2 = basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[s2].size(); \textcolor{comment}{// Size of Shell 2}}
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288 \textcolor{preprocessor}{\#ifdef \_SHZ\_SCREEN\_4C}}
+\DoxyCodeLine{289         \textcolor{keywordtype}{double} shz12 = 0, shMax12 = 0;}
+\DoxyCodeLine{290         \textcolor{keywordflow}{if}( screen ) \{}
+\DoxyCodeLine{291           shz12 = eri.\mbox{\hyperlink{classChronusQ_1_1DirectTPI_a5fe8f1b07ffeec39f48faae7987cdfdf}{schwarz}}()[s1 + s2*nShell];}
+\DoxyCodeLine{292           shMax12 = ShBlkNorms[0][s1 + s2*nShell];}
+\DoxyCodeLine{293         \}}
+\DoxyCodeLine{294 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} s3(0), bf3\_s(0); s3 <= s1; bf3\_s+=n3, s3++) \{}
+\DoxyCodeLine{297 }
+\DoxyCodeLine{298         n3 = basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[s3].size(); \textcolor{comment}{// Size of Shell 3}}
+\DoxyCodeLine{299         s4\_max = (s1 == s3) ? s2 : s3; \textcolor{comment}{// Determine the unique max of Shell 4}}
+\DoxyCodeLine{300 }
+\DoxyCodeLine{301 \textcolor{preprocessor}{\#ifdef \_SHZ\_SCREEN\_4C}}
+\DoxyCodeLine{302 }
+\DoxyCodeLine{303         \textcolor{keywordtype}{double} shMax123 = 0;}
+\DoxyCodeLine{304         \textcolor{keywordflow}{if}( screen ) \{}
+\DoxyCodeLine{305           \textcolor{comment}{// Pre-\/calculate shell-\/block norm max's that only}}
+\DoxyCodeLine{306           \textcolor{comment}{// depend on shells 1,2 and 3}}
+\DoxyCodeLine{307           shMax123 = }
+\DoxyCodeLine{308             std::max(ShBlkNorms[0][s1 + s3*nShell], }
+\DoxyCodeLine{309                      ShBlkNorms[0][s2 + s3*nShell]);}
+\DoxyCodeLine{310 }
+\DoxyCodeLine{311           shMax123 = std::max(shMax123,shMax12);}
+\DoxyCodeLine{312         \}}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{315  }
+\DoxyCodeLine{316       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} s4(0), bf4\_s(0); s4 <= s4\_max; bf4\_s+=n4, s4++, s1234++) \{}
+\DoxyCodeLine{317 }
+\DoxyCodeLine{318         n4 = basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[s4].size(); \textcolor{comment}{// Size of Shell 4}}
+\DoxyCodeLine{319 }
+\DoxyCodeLine{320         \textcolor{comment}{// Round Robbin work distribution}}
+\DoxyCodeLine{321 \textcolor{preprocessor}{        \#ifdef \_OPENMP}}
+\DoxyCodeLine{322         \textcolor{keywordflow}{if}( s1234 \% nThreads != thread\_id ) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{323 \textcolor{preprocessor}{        \#endif}}
+\DoxyCodeLine{324 }
+\DoxyCodeLine{325 }
+\DoxyCodeLine{326 \textcolor{preprocessor}{\#ifdef \_SHZ\_SCREEN\_4C}}
+\DoxyCodeLine{327 }
+\DoxyCodeLine{328         \textcolor{keywordtype}{double} shMax = 0;}
+\DoxyCodeLine{329 }
+\DoxyCodeLine{330         \textcolor{keywordflow}{if}( screen ) \{}
+\DoxyCodeLine{331           \textcolor{comment}{// Compute Shell norm max}}
+\DoxyCodeLine{332           shMax = }
+\DoxyCodeLine{333             std::max(ShBlkNorms[0][s1 + s4*nShell],}
+\DoxyCodeLine{334             std::max(ShBlkNorms[0][s2 + s4*nShell],}
+\DoxyCodeLine{335                      ShBlkNorms[0][s3 + s4*nShell]));}
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337           shMax = std::max(shMax,shMax123);}
+\DoxyCodeLine{338 }
+\DoxyCodeLine{339           \textcolor{keywordflow}{if}((shMax *shMax * shz12 * eri.\mbox{\hyperlink{classChronusQ_1_1DirectTPI_a5fe8f1b07ffeec39f48faae7987cdfdf}{schwarz}}()[s3 + s4*nShell]) <}
+\DoxyCodeLine{340              eri.\mbox{\hyperlink{classChronusQ_1_1DirectTPI_a51ce753ee588706401406d4216c1ba74}{threshSchwarz}}()) \{ nSkip[thread\_id]++; \textcolor{keywordflow}{continue}; \}}
+\DoxyCodeLine{341         \}}
+\DoxyCodeLine{342  }
+\DoxyCodeLine{343 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{344 }
+\DoxyCodeLine{345         \textcolor{comment}{// Evaluate ERI for shell quartet (s1 s2 | s3 s4)}}
+\DoxyCodeLine{346         engines[thread\_id].compute2<}
+\DoxyCodeLine{347           libint2::Operator::coulomb, libint2::BraKet::xx\_xx, 2>(}
+\DoxyCodeLine{348           basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[s1],}
+\DoxyCodeLine{349           basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[s2],}
+\DoxyCodeLine{350           basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[s3],}
+\DoxyCodeLine{351           basisSet\_.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}[s4]}
+\DoxyCodeLine{352         );}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354 }
+\DoxyCodeLine{355         \textcolor{keyword}{const} \textcolor{keyword}{auto}\& buff = engines[thread\_id].results();}
+\DoxyCodeLine{356 }
+\DoxyCodeLine{357         \textcolor{keywordflow}{if}(\&buff == \textcolor{keyword}{nullptr}) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{358 }
+\DoxyCodeLine{359 \textcolor{preprocessor}{\#if 1 }\textcolor{comment}{// Contraction}}
+\DoxyCodeLine{360 }
+\DoxyCodeLine{361         memset(ERIBuffAB,0.0,4*NB4);}
+\DoxyCodeLine{362         memset(ERIBuffCD,0.0,4*NB4);}
+\DoxyCodeLine{363 }
+\DoxyCodeLine{364         \textcolor{keywordflow}{for}(m = 0, mnkl = 0ul  ; m <                  n1; ++m) }
+\DoxyCodeLine{365         \textcolor{keywordflow}{for}(n =   maxShellSize ; n <   maxShellSize + n2; ++n)}
+\DoxyCodeLine{366         \textcolor{keywordflow}{for}(k = 2*maxShellSize ; k < 2*maxShellSize + n3; ++k) }
+\DoxyCodeLine{367         \textcolor{keywordflow}{for}(l = 3*maxShellSize ; l < 3*maxShellSize + n4; ++l, ++mnkl) \{}
+\DoxyCodeLine{368 }
+\DoxyCodeLine{369           \textcolor{keyword}{auto} MNKL = m + n*NB + k*NB2 + l*NB3;}
+\DoxyCodeLine{370           \textcolor{keyword}{auto} MNLK = m + n*NB + l*NB2 + k*NB3;}
+\DoxyCodeLine{371           \textcolor{keyword}{auto} NMKL = n + m*NB + k*NB2 + l*NB3;}
+\DoxyCodeLine{372           \textcolor{keyword}{auto} NMLK = n + m*NB + l*NB2 + k*NB3;}
+\DoxyCodeLine{373           \textcolor{keyword}{auto} KLMN = k + l*NB + m*NB2 + n*NB3;}
+\DoxyCodeLine{374           \textcolor{keyword}{auto} KLNM = k + l*NB + n*NB2 + m*NB3;}
+\DoxyCodeLine{375           \textcolor{keyword}{auto} LKMN = l + k*NB + m*NB2 + n*NB3;}
+\DoxyCodeLine{376           \textcolor{keyword}{auto} LKNM = l + k*NB + n*NB2 + m*NB3;}
+\DoxyCodeLine{377 }
+\DoxyCodeLine{378           \textcolor{comment}{/* Dirac-\/Coulomb */}}
+\DoxyCodeLine{379           \textcolor{comment}{// ∇A∙∇B(mn|kl)}}
+\DoxyCodeLine{380           \textcolor{keyword}{auto} dAdotdB = buff[AxBx][mnkl] + buff[AyBy][mnkl] + buff[AzBz][mnkl];}
+\DoxyCodeLine{381           \textcolor{comment}{// ∇Ax∇B(mn|kl)}}
+\DoxyCodeLine{382           \textcolor{keyword}{auto} dAcrossdB\_x =  buff[AyBz][mnkl] -\/ buff[AzBy][mnkl];}
+\DoxyCodeLine{383           \textcolor{keyword}{auto} dAcrossdB\_y = -\/buff[AxBz][mnkl] + buff[AzBx][mnkl];}
+\DoxyCodeLine{384           \textcolor{keyword}{auto} dAcrossdB\_z =  buff[AxBy][mnkl] -\/ buff[AyBx][mnkl];}
+\DoxyCodeLine{385 }
+\DoxyCodeLine{386           \textcolor{comment}{// ∇C∙∇D(mn|kl)}}
+\DoxyCodeLine{387           \textcolor{keyword}{auto} dCdotdD = buff[CxDx][mnkl] + buff[CyDy][mnkl] + buff[CzDz][mnkl];}
+\DoxyCodeLine{388           \textcolor{comment}{// ∇Cx∇D(mn|kl)}}
+\DoxyCodeLine{389           \textcolor{keyword}{auto} dCcrossdD\_x =  buff[CyDz][mnkl] -\/ buff[CzDy][mnkl];}
+\DoxyCodeLine{390           \textcolor{keyword}{auto} dCcrossdD\_y = -\/buff[CxDz][mnkl] + buff[CzDx][mnkl];}
+\DoxyCodeLine{391           \textcolor{keyword}{auto} dCcrossdD\_z =  buff[CxDy][mnkl] -\/ buff[CyDx][mnkl];}
+\DoxyCodeLine{392 }
+\DoxyCodeLine{393 }
+\DoxyCodeLine{394           \textcolor{comment}{// ∇A∙∇B(mn|kl) followed by ∇Ax∇B(mn|kl) X, Y, and Z}}
+\DoxyCodeLine{395           \textcolor{comment}{// (mn|kl)}}
+\DoxyCodeLine{396           ERIBuffAB[      MNKL] =  dAdotdB;}
+\DoxyCodeLine{397           ERIBuffAB[  NB4+MNKL] =  dAcrossdB\_x;}
+\DoxyCodeLine{398           ERIBuffAB[2*NB4+MNKL] =  dAcrossdB\_y;}
+\DoxyCodeLine{399           ERIBuffAB[3*NB4+MNKL] =  dAcrossdB\_z;}
+\DoxyCodeLine{400           \textcolor{comment}{// (mn|lk)}}
+\DoxyCodeLine{401           ERIBuffAB[      MNLK] =  dAdotdB;}
+\DoxyCodeLine{402           ERIBuffAB[  NB4+MNLK] =  dAcrossdB\_x;}
+\DoxyCodeLine{403           ERIBuffAB[2*NB4+MNLK] =  dAcrossdB\_y;}
+\DoxyCodeLine{404           ERIBuffAB[3*NB4+MNLK] =  dAcrossdB\_z;}
+\DoxyCodeLine{405           \textcolor{comment}{// (nm|kl)}}
+\DoxyCodeLine{406           ERIBuffAB[      NMKL] =  dAdotdB;}
+\DoxyCodeLine{407           ERIBuffAB[  NB4+NMKL] = -\/dAcrossdB\_x;}
+\DoxyCodeLine{408           ERIBuffAB[2*NB4+NMKL] = -\/dAcrossdB\_y;}
+\DoxyCodeLine{409           ERIBuffAB[3*NB4+NMKL] = -\/dAcrossdB\_z;}
+\DoxyCodeLine{410           \textcolor{comment}{// (nm|lk)}}
+\DoxyCodeLine{411           ERIBuffAB[      NMLK] =  dAdotdB;}
+\DoxyCodeLine{412           ERIBuffAB[  NB4+NMLK] = -\/dAcrossdB\_x;}
+\DoxyCodeLine{413           ERIBuffAB[2*NB4+NMLK] = -\/dAcrossdB\_y;}
+\DoxyCodeLine{414           ERIBuffAB[3*NB4+NMLK] = -\/dAcrossdB\_z;}
+\DoxyCodeLine{415           \textcolor{comment}{// (kl|mn)}}
+\DoxyCodeLine{416           ERIBuffAB[      KLMN] =  dCdotdD;}
+\DoxyCodeLine{417           ERIBuffAB[  NB4+KLMN] =  dCcrossdD\_x;}
+\DoxyCodeLine{418           ERIBuffAB[2*NB4+KLMN] =  dCcrossdD\_y;}
+\DoxyCodeLine{419           ERIBuffAB[3*NB4+KLMN] =  dCcrossdD\_z;}
+\DoxyCodeLine{420           \textcolor{comment}{// (kl|nm)}}
+\DoxyCodeLine{421           ERIBuffAB[      KLNM] =  dCdotdD;}
+\DoxyCodeLine{422           ERIBuffAB[  NB4+KLNM] =  dCcrossdD\_x;}
+\DoxyCodeLine{423           ERIBuffAB[2*NB4+KLNM] =  dCcrossdD\_y;}
+\DoxyCodeLine{424           ERIBuffAB[3*NB4+KLNM] =  dCcrossdD\_z;}
+\DoxyCodeLine{425           \textcolor{comment}{// (lk|mn)}}
+\DoxyCodeLine{426           ERIBuffAB[      LKMN] =  dCdotdD;}
+\DoxyCodeLine{427           ERIBuffAB[  NB4+LKMN] = -\/dCcrossdD\_x;}
+\DoxyCodeLine{428           ERIBuffAB[2*NB4+LKMN] = -\/dCcrossdD\_y;}
+\DoxyCodeLine{429           ERIBuffAB[3*NB4+LKMN] = -\/dCcrossdD\_z;}
+\DoxyCodeLine{430           \textcolor{comment}{// (lk|nm)}}
+\DoxyCodeLine{431           ERIBuffAB[      LKNM] =  dCdotdD;}
+\DoxyCodeLine{432           ERIBuffAB[  NB4+LKNM] = -\/dCcrossdD\_x;}
+\DoxyCodeLine{433           ERIBuffAB[2*NB4+LKNM] = -\/dCcrossdD\_y;}
+\DoxyCodeLine{434           ERIBuffAB[3*NB4+LKNM] = -\/dCcrossdD\_z;}
+\DoxyCodeLine{435 }
+\DoxyCodeLine{436           \textcolor{comment}{// ∇C∙∇D(mn|kl) followed by ∇Cx∇D(mn|kl) X, Y, and Z}}
+\DoxyCodeLine{437           \textcolor{comment}{// (mn|kl)}}
+\DoxyCodeLine{438           ERIBuffCD[      MNKL] =  dCdotdD;}
+\DoxyCodeLine{439           ERIBuffCD[  NB4+MNKL] =  dCcrossdD\_x;}
+\DoxyCodeLine{440           ERIBuffCD[2*NB4+MNKL] =  dCcrossdD\_y;}
+\DoxyCodeLine{441           ERIBuffCD[3*NB4+MNKL] =  dCcrossdD\_z;}
+\DoxyCodeLine{442           \textcolor{comment}{// (mn|lk)}}
+\DoxyCodeLine{443           ERIBuffCD[      MNLK] =  dCdotdD;}
+\DoxyCodeLine{444           ERIBuffCD[  NB4+MNLK] = -\/dCcrossdD\_x;}
+\DoxyCodeLine{445           ERIBuffCD[2*NB4+MNLK] = -\/dCcrossdD\_y;}
+\DoxyCodeLine{446           ERIBuffCD[3*NB4+MNLK] = -\/dCcrossdD\_z;}
+\DoxyCodeLine{447           \textcolor{comment}{// (nm|kl)}}
+\DoxyCodeLine{448           ERIBuffCD[      NMKL] =  dCdotdD;}
+\DoxyCodeLine{449           ERIBuffCD[  NB4+NMKL] =  dCcrossdD\_x;}
+\DoxyCodeLine{450           ERIBuffCD[2*NB4+NMKL] =  dCcrossdD\_y;}
+\DoxyCodeLine{451           ERIBuffCD[3*NB4+NMKL] =  dCcrossdD\_z;}
+\DoxyCodeLine{452           \textcolor{comment}{// (nm|lk)}}
+\DoxyCodeLine{453           ERIBuffCD[      NMLK] =  dCdotdD;}
+\DoxyCodeLine{454           ERIBuffCD[  NB4+NMLK] = -\/dCcrossdD\_x;}
+\DoxyCodeLine{455           ERIBuffCD[2*NB4+NMLK] = -\/dCcrossdD\_y;}
+\DoxyCodeLine{456           ERIBuffCD[3*NB4+NMLK] = -\/dCcrossdD\_z;}
+\DoxyCodeLine{457           \textcolor{comment}{// (kl|mn)}}
+\DoxyCodeLine{458           ERIBuffCD[      KLMN] =  dAdotdB;}
+\DoxyCodeLine{459           ERIBuffCD[  NB4+KLMN] =  dAcrossdB\_x;}
+\DoxyCodeLine{460           ERIBuffCD[2*NB4+KLMN] =  dAcrossdB\_y;}
+\DoxyCodeLine{461           ERIBuffCD[3*NB4+KLMN] =  dAcrossdB\_z;}
+\DoxyCodeLine{462           \textcolor{comment}{// (kl|nm)}}
+\DoxyCodeLine{463           ERIBuffCD[      KLNM] =  dAdotdB;}
+\DoxyCodeLine{464           ERIBuffCD[  NB4+KLNM] = -\/dAcrossdB\_x;}
+\DoxyCodeLine{465           ERIBuffCD[2*NB4+KLNM] = -\/dAcrossdB\_y;}
+\DoxyCodeLine{466           ERIBuffCD[3*NB4+KLNM] = -\/dAcrossdB\_z;}
+\DoxyCodeLine{467           \textcolor{comment}{// (lk|mn)}}
+\DoxyCodeLine{468           ERIBuffCD[      LKMN] =  dAdotdB;}
+\DoxyCodeLine{469           ERIBuffCD[  NB4+LKMN] =  dAcrossdB\_x;}
+\DoxyCodeLine{470           ERIBuffCD[2*NB4+LKMN] =  dAcrossdB\_y;}
+\DoxyCodeLine{471           ERIBuffCD[3*NB4+LKMN] =  dAcrossdB\_z;}
+\DoxyCodeLine{472           \textcolor{comment}{// (lk|nm)}}
+\DoxyCodeLine{473           ERIBuffCD[      LKNM] =  dAdotdB;}
+\DoxyCodeLine{474           ERIBuffCD[  NB4+LKNM] = -\/dAcrossdB\_x;}
+\DoxyCodeLine{475           ERIBuffCD[2*NB4+LKNM] = -\/dAcrossdB\_y;}
+\DoxyCodeLine{476           ERIBuffCD[3*NB4+LKNM] = -\/dAcrossdB\_z;}
+\DoxyCodeLine{477 }
+\DoxyCodeLine{478         \} \textcolor{comment}{// integral preparation loop}}
+\DoxyCodeLine{479 }
+\DoxyCodeLine{480 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{481         std::cout << \textcolor{stringliteral}{"{}ERI00-\/03: ∇A∙∇B(ab|cd)  ∇Ax∇B(ab|cd)-\/X  ∇Ax∇B(ab|cd)-\/Y  ∇Ax∇B(ab|cd)-\/Z"{}} << std::endl;}
+\DoxyCodeLine{482         \textcolor{keywordflow}{for}(m = 0ul,            bf1 = bf1\_s; m <                  n1; ++m, bf1++) }
+\DoxyCodeLine{483         \textcolor{keywordflow}{for}(n =   maxShellSize, bf2 = bf2\_s; n <   maxShellSize + n2; ++n, bf2++) }
+\DoxyCodeLine{484         \textcolor{keywordflow}{for}(k = 2*maxShellSize, bf3 = bf3\_s; k < 2*maxShellSize + n3; ++k, bf3++) }
+\DoxyCodeLine{485         \textcolor{keywordflow}{for}(l = 3*maxShellSize, bf4 = bf4\_s; l < 3*maxShellSize + n4; ++l, bf4++) \{}
+\DoxyCodeLine{486 }
+\DoxyCodeLine{487           \textcolor{keyword}{auto} MNKL = m + n*NB + k*NB2 + l*NB3;}
+\DoxyCodeLine{488           \textcolor{keyword}{auto} KLMN = k + l*NB + m*NB2 + n*NB3;}
+\DoxyCodeLine{489           \textcolor{keyword}{auto} DotPrd = MNKL;}
+\DoxyCodeLine{490           \textcolor{keyword}{auto} CrossX = MNKL+NB4;}
+\DoxyCodeLine{491           \textcolor{keyword}{auto} CrossY = MNKL+2*NB4;}
+\DoxyCodeLine{492           \textcolor{keyword}{auto} CrossZ = MNKL+3*NB4;}
+\DoxyCodeLine{493 }
+\DoxyCodeLine{494           std::cout << \textcolor{stringliteral}{"{}("{}} << m << \textcolor{stringliteral}{"{},"{}} << n << \textcolor{stringliteral}{"{}|"{}} << k << \textcolor{stringliteral}{"{},"{}} << l << \textcolor{stringliteral}{"{})  "{}};}
+\DoxyCodeLine{495           std::cout << ERIBuffAB[DotPrd];}
+\DoxyCodeLine{496           std::cout << \textcolor{stringliteral}{"{}   "{}};}
+\DoxyCodeLine{497           std::cout << ERIBuffAB[CrossX];}
+\DoxyCodeLine{498           std::cout << \textcolor{stringliteral}{"{}   "{}};}
+\DoxyCodeLine{499           std::cout << ERIBuffAB[CrossY];}
+\DoxyCodeLine{500           std::cout << \textcolor{stringliteral}{"{}   "{}};}
+\DoxyCodeLine{501           std::cout << ERIBuffAB[CrossZ] << std::endl;}
+\DoxyCodeLine{502 }
+\DoxyCodeLine{503         \};}
+\DoxyCodeLine{504 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{505 }
+\DoxyCodeLine{506         \textcolor{keywordflow}{for}(m = 0ul,            bf1 = bf1\_s; m <                  n1; ++m, bf1++) }
+\DoxyCodeLine{507         \textcolor{keywordflow}{for}(n =   maxShellSize, bf2 = bf2\_s; n <   maxShellSize + n2; ++n, bf2++) }
+\DoxyCodeLine{508         \textcolor{keywordflow}{for}(k = 2*maxShellSize, bf3 = bf3\_s; k < 2*maxShellSize + n3; ++k, bf3++) }
+\DoxyCodeLine{509         \textcolor{keywordflow}{for}(l = 3*maxShellSize, bf4 = bf4\_s; l < 3*maxShellSize + n4; ++l, bf4++) \{}
+\DoxyCodeLine{510 }
+\DoxyCodeLine{511 }
+\DoxyCodeLine{512           \textcolor{keyword}{auto} MNKL = m + n*NB + k*NB2 + l*NB3;}
+\DoxyCodeLine{513           \textcolor{keyword}{auto} KLMN = k + l*NB + m*NB2 + n*NB3;}
+\DoxyCodeLine{514           \textcolor{keyword}{auto} DotPrd = MNKL;}
+\DoxyCodeLine{515           \textcolor{keyword}{auto} CrossX = MNKL+NB4;}
+\DoxyCodeLine{516           \textcolor{keyword}{auto} CrossY = MNKL+2*NB4;}
+\DoxyCodeLine{517           \textcolor{keyword}{auto} CrossZ = MNKL+3*NB4;}
+\DoxyCodeLine{518 }
+\DoxyCodeLine{519 }
+\DoxyCodeLine{520 }
+\DoxyCodeLine{521 \textcolor{comment}{          /***********************************/}}
+\DoxyCodeLine{522           \textcolor{comment}{/* Dirac-\/Coulomb (LL|LL)           */}}
+\DoxyCodeLine{523 \textcolor{comment}{          /***********************************/}}
+\DoxyCodeLine{524           \textcolor{keyword}{auto} AXMSTemp = AX\_loc[LLMS];}
+\DoxyCodeLine{525           \textcolor{keyword}{auto} XMSTemp  = matList[SSMS].X;}
+\DoxyCodeLine{526           \textcolor{keyword}{auto} XMXTemp  = matList[SSMX].X;}
+\DoxyCodeLine{527           \textcolor{keyword}{auto} XMYTemp  = matList[SSMY].X;}
+\DoxyCodeLine{528           \textcolor{keyword}{auto} XMZTemp  = matList[SSMZ].X;}
+\DoxyCodeLine{529 }
+\DoxyCodeLine{530           \textcolor{comment}{//MNKL}}
+\DoxyCodeLine{531           AXMSTemp[bf1 + bf2*nBasis] += ERIBuffCD[DotPrd]*XMSTemp[bf4 + bf3*nBasis];}
+\DoxyCodeLine{532           AXMSTemp[bf1 + bf2*nBasis] += ERIBuffCD[CrossX]*XMXTemp[bf4 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{533           AXMSTemp[bf1 + bf2*nBasis] += ERIBuffCD[CrossY]*XMYTemp[bf4 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{534           AXMSTemp[bf1 + bf2*nBasis] += ERIBuffCD[CrossZ]*XMZTemp[bf4 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{535 }
+\DoxyCodeLine{536           \textcolor{comment}{//NMKL}}
+\DoxyCodeLine{537           \textcolor{keywordflow}{if}(bf1\_s!=bf2\_s)\{}
+\DoxyCodeLine{538             AXMSTemp[bf2 + bf1*nBasis] += ERIBuffCD[DotPrd]*XMSTemp[bf4 + bf3*nBasis];}
+\DoxyCodeLine{539             AXMSTemp[bf2 + bf1*nBasis] += ERIBuffCD[CrossX]*XMXTemp[bf4 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{540             AXMSTemp[bf2 + bf1*nBasis] += ERIBuffCD[CrossY]*XMYTemp[bf4 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{541             AXMSTemp[bf2 + bf1*nBasis] += ERIBuffCD[CrossZ]*XMZTemp[bf4 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{542           \}}
+\DoxyCodeLine{543 }
+\DoxyCodeLine{544           \textcolor{comment}{//MNLK}}
+\DoxyCodeLine{545           \textcolor{keywordflow}{if}(bf3\_s!=bf4\_s)\{}
+\DoxyCodeLine{546             AXMSTemp[bf1 + bf2*nBasis] += ERIBuffCD[DotPrd]*XMSTemp[bf3 + bf4*nBasis];}
+\DoxyCodeLine{547             AXMSTemp[bf1 + bf2*nBasis] -\/= ERIBuffCD[CrossX]*XMXTemp[bf3 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{548             AXMSTemp[bf1 + bf2*nBasis] -\/= ERIBuffCD[CrossY]*XMYTemp[bf3 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{549             AXMSTemp[bf1 + bf2*nBasis] -\/= ERIBuffCD[CrossZ]*XMZTemp[bf3 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{550           \}}
+\DoxyCodeLine{551 }
+\DoxyCodeLine{552           \textcolor{comment}{//NMLK}}
+\DoxyCodeLine{553           \textcolor{keywordflow}{if}(bf1\_s!=bf2\_s and bf3\_s!=bf4\_s)\{}
+\DoxyCodeLine{554             AXMSTemp[bf2 + bf1*nBasis] += ERIBuffCD[DotPrd]*XMSTemp[bf3 + bf4*nBasis];}
+\DoxyCodeLine{555             AXMSTemp[bf2 + bf1*nBasis] -\/= ERIBuffCD[CrossX]*XMXTemp[bf3 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{556             AXMSTemp[bf2 + bf1*nBasis] -\/= ERIBuffCD[CrossY]*XMYTemp[bf3 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{557             AXMSTemp[bf2 + bf1*nBasis] -\/= ERIBuffCD[CrossZ]*XMZTemp[bf3 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{558           \}}
+\DoxyCodeLine{559 }
+\DoxyCodeLine{560           \textcolor{comment}{//NMLK}}
+\DoxyCodeLine{561           \textcolor{keywordflow}{if}(bf1\_s!=bf3\_s or bf2\_s!=bf4\_s)\{}
+\DoxyCodeLine{562  }
+\DoxyCodeLine{563             DotPrd = KLMN;}
+\DoxyCodeLine{564             CrossX = KLMN+NB4;}
+\DoxyCodeLine{565             CrossY = KLMN+2*NB4;}
+\DoxyCodeLine{566             CrossZ = KLMN+3*NB4;}
+\DoxyCodeLine{567 }
+\DoxyCodeLine{568             \textcolor{comment}{//KLMN}}
+\DoxyCodeLine{569             AXMSTemp[bf3 + bf4*nBasis] += ERIBuffCD[DotPrd]*XMSTemp[bf2 + bf1*nBasis];}
+\DoxyCodeLine{570             AXMSTemp[bf3 + bf4*nBasis] += ERIBuffCD[CrossX]*XMXTemp[bf2 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{571             AXMSTemp[bf3 + bf4*nBasis] += ERIBuffCD[CrossY]*XMYTemp[bf2 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{572             AXMSTemp[bf3 + bf4*nBasis] += ERIBuffCD[CrossZ]*XMZTemp[bf2 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{573 }
+\DoxyCodeLine{574             \textcolor{comment}{//NMKL}}
+\DoxyCodeLine{575             \textcolor{keywordflow}{if}(bf3\_s!=bf4\_s)\{}
+\DoxyCodeLine{576               AXMSTemp[bf4 + bf3*nBasis] += ERIBuffCD[DotPrd]*XMSTemp[bf2 + bf1*nBasis];}
+\DoxyCodeLine{577               AXMSTemp[bf4 + bf3*nBasis] += ERIBuffCD[CrossX]*XMXTemp[bf2 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{578               AXMSTemp[bf4 + bf3*nBasis] += ERIBuffCD[CrossY]*XMYTemp[bf2 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{579               AXMSTemp[bf4 + bf3*nBasis] += ERIBuffCD[CrossZ]*XMZTemp[bf2 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{580             \}}
+\DoxyCodeLine{581 }
+\DoxyCodeLine{582             \textcolor{comment}{//MNLK}}
+\DoxyCodeLine{583             \textcolor{keywordflow}{if}(bf1\_s!=bf2\_s)\{}
+\DoxyCodeLine{584               AXMSTemp[bf3 + bf4*nBasis] += ERIBuffCD[DotPrd]*XMSTemp[bf1 + bf2*nBasis];}
+\DoxyCodeLine{585               AXMSTemp[bf3 + bf4*nBasis] -\/= ERIBuffCD[CrossX]*XMXTemp[bf1 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{586               AXMSTemp[bf3 + bf4*nBasis] -\/= ERIBuffCD[CrossY]*XMYTemp[bf1 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{587               AXMSTemp[bf3 + bf4*nBasis] -\/= ERIBuffCD[CrossZ]*XMZTemp[bf1 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{588             \}}
+\DoxyCodeLine{589 }
+\DoxyCodeLine{590             \textcolor{keywordflow}{if}(bf1\_s!=bf2\_s and bf3\_s!=bf4\_s)\{}
+\DoxyCodeLine{591               AXMSTemp[bf4 + bf3*nBasis] += ERIBuffCD[DotPrd]*XMSTemp[bf1 + bf2*nBasis];}
+\DoxyCodeLine{592               AXMSTemp[bf4 + bf3*nBasis] -\/= ERIBuffCD[CrossX]*XMXTemp[bf1 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{593               AXMSTemp[bf4 + bf3*nBasis] -\/= ERIBuffCD[CrossY]*XMYTemp[bf1 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{594               AXMSTemp[bf4 + bf3*nBasis] -\/= ERIBuffCD[CrossZ]*XMZTemp[bf1 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{595             \}}
+\DoxyCodeLine{596           \}}
+\DoxyCodeLine{597 }
+\DoxyCodeLine{598 \textcolor{comment}{          /***********************************/}}
+\DoxyCodeLine{599           \textcolor{comment}{/* Dirac-\/Coulomb (SS|SS)           */}}
+\DoxyCodeLine{600 \textcolor{comment}{          /***********************************/}}
+\DoxyCodeLine{601 }
+\DoxyCodeLine{602           DotPrd = MNKL;}
+\DoxyCodeLine{603           CrossX = MNKL+NB4;}
+\DoxyCodeLine{604           CrossY = MNKL+2*NB4;}
+\DoxyCodeLine{605           CrossZ = MNKL+3*NB4;}
+\DoxyCodeLine{606 }
+\DoxyCodeLine{607           AXMSTemp  = AX\_loc[SSMS];}
+\DoxyCodeLine{608           \textcolor{keyword}{auto} AXMXTemp  = AX\_loc[SSMX];}
+\DoxyCodeLine{609           \textcolor{keyword}{auto} AXMYTemp  = AX\_loc[SSMY];}
+\DoxyCodeLine{610           \textcolor{keyword}{auto} AXMZTemp  = AX\_loc[SSMZ];}
+\DoxyCodeLine{611           XMSTemp = matList[LLMS].X;}
+\DoxyCodeLine{612 }
+\DoxyCodeLine{613           \textcolor{comment}{//MNKL}}
+\DoxyCodeLine{614           AXMSTemp[bf1 + bf2*nBasis] += ERIBuffAB[DotPrd]*XMSTemp[bf4 + bf3*nBasis];}
+\DoxyCodeLine{615           AXMXTemp[bf1 + bf2*nBasis] += ERIBuffAB[CrossX]*XMSTemp[bf4 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{616           AXMYTemp[bf1 + bf2*nBasis] += ERIBuffAB[CrossY]*XMSTemp[bf4 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{617           AXMZTemp[bf1 + bf2*nBasis] += ERIBuffAB[CrossZ]*XMSTemp[bf4 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{618 }
+\DoxyCodeLine{619           \textcolor{comment}{//NMKL}}
+\DoxyCodeLine{620           \textcolor{keywordflow}{if}(bf1\_s!=bf2\_s)\{}
+\DoxyCodeLine{621             AXMSTemp[bf2 + bf1*nBasis] += ERIBuffAB[DotPrd]*XMSTemp[bf4 + bf3*nBasis];}
+\DoxyCodeLine{622             AXMXTemp[bf2 + bf1*nBasis] -\/= ERIBuffAB[CrossX]*XMSTemp[bf4 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{623             AXMYTemp[bf2 + bf1*nBasis] -\/= ERIBuffAB[CrossY]*XMSTemp[bf4 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{624             AXMZTemp[bf2 + bf1*nBasis] -\/= ERIBuffAB[CrossZ]*XMSTemp[bf4 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{625           \}}
+\DoxyCodeLine{626 }
+\DoxyCodeLine{627           \textcolor{comment}{//MNLK}}
+\DoxyCodeLine{628           \textcolor{keywordflow}{if}(bf3\_s!=bf4\_s)\{}
+\DoxyCodeLine{629             AXMSTemp[bf1 + bf2*nBasis] += ERIBuffAB[DotPrd]*XMSTemp[bf3 + bf4*nBasis];}
+\DoxyCodeLine{630             AXMXTemp[bf1 + bf2*nBasis] += ERIBuffAB[CrossX]*XMSTemp[bf3 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{631             AXMYTemp[bf1 + bf2*nBasis] += ERIBuffAB[CrossY]*XMSTemp[bf3 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{632             AXMZTemp[bf1 + bf2*nBasis] += ERIBuffAB[CrossZ]*XMSTemp[bf3 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{633           \}}
+\DoxyCodeLine{634 }
+\DoxyCodeLine{635           \textcolor{comment}{//NMLK}}
+\DoxyCodeLine{636           \textcolor{keywordflow}{if}(bf1\_s!=bf2\_s and bf3\_s!=bf4\_s)\{}
+\DoxyCodeLine{637             AXMSTemp[bf2 + bf1*nBasis] += ERIBuffAB[DotPrd]*XMSTemp[bf3 + bf4*nBasis];}
+\DoxyCodeLine{638             AXMXTemp[bf2 + bf1*nBasis] -\/= ERIBuffAB[CrossX]*XMSTemp[bf3 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{639             AXMYTemp[bf2 + bf1*nBasis] -\/= ERIBuffAB[CrossY]*XMSTemp[bf3 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{640             AXMZTemp[bf2 + bf1*nBasis] -\/= ERIBuffAB[CrossZ]*XMSTemp[bf3 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{641           \}}
+\DoxyCodeLine{642 }
+\DoxyCodeLine{643           \textcolor{keywordflow}{if}(bf1\_s!=bf3\_s or bf2\_s!=bf4\_s)\{}
+\DoxyCodeLine{644  }
+\DoxyCodeLine{645             DotPrd = KLMN;}
+\DoxyCodeLine{646             CrossX = KLMN+NB4;}
+\DoxyCodeLine{647             CrossY = KLMN+2*NB4;}
+\DoxyCodeLine{648             CrossZ = KLMN+3*NB4;}
+\DoxyCodeLine{649 }
+\DoxyCodeLine{650             \textcolor{comment}{//KLMN}}
+\DoxyCodeLine{651             AXMSTemp[bf3 + bf4*nBasis] += ERIBuffAB[DotPrd]*XMSTemp[bf2 + bf1*nBasis];}
+\DoxyCodeLine{652             AXMXTemp[bf3 + bf4*nBasis] += ERIBuffAB[CrossX]*XMSTemp[bf2 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{653             AXMYTemp[bf3 + bf4*nBasis] += ERIBuffAB[CrossY]*XMSTemp[bf2 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{654             AXMZTemp[bf3 + bf4*nBasis] += ERIBuffAB[CrossZ]*XMSTemp[bf2 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{655 }
+\DoxyCodeLine{656             \textcolor{comment}{//NMKL}}
+\DoxyCodeLine{657             \textcolor{keywordflow}{if}(bf3\_s!=bf4\_s)\{}
+\DoxyCodeLine{658               AXMSTemp[bf4 + bf3*nBasis] += ERIBuffAB[DotPrd]*XMSTemp[bf2 + bf1*nBasis];}
+\DoxyCodeLine{659               AXMXTemp[bf4 + bf3*nBasis] -\/= ERIBuffAB[CrossX]*XMSTemp[bf2 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{660               AXMYTemp[bf4 + bf3*nBasis] -\/= ERIBuffAB[CrossY]*XMSTemp[bf2 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{661               AXMZTemp[bf4 + bf3*nBasis] -\/= ERIBuffAB[CrossZ]*XMSTemp[bf2 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{662             \}}
+\DoxyCodeLine{663 }
+\DoxyCodeLine{664             \textcolor{comment}{//MNLK}}
+\DoxyCodeLine{665             \textcolor{keywordflow}{if}(bf1\_s!=bf2\_s)\{}
+\DoxyCodeLine{666               AXMSTemp[bf3 + bf4*nBasis] += ERIBuffAB[DotPrd]*XMSTemp[bf1 + bf2*nBasis];}
+\DoxyCodeLine{667               AXMXTemp[bf3 + bf4*nBasis] += ERIBuffAB[CrossX]*XMSTemp[bf1 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{668               AXMYTemp[bf3 + bf4*nBasis] += ERIBuffAB[CrossY]*XMSTemp[bf1 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{669               AXMZTemp[bf3 + bf4*nBasis] += ERIBuffAB[CrossZ]*XMSTemp[bf1 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{670             \}}
+\DoxyCodeLine{671 }
+\DoxyCodeLine{672             \textcolor{keywordflow}{if}(bf1\_s!=bf2\_s and bf3\_s!=bf4\_s)\{}
+\DoxyCodeLine{673               AXMSTemp[bf4 + bf3*nBasis] += ERIBuffAB[DotPrd]*XMSTemp[bf1 + bf2*nBasis];}
+\DoxyCodeLine{674               AXMXTemp[bf4 + bf3*nBasis] -\/= ERIBuffAB[CrossX]*XMSTemp[bf1 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{675               AXMYTemp[bf4 + bf3*nBasis] -\/= ERIBuffAB[CrossY]*XMSTemp[bf1 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{676               AXMZTemp[bf4 + bf3*nBasis] -\/= ERIBuffAB[CrossZ]*XMSTemp[bf1 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{677             \}}
+\DoxyCodeLine{678           \}}
+\DoxyCodeLine{679 }
+\DoxyCodeLine{680 }
+\DoxyCodeLine{681 \textcolor{comment}{          /***********************************/}}
+\DoxyCodeLine{682           \textcolor{comment}{/* Dirac-\/Coulomb (LL|SS) / (SS|LL) */}}
+\DoxyCodeLine{683 \textcolor{comment}{          /***********************************/}}
+\DoxyCodeLine{684           DotPrd = MNKL;}
+\DoxyCodeLine{685           CrossX = MNKL+NB4;}
+\DoxyCodeLine{686           CrossY = MNKL+2*NB4;}
+\DoxyCodeLine{687           CrossZ = MNKL+3*NB4;}
+\DoxyCodeLine{688 }
+\DoxyCodeLine{689           AXMSTemp  = AX\_loc[LSMS];}
+\DoxyCodeLine{690           AXMXTemp  = AX\_loc[LSMX];}
+\DoxyCodeLine{691           AXMYTemp  = AX\_loc[LSMY];}
+\DoxyCodeLine{692           AXMZTemp  = AX\_loc[LSMZ];}
+\DoxyCodeLine{693           XMSTemp = matList[LSMS].X;}
+\DoxyCodeLine{694           XMXTemp = matList[LSMX].X;}
+\DoxyCodeLine{695           XMYTemp = matList[LSMY].X;}
+\DoxyCodeLine{696           XMZTemp = matList[LSMZ].X;}
+\DoxyCodeLine{697 }
+\DoxyCodeLine{698           \textcolor{comment}{//MNKL}}
+\DoxyCodeLine{699           AXMSTemp[bf1 + bf4*nBasis] -\/= ERIBuffCD[DotPrd]*XMSTemp[bf2 + bf3*nBasis];}
+\DoxyCodeLine{700           AXMSTemp[bf1 + bf4*nBasis] -\/= ERIBuffCD[CrossX]*XMXTemp[bf2 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{701           AXMSTemp[bf1 + bf4*nBasis] -\/= ERIBuffCD[CrossY]*XMYTemp[bf2 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{702           AXMSTemp[bf1 + bf4*nBasis] -\/= ERIBuffCD[CrossZ]*XMZTemp[bf2 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{703 }
+\DoxyCodeLine{704           AXMXTemp[bf1 + bf4*nBasis] -\/= ERIBuffCD[DotPrd]*XMXTemp[bf2 + bf3*nBasis];}
+\DoxyCodeLine{705           AXMXTemp[bf1 + bf4*nBasis] -\/= ERIBuffCD[CrossX]*XMSTemp[bf2 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{706           AXMXTemp[bf1 + bf4*nBasis] -\/= ERIBuffCD[CrossY]*XMZTemp[bf2 + bf3*nBasis];}
+\DoxyCodeLine{707           AXMXTemp[bf1 + bf4*nBasis] += ERIBuffCD[CrossZ]*XMYTemp[bf2 + bf3*nBasis];}
+\DoxyCodeLine{708 }
+\DoxyCodeLine{709           AXMYTemp[bf1 + bf4*nBasis] -\/= ERIBuffCD[DotPrd]*XMYTemp[bf2 + bf3*nBasis];}
+\DoxyCodeLine{710           AXMYTemp[bf1 + bf4*nBasis] += ERIBuffCD[CrossX]*XMZTemp[bf2 + bf3*nBasis];}
+\DoxyCodeLine{711           AXMYTemp[bf1 + bf4*nBasis] -\/= ERIBuffCD[CrossY]*XMSTemp[bf2 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{712           AXMYTemp[bf1 + bf4*nBasis] -\/= ERIBuffCD[CrossZ]*XMXTemp[bf2 + bf3*nBasis];}
+\DoxyCodeLine{713 }
+\DoxyCodeLine{714           AXMZTemp[bf1 + bf4*nBasis] -\/= ERIBuffCD[DotPrd]*XMZTemp[bf2 + bf3*nBasis];}
+\DoxyCodeLine{715           AXMZTemp[bf1 + bf4*nBasis] -\/= ERIBuffCD[CrossX]*XMYTemp[bf2 + bf3*nBasis];}
+\DoxyCodeLine{716           AXMZTemp[bf1 + bf4*nBasis] += ERIBuffCD[CrossY]*XMXTemp[bf2 + bf3*nBasis];}
+\DoxyCodeLine{717           AXMZTemp[bf1 + bf4*nBasis] -\/= ERIBuffCD[CrossZ]*XMSTemp[bf2 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{718 }
+\DoxyCodeLine{719           \textcolor{comment}{//MNLK}}
+\DoxyCodeLine{720           \textcolor{keywordflow}{if}(bf3\_s!=bf4\_s) \{}
+\DoxyCodeLine{721             AXMSTemp[bf1 + bf3*nBasis] -\/= ERIBuffCD[DotPrd]*XMSTemp[bf2 + bf4*nBasis];}
+\DoxyCodeLine{722             AXMSTemp[bf1 + bf3*nBasis] += ERIBuffCD[CrossX]*XMXTemp[bf2 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{723             AXMSTemp[bf1 + bf3*nBasis] += ERIBuffCD[CrossY]*XMYTemp[bf2 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{724             AXMSTemp[bf1 + bf3*nBasis] += ERIBuffCD[CrossZ]*XMZTemp[bf2 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{725 }
+\DoxyCodeLine{726             AXMXTemp[bf1 + bf3*nBasis] -\/= ERIBuffCD[DotPrd]*XMXTemp[bf2 + bf4*nBasis];}
+\DoxyCodeLine{727             AXMXTemp[bf1 + bf3*nBasis] += ERIBuffCD[CrossX]*XMSTemp[bf2 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{728             AXMXTemp[bf1 + bf3*nBasis] += ERIBuffCD[CrossY]*XMZTemp[bf2 + bf4*nBasis];}
+\DoxyCodeLine{729             AXMXTemp[bf1 + bf3*nBasis] -\/= ERIBuffCD[CrossZ]*XMYTemp[bf2 + bf4*nBasis];}
+\DoxyCodeLine{730 }
+\DoxyCodeLine{731             AXMYTemp[bf1 + bf3*nBasis] -\/= ERIBuffCD[DotPrd]*XMYTemp[bf2 + bf4*nBasis];}
+\DoxyCodeLine{732             AXMYTemp[bf1 + bf3*nBasis] -\/= ERIBuffCD[CrossX]*XMZTemp[bf2 + bf4*nBasis];}
+\DoxyCodeLine{733             AXMYTemp[bf1 + bf3*nBasis] += ERIBuffCD[CrossY]*XMSTemp[bf2 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{734             AXMYTemp[bf1 + bf3*nBasis] += ERIBuffCD[CrossZ]*XMXTemp[bf2 + bf4*nBasis];}
+\DoxyCodeLine{735 }
+\DoxyCodeLine{736             AXMZTemp[bf1 + bf3*nBasis] -\/= ERIBuffCD[DotPrd]*XMZTemp[bf2 + bf4*nBasis];}
+\DoxyCodeLine{737             AXMZTemp[bf1 + bf3*nBasis] += ERIBuffCD[CrossX]*XMYTemp[bf2 + bf4*nBasis];}
+\DoxyCodeLine{738             AXMZTemp[bf1 + bf3*nBasis] -\/= ERIBuffCD[CrossY]*XMXTemp[bf2 + bf4*nBasis];}
+\DoxyCodeLine{739             AXMZTemp[bf1 + bf3*nBasis] += ERIBuffCD[CrossZ]*XMSTemp[bf2 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{740           \}}
+\DoxyCodeLine{741 }
+\DoxyCodeLine{742           \textcolor{comment}{//NMKL}}
+\DoxyCodeLine{743           \textcolor{keywordflow}{if}(bf1\_s!=bf2\_s)\{}
+\DoxyCodeLine{744             AXMSTemp[bf2 + bf4*nBasis] -\/= ERIBuffCD[DotPrd]*XMSTemp[bf1 + bf3*nBasis];}
+\DoxyCodeLine{745             AXMSTemp[bf2 + bf4*nBasis] -\/= ERIBuffCD[CrossX]*XMXTemp[bf1 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{746             AXMSTemp[bf2 + bf4*nBasis] -\/= ERIBuffCD[CrossY]*XMYTemp[bf1 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{747             AXMSTemp[bf2 + bf4*nBasis] -\/= ERIBuffCD[CrossZ]*XMZTemp[bf1 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{748 }
+\DoxyCodeLine{749             AXMXTemp[bf2 + bf4*nBasis] -\/= ERIBuffCD[DotPrd]*XMXTemp[bf1 + bf3*nBasis];}
+\DoxyCodeLine{750             AXMXTemp[bf2 + bf4*nBasis] -\/= ERIBuffCD[CrossX]*XMSTemp[bf1 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{751             AXMXTemp[bf2 + bf4*nBasis] -\/= ERIBuffCD[CrossY]*XMZTemp[bf1 + bf3*nBasis];}
+\DoxyCodeLine{752             AXMXTemp[bf2 + bf4*nBasis] += ERIBuffCD[CrossZ]*XMYTemp[bf1 + bf3*nBasis];}
+\DoxyCodeLine{753 }
+\DoxyCodeLine{754             AXMYTemp[bf2 + bf4*nBasis] -\/= ERIBuffCD[DotPrd]*XMYTemp[bf1 + bf3*nBasis];}
+\DoxyCodeLine{755             AXMYTemp[bf2 + bf4*nBasis] += ERIBuffCD[CrossX]*XMZTemp[bf1 + bf3*nBasis];}
+\DoxyCodeLine{756             AXMYTemp[bf2 + bf4*nBasis] -\/= ERIBuffCD[CrossY]*XMSTemp[bf1 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{757             AXMYTemp[bf2 + bf4*nBasis] -\/= ERIBuffCD[CrossZ]*XMXTemp[bf1 + bf3*nBasis];}
+\DoxyCodeLine{758 }
+\DoxyCodeLine{759             AXMZTemp[bf2 + bf4*nBasis] -\/= ERIBuffCD[DotPrd]*XMZTemp[bf1 + bf3*nBasis];}
+\DoxyCodeLine{760             AXMZTemp[bf2 + bf4*nBasis] -\/= ERIBuffCD[CrossX]*XMYTemp[bf1 + bf3*nBasis];}
+\DoxyCodeLine{761             AXMZTemp[bf2 + bf4*nBasis] += ERIBuffCD[CrossY]*XMXTemp[bf1 + bf3*nBasis];}
+\DoxyCodeLine{762             AXMZTemp[bf2 + bf4*nBasis] -\/= ERIBuffCD[CrossZ]*XMSTemp[bf1 + bf3*nBasis]*iscale;}
+\DoxyCodeLine{763 }
+\DoxyCodeLine{764             \textcolor{keywordflow}{if}(bf3\_s!=bf4\_s) \{}
+\DoxyCodeLine{765               AXMSTemp[bf2 + bf3*nBasis] -\/= ERIBuffCD[DotPrd]*XMSTemp[bf1 + bf4*nBasis];}
+\DoxyCodeLine{766               AXMSTemp[bf2 + bf3*nBasis] += ERIBuffCD[CrossX]*XMXTemp[bf1 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{767               AXMSTemp[bf2 + bf3*nBasis] += ERIBuffCD[CrossY]*XMYTemp[bf1 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{768               AXMSTemp[bf2 + bf3*nBasis] += ERIBuffCD[CrossZ]*XMZTemp[bf1 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{769 }
+\DoxyCodeLine{770               AXMXTemp[bf2 + bf3*nBasis] -\/= ERIBuffCD[DotPrd]*XMXTemp[bf1 + bf4*nBasis];}
+\DoxyCodeLine{771               AXMXTemp[bf2 + bf3*nBasis] += ERIBuffCD[CrossX]*XMSTemp[bf1 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{772               AXMXTemp[bf2 + bf3*nBasis] += ERIBuffCD[CrossY]*XMZTemp[bf1 + bf4*nBasis];}
+\DoxyCodeLine{773               AXMXTemp[bf2 + bf3*nBasis] -\/= ERIBuffCD[CrossZ]*XMYTemp[bf1 + bf4*nBasis];}
+\DoxyCodeLine{774 }
+\DoxyCodeLine{775               AXMYTemp[bf2 + bf3*nBasis] -\/= ERIBuffCD[DotPrd]*XMYTemp[bf1 + bf4*nBasis];}
+\DoxyCodeLine{776               AXMYTemp[bf2 + bf3*nBasis] -\/= ERIBuffCD[CrossX]*XMZTemp[bf1 + bf4*nBasis];}
+\DoxyCodeLine{777               AXMYTemp[bf2 + bf3*nBasis] += ERIBuffCD[CrossY]*XMSTemp[bf1 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{778               AXMYTemp[bf2 + bf3*nBasis] += ERIBuffCD[CrossZ]*XMXTemp[bf1 + bf4*nBasis];}
+\DoxyCodeLine{779 }
+\DoxyCodeLine{780               AXMZTemp[bf2 + bf3*nBasis] -\/= ERIBuffCD[DotPrd]*XMZTemp[bf1 + bf4*nBasis];}
+\DoxyCodeLine{781               AXMZTemp[bf2 + bf3*nBasis] += ERIBuffCD[CrossX]*XMYTemp[bf1 + bf4*nBasis];}
+\DoxyCodeLine{782               AXMZTemp[bf2 + bf3*nBasis] -\/= ERIBuffCD[CrossY]*XMXTemp[bf1 + bf4*nBasis];}
+\DoxyCodeLine{783               AXMZTemp[bf2 + bf3*nBasis] += ERIBuffCD[CrossZ]*XMSTemp[bf1 + bf4*nBasis]*iscale;}
+\DoxyCodeLine{784             \}}
+\DoxyCodeLine{785           \}}
+\DoxyCodeLine{786 }
+\DoxyCodeLine{787           \textcolor{keywordflow}{if}(bf1\_s!=bf3\_s or bf2\_s!=bf4\_s)\{}
+\DoxyCodeLine{788  }
+\DoxyCodeLine{789             DotPrd = KLMN;}
+\DoxyCodeLine{790             CrossX = KLMN+NB4;}
+\DoxyCodeLine{791             CrossY = KLMN+2*NB4;}
+\DoxyCodeLine{792             CrossZ = KLMN+3*NB4;}
+\DoxyCodeLine{793 }
+\DoxyCodeLine{794             \textcolor{comment}{//KLMN}}
+\DoxyCodeLine{795             AXMSTemp[bf3 + bf2*nBasis] -\/= ERIBuffCD[DotPrd]*XMSTemp[bf4 + bf1*nBasis];}
+\DoxyCodeLine{796             AXMSTemp[bf3 + bf2*nBasis] -\/= ERIBuffCD[CrossX]*XMXTemp[bf4 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{797             AXMSTemp[bf3 + bf2*nBasis] -\/= ERIBuffCD[CrossY]*XMYTemp[bf4 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{798             AXMSTemp[bf3 + bf2*nBasis] -\/= ERIBuffCD[CrossZ]*XMZTemp[bf4 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{799   }
+\DoxyCodeLine{800             AXMXTemp[bf3 + bf2*nBasis] -\/= ERIBuffCD[DotPrd]*XMXTemp[bf4 + bf1*nBasis];}
+\DoxyCodeLine{801             AXMXTemp[bf3 + bf2*nBasis] -\/= ERIBuffCD[CrossX]*XMSTemp[bf4 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{802             AXMXTemp[bf3 + bf2*nBasis] -\/= ERIBuffCD[CrossY]*XMZTemp[bf4 + bf1*nBasis];}
+\DoxyCodeLine{803             AXMXTemp[bf3 + bf2*nBasis] += ERIBuffCD[CrossZ]*XMYTemp[bf4 + bf1*nBasis];}
+\DoxyCodeLine{804   }
+\DoxyCodeLine{805             AXMYTemp[bf3 + bf2*nBasis] -\/= ERIBuffCD[DotPrd]*XMYTemp[bf4 + bf1*nBasis];}
+\DoxyCodeLine{806             AXMYTemp[bf3 + bf2*nBasis] += ERIBuffCD[CrossX]*XMZTemp[bf4 + bf1*nBasis];}
+\DoxyCodeLine{807             AXMYTemp[bf3 + bf2*nBasis] -\/= ERIBuffCD[CrossY]*XMSTemp[bf4 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{808             AXMYTemp[bf3 + bf2*nBasis] -\/= ERIBuffCD[CrossZ]*XMXTemp[bf4 + bf1*nBasis];}
+\DoxyCodeLine{809   }
+\DoxyCodeLine{810             AXMZTemp[bf3 + bf2*nBasis] -\/= ERIBuffCD[DotPrd]*XMZTemp[bf4 + bf1*nBasis];}
+\DoxyCodeLine{811             AXMZTemp[bf3 + bf2*nBasis] -\/= ERIBuffCD[CrossX]*XMYTemp[bf4 + bf1*nBasis];}
+\DoxyCodeLine{812             AXMZTemp[bf3 + bf2*nBasis] += ERIBuffCD[CrossY]*XMXTemp[bf4 + bf1*nBasis];}
+\DoxyCodeLine{813             AXMZTemp[bf3 + bf2*nBasis] -\/= ERIBuffCD[CrossZ]*XMSTemp[bf4 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{814   }
+\DoxyCodeLine{815             \textcolor{comment}{//KLNM}}
+\DoxyCodeLine{816             \textcolor{keywordflow}{if}(bf3\_s!=bf4\_s)\{}
+\DoxyCodeLine{817               AXMSTemp[bf4 + bf2*nBasis] -\/= ERIBuffCD[DotPrd]*XMSTemp[bf3 + bf1*nBasis];}
+\DoxyCodeLine{818               AXMSTemp[bf4 + bf2*nBasis] -\/= ERIBuffCD[CrossX]*XMXTemp[bf3 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{819               AXMSTemp[bf4 + bf2*nBasis] -\/= ERIBuffCD[CrossY]*XMYTemp[bf3 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{820               AXMSTemp[bf4 + bf2*nBasis] -\/= ERIBuffCD[CrossZ]*XMZTemp[bf3 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{821   }
+\DoxyCodeLine{822               AXMXTemp[bf4 + bf2*nBasis] -\/= ERIBuffCD[DotPrd]*XMXTemp[bf3 + bf1*nBasis];}
+\DoxyCodeLine{823               AXMXTemp[bf4 + bf2*nBasis] -\/= ERIBuffCD[CrossX]*XMSTemp[bf3 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{824               AXMXTemp[bf4 + bf2*nBasis] -\/= ERIBuffCD[CrossY]*XMZTemp[bf3 + bf1*nBasis];}
+\DoxyCodeLine{825               AXMXTemp[bf4 + bf2*nBasis] += ERIBuffCD[CrossZ]*XMYTemp[bf3 + bf1*nBasis];}
+\DoxyCodeLine{826   }
+\DoxyCodeLine{827               AXMYTemp[bf4 + bf2*nBasis] -\/= ERIBuffCD[DotPrd]*XMYTemp[bf3 + bf1*nBasis];}
+\DoxyCodeLine{828               AXMYTemp[bf4 + bf2*nBasis] += ERIBuffCD[CrossX]*XMZTemp[bf3 + bf1*nBasis];}
+\DoxyCodeLine{829               AXMYTemp[bf4 + bf2*nBasis] -\/= ERIBuffCD[CrossY]*XMSTemp[bf3 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{830               AXMYTemp[bf4 + bf2*nBasis] -\/= ERIBuffCD[CrossZ]*XMXTemp[bf3 + bf1*nBasis];}
+\DoxyCodeLine{831   }
+\DoxyCodeLine{832               AXMZTemp[bf4 + bf2*nBasis] -\/= ERIBuffCD[DotPrd]*XMZTemp[bf3 + bf1*nBasis];}
+\DoxyCodeLine{833               AXMZTemp[bf4 + bf2*nBasis] -\/= ERIBuffCD[CrossX]*XMYTemp[bf3 + bf1*nBasis];}
+\DoxyCodeLine{834               AXMZTemp[bf4 + bf2*nBasis] += ERIBuffCD[CrossY]*XMXTemp[bf3 + bf1*nBasis];}
+\DoxyCodeLine{835               AXMZTemp[bf4 + bf2*nBasis] -\/= ERIBuffCD[CrossZ]*XMSTemp[bf3 + bf1*nBasis]*iscale;}
+\DoxyCodeLine{836             \}}
+\DoxyCodeLine{837   }
+\DoxyCodeLine{838             \textcolor{comment}{//LKMN}}
+\DoxyCodeLine{839             \textcolor{keywordflow}{if}(bf1\_s!=bf2\_s) \{}
+\DoxyCodeLine{840               AXMSTemp[bf3 + bf1*nBasis] -\/= ERIBuffCD[DotPrd]*XMSTemp[bf4 + bf2*nBasis];}
+\DoxyCodeLine{841               AXMSTemp[bf3 + bf1*nBasis] += ERIBuffCD[CrossX]*XMXTemp[bf4 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{842               AXMSTemp[bf3 + bf1*nBasis] += ERIBuffCD[CrossY]*XMYTemp[bf4 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{843               AXMSTemp[bf3 + bf1*nBasis] += ERIBuffCD[CrossZ]*XMZTemp[bf4 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{844   }
+\DoxyCodeLine{845               AXMXTemp[bf3 + bf1*nBasis] -\/= ERIBuffCD[DotPrd]*XMXTemp[bf4 + bf2*nBasis];}
+\DoxyCodeLine{846               AXMXTemp[bf3 + bf1*nBasis] += ERIBuffCD[CrossX]*XMSTemp[bf4 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{847               AXMXTemp[bf3 + bf1*nBasis] += ERIBuffCD[CrossY]*XMZTemp[bf4 + bf2*nBasis];}
+\DoxyCodeLine{848               AXMXTemp[bf3 + bf1*nBasis] -\/= ERIBuffCD[CrossZ]*XMYTemp[bf4 + bf2*nBasis];}
+\DoxyCodeLine{849   }
+\DoxyCodeLine{850               AXMYTemp[bf3 + bf1*nBasis] -\/= ERIBuffCD[DotPrd]*XMYTemp[bf4 + bf2*nBasis];}
+\DoxyCodeLine{851               AXMYTemp[bf3 + bf1*nBasis] -\/= ERIBuffCD[CrossX]*XMZTemp[bf4 + bf2*nBasis];}
+\DoxyCodeLine{852               AXMYTemp[bf3 + bf1*nBasis] += ERIBuffCD[CrossY]*XMSTemp[bf4 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{853               AXMYTemp[bf3 + bf1*nBasis] += ERIBuffCD[CrossZ]*XMXTemp[bf4 + bf2*nBasis];}
+\DoxyCodeLine{854   }
+\DoxyCodeLine{855               AXMZTemp[bf3 + bf1*nBasis] -\/= ERIBuffCD[DotPrd]*XMZTemp[bf4 + bf2*nBasis];}
+\DoxyCodeLine{856               AXMZTemp[bf3 + bf1*nBasis] += ERIBuffCD[CrossX]*XMYTemp[bf4 + bf2*nBasis];}
+\DoxyCodeLine{857               AXMZTemp[bf3 + bf1*nBasis] -\/= ERIBuffCD[CrossY]*XMXTemp[bf4 + bf2*nBasis];}
+\DoxyCodeLine{858               AXMZTemp[bf3 + bf1*nBasis] += ERIBuffCD[CrossZ]*XMSTemp[bf4 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{859   }
+\DoxyCodeLine{860               \textcolor{comment}{//LKNM}}
+\DoxyCodeLine{861               \textcolor{keywordflow}{if}(bf4\_s!=bf3\_s) \{}
+\DoxyCodeLine{862                 AXMSTemp[bf4 + bf1*nBasis] -\/= ERIBuffCD[DotPrd]*XMSTemp[bf3 + bf2*nBasis];}
+\DoxyCodeLine{863                 AXMSTemp[bf4 + bf1*nBasis] += ERIBuffCD[CrossX]*XMXTemp[bf3 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{864                 AXMSTemp[bf4 + bf1*nBasis] += ERIBuffCD[CrossY]*XMYTemp[bf3 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{865                 AXMSTemp[bf4 + bf1*nBasis] += ERIBuffCD[CrossZ]*XMZTemp[bf3 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{866   }
+\DoxyCodeLine{867                 AXMXTemp[bf4 + bf1*nBasis] -\/= ERIBuffCD[DotPrd]*XMXTemp[bf3 + bf2*nBasis];}
+\DoxyCodeLine{868                 AXMXTemp[bf4 + bf1*nBasis] += ERIBuffCD[CrossX]*XMSTemp[bf3 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{869                 AXMXTemp[bf4 + bf1*nBasis] += ERIBuffCD[CrossY]*XMZTemp[bf3 + bf2*nBasis];}
+\DoxyCodeLine{870                 AXMXTemp[bf4 + bf1*nBasis] -\/= ERIBuffCD[CrossZ]*XMYTemp[bf3 + bf2*nBasis];}
+\DoxyCodeLine{871   }
+\DoxyCodeLine{872                 AXMYTemp[bf4 + bf1*nBasis] -\/= ERIBuffCD[DotPrd]*XMYTemp[bf3 + bf2*nBasis];}
+\DoxyCodeLine{873                 AXMYTemp[bf4 + bf1*nBasis] -\/= ERIBuffCD[CrossX]*XMZTemp[bf3 + bf2*nBasis];}
+\DoxyCodeLine{874                 AXMYTemp[bf4 + bf1*nBasis] += ERIBuffCD[CrossY]*XMSTemp[bf3 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{875                 AXMYTemp[bf4 + bf1*nBasis] += ERIBuffCD[CrossZ]*XMXTemp[bf3 + bf2*nBasis];}
+\DoxyCodeLine{876   }
+\DoxyCodeLine{877                 AXMZTemp[bf4 + bf1*nBasis] -\/= ERIBuffCD[DotPrd]*XMZTemp[bf3 + bf2*nBasis];}
+\DoxyCodeLine{878                 AXMZTemp[bf4 + bf1*nBasis] += ERIBuffCD[CrossX]*XMYTemp[bf3 + bf2*nBasis];}
+\DoxyCodeLine{879                 AXMZTemp[bf4 + bf1*nBasis] -\/= ERIBuffCD[CrossY]*XMXTemp[bf3 + bf2*nBasis];}
+\DoxyCodeLine{880                 AXMZTemp[bf4 + bf1*nBasis] += ERIBuffCD[CrossZ]*XMSTemp[bf3 + bf2*nBasis]*iscale;}
+\DoxyCodeLine{881               \}}
+\DoxyCodeLine{882             \}}
+\DoxyCodeLine{883 }
+\DoxyCodeLine{884           \}}
+\DoxyCodeLine{885 }
+\DoxyCodeLine{886         \} \textcolor{comment}{// contraction loop}}
+\DoxyCodeLine{887 }
+\DoxyCodeLine{888 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// Contraction}}
+\DoxyCodeLine{889 }
+\DoxyCodeLine{890 }
+\DoxyCodeLine{891     \}; \textcolor{comment}{// loop s4}}
+\DoxyCodeLine{892     \}; \textcolor{comment}{// loop s3}}
+\DoxyCodeLine{893     \}; \textcolor{comment}{// loop s2}}
+\DoxyCodeLine{894     \}; \textcolor{comment}{// loop s1}}
+\DoxyCodeLine{895 }
+\DoxyCodeLine{896 }
+\DoxyCodeLine{897     \}; \textcolor{comment}{// OpenMP context}}
+\DoxyCodeLine{898 }
+\DoxyCodeLine{899 }
+\DoxyCodeLine{900     \textcolor{keywordtype}{size\_t} nIntSkip = std::accumulate(nSkip.begin(),nSkip.end(),0);}
+\DoxyCodeLine{901     std::cout << \textcolor{stringliteral}{"{}Screened "{}} << nIntSkip << std::endl;}
+\DoxyCodeLine{902 }
+\DoxyCodeLine{903     \textcolor{keyword}{auto} durDirect = \mbox{\hyperlink{namespaceChronusQ_a3b2153e93af4532ff5b1e75d8af453b0}{tock}}(topDirect);}
+\DoxyCodeLine{904     std::cout << \textcolor{stringliteral}{"{}Direct Contraction took "{}} <<  durDirect << \textcolor{stringliteral}{"{} s\(\backslash\)n"{}}; }
+\DoxyCodeLine{905 }
+\DoxyCodeLine{906     std::cout << std::endl;}
+\DoxyCodeLine{907 }
+\DoxyCodeLine{908 }
+\DoxyCodeLine{909     \textcolor{keywordflow}{if} (nThreads>1)}
+\DoxyCodeLine{910     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iMat = 0; iMat < nMat;  iMat++ ) }
+\DoxyCodeLine{911     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iTh  = 0; iTh < nThreads; iTh++) \{}
+\DoxyCodeLine{912  }
+\DoxyCodeLine{913       \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'N'},\textcolor{charliteral}{'N'},nBasis,nBasis,MatsT(1.0),AXthreads[iTh][iMat],nBasis,MatsT(1.0),}
+\DoxyCodeLine{914          matList[iMat].AX,nBasis,matList[iMat].AX,nBasis);}
+\DoxyCodeLine{915 }
+\DoxyCodeLine{916     \};}
+\DoxyCodeLine{917     }
+\DoxyCodeLine{918 }
+\DoxyCodeLine{919 \textcolor{preprocessor}{\#ifdef \_SHZ\_SCREEN\_4C}}
+\DoxyCodeLine{920     memManager\_.free(ShBlkNorms\_raw);}
+\DoxyCodeLine{921 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{922 }
+\DoxyCodeLine{923     \textcolor{keywordflow}{if}(AXRaw != \textcolor{keyword}{nullptr}) memManager\_.free(AXRaw);}
+\DoxyCodeLine{924     \textcolor{keywordflow}{if}(ERIBuffer != \textcolor{keyword}{nullptr}) memManager\_.free(ERIBuffer);}
+\DoxyCodeLine{925 }
+\DoxyCodeLine{926     \textcolor{comment}{// Turn threads for LA back on}}
+\DoxyCodeLine{927     \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(LAThreads);}
+\DoxyCodeLine{928 }
+\DoxyCodeLine{929   \}}
+\DoxyCodeLine{930 }
+\DoxyCodeLine{931   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{932   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_a1cd97cf0101c08cfd8a4b297a6bece3f}{GTODirectRelERIContraction<double,double>::directScaffold}}(}
+\DoxyCodeLine{933     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm, \textcolor{keyword}{const} \textcolor{keywordtype}{bool} screen,}
+\DoxyCodeLine{934     std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<double>}}> \&matList)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{935     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Dirac-\/Coulomb + Real is an invalid option"{}},std::cout);  }
+\DoxyCodeLine{936   \}}
+\DoxyCodeLine{937 }
+\DoxyCodeLine{938   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{939   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_a1cd97cf0101c08cfd8a4b297a6bece3f}{GTODirectRelERIContraction<dcomplex,dcomplex>::directScaffold}}(}
+\DoxyCodeLine{940     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm, \textcolor{keyword}{const} \textcolor{keywordtype}{bool} screen,}
+\DoxyCodeLine{941     std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<dcomplex>}}> \&matList)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{942     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Complex integral is is an invalid option"{}},std::cout);  }
+\DoxyCodeLine{943   \}}
+\DoxyCodeLine{944 }
+\DoxyCodeLine{945 }
+\DoxyCodeLine{946 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{947 }
+\DoxyCodeLine{948 }
+\DoxyCodeLine{949 }
+\DoxyCodeLine{950 }
+\DoxyCodeLine{951 }
+\DoxyCodeLine{952 }
+\DoxyCodeLine{953 }
+\DoxyCodeLine{954 }
+\DoxyCodeLine{955 }
+\DoxyCodeLine{956 }
+\DoxyCodeLine{957 }
+\DoxyCodeLine{958 }
+\DoxyCodeLine{959 }
+\DoxyCodeLine{960 }
+\DoxyCodeLine{961 }
+\DoxyCodeLine{962 }
+\DoxyCodeLine{963 }
+\DoxyCodeLine{964 }
+\DoxyCodeLine{965 }
+\DoxyCodeLine{966 }
+\DoxyCodeLine{967 }
+
+\end{DoxyCode}

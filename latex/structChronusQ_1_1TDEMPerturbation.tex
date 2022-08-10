@@ -1,0 +1,195 @@
+\hypertarget{structChronusQ_1_1TDEMPerturbation}{}\doxysection{ChronusQ\+::TDEMPerturbation Struct Reference}
+\label{structChronusQ_1_1TDEMPerturbation}\index{ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}}
+
+
+Full specification of the time-\/dependent EM perturbation for a \mbox{\hyperlink{classChronusQ_1_1RealTime}{Real\+Time}} simulation.  
+
+
+
+
+{\ttfamily \#include $<$fields.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation_a5598a70330bf423f7064103baec1178e}{add\+Field}} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structChronusQ_1_1TDEMFieldBase}{TDEMField\+Base}} $>$ f)
+\begin{DoxyCompactList}\small\item\em Add a field to the perturbation. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename \+\_\+\+TDField $>$ }\\void \mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation_ae4d2880d620a43a7a11b540403a707e9}{add\+Field}} (std\+::shared\+\_\+ptr$<$ \+\_\+\+TDField $>$ f)
+\item 
+{\footnotesize template$<$typename \+\_\+\+TDField $>$ }\\void \mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation_a8b3e6bd63f516ab9929f0b7e8a4935b8}{add\+Field}} (\+\_\+\+TDField f)
+\item 
+{\footnotesize template$<$typename Env , typename \+\_\+\+UV $>$ }\\void \mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation_a3807df12bb7324f427388ff35c414eb8}{add\+Field}} (\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMField\+Typ}} em, \mbox{\hyperlink{namespaceChronusQ_a035bfe4ec217f729c26b3de1c555cd36}{Field\+Gauge}} fg, Env env, const \+\_\+\+UV \&uv)
+\item 
+{\footnotesize template$<$typename Env , typename \+\_\+\+UV $>$ }\\void \mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation_af03252a53a855a7d1688278926c76941}{add\+Field}} (\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMField\+Typ}} em, Env env, const \+\_\+\+UV \&uv)
+\item 
+\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation_a583ef97d8c0f28a55ee14997a645fb5d}{get\+Pert}} (double t)
+\item 
+{\footnotesize template$<$size\+\_\+t N$>$ }\\std\+::array$<$ double, N $>$ \mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation_a53602263d72192cfe068823b27e43866}{get\+NAmp}} (\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMField\+Typ}} TYPE, double t)
+\item 
+std\+::array$<$ double, 3 $>$ \mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation_a51921bf2bd85f45b7806f5023edfb88b}{get\+Dipole\+Amp}} (\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMField\+Typ}} TYPE, double t)
+\item 
+bool \mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation_a3540960400f9de9476fd14a094dc4bfc}{is\+Field\+Discontinuous}} (double curT, double deltaT)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structChronusQ_1_1TDEMFieldBase}{TDEMField\+Base}} $>$ $>$ \mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation_a94f962f113dc76a4b59488a7275adf75}{fields}}
+\begin{DoxyCompactList}\small\item\em Fields for the EM perturbation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Full specification of the time-\/dependent EM perturbation for a \mbox{\hyperlink{classChronusQ_1_1RealTime}{Real\+Time}} simulation. 
+
+General to multiple fields. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{structChronusQ_1_1TDEMPerturbation_a8b3e6bd63f516ab9929f0b7e8a4935b8}\label{structChronusQ_1_1TDEMPerturbation_a8b3e6bd63f516ab9929f0b7e8a4935b8}} 
+\index{ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}!addField@{addField}}
+\index{addField@{addField}!ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}}
+\doxysubsubsection{\texorpdfstring{addField()}{addField()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily template$<$typename \+\_\+\+TDField $>$ \\
+void Chronus\+Q\+::\+TDEMPerturbation\+::add\+Field (\begin{DoxyParamCaption}\item[{\+\_\+\+TDField}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{structChronusQ_1_1TDEMPerturbation_a8b3e6bd63f516ab9929f0b7e8a4935b8_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{structChronusQ_1_1TDEMPerturbation_a8b3e6bd63f516ab9929f0b7e8a4935b8_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1TDEMPerturbation_af03252a53a855a7d1688278926c76941}\label{structChronusQ_1_1TDEMPerturbation_af03252a53a855a7d1688278926c76941}} 
+\index{ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}!addField@{addField}}
+\index{addField@{addField}!ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}}
+\doxysubsubsection{\texorpdfstring{addField()}{addField()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily template$<$typename Env , typename \+\_\+\+UV $>$ \\
+void Chronus\+Q\+::\+TDEMPerturbation\+::add\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMField\+Typ}}}]{em,  }\item[{Env}]{env,  }\item[{const \+\_\+\+UV \&}]{uv }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1TDEMPerturbation_af03252a53a855a7d1688278926c76941_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1TDEMPerturbation_a3807df12bb7324f427388ff35c414eb8}\label{structChronusQ_1_1TDEMPerturbation_a3807df12bb7324f427388ff35c414eb8}} 
+\index{ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}!addField@{addField}}
+\index{addField@{addField}!ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}}
+\doxysubsubsection{\texorpdfstring{addField()}{addField()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily template$<$typename Env , typename \+\_\+\+UV $>$ \\
+void Chronus\+Q\+::\+TDEMPerturbation\+::add\+Field (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMField\+Typ}}}]{em,  }\item[{\mbox{\hyperlink{namespaceChronusQ_a035bfe4ec217f729c26b3de1c555cd36}{Field\+Gauge}}}]{fg,  }\item[{Env}]{env,  }\item[{const \+\_\+\+UV \&}]{uv }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1TDEMPerturbation_a3807df12bb7324f427388ff35c414eb8_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1TDEMPerturbation_ae4d2880d620a43a7a11b540403a707e9}\label{structChronusQ_1_1TDEMPerturbation_ae4d2880d620a43a7a11b540403a707e9}} 
+\index{ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}!addField@{addField}}
+\index{addField@{addField}!ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}}
+\doxysubsubsection{\texorpdfstring{addField()}{addField()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily template$<$typename \+\_\+\+TDField $>$ \\
+void Chronus\+Q\+::\+TDEMPerturbation\+::add\+Field (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ \+\_\+\+TDField $>$}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1TDEMPerturbation_ae4d2880d620a43a7a11b540403a707e9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{structChronusQ_1_1TDEMPerturbation_ae4d2880d620a43a7a11b540403a707e9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1TDEMPerturbation_a5598a70330bf423f7064103baec1178e}\label{structChronusQ_1_1TDEMPerturbation_a5598a70330bf423f7064103baec1178e}} 
+\index{ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}!addField@{addField}}
+\index{addField@{addField}!ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}}
+\doxysubsubsection{\texorpdfstring{addField()}{addField()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+TDEMPerturbation\+::add\+Field (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{structChronusQ_1_1TDEMFieldBase}{TDEMField\+Base}} $>$}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Add a field to the perturbation. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em f} & Tensorial field specification \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1TDEMPerturbation_a5598a70330bf423f7064103baec1178e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1TDEMPerturbation_a51921bf2bd85f45b7806f5023edfb88b}\label{structChronusQ_1_1TDEMPerturbation_a51921bf2bd85f45b7806f5023edfb88b}} 
+\index{ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}!getDipoleAmp@{getDipoleAmp}}
+\index{getDipoleAmp@{getDipoleAmp}!ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}}
+\doxysubsubsection{\texorpdfstring{getDipoleAmp()}{getDipoleAmp()}}
+{\footnotesize\ttfamily std\+::array$<$ double, 3 $>$ Chronus\+Q\+::\+TDEMPerturbation\+::get\+Dipole\+Amp (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMField\+Typ}}}]{TYPE,  }\item[{double}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{structChronusQ_1_1TDEMPerturbation_a53602263d72192cfe068823b27e43866}\label{structChronusQ_1_1TDEMPerturbation_a53602263d72192cfe068823b27e43866}} 
+\index{ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}!getNAmp@{getNAmp}}
+\index{getNAmp@{getNAmp}!ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}}
+\doxysubsubsection{\texorpdfstring{getNAmp()}{getNAmp()}}
+{\footnotesize\ttfamily template$<$size\+\_\+t N$>$ \\
+std\+::array$<$ double, N $>$ Chronus\+Q\+::\+TDEMPerturbation\+::get\+NAmp (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9}{EMField\+Typ}}}]{TYPE,  }\item[{double}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{structChronusQ_1_1TDEMPerturbation_a583ef97d8c0f28a55ee14997a645fb5d}\label{structChronusQ_1_1TDEMPerturbation_a583ef97d8c0f28a55ee14997a645fb5d}} 
+\index{ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}!getPert@{getPert}}
+\index{getPert@{getPert}!ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}}
+\doxysubsubsection{\texorpdfstring{getPert()}{getPert()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} Chronus\+Q\+::\+TDEMPerturbation\+::get\+Pert (\begin{DoxyParamCaption}\item[{double}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1TDEMPerturbation_a583ef97d8c0f28a55ee14997a645fb5d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1TDEMPerturbation_a3540960400f9de9476fd14a094dc4bfc}\label{structChronusQ_1_1TDEMPerturbation_a3540960400f9de9476fd14a094dc4bfc}} 
+\index{ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}!isFieldDiscontinuous@{isFieldDiscontinuous}}
+\index{isFieldDiscontinuous@{isFieldDiscontinuous}!ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}}
+\doxysubsubsection{\texorpdfstring{isFieldDiscontinuous()}{isFieldDiscontinuous()}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+TDEMPerturbation\+::is\+Field\+Discontinuous (\begin{DoxyParamCaption}\item[{double}]{curT,  }\item[{double}]{deltaT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structChronusQ_1_1TDEMPerturbation_a94f962f113dc76a4b59488a7275adf75}\label{structChronusQ_1_1TDEMPerturbation_a94f962f113dc76a4b59488a7275adf75}} 
+\index{ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}!fields@{fields}}
+\index{fields@{fields}!ChronusQ::TDEMPerturbation@{ChronusQ::TDEMPerturbation}}
+\doxysubsubsection{\texorpdfstring{fields}{fields}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{structChronusQ_1_1TDEMFieldBase}{TDEMField\+Base}}$>$ $>$ Chronus\+Q\+::\+TDEMPerturbation\+::fields}
+
+
+
+Fields for the EM perturbation. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/realtime/\mbox{\hyperlink{realtime_2fields_8hpp}{fields.\+hpp}}\end{DoxyCompactItemize}

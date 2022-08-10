@@ -1,0 +1,238 @@
+\hypertarget{realtime_2print_8hpp_source}{}\doxysection{print.\+hpp}
+\label{realtime_2print_8hpp_source}\index{include/realtime/print.hpp@{include/realtime/print.hpp}}
+\mbox{\hyperlink{realtime_2print_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{realtime_8hpp}{realtime.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{output_8hpp}{cxxapi/output.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{physcon_8hpp}{physcon.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_abecb8abde4cd8c690e1540e1592b3919}{RTFormattedLine}}(std::ostream \&out, std::string s) \{}
+\DoxyCodeLine{34     out << std::setw(38) << \textcolor{stringliteral}{"{}  "{}} + s << std::endl;}
+\DoxyCodeLine{35   \}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{38   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_abecb8abde4cd8c690e1540e1592b3919}{RTFormattedLine}}(std::ostream \&out, std::string s, T v) \{}
+\DoxyCodeLine{39     out << std::setw(38) << \textcolor{stringliteral}{"{}  "{}} + s << v << std::endl;}
+\DoxyCodeLine{40   \}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T, \textcolor{keyword}{typename} U>}
+\DoxyCodeLine{43   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_abecb8abde4cd8c690e1540e1592b3919}{RTFormattedLine}}(std::ostream \&out, std::string s, T v, U u) \{}
+\DoxyCodeLine{44     out << std::setw(38) << \textcolor{stringliteral}{"{}  "{}} + s << v << u << std::endl;}
+\DoxyCodeLine{45   \}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }\_SSTyp, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{49   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a83e5a1e72062e4fae0d53b2c427bd230}{RealTime<\_SSTyp,IntsT>::printRTHeader}}() \{}
+\DoxyCodeLine{50     }
+\DoxyCodeLine{51     \textcolor{comment}{// No printing if silent}}
+\DoxyCodeLine{52     \textcolor{keywordflow}{if}( this-\/>printLevel == 0 ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     std::cout << \mbox{\hyperlink{namespaceChronusQ_aea3bdcfe8284fa0cf16ef6866b5a99a7}{BannerTop}} << std::endl;}
+\DoxyCodeLine{55     std::cout << \textcolor{stringliteral}{"{}Real-\/Time Propagation Settings:"{}} << std::endl << std::endl;}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     std::cout << std::left << std::setprecision(7);}
+\DoxyCodeLine{58     std::string AUTime = \textcolor{stringliteral}{"{} \(\backslash\)u0127 / Eh"{}};}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \mbox{\hyperlink{namespaceChronusQ_abecb8abde4cd8c690e1540e1592b3919}{RTFormattedLine}}(std::cout,\textcolor{stringliteral}{"{}* Simulation Parameters:"{}});}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{keywordtype}{int} nSteps = intScheme.tMax / intScheme.deltaT;}
+\DoxyCodeLine{65     \mbox{\hyperlink{namespaceChronusQ_abecb8abde4cd8c690e1540e1592b3919}{RTFormattedLine}}(std::cout,\textcolor{stringliteral}{"{}Simulation Time:"{}},intScheme.tMax,AUTime);}
+\DoxyCodeLine{66     \mbox{\hyperlink{namespaceChronusQ_abecb8abde4cd8c690e1540e1592b3919}{RTFormattedLine}}(std::cout,\textcolor{stringliteral}{"{}Number of Steps:"{}},nSteps);}
+\DoxyCodeLine{67     \mbox{\hyperlink{namespaceChronusQ_abecb8abde4cd8c690e1540e1592b3919}{RTFormattedLine}}(std::cout,\textcolor{stringliteral}{"{}Step Size:"{}},intScheme.deltaT,AUTime);}
+\DoxyCodeLine{68     \mbox{\hyperlink{namespaceChronusQ_abecb8abde4cd8c690e1540e1592b3919}{RTFormattedLine}}(std::cout,\textcolor{stringliteral}{"{} "{}},intScheme.deltaT * \mbox{\hyperlink{namespaceChronusQ_a5eb23f7f0b92e7527a5509138f761432}{FSPerAUTime}} ,\textcolor{stringliteral}{"{} fs"{}});}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     std::cout << std::endl;}
+\DoxyCodeLine{74     \mbox{\hyperlink{namespaceChronusQ_abecb8abde4cd8c690e1540e1592b3919}{RTFormattedLine}}(std::cout,\textcolor{stringliteral}{"{}* Integration Parameters:"{}});}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     std::string methString;}
+\DoxyCodeLine{77     \textcolor{keywordflow}{if}( intScheme.intAlg == \mbox{\hyperlink{namespaceChronusQ_a4ad72166feb5aa4eee186a7e0dc449bfa0c9425df983f00b72c2d87d7af2749a3}{MMUT}} ) }
+\DoxyCodeLine{78       methString = \textcolor{stringliteral}{"{}Modified Midpoint Unitary Transformation (MMUT)"{}}; }
+\DoxyCodeLine{79     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(intScheme.intAlg == \mbox{\hyperlink{namespaceChronusQ_a4ad72166feb5aa4eee186a7e0dc449bfa397e7a194d512a852eebf7d55f70613a}{ExpMagnus2}}) }
+\DoxyCodeLine{80       methString = \textcolor{stringliteral}{"{}Explicit 2nd Order Magnus"{}}; }
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82     \mbox{\hyperlink{namespaceChronusQ_abecb8abde4cd8c690e1540e1592b3919}{RTFormattedLine}}(std::cout,\textcolor{stringliteral}{"{}Electronic Integration:"{}},methString); }
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     \textcolor{keywordflow}{if}( intScheme.intAlg == \mbox{\hyperlink{namespaceChronusQ_a4ad72166feb5aa4eee186a7e0dc449bfa0c9425df983f00b72c2d87d7af2749a3}{MMUT}} ) \{}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86       std::string rstString;}
+\DoxyCodeLine{87       \textcolor{keywordflow}{if}( intScheme.rstStep == \mbox{\hyperlink{namespaceChronusQ_a7a47a9b6cfd485ee01deb10204bb013ba5079fd5cd1a87fb5d3f93954be5733be}{ForwardEuler}} )}
+\DoxyCodeLine{88         rstString = \textcolor{stringliteral}{"{}Forward Euler"{}};}
+\DoxyCodeLine{89       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( intScheme.rstStep == \mbox{\hyperlink{namespaceChronusQ_a7a47a9b6cfd485ee01deb10204bb013bae798dabe0dc07621a9edf0c24831edb6}{ExplicitMagnus2}} )}
+\DoxyCodeLine{90         rstString = \textcolor{stringliteral}{"{}Explicit 2nd Order Magnus"{}};}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92        \mbox{\hyperlink{namespaceChronusQ_abecb8abde4cd8c690e1540e1592b3919}{RTFormattedLine}}(std::cout,\textcolor{stringliteral}{"{}Restarting MMUT every "{}},}
+\DoxyCodeLine{93          intScheme.iRstrt,\textcolor{stringliteral}{"{} steps with a(n) "{}} + rstString + \textcolor{stringliteral}{"{} step"{}});}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     \}}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     \textcolor{keywordflow}{if}( pert.fields.size() > 0 ) \{}
+\DoxyCodeLine{99       std::cout << std::endl;}
+\DoxyCodeLine{100       \mbox{\hyperlink{namespaceChronusQ_abecb8abde4cd8c690e1540e1592b3919}{RTFormattedLine}}(std::cout,\textcolor{stringliteral}{"{}* Perturbation:\(\backslash\)n"{}});}
+\DoxyCodeLine{101   }
+\DoxyCodeLine{102       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&field : pert.fields) \{}
+\DoxyCodeLine{103         std::cout << std::setw(4) << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{104         std::cout << \textcolor{stringliteral}{"{}Field "{}} << std::distance(\&field,\&pert.fields[0]) +1}
+\DoxyCodeLine{105                   << \textcolor{stringliteral}{"{}:  "{}};}
+\DoxyCodeLine{106         }
+\DoxyCodeLine{107         \textcolor{keyword}{auto} amp = field-\/>getAmp(0);}
+\DoxyCodeLine{108         \textcolor{keywordflow}{if}( \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{structChronusQ_1_1TDEMField}{TDDipoleField}}\&\textcolor{keyword}{>}(*field).\mbox{\hyperlink{structChronusQ_1_1EMFieldBase_adc56e3e63eaca310c375168a7ded1ed0}{emFieldTyp}} == \mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9affb099f0286d43119e7134902486543e}{Electric}} )}
+\DoxyCodeLine{109           std::cout << \textcolor{stringliteral}{"{}Electric"{}};}
+\DoxyCodeLine{110         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{111           std::cout << \textcolor{stringliteral}{"{}Magnetic"{}};}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113         std::cout << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115         \textcolor{keywordflow}{if}( amp.size() == 3 ) std::cout << \textcolor{stringliteral}{"{}Dipole"{}};}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117         std::cout << \textcolor{stringliteral}{"{} Field\(\backslash\)n"{}};}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120         std::cout << std::setw(4) << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{121         std::cout << std::setw(20) << \textcolor{stringliteral}{"{} * Amplitude (AU)"{}} << \textcolor{stringliteral}{"{}\{ "{}};}
+\DoxyCodeLine{122         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < amp.size(); i++) \{}
+\DoxyCodeLine{123           std::cout << amp[i]; \textcolor{keywordflow}{if}(i != amp.size() -\/ 1) std::cout << \textcolor{stringliteral}{"{}, "{}};}
+\DoxyCodeLine{124         \}}
+\DoxyCodeLine{125         std::cout << \textcolor{stringliteral}{"{} \}\(\backslash\)n"{}};}
+\DoxyCodeLine{126           }
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128         std::cout << std::setw(4) << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{129         \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{130           \mbox{\hyperlink{structChronusQ_1_1FieldEnvelope_3_01Step_01_4}{StepField}} \&env = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{structChronusQ_1_1FieldEnvelope_3_01Step_01_4}{StepField}}\&\textcolor{keyword}{>}(*field-\/>envelope);}
+\DoxyCodeLine{131           std::cout << std::setw(20) << \textcolor{stringliteral}{"{} * Step Field"{}};}
+\DoxyCodeLine{132           std::cout << std::setw(9) << \textcolor{stringliteral}{"{}TON = "{}}  << std::setw(10) << env.\mbox{\hyperlink{structChronusQ_1_1FieldEnvelopeBase_a320127a0e51541af3d5a5d80b0596ff4}{tOn}};}
+\DoxyCodeLine{133           std::cout << \textcolor{stringliteral}{"{}   "{}};}
+\DoxyCodeLine{134           std::cout << std::setw(9) << \textcolor{stringliteral}{"{}TOFF = "{}} << std::setw(10) << env.\mbox{\hyperlink{structChronusQ_1_1FieldEnvelopeBase_acf4281fac45c53cb7667321c5aff7258}{tOff}};}
+\DoxyCodeLine{135           std::cout << std::endl;}
+\DoxyCodeLine{136         \} \textcolor{keywordflow}{catch}(...) \{ \}}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139         }
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142       \}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     \}}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147     std::cout << std::endl;}
+\DoxyCodeLine{148     \mbox{\hyperlink{namespaceChronusQ_abecb8abde4cd8c690e1540e1592b3919}{RTFormattedLine}}(std::cout,\textcolor{stringliteral}{"{}* Misc Parameters:"{}});}
+\DoxyCodeLine{149  }
+\DoxyCodeLine{150     std::string expString;}
+\DoxyCodeLine{151     \textcolor{keywordflow}{if}( intScheme.prpAlg == \mbox{\hyperlink{namespaceChronusQ_ada67e48372e53575ba634a327bbb12d2aec456990550fea3e114445fedffe44af}{Diagonalization}} )}
+\DoxyCodeLine{152       expString = \textcolor{stringliteral}{"{}Eigen Decomposition"{}};}
+\DoxyCodeLine{153     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( intScheme.prpAlg == \mbox{\hyperlink{namespaceChronusQ_ada67e48372e53575ba634a327bbb12d2ab1a8b17f88172c1172bee78a34ebef81}{TaylorExpansion}} )}
+\DoxyCodeLine{154       expString = \textcolor{stringliteral}{"{}Taylor Expansion"{}};}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156     \mbox{\hyperlink{namespaceChronusQ_abecb8abde4cd8c690e1540e1592b3919}{RTFormattedLine}}(std::cout,\textcolor{stringliteral}{"{}Matrix Exponential Method:"{}},expString);}
+\DoxyCodeLine{157     }
+\DoxyCodeLine{158     std::cout << std::endl << \mbox{\hyperlink{namespaceChronusQ_aea3bdcfe8284fa0cf16ef6866b5a99a7}{BannerTop}} << std::endl;}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160     std::cout << std::endl << std::fixed << std::right;}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162     \textcolor{keywordflow}{if}( this-\/>printLevel == 1 ) \{}
+\DoxyCodeLine{163       std::cout << std::setprecision(4);}
+\DoxyCodeLine{164       std::cout << std::setw(11) << \textcolor{stringliteral}{"{}Time (AU)"{}} << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166       std::cout << std::setprecision(10);}
+\DoxyCodeLine{167       std::cout << std::setw(16) << \textcolor{stringliteral}{"{}Energy (Eh)"{}} << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169       std::cout << std::setprecision(8);}
+\DoxyCodeLine{170       std::cout << std::setw(16) << \textcolor{stringliteral}{"{}Dipole (X)"{}} << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{171       std::cout << std::setw(16) << \textcolor{stringliteral}{"{}Dipole (Y)"{}} << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{172       std::cout << std::setw(16) << \textcolor{stringliteral}{"{}Dipole (Z)"{}} << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174       std::cout << std::endl << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}} << std::endl << std::endl;}
+\DoxyCodeLine{175     \}}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177     \textcolor{keywordflow}{if}( this-\/>printLevel == -\/1 )}
+\DoxyCodeLine{178       this-\/>printLevel = 0;}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180   \};}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }\_SSTyp, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{183   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_ac65ab43374a8d9340e3d0ab4a637dd9c}{RealTime<\_SSTyp,IntsT>::printRTStep}}() \{ }
+\DoxyCodeLine{184     \textcolor{keywordflow}{if}(this-\/>printLevel == 1) \{}
+\DoxyCodeLine{185       printStepSummary();}
+\DoxyCodeLine{186     \}}
+\DoxyCodeLine{187     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(this-\/>printLevel > 1) \{}
+\DoxyCodeLine{188       printStepDetail();}
+\DoxyCodeLine{189     \}}
+\DoxyCodeLine{190   \};}
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }\_SSTyp, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{193   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a050427150e6b25469f9ab8adadf44233}{RealTime<\_SSTyp,IntsT>::printStepSummary}}() \{ }
+\DoxyCodeLine{194     std::cout << std::fixed << std::right;}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196     std::cout << std::setprecision(4);}
+\DoxyCodeLine{197     std::cout << std::setw(11) << curState.xTime << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199     std::cout << std::setprecision(10);}
+\DoxyCodeLine{200     std::cout << std::setw(16) << propagator\_.totalEnergy << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202     std::cout << std::setprecision(8);}
+\DoxyCodeLine{203     std::cout << std::setw(16) << propagator\_.elecDipole[0] << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{204     std::cout << std::setw(16) << propagator\_.elecDipole[1] << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{205     std::cout << std::setw(16) << propagator\_.elecDipole[2] << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207     std::cout << std::endl;}
+\DoxyCodeLine{208 }
+\DoxyCodeLine{209   \}; }
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }\_SSTyp, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{212   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a200b26b67fc8b1be46983567304e699c}{RealTime<\_SSTyp,IntsT>::printStepDetail}}() \{ }
+\DoxyCodeLine{213     std::cout << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}} << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{214     std::cout << std::fixed << std::right;}
+\DoxyCodeLine{215     std::cout << \textcolor{stringliteral}{"{}Step: "{}} << std::setw(7) << curState.iStep << \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{216 }
+\DoxyCodeLine{217     std::cout << std::setprecision(5) << \textcolor{stringliteral}{"{}Time: "{}};}
+\DoxyCodeLine{218     std::cout << std::setw(11) << curState.xTime << \textcolor{stringliteral}{"{} (au) | "{}};}
+\DoxyCodeLine{219     std::cout << std::setw(11) << curState.xTime * \mbox{\hyperlink{namespaceChronusQ_a5eb23f7f0b92e7527a5509138f761432}{FSPerAUTime}} << \textcolor{stringliteral}{"{} (fs)\(\backslash\)n"{}};}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221     std::cout << std::setprecision(12) << \textcolor{stringliteral}{"{}Energy: "{}};}
+\DoxyCodeLine{222     std::cout << std::setw(24) << propagator\_.totalEnergy << \textcolor{stringliteral}{"{} (Hartree)\(\backslash\)n"{}};}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224     std::cout << std::setprecision(8) << \textcolor{stringliteral}{"{}Dipole: "{}};}
+\DoxyCodeLine{225     std::cout << std::setw(16) << propagator\_.elecDipole[0]*\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{226     std::cout << std::setw(16) << propagator\_.elecDipole[1]*\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} << \textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{227     std::cout << std::setw(16) << propagator\_.elecDipole[2]*\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} << \textcolor{stringliteral}{"{} (Debye)"{}};}
+\DoxyCodeLine{228     std::cout << std::endl;}
+\DoxyCodeLine{229   \};}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{232 }
+
+\end{DoxyCode}

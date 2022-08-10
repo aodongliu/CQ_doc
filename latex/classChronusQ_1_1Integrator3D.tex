@@ -1,0 +1,188 @@
+\hypertarget{classChronusQ_1_1Integrator3D}{}\doxysection{ChronusQ\+::Integrator3D\texorpdfstring{$<$}{<} \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1Integrator3D}\index{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}}
+
+
+3D \mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} integrator  
+
+
+
+
+{\ttfamily \#include $<$integrator.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a41e87408b97c92b52adc961c4024f2ee}{Integrator3D}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Integrator3D_ab97dfbe6de5f744814947e3fd3fd5913}{Integrator3D}} (const \mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Integrator3D}} \&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a60ae32ff72e8d061a2d3cbf2dbfb9375}{Integrator3D}} (\mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Integrator3D}} \&\&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Integrator3D_a0b5fcbfce2c581f808f872909497ddb4}{Integrator3D}} (\+\_\+\+QTyp1 g1, \+\_\+\+QTyp2 g2, \+\_\+\+QTyp3 g3)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Integrator3D}} constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a76d592f387eb741184fe1c38971548ce}{generate\+Batch}} (size\+\_\+t ist, size\+\_\+t iend, std\+::vector$<$ \mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\+\_\+t}} $>$ \&batch\+Pt, std\+::vector$<$ double $>$ \&batchW)
+\begin{DoxyCompactList}\small\item\em Generates a 3D batch of points via the cartesian product of the 1D quadratures. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T , class F , typename... Args$>$ }\\void \mbox{\hyperlink{classChronusQ_1_1Integrator3D_af8aabdb242af23e442c23dd46ff805c9}{integrate}} (double SCALE, T \&res, const F \&func, Args... args)
+\begin{DoxyCompactList}\small\item\em Integrate function. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T , class F , typename... Args$>$ }\\void \mbox{\hyperlink{classChronusQ_1_1Integrator3D_aeb1607921af840ab46fb0535e9470480}{integrate}} (T \&res, const F \&func, Args... args)
+\begin{DoxyCompactList}\small\item\em Specialization of integrate function which leaves the result unscaled. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T , class F , typename... Args$>$ }\\T \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a6c1367fcad051671a695be23d00238a5}{integrate}} (const F \&func, Args... args)
+\begin{DoxyCompactList}\small\item\em Generalization of the integrate function which constructs the result internally and passes to the integrate function to be incremented by reference. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\+\_\+\+QTyp1 \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a3194409905cbf8996d21949ccab110de}{q1}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} over dimension 1. \end{DoxyCompactList}\item 
+\+\_\+\+QTyp2 \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a62ed6f2348e0aa2f4924b8475a4a5f23}{q2}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} over dimension 2. \end{DoxyCompactList}\item 
+\+\_\+\+QTyp3 \mbox{\hyperlink{classChronusQ_1_1Integrator3D_a1d96e08ac3efd1fc11d1f17150c496fd}{q3}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} over dimension 3. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class \+\_\+\+QTyp1, class \+\_\+\+QTyp2, class \+\_\+\+QTyp3$>$\newline
+class Chronus\+Q\+::\+Integrator3\+D$<$ \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 $>$}
+3D \mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} integrator 
+
+Templated over \mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} classes. To be used as Integrator3$<$\+\_\+\+QTyp1,\+\_\+\+QTyp2,\+\_\+\+QTyp3$>$ obj(QTyp1\+\_\+\+Constr(arg1,...), QTyp2\+\_\+\+Constr(arg2,...), QTyp3\+\_\+\+Constr(arg3,...); 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1Integrator3D_a41e87408b97c92b52adc961c4024f2ee}\label{classChronusQ_1_1Integrator3D_a41e87408b97c92b52adc961c4024f2ee}} 
+\index{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}!Integrator3D@{Integrator3D}}
+\index{Integrator3D@{Integrator3D}!ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}}
+\doxysubsubsection{\texorpdfstring{Integrator3D()}{Integrator3D()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 , class \+\_\+\+QTyp2 , class \+\_\+\+QTyp3 $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Chronus\+Q\+::\+Integrator3D}}$<$ \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 $>$\+::\+Integrator3D (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1Integrator3D_ab97dfbe6de5f744814947e3fd3fd5913}\label{classChronusQ_1_1Integrator3D_ab97dfbe6de5f744814947e3fd3fd5913}} 
+\index{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}!Integrator3D@{Integrator3D}}
+\index{Integrator3D@{Integrator3D}!ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}}
+\doxysubsubsection{\texorpdfstring{Integrator3D()}{Integrator3D()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 , class \+\_\+\+QTyp2 , class \+\_\+\+QTyp3 $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Chronus\+Q\+::\+Integrator3D}}$<$ \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 $>$\+::\+Integrator3D (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Integrator3D}}$<$ \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 $>$ \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1Integrator3D_a60ae32ff72e8d061a2d3cbf2dbfb9375}\label{classChronusQ_1_1Integrator3D_a60ae32ff72e8d061a2d3cbf2dbfb9375}} 
+\index{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}!Integrator3D@{Integrator3D}}
+\index{Integrator3D@{Integrator3D}!ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}}
+\doxysubsubsection{\texorpdfstring{Integrator3D()}{Integrator3D()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 , class \+\_\+\+QTyp2 , class \+\_\+\+QTyp3 $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Chronus\+Q\+::\+Integrator3D}}$<$ \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 $>$\+::\+Integrator3D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Integrator3D}}$<$ \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 $>$ \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1Integrator3D_a0b5fcbfce2c581f808f872909497ddb4}\label{classChronusQ_1_1Integrator3D_a0b5fcbfce2c581f808f872909497ddb4}} 
+\index{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}!Integrator3D@{Integrator3D}}
+\index{Integrator3D@{Integrator3D}!ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}}
+\doxysubsubsection{\texorpdfstring{Integrator3D()}{Integrator3D()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 , class \+\_\+\+QTyp2 , class \+\_\+\+QTyp3 $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Chronus\+Q\+::\+Integrator3D}}$<$ \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 $>$\+::\+Integrator3D (\begin{DoxyParamCaption}\item[{\+\_\+\+QTyp1}]{g1,  }\item[{\+\_\+\+QTyp2}]{g2,  }\item[{\+\_\+\+QTyp3}]{g3 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Integrator3D}} constructor. 
+
+Constructs a \mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Integrator3D}} object from three \mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} objects 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1Integrator3D_a76d592f387eb741184fe1c38971548ce}\label{classChronusQ_1_1Integrator3D_a76d592f387eb741184fe1c38971548ce}} 
+\index{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}!generateBatch@{generateBatch}}
+\index{generateBatch@{generateBatch}!ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}}
+\doxysubsubsection{\texorpdfstring{generateBatch()}{generateBatch()}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 , class \+\_\+\+QTyp2 , class \+\_\+\+QTyp3 $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Chronus\+Q\+::\+Integrator3D}}$<$ \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 $>$\+::generate\+Batch (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{ist,  }\item[{size\+\_\+t}]{iend,  }\item[{std\+::vector$<$ \mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\+\_\+t}} $>$ \&}]{batch\+Pt,  }\item[{std\+::vector$<$ double $>$ \&}]{batchW }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Generates a 3D batch of points via the cartesian product of the 1D quadratures. 
+
+For a select number of points in the first quadrature (q1), this function returns the cartesian product over all of the points in the second (q2) and third (q3) quadratures Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Integrator3D_a76d592f387eb741184fe1c38971548ce_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Integrator3D_a6c1367fcad051671a695be23d00238a5}\label{classChronusQ_1_1Integrator3D_a6c1367fcad051671a695be23d00238a5}} 
+\index{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}!integrate@{integrate}}
+\index{integrate@{integrate}!ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}}
+\doxysubsubsection{\texorpdfstring{integrate()}{integrate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 , class \+\_\+\+QTyp2 , class \+\_\+\+QTyp3 $>$ \\
+template$<$typename T , class F , typename... Args$>$ \\
+T \mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Chronus\+Q\+::\+Integrator3D}}$<$ \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 $>$\+::integrate (\begin{DoxyParamCaption}\item[{const F \&}]{func,  }\item[{Args...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Generalization of the integrate function which constructs the result internally and passes to the integrate function to be incremented by reference. 
+
+\mbox{\Hypertarget{classChronusQ_1_1Integrator3D_af8aabdb242af23e442c23dd46ff805c9}\label{classChronusQ_1_1Integrator3D_af8aabdb242af23e442c23dd46ff805c9}} 
+\index{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}!integrate@{integrate}}
+\index{integrate@{integrate}!ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}}
+\doxysubsubsection{\texorpdfstring{integrate()}{integrate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 , class \+\_\+\+QTyp2 , class \+\_\+\+QTyp3 $>$ \\
+template$<$typename T , class F , typename... Args$>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Chronus\+Q\+::\+Integrator3D}}$<$ \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 $>$\+::integrate (\begin{DoxyParamCaption}\item[{double}]{SCALE,  }\item[{T \&}]{res,  }\item[{const F \&}]{func,  }\item[{Args...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Integrate function. 
+
+Integrates a passed 3D function and increments the result which is to be passed by reference. The result is to be scaled by a passed parameter. Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Integrator3D_af8aabdb242af23e442c23dd46ff805c9_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Integrator3D_aeb1607921af840ab46fb0535e9470480}\label{classChronusQ_1_1Integrator3D_aeb1607921af840ab46fb0535e9470480}} 
+\index{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}!integrate@{integrate}}
+\index{integrate@{integrate}!ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}}
+\doxysubsubsection{\texorpdfstring{integrate()}{integrate()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 , class \+\_\+\+QTyp2 , class \+\_\+\+QTyp3 $>$ \\
+template$<$typename T , class F , typename... Args$>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Chronus\+Q\+::\+Integrator3D}}$<$ \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 $>$\+::integrate (\begin{DoxyParamCaption}\item[{T \&}]{res,  }\item[{const F \&}]{func,  }\item[{Args...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Specialization of integrate function which leaves the result unscaled. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1Integrator3D_a3194409905cbf8996d21949ccab110de}\label{classChronusQ_1_1Integrator3D_a3194409905cbf8996d21949ccab110de}} 
+\index{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}!q1@{q1}}
+\index{q1@{q1}!ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}}
+\doxysubsubsection{\texorpdfstring{q1}{q1}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 , class \+\_\+\+QTyp2 , class \+\_\+\+QTyp3 $>$ \\
+\+\_\+\+QTyp1 \mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Chronus\+Q\+::\+Integrator3D}}$<$ \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 $>$\+::q1\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} over dimension 1. 
+
+\mbox{\Hypertarget{classChronusQ_1_1Integrator3D_a62ed6f2348e0aa2f4924b8475a4a5f23}\label{classChronusQ_1_1Integrator3D_a62ed6f2348e0aa2f4924b8475a4a5f23}} 
+\index{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}!q2@{q2}}
+\index{q2@{q2}!ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}}
+\doxysubsubsection{\texorpdfstring{q2}{q2}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 , class \+\_\+\+QTyp2 , class \+\_\+\+QTyp3 $>$ \\
+\+\_\+\+QTyp2 \mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Chronus\+Q\+::\+Integrator3D}}$<$ \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 $>$\+::q2\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} over dimension 2. 
+
+\mbox{\Hypertarget{classChronusQ_1_1Integrator3D_a1d96e08ac3efd1fc11d1f17150c496fd}\label{classChronusQ_1_1Integrator3D_a1d96e08ac3efd1fc11d1f17150c496fd}} 
+\index{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}!q3@{q3}}
+\index{q3@{q3}!ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$@{ChronusQ::Integrator3D$<$ \_QTyp1, \_QTyp2, \_QTyp3 $>$}}
+\doxysubsubsection{\texorpdfstring{q3}{q3}}
+{\footnotesize\ttfamily template$<$class \+\_\+\+QTyp1 , class \+\_\+\+QTyp2 , class \+\_\+\+QTyp3 $>$ \\
+\+\_\+\+QTyp3 \mbox{\hyperlink{classChronusQ_1_1Integrator3D}{Chronus\+Q\+::\+Integrator3D}}$<$ \+\_\+\+QTyp1, \+\_\+\+QTyp2, \+\_\+\+QTyp3 $>$\+::q3\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} over dimension 3. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/grid/\mbox{\hyperlink{integrator_8hpp}{integrator.\+hpp}}\end{DoxyCompactItemize}

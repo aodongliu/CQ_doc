@@ -1,0 +1,283 @@
+\hypertarget{singleslater_8hpp_source}{}\doxysection{singleslater.\+hpp}
+\label{singleslater_8hpp_source}\index{include/singleslater.hpp@{include/singleslater.hpp}}
+\mbox{\hyperlink{singleslater_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{wavefunction_8hpp}{wavefunction.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2base_8hpp}{singleslater/base.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{twopints_8hpp}{particleintegrals/twopints.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrix_8hpp}{matrix.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{orthogonalization_8hpp}{orthogonalization.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{modifyorbitals_8hpp}{modifyorbitals.hpp}}>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{comment}{// Debug print triggered by Wavefunction}}
+\DoxyCodeLine{35   }
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#ifdef \_WaveFunctionDebug}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{  \#define \_SingleSlaterDebug}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42   \textcolor{comment}{// Declaration of CoreH and Fock builders.}}
+\DoxyCodeLine{43   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{44   \textcolor{keyword}{class }CoreHBuilder;}
+\DoxyCodeLine{45   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{46   \textcolor{keyword}{class }FockBuilder;}
+\DoxyCodeLine{47   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{48   \textcolor{keyword}{class }MOIntsTransformer;}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{59   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{60   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{SingleSlaterBase}}, \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1WaveFunction}{WaveFunction}}<MatsT,IntsT> \{}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU, \textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{63     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \textcolor{comment}{// Useful typedefs}}
+\DoxyCodeLine{68     \textcolor{keyword}{typedef} MatsT*                    \mbox{\hyperlink{classChronusQ_1_1SingleSlater_af5d41fea78b691f3bdae666fa322cdda}{oper\_t}};}
+\DoxyCodeLine{69     \textcolor{keyword}{typedef} std::vector<oper\_t>       \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a03cd40daae057ce506a42f7f7733fd6c}{oper\_t\_coll}};}
+\DoxyCodeLine{70     \textcolor{keyword}{typedef} std::vector<oper\_t\_coll>  \mbox{\hyperlink{classChronusQ_1_1SingleSlater_af558611f3e9163a208b73366ebc685a0}{oper\_t\_coll2}};}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \textcolor{comment}{//BasisSet \&basisSet\_; ///< BasisSet for the GTO basis defintion}}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74   \textcolor{keyword}{private}:}
+\DoxyCodeLine{75   \textcolor{keyword}{public}:}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77     \textcolor{keyword}{typedef} MatsT \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a3407f0860de9c372eae0c61452542e0c}{value\_type}};}
+\DoxyCodeLine{78     \textcolor{keyword}{typedef} IntsT \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a37f746e8daa5d95969027e991037665e}{ints\_type}};}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{comment}{//ORTHO\_TYPE            orthoType; ///< Orthogonalization scheme}}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82     \textcolor{comment}{// Operator storage}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     \textcolor{comment}{// AO Fock Matrix}}
+\DoxyCodeLine{85     std::shared\_ptr<PauliSpinorSquareMatrices<MatsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab82f1f8ad464a41f46f9ee508cf22b38}{fockMatrix}}; }
+\DoxyCodeLine{86     std::vector<SquareMatrix<MatsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab4e89b1389d78f8590b6d22c4c671058}{fockMO}};     }
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88     \textcolor{comment}{// Orthonormal Fock}}
+\DoxyCodeLine{89     std::shared\_ptr<PauliSpinorSquareMatrices<MatsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ac95ece732e2b54ee0202ef1dfbcaf07d}{fockMatrixOrtho}}; }
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{comment}{// Coulomb (J[D])}}
+\DoxyCodeLine{92     std::shared\_ptr<SquareMatrix<MatsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a84e451a406430cbd59294c212c2fa4ab}{coulombMatrix}}; }
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94     \textcolor{comment}{// Exchange (K[D])}}
+\DoxyCodeLine{95     std::shared\_ptr<PauliSpinorSquareMatrices<MatsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_afaff266c8eab1fb6cdecf429fbb3de7d}{exchangeMatrix}}; }
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97     \textcolor{comment}{// Two-\/electron Hamiltonian (G[D])}}
+\DoxyCodeLine{98     std::shared\_ptr<PauliSpinorSquareMatrices<MatsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa5b6666e06adbd12fdd3cc534f2d297b}{twoeH}}; }
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100     \textcolor{comment}{// Orthonormal density}}
+\DoxyCodeLine{101     std::shared\_ptr<PauliSpinorSquareMatrices<MatsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ae989c830b327e70a2d131bb42ef03ac6}{onePDMOrtho}}; }
+\DoxyCodeLine{102     std::shared\_ptr<PauliSpinorSquareMatrices<MatsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a0d97aa6f39994dcd32a0b4f7a4498620}{deltaOnePDM}}; }
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104     std::shared\_ptr<PauliSpinorSquareMatrices<MatsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a6b7685f816cf01f8af699951274e62a6}{coreH}}; }
+\DoxyCodeLine{105     std::shared\_ptr<PauliSpinorSquareMatrices<MatsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a30fd7cfbcb2ab6049377e50ce87d5f80}{coreHPerturbed}}; }
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     \textcolor{comment}{// Algorithm Abstractions}}
+\DoxyCodeLine{108     std::shared\_ptr<TPIContractions<MatsT,IntsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a22300da3375f3b5d49b467c9b4ae143f}{TPI}}; }
+\DoxyCodeLine{109     std::shared\_ptr<CoreHBuilder<MatsT,IntsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ac5a9167316327a051549b868625a2092}{coreHBuilder}}; }
+\DoxyCodeLine{110     std::shared\_ptr<FockBuilder<MatsT,IntsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a089ade292c642e182e74eef492fa6c80}{fockBuilder}};  }
+\DoxyCodeLine{111     std::shared\_ptr<Orthogonalization<MatsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7b247a547632814d69c0328dd0fdf637}{orthoSpinor}};  }
+\DoxyCodeLine{112     std::shared\_ptr<Orthogonalization<MatsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a5f8672e41e08fa9f1abcae424d663dc2}{orthoAB}};      }
+\DoxyCodeLine{113     std::shared\_ptr<ModifyOrbitals<MatsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a74babe7e457155baf6c3c43d6ecef1dd}{modifyOrbitals}};  }
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115     \textcolor{comment}{// Method specific propery storage}}
+\DoxyCodeLine{116     std::vector<double> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_af0242d86637a566a96d8e373d02bed4a}{mullikenCharges}};}
+\DoxyCodeLine{117     std::vector<double> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ad420dea9ce0821c1560855003266f9c5}{lowdinCharges}};}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{121       }
+\DoxyCodeLine{130     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{131     \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aecdebf05a1fe53fe9e0490ce0e257106}{SingleSlater}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis,}
+\DoxyCodeLine{132                  \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals<IntsT>}} \&aoi, Args... args) :}
+\DoxyCodeLine{133       \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{SingleSlaterBase}}(c,mem,mol,basis,args...),}
+\DoxyCodeLine{134       \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{WaveFunctionBase}}(c,mem,mol,basis,args...),}
+\DoxyCodeLine{135       \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}}(c,mem,args...),}
+\DoxyCodeLine{136       \mbox{\hyperlink{classChronusQ_1_1WaveFunction}{WaveFunction}}<MatsT,IntsT>(c,mem,mol,basis,aoi,args...)}
+\DoxyCodeLine{137       \textcolor{comment}{//, basisSet\_(basis)}}
+\DoxyCodeLine{138       \textcolor{comment}{//, coreType(NON\_RELATIVISTIC), orthoType(LOWDIN)}}
+\DoxyCodeLine{139     \{}
+\DoxyCodeLine{140       \textcolor{comment}{// Allocate SingleSlater Object}}
+\DoxyCodeLine{141       \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a4e284265c548cf208ee288d7fe812dba}{alloc}}();}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143       \textcolor{comment}{// Determine Real/Complex part of method string}}
+\DoxyCodeLine{144       \textcolor{keywordflow}{if}(std::is\_same<MatsT,double>::value) \{}
+\DoxyCodeLine{145         \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a0a49cbbc09f5076d671240b41b87158d}{refLongName\_}}  = \textcolor{stringliteral}{"{}Real "{}};}
+\DoxyCodeLine{146         \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a531a032e4edaeffb1405a294e6da6b13}{refShortName\_}} = \textcolor{stringliteral}{"{}R-\/"{}};}
+\DoxyCodeLine{147       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{148         \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a0a49cbbc09f5076d671240b41b87158d}{refLongName\_}}  = \textcolor{stringliteral}{"{}Complex "{}};}
+\DoxyCodeLine{149         \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase_a531a032e4edaeffb1405a294e6da6b13}{refShortName\_}} = \textcolor{stringliteral}{"{}C-\/"{}};}
+\DoxyCodeLine{150       }
+\DoxyCodeLine{151       \}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     \}; \textcolor{comment}{// SingleSlater constructor}}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155     \textcolor{comment}{// See include/singleslater/impl.hpp for documentation }}
+\DoxyCodeLine{156     \textcolor{comment}{// on the following constructors}}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158     \textcolor{comment}{// Different type}}
+\DoxyCodeLine{159     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU> }
+\DoxyCodeLine{160       \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa88b30b3b531876ae23a8c65f08c2d51}{SingleSlater}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsU,IntsT>}} \&, \textcolor{keywordtype}{int} dummy = 0);}
+\DoxyCodeLine{161     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU> }
+\DoxyCodeLine{162       \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa88b30b3b531876ae23a8c65f08c2d51}{SingleSlater}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsU,IntsT>}} \&\&     , \textcolor{keywordtype}{int} dummy = 0);}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164     \textcolor{comment}{// Same type}}
+\DoxyCodeLine{165     \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa88b30b3b531876ae23a8c65f08c2d51}{SingleSlater}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&);}
+\DoxyCodeLine{166     \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa88b30b3b531876ae23a8c65f08c2d51}{SingleSlater}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&\&);     }
+\DoxyCodeLine{167 }
+\DoxyCodeLine{173     \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a082873d144c7afd67913f624020dccbb}{\string~SingleSlater}}() \{ \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a4feb78741a10acaad6cfda680425e026}{dealloc}}(); \}}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177     \textcolor{comment}{// Public Member functions}}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179     \textcolor{comment}{//BasisSet\& basisSet() \{ return basisSet\_; \}}}
+\DoxyCodeLine{180       }
+\DoxyCodeLine{181       }
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183     \textcolor{comment}{// Deallocation (see include/singleslater/impl.hpp for docs)}}
+\DoxyCodeLine{184     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a4e284265c548cf208ee288d7fe812dba}{alloc}}();}
+\DoxyCodeLine{185     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a4feb78741a10acaad6cfda680425e026}{dealloc}}();}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188     \textcolor{comment}{// Declarations from QuantumBase }}
+\DoxyCodeLine{189     \textcolor{comment}{// (see include/singleslater/quantum.hpp for docs)}}
+\DoxyCodeLine{190     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a45669addf520b9615ef9575144c69eb9}{formDensity}}();}
+\DoxyCodeLine{191     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a18d2ba2b05e8b80f8ae57e28ae75a715}{computeEnergy}}();}
+\DoxyCodeLine{192     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a67c95963a02d02dd6e7e7791b44b867e}{computeMultipole}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&);}
+\DoxyCodeLine{193     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a788a2f32f06c22a9dd21293747b2e4e4}{computeSpin}}();}
+\DoxyCodeLine{194     \textcolor{keyword}{virtual} std::vector<double> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ade8bc140484560ef0c3c2d9bd7dfc25d}{getEnergySummary}}();}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196     \textcolor{comment}{// Compute various core Hamitlonian}}
+\DoxyCodeLine{197     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a3e114991a7155171af777d2abac7dad1}{formCoreH}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&, \textcolor{keywordtype}{bool}); \textcolor{comment}{// Compute the CH}}
+\DoxyCodeLine{198     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a974c7a6371ccc77bdededa3367616421}{computeOrtho}}();  \textcolor{comment}{// Evaluate orthonormalization transformations}}
+\DoxyCodeLine{199     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7cd43a9998034dabd251899d5cdbd4e7}{computeOrthoGrad}}(); \textcolor{comment}{// Evaluate gradient of orthonormalization}}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201     \textcolor{comment}{// Method specific properties}}
+\DoxyCodeLine{202     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7d730c8b8c684dc260c813730ed1004f}{populationAnalysis}}();}
+\DoxyCodeLine{203     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a459022353e4edb2a49c0e2a10c14b248}{methodSpecificProperties}}() \{}
+\DoxyCodeLine{204       \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7d730c8b8c684dc260c813730ed1004f}{populationAnalysis}}();}
+\DoxyCodeLine{205     \}}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207     \textcolor{comment}{// Form a fock matrix (see include/singleslater/fock.hpp for docs)}}
+\DoxyCodeLine{208     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7da0fea35cf7e2337d36b35942ee24a2}{formFock}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false}, \textcolor{keywordtype}{double} xHFX = 1.);}
+\DoxyCodeLine{209     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a3ddfdff2c26f53450499335617622db0}{formFock}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert) \{ \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a3ddfdff2c26f53450499335617622db0}{formFock}}(pert,\textcolor{keyword}{false},1.);\};}
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211     \textcolor{comment}{// Get the total gradient}}
+\DoxyCodeLine{212     \textcolor{keyword}{virtual} std::vector<double> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_abe44a52a240974af91e25625e7337f33}{getGrad}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&, \textcolor{keywordtype}{bool} equil,}
+\DoxyCodeLine{213       \textcolor{keywordtype}{bool} saveInts);}
+\DoxyCodeLine{214 }
+\DoxyCodeLine{215     \textcolor{comment}{// Form initial guess orbitals}}
+\DoxyCodeLine{216     \textcolor{comment}{// see include/singleslater/guess.hpp for docs)}}
+\DoxyCodeLine{217     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ad92d1fc80b60a5b26ceb4fb299fde3fd}{formGuess}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1SingleSlaterOptions}{SingleSlaterOptions}}\&);}
+\DoxyCodeLine{218     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a9d1dbf57bdb6c7135eaf3b512e887cd1}{CoreGuess}}();}
+\DoxyCodeLine{219     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a1b75ce41c298bf218fb2c3a7d6d32913}{SADGuess}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1SingleSlaterOptions}{SingleSlaterOptions}}\&);}
+\DoxyCodeLine{220     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ad727bdcd5f516427e9ac81a240478273}{TightGuess}}();}
+\DoxyCodeLine{221     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab3cbcb35d2907570beba58b128ad8f08}{RandomGuess}}();}
+\DoxyCodeLine{222     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a5edafba5821bbea649227d7ccd8134a6}{ReadGuessMO}}();}
+\DoxyCodeLine{223     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_afcffe73c317de0688ce7c82e7071e724}{ReadGuess1PDM}}();}
+\DoxyCodeLine{224     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_afc5dfd3c9be5e45debb5b6fb959692cf}{FchkGuessMO}}();}
+\DoxyCodeLine{225     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a453da0cc606b4722c8af97d4194fd52e}{computeNaturalOrbitals}}();}
+\DoxyCodeLine{226     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a5523ec655b83625f0eae12aac5d7bd79}{getNewOrbitals}}();}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228     \textcolor{comment}{// ReadGuess1PDM functions}}
+\DoxyCodeLine{229     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a60ed1a84d937ddca44030fe69482effa}{readSameTypeDenBin}}();}
+\DoxyCodeLine{230     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a2f07f4f6ecd1fc4f9a8098a2e9735692}{readDiffTypeDenBin}}(std::string binName);}
+\DoxyCodeLine{231     \textcolor{keyword}{template} <\textcolor{keyword}{typename} ScrMatsT>}
+\DoxyCodeLine{232     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a6d3185f330f7cae8cecc314a7d73c6f5}{getScr1PDM}}(\mbox{\hyperlink{classChronusQ_1_1SafeFile}{SafeFile}} \&);}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234     \textcolor{comment}{// Fchk-\/related functions}}
+\DoxyCodeLine{235     std::vector<int> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a902c20baa61578af71ecdd400f975c3a}{fchkToCQMO}}();}
+\DoxyCodeLine{236     std::unordered\_map<int,std::vector<int>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7cd3cbc49125b3ad668488279ea51086}{returnAngReorder}}();}
+\DoxyCodeLine{237     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ae9d35c2e558280c82d48c3fb0f22505f}{reorderAngMO}}(std::vector<int> sl, MatsT* tmo, \textcolor{keywordtype}{int} sp);}
+\DoxyCodeLine{238     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_afe8af82f3cb0ae9c31d56474c55f60b1}{reorderSpinMO}}();}
+\DoxyCodeLine{239 }
+\DoxyCodeLine{240     \textcolor{comment}{// Transformation functions to and from the orthonormal basis}}
+\DoxyCodeLine{241     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_afae92faab20e49148202b152ffccdc61}{ao2orthoFock}}();}
+\DoxyCodeLine{242     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a9511c60786341ece6ea039180ad40e4f}{ao2orthoMOs}}();}
+\DoxyCodeLine{243     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_abf6a809d2ba66674702c98014eed99ee}{ao2orthoDen}}();}
+\DoxyCodeLine{244     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a6265d1b4ee885c4a5738a80a832eb4bd}{ortho2aoDen}}();}
+\DoxyCodeLine{245     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ae53e12f0e3b1ccd5ce30ab1d4fcf539c}{ortho2aoMOs}}();}
+\DoxyCodeLine{246     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a1ab7947386c3c4d10d4ec1d33fc24696}{orthoAOMO}}();}
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248     \textcolor{comment}{// SCF Specific Functions}}
+\DoxyCodeLine{249     \textcolor{keyword}{inline} \textcolor{keyword}{virtual} \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ae7d853588e7df8b213d5145d98c7e06d}{getTotalEnergy}}() \{ \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}{totalEnergy}}; \};}
+\DoxyCodeLine{250     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a1fec0eae3fb5b0e4daeb6d626acf8c8b}{printProperties}}();}
+\DoxyCodeLine{251     \textcolor{keyword}{virtual} std::vector<std::shared\_ptr<SquareMatrix<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a80edfd2174bc34cb12ea80e7b8075a68}{getOnePDM}}();}
+\DoxyCodeLine{252     \textcolor{keyword}{virtual} std::vector<std::shared\_ptr<SquareMatrix<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a7556734bf28f7aebe4aa0248082b2247}{getFock}}();}
+\DoxyCodeLine{253     \textcolor{keyword}{virtual} std::vector<std::shared\_ptr<Orthogonalization<MatsT>>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa333eda574020f1709e7f53123e7041a}{getOrtho}}();}
+\DoxyCodeLine{254     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ae28c8bb18975bd6917fcb1fdfadec440}{runModifyOrbitals}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&);}
+\DoxyCodeLine{255     \textcolor{keyword}{virtual} std::vector<NRRotOptions> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a0cfa807c8a2f7496ed831cd438269380}{buildRotOpt}}();}
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257     \textcolor{comment}{// Misc procedural}}
+\DoxyCodeLine{258     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a1728e00117bbe12c682ef6579d50cc04}{diagOrthoFock}}();}
+\DoxyCodeLine{259     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_af3f0290638b5c84ea6689ea1e9c01cd3}{diagAOFock}}();}
+\DoxyCodeLine{260     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a9c8bed99d471546dd604fb941dfe268c}{saveCurrentState}}();}
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262     \textcolor{comment}{// Stability and reopt}}
+\DoxyCodeLine{263     \textcolor{keyword}{virtual} std::pair<double,MatsT*> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a71bcbcbd2ff9ecb6ec7d897fca9da397}{getStab}}() = 0;}
+\DoxyCodeLine{264     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a45fc6ff0462842c3180d60532f202a4d}{checkStability}}();}
+\DoxyCodeLine{265     \textcolor{keyword}{virtual} MatsT* \mbox{\hyperlink{classChronusQ_1_1SingleSlater_af659370e5b7d74c2a95c9a99ae2bc8af}{getNRCoeffs}}() \{ \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};\};}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267     \textcolor{comment}{// Print functions}}
+\DoxyCodeLine{268     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a298071838cacfdf694198b365c5d7afe}{printFock}}(std::ostream\& )    ;}
+\DoxyCodeLine{269     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a25c5c4ed089f649aa187ae01fb9e0463}{print1PDMOrtho}}(std::ostream\&);}
+\DoxyCodeLine{270     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a9e56533523726cd5caa32252da3472f9}{printGD}}(std::ostream\&)       ;}
+\DoxyCodeLine{271     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a6b647f73776669c927db60d80c5be16d}{printJ}}(std::ostream\&)        ;}
+\DoxyCodeLine{272     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa87300760c9106340d51ea325a9cc51b}{printK}}(std::ostream\&)        ;}
+\DoxyCodeLine{273     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a4a4fbbf854e5f10d44bd721c87d347e3}{printMiscProperties}}(std::ostream\&);}
+\DoxyCodeLine{274     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a512a39adecb82e025db649e1de4c858f}{printEPS}}(std::ostream\&);}
+\DoxyCodeLine{275     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ac8da56bf9032318b1eaa59260940a583}{printMOInfo}}(std::ostream\&, \textcolor{keywordtype}{size\_t} a = 0); }
+\DoxyCodeLine{276     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a427c91e18eabe10076f408a589242b47}{printFockTimings}}(std::ostream\&);}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278     \textcolor{comment}{// Method to produce a test on integral transformation }}
+\DoxyCodeLine{279 \textcolor{preprocessor}{\#ifdef TEST\_MOINTSTRANSFORMER}}
+\DoxyCodeLine{280     \textcolor{keywordtype}{void} MOIntsTransformationTest(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&);}
+\DoxyCodeLine{281 \textcolor{preprocessor}{\#endif    }}
+\DoxyCodeLine{282     std::shared\_ptr<MOIntsTransformer<MatsT, IntsT>> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a0acd43d9e908b566b9362ec6a8a41558}{generateMOIntsTransformer}}();}
+\DoxyCodeLine{283 }
+\DoxyCodeLine{284     \textcolor{comment}{// MO Transformations}}
+\DoxyCodeLine{285     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a459a0948ff2566a740cca857befd21b5}{MOFOCK}}();}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287   \}; \textcolor{comment}{// class SingleSlater}}
+\DoxyCodeLine{288 }
+\DoxyCodeLine{289 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291 \textcolor{comment}{// Include declaration of CoreHBuilder and FockBuilder}}
+\DoxyCodeLine{292 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{corehbuilder_8hpp}{corehbuilder.hpp}}>}}
+\DoxyCodeLine{293 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{fockbuilder_8hpp}{fockbuilder.hpp}}>}}
+\DoxyCodeLine{294 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mointstransformer_8hpp}{mointstransformer.hpp}}>}}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296 \textcolor{comment}{// Include headers for specializations of SingleSlater}}
+\DoxyCodeLine{297 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2hartreefock_8hpp}{singleslater/hartreefock.hpp}}>} \textcolor{comment}{// HF specialization}}
+\DoxyCodeLine{298 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2kohnsham_8hpp}{singleslater/kohnsham.hpp}}>}    \textcolor{comment}{// KS specialization}}
+\DoxyCodeLine{299 }
+
+\end{DoxyCode}

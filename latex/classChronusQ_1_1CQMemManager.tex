@@ -1,0 +1,398 @@
+\hypertarget{classChronusQ_1_1CQMemManager}{}\doxysection{ChronusQ\+::CQMem\+Manager Class Reference}
+\label{classChronusQ_1_1CQMemManager}\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+
+
+{\ttfamily \#include $<$memmanager.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::CQMem\+Manager\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{classChronusQ_1_1CQMemManager__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::CQMem\+Manager\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{classChronusQ_1_1CQMemManager__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a3767eb4d127046ee6fb2b88f63996da1}{CQMem\+Manager}} (const \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&)=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a6a9efe8ac1c3f1f3cbb4205c27a15d03}{CQMem\+Manager}} (\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&\&)=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& \mbox{\hyperlink{classChronusQ_1_1CQMemManager_aaa1fa2f9b2bdd1b788c64ed228007c66}{operator=}} (const \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&)=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& \mbox{\hyperlink{classChronusQ_1_1CQMemManager_a15065ff587cf405e31098c53f26ff396}{operator=}} (\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&\&)=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a3e88ead7f2e261b102f7bf7695349752}{CQMem\+Manager}} (size\+\_\+t N=0, size\+\_\+t Block\+Size=2048)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1CQMemManager_a91d9733a005687facd95d071c606dd85}{alloc\+Mem}} ()
+\item 
+{\footnotesize template$<$typename T $>$ }\\T $\ast$ \mbox{\hyperlink{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981}{malloc}} (size\+\_\+t n)
+\begin{DoxyCompactList}\small\item\em Allocates a contiguous block of memory of a specified type. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}} (T $\ast$\&ptr)
+\item 
+{\footnotesize template$<$typename T , typename... Targs$>$ }\\void \mbox{\hyperlink{classChronusQ_1_1CQMemManager_a44faf6f19a548a5d0d4fc66f7bf219b4}{free}} (T $\ast$\&ptr, Targs... args)
+\item 
+{\footnotesize template$<$typename T $>$ }\\size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1CQMemManager_a38789366b9f173a0e0442002f51263a9}{get\+Size}} (T $\ast$ptr)
+\item 
+{\footnotesize template$<$typename T $>$ }\\size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1CQMemManager_aaf833a1203748891674ccf65268ad6e9}{max\+\_\+avail\+\_\+allocatable}} (size\+\_\+t size=1)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1CQMemManager_a403decedddcae0b668c23c364a85eafb}{print\+Alloc\+Table}} (std\+::ostream \&out) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1CQMemManager_a49800778fe6fafcd4ef4b0da92cd6bb2}{fix\+Block\+Number}} ()
+\begin{DoxyCompactList}\small\item\em Ensures that the memory block (N\+\_\+) is divisible by the segregation block size (Block\+Size\+\_\+) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1CQMemManager_ade59c6f76a32ce7afdbc51f8dc87dee5}{N\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Total bytes to be allocated. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1CQMemManager_a177023b8a34bcfb9b4b48ca9459a2d65}{NAlloc\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Number of blocks currently allocated. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1CQMemManager_abea2ef0d946c49541b90f80c83dd0c88}{Block\+Size\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Segregation block size. \end{DoxyCompactList}\item 
+std\+::vector$<$ char $>$ \mbox{\hyperlink{classChronusQ_1_1CQMemManager_a92e76c90a285e5687345811e867e78b4}{V\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Internal memort. \end{DoxyCompactList}\item 
+std\+::unordered\+\_\+map$<$ void $\ast$, std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1CQMemManager_ada651353e2d6991f931dabd956db6e80}{Allocated\+Blocks\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Map from block pointer to the size of the block. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classChronusQ_1_1CQMemManager_ab39ac6808f33c93c668d1a423ae486d9}{is\+Allocated\+\_\+}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{classChronusQ_1_1CQMemManager_a49d51076cf535467a8e4e843f07ef6a9}{operator$<$$<$}} (std\+::ostream \&out, const \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_a3767eb4d127046ee6fb2b88f63996da1}\label{classChronusQ_1_1CQMemManager_a3767eb4d127046ee6fb2b88f63996da1}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!CQMemManager@{CQMemManager}}
+\index{CQMemManager@{CQMemManager}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{CQMemManager()}{CQMemManager()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+CQMem\+Manager\+::\+CQMem\+Manager (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_a6a9efe8ac1c3f1f3cbb4205c27a15d03}\label{classChronusQ_1_1CQMemManager_a6a9efe8ac1c3f1f3cbb4205c27a15d03}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!CQMemManager@{CQMemManager}}
+\index{CQMemManager@{CQMemManager}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{CQMemManager()}{CQMemManager()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+CQMem\+Manager\+::\+CQMem\+Manager (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_a3e88ead7f2e261b102f7bf7695349752}\label{classChronusQ_1_1CQMemManager_a3e88ead7f2e261b102f7bf7695349752}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!CQMemManager@{CQMemManager}}
+\index{CQMemManager@{CQMemManager}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{CQMemManager()}{CQMemManager()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+CQMem\+Manager\+::\+CQMem\+Manager (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{N = {\ttfamily 0},  }\item[{size\+\_\+t}]{Block\+Size = {\ttfamily 2048} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor. 
+
+Constructs a \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} object with optionally defaulted values. If no paramemters are set, it will default to no memory (0 bytes) allocated and a 256 byte segregation length. If the requested memory and segregation legnth are not 0 , it will allocate and segregate the block
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em N} & Total memory (in bytes) to be allocated \\
+\hline
+\mbox{\texttt{ in}}  & {\em Block\+Size} & Segregation block size \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQMemManager_a3e88ead7f2e261b102f7bf7695349752_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_a91d9733a005687facd95d071c606dd85}\label{classChronusQ_1_1CQMemManager_a91d9733a005687facd95d071c606dd85}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!allocMem@{allocMem}}
+\index{allocMem@{allocMem}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{allocMem()}{allocMem()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+CQMem\+Manager\+::alloc\+Mem (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Allocates the memory block Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQMemManager_a91d9733a005687facd95d071c606dd85_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQMemManager_a91d9733a005687facd95d071c606dd85_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_a49800778fe6fafcd4ef4b0da92cd6bb2}\label{classChronusQ_1_1CQMemManager_a49800778fe6fafcd4ef4b0da92cd6bb2}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!fixBlockNumber@{fixBlockNumber}}
+\index{fixBlockNumber@{fixBlockNumber}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{fixBlockNumber()}{fixBlockNumber()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+CQMem\+Manager\+::fix\+Block\+Number (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Ensures that the memory block (N\+\_\+) is divisible by the segregation block size (Block\+Size\+\_\+) 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQMemManager_a49800778fe6fafcd4ef4b0da92cd6bb2_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}\label{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!free@{free}}
+\index{free@{free}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{free()}{free()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void Chronus\+Q\+::\+CQMem\+Manager\+::free (\begin{DoxyParamCaption}\item[{T $\ast$\&}]{ptr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Frees a contiguous memory block given a pointer previously returned by \mbox{\hyperlink{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981}{CQMem\+Manager\+::malloc}}.
+
+\begin{DoxyWarning}{Warning}
+Will throw an error if the pointer is not currently in the list of allocated pointers
+\end{DoxyWarning}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em ptr} & Pointer to free \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_a44faf6f19a548a5d0d4fc66f7bf219b4}\label{classChronusQ_1_1CQMemManager_a44faf6f19a548a5d0d4fc66f7bf219b4}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!free@{free}}
+\index{free@{free}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{free()}{free()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T , typename... Targs$>$ \\
+void Chronus\+Q\+::\+CQMem\+Manager\+::free (\begin{DoxyParamCaption}\item[{T $\ast$\&}]{ptr,  }\item[{Targs...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Parameter pack of \mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{CQMem\+Manager\+::free}}. Allows for subsequent deallocation of an arbitrary number of memory blocks.
+
+z.\+B.
+
+free(\+X,\+Y,\+Z);
+
+is equivalant to
+
+free(\+X); free(\+Y); free(\+Z); Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQMemManager_a44faf6f19a548a5d0d4fc66f7bf219b4_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_a38789366b9f173a0e0442002f51263a9}\label{classChronusQ_1_1CQMemManager_a38789366b9f173a0e0442002f51263a9}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!getSize@{getSize}}
+\index{getSize@{getSize}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+size\+\_\+t Chronus\+Q\+::\+CQMem\+Manager\+::get\+Size (\begin{DoxyParamCaption}\item[{T $\ast$}]{ptr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Returns the size of an allocated memory block
+
+\begin{DoxyWarning}{Warning}
+Dies if pointer is not in the memory block
+\end{DoxyWarning}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em ptr} & Pointer of interest \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Size of the allocated block in terms of type T 
+\end{DoxyReturn}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQMemManager_a38789366b9f173a0e0442002f51263a9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981}\label{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!malloc@{malloc}}
+\index{malloc@{malloc}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{malloc()}{malloc()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T $\ast$ Chronus\+Q\+::\+CQMem\+Manager\+::malloc (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Allocates a contiguous block of memory of a specified type. 
+
+Allocates the correct number of blocks from the segregated storage given a type and a number to allocate
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em n} & Number of items of type T to allocate \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to contiguous memory block that contains n items of type T 
+\end{DoxyReturn}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_aaf833a1203748891674ccf65268ad6e9}\label{classChronusQ_1_1CQMemManager_aaf833a1203748891674ccf65268ad6e9}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!max\_avail\_allocatable@{max\_avail\_allocatable}}
+\index{max\_avail\_allocatable@{max\_avail\_allocatable}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{max\_avail\_allocatable()}{max\_avail\_allocatable()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+size\+\_\+t Chronus\+Q\+::\+CQMem\+Manager\+::max\+\_\+avail\+\_\+allocatable (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{size = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the maximum allocatable size Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1CQMemManager_aaf833a1203748891674ccf65268ad6e9_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_aaa1fa2f9b2bdd1b788c64ed228007c66}\label{classChronusQ_1_1CQMemManager_aaa1fa2f9b2bdd1b788c64ed228007c66}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!operator=@{operator=}}
+\index{operator=@{operator=}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& Chronus\+Q\+::\+CQMem\+Manager\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_a15065ff587cf405e31098c53f26ff396}\label{classChronusQ_1_1CQMemManager_a15065ff587cf405e31098c53f26ff396}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!operator=@{operator=}}
+\index{operator=@{operator=}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& Chronus\+Q\+::\+CQMem\+Manager\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_a403decedddcae0b668c23c364a85eafb}\label{classChronusQ_1_1CQMemManager_a403decedddcae0b668c23c364a85eafb}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!printAllocTable@{printAllocTable}}
+\index{printAllocTable@{printAllocTable}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{printAllocTable()}{printAllocTable()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+CQMem\+Manager\+::print\+Alloc\+Table (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Prints the \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} allocation table to a specified output device.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em out} & Output device to print the table \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_a49d51076cf535467a8e4e843f07ef6a9}\label{classChronusQ_1_1CQMemManager_a49d51076cf535467a8e4e843f07ef6a9}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{const \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Outputs a summary of the memory allocation in its current state
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em \mbox{[}in/out\mbox{]}} & out Output device. \\
+\hline
+\mbox{\texttt{ in}}  & {\em mem} & \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} object of interest \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_ada651353e2d6991f931dabd956db6e80}\label{classChronusQ_1_1CQMemManager_ada651353e2d6991f931dabd956db6e80}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!AllocatedBlocks\_@{AllocatedBlocks\_}}
+\index{AllocatedBlocks\_@{AllocatedBlocks\_}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{AllocatedBlocks\_}{AllocatedBlocks\_}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$void$\ast$,std\+::pair$<$size\+\_\+t,size\+\_\+t$>$ $>$ Chronus\+Q\+::\+CQMem\+Manager\+::\+Allocated\+Blocks\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Map from block pointer to the size of the block. 
+
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_abea2ef0d946c49541b90f80c83dd0c88}\label{classChronusQ_1_1CQMemManager_abea2ef0d946c49541b90f80c83dd0c88}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!BlockSize\_@{BlockSize\_}}
+\index{BlockSize\_@{BlockSize\_}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{BlockSize\_}{BlockSize\_}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+CQMem\+Manager\+::\+Block\+Size\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Segregation block size. 
+
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_ab39ac6808f33c93c668d1a423ae486d9}\label{classChronusQ_1_1CQMemManager_ab39ac6808f33c93c668d1a423ae486d9}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!isAllocated\_@{isAllocated\_}}
+\index{isAllocated\_@{isAllocated\_}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{isAllocated\_}{isAllocated\_}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+CQMem\+Manager\+::is\+Allocated\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_ade59c6f76a32ce7afdbc51f8dc87dee5}\label{classChronusQ_1_1CQMemManager_ade59c6f76a32ce7afdbc51f8dc87dee5}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!N\_@{N\_}}
+\index{N\_@{N\_}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{N\_}{N\_}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+CQMem\+Manager\+::\+N\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Total bytes to be allocated. 
+
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_a177023b8a34bcfb9b4b48ca9459a2d65}\label{classChronusQ_1_1CQMemManager_a177023b8a34bcfb9b4b48ca9459a2d65}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!NAlloc\_@{NAlloc\_}}
+\index{NAlloc\_@{NAlloc\_}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{NAlloc\_}{NAlloc\_}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+CQMem\+Manager\+::\+NAlloc\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Number of blocks currently allocated. 
+
+\mbox{\Hypertarget{classChronusQ_1_1CQMemManager_a92e76c90a285e5687345811e867e78b4}\label{classChronusQ_1_1CQMemManager_a92e76c90a285e5687345811e867e78b4}} 
+\index{ChronusQ::CQMemManager@{ChronusQ::CQMemManager}!V\_@{V\_}}
+\index{V\_@{V\_}!ChronusQ::CQMemManager@{ChronusQ::CQMemManager}}
+\doxysubsubsection{\texorpdfstring{V\_}{V\_}}
+{\footnotesize\ttfamily std\+::vector$<$char$>$ Chronus\+Q\+::\+CQMem\+Manager\+::\+V\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Internal memort. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{memmanager_8hpp}{memmanager.\+hpp}}\end{DoxyCompactItemize}

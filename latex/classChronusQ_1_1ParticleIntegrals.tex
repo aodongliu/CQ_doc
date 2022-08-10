@@ -1,0 +1,267 @@
+\hypertarget{classChronusQ_1_1ParticleIntegrals}{}\doxysection{ChronusQ\+::Particle\+Integrals Class Reference}
+\label{classChronusQ_1_1ParticleIntegrals}\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+
+
+Templated class to handle the evaluation and storage of one particle integral matrix in a finite basis set.  
+
+
+
+
+{\ttfamily \#include $<$particleintegrals.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::Particle\+Integrals\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ParticleIntegrals__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::Particle\+Integrals\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{classChronusQ_1_1ParticleIntegrals__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a0aa6536df335566808c63e5d550e8ae3}{Particle\+Integrals}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_af7898bf6ac6662a405cc385f9f1850f6}{Particle\+Integrals}} (const \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{Particle\+Integrals}} \&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a78ff917a36d11ed66ed1709d6eb822f8}{Particle\+Integrals}} (\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{Particle\+Integrals}} \&\&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_ad30721217a04758fb543ff45f0fae34e}{Particle\+Integrals}} (\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem, size\+\_\+t nb)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{mem\+Manager}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{n\+Basis}} () const
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_ab10e3e2c8b570a2ed6c85f0288c85644}{compute\+AOInts}} (\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}, const \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{Hamiltonian\+Options}} \&)=0
+\begin{DoxyCompactList}\small\item\em Evaluate AO \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} according to a basis set. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a082807bac6a92b20c1e8e1ff65b397c4}{compute\+AOInts}} (\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}, const \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{Hamiltonian\+Options}} \&)=0
+\begin{DoxyCompactList}\small\item\em Evaluate AO \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} according to two basis sets. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a33c46ba8b6ff57b5df6175995f860ddd}{clear}} ()=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a2b5fb01eb6c205300395e6eacc2314b1}{output}} (std\+::ostream \&, const std\+::string \&=\char`\"{}\char`\"{}, bool print\+Full=false) const =0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_aa77620083422196b6797c968ffb79136}{broadcast}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} comm=\mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\+\_\+\+COMM\+\_\+\+WORLD}}, int root=0)
+\item 
+virtual \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a93868e359fe14716b48c7eef186ca93d}{$\sim$\+Particle\+Integrals}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename TransT $>$ }\\static std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{Particle\+Integrals}} $>$ \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_af43506fc5ed42e83c01016842838a4d2}{transform}} (const \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{Particle\+Integrals}} \&, char TRANS, const TransT $\ast$T, int NT, int LDT)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a33f3859297ad20c4957f85e8d623d227}{NB}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4060c48fc42986b6d431e005dcff8dba}{mem\+Manager\+\_\+}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} to allocate matricies. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Templated class to handle the evaluation and storage of one particle integral matrix in a finite basis set. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_a0aa6536df335566808c63e5d550e8ae3}\label{classChronusQ_1_1ParticleIntegrals_a0aa6536df335566808c63e5d550e8ae3}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!ParticleIntegrals@{ParticleIntegrals}}
+\index{ParticleIntegrals@{ParticleIntegrals}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{ParticleIntegrals()}{ParticleIntegrals()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Particle\+Integrals\+::\+Particle\+Integrals (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_af7898bf6ac6662a405cc385f9f1850f6}\label{classChronusQ_1_1ParticleIntegrals_af7898bf6ac6662a405cc385f9f1850f6}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!ParticleIntegrals@{ParticleIntegrals}}
+\index{ParticleIntegrals@{ParticleIntegrals}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{ParticleIntegrals()}{ParticleIntegrals()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Particle\+Integrals\+::\+Particle\+Integrals (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{Particle\+Integrals}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_a78ff917a36d11ed66ed1709d6eb822f8}\label{classChronusQ_1_1ParticleIntegrals_a78ff917a36d11ed66ed1709d6eb822f8}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!ParticleIntegrals@{ParticleIntegrals}}
+\index{ParticleIntegrals@{ParticleIntegrals}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{ParticleIntegrals()}{ParticleIntegrals()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Particle\+Integrals\+::\+Particle\+Integrals (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{Particle\+Integrals}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_ad30721217a04758fb543ff45f0fae34e}\label{classChronusQ_1_1ParticleIntegrals_ad30721217a04758fb543ff45f0fae34e}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!ParticleIntegrals@{ParticleIntegrals}}
+\index{ParticleIntegrals@{ParticleIntegrals}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{ParticleIntegrals()}{ParticleIntegrals()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Particle\+Integrals\+::\+Particle\+Integrals (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem,  }\item[{size\+\_\+t}]{nb }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_a93868e359fe14716b48c7eef186ca93d}\label{classChronusQ_1_1ParticleIntegrals_a93868e359fe14716b48c7eef186ca93d}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!````~ParticleIntegrals@{$\sim$ParticleIntegrals}}
+\index{````~ParticleIntegrals@{$\sim$ParticleIntegrals}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{$\sim$ParticleIntegrals()}{~ParticleIntegrals()}}
+{\footnotesize\ttfamily virtual Chronus\+Q\+::\+Particle\+Integrals\+::$\sim$\+Particle\+Integrals (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_aa77620083422196b6797c968ffb79136}\label{classChronusQ_1_1ParticleIntegrals_aa77620083422196b6797c968ffb79136}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!broadcast@{broadcast}}
+\index{broadcast@{broadcast}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{broadcast()}{broadcast()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Particle\+Integrals\+::broadcast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{comm = {\ttfamily \mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\+\_\+\+COMM\+\_\+\+WORLD}}},  }\item[{int}]{root = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aefedef91bcdbacee91f731285454f4a6}{Chronus\+Q\+::\+In\+Core4index\+TPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a8b09e39ce86971c63370638315a7c904}{Chronus\+Q\+::\+In\+Core\+RITPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1MultipoleInts_ad62dd36f2295f06f10ce5d2c3fde3901}{Chronus\+Q\+::\+Multipole\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1OnePInts_a6dd3a709d44373a41e4f1fb0c0fb8668}{Chronus\+Q\+::\+One\+PInts$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1OnePRelInts_a216c323d1eba61b36721c93f1c75d83e}{Chronus\+Q\+::\+One\+PRel\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1TwoPInts_ac4afb19c13c9966736f5bb1b2553164f}{Chronus\+Q\+::\+Two\+PInts$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1TwoPInts_ac4afb19c13c9966736f5bb1b2553164f}{Chronus\+Q\+::\+Two\+PInts$<$ dcomplex $>$}}, \mbox{\hyperlink{classChronusQ_1_1DirectTPI_a3151cf436c8d7ce0283b16849d9ad888}{Chronus\+Q\+::\+Direct\+TPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_adf35b528ae542c2b6ceaba895b0a7e7f}{Chronus\+Q\+::\+In\+Core4index\+Rel\+ERI$<$ Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1VectorInts_adf7d51995d98b146840245ab95ad027a}{Chronus\+Q\+::\+Vector\+Ints$<$ Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ParticleIntegrals_aa77620083422196b6797c968ffb79136_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ParticleIntegrals_aa77620083422196b6797c968ffb79136_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_a33c46ba8b6ff57b5df6175995f860ddd}\label{classChronusQ_1_1ParticleIntegrals_a33c46ba8b6ff57b5df6175995f860ddd}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!clear@{clear}}
+\index{clear@{clear}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Particle\+Integrals\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1GradInts_ab81511d35d3a9c38346c85f70b437800}{Chronus\+Q\+::\+Grad\+Ints$<$ Int\+Class, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_ab81511d35d3a9c38346c85f70b437800}{Chronus\+Q\+::\+Grad\+Ints$<$ Chronus\+Q\+::\+Two\+PInts, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1MultipoleInts_a1f1292cbe834da88b43b84839b5c08e2}{Chronus\+Q\+::\+Multipole\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1OnePInts_aec4d4e07f664ba6703d02bb6fe99c745}{Chronus\+Q\+::\+One\+PInts$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1OnePRelInts_ac1c13d635f4122ed4934216aef736754}{Chronus\+Q\+::\+One\+PRel\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1DirectTPI_abd8b13d5d58b899152f6e24c1584b6ae}{Chronus\+Q\+::\+Direct\+TPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a62874e34021d6f216d7326357aca1468}{Chronus\+Q\+::\+In\+Core4index\+Rel\+ERI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a6456bc2e33060e618820720bd03e1fd2}{Chronus\+Q\+::\+In\+Core4index\+TPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_ac91697682666f5e10b9157d0b44b9d0d}{Chronus\+Q\+::\+In\+Core\+RITPI$<$ Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1VectorInts_abe8a54c5867f06ab2ba410fa435cbadf}{Chronus\+Q\+::\+Vector\+Ints$<$ Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_a082807bac6a92b20c1e8e1ff65b397c4}\label{classChronusQ_1_1ParticleIntegrals_a082807bac6a92b20c1e8e1ff65b397c4}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!computeAOInts@{computeAOInts}}
+\index{computeAOInts@{computeAOInts}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{computeAOInts()}{computeAOInts()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Particle\+Integrals\+::compute\+AOInts (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{,  }\item[{\mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}}]{,  }\item[{const \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{Hamiltonian\+Options}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Evaluate AO \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} according to two basis sets. 
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1GradInts_ac3ca15b80e5c7d2fafe0d2210a820c0a}{Chronus\+Q\+::\+Grad\+Ints$<$ Int\+Class, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_ac3ca15b80e5c7d2fafe0d2210a820c0a}{Chronus\+Q\+::\+Grad\+Ints$<$ Chronus\+Q\+::\+Two\+PInts, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1MultipoleInts_ae07c1932dd3a812b446aa5dbafec9288}{Chronus\+Q\+::\+Multipole\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1OnePInts_a14b0149a3c6fd2b6e826492427bc1215}{Chronus\+Q\+::\+One\+PInts$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1DirectTPI_ad177f0c85e8ea514bbbf6a116776158b}{Chronus\+Q\+::\+Direct\+TPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a8bc5c026ba8d280e8aa3624edbed8c7d}{Chronus\+Q\+::\+In\+Core\+RITPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1VectorInts_adb16b4c5102bee2d2db0ed49144f7cfe}{Chronus\+Q\+::\+Vector\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_a0eea6426037add6f910677447c152676}{Chronus\+Q\+::\+Grad\+Ints$<$ Int\+Class, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_a0eea6426037add6f910677447c152676}{Chronus\+Q\+::\+Grad\+Ints$<$ Chronus\+Q\+::\+Two\+PInts, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_a013963f63a5e75880561ab273102d3cb}{Chronus\+Q\+::\+Grad\+Ints$<$ Int\+Class, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_a013963f63a5e75880561ab273102d3cb}{Chronus\+Q\+::\+Grad\+Ints$<$ Chronus\+Q\+::\+Two\+PInts, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_abec0538e09074efa00a9c5f603766a68}{Chronus\+Q\+::\+Grad\+Ints$<$ Int\+Class, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_abec0538e09074efa00a9c5f603766a68}{Chronus\+Q\+::\+Grad\+Ints$<$ Chronus\+Q\+::\+Two\+PInts, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_a2b26aada5d107663f709a6b5c7d9b6a6}{Chronus\+Q\+::\+Grad\+Ints$<$ Int\+Class, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_a2b26aada5d107663f709a6b5c7d9b6a6}{Chronus\+Q\+::\+Grad\+Ints$<$ Chronus\+Q\+::\+Two\+PInts, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ada91d1f05147712557cfb7c750442b61}{Chronus\+Q\+::\+In\+Core4index\+TPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_a2813223fe44942986f64312cca8dedf5}{Chronus\+Q\+::\+Grad\+Ints$<$ Int\+Class, Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1GradInts_a2813223fe44942986f64312cca8dedf5}{Chronus\+Q\+::\+Grad\+Ints$<$ Chronus\+Q\+::\+Two\+PInts, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_ab10e3e2c8b570a2ed6c85f0288c85644}\label{classChronusQ_1_1ParticleIntegrals_ab10e3e2c8b570a2ed6c85f0288c85644}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!computeAOInts@{computeAOInts}}
+\index{computeAOInts@{computeAOInts}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{computeAOInts()}{computeAOInts()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Particle\+Integrals\+::compute\+AOInts (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{,  }\item[{\mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}}]{,  }\item[{const \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{Hamiltonian\+Options}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Evaluate AO \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} according to a basis set. 
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1GradInts_ac85b39c2240fabfb6533cf79edf81576}{Chronus\+Q\+::\+Grad\+Ints$<$ Int\+Class, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_ac85b39c2240fabfb6533cf79edf81576}{Chronus\+Q\+::\+Grad\+Ints$<$ Chronus\+Q\+::\+Two\+PInts, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1MultipoleInts_a311b3d2609d1297296f5809359c48e9e}{Chronus\+Q\+::\+Multipole\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1OnePInts_aa2903f90cbe27eef0a45f40b56fabe69}{Chronus\+Q\+::\+One\+PInts$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1OnePRelInts_aea488973c2c5c3e96c223f7317396cc7}{Chronus\+Q\+::\+One\+PRel\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1DirectTPI_a6b57f9c632ae60168e7ba47ed947d5e0}{Chronus\+Q\+::\+Direct\+TPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_ab10f4d35cd295e7dd683f783c1651943}{Chronus\+Q\+::\+In\+Core\+RITPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCoreAuxBasisRIERI_a026b151d50193a70b4af97ca206cf3f6}{Chronus\+Q\+::\+In\+Core\+Aux\+Basis\+RIERI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCoreCholeskyRIERI_a9d76364f2498bd6e75b0e76518ac1693}{Chronus\+Q\+::\+In\+Core\+Cholesky\+RIERI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1VectorInts_a8d84f5d4a02c64ee077a9f347903ef29}{Chronus\+Q\+::\+Vector\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_ac150f4a9c22ac0e4de149e4a18a2b41b}{Chronus\+Q\+::\+Grad\+Ints$<$ Int\+Class, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_ac150f4a9c22ac0e4de149e4a18a2b41b}{Chronus\+Q\+::\+Grad\+Ints$<$ Chronus\+Q\+::\+Two\+PInts, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_adf95e8eb1535def667e56a6b6747a703}{Chronus\+Q\+::\+Grad\+Ints$<$ Int\+Class, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_adf95e8eb1535def667e56a6b6747a703}{Chronus\+Q\+::\+Grad\+Ints$<$ Chronus\+Q\+::\+Two\+PInts, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCoreAuxBasisRIERI_a4cfa2729da0e85f80083c95b60c6a0b5}{Chronus\+Q\+::\+In\+Core\+Aux\+Basis\+RIERI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCoreCholeskyRIERI_a314891b4ff3ee1b8b33e45651e492d34}{Chronus\+Q\+::\+In\+Core\+Cholesky\+RIERI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1OnePRelInts_a1d4a28e7e2448564ba921a1b399b0495}{Chronus\+Q\+::\+One\+PRel\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1VectorInts_ad6d9507d58eb7dc5c4232751e4780255}{Chronus\+Q\+::\+Vector\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1OnePInts_ac17bdd4518fab415c0fce9fcaa4c62f5}{Chronus\+Q\+::\+One\+PInts$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1VectorInts_a6fc126a19da3242a89620a15b6c2cfab}{Chronus\+Q\+::\+Vector\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1OnePRelInts_a94913bdfd16148a6608e0600308e2fd5}{Chronus\+Q\+::\+One\+PRel\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_a5054c37ad668d2b59429ea9f6bee6d70}{Chronus\+Q\+::\+Grad\+Ints$<$ Int\+Class, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_a5054c37ad668d2b59429ea9f6bee6d70}{Chronus\+Q\+::\+Grad\+Ints$<$ Chronus\+Q\+::\+Two\+PInts, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1MultipoleInts_aca6b17c730f276ce66bd707abad0bbcb}{Chronus\+Q\+::\+Multipole\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1OnePInts_a9fb89c30f3447ebba9b910e5cad3a126}{Chronus\+Q\+::\+One\+PInts$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1MultipoleInts_aae66249b78001502d7018afab0a3026e}{Chronus\+Q\+::\+Multipole\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCoreAuxBasisRIERI_abf167075da4a9eeb119b285a91e26460}{Chronus\+Q\+::\+In\+Core\+Aux\+Basis\+RIERI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a043c2e2b9d5b907d17a2d8bba46b38da}{Chronus\+Q\+::\+In\+Core4index\+Rel\+ERI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ad097a18e26243cecc105fd401f11422d}{Chronus\+Q\+::\+In\+Core4index\+TPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCoreCholeskyRIERI_a3f2c492d9750e282f508a9586870761f}{Chronus\+Q\+::\+In\+Core\+Cholesky\+RIERI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_abf3f8be818bbde9222e6652484d50c19}{Chronus\+Q\+::\+Grad\+Ints$<$ Int\+Class, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_abf3f8be818bbde9222e6652484d50c19}{Chronus\+Q\+::\+Grad\+Ints$<$ Chronus\+Q\+::\+Two\+PInts, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_ae353bb875e69f9e196e7c54c17f16e5f}{Chronus\+Q\+::\+Grad\+Ints$<$ Int\+Class, Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1GradInts_ae353bb875e69f9e196e7c54c17f16e5f}{Chronus\+Q\+::\+Grad\+Ints$<$ Chronus\+Q\+::\+Two\+PInts, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}\label{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!memManager@{memManager}}
+\index{memManager@{memManager}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{memManager()}{memManager()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& Chronus\+Q\+::\+Particle\+Integrals\+::mem\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}\label{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!nBasis@{nBasis}}
+\index{nBasis@{nBasis}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{nBasis()}{nBasis()}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Particle\+Integrals\+::n\+Basis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_a2b5fb01eb6c205300395e6eacc2314b1}\label{classChronusQ_1_1ParticleIntegrals_a2b5fb01eb6c205300395e6eacc2314b1}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!output@{output}}
+\index{output@{output}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{output()}{output()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Particle\+Integrals\+::output (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{,  }\item[{const std\+::string \&}]{ = {\ttfamily \char`\"{}\char`\"{}},  }\item[{bool}]{print\+Full = {\ttfamily false} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1GradInts_a14dd4457af436e53d7860b14ac42750f}{Chronus\+Q\+::\+Grad\+Ints$<$ Int\+Class, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1GradInts_a14dd4457af436e53d7860b14ac42750f}{Chronus\+Q\+::\+Grad\+Ints$<$ Chronus\+Q\+::\+Two\+PInts, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1MultipoleInts_a783b8cd259ff5fcf1b0862e6fab4ff93}{Chronus\+Q\+::\+Multipole\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1OnePInts_aee4f6e10f91949383802fda65ef546e8}{Chronus\+Q\+::\+One\+PInts$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1OnePRelInts_aab54f15f5937ed0226f5b57bf31bada1}{Chronus\+Q\+::\+One\+PRel\+Ints$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1DirectTPI_a7a1f0ae838d00e55ec5d9229649086d0}{Chronus\+Q\+::\+Direct\+TPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a968846adf83f80dc179a32d3bc2c7923}{Chronus\+Q\+::\+In\+Core4index\+Rel\+ERI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a3cd51a40d2fbf9c44fe388e87ebc7c98}{Chronus\+Q\+::\+In\+Core4index\+TPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_ae07999c705f0527793bd8da9c3946445}{Chronus\+Q\+::\+In\+Core\+RITPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCoreAuxBasisRIERI_aa1f1cc753b1d003c7ff83542b9591c01}{Chronus\+Q\+::\+In\+Core\+Aux\+Basis\+RIERI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCoreCholeskyRIERI_a149799fb7937537928c0b302ee4ebe73}{Chronus\+Q\+::\+In\+Core\+Cholesky\+RIERI$<$ Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1VectorInts_a22dc8cd7d18b2be0a90e77c6ca59f7b4}{Chronus\+Q\+::\+Vector\+Ints$<$ Ints\+T $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ParticleIntegrals_a2b5fb01eb6c205300395e6eacc2314b1_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_af43506fc5ed42e83c01016842838a4d2}\label{classChronusQ_1_1ParticleIntegrals_af43506fc5ed42e83c01016842838a4d2}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!transform@{transform}}
+\index{transform@{transform}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{transform()}{transform()}}
+{\footnotesize\ttfamily template$<$typename TransT $>$ \\
+template std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{Particle\+Integrals}} $>$ Chronus\+Q\+::\+Particle\+Integrals\+::transform (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{Particle\+Integrals}} \&}]{,  }\item[{char}]{TRANS,  }\item[{const TransT $\ast$}]{T,  }\item[{int}]{NT,  }\item[{int}]{LDT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ParticleIntegrals_af43506fc5ed42e83c01016842838a4d2_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ParticleIntegrals_af43506fc5ed42e83c01016842838a4d2_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_a4060c48fc42986b6d431e005dcff8dba}\label{classChronusQ_1_1ParticleIntegrals_a4060c48fc42986b6d431e005dcff8dba}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!memManager\_@{memManager\_}}
+\index{memManager\_@{memManager\_}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{memManager\_}{memManager\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}}\& Chronus\+Q\+::\+Particle\+Integrals\+::mem\+Manager\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} to allocate matricies. 
+
+\mbox{\Hypertarget{classChronusQ_1_1ParticleIntegrals_a33f3859297ad20c4957f85e8d623d227}\label{classChronusQ_1_1ParticleIntegrals_a33f3859297ad20c4957f85e8d623d227}} 
+\index{ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}!NB@{NB}}
+\index{NB@{NB}!ChronusQ::ParticleIntegrals@{ChronusQ::ParticleIntegrals}}
+\doxysubsubsection{\texorpdfstring{NB}{NB}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Particle\+Integrals\+::\+NB\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{particleintegrals_8hpp}{particleintegrals.\+hpp}}\item 
+src/particleintegrals/\mbox{\hyperlink{particleintegrals_2transform_8cxx}{transform.\+cxx}}\end{DoxyCompactItemize}

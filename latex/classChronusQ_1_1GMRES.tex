@@ -1,0 +1,203 @@
+\hypertarget{classChronusQ_1_1GMRES}{}\doxysection{ChronusQ\+::GMRES\texorpdfstring{$<$}{<} \+\_\+F \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1GMRES}\index{ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}}
+
+
+{\ttfamily \#include $<$itersolver.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::GMRES\texorpdfstring{$<$}{<} \+\_\+F \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=215pt]{classChronusQ_1_1GMRES__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::GMRES\texorpdfstring{$<$}{<} \+\_\+F \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1GMRES__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classChronusQ_1_1GMRES_aa8c0522877bbd3c19e358dcbd4887a0d}{Vecs\+Gen\+\_\+t}} = typename \mbox{\hyperlink{classChronusQ_1_1IterSolver}{Iter\+Solver}}$<$ \+\_\+F $>$\+::\+Vecs\+Gen\+\_\+t
+\item 
+using \mbox{\hyperlink{classChronusQ_1_1GMRES_ad950b9ebab1d0ad53fc0ecb314ee70ba}{Linear\+Trans\+\_\+t}} = typename \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver}{Iter\+Linear\+Solver}}$<$ \+\_\+F $>$\+::\+Linear\+Trans\+\_\+t
+\item 
+using \mbox{\hyperlink{classChronusQ_1_1GMRES_a191de074c525bcca6dcc8c9bb9c84f3c}{Shift\+\_\+t}} = typename \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver}{Iter\+Linear\+Solver}}$<$ \+\_\+F $>$\+::\+Shift\+\_\+t
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1GMRES_a32d2cadfc56782f13d34307576b33b2d}{GMRES}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem, const size\+\_\+t N, const size\+\_\+t MSS, double conv, const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{Linear\+Trans\+\_\+t}} \&linear\+Trans, const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{Linear\+Trans\+\_\+t}} \&pre\+No\+Shift, const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{Vecs\+Gen\+\_\+t}} \&vec\+Gen=\mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{Vecs\+Gen\+\_\+t}}(), const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\+\_\+t}} \&shift\+Vec=\mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\+\_\+t}}())
+\item 
+\mbox{\hyperlink{classChronusQ_1_1GMRES_a225575f0caf93b88a20f1f16014a3b0f}{GMRES}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem, const size\+\_\+t N, const size\+\_\+t MSS, double conv, const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{Linear\+Trans\+\_\+t}} \&linear\+Trans, const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\+\_\+t}} \&pre\+Shift, const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{Vecs\+Gen\+\_\+t}} \&vec\+Gen=\mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{Vecs\+Gen\+\_\+t}}(), const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\+\_\+t}} \&shift\+Vec=\mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\+\_\+t}}())
+\item 
+\mbox{\hyperlink{classChronusQ_1_1GMRES_acaa8abadf56d900d0f2834351df9b325}{$\sim$\+GMRES}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1GMRES_a119de3e829ee24ece44f191b97c361f9}{alloc}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1GMRES_a55bf99d97e6e37034f9dc85d0cfec47d}{run\+Batch}} (size\+\_\+t n\+RHS, size\+\_\+t n\+Shift, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ \+\_\+F $>$ $>$ RHS, \+\_\+F $\ast$shifts, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ \+\_\+F $>$ $>$ SOL, double $\ast$RHSNorm)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ \+\_\+F $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1GMRES_a376edf6c56efb4c2408a483392f9f24b}{HHR\+\_\+}} = nullptr
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ \+\_\+F $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1GMRES_a1caf050aaf13c6e005552ab5c817596d}{U\+\_\+}} = nullptr
+\item 
+\+\_\+F $\ast$ \mbox{\hyperlink{classChronusQ_1_1GMRES_ac343ec0580e673233185fb27134bb02e}{W\+\_\+}} = nullptr
+\item 
+\+\_\+F $\ast$ \mbox{\hyperlink{classChronusQ_1_1GMRES_a463e0a1aa0b24c1b42cac074121ff4a8}{J\+\_\+}} = nullptr
+\item 
+\+\_\+F $\ast$ \mbox{\hyperlink{classChronusQ_1_1GMRES_a9f06478d540ed5d1245c380e6eb6187f}{R\+\_\+}} = nullptr
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1GMRES_ad950b9ebab1d0ad53fc0ecb314ee70ba}\label{classChronusQ_1_1GMRES_ad950b9ebab1d0ad53fc0ecb314ee70ba}} 
+\index{ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}!LinearTrans\_t@{LinearTrans\_t}}
+\index{LinearTrans\_t@{LinearTrans\_t}!ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}}
+\doxysubsubsection{\texorpdfstring{LinearTrans\_t}{LinearTrans\_t}}
+{\footnotesize\ttfamily template$<$typename \+\_\+F $>$ \\
+using \mbox{\hyperlink{classChronusQ_1_1GMRES}{Chronus\+Q\+::\+GMRES}}$<$ \+\_\+F $>$\+::\+Linear\+Trans\+\_\+t =  typename \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver}{Iter\+Linear\+Solver}}$<$\+\_\+F$>$\+::\+Linear\+Trans\+\_\+t}
+
+\mbox{\Hypertarget{classChronusQ_1_1GMRES_a191de074c525bcca6dcc8c9bb9c84f3c}\label{classChronusQ_1_1GMRES_a191de074c525bcca6dcc8c9bb9c84f3c}} 
+\index{ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}!Shift\_t@{Shift\_t}}
+\index{Shift\_t@{Shift\_t}!ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}}
+\doxysubsubsection{\texorpdfstring{Shift\_t}{Shift\_t}}
+{\footnotesize\ttfamily template$<$typename \+\_\+F $>$ \\
+using \mbox{\hyperlink{classChronusQ_1_1GMRES}{Chronus\+Q\+::\+GMRES}}$<$ \+\_\+F $>$\+::\+Shift\+\_\+t =  typename \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver}{Iter\+Linear\+Solver}}$<$\+\_\+F$>$\+::\+Shift\+\_\+t}
+
+\mbox{\Hypertarget{classChronusQ_1_1GMRES_aa8c0522877bbd3c19e358dcbd4887a0d}\label{classChronusQ_1_1GMRES_aa8c0522877bbd3c19e358dcbd4887a0d}} 
+\index{ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}!VecsGen\_t@{VecsGen\_t}}
+\index{VecsGen\_t@{VecsGen\_t}!ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}}
+\doxysubsubsection{\texorpdfstring{VecsGen\_t}{VecsGen\_t}}
+{\footnotesize\ttfamily template$<$typename \+\_\+F $>$ \\
+using \mbox{\hyperlink{classChronusQ_1_1GMRES}{Chronus\+Q\+::\+GMRES}}$<$ \+\_\+F $>$\+::\+Vecs\+Gen\+\_\+t =  typename \mbox{\hyperlink{classChronusQ_1_1IterSolver}{Iter\+Solver}}$<$\+\_\+F$>$\+::\+Vecs\+Gen\+\_\+t}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1GMRES_a32d2cadfc56782f13d34307576b33b2d}\label{classChronusQ_1_1GMRES_a32d2cadfc56782f13d34307576b33b2d}} 
+\index{ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}!GMRES@{GMRES}}
+\index{GMRES@{GMRES}!ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}}
+\doxysubsubsection{\texorpdfstring{GMRES()}{GMRES()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename \+\_\+F $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1GMRES}{Chronus\+Q\+::\+GMRES}}$<$ \+\_\+F $>$\+::\+GMRES (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{c,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem,  }\item[{const size\+\_\+t}]{N,  }\item[{const size\+\_\+t}]{MSS,  }\item[{double}]{conv,  }\item[{const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{Linear\+Trans\+\_\+t}} \&}]{linear\+Trans,  }\item[{const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{Linear\+Trans\+\_\+t}} \&}]{pre\+No\+Shift,  }\item[{const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{Vecs\+Gen\+\_\+t}} \&}]{vec\+Gen = {\ttfamily \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{Vecs\+Gen\+\_\+t}}()},  }\item[{const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\+\_\+t}} \&}]{shift\+Vec = {\ttfamily \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\+\_\+t}}()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1GMRES_a225575f0caf93b88a20f1f16014a3b0f}\label{classChronusQ_1_1GMRES_a225575f0caf93b88a20f1f16014a3b0f}} 
+\index{ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}!GMRES@{GMRES}}
+\index{GMRES@{GMRES}!ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}}
+\doxysubsubsection{\texorpdfstring{GMRES()}{GMRES()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename \+\_\+F $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1GMRES}{Chronus\+Q\+::\+GMRES}}$<$ \+\_\+F $>$\+::\+GMRES (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{c,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem,  }\item[{const size\+\_\+t}]{N,  }\item[{const size\+\_\+t}]{MSS,  }\item[{double}]{conv,  }\item[{const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{Linear\+Trans\+\_\+t}} \&}]{linear\+Trans,  }\item[{const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\+\_\+t}} \&}]{pre\+Shift,  }\item[{const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{Vecs\+Gen\+\_\+t}} \&}]{vec\+Gen = {\ttfamily \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{Vecs\+Gen\+\_\+t}}()},  }\item[{const \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\+\_\+t}} \&}]{shift\+Vec = {\ttfamily \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\+\_\+t}}()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1GMRES_acaa8abadf56d900d0f2834351df9b325}\label{classChronusQ_1_1GMRES_acaa8abadf56d900d0f2834351df9b325}} 
+\index{ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}!````~GMRES@{$\sim$GMRES}}
+\index{````~GMRES@{$\sim$GMRES}!ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$GMRES()}{~GMRES()}}
+{\footnotesize\ttfamily template$<$typename \+\_\+F $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1GMRES}{Chronus\+Q\+::\+GMRES}}$<$ \+\_\+F $>$\+::$\sim$\mbox{\hyperlink{classChronusQ_1_1GMRES}{GMRES}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1GMRES_acaa8abadf56d900d0f2834351df9b325_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1GMRES_a119de3e829ee24ece44f191b97c361f9}\label{classChronusQ_1_1GMRES_a119de3e829ee24ece44f191b97c361f9}} 
+\index{ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}!alloc@{alloc}}
+\index{alloc@{alloc}!ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}}
+\doxysubsubsection{\texorpdfstring{alloc()}{alloc()}}
+{\footnotesize\ttfamily template$<$typename \+\_\+F $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1GMRES}{Chronus\+Q\+::\+GMRES}}$<$ \+\_\+F $>$\+::alloc (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a2bbe98f4170bdde8f31caaf66d577c0f}{Chronus\+Q\+::\+Iter\+Linear\+Solver$<$ \+\_\+\+F $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1GMRES_a119de3e829ee24ece44f191b97c361f9_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1GMRES_a55bf99d97e6e37034f9dc85d0cfec47d}\label{classChronusQ_1_1GMRES_a55bf99d97e6e37034f9dc85d0cfec47d}} 
+\index{ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}!runBatch@{runBatch}}
+\index{runBatch@{runBatch}!ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}}
+\doxysubsubsection{\texorpdfstring{runBatch()}{runBatch()}}
+{\footnotesize\ttfamily template$<$typename \+\_\+F $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1GMRES}{Chronus\+Q\+::\+GMRES}}$<$ \+\_\+F $>$\+::run\+Batch (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n\+RHS,  }\item[{size\+\_\+t}]{n\+Shift,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ \+\_\+F $>$ $>$}]{RHS,  }\item[{\+\_\+F $\ast$}]{shifts,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ \+\_\+F $>$ $>$}]{SOL,  }\item[{double $\ast$}]{RHSNorm }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a65d7cbe1f39b8bfdc6ce5a6303a14daa}{Chronus\+Q\+::\+Iter\+Linear\+Solver$<$ \+\_\+\+F $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1GMRES_a55bf99d97e6e37034f9dc85d0cfec47d_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1GMRES_a376edf6c56efb4c2408a483392f9f24b}\label{classChronusQ_1_1GMRES_a376edf6c56efb4c2408a483392f9f24b}} 
+\index{ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}!HHR\_@{HHR\_}}
+\index{HHR\_@{HHR\_}!ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}}
+\doxysubsubsection{\texorpdfstring{HHR\_}{HHR\_}}
+{\footnotesize\ttfamily template$<$typename \+\_\+F $>$ \\
+std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$\+\_\+F$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1GMRES}{Chronus\+Q\+::\+GMRES}}$<$ \+\_\+F $>$\+::\+HHR\+\_\+ = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1GMRES_a463e0a1aa0b24c1b42cac074121ff4a8}\label{classChronusQ_1_1GMRES_a463e0a1aa0b24c1b42cac074121ff4a8}} 
+\index{ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}!J\_@{J\_}}
+\index{J\_@{J\_}!ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}}
+\doxysubsubsection{\texorpdfstring{J\_}{J\_}}
+{\footnotesize\ttfamily template$<$typename \+\_\+F $>$ \\
+\+\_\+F$\ast$ \mbox{\hyperlink{classChronusQ_1_1GMRES}{Chronus\+Q\+::\+GMRES}}$<$ \+\_\+F $>$\+::\+J\+\_\+ = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1GMRES_a9f06478d540ed5d1245c380e6eb6187f}\label{classChronusQ_1_1GMRES_a9f06478d540ed5d1245c380e6eb6187f}} 
+\index{ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}!R\_@{R\_}}
+\index{R\_@{R\_}!ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}}
+\doxysubsubsection{\texorpdfstring{R\_}{R\_}}
+{\footnotesize\ttfamily template$<$typename \+\_\+F $>$ \\
+\+\_\+F$\ast$ \mbox{\hyperlink{classChronusQ_1_1GMRES}{Chronus\+Q\+::\+GMRES}}$<$ \+\_\+F $>$\+::\+R\+\_\+ = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1GMRES_a1caf050aaf13c6e005552ab5c817596d}\label{classChronusQ_1_1GMRES_a1caf050aaf13c6e005552ab5c817596d}} 
+\index{ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}!U\_@{U\_}}
+\index{U\_@{U\_}!ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}}
+\doxysubsubsection{\texorpdfstring{U\_}{U\_}}
+{\footnotesize\ttfamily template$<$typename \+\_\+F $>$ \\
+std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$\+\_\+F$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1GMRES}{Chronus\+Q\+::\+GMRES}}$<$ \+\_\+F $>$\+::\+U\+\_\+ = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1GMRES_ac343ec0580e673233185fb27134bb02e}\label{classChronusQ_1_1GMRES_ac343ec0580e673233185fb27134bb02e}} 
+\index{ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}!W\_@{W\_}}
+\index{W\_@{W\_}!ChronusQ::GMRES$<$ \_F $>$@{ChronusQ::GMRES$<$ \_F $>$}}
+\doxysubsubsection{\texorpdfstring{W\_}{W\_}}
+{\footnotesize\ttfamily template$<$typename \+\_\+F $>$ \\
+\+\_\+F$\ast$ \mbox{\hyperlink{classChronusQ_1_1GMRES}{Chronus\+Q\+::\+GMRES}}$<$ \+\_\+F $>$\+::\+W\+\_\+ = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{itersolver_8hpp}{itersolver.\+hpp}}\item 
+include/itersolver/\mbox{\hyperlink{gmres_8hpp}{gmres.\+hpp}}\end{DoxyCompactItemize}

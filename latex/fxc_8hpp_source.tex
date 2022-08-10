@@ -1,0 +1,2001 @@
+\hypertarget{fxc_8hpp_source}{}\doxysection{fxc.\+hpp}
+\label{fxc_8hpp_source}\index{include/singleslater/kohnsham/fxc.hpp@{include/singleslater/kohnsham/fxc.hpp}}
+\mbox{\hyperlink{fxc_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2kohnsham_8hpp}{singleslater/kohnsham.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{integrator_8hpp}{grid/integrator.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{basisset__util_8hpp}{basisset/basisset\_util.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasutil_8hpp}{cqlinalg/blasutil.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasext_8hpp}{cqlinalg/blasext.hpp}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{threads_8hpp}{util/threads.hpp}}>}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{38   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_a07ea83f5e278d63dddcfca1e58334666}{KohnSham<MatsT,IntsT>::loadFXCder}}(\textcolor{keywordtype}{size\_t} NPTS, \textcolor{keywordtype}{double} *Den, \textcolor{keywordtype}{double} *Gamma, \textcolor{keywordtype}{double} *EpsEval, \textcolor{keywordtype}{double} *VRhoEval, }
+\DoxyCodeLine{39     \textcolor{keywordtype}{double} *V2RhoEval, \textcolor{keywordtype}{double} *VgammaEval, \textcolor{keywordtype}{double} *V2gammaEval, \textcolor{keywordtype}{double} *V2RhogammaEval, }
+\DoxyCodeLine{40     \textcolor{keywordtype}{double} *EpsSCR, \textcolor{keywordtype}{double} *VRhoSCR, \textcolor{keywordtype}{double} *VgammaSCR, \textcolor{keywordtype}{double} *V2RhoEvalSCR, \textcolor{keywordtype}{double} *V2gammaEvalSCR,}
+\DoxyCodeLine{41     \textcolor{keywordtype}{double} *V2RhogammaEvalSCR) \{ }
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iF = 0; iF < functionals.size(); iF++) \{}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45       \textcolor{keywordtype}{double} *ES = \textcolor{keyword}{nullptr}, *VR = \textcolor{keyword}{nullptr}, *VS = \textcolor{keyword}{nullptr}, *V2R = \textcolor{keyword}{nullptr}, }
+\DoxyCodeLine{46         *V2S = \textcolor{keyword}{nullptr}, *V2RS = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48       \textcolor{keywordflow}{if}( iF == 0 ) \{}
+\DoxyCodeLine{49         ES = EpsEval;}
+\DoxyCodeLine{50         VR = VRhoEval;}
+\DoxyCodeLine{51         VS = VgammaEval;}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53         V2R  = V2RhoEval;}
+\DoxyCodeLine{54         V2S  = V2gammaEval;}
+\DoxyCodeLine{55         V2RS = V2RhogammaEval;}
+\DoxyCodeLine{56       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{57         ES = EpsSCR;}
+\DoxyCodeLine{58         VR = VRhoSCR;}
+\DoxyCodeLine{59         VS = VgammaSCR;}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61         V2R  = V2RhoEvalSCR;}
+\DoxyCodeLine{62         V2S  = V2gammaEvalSCR;}
+\DoxyCodeLine{63         V2RS = V2RhogammaEvalSCR;}
+\DoxyCodeLine{64       \}}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66       \textcolor{keywordflow}{if}( functionals[iF]-\/>isGGA() )}
+\DoxyCodeLine{67         functionals[iF]-\/>evalEXC\_VXC\_FXC(NPTS,Den,Gamma,ES,VR,VS,V2R,V2RS,V2S);}
+\DoxyCodeLine{68       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{69         functionals[iF]-\/>evalEXC\_VXC\_FXC(NPTS,Den,ES,VR,V2R);}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71       \textcolor{keywordflow}{if}( std::any\_of(V2R,V2R + 3*NPTS,[\&](\textcolor{keywordtype}{double} x)\{ \textcolor{keywordflow}{return} std::isnan(x); \}) ) std::cerr << \textcolor{stringliteral}{"{}V2R NANS\(\backslash\)n"{}};}
+\DoxyCodeLine{72       \textcolor{keywordflow}{if}( functionals[iF]-\/>isGGA() ) \{}
+\DoxyCodeLine{73         \textcolor{keywordflow}{if}( std::any\_of(V2S,V2S + 6*NPTS,[\&](\textcolor{keywordtype}{double} x)\{ \textcolor{keywordflow}{return} std::isnan(x); \}) ) std::cerr << \textcolor{stringliteral}{"{}V2S NANS\(\backslash\)n"{}};}
+\DoxyCodeLine{74         \textcolor{keywordflow}{if}( std::any\_of(V2RS,V2RS + 6*NPTS,[\&](\textcolor{keywordtype}{double} x)\{ \textcolor{keywordflow}{return} std::isnan(x); \}) ) std::cerr << \textcolor{stringliteral}{"{}V2RS NANS\(\backslash\)n"{}};}
+\DoxyCodeLine{75       \}}
+\DoxyCodeLine{76       }
+\DoxyCodeLine{77       \textcolor{keywordflow}{if}( iF != 0 ) \{}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79         blas::axpy(NPTS  ,1.,ES ,1,EpsEval  ,1);}
+\DoxyCodeLine{80         blas::axpy(2*NPTS,1.,VR ,1,VRhoEval ,1);}
+\DoxyCodeLine{81         blas::axpy(3*NPTS,1.,V2R,1,V2RhoEval,1);}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83         \textcolor{keywordflow}{if}( functionals[iF]-\/>isGGA() ) \{}
+\DoxyCodeLine{84           blas::axpy(3*NPTS,1.,VS  ,1,VgammaEval    ,1);}
+\DoxyCodeLine{85           blas::axpy(6*NPTS,1.,V2S ,1,V2gammaEval   ,1);}
+\DoxyCodeLine{86           blas::axpy(6*NPTS,1.,V2RS,1,V2RhogammaEval,1);}
+\DoxyCodeLine{87         \}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89       \}}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \}}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93   \}; \textcolor{comment}{// KohnSham<T>::loadFXCder}}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{102   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{103   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_af523017d747fe8b6a87d6cda457300a0}{KohnSham<MatsT, IntsT>::constructZVarsFXC}}(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\_TYPE}} denTyp, \textcolor{keywordtype}{bool} isGGA, \textcolor{keywordtype}{size\_t} NPts, }
+\DoxyCodeLine{104     \textcolor{keywordtype}{double}* GDenS, \textcolor{keywordtype}{double}* GDenZ, \textcolor{keywordtype}{double}* GDenY, \textcolor{keywordtype}{double}* GDenX,}
+\DoxyCodeLine{105     U* TS, U* TZ, U* TY, U* TX,}
+\DoxyCodeLine{106     U* GTS, U* GTZ, U* GTY, U* GTX,}
+\DoxyCodeLine{107     \textcolor{keywordtype}{double} *VR, \textcolor{keywordtype}{double} *VG, }
+\DoxyCodeLine{108     \textcolor{keywordtype}{double} *V2R, \textcolor{keywordtype}{double} *V2G, \textcolor{keywordtype}{double} *V2RG, }
+\DoxyCodeLine{109     U *ZrhoVar1, U *ZgammaVar1, U *ZgammaVar2, U *ZgammaVar3, U *ZgammaVar4)\{}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     memset(ZrhoVar1,0,NPts);}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114     \textcolor{keywordflow}{if}( denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}} ) \{}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++)}
+\DoxyCodeLine{117         ZrhoVar1[iPt] = TS[iPt] * ( V2R[3*iPt] + 2 * V2R[3*iPt + 1] + V2R[3*iPt + 2] ) +}
+\DoxyCodeLine{118                         TZ[iPt] * ( V2R[3*iPt] -\/     V2R[3*iPt + 2] );}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120       \textcolor{keywordflow}{if}( isGGA )}
+\DoxyCodeLine{121       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123         U gPTss = (GDenS[iPt]          * GTS[iPt]         ) +}
+\DoxyCodeLine{124                   (GDenS[iPt + NPts]   * GTS[iPt + NPts]  ) +}
+\DoxyCodeLine{125                   (GDenS[iPt + 2*NPts] * GTS[iPt + 2*NPts]);}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127         U gPTsz = (GDenS[iPt]          * GTZ[iPt]         ) +}
+\DoxyCodeLine{128                   (GDenS[iPt + NPts]   * GTZ[iPt + NPts]  ) +}
+\DoxyCodeLine{129                   (GDenS[iPt + 2*NPts] * GTZ[iPt + 2*NPts]);}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131         U gPTzz(0.);}
+\DoxyCodeLine{132         \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() ) \{}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134           \textcolor{comment}{// Sum of both <SZ> and <ZS>}}
+\DoxyCodeLine{135           gPTsz += (GDenZ[iPt]          * GTS[iPt]         ) +}
+\DoxyCodeLine{136                    (GDenZ[iPt + NPts]   * GTS[iPt + NPts]  ) +}
+\DoxyCodeLine{137                    (GDenZ[iPt + 2*NPts] * GTS[iPt + 2*NPts]);}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139           gPTzz = (GDenZ[iPt]          * GTZ[iPt]         ) +}
+\DoxyCodeLine{140                   (GDenZ[iPt + NPts]   * GTZ[iPt + NPts]  ) +}
+\DoxyCodeLine{141                   (GDenZ[iPt + 2*NPts] * GTZ[iPt + 2*NPts]);}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143         \}}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146         ZrhoVar1[iPt] += ( V2RG[6*iPt    ] + V2RG[6*iPt + 1] + V2RG[6*iPt + 2] + }
+\DoxyCodeLine{147                            V2RG[6*iPt + 3] + V2RG[6*iPt + 4] + V2RG[6*iPt + 5]   ) * gPTss +}
+\DoxyCodeLine{148                          ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] + V2RG[6*iPt + 3] -\/}
+\DoxyCodeLine{149                            V2RG[6*iPt + 5]                                       ) * gPTsz +}
+\DoxyCodeLine{150                          ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] + }
+\DoxyCodeLine{151                            V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 4] + V2RG[6*iPt + 5]   ) * gPTzz;}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155         ZgammaVar1[iPt] = 2 * ( VG[3*iPt] + VG[3*iPt + 1] + VG[3*iPt + 2] );}
+\DoxyCodeLine{156         ZgammaVar2[iPt] = 2 * ( VG[3*iPt] -\/ VG[3*iPt + 2]                 );}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158         ZgammaVar3[iPt] = }
+\DoxyCodeLine{159           ( V2G[6*iPt    ] + 2*V2G[6*iPt + 1] + 2*V2G[6*iPt + 2] + }
+\DoxyCodeLine{160             V2G[6*iPt + 3] + 2*V2G[6*iPt + 4] +   V2G[6*iPt + 5]   ) * gPTss +}
+\DoxyCodeLine{161           ( V2G[6*iPt    ] +   V2G[6*iPt + 1] -\/   V2G[6*iPt + 4] -\/}
+\DoxyCodeLine{162             V2G[6*iPt + 5]                                         ) * gPTsz +}
+\DoxyCodeLine{163           ( V2G[6*iPt    ] + 2*V2G[6*iPt + 2] -\/   V2G[6*iPt + 3] +}
+\DoxyCodeLine{164             V2G[6*iPt + 5]                                         ) * gPTzz +}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166          ( V2RG[6*iPt    ] + V2RG[6*iPt + 1] + V2RG[6*iPt + 2] + }
+\DoxyCodeLine{167            V2RG[6*iPt + 3] + V2RG[6*iPt + 4] + V2RG[6*iPt + 5]   ) * TS[iPt] +}
+\DoxyCodeLine{168          ( V2RG[6*iPt    ] + V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{169            V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) * TZ[iPt];}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171         \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() )}
+\DoxyCodeLine{172           ZgammaVar4[iPt] = }
+\DoxyCodeLine{173             ( V2G[6*iPt    ] + 2*V2G[6*iPt + 1] -\/   V2G[6*iPt + 4] -\/}
+\DoxyCodeLine{174               V2G[6*iPt + 5]                                         ) * gPTss +}
+\DoxyCodeLine{175             ( V2G[6*iPt    ] -\/ 2*V2G[6*iPt + 2] +   V2G[6*iPt + 5]   ) * gPTsz +}
+\DoxyCodeLine{176             ( V2G[6*iPt    ] -\/   V2G[6*iPt + 1] +   V2G[6*iPt + 4] -\/}
+\DoxyCodeLine{177               V2G[6*iPt + 5]                                         ) * gPTzz +}
+\DoxyCodeLine{178   }
+\DoxyCodeLine{179            ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] + V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 5]   ) * TS[iPt] +}
+\DoxyCodeLine{180            ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] + V2RG[6*iPt + 5]   ) * TZ[iPt];}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182       \}}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{185 }
+\DoxyCodeLine{186       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++)}
+\DoxyCodeLine{187         ZrhoVar1[iPt] = TZ[iPt] * ( V2R[3*iPt] -\/ 2 * V2R[3*iPt + 1] + V2R[3*iPt + 2] ) +}
+\DoxyCodeLine{188                         TS[iPt] * ( V2R[3*iPt] -\/     V2R[3*iPt + 2] );}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192       \textcolor{keywordflow}{if}( isGGA )}
+\DoxyCodeLine{193       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195         U gPTss = (GDenS[iPt]          * GTS[iPt]         ) +}
+\DoxyCodeLine{196                   (GDenS[iPt + NPts]   * GTS[iPt + NPts]  ) +}
+\DoxyCodeLine{197                   (GDenS[iPt + 2*NPts] * GTS[iPt + 2*NPts]);}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199         U gPTsz = (GDenS[iPt]          * GTZ[iPt]         ) +}
+\DoxyCodeLine{200                   (GDenS[iPt + NPts]   * GTZ[iPt + NPts]  ) +}
+\DoxyCodeLine{201                   (GDenS[iPt + 2*NPts] * GTZ[iPt + 2*NPts]);}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203         U gPTzz(0.);}
+\DoxyCodeLine{204         \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() ) \{}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206           \textcolor{comment}{// Sum of both <SZ> and <ZS>}}
+\DoxyCodeLine{207           gPTsz += (GDenZ[iPt]          * GTS[iPt]         ) +}
+\DoxyCodeLine{208                    (GDenZ[iPt + NPts]   * GTS[iPt + NPts]  ) +}
+\DoxyCodeLine{209                    (GDenZ[iPt + 2*NPts] * GTS[iPt + 2*NPts]);}
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211           gPTzz = (GDenZ[iPt]          * GTZ[iPt]         ) +}
+\DoxyCodeLine{212                   (GDenZ[iPt + NPts]   * GTZ[iPt + NPts]  ) +}
+\DoxyCodeLine{213                   (GDenZ[iPt + 2*NPts] * GTZ[iPt + 2*NPts]);}
+\DoxyCodeLine{214 }
+\DoxyCodeLine{215         \}}
+\DoxyCodeLine{216 }
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219         ZrhoVar1[iPt] += ( V2RG[6*iPt    ] + V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{220                            V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) * gPTss +}
+\DoxyCodeLine{221                          ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] +}
+\DoxyCodeLine{222                            V2RG[6*iPt + 5]                                       ) * gPTsz + }
+\DoxyCodeLine{223                          ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{224                            V2RG[6*iPt + 3] + V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) * gPTzz;}
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226         ZgammaVar1[iPt] = 2 * ( VG[3*iPt] -\/ VG[3*iPt + 2]                 );}
+\DoxyCodeLine{227         ZgammaVar2[iPt] = 2 * ( VG[3*iPt] -\/ VG[3*iPt + 1] + VG[3*iPt + 2] );}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229         ZgammaVar3[iPt] = }
+\DoxyCodeLine{230           ( V2G[6*iPt    ] +   V2G[6*iPt + 1] -\/ V2G[6*iPt + 4] -\/ V2G[6*iPt + 5]   ) * gPTss +}
+\DoxyCodeLine{231           ( V2G[6*iPt    ] -\/ 2*V2G[6*iPt + 2] + V2G[6*iPt + 5]                    ) * gPTsz +}
+\DoxyCodeLine{232           ( V2G[6*iPt    ] -\/   V2G[6*iPt + 1] + V2G[6*iPt + 4] -\/ V2G[6*iPt + 5]   ) * gPTzz +}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234           ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] + V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 5] ) * TS[iPt] +}
+\DoxyCodeLine{235           ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] + V2RG[6*iPt + 5] ) * TZ[iPt];}
+\DoxyCodeLine{236 }
+\DoxyCodeLine{237         \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() )}
+\DoxyCodeLine{238           ZgammaVar4[iPt] = }
+\DoxyCodeLine{239             ( V2G[6*iPt    ] + 2*V2G[6*iPt + 2] -\/   V2G[6*iPt + 3] +}
+\DoxyCodeLine{240               V2G[6*iPt + 5]                                         ) * gPTss +}
+\DoxyCodeLine{241             ( V2G[6*iPt    ] -\/   V2G[6*iPt + 1] +   V2G[6*iPt + 4] -\/}
+\DoxyCodeLine{242               V2G[6*iPt + 5]                                         ) * gPTsz +}
+\DoxyCodeLine{243             ( V2G[6*iPt    ] -\/ 2*V2G[6*iPt + 1] + 2*V2G[6*iPt + 2] + }
+\DoxyCodeLine{244               V2G[6*iPt + 3] -\/ 2*V2G[6*iPt + 4] +   V2G[6*iPt + 5]   ) * gPTzz +}
+\DoxyCodeLine{245   }
+\DoxyCodeLine{246            ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] + }
+\DoxyCodeLine{247              V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 4] + V2RG[6*iPt + 5]   ) * TS[iPt] +}
+\DoxyCodeLine{248            ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{249              V2RG[6*iPt + 3] + V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) * TZ[iPt];}
+\DoxyCodeLine{250 }
+\DoxyCodeLine{251       \}}
+\DoxyCodeLine{252 }
+\DoxyCodeLine{253     \}}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255   \}}
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{258   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{259   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_af523017d747fe8b6a87d6cda457300a0}{KohnSham<MatsT, IntsT>::constructZVarsFXC}}(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\_TYPE}} denTyp, \textcolor{keywordtype}{bool} isGGA, \textcolor{keywordtype}{size\_t} NPts, }
+\DoxyCodeLine{260     \textcolor{keywordtype}{double}* GDenS, \textcolor{keywordtype}{double}* GDenZ, \textcolor{keywordtype}{double}* GDenY, \textcolor{keywordtype}{double}* GDenX,}
+\DoxyCodeLine{261     \textcolor{keywordtype}{bool} * Msmall, \textcolor{keywordtype}{double} *Mnorm, }
+\DoxyCodeLine{262     \textcolor{keywordtype}{double} *Kx, \textcolor{keywordtype}{double} *Ky, \textcolor{keywordtype}{double} *Kz, }
+\DoxyCodeLine{263     \textcolor{keywordtype}{double} *Hx, \textcolor{keywordtype}{double} *Hy, \textcolor{keywordtype}{double} *Hz,}
+\DoxyCodeLine{264     U* TS, U* TZ, U* TY, U* TX,}
+\DoxyCodeLine{265     U* GTS, U* GTZ, U* GTY, U* GTX,}
+\DoxyCodeLine{266     U* gPTssv, U* gPTszv, U* gPTsyv, U* gPTsxv, U* gPTzzv, }
+\DoxyCodeLine{267     U* gPTyyv, U* gPTxxv,  }
+\DoxyCodeLine{268     \textcolor{keywordtype}{double} *VR, \textcolor{keywordtype}{double} *VG, }
+\DoxyCodeLine{269     \textcolor{keywordtype}{double} *V2R, \textcolor{keywordtype}{double} *V2G, \textcolor{keywordtype}{double} *V2RG, }
+\DoxyCodeLine{270     U *ZrhoVar1, U *ZgammaVar1, U *ZgammaVar2, U *ZgammaVar3, U *ZgammaVar4)\{}
+\DoxyCodeLine{271 }
+\DoxyCodeLine{272     memset(ZrhoVar1,0,NPts);}
+\DoxyCodeLine{273 }
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275     \textcolor{keywordflow}{if}( not this-\/>onePDM-\/>hasXY() ) \{}
+\DoxyCodeLine{276       \textcolor{keywordflow}{if}( denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}} ) \{}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++)\{}
+\DoxyCodeLine{279             }
+\DoxyCodeLine{280           ZrhoVar1[iPt] =  TS[iPt] * ( V2R[3*iPt] + 2 * V2R[3*iPt + 1] + V2R[3*iPt + 2] ) +}
+\DoxyCodeLine{281                            TZ[iPt] * ( V2R[3*iPt] -\/     V2R[3*iPt + 2] );}
+\DoxyCodeLine{282                            }
+\DoxyCodeLine{283         \}}
+\DoxyCodeLine{284         \textcolor{keywordflow}{if}( isGGA )}
+\DoxyCodeLine{285         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{286   }
+\DoxyCodeLine{287           U gPTss = (GDenS[iPt]          * GTS[iPt]         ) +}
+\DoxyCodeLine{288                     (GDenS[iPt + NPts]   * GTS[iPt + NPts]  ) +}
+\DoxyCodeLine{289                     (GDenS[iPt + 2*NPts] * GTS[iPt + 2*NPts]);}
+\DoxyCodeLine{290   }
+\DoxyCodeLine{291           U gPTsz = (GDenS[iPt]          * GTZ[iPt]         ) +}
+\DoxyCodeLine{292                     (GDenS[iPt + NPts]   * GTZ[iPt + NPts]  ) +}
+\DoxyCodeLine{293                     (GDenS[iPt + 2*NPts] * GTZ[iPt + 2*NPts]);}
+\DoxyCodeLine{294   }
+\DoxyCodeLine{295           U gPTzz(0.);}
+\DoxyCodeLine{296           \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() ) \{}
+\DoxyCodeLine{297   }
+\DoxyCodeLine{298             \textcolor{comment}{// Sum of both <SZ> and <ZS>}}
+\DoxyCodeLine{299             gPTsz += (GDenZ[iPt]          * GTS[iPt]         ) +}
+\DoxyCodeLine{300                      (GDenZ[iPt + NPts]   * GTS[iPt + NPts]  ) +}
+\DoxyCodeLine{301                      (GDenZ[iPt + 2*NPts] * GTS[iPt + 2*NPts]);}
+\DoxyCodeLine{302   }
+\DoxyCodeLine{303             gPTzz = (GDenZ[iPt]          * GTZ[iPt]         ) +}
+\DoxyCodeLine{304                     (GDenZ[iPt + NPts]   * GTZ[iPt + NPts]  ) +}
+\DoxyCodeLine{305                     (GDenZ[iPt + 2*NPts] * GTZ[iPt + 2*NPts]);}
+\DoxyCodeLine{306   }
+\DoxyCodeLine{307           \}}
+\DoxyCodeLine{308   }
+\DoxyCodeLine{309   }
+\DoxyCodeLine{310           ZrhoVar1[iPt] += ( V2RG[6*iPt    ] + V2RG[6*iPt + 1] + V2RG[6*iPt + 2] + }
+\DoxyCodeLine{311                              V2RG[6*iPt + 3] + V2RG[6*iPt + 4] + V2RG[6*iPt + 5]   ) * gPTss +}
+\DoxyCodeLine{312                            ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] + V2RG[6*iPt + 3] -\/}
+\DoxyCodeLine{313                              V2RG[6*iPt + 5]                                       ) * gPTsz +}
+\DoxyCodeLine{314                            ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] + }
+\DoxyCodeLine{315                              V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 4] + V2RG[6*iPt + 5]   ) * gPTzz;}
+\DoxyCodeLine{316   }
+\DoxyCodeLine{317   }
+\DoxyCodeLine{318   }
+\DoxyCodeLine{319           ZgammaVar1[iPt] = 2 * ( VG[3*iPt] + VG[3*iPt + 1] + VG[3*iPt + 2] );}
+\DoxyCodeLine{320           ZgammaVar2[iPt] = 2 * ( VG[3*iPt] -\/ VG[3*iPt + 2]                 );}
+\DoxyCodeLine{321   }
+\DoxyCodeLine{322           ZgammaVar3[iPt] = }
+\DoxyCodeLine{323             ( V2G[6*iPt    ] + 2*V2G[6*iPt + 1] + 2*V2G[6*iPt + 2] + }
+\DoxyCodeLine{324               V2G[6*iPt + 3] + 2*V2G[6*iPt + 4] +   V2G[6*iPt + 5]   ) * gPTss +}
+\DoxyCodeLine{325             ( V2G[6*iPt    ] +   V2G[6*iPt + 1] -\/   V2G[6*iPt + 4] -\/}
+\DoxyCodeLine{326               V2G[6*iPt + 5]                                         ) * gPTsz +}
+\DoxyCodeLine{327             ( V2G[6*iPt    ] + 2*V2G[6*iPt + 2] -\/   V2G[6*iPt + 3] +}
+\DoxyCodeLine{328               V2G[6*iPt + 5]                                         ) * gPTzz +}
+\DoxyCodeLine{329   }
+\DoxyCodeLine{330            ( V2RG[6*iPt    ] + V2RG[6*iPt + 1] + V2RG[6*iPt + 2] + }
+\DoxyCodeLine{331              V2RG[6*iPt + 3] + V2RG[6*iPt + 4] + V2RG[6*iPt + 5]   ) * TS[iPt] +}
+\DoxyCodeLine{332            ( V2RG[6*iPt    ] + V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{333              V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) * TZ[iPt];}
+\DoxyCodeLine{334   }
+\DoxyCodeLine{335           \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() )}
+\DoxyCodeLine{336             ZgammaVar4[iPt] = }
+\DoxyCodeLine{337               ( V2G[6*iPt    ] + V2G[6*iPt + 1] -\/   V2G[6*iPt + 4] -\/}
+\DoxyCodeLine{338                 V2G[6*iPt + 5]                                         ) * gPTss +}
+\DoxyCodeLine{339               ( V2G[6*iPt    ] -\/ 2*V2G[6*iPt + 2] +   V2G[6*iPt + 5]   ) * gPTsz +}
+\DoxyCodeLine{340               ( V2G[6*iPt    ] -\/   V2G[6*iPt + 1] +   V2G[6*iPt + 4] -\/}
+\DoxyCodeLine{341                 V2G[6*iPt + 5]                                         ) * gPTzz +}
+\DoxyCodeLine{342     }
+\DoxyCodeLine{343              ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] + V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 5]   ) * TS[iPt] +}
+\DoxyCodeLine{344              ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] + V2RG[6*iPt + 5]   ) * TZ[iPt];}
+\DoxyCodeLine{345   }
+\DoxyCodeLine{346         \} \textcolor{comment}{//iPts}}
+\DoxyCodeLine{347   }
+\DoxyCodeLine{348       \} \textcolor{keywordflow}{else} \{ \textcolor{comment}{// MZ 1C}}
+\DoxyCodeLine{349   }
+\DoxyCodeLine{350         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++)}
+\DoxyCodeLine{351           ZrhoVar1[iPt] = TZ[iPt] * ( V2R[3*iPt] -\/ 2 * V2R[3*iPt + 1] + V2R[3*iPt + 2] ) +}
+\DoxyCodeLine{352                           TS[iPt] * ( V2R[3*iPt] -\/     V2R[3*iPt + 2] );}
+\DoxyCodeLine{353   }
+\DoxyCodeLine{354   }
+\DoxyCodeLine{355         \textcolor{keywordflow}{if}( isGGA )}
+\DoxyCodeLine{356         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{357   }
+\DoxyCodeLine{358           U gPTss = (GDenS[iPt]          * GTS[iPt]         ) +}
+\DoxyCodeLine{359                     (GDenS[iPt + NPts]   * GTS[iPt + NPts]  ) +}
+\DoxyCodeLine{360                     (GDenS[iPt + 2*NPts] * GTS[iPt + 2*NPts]);}
+\DoxyCodeLine{361   }
+\DoxyCodeLine{362           U gPTsz = (GDenS[iPt]          * GTZ[iPt]         ) +}
+\DoxyCodeLine{363                     (GDenS[iPt + NPts]   * GTZ[iPt + NPts]  ) +}
+\DoxyCodeLine{364                     (GDenS[iPt + 2*NPts] * GTZ[iPt + 2*NPts]);}
+\DoxyCodeLine{365   }
+\DoxyCodeLine{366           U gPTzz(0.);}
+\DoxyCodeLine{367           \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() ) \{}
+\DoxyCodeLine{368   }
+\DoxyCodeLine{369             \textcolor{comment}{// Sum of both <SZ> and <ZS>}}
+\DoxyCodeLine{370             gPTsz += (GDenZ[iPt]          * GTS[iPt]         ) +}
+\DoxyCodeLine{371                      (GDenZ[iPt + NPts]   * GTS[iPt + NPts]  ) +}
+\DoxyCodeLine{372                      (GDenZ[iPt + 2*NPts] * GTS[iPt + 2*NPts]);}
+\DoxyCodeLine{373   }
+\DoxyCodeLine{374             gPTzz = (GDenZ[iPt]          * GTZ[iPt]         ) +}
+\DoxyCodeLine{375                     (GDenZ[iPt + NPts]   * GTZ[iPt + NPts]  ) +}
+\DoxyCodeLine{376                     (GDenZ[iPt + 2*NPts] * GTZ[iPt + 2*NPts]);}
+\DoxyCodeLine{377   }
+\DoxyCodeLine{378           \}}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380   }
+\DoxyCodeLine{381           ZrhoVar1[iPt] += ( V2RG[6*iPt    ] + V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{382                              V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) * gPTss +}
+\DoxyCodeLine{383                            ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] +}
+\DoxyCodeLine{384                              V2RG[6*iPt + 5]                                       ) * gPTsz + }
+\DoxyCodeLine{385                            ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{386                              V2RG[6*iPt + 3] + V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) * gPTzz;}
+\DoxyCodeLine{387 }
+\DoxyCodeLine{388 }
+\DoxyCodeLine{389 }
+\DoxyCodeLine{390 }
+\DoxyCodeLine{391           ZgammaVar1[iPt] = 2 * ( VG[3*iPt] -\/ VG[3*iPt + 2]                 );}
+\DoxyCodeLine{392           ZgammaVar2[iPt] = 2 * ( VG[3*iPt] -\/ VG[3*iPt + 1] + VG[3*iPt + 2] );}
+\DoxyCodeLine{393   }
+\DoxyCodeLine{394           ZgammaVar3[iPt] = }
+\DoxyCodeLine{395             ( V2G[6*iPt    ] +   V2G[6*iPt + 1] -\/ V2G[6*iPt + 4] -\/ V2G[6*iPt + 5]   ) * gPTss +}
+\DoxyCodeLine{396             ( V2G[6*iPt    ] -\/ 2*V2G[6*iPt + 2] + V2G[6*iPt + 5]                    ) * gPTsz +}
+\DoxyCodeLine{397             ( V2G[6*iPt    ] -\/   V2G[6*iPt + 1] + V2G[6*iPt + 4] -\/ V2G[6*iPt + 5]   ) * gPTzz +}
+\DoxyCodeLine{398   }
+\DoxyCodeLine{399             ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] + V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 5] ) * TS[iPt] +}
+\DoxyCodeLine{400             ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] + V2RG[6*iPt + 5] ) * TZ[iPt];}
+\DoxyCodeLine{401   }
+\DoxyCodeLine{402           \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() )}
+\DoxyCodeLine{403             ZgammaVar4[iPt] = }
+\DoxyCodeLine{404               ( V2G[6*iPt    ] + 2*V2G[6*iPt + 2] -\/   V2G[6*iPt + 3] +}
+\DoxyCodeLine{405                 V2G[6*iPt + 5]                                         ) * gPTss +}
+\DoxyCodeLine{406               ( V2G[6*iPt    ] -\/   V2G[6*iPt + 1] +   V2G[6*iPt + 4] -\/}
+\DoxyCodeLine{407                 V2G[6*iPt + 5]                                         ) * gPTsz +}
+\DoxyCodeLine{408               ( V2G[6*iPt    ] -\/ 2*V2G[6*iPt + 1] + 2*V2G[6*iPt + 2] + }
+\DoxyCodeLine{409                 V2G[6*iPt + 3] -\/ 2*V2G[6*iPt + 4] +   V2G[6*iPt + 5]   ) * gPTzz +}
+\DoxyCodeLine{410     }
+\DoxyCodeLine{411              ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] + }
+\DoxyCodeLine{412                V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 4] + V2RG[6*iPt + 5]   ) * TS[iPt] +}
+\DoxyCodeLine{413              ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{414                V2RG[6*iPt + 3] + V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) * TZ[iPt];}
+\DoxyCodeLine{415 }
+\DoxyCodeLine{416 }
+\DoxyCodeLine{417         \} \textcolor{comment}{// iPt}}
+\DoxyCodeLine{418   }
+\DoxyCodeLine{419       \}}
+\DoxyCodeLine{420 }
+\DoxyCodeLine{421     \} \textcolor{keywordflow}{else} \{ \textcolor{comment}{// Scalar 2c}}
+\DoxyCodeLine{422 }
+\DoxyCodeLine{423       \textcolor{comment}{//  SCALAR }}
+\DoxyCodeLine{424       \textcolor{keywordflow}{if}( denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}} ) \{}
+\DoxyCodeLine{425         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++)\{}
+\DoxyCodeLine{426 }
+\DoxyCodeLine{427             ZrhoVar1[iPt] =  TS[iPt] * ( V2R[3*iPt] + 2 * V2R[3*iPt + 1] + V2R[3*iPt + 2] ) +}
+\DoxyCodeLine{428                               (   Kz[iPt] * TZ[iPt]   }
+\DoxyCodeLine{429                                 + Ky[iPt] * TY[iPt]    }
+\DoxyCodeLine{430                                 + Kx[iPt] * TX[iPt]      ) * ( V2R[3*iPt] -\/     V2R[3*iPt + 2] );}
+\DoxyCodeLine{431 }
+\DoxyCodeLine{432         \}}
+\DoxyCodeLine{433         \textcolor{keywordflow}{if}( isGGA ) \{}
+\DoxyCodeLine{434           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{435   }
+\DoxyCodeLine{436             ZrhoVar1[iPt] += ( V2RG[6*iPt    ] + V2RG[6*iPt + 1] + V2RG[6*iPt + 2] + }
+\DoxyCodeLine{437                                V2RG[6*iPt + 3] + V2RG[6*iPt + 4] + V2RG[6*iPt + 5]   ) }
+\DoxyCodeLine{438                               * gPTssv[iPt] }
+\DoxyCodeLine{439                      }
+\DoxyCodeLine{440                            + ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] + V2RG[6*iPt + 3] -\/}
+\DoxyCodeLine{441                                V2RG[6*iPt + 5]                                       ) }
+\DoxyCodeLine{442                               * (gPTsxv[iPt] * Hx[iPt] + gPTsyv[iPt] * Hy[iPt] + gPTszv[iPt] * Hz[iPt] )}
+\DoxyCodeLine{443 }
+\DoxyCodeLine{444                            + ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] + }
+\DoxyCodeLine{445                                V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 4] + V2RG[6*iPt + 5]   )  }
+\DoxyCodeLine{446                                * (gPTxxv[iPt] + gPTyyv[iPt] + gPTzzv[iPt]);}
+\DoxyCodeLine{447 }
+\DoxyCodeLine{448             ZgammaVar1[iPt] = 2 * ( VG[3*iPt] + VG[3*iPt + 1] + VG[3*iPt + 2] );}
+\DoxyCodeLine{449 }
+\DoxyCodeLine{450             ZgammaVar2[iPt] = 2 * ( VG[3*iPt] -\/ VG[3*iPt + 2]                 );}
+\DoxyCodeLine{451 }
+\DoxyCodeLine{452             ZgammaVar3[iPt] = }
+\DoxyCodeLine{453               ( V2G[6*iPt    ] + 2*V2G[6*iPt + 1] + 2*V2G[6*iPt + 2] + }
+\DoxyCodeLine{454                 V2G[6*iPt + 3] + 2*V2G[6*iPt + 4] +   V2G[6*iPt + 5]   ) }
+\DoxyCodeLine{455               * gPTssv[iPt] +}
+\DoxyCodeLine{456 }
+\DoxyCodeLine{457               ( V2G[6*iPt    ] + 2*V2G[6*iPt + 2] -\/   V2G[6*iPt + 3] +}
+\DoxyCodeLine{458                 V2G[6*iPt + 5]                                         ) }
+\DoxyCodeLine{459               * (gPTxxv[iPt] + gPTyyv[iPt] + gPTzzv[iPt]) +}
+\DoxyCodeLine{460     }
+\DoxyCodeLine{461              ( V2RG[6*iPt    ] + V2RG[6*iPt + 1] + V2RG[6*iPt + 2] + }
+\DoxyCodeLine{462                V2RG[6*iPt + 3] + V2RG[6*iPt + 4] + V2RG[6*iPt + 5]   ) }
+\DoxyCodeLine{463               * TS[iPt] }
+\DoxyCodeLine{464 ;}
+\DoxyCodeLine{465 }
+\DoxyCodeLine{466             ZgammaVar4[iPt] = }
+\DoxyCodeLine{467               ( V2G[6*iPt    ] +  V2G[6*iPt + 1] -\/   V2G[6*iPt + 4] -\/}
+\DoxyCodeLine{468                 V2G[6*iPt + 5]                                         ) }
+\DoxyCodeLine{469               * gPTssv[iPt] +}
+\DoxyCodeLine{470 }
+\DoxyCodeLine{471               ( V2G[6*iPt    ] -\/   V2G[6*iPt + 1] +   V2G[6*iPt + 4] -\/}
+\DoxyCodeLine{472                 V2G[6*iPt + 5]                                         )}
+\DoxyCodeLine{473               * (gPTxxv[iPt] + gPTyyv[iPt] + gPTzzv[iPt]) +}
+\DoxyCodeLine{474             }
+\DoxyCodeLine{475              ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] + V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 5]   ) }
+\DoxyCodeLine{476               * TS[iPt] }
+\DoxyCodeLine{477 ;}
+\DoxyCodeLine{478 }
+\DoxyCodeLine{479                }
+\DoxyCodeLine{480               ZgammaVar3[iPt]+= ( V2G[6*iPt    ] +   V2G[6*iPt + 1] -\/   V2G[6*iPt + 4] -\/}
+\DoxyCodeLine{481                   V2G[6*iPt + 5]                                         ) }
+\DoxyCodeLine{482                 * (gPTsxv[iPt] * Hx[iPt] + gPTsyv[iPt] * Hy[iPt] + gPTszv[iPt] * Hz[iPt] ) +}
+\DoxyCodeLine{483 }
+\DoxyCodeLine{484              ( V2RG[6*iPt    ] + V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{485                V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) }
+\DoxyCodeLine{486               * (   Kz[iPt] * TZ[iPt]   }
+\DoxyCodeLine{487                   + Ky[iPt] * TY[iPt]    }
+\DoxyCodeLine{488                   + Kx[iPt] * TX[iPt]  );}
+\DoxyCodeLine{489  }
+\DoxyCodeLine{490              ZgammaVar4[iPt] += ( V2G[6*iPt    ] -\/ 2*V2G[6*iPt + 2] +   V2G[6*iPt + 5]   ) }
+\DoxyCodeLine{491                * (gPTsxv[iPt] * Hx[iPt] + gPTsyv[iPt] * Hy[iPt] + gPTszv[iPt] * Hz[iPt] ) + }
+\DoxyCodeLine{492                ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] + V2RG[6*iPt + 5]   )}
+\DoxyCodeLine{493                * (   Kz[iPt] * TZ[iPt] }
+\DoxyCodeLine{494                    + Ky[iPt] * TY[iPt] }
+\DoxyCodeLine{495                    + Kx[iPt] * TX[iPt]  );  }
+\DoxyCodeLine{496 }
+\DoxyCodeLine{497           \} \textcolor{comment}{//NPTs}}
+\DoxyCodeLine{498         \} \textcolor{comment}{// GGA}}
+\DoxyCodeLine{499 }
+\DoxyCodeLine{500        \textcolor{comment}{//  MX 2c }}
+\DoxyCodeLine{501        \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5ab22d2789fda102ddabdacdb49af83bbf}{MX}} ) \{}
+\DoxyCodeLine{502          \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{503            \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{504              ZrhoVar1[iPt] = ( Kx[iPt] * TX[iPt] + Ky[iPt] * TY[iPt] + Kz[iPt] * TZ[iPt]) * }
+\DoxyCodeLine{505                              ( V2R[3*iPt] -\/ 2 * V2R[3*iPt + 1] + V2R[3*iPt + 2] ) +}
+\DoxyCodeLine{506                                TS[iPt] * ( V2R[3*iPt] -\/     V2R[3*iPt + 2] );}
+\DoxyCodeLine{507              ZrhoVar1[iPt] *=  Kx[iPt] ; }
+\DoxyCodeLine{508              ZrhoVar1[iPt] +=  2.*(VR[2*iPt] -\/ VR[2*iPt + 1]) }
+\DoxyCodeLine{509                                 * (TX[iPt]}
+\DoxyCodeLine{510 }
+\DoxyCodeLine{511                                  -\/ (  Kx[iPt] *Kz[iPt] * TZ[iPt]   }
+\DoxyCodeLine{512                                     + Kx[iPt] *Ky[iPt] * TY[iPt]   }
+\DoxyCodeLine{513                                     + Kx[iPt] *Kx[iPt] * TX[iPt]   ) )/(Mnorm[iPt]);}
+\DoxyCodeLine{514 }
+\DoxyCodeLine{515              \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{516                ZrhoVar1[iPt] = ( TX[iPt] ) * }
+\DoxyCodeLine{517                                ( V2R[3*iPt] -\/ 2 * V2R[3*iPt + 1] + V2R[3*iPt + 2] ) ;}
+\DoxyCodeLine{518                                }
+\DoxyCodeLine{519                ZrhoVar1[iPt]+= TS[iPt] * ( V2R[3*iPt] -\/     V2R[3*iPt + 2] ); }
+\DoxyCodeLine{520       }
+\DoxyCodeLine{521              \}}
+\DoxyCodeLine{522            \}}
+\DoxyCodeLine{523        \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5a91a026eba35b718e654608234c1878ba}{MY}} ) \{}
+\DoxyCodeLine{524         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{525           \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{526             ZrhoVar1[iPt] = ( Kx[iPt] * TX[iPt] + Ky[iPt] * TY[iPt] + Kz[iPt] * TZ[iPt]) * }
+\DoxyCodeLine{527                             ( V2R[3*iPt] -\/ 2 * V2R[3*iPt + 1] + V2R[3*iPt + 2] ) +}
+\DoxyCodeLine{528                               TS[iPt] * ( V2R[3*iPt] -\/     V2R[3*iPt + 2] );}
+\DoxyCodeLine{529             ZrhoVar1[iPt] *=  Ky[iPt] ; }
+\DoxyCodeLine{530             ZrhoVar1[iPt] +=  2.*(VR[2*iPt] -\/ VR[2*iPt + 1]) }
+\DoxyCodeLine{531                                * (TY[iPt]}
+\DoxyCodeLine{532 }
+\DoxyCodeLine{533                                 -\/ ( Ky[iPt] * Kz[iPt] * TZ[iPt]   }
+\DoxyCodeLine{534                                    +Ky[iPt] * Ky[iPt] * TY[iPt]   }
+\DoxyCodeLine{535                                    +Ky[iPt] * Kx[iPt] * TX[iPt]   ) )/(Mnorm[iPt]);}
+\DoxyCodeLine{536 }
+\DoxyCodeLine{537           \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{538             ZrhoVar1[iPt] = ( TY[iPt] ) * }
+\DoxyCodeLine{539                             ( V2R[3*iPt] -\/ 2 * V2R[3*iPt + 1] + V2R[3*iPt + 2] ) ;}
+\DoxyCodeLine{540 }
+\DoxyCodeLine{541             ZrhoVar1[iPt]+= TS[iPt] * ( V2R[3*iPt] -\/     V2R[3*iPt + 2] ); }
+\DoxyCodeLine{542 }
+\DoxyCodeLine{543             \}}
+\DoxyCodeLine{544           \}}
+\DoxyCodeLine{545        \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}} ) \{}
+\DoxyCodeLine{546         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{547           \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{548              ZrhoVar1[iPt] = ( Kx[iPt] * TX[iPt] + Ky[iPt] * TY[iPt] + Kz[iPt] * TZ[iPt]) * }
+\DoxyCodeLine{549                              ( V2R[3*iPt] -\/ 2 * V2R[3*iPt + 1] + V2R[3*iPt + 2] ) +}
+\DoxyCodeLine{550                                TS[iPt] * ( V2R[3*iPt] -\/     V2R[3*iPt + 2] );}
+\DoxyCodeLine{551              ZrhoVar1[iPt]  *=  Kz[iPt] ; }
+\DoxyCodeLine{552              ZrhoVar1[iPt] +=  2.*(VR[2*iPt] -\/ VR[2*iPt + 1]) }
+\DoxyCodeLine{553                                 * (TZ[iPt]}
+\DoxyCodeLine{554                                 }
+\DoxyCodeLine{555                                  -\/ ( Kz[iPt] * Kz[iPt] * TZ[iPt]   }
+\DoxyCodeLine{556                                     +Kz[iPt] * Ky[iPt] * TY[iPt]   }
+\DoxyCodeLine{557                                     +Kz[iPt] * Kx[iPt] * TX[iPt]   ) )/(Mnorm[iPt]);}
+\DoxyCodeLine{558 }
+\DoxyCodeLine{559             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{560              ZrhoVar1[iPt] = ( TZ[iPt] ) * }
+\DoxyCodeLine{561                              ( V2R[3*iPt] -\/ 2 * V2R[3*iPt + 1] + V2R[3*iPt + 2] ) ;}
+\DoxyCodeLine{562 }
+\DoxyCodeLine{563             ZrhoVar1[iPt]+= TS[iPt] * ( V2R[3*iPt] -\/     V2R[3*iPt + 2] ); }
+\DoxyCodeLine{564 }
+\DoxyCodeLine{565             \}}
+\DoxyCodeLine{566           \}}
+\DoxyCodeLine{567        \}}
+\DoxyCodeLine{568       }
+\DoxyCodeLine{569        \textcolor{comment}{// GGA 2C for non SCALAR}}
+\DoxyCodeLine{570        \textcolor{keywordflow}{if}( isGGA \&\& denTyp != \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}} ) \{}
+\DoxyCodeLine{571          \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{572 }
+\DoxyCodeLine{573        \textcolor{comment}{//ZrhoVar1 for non scalar}}
+\DoxyCodeLine{574            U tmp   = ( V2RG[6*iPt    ] + V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{575                        V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) }
+\DoxyCodeLine{576                        * gPTssv[iPt]; \textcolor{comment}{// +}}
+\DoxyCodeLine{577 }
+\DoxyCodeLine{578 }
+\DoxyCodeLine{579            \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{580              tmp+=        ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] +}
+\DoxyCodeLine{581                        V2RG[6*iPt + 5]                                       ) }
+\DoxyCodeLine{582 }
+\DoxyCodeLine{583                        * (gPTsxv[iPt] * Hx[iPt] + gPTsyv[iPt] * Hy[iPt] + gPTszv[iPt] * Hz[iPt] );\textcolor{comment}{// +}}
+\DoxyCodeLine{584            \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{585              \textcolor{keywordflow}{if} (denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5ab22d2789fda102ddabdacdb49af83bbf}{MX}} ) \{ }
+\DoxyCodeLine{586                tmp+= ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] + V2RG[6*iPt + 5] )}
+\DoxyCodeLine{587 *  gPTsxv[iPt]  ;}
+\DoxyCodeLine{588              \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5a91a026eba35b718e654608234c1878ba}{MY}}) \{ }
+\DoxyCodeLine{589                tmp+= ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] + V2RG[6*iPt + 5] )}
+\DoxyCodeLine{590 *  gPTsyv[iPt]  ;}
+\DoxyCodeLine{591              \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}}) \{ }
+\DoxyCodeLine{592                tmp+= ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] + V2RG[6*iPt + 5] )}
+\DoxyCodeLine{593 *  gPTszv[iPt]  ;}
+\DoxyCodeLine{594              \}}
+\DoxyCodeLine{595            \}  }
+\DoxyCodeLine{596 }
+\DoxyCodeLine{597 }
+\DoxyCodeLine{598            tmp +=}
+\DoxyCodeLine{599                      ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{600                        V2RG[6*iPt + 3] + V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) }
+\DoxyCodeLine{601                       * (gPTxxv[iPt] + gPTyyv[iPt] + gPTzzv[iPt]);}
+\DoxyCodeLine{602 }
+\DoxyCodeLine{603 }
+\DoxyCodeLine{604 }
+\DoxyCodeLine{605            \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{606              \textcolor{keywordflow}{if} (denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5ab22d2789fda102ddabdacdb49af83bbf}{MX}} ) \{}
+\DoxyCodeLine{607                ZrhoVar1[iPt] += Kx[iPt]*tmp;}
+\DoxyCodeLine{608              \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5a91a026eba35b718e654608234c1878ba}{MY}}) \{}
+\DoxyCodeLine{609                ZrhoVar1[iPt] += Ky[iPt]*tmp;}
+\DoxyCodeLine{610              \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}}) \{}
+\DoxyCodeLine{611                ZrhoVar1[iPt] += Kz[iPt]*tmp;}
+\DoxyCodeLine{612              \}}
+\DoxyCodeLine{613            \}\textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{614              ZrhoVar1[iPt] += tmp;}
+\DoxyCodeLine{615            \}}
+\DoxyCodeLine{616 }
+\DoxyCodeLine{617            ZgammaVar1[iPt] = 2 * ( VG[3*iPt] -\/ VG[3*iPt + 2]                 );}
+\DoxyCodeLine{618 }
+\DoxyCodeLine{619            ZgammaVar2[iPt] = 2 * ( VG[3*iPt] -\/ VG[3*iPt + 1] + VG[3*iPt + 2] );}
+\DoxyCodeLine{620 }
+\DoxyCodeLine{621            ZgammaVar3[iPt] = }
+\DoxyCodeLine{622              ( V2G[6*iPt    ] +   V2G[6*iPt + 1] -\/ V2G[6*iPt + 4] -\/ V2G[6*iPt + 5]   ) }
+\DoxyCodeLine{623               * gPTssv[iPt] +}
+\DoxyCodeLine{624              ( V2G[6*iPt    ] -\/   V2G[6*iPt + 1] + V2G[6*iPt + 4] -\/ V2G[6*iPt + 5]   ) }
+\DoxyCodeLine{625               * (gPTxxv[iPt] + gPTyyv[iPt] + gPTzzv[iPt]) +}
+\DoxyCodeLine{626              ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] + V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 5] ) }
+\DoxyCodeLine{627               * TS[iPt] ;}
+\DoxyCodeLine{628 }
+\DoxyCodeLine{629 }
+\DoxyCodeLine{630            ZgammaVar4[iPt] = }
+\DoxyCodeLine{631              ( V2G[6*iPt    ] + 2*V2G[6*iPt + 2] -\/   V2G[6*iPt + 3] +}
+\DoxyCodeLine{632                V2G[6*iPt + 5]                                         ) }
+\DoxyCodeLine{633               * gPTssv[iPt] +}
+\DoxyCodeLine{634              ( V2G[6*iPt    ] -\/ 2*V2G[6*iPt + 1] + 2*V2G[6*iPt + 2] + }
+\DoxyCodeLine{635                V2G[6*iPt + 3] -\/ 2*V2G[6*iPt + 4] +   V2G[6*iPt + 5]   ) }
+\DoxyCodeLine{636               * (gPTxxv[iPt] + gPTyyv[iPt] + gPTzzv[iPt]) +}
+\DoxyCodeLine{637             ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] + }
+\DoxyCodeLine{638               V2RG[6*iPt + 3] -\/ V2RG[6*iPt + 4] + V2RG[6*iPt + 5]   ) }
+\DoxyCodeLine{639               * TS[iPt] ;}
+\DoxyCodeLine{640 }
+\DoxyCodeLine{641 }
+\DoxyCodeLine{642 }
+\DoxyCodeLine{643            \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{644 }
+\DoxyCodeLine{645              ZgammaVar3[iPt] += ( V2G[6*iPt    ] -\/ 2*V2G[6*iPt + 2] + V2G[6*iPt + 5] )}
+\DoxyCodeLine{646                * (gPTsxv[iPt] * Hx[iPt] + gPTsyv[iPt] * Hy[iPt] + gPTszv[iPt] * Hz[iPt] ) ; }
+\DoxyCodeLine{647 }
+\DoxyCodeLine{648              ZgammaVar4[iPt] += ( V2G[6*iPt    ] -\/   V2G[6*iPt + 1] +   V2G[6*iPt + 4] -\/ V2G[6*iPt + 5] )}
+\DoxyCodeLine{649                * (gPTsxv[iPt] * Hx[iPt] + gPTsyv[iPt] * Hy[iPt] + gPTszv[iPt] * Hz[iPt] );}
+\DoxyCodeLine{650 }
+\DoxyCodeLine{651 }
+\DoxyCodeLine{652                ZgammaVar3[iPt] += ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] + V2RG[6*iPt + 5] ) }
+\DoxyCodeLine{653                                    * (   Kz[iPt] * TZ[iPt]   }
+\DoxyCodeLine{654                                        + Ky[iPt] * TY[iPt]    }
+\DoxyCodeLine{655                                        + Kx[iPt] * TX[iPt]  );}
+\DoxyCodeLine{656                ZgammaVar4[iPt] += ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{657                                     V2RG[6*iPt + 3] + V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) }
+\DoxyCodeLine{658                                     *  (   Kz[iPt] * TZ[iPt]   }
+\DoxyCodeLine{659                                         + Ky[iPt] * TY[iPt]    }
+\DoxyCodeLine{660                                         + Kx[iPt] * TX[iPt]  );}
+\DoxyCodeLine{661 }
+\DoxyCodeLine{662            \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{663              \textcolor{keywordflow}{if} (denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5ab22d2789fda102ddabdacdb49af83bbf}{MX}} ) \{ }
+\DoxyCodeLine{664                ZgammaVar3[iPt] += ( V2G[6*iPt    ] -\/ 2*V2G[6*iPt + 2] + V2G[6*iPt + 5] ) }
+\DoxyCodeLine{665                  * gPTsxv[iPt] ;}
+\DoxyCodeLine{666 }
+\DoxyCodeLine{667                ZgammaVar4[iPt] += ( V2G[6*iPt    ] -\/   V2G[6*iPt + 1] +   V2G[6*iPt + 4]}
+\DoxyCodeLine{668                  -\/ V2G[6*iPt + 5] )* gPTsxv[iPt]; }
+\DoxyCodeLine{669 }
+\DoxyCodeLine{670 }
+\DoxyCodeLine{671                ZgammaVar3[iPt] += ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] + V2RG[6*iPt + 5] )}
+\DoxyCodeLine{672                                       * TX[iPt];}
+\DoxyCodeLine{673 }
+\DoxyCodeLine{674                ZgammaVar4[iPt] += ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{675                                     V2RG[6*iPt + 3] + V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) }
+\DoxyCodeLine{676                                       * TX[iPt];}
+\DoxyCodeLine{677 }
+\DoxyCodeLine{678              \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5a91a026eba35b718e654608234c1878ba}{MY}}) \{}
+\DoxyCodeLine{679                ZgammaVar3[iPt] += ( V2G[6*iPt    ] -\/ 2*V2G[6*iPt + 2] + V2G[6*iPt + 5] ) }
+\DoxyCodeLine{680                  * gPTsyv[iPt] ; }
+\DoxyCodeLine{681 }
+\DoxyCodeLine{682 }
+\DoxyCodeLine{683                ZgammaVar4[iPt] += ( V2G[6*iPt    ] -\/   V2G[6*iPt + 1] +   V2G[6*iPt + 4]}
+\DoxyCodeLine{684                  -\/ V2G[6*iPt + 5] )* gPTsyv[iPt]; }
+\DoxyCodeLine{685 }
+\DoxyCodeLine{686 }
+\DoxyCodeLine{687                ZgammaVar3[iPt] += ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] + V2RG[6*iPt + 5] )}
+\DoxyCodeLine{688                                       * TY[iPt];}
+\DoxyCodeLine{689 }
+\DoxyCodeLine{690                ZgammaVar4[iPt] += ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{691                                     V2RG[6*iPt + 3] + V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) }
+\DoxyCodeLine{692                                       * TY[iPt];}
+\DoxyCodeLine{693              \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (denTyp == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}}) \{}
+\DoxyCodeLine{694                ZgammaVar3[iPt] += ( V2G[6*iPt    ] -\/ 2*V2G[6*iPt + 2] + V2G[6*iPt + 5] ) }
+\DoxyCodeLine{695                  * gPTszv[iPt] ; }
+\DoxyCodeLine{696                ZgammaVar4[iPt] += ( V2G[6*iPt    ] -\/   V2G[6*iPt + 1] +   V2G[6*iPt + 4]}
+\DoxyCodeLine{697                  -\/ V2G[6*iPt + 5] )* gPTszv[iPt]; }
+\DoxyCodeLine{698 }
+\DoxyCodeLine{699 }
+\DoxyCodeLine{700                ZgammaVar3[iPt] += ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 2] -\/ V2RG[6*iPt + 3] + V2RG[6*iPt + 5] )}
+\DoxyCodeLine{701                                       * TZ[iPt];}
+\DoxyCodeLine{702 }
+\DoxyCodeLine{703 }
+\DoxyCodeLine{704                ZgammaVar4[iPt] += ( V2RG[6*iPt    ] -\/ V2RG[6*iPt + 1] + V2RG[6*iPt + 2] -\/ }
+\DoxyCodeLine{705                                     V2RG[6*iPt + 3] + V2RG[6*iPt + 4] -\/ V2RG[6*iPt + 5]   ) }
+\DoxyCodeLine{706                                       * TZ[iPt];}
+\DoxyCodeLine{707              \}}
+\DoxyCodeLine{708            \}   }
+\DoxyCodeLine{709          \} \textcolor{comment}{//NPts }}
+\DoxyCodeLine{710        \} \textcolor{comment}{//GGA not SCALAR }}
+\DoxyCodeLine{711     \}  \textcolor{comment}{// 2C }}
+\DoxyCodeLine{712   \} \textcolor{comment}{// end}}
+\DoxyCodeLine{713 }
+\DoxyCodeLine{714   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{715   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{716   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_acf41050f0847cef9a31776c1da1990cc}{KohnSham<MatsT,IntsT>::evalTransDen}}(\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\_EVAL\_TYPE}} typ, \textcolor{keywordtype}{size\_t} NPts,\textcolor{keywordtype}{size\_t} NBE, \textcolor{keywordtype}{size\_t} NB, }
+\DoxyCodeLine{717     std::vector<std::pair<size\_t,size\_t>> \&subMatCut, U *SCR1,}
+\DoxyCodeLine{718     U *SCR2, U *DENMAT, U *Den, U *GDenX, U *GDenY, U *GDenZ,}
+\DoxyCodeLine{719     U *BasisScr)\{}
+\DoxyCodeLine{720 }
+\DoxyCodeLine{721     \textcolor{keywordtype}{size\_t} IOff = NPts*NBE;}
+\DoxyCodeLine{722 }
+\DoxyCodeLine{723     \mbox{\hyperlink{namespaceChronusQ_aefe5044c2c69a43dacf07101ba870cd2}{SubMatSet}}(NB,NB,NBE,NBE,DENMAT,NB,SCR1,NBE,subMatCut);           }
+\DoxyCodeLine{724 }
+\DoxyCodeLine{725     \textcolor{comment}{// Obtain Sum\_nu P\_mu\_nu Phi\_nu}}
+\DoxyCodeLine{726     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NBE,NPts,NBE,U(1.),SCR1,NBE,BasisScr,NBE,U(0.),SCR2,NBE);}
+\DoxyCodeLine{727 }
+\DoxyCodeLine{728     \textcolor{keywordflow}{if}( typ != \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} )\{}
+\DoxyCodeLine{729       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{730         Den[iPt] = 0.;}
+\DoxyCodeLine{731         U *SCR\_cur = SCR2 + iPt*NBE;}
+\DoxyCodeLine{732         U *B\_cur   = BasisScr + iPt*NBE;}
+\DoxyCodeLine{733   }
+\DoxyCodeLine{734         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} j = 0; j < NBE; j++) }
+\DoxyCodeLine{735           Den[iPt] += SCR\_cur[j] * B\_cur[j];}
+\DoxyCodeLine{736 }
+\DoxyCodeLine{737       \}}
+\DoxyCodeLine{738     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{739 }
+\DoxyCodeLine{740       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{741         Den[iPt] = 0.;}
+\DoxyCodeLine{742         GDenX[iPt] = 0.;}
+\DoxyCodeLine{743         GDenY[iPt] = 0.;}
+\DoxyCodeLine{744         GDenZ[iPt] = 0.;}
+\DoxyCodeLine{745         \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NBEiPt = iPt*NBE;}
+\DoxyCodeLine{746         \textcolor{keyword}{const} U *SCR\_cur  = SCR2 + NBEiPt;}
+\DoxyCodeLine{747         \textcolor{keyword}{const} U *B\_cur    = BasisScr + NBEiPt;}
+\DoxyCodeLine{748         \textcolor{keyword}{const} U *B\_curX   = B\_cur  + IOff;}
+\DoxyCodeLine{749         \textcolor{keyword}{const} U *B\_curY   = B\_curX + IOff;}
+\DoxyCodeLine{750         \textcolor{keyword}{const} U *B\_curZ   = B\_curY + IOff;}
+\DoxyCodeLine{751       }
+\DoxyCodeLine{752         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} j = 0; j < NBE; j++) \{ }
+\DoxyCodeLine{753           Den[iPt]   += SCR\_cur[j] * B\_cur[j];}
+\DoxyCodeLine{754           GDenX[iPt] += SCR\_cur[j] * B\_curX[j];}
+\DoxyCodeLine{755           GDenY[iPt] += SCR\_cur[j] * B\_curY[j];}
+\DoxyCodeLine{756           GDenZ[iPt] += SCR\_cur[j] * B\_curZ[j];}
+\DoxyCodeLine{757         \}}
+\DoxyCodeLine{758       \}}
+\DoxyCodeLine{759       \textcolor{comment}{// Transition density not symmetric}}
+\DoxyCodeLine{760       \textcolor{comment}{// Obtain Sum\_nu P\string^T\_mu\_nu Phi\_nu}}
+\DoxyCodeLine{761       blas::gemm(blas::Layout::ColMajor,blas::Op::Trans,blas::Op::NoTrans,NBE,NPts,NBE,U(1.),SCR1,NBE,BasisScr,NBE,U(0.),SCR2,NBE);}
+\DoxyCodeLine{762  }
+\DoxyCodeLine{763       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{764         \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} NBEiPt = iPt*NBE;}
+\DoxyCodeLine{765         \textcolor{keyword}{const} U *SCR\_cur  = SCR2 + NBEiPt;}
+\DoxyCodeLine{766         \textcolor{keyword}{const} U *B\_cur    = BasisScr + NBEiPt;}
+\DoxyCodeLine{767         \textcolor{keyword}{const} U *B\_curX   = B\_cur  + IOff;}
+\DoxyCodeLine{768         \textcolor{keyword}{const} U *B\_curY   = B\_curX + IOff;}
+\DoxyCodeLine{769         \textcolor{keyword}{const} U *B\_curZ   = B\_curY + IOff;}
+\DoxyCodeLine{770 }
+\DoxyCodeLine{771         U denXtmp=0.0;}
+\DoxyCodeLine{772         U denYtmp=0.0;}
+\DoxyCodeLine{773         U denZtmp=0.0;}
+\DoxyCodeLine{774             }
+\DoxyCodeLine{775         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} j = 0; j < NBE; j++) \{ }
+\DoxyCodeLine{776           denXtmp += SCR\_cur[j] * B\_curX[j];}
+\DoxyCodeLine{777           denYtmp += SCR\_cur[j] * B\_curY[j];}
+\DoxyCodeLine{778           denZtmp += SCR\_cur[j] * B\_curZ[j];}
+\DoxyCodeLine{779         \}}
+\DoxyCodeLine{780 }
+\DoxyCodeLine{781         GDenX[iPt] += denXtmp;}
+\DoxyCodeLine{782         GDenY[iPt] += denYtmp;}
+\DoxyCodeLine{783         GDenZ[iPt] += denZtmp;}
+\DoxyCodeLine{784 }
+\DoxyCodeLine{785       \} \textcolor{comment}{//for(auto iPt = 0; iPt < NPts; iPt++) }}
+\DoxyCodeLine{786     \}}
+\DoxyCodeLine{787 }
+\DoxyCodeLine{788   \}; \textcolor{comment}{// //KohnSham<MatsT,IntsT>::evalTransDen}}
+\DoxyCodeLine{789 }
+\DoxyCodeLine{790 }
+\DoxyCodeLine{791   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{792   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{793   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_a46404109e3e9117c67084fe9461a6f5f}{KohnSham<MatsT, IntsT>::formZ\_fxc}}(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\_TYPE}} denType, \textcolor{keywordtype}{bool} isGGA, \textcolor{keywordtype}{size\_t} NPts, \textcolor{keywordtype}{size\_t} NBE, \textcolor{keywordtype}{size\_t} IOff,}
+\DoxyCodeLine{794     \textcolor{keywordtype}{double} epsScreen, std::vector<double> \&\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}},}
+\DoxyCodeLine{795     U *ZrhoVar1, U *ZgammaVar1, U *ZgammaVar2, U *ZgammaVar3, U *ZgammaVar4,}
+\DoxyCodeLine{796     \textcolor{keywordtype}{double}* GDenS, \textcolor{keywordtype}{double}* GDenZ, \textcolor{keywordtype}{double}* GDenY, \textcolor{keywordtype}{double}* GDenX, U* GTS, U* GTZ, U* GTY, U* GTX,}
+\DoxyCodeLine{797     \textcolor{keywordtype}{double} *BasisScr, U* ZMAT) \{}
+\DoxyCodeLine{798 }
+\DoxyCodeLine{799     memset(ZMAT,0,IOff*\textcolor{keyword}{sizeof}(U));}
+\DoxyCodeLine{800 }
+\DoxyCodeLine{801     \textcolor{keywordtype}{double}* ZMAT\_RE = \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{double}*\textcolor{keyword}{>}(ZMAT);}
+\DoxyCodeLine{802     \textcolor{keywordtype}{double}* ZMAT\_IM = ZMAT\_RE + 1;}
+\DoxyCodeLine{803     \textcolor{keywordtype}{int} INCZMAT = \textcolor{keyword}{sizeof}(U)/\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double});}
+\DoxyCodeLine{804 }
+\DoxyCodeLine{805     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{806 }
+\DoxyCodeLine{807       U Fg = 0.5 * \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[iPt] * ZrhoVar1[iPt];}
+\DoxyCodeLine{808 }
+\DoxyCodeLine{809       \textcolor{keywordtype}{double} Fg\_r = std::real(Fg);}
+\DoxyCodeLine{810       blas::axpy(NBE,Fg\_r,BasisScr + iPt*NBE,1, ZMAT\_RE + iPt*NBE*INCZMAT ,INCZMAT);}
+\DoxyCodeLine{811 }
+\DoxyCodeLine{812       \textcolor{keywordflow}{if}( std::is\_same<U,dcomplex>::value ) \{}
+\DoxyCodeLine{813         \textcolor{keywordtype}{double} Fg\_i = std::imag(Fg);}
+\DoxyCodeLine{814         blas::axpy(NBE,Fg\_i,BasisScr + iPt*NBE,1, ZMAT\_IM + iPt*NBE*INCZMAT ,INCZMAT);}
+\DoxyCodeLine{815       \}}
+\DoxyCodeLine{816 }
+\DoxyCodeLine{817 }
+\DoxyCodeLine{818 }
+\DoxyCodeLine{819       \textcolor{keywordflow}{if}( isGGA ) \{}
+\DoxyCodeLine{820 }
+\DoxyCodeLine{821         U FgX = ZgammaVar1[iPt] * GTS[iPt         ] + ZgammaVar2[iPt] * GTZ[iPt         ] + ZgammaVar3[iPt] * GDenS[iPt         ];}
+\DoxyCodeLine{822         U FgY = ZgammaVar1[iPt] * GTS[iPt + NPts  ] + ZgammaVar2[iPt] * GTZ[iPt + NPts  ] + ZgammaVar3[iPt] * GDenS[iPt + NPts  ];}
+\DoxyCodeLine{823         U FgZ = ZgammaVar1[iPt] * GTS[iPt + 2*NPts] + ZgammaVar2[iPt] * GTZ[iPt + 2*NPts] + ZgammaVar3[iPt] * GDenS[iPt + 2*NPts];}
+\DoxyCodeLine{824 }
+\DoxyCodeLine{825         \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() ) \{}
+\DoxyCodeLine{826 }
+\DoxyCodeLine{827           FgX += ZgammaVar4[iPt] * GDenZ[iPt         ];}
+\DoxyCodeLine{828           FgY += ZgammaVar4[iPt] * GDenZ[iPt + NPts  ];}
+\DoxyCodeLine{829           FgZ += ZgammaVar4[iPt] * GDenZ[iPt + 2*NPts];}
+\DoxyCodeLine{830 }
+\DoxyCodeLine{831         \}}
+\DoxyCodeLine{832 }
+\DoxyCodeLine{833 }
+\DoxyCodeLine{834         FgX *= \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[iPt];}
+\DoxyCodeLine{835         FgY *= \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[iPt];}
+\DoxyCodeLine{836         FgZ *= \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[iPt];}
+\DoxyCodeLine{837 }
+\DoxyCodeLine{838         \textcolor{keywordtype}{double} FgX\_r = std::real(FgX);}
+\DoxyCodeLine{839         \textcolor{keywordtype}{double} FgY\_r = std::real(FgY);}
+\DoxyCodeLine{840         \textcolor{keywordtype}{double} FgZ\_r = std::real(FgZ);}
+\DoxyCodeLine{841 }
+\DoxyCodeLine{842         blas::axpy(NBE,FgX\_r,BasisScr + iPt*NBE +   IOff,1,ZMAT\_RE + iPt*NBE*INCZMAT,INCZMAT);}
+\DoxyCodeLine{843         blas::axpy(NBE,FgY\_r,BasisScr + iPt*NBE + 2*IOff,1,ZMAT\_RE + iPt*NBE*INCZMAT,INCZMAT);}
+\DoxyCodeLine{844         blas::axpy(NBE,FgZ\_r,BasisScr + iPt*NBE + 3*IOff,1,ZMAT\_RE + iPt*NBE*INCZMAT,INCZMAT);}
+\DoxyCodeLine{845 }
+\DoxyCodeLine{846       \}}
+\DoxyCodeLine{847 }
+\DoxyCodeLine{848 }
+\DoxyCodeLine{849 }
+\DoxyCodeLine{850     \}}
+\DoxyCodeLine{851 }
+\DoxyCodeLine{852   \}}
+\DoxyCodeLine{853 }
+\DoxyCodeLine{854   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{855   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{856   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_a46404109e3e9117c67084fe9461a6f5f}{KohnSham<MatsT, IntsT>::formZ\_fxc}}(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\_TYPE}} denType, \textcolor{keywordtype}{bool} isGGA, \textcolor{keywordtype}{size\_t} NPts, \textcolor{keywordtype}{size\_t} NBE, \textcolor{keywordtype}{size\_t} IOff,}
+\DoxyCodeLine{857     \textcolor{keywordtype}{double} epsScreen, std::vector<double> \&\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}},}
+\DoxyCodeLine{858     U *ZrhoVar1, U *ZgammaVar1, U *ZgammaVar2, U *ZgammaVar3, U *ZgammaVar4,}
+\DoxyCodeLine{859     \textcolor{keywordtype}{bool} * Msmall, \textcolor{keywordtype}{double} *Mnorm, }
+\DoxyCodeLine{860     \textcolor{keywordtype}{double}* DSDMnorm, \textcolor{keywordtype}{double}* signMD,}
+\DoxyCodeLine{861     \textcolor{keywordtype}{double}* GDenS, \textcolor{keywordtype}{double}* GDenZ, \textcolor{keywordtype}{double}* GDenY, \textcolor{keywordtype}{double}* GDenX, }
+\DoxyCodeLine{862     \textcolor{keywordtype}{double} *Kx, \textcolor{keywordtype}{double} *Ky, \textcolor{keywordtype}{double} *Kz, \textcolor{keywordtype}{double} *Hx, \textcolor{keywordtype}{double} *Hy, \textcolor{keywordtype}{double} *Hz,}
+\DoxyCodeLine{863     U* GTS, U* GTZ, U* GTY, U* GTX, }
+\DoxyCodeLine{864     U* gPTss, U* gPTsz, U* gPTsy, U* gPTsx, U* gPTzz,}
+\DoxyCodeLine{865     U* gPTyy, U* gPTxx,  }
+\DoxyCodeLine{866     \textcolor{keywordtype}{double} *BasisScr, U* ZMAT) \{}
+\DoxyCodeLine{867 }
+\DoxyCodeLine{868     memset(ZMAT,0,IOff*\textcolor{keyword}{sizeof}(U));}
+\DoxyCodeLine{869 }
+\DoxyCodeLine{870     \textcolor{comment}{//The same for 1 or 2C}}
+\DoxyCodeLine{871     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{872         U Fg = 0.5 * \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[iPt] * ZrhoVar1[iPt];}
+\DoxyCodeLine{873         blas::axpy(NBE,Fg,BasisScr + iPt*NBE,1, ZMAT + iPt*NBE ,1);}
+\DoxyCodeLine{874   }
+\DoxyCodeLine{875       \}}
+\DoxyCodeLine{876 }
+\DoxyCodeLine{877       \textcolor{keywordflow}{if}( isGGA ) \{}
+\DoxyCodeLine{878 }
+\DoxyCodeLine{879         \textcolor{keywordflow}{if}( not this-\/>onePDM-\/>hasXY() ) \{}
+\DoxyCodeLine{880           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{881           }
+\DoxyCodeLine{882             U FgX = ZgammaVar1[iPt] * GTS[iPt         ] + ZgammaVar2[iPt] * GTZ[iPt         ] + ZgammaVar3[iPt] * GDenS[iPt         ];}
+\DoxyCodeLine{883             U FgY = ZgammaVar1[iPt] * GTS[iPt + NPts  ] + ZgammaVar2[iPt] * GTZ[iPt + NPts  ] + ZgammaVar3[iPt] * GDenS[iPt + NPts  ];}
+\DoxyCodeLine{884             U FgZ = ZgammaVar1[iPt] * GTS[iPt + 2*NPts] + ZgammaVar2[iPt] * GTZ[iPt + 2*NPts] + ZgammaVar3[iPt] * GDenS[iPt + 2*NPts];}
+\DoxyCodeLine{885   }
+\DoxyCodeLine{886             \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() ) \{}
+\DoxyCodeLine{887   }
+\DoxyCodeLine{888               FgX += ZgammaVar4[iPt] * GDenZ[iPt         ];}
+\DoxyCodeLine{889               FgY += ZgammaVar4[iPt] * GDenZ[iPt + NPts  ];}
+\DoxyCodeLine{890               FgZ += ZgammaVar4[iPt] * GDenZ[iPt + 2*NPts];}
+\DoxyCodeLine{891   }
+\DoxyCodeLine{892             \}}
+\DoxyCodeLine{893   }
+\DoxyCodeLine{894   }
+\DoxyCodeLine{895             FgX *= \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[iPt];}
+\DoxyCodeLine{896             FgY *= \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[iPt];}
+\DoxyCodeLine{897             FgZ *= \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[iPt];}
+\DoxyCodeLine{898   }
+\DoxyCodeLine{899             blas::axpy(NBE,FgX,BasisScr + iPt*NBE +   IOff,1,ZMAT + iPt*NBE,1);}
+\DoxyCodeLine{900             blas::axpy(NBE,FgY,BasisScr + iPt*NBE + 2*IOff,1,ZMAT + iPt*NBE,1);}
+\DoxyCodeLine{901             blas::axpy(NBE,FgZ,BasisScr + iPt*NBE + 3*IOff,1,ZMAT + iPt*NBE,1);}
+\DoxyCodeLine{902   }
+\DoxyCodeLine{903           \} \textcolor{comment}{// NPTS}}
+\DoxyCodeLine{904 }
+\DoxyCodeLine{905         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{906           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{907 }
+\DoxyCodeLine{908             U FgX = U(0.);}
+\DoxyCodeLine{909             U FgY = U(0.);}
+\DoxyCodeLine{910             U FgZ = U(0.);}
+\DoxyCodeLine{911 }
+\DoxyCodeLine{912             U tmp1 = U(0.0);}
+\DoxyCodeLine{913             U tmp2 = U(0.0);}
+\DoxyCodeLine{914 }
+\DoxyCodeLine{915             \textcolor{keywordflow}{if} (denType == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}} ) \{}
+\DoxyCodeLine{916              \textcolor{comment}{// Fx}}
+\DoxyCodeLine{917                \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{918                   U tmp1 =                (   GDenX [iPt         ] * gPTsx[iPt] }
+\DoxyCodeLine{919                                             + GDenY [iPt         ] * gPTsy[iPt]  }
+\DoxyCodeLine{920                                             + GDenZ [iPt         ] * gPTsz[iPt] }
+\DoxyCodeLine{921                                           ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{922                   U tmp2 =                (  gPTsx[iPt] * Hx[iPt] }
+\DoxyCodeLine{923                                            + gPTsy[iPt] * Hy[iPt] }
+\DoxyCodeLine{924                                            + gPTsz[iPt] * Hz[iPt] ) * (   GDenX [iPt         ] * Hx[iPt]}
+\DoxyCodeLine{925                                                                    + GDenY [iPt         ] * Hy[iPt]  }
+\DoxyCodeLine{926                                                                    + GDenZ [iPt         ] * Hz[iPt] }
+\DoxyCodeLine{927                                                                                                     ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{928                 \}}
+\DoxyCodeLine{929               FgX = }
+\DoxyCodeLine{930                     ZgammaVar1[iPt] *    GTS   [iPt         ] }
+\DoxyCodeLine{931                   + ZgammaVar2[iPt] * (  GTX   [iPt         ] * Hx[iPt] }
+\DoxyCodeLine{932                                        + GTY   [iPt         ] * Hy[iPt]  }
+\DoxyCodeLine{933                                        + GTZ   [iPt         ] * Hz[iPt] ) }
+\DoxyCodeLine{934                   + ZgammaVar3[iPt] *    GDenS [iPt         ]}
+\DoxyCodeLine{935                   + ZgammaVar4[iPt] * (  GDenX [iPt         ] * Hx[iPt] }
+\DoxyCodeLine{936                                        + GDenY [iPt         ] * Hy[iPt]  }
+\DoxyCodeLine{937                                        + GDenZ [iPt         ] * Hz[iPt] ) }
+\DoxyCodeLine{938                   + ZgammaVar2[iPt] * (tmp1 -\/ tmp2) *signMD[iPt];}
+\DoxyCodeLine{939 }
+\DoxyCodeLine{940              \textcolor{comment}{// Fy}}
+\DoxyCodeLine{941                tmp1 = U(0.0);}
+\DoxyCodeLine{942                tmp2 = U(0.0);}
+\DoxyCodeLine{943                \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{944                 tmp1 =                (   GDenX [iPt + NPts         ] * gPTsx[iPt] }
+\DoxyCodeLine{945                                         + GDenY [iPt + NPts         ] * gPTsy[iPt]  }
+\DoxyCodeLine{946                                         + GDenZ [iPt + NPts         ] * gPTsz[iPt] }
+\DoxyCodeLine{947                                       ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{948                 tmp2 =                (  gPTsx[iPt] * Hx[iPt] }
+\DoxyCodeLine{949                                        + gPTsy[iPt] * Hy[iPt] }
+\DoxyCodeLine{950                                        + gPTsz[iPt] * Hz[iPt] ) * (   GDenX [iPt + NPts        ] * Hx[iPt]}
+\DoxyCodeLine{951                                                                + GDenY [iPt + NPts         ] * Hy[iPt]  }
+\DoxyCodeLine{952                                                                + GDenZ [iPt + NPts         ] * Hz[iPt] }
+\DoxyCodeLine{953                                                                                                 ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{954                 \}}
+\DoxyCodeLine{955               FgY = }
+\DoxyCodeLine{956                     ZgammaVar1[iPt] *    GTS   [iPt + NPts     ] }
+\DoxyCodeLine{957                   + ZgammaVar2[iPt] * (  GTX   [iPt + NPts     ] * Hx[iPt] }
+\DoxyCodeLine{958                                        + GTY   [iPt + NPts     ] * Hy[iPt]  }
+\DoxyCodeLine{959                                        + GTZ   [iPt + NPts     ] * Hz[iPt] ) }
+\DoxyCodeLine{960                   + ZgammaVar3[iPt] *    GDenS [iPt + NPts     ]}
+\DoxyCodeLine{961                   + ZgammaVar4[iPt] * (  GDenX [iPt + NPts     ] * Hx[iPt] }
+\DoxyCodeLine{962                                        + GDenY [iPt + NPts     ] * Hy[iPt]  }
+\DoxyCodeLine{963                                        + GDenZ [iPt + NPts     ] * Hz[iPt] ) }
+\DoxyCodeLine{964                   + ZgammaVar2[iPt] * (tmp1 -\/ tmp2) *signMD[iPt];}
+\DoxyCodeLine{965              \textcolor{comment}{// Fz}}
+\DoxyCodeLine{966                tmp1 = U(0.0);}
+\DoxyCodeLine{967                tmp2 = U(0.0);}
+\DoxyCodeLine{968                \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{969                 tmp1 =                (   GDenX [iPt + 2*NPts         ] * gPTsx[iPt] }
+\DoxyCodeLine{970                                         + GDenY [iPt + 2*NPts         ] * gPTsy[iPt]  }
+\DoxyCodeLine{971                                         + GDenZ [iPt + 2*NPts         ] * gPTsz[iPt] }
+\DoxyCodeLine{972                                       ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{973                 tmp2 =                (  gPTsx[iPt] * Hx[iPt] }
+\DoxyCodeLine{974                                        + gPTsy[iPt] * Hy[iPt] }
+\DoxyCodeLine{975                                        + gPTsz[iPt] * Hz[iPt] ) * (   GDenX [iPt + 2*NPts        ] * Hx[iPt]}
+\DoxyCodeLine{976                                                                + GDenY [iPt + 2*NPts         ] * Hy[iPt]  }
+\DoxyCodeLine{977                                                                + GDenZ [iPt + 2*NPts         ] * Hz[iPt] }
+\DoxyCodeLine{978                                                                                                 ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{979                 \}}
+\DoxyCodeLine{980               FgZ = }
+\DoxyCodeLine{981                     ZgammaVar1[iPt] *    GTS   [iPt + 2*NPts     ] }
+\DoxyCodeLine{982                   + ZgammaVar2[iPt] * (  GTX   [iPt + 2*NPts     ] * Hx[iPt] }
+\DoxyCodeLine{983                                        + GTY   [iPt + 2*NPts     ] * Hy[iPt]  }
+\DoxyCodeLine{984                                        + GTZ   [iPt + 2*NPts     ] * Hz[iPt] ) }
+\DoxyCodeLine{985                   + ZgammaVar3[iPt] *    GDenS [iPt + 2*NPts     ]}
+\DoxyCodeLine{986                   + ZgammaVar4[iPt] * (  GDenX [iPt + 2*NPts     ] * Hx[iPt] }
+\DoxyCodeLine{987                                        + GDenY [iPt + 2*NPts     ] * Hy[iPt]  }
+\DoxyCodeLine{988                                        + GDenZ [iPt + 2*NPts     ] * Hz[iPt] ) }
+\DoxyCodeLine{989                   + ZgammaVar2[iPt] * (tmp1 -\/ tmp2) *signMD[iPt];}
+\DoxyCodeLine{990 }
+\DoxyCodeLine{991 }
+\DoxyCodeLine{992             \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (denType == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5ab22d2789fda102ddabdacdb49af83bbf}{MX}} ) \{}
+\DoxyCodeLine{993               \textcolor{comment}{//Fx}}
+\DoxyCodeLine{994                \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{995                tmp1 =                (   GDenS [iPt         ] * gPTsx[iPt] }
+\DoxyCodeLine{996                                       ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{997                tmp2 =                (  gPTsx[iPt] * Hx[iPt] }
+\DoxyCodeLine{998                                        + gPTsy[iPt] * Hy[iPt] }
+\DoxyCodeLine{999                                        + gPTsz[iPt] * Hz[iPt] ) * (   GDenS [iPt         ] * Hx[iPt]}
+\DoxyCodeLine{1000                                                                                                 ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1001                 }
+\DoxyCodeLine{1002                 FgX = }
+\DoxyCodeLine{1003                       ZgammaVar1[iPt] *    GTS   [iPt         ] * Hx[iPt]}
+\DoxyCodeLine{1004                     + ZgammaVar2[iPt] * (  GTX   [iPt         ] ) }
+\DoxyCodeLine{1005                     + ZgammaVar3[iPt] *    GDenS [iPt         ] * Hx[iPt]}
+\DoxyCodeLine{1006                     + ZgammaVar4[iPt] * (  GDenX [iPt         ] )}
+\DoxyCodeLine{1007                   + ZgammaVar1[iPt] * (tmp1 -\/ tmp2) *signMD[iPt];}
+\DoxyCodeLine{1008               \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1009                 FgX = ZgammaVar1[iPt] *    GTS   [iPt         ]}
+\DoxyCodeLine{1010                       + ZgammaVar2[iPt] * (  GTX   [iPt         ] )}
+\DoxyCodeLine{1011                       + ZgammaVar3[iPt] *    GDenS [iPt         ] }
+\DoxyCodeLine{1012                     + ZgammaVar4[iPt] * (  GDenX [iPt         ] ); }
+\DoxyCodeLine{1013               \}}
+\DoxyCodeLine{1014               \textcolor{comment}{//Fy}}
+\DoxyCodeLine{1015                tmp1 = U(0.0);}
+\DoxyCodeLine{1016                tmp2 = U(0.0);}
+\DoxyCodeLine{1017                \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{1018                 tmp1 =                (   GDenS [iPt + NPts      ] * gPTsx[iPt] }
+\DoxyCodeLine{1019                                       ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1020                 tmp2 =                (  gPTsx[iPt] * Hx[iPt] }
+\DoxyCodeLine{1021                                        + gPTsy[iPt] * Hy[iPt] }
+\DoxyCodeLine{1022                                        + gPTsz[iPt] * Hz[iPt] ) * (   GDenS [iPt + NPts   ] * Hx[iPt]}
+\DoxyCodeLine{1023                                                                                                 ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1024                 }
+\DoxyCodeLine{1025                  FgY = }
+\DoxyCodeLine{1026                        ZgammaVar1[iPt] *    GTS   [iPt + NPts      ] * Hx[iPt]}
+\DoxyCodeLine{1027                      + ZgammaVar2[iPt] * (  GTX   [iPt + NPts      ] ) }
+\DoxyCodeLine{1028                      + ZgammaVar3[iPt] *    GDenS [iPt + NPts      ] * Hx[iPt]}
+\DoxyCodeLine{1029                      + ZgammaVar4[iPt] * (  GDenX [iPt + NPts      ] )}
+\DoxyCodeLine{1030                   + ZgammaVar1[iPt] * (tmp1 -\/ tmp2) *signMD[iPt];}
+\DoxyCodeLine{1031                \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1032                  FgY = ZgammaVar1[iPt] *    GTS   [iPt + NPts      ]}
+\DoxyCodeLine{1033                        + ZgammaVar2[iPt] * (  GTX   [iPt + NPts      ] )  }
+\DoxyCodeLine{1034                        + ZgammaVar3[iPt] *    GDenS [iPt + NPts        ] }
+\DoxyCodeLine{1035                       + ZgammaVar4[iPt] * (  GDenX [iPt + NPts      ] ) ;}
+\DoxyCodeLine{1036                \}}
+\DoxyCodeLine{1037 }
+\DoxyCodeLine{1038               \textcolor{comment}{//Fz}}
+\DoxyCodeLine{1039                tmp1 = U(0.0);}
+\DoxyCodeLine{1040                tmp2 = U(0.0);}
+\DoxyCodeLine{1041                \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{1042                 tmp1 =                (   GDenS [iPt + 2*NPts      ] * gPTsx[iPt] }
+\DoxyCodeLine{1043                                       ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1044                 tmp2 =                (  gPTsx[iPt] * Hx[iPt] }
+\DoxyCodeLine{1045                                        + gPTsy[iPt] * Hy[iPt] }
+\DoxyCodeLine{1046                                        + gPTsz[iPt] * Hz[iPt] ) * (   GDenS [iPt + 2*NPts       ] * Hx[iPt]}
+\DoxyCodeLine{1047                                                                                                 ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1048                 }
+\DoxyCodeLine{1049               FgZ = }
+\DoxyCodeLine{1050                     ZgammaVar1[iPt] *    GTS   [iPt + 2*NPts      ] * Hx[iPt] }
+\DoxyCodeLine{1051                   + ZgammaVar2[iPt] * (  GTX   [iPt + 2*NPts      ] )}
+\DoxyCodeLine{1052                   + ZgammaVar3[iPt] *    GDenS [iPt + 2*NPts      ] * Hx[iPt]}
+\DoxyCodeLine{1053                   + ZgammaVar4[iPt] * (  GDenX [iPt + 2*NPts      ] )}
+\DoxyCodeLine{1054                   + ZgammaVar1[iPt] * (tmp1 -\/ tmp2) *signMD[iPt];}
+\DoxyCodeLine{1055                \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1056                  FgZ = ZgammaVar1[iPt] *    GTS   [iPt + 2*NPts      ]}
+\DoxyCodeLine{1057                      + ZgammaVar2[iPt] * (  GTX   [iPt + 2*NPts      ] )}
+\DoxyCodeLine{1058                      + ZgammaVar3[iPt] *    GDenS [iPt + 2*NPts        ] }
+\DoxyCodeLine{1059                      + ZgammaVar4[iPt] * (  GDenX [iPt + 2*NPts      ] ) ;}
+\DoxyCodeLine{1060                \}}
+\DoxyCodeLine{1061 }
+\DoxyCodeLine{1062 }
+\DoxyCodeLine{1063             \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (denType == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5a91a026eba35b718e654608234c1878ba}{MY}} ) \{}
+\DoxyCodeLine{1064               \textcolor{comment}{//Fx}}
+\DoxyCodeLine{1065                \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{1066                tmp1 =                (   GDenS [iPt         ] * gPTsy[iPt] }
+\DoxyCodeLine{1067                                           ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1068                tmp2 =                (  gPTsx[iPt] * Hx[iPt] }
+\DoxyCodeLine{1069                                        + gPTsy[iPt] * Hy[iPt] }
+\DoxyCodeLine{1070                                        + gPTsz[iPt] * Hz[iPt] ) * (   GDenS [iPt         ] * Hy[iPt]}
+\DoxyCodeLine{1071                                                                                                 ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1072                }
+\DoxyCodeLine{1073               FgX = }
+\DoxyCodeLine{1074                     ZgammaVar1[iPt] *    GTS   [iPt         ] * Hy[iPt]}
+\DoxyCodeLine{1075                   + ZgammaVar2[iPt] * (  GTY   [iPt         ] )}
+\DoxyCodeLine{1076                   + ZgammaVar3[iPt] *    GDenS [iPt         ] * Hy[iPt]}
+\DoxyCodeLine{1077                   + ZgammaVar4[iPt] * (  GDenY [iPt         ] )}
+\DoxyCodeLine{1078                   + ZgammaVar1[iPt] * (tmp1 -\/ tmp2) *signMD[iPt];}
+\DoxyCodeLine{1079 }
+\DoxyCodeLine{1080                \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1081                  FgX = ZgammaVar1[iPt] *    GTS   [iPt         ] }
+\DoxyCodeLine{1082                    + ZgammaVar2[iPt] * (  GTY   [iPt         ] ) }
+\DoxyCodeLine{1083                    + ZgammaVar3[iPt] *    GDenS [iPt         ]}
+\DoxyCodeLine{1084                    + ZgammaVar4[iPt] * (  GDenY [iPt         ] );}
+\DoxyCodeLine{1085                \}}
+\DoxyCodeLine{1086               \textcolor{comment}{//Fy}}
+\DoxyCodeLine{1087                tmp1 = U(0.0);}
+\DoxyCodeLine{1088                tmp2 = U(0.0);}
+\DoxyCodeLine{1089                \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{1090                 tmp1 =                (   GDenS [iPt + NPts      ] * gPTsy[iPt] }
+\DoxyCodeLine{1091                                       ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1092                 tmp2 =                (  gPTsx[iPt] * Hx[iPt] }
+\DoxyCodeLine{1093                                        + gPTsy[iPt] * Hy[iPt] }
+\DoxyCodeLine{1094                                        + gPTsz[iPt] * Hz[iPt] ) * (   GDenS [iPt + NPts       ] * Hy[iPt]}
+\DoxyCodeLine{1095                                                                                                 ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1096                 }
+\DoxyCodeLine{1097               FgY = }
+\DoxyCodeLine{1098                     ZgammaVar1[iPt] *    GTS   [iPt + NPts      ] * Hy[iPt]}
+\DoxyCodeLine{1099                   + ZgammaVar2[iPt] * (  GTY   [iPt + NPts      ] )}
+\DoxyCodeLine{1100                   + ZgammaVar3[iPt] *    GDenS [iPt + NPts      ] * Hy[iPt]}
+\DoxyCodeLine{1101                   + ZgammaVar4[iPt] * (  GDenY [iPt + NPts      ] )}
+\DoxyCodeLine{1102                   + ZgammaVar1[iPt] * (tmp1 -\/ tmp2) *signMD[iPt];}
+\DoxyCodeLine{1103                \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1104                  FgY = ZgammaVar1[iPt] *    GTS   [iPt + NPts      ]}
+\DoxyCodeLine{1105                    + ZgammaVar2[iPt] * (  GTY   [iPt + NPts      ] )  }
+\DoxyCodeLine{1106                    + ZgammaVar3[iPt] *    GDenS [iPt + NPts      ]}
+\DoxyCodeLine{1107                    + ZgammaVar4[iPt] * (  GDenY [iPt + NPts      ] ) ;}
+\DoxyCodeLine{1108                \} }
+\DoxyCodeLine{1109               \textcolor{comment}{//Fz}}
+\DoxyCodeLine{1110                tmp1 = U(0.0);}
+\DoxyCodeLine{1111                tmp2 = U(0.0);}
+\DoxyCodeLine{1112                \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{1113                 tmp1 =                (   GDenS [iPt + 2*NPts      ] * gPTsy[iPt] }
+\DoxyCodeLine{1114                                       ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1115                 tmp2 =                (  gPTsx[iPt] * Hx[iPt] }
+\DoxyCodeLine{1116                                        + gPTsy[iPt] * Hy[iPt] }
+\DoxyCodeLine{1117                                        + gPTsz[iPt] * Hz[iPt] ) * (   GDenS [iPt + 2*NPts      ] * Hy[iPt]}
+\DoxyCodeLine{1118                                                                                                 ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1119                }
+\DoxyCodeLine{1120               FgZ = }
+\DoxyCodeLine{1121                     ZgammaVar1[iPt] *    GTS   [iPt + 2*NPts      ] * Hy[iPt] }
+\DoxyCodeLine{1122                   + ZgammaVar2[iPt] * (  GTY   [iPt + 2*NPts      ] )}
+\DoxyCodeLine{1123                   + ZgammaVar3[iPt] *    GDenS [iPt + 2*NPts      ] * Hy[iPt]}
+\DoxyCodeLine{1124                   + ZgammaVar4[iPt] * (  GDenY [iPt + 2*NPts      ] )}
+\DoxyCodeLine{1125                   + ZgammaVar1[iPt] * (tmp1 -\/ tmp2) *signMD[iPt];}
+\DoxyCodeLine{1126                 \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1127                   FgZ = ZgammaVar1[iPt] *    GTS   [iPt + 2*NPts      ]}
+\DoxyCodeLine{1128                     + ZgammaVar2[iPt] * (  GTY   [iPt + 2*NPts      ] )}
+\DoxyCodeLine{1129                     + ZgammaVar3[iPt] *    GDenS [iPt + 2*NPts      ]}
+\DoxyCodeLine{1130                     + ZgammaVar4[iPt] * (  GDenY [iPt + 2*NPts      ] ) ;}
+\DoxyCodeLine{1131                 \}}
+\DoxyCodeLine{1132 }
+\DoxyCodeLine{1133 }
+\DoxyCodeLine{1134             \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (denType == \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}} ) \{}
+\DoxyCodeLine{1135               \textcolor{comment}{//Fx}}
+\DoxyCodeLine{1136                \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{1137                tmp1 =                (   GDenS [iPt         ] * gPTsz[iPt] }
+\DoxyCodeLine{1138                                       ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1139                tmp2 =                (  gPTsx[iPt] * Hx[iPt] }
+\DoxyCodeLine{1140                                        + gPTsy[iPt] * Hy[iPt] }
+\DoxyCodeLine{1141                                        + gPTsz[iPt] * Hz[iPt] ) * (   GDenS [iPt         ] * Hz[iPt]}
+\DoxyCodeLine{1142                                                                                                 ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1143                }
+\DoxyCodeLine{1144               FgX = }
+\DoxyCodeLine{1145                     ZgammaVar1[iPt] *    GTS   [iPt         ] * Hz[iPt]}
+\DoxyCodeLine{1146                   + ZgammaVar2[iPt] * (  GTZ   [iPt         ] )}
+\DoxyCodeLine{1147                   + ZgammaVar3[iPt] *    GDenS [iPt         ] * Hz[iPt]}
+\DoxyCodeLine{1148                   + ZgammaVar4[iPt] * (  GDenZ [iPt         ] )}
+\DoxyCodeLine{1149                   + ZgammaVar1[iPt] * (tmp1 -\/ tmp2) *signMD[iPt];}
+\DoxyCodeLine{1150                \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1151                 FgX = ZgammaVar1[iPt] *    GTS   [iPt         ]}
+\DoxyCodeLine{1152                   + ZgammaVar2[iPt] * (  GTZ   [iPt         ] )}
+\DoxyCodeLine{1153                   + ZgammaVar3[iPt] *    GDenS [iPt      ]}
+\DoxyCodeLine{1154                   + ZgammaVar4[iPt] * (  GDenZ [iPt         ] );}
+\DoxyCodeLine{1155                \}}
+\DoxyCodeLine{1156 }
+\DoxyCodeLine{1157               \textcolor{comment}{//Fy}}
+\DoxyCodeLine{1158                tmp1 = U(0.0);}
+\DoxyCodeLine{1159                tmp2 = U(0.0);}
+\DoxyCodeLine{1160                \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{1161                 tmp1 =                (   GDenS [iPt + NPts      ] * gPTsz[iPt] }
+\DoxyCodeLine{1162                                       ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1163                 tmp2 =                (  gPTsx[iPt] * Hx[iPt] }
+\DoxyCodeLine{1164                                        + gPTsy[iPt] * Hy[iPt] }
+\DoxyCodeLine{1165                                        + gPTsz[iPt] * Hz[iPt] ) * (   GDenS [iPt + NPts      ] * Hz[iPt]}
+\DoxyCodeLine{1166                                                                                                 ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1167                }
+\DoxyCodeLine{1168               FgY = }
+\DoxyCodeLine{1169                     ZgammaVar1[iPt] *    GTS   [iPt + NPts      ] * Hz[iPt]}
+\DoxyCodeLine{1170                   + ZgammaVar2[iPt] * (  GTZ   [iPt + NPts      ] )}
+\DoxyCodeLine{1171                   + ZgammaVar3[iPt] *    GDenS [iPt + NPts      ] * Hz[iPt]}
+\DoxyCodeLine{1172                   + ZgammaVar4[iPt] * (  GDenZ [iPt + NPts      ] )}
+\DoxyCodeLine{1173                   + ZgammaVar1[iPt] * (tmp1 -\/ tmp2) *signMD[iPt];}
+\DoxyCodeLine{1174 }
+\DoxyCodeLine{1175                \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1176                  FgY = ZgammaVar1[iPt] *    GTS   [iPt + NPts      ]}
+\DoxyCodeLine{1177                     + ZgammaVar2[iPt] * (  GTZ   [iPt + NPts      ] )}
+\DoxyCodeLine{1178                     + ZgammaVar3[iPt] *    GDenS [iPt + NPts      ]}
+\DoxyCodeLine{1179                     + ZgammaVar4[iPt] * (  GDenZ [iPt + NPts      ] ); }
+\DoxyCodeLine{1180                \} }
+\DoxyCodeLine{1181               \textcolor{comment}{//Fz}}
+\DoxyCodeLine{1182                tmp1 = U(0.0);}
+\DoxyCodeLine{1183                tmp2 = U(0.0);}
+\DoxyCodeLine{1184                \textcolor{keywordflow}{if} (!Msmall[iPt]) \{}
+\DoxyCodeLine{1185                 tmp1 =                (   GDenS [iPt + 2*NPts      ] * gPTsz[iPt] }
+\DoxyCodeLine{1186                                       ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1187                 tmp2 =                (  gPTsx[iPt] * Hx[iPt] }
+\DoxyCodeLine{1188                                        + gPTsy[iPt] * Hy[iPt] }
+\DoxyCodeLine{1189                                        + gPTsz[iPt] * Hz[iPt] ) * (   GDenS [iPt + 2*NPts    ] * Hz[iPt]}
+\DoxyCodeLine{1190                                                                                                 ) / DSDMnorm[iPt]; }
+\DoxyCodeLine{1191                 }
+\DoxyCodeLine{1192               FgZ = }
+\DoxyCodeLine{1193                     ZgammaVar1[iPt] *    GTS   [iPt + 2*NPts      ] * Hz[iPt]}
+\DoxyCodeLine{1194                   + ZgammaVar2[iPt] * (  GTZ   [iPt + 2*NPts      ] )}
+\DoxyCodeLine{1195                   + ZgammaVar3[iPt] *    GDenS [iPt + 2*NPts      ] * Hz[iPt]}
+\DoxyCodeLine{1196                   + ZgammaVar4[iPt] * (  GDenZ [iPt + 2*NPts      ] )}
+\DoxyCodeLine{1197                   + ZgammaVar1[iPt] * (tmp1 -\/ tmp2) *signMD[iPt];}
+\DoxyCodeLine{1198                 \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{1199                   FgZ = ZgammaVar1[iPt] *    GTS   [iPt + 2*NPts      ]}
+\DoxyCodeLine{1200                      + ZgammaVar2[iPt] * (  GTZ   [iPt + 2*NPts      ] )}
+\DoxyCodeLine{1201                      + ZgammaVar3[iPt] *    GDenS [iPt + 2*NPts      ]}
+\DoxyCodeLine{1202                      + ZgammaVar4[iPt] * (  GDenZ [iPt + 2*NPts      ] )  ; }
+\DoxyCodeLine{1203                 \}  }
+\DoxyCodeLine{1204 }
+\DoxyCodeLine{1205             \}}
+\DoxyCodeLine{1206 }
+\DoxyCodeLine{1207             FgX *= \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[iPt];}
+\DoxyCodeLine{1208             FgY *= \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[iPt];}
+\DoxyCodeLine{1209             FgZ *= \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[iPt];}
+\DoxyCodeLine{1210     }
+\DoxyCodeLine{1211             blas::axpy(NBE,FgX,BasisScr + iPt*NBE +   IOff,1,ZMAT + iPt*NBE,1);}
+\DoxyCodeLine{1212             blas::axpy(NBE,FgY,BasisScr + iPt*NBE + 2*IOff,1,ZMAT + iPt*NBE,1);}
+\DoxyCodeLine{1213             blas::axpy(NBE,FgZ,BasisScr + iPt*NBE + 3*IOff,1,ZMAT + iPt*NBE,1);}
+\DoxyCodeLine{1214 }
+\DoxyCodeLine{1215           \} \textcolor{comment}{//NPTS }}
+\DoxyCodeLine{1216 }
+\DoxyCodeLine{1217         \} \textcolor{comment}{//2C GGA}}
+\DoxyCodeLine{1218 }
+\DoxyCodeLine{1219     \}  \textcolor{comment}{// isGGA}}
+\DoxyCodeLine{1220 }
+\DoxyCodeLine{1221   \} \textcolor{comment}{//End}}
+\DoxyCodeLine{1222 }
+\DoxyCodeLine{1223 }
+\DoxyCodeLine{1224   \textcolor{comment}{// Calculate gPTss,sx,sy,sz }}
+\DoxyCodeLine{1225   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{1226   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{1227   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_ae0fb874b9f0f8a6dc12b1682efe38ff7}{KohnSham<MatsT,IntsT>::mkgPTVar}}( }
+\DoxyCodeLine{1228     \textcolor{keywordtype}{size\_t} NPts, }
+\DoxyCodeLine{1229     \textcolor{keywordtype}{double}* GDenS, \textcolor{keywordtype}{double}* GDenZ, \textcolor{keywordtype}{double}* GDenY, \textcolor{keywordtype}{double}* GDenX, }
+\DoxyCodeLine{1230     U* GTS, U* GTZ, U* GTY, U* GTX,}
+\DoxyCodeLine{1231     U* gPTss, U* gPTsz, U* gPTsy, U* gPTsx, U* gPTzz, }
+\DoxyCodeLine{1232     U* gPTyy, U* gPTxx  }
+\DoxyCodeLine{1233     ) \{}
+\DoxyCodeLine{1234     }
+\DoxyCodeLine{1235        \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iPt = 0ul; iPt < NPts; iPt++) \{}
+\DoxyCodeLine{1236          gPTss[iPt]  = (GDenS[iPt]          * GTS[iPt]         ) +}
+\DoxyCodeLine{1237                    (GDenS[iPt + NPts]   * GTS[iPt + NPts]  ) +}
+\DoxyCodeLine{1238                    (GDenS[iPt + 2*NPts] * GTS[iPt + 2*NPts]);}
+\DoxyCodeLine{1239 }
+\DoxyCodeLine{1240          gPTsz[iPt] = (GDenS[iPt]          * GTZ[iPt]         ) +}
+\DoxyCodeLine{1241                  (GDenS[iPt + NPts]   * GTZ[iPt + NPts]  ) +}
+\DoxyCodeLine{1242                  (GDenS[iPt + 2*NPts] * GTZ[iPt + 2*NPts]);}
+\DoxyCodeLine{1243    }
+\DoxyCodeLine{1244          \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() )\{}
+\DoxyCodeLine{1245 }
+\DoxyCodeLine{1246            \textcolor{comment}{//since gPTsz + gPTzs are always added }}
+\DoxyCodeLine{1247            gPTsz[iPt] += (GDenZ[iPt]          * GTS[iPt]         ) +}
+\DoxyCodeLine{1248                     (GDenZ[iPt + NPts]   * GTS[iPt + NPts]  ) +}
+\DoxyCodeLine{1249                     (GDenZ[iPt + 2*NPts] * GTS[iPt + 2*NPts]);}
+\DoxyCodeLine{1250    }
+\DoxyCodeLine{1251            gPTzz[iPt] = (GDenZ[iPt]          * GTZ[iPt]         ) +}
+\DoxyCodeLine{1252                    (GDenZ[iPt + NPts]   * GTZ[iPt + NPts]  ) +}
+\DoxyCodeLine{1253                    (GDenZ[iPt + 2*NPts] * GTZ[iPt + 2*NPts]);}
+\DoxyCodeLine{1254 }
+\DoxyCodeLine{1255          \}}
+\DoxyCodeLine{1256          \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasXY() ) \{}
+\DoxyCodeLine{1257     }
+\DoxyCodeLine{1258            gPTsy[iPt] = (GDenS[iPt]          * GTY[iPt]         ) +}
+\DoxyCodeLine{1259                    (GDenS[iPt + NPts]   * GTY[iPt + NPts]  ) +}
+\DoxyCodeLine{1260                    (GDenS[iPt + 2*NPts] * GTY[iPt + 2*NPts]);}
+\DoxyCodeLine{1261            \textcolor{comment}{// Since gPTsy + gPTys are always added }}
+\DoxyCodeLine{1262            gPTsy[iPt] += (GDenY[iPt]          * GTS[iPt]         ) +}
+\DoxyCodeLine{1263                     (GDenY[iPt + NPts]   * GTS[iPt + NPts]  ) +}
+\DoxyCodeLine{1264                     (GDenY[iPt + 2*NPts] * GTS[iPt + 2*NPts]);}
+\DoxyCodeLine{1265    }
+\DoxyCodeLine{1266            gPTyy[iPt] = (GDenY[iPt]          * GTY[iPt]         ) +}
+\DoxyCodeLine{1267                    (GDenY[iPt + NPts]   * GTY[iPt + NPts]  ) +}
+\DoxyCodeLine{1268                    (GDenY[iPt + 2*NPts] * GTY[iPt + 2*NPts]);}
+\DoxyCodeLine{1269     }
+\DoxyCodeLine{1270            gPTsx[iPt] = (GDenS[iPt]          * GTX[iPt]         ) +}
+\DoxyCodeLine{1271                    (GDenS[iPt + NPts]   * GTX[iPt + NPts]  ) +}
+\DoxyCodeLine{1272                    (GDenS[iPt + 2*NPts] * GTX[iPt + 2*NPts]);}
+\DoxyCodeLine{1273            \textcolor{comment}{// Since gPTsx + gPTxs are always added }}
+\DoxyCodeLine{1274            gPTsx[iPt] += (GDenX[iPt]          * GTS[iPt]         ) +}
+\DoxyCodeLine{1275                     (GDenX[iPt + NPts]   * GTS[iPt + NPts]  ) +}
+\DoxyCodeLine{1276                     (GDenX[iPt + 2*NPts] * GTS[iPt + 2*NPts]);}
+\DoxyCodeLine{1277    }
+\DoxyCodeLine{1278            gPTxx[iPt] = (GDenX[iPt]          * GTX[iPt]         ) +}
+\DoxyCodeLine{1279                    (GDenX[iPt + NPts]   * GTX[iPt + NPts]  ) +}
+\DoxyCodeLine{1280                    (GDenX[iPt + 2*NPts] * GTX[iPt + 2*NPts]);}
+\DoxyCodeLine{1281          \}}
+\DoxyCodeLine{1282     }
+\DoxyCodeLine{1283     \}; \textcolor{comment}{//for(auto iPt = 0ul; iPt < NPts; iPt++)}}
+\DoxyCodeLine{1284 }
+\DoxyCodeLine{1285   \} \textcolor{comment}{// void mkgPTVar}}
+\DoxyCodeLine{1286 }
+\DoxyCodeLine{1287 }
+\DoxyCodeLine{1288 }
+\DoxyCodeLine{1289 }
+\DoxyCodeLine{1290 }
+\DoxyCodeLine{1291 }
+\DoxyCodeLine{1292   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{1293   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{1294   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1KohnSham_a930f6552411a1e511f07aa3ca6c4bdab}{KohnSham<MatsT, IntsT>::formFXC}}( \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,  }
+\DoxyCodeLine{1295       std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<U>}}> \&cList ) \{}
+\DoxyCodeLine{1296 }
+\DoxyCodeLine{1297 }
+\DoxyCodeLine{1298     \textcolor{keywordtype}{size\_t} itOff = this-\/>nC == 2 ? 5 : 3;}
+\DoxyCodeLine{1299     \textcolor{keywordtype}{size\_t} nVec = cList.size() / itOff;}
+\DoxyCodeLine{1300     \textcolor{keywordtype}{size\_t} NB     = this-\/>basisSet().nBasis;}
+\DoxyCodeLine{1301     \textcolor{keywordtype}{size\_t} NB2    = NB*NB;}
+\DoxyCodeLine{1302     \textcolor{keywordtype}{size\_t} NPPB   = intParam.nRadPerBatch * intParam.nAng;}
+\DoxyCodeLine{1303     \textcolor{keywordtype}{size\_t} nAtoms = this-\/>molecule().nAtoms;}
+\DoxyCodeLine{1304 }
+\DoxyCodeLine{1305 }
+\DoxyCodeLine{1306     \textcolor{comment}{// Parallelism}}
+\DoxyCodeLine{1307     \textcolor{keywordtype}{size\_t} NT = \mbox{\hyperlink{namespaceChronusQ_a3320ee560c87921c8d84885db82e9917}{GetNumThreads}}();}
+\DoxyCodeLine{1308     \textcolor{keywordtype}{size\_t} LAThreads = \mbox{\hyperlink{namespaceChronusQ_a3152808c4819d6cbf8a29aef92728866}{GetLAThreads}}();}
+\DoxyCodeLine{1309     \textcolor{keywordtype}{size\_t} mpiRank = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(c);}
+\DoxyCodeLine{1310     \textcolor{keywordtype}{size\_t} mpiSize = \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(c);}
+\DoxyCodeLine{1311 }
+\DoxyCodeLine{1312     \textcolor{comment}{// Turn off LA threads}}
+\DoxyCodeLine{1313     \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(1);}
+\DoxyCodeLine{1314 }
+\DoxyCodeLine{1315     \textcolor{comment}{// Split the MPI Comm}}
+\DoxyCodeLine{1316     \textcolor{keywordtype}{int} color = ((mpiSize < nAtoms) or }
+\DoxyCodeLine{1317                  (mpiRank < nAtoms)) ? 1 : \mbox{\hyperlink{mpi_8hpp_aff6b3ceb2c22396e5eab7f509b3da0dc}{MPI\_UNDEFINED}};}
+\DoxyCodeLine{1318                                                             }
+\DoxyCodeLine{1319                   }
+\DoxyCodeLine{1320     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} intComm = \mbox{\hyperlink{namespaceChronusQ_a25b765abdb845e0ca3adb846155b3878}{MPICommSplit}}(c,color,mpiRank);}
+\DoxyCodeLine{1321 }
+\DoxyCodeLine{1322 }
+\DoxyCodeLine{1323     \textcolor{keywordtype}{bool} isGGA = std::any\_of(functionals.begin(),functionals.end(),}
+\DoxyCodeLine{1324                    [](std::shared\_ptr<DFTFunctional> \&x) \{}
+\DoxyCodeLine{1325                      return x-\/>isGGA(); }
+\DoxyCodeLine{1326                    \}); }
+\DoxyCodeLine{1327 }
+\DoxyCodeLine{1328 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{1329     \textcolor{keywordflow}{if}( intComm != \mbox{\hyperlink{namespaceChronusQ_a64b7658dac48bb68d8e0e82c988202fd}{MPI\_COMM\_NULL}} ) \{}
+\DoxyCodeLine{1330 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1331 }
+\DoxyCodeLine{1332     U* NBNBSCR = this-\/>memManager.template malloc<U>(NB2 * NT);}
+\DoxyCodeLine{1333     U* NBNPSCR = this-\/>memManager.template malloc<U>(NB*NPPB * NT);}
+\DoxyCodeLine{1334 }
+\DoxyCodeLine{1335     \textcolor{keywordtype}{double}* NBNBSCRD = this-\/>memManager.template malloc<double>(NB2 * NT);}
+\DoxyCodeLine{1336     \textcolor{keywordtype}{double}* NBNPSCRD = this-\/>memManager.template malloc<double>(NB*NPPB * NT);}
+\DoxyCodeLine{1337 }
+\DoxyCodeLine{1338 }
+\DoxyCodeLine{1339     std::shared\_ptr<PauliSpinorSquareMatrices<double>> Re1PDM;}
+\DoxyCodeLine{1340     \textcolor{keywordflow}{if} (std::is\_same<U,double>::value)}
+\DoxyCodeLine{1341       Re1PDM = std::dynamic\_pointer\_cast<PauliSpinorSquareMatrices<double>>(}
+\DoxyCodeLine{1342           this-\/>onePDM);}
+\DoxyCodeLine{1343     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{1344       Re1PDM = std::make\_shared<PauliSpinorSquareMatrices<double>>(}
+\DoxyCodeLine{1345           this-\/>onePDM-\/>real\_part());}
+\DoxyCodeLine{1346 }
+\DoxyCodeLine{1347 }
+\DoxyCodeLine{1348     std::vector<std::vector<U*>> ReTSymm;}
+\DoxyCodeLine{1349     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iVec = 0; iVec < nVec; iVec++) \{}
+\DoxyCodeLine{1350       ReTSymm.emplace\_back();}
+\DoxyCodeLine{1351 }
+\DoxyCodeLine{1352       \textcolor{keywordtype}{size\_t} indx = iVec * itOff;}
+\DoxyCodeLine{1353       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iS = 0; iS < 2*this-\/>nC; iS++) \{}
+\DoxyCodeLine{1354         }
+\DoxyCodeLine{1355          ReTSymm.back().emplace\_back(}
+\DoxyCodeLine{1356              this-\/>memManager.template malloc<U>(NB2));}
+\DoxyCodeLine{1357          \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},NB,NB,U(1.0),cList[indx + iS + 1].\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}},NB,}
+\DoxyCodeLine{1358            ReTSymm.back().back(),NB);}
+\DoxyCodeLine{1359 }
+\DoxyCodeLine{1360       \}}
+\DoxyCodeLine{1361 }
+\DoxyCodeLine{1362     \}}
+\DoxyCodeLine{1363 }
+\DoxyCodeLine{1364 }
+\DoxyCodeLine{1365     U* GxcT\_raw = this-\/>memManager.template malloc<U>(2*this-\/>nC*nVec*NT*NB2);}
+\DoxyCodeLine{1366     U* Gxc\_first = GxcT\_raw;}
+\DoxyCodeLine{1367     std::vector<std::vector<std::vector<U*>>> GxcT;}
+\DoxyCodeLine{1368     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} ithread = 0; ithread < NT; ithread++) \{}
+\DoxyCodeLine{1369       GxcT.emplace\_back();}
+\DoxyCodeLine{1370       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iVec = 0; iVec < nVec; iVec++) \{ }
+\DoxyCodeLine{1371         GxcT.back().emplace\_back();}
+\DoxyCodeLine{1372         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iS = 0; iS < 2*this-\/>nC; iS++)\{}
+\DoxyCodeLine{1373           GxcT.back().back().emplace\_back(Gxc\_first);}
+\DoxyCodeLine{1374           memset(GxcT.back().back().back(),0,NB2*\textcolor{keyword}{sizeof}(U));}
+\DoxyCodeLine{1375           Gxc\_first += NB2;}
+\DoxyCodeLine{1376         \}}
+\DoxyCodeLine{1377       \}}
+\DoxyCodeLine{1378     \}}
+\DoxyCodeLine{1379 }
+\DoxyCodeLine{1380 }
+\DoxyCodeLine{1381 }
+\DoxyCodeLine{1382 }
+\DoxyCodeLine{1383 }
+\DoxyCodeLine{1384 }
+\DoxyCodeLine{1385     \textcolor{comment}{// Allocation of V Vairables}}
+\DoxyCodeLine{1386     \textcolor{keywordtype}{double} *DenS(\textcolor{keyword}{nullptr}),  *DenZ(\textcolor{keyword}{nullptr}),  *DenY(\textcolor{keyword}{nullptr}),  *DenX(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{1387     \textcolor{keywordtype}{double} *GDenS(\textcolor{keyword}{nullptr}), *GDenZ(\textcolor{keyword}{nullptr}), *GDenY(\textcolor{keyword}{nullptr}), *GDenX(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{1388 }
+\DoxyCodeLine{1389     \textcolor{comment}{// Allocation of auxiliary variables used in small m limit}}
+\DoxyCodeLine{1390     \textcolor{comment}{// for 2c TDKS}}
+\DoxyCodeLine{1391     \textcolor{keywordtype}{double} *Mnorm(\textcolor{keyword}{nullptr});  \textcolor{comment}{// |m| }}
+\DoxyCodeLine{1392     \textcolor{comment}{// rho\string^K/|rho\string^k| for large m and 1/3 for small m}}
+\DoxyCodeLine{1393     \textcolor{comment}{// Eq. D.21a Shichao Sun's thesis }}
+\DoxyCodeLine{1394     \textcolor{keywordtype}{double} *KScratch(\textcolor{keyword}{nullptr});   }
+\DoxyCodeLine{1395     \textcolor{comment}{// Eq. D.21b Shichao Sun's thesis }}
+\DoxyCodeLine{1396     \textcolor{keywordtype}{double} *HScratch(\textcolor{keyword}{nullptr});   }
+\DoxyCodeLine{1397     \textcolor{comment}{// Checks if m is below a threshold at that grid point }}
+\DoxyCodeLine{1398     \textcolor{keywordtype}{bool}   *Msmall(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{1399     \textcolor{comment}{// |del rho * del m| }}
+\DoxyCodeLine{1400     \textcolor{keywordtype}{double} *DSDMnorm(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{1401     \textcolor{comment}{// Eq. D.6 in Shichao Sun's thesis}}
+\DoxyCodeLine{1402     \textcolor{keywordtype}{double} *signMD(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{1403 }
+\DoxyCodeLine{1404     \textcolor{comment}{// Density}}
+\DoxyCodeLine{1405     DenS = this-\/>memManager.template malloc<double>(NPPB * NT);}
+\DoxyCodeLine{1406     \textcolor{keywordflow}{if}( this-\/>nC == 2 or not this-\/>iCS )}
+\DoxyCodeLine{1407       DenZ = this-\/>memManager.template malloc<double>(NPPB * NT);}
+\DoxyCodeLine{1408     \textcolor{keywordflow}{if}( this-\/>nC == 2 ) \{}
+\DoxyCodeLine{1409       DenY = this-\/>memManager.template malloc<double>(NPPB * NT);}
+\DoxyCodeLine{1410       DenX = this-\/>memManager.template malloc<double>(NPPB * NT);}
+\DoxyCodeLine{1411       Mnorm    = this-\/>memManager.template malloc<double>(NPPB * NT);}
+\DoxyCodeLine{1412       KScratch = this-\/>memManager.template malloc<double>(3 * NPPB * NT); \textcolor{comment}{// 3 is for K=x,y,z}}
+\DoxyCodeLine{1413       Msmall   = this-\/>memManager.template malloc<bool>(NPPB * NT);}
+\DoxyCodeLine{1414     \}}
+\DoxyCodeLine{1415 }
+\DoxyCodeLine{1416 }
+\DoxyCodeLine{1417     \textcolor{comment}{// Density Gradient}}
+\DoxyCodeLine{1418     \textcolor{keywordflow}{if}( isGGA ) \{}
+\DoxyCodeLine{1419 }
+\DoxyCodeLine{1420       GDenS = this-\/>memManager.template malloc<double>(3*NPPB * NT);}
+\DoxyCodeLine{1421       \textcolor{keywordflow}{if}( this-\/>nC == 2 or not this-\/>iCS )}
+\DoxyCodeLine{1422         GDenZ = this-\/>memManager.template malloc<double>(3*NPPB * NT);}
+\DoxyCodeLine{1423       \textcolor{keywordflow}{if}( this-\/>nC == 2 ) \{}
+\DoxyCodeLine{1424         GDenY = this-\/>memManager.template malloc<double>(3*NPPB * NT);}
+\DoxyCodeLine{1425         GDenX = this-\/>memManager.template malloc<double>(3*NPPB * NT);}
+\DoxyCodeLine{1426         HScratch = this-\/>memManager.template malloc<double>(3*NPPB * NT);}
+\DoxyCodeLine{1427         DSDMnorm    = this-\/>memManager.template malloc<double>(NPPB * NT);}
+\DoxyCodeLine{1428         signMD      = this-\/>memManager.template malloc<double>(NPPB * NT);}
+\DoxyCodeLine{1429       \}}
+\DoxyCodeLine{1430 }
+\DoxyCodeLine{1431     \}}
+\DoxyCodeLine{1432 }
+\DoxyCodeLine{1433     \textcolor{comment}{// Allocation of T evaluation}}
+\DoxyCodeLine{1434     U *TS(\textcolor{keyword}{nullptr}),  *TZ(\textcolor{keyword}{nullptr}),  *TY(\textcolor{keyword}{nullptr}),  *TX(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{1435     U *GTS(\textcolor{keyword}{nullptr}), *GTZ(\textcolor{keyword}{nullptr}), *GTY(\textcolor{keyword}{nullptr}), *GTX(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{1436 }
+\DoxyCodeLine{1437     \textcolor{comment}{// T}}
+\DoxyCodeLine{1438     TS = this-\/>memManager.template malloc<U>(NPPB * NT);}
+\DoxyCodeLine{1439     TZ = this-\/>memManager.template malloc<U>(NPPB * NT);}
+\DoxyCodeLine{1440     \textcolor{keywordflow}{if}( this-\/>nC == 2 ) \{}
+\DoxyCodeLine{1441       TY = this-\/>memManager.template malloc<U>(NPPB * NT);}
+\DoxyCodeLine{1442       TX = this-\/>memManager.template malloc<U>(NPPB * NT);}
+\DoxyCodeLine{1443     \}}
+\DoxyCodeLine{1444 }
+\DoxyCodeLine{1445     \textcolor{comment}{// Allocation of gPT variables }}
+\DoxyCodeLine{1446     \textcolor{comment}{// Products of density gradient with transition-\/density gradient}}
+\DoxyCodeLine{1447     U *gPTss(\textcolor{keyword}{nullptr}), *gPTsz(\textcolor{keyword}{nullptr}), *gPTsy(\textcolor{keyword}{nullptr}), *gPTsx(\textcolor{keyword}{nullptr}), }
+\DoxyCodeLine{1448      *gPTzz(\textcolor{keyword}{nullptr}), *gPTyy(\textcolor{keyword}{nullptr}), *gPTxx(\textcolor{keyword}{nullptr}); }
+\DoxyCodeLine{1449 }
+\DoxyCodeLine{1450     \textcolor{comment}{// T Gradient}}
+\DoxyCodeLine{1451     \textcolor{keywordflow}{if}( isGGA ) \{}
+\DoxyCodeLine{1452 }
+\DoxyCodeLine{1453       GTS = this-\/>memManager.template malloc<U>(3*NPPB * NT);}
+\DoxyCodeLine{1454       gPTss = this-\/>memManager.template malloc<U>(NPPB * NT);}
+\DoxyCodeLine{1455       GTZ = this-\/>memManager.template malloc<U>(3*NPPB * NT);}
+\DoxyCodeLine{1456       gPTsz = this-\/>memManager.template malloc<U>(NPPB * NT);}
+\DoxyCodeLine{1457 }
+\DoxyCodeLine{1458       \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() ) }
+\DoxyCodeLine{1459         gPTzz = this-\/>memManager.template malloc<U>(NPPB * NT);}
+\DoxyCodeLine{1460 }
+\DoxyCodeLine{1461       \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasXY() ) \{}
+\DoxyCodeLine{1462         GTY = this-\/>memManager.template malloc<U>(3*NPPB * NT);}
+\DoxyCodeLine{1463         GTX = this-\/>memManager.template malloc<U>(3*NPPB * NT);}
+\DoxyCodeLine{1464 }
+\DoxyCodeLine{1465 }
+\DoxyCodeLine{1466         gPTsx = this-\/>memManager.template malloc<U>(NPPB * NT);}
+\DoxyCodeLine{1467         gPTsy = this-\/>memManager.template malloc<U>(NPPB * NT);}
+\DoxyCodeLine{1468         gPTyy = this-\/>memManager.template malloc<U>(NPPB * NT);}
+\DoxyCodeLine{1469         gPTxx = this-\/>memManager.template malloc<U>(NPPB * NT);}
+\DoxyCodeLine{1470       \}}
+\DoxyCodeLine{1471     \}}
+\DoxyCodeLine{1472 }
+\DoxyCodeLine{1473 }
+\DoxyCodeLine{1474 }
+\DoxyCodeLine{1475 }
+\DoxyCodeLine{1476 }
+\DoxyCodeLine{1477     \textcolor{comment}{// U Variables}}
+\DoxyCodeLine{1478 }
+\DoxyCodeLine{1479     \textcolor{keywordtype}{double} * eps     = this-\/>memManager.template malloc<double>(NPPB * NT);}
+\DoxyCodeLine{1480     \textcolor{keywordtype}{double} * U\_n     = this-\/>memManager.template malloc<double>(2*NPPB * NT);}
+\DoxyCodeLine{1481     \textcolor{keywordtype}{double} * U\_gamma = isGGA ? }
+\DoxyCodeLine{1482       this-\/>memManager.template malloc<double>(3*NPPB * NT) : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1483 }
+\DoxyCodeLine{1484     \textcolor{comment}{// U First Derivatives}}
+\DoxyCodeLine{1485 }
+\DoxyCodeLine{1486     \textcolor{keywordtype}{double} * dVU\_n     = this-\/>memManager.template malloc<double>(2*NPPB * NT);}
+\DoxyCodeLine{1487     \textcolor{keywordtype}{double} * dVU\_gamma = isGGA ? }
+\DoxyCodeLine{1488       this-\/>memManager.template malloc<double>(3*NPPB * NT) : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1489 }
+\DoxyCodeLine{1490     \textcolor{keywordtype}{double} * eps\_SCR(\textcolor{keyword}{nullptr}), * dVU\_n\_SCR(\textcolor{keyword}{nullptr}), * dVU\_gamma\_SCR(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{1491     \textcolor{keywordflow}{if}( functionals.size() > 1 ) \{}
+\DoxyCodeLine{1492 }
+\DoxyCodeLine{1493       eps\_SCR       = this-\/>memManager.template malloc<double>(NPPB * NT);}
+\DoxyCodeLine{1494       dVU\_n\_SCR     = this-\/>memManager.template malloc<double>(2*NPPB * NT);}
+\DoxyCodeLine{1495       dVU\_gamma\_SCR = isGGA ? }
+\DoxyCodeLine{1496         this-\/>memManager.template malloc<double>(3*NPPB * NT) : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1497 }
+\DoxyCodeLine{1498     \}}
+\DoxyCodeLine{1499 }
+\DoxyCodeLine{1500     \textcolor{comment}{// U Second Derivatives}}
+\DoxyCodeLine{1501 }
+\DoxyCodeLine{1502     \textcolor{keywordtype}{double} * d2VU\_n = this-\/>memManager.template malloc<double>(3*NPPB * NT);}
+\DoxyCodeLine{1503     \textcolor{keywordtype}{double} * d2VU\_gamma   = isGGA ? }
+\DoxyCodeLine{1504       this-\/>memManager.template malloc<double>(6*NPPB * NT) : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1505     \textcolor{keywordtype}{double} * d2VU\_n\_gamma = isGGA ? }
+\DoxyCodeLine{1506       this-\/>memManager.template malloc<double>(6*NPPB * NT) : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1507 }
+\DoxyCodeLine{1508     \textcolor{keywordtype}{double} * d2VU\_n\_SCR(\textcolor{keyword}{nullptr}), * d2VU\_gamma\_SCR(\textcolor{keyword}{nullptr}), }
+\DoxyCodeLine{1509            * d2VU\_n\_gamma\_SCR(\textcolor{keyword}{nullptr}); }
+\DoxyCodeLine{1510 }
+\DoxyCodeLine{1511     \textcolor{keywordflow}{if}( functionals.size() > 1 ) \{}
+\DoxyCodeLine{1512       d2VU\_n\_SCR = this-\/>memManager.template malloc<double>(3*NPPB * NT);}
+\DoxyCodeLine{1513       d2VU\_gamma\_SCR   = isGGA ? }
+\DoxyCodeLine{1514         this-\/>memManager.template malloc<double>(6*NPPB * NT) : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1515       d2VU\_n\_gamma\_SCR = isGGA ? }
+\DoxyCodeLine{1516         this-\/>memManager.template malloc<double>(6*NPPB * NT) : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1517     \}}
+\DoxyCodeLine{1518 }
+\DoxyCodeLine{1519 }
+\DoxyCodeLine{1520     \textcolor{comment}{// Z Vars}}
+\DoxyCodeLine{1521     U * ZrhoVar = this-\/>memManager.template malloc<U>(NPPB * NT);}
+\DoxyCodeLine{1522 }
+\DoxyCodeLine{1523     U * ZgammaVar1 = isGGA ? }
+\DoxyCodeLine{1524       this-\/>memManager.template malloc<U>(NPPB * NT) : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1525     U * ZgammaVar2 = isGGA ? }
+\DoxyCodeLine{1526       this-\/>memManager.template malloc<U>(NPPB * NT) : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1527     U * ZgammaVar3 = isGGA ? }
+\DoxyCodeLine{1528       this-\/>memManager.template malloc<U>(NPPB * NT) : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1529     U * ZgammaVar4 = isGGA ? }
+\DoxyCodeLine{1530       this-\/>memManager.template malloc<U>(NPPB * NT) : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1531 }
+\DoxyCodeLine{1532     U* ZMAT = this-\/>memManager.template malloc<U>(NB*NPPB * NT);}
+\DoxyCodeLine{1533 }
+\DoxyCodeLine{1534     \textcolor{keywordtype}{int} NDer = isGGA ? 4 : 1;}
+\DoxyCodeLine{1535     U* Basis\_cmplx(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{1536     \textcolor{keywordflow}{if}( std::is\_same<U,dcomplex>::value ) }
+\DoxyCodeLine{1537       Basis\_cmplx = this-\/>memManager.template malloc<U>(NB*NDer*NPPB*NT);}
+\DoxyCodeLine{1538 }
+\DoxyCodeLine{1539     \textcolor{keywordtype}{double} intDen = 0.;}
+\DoxyCodeLine{1540 }
+\DoxyCodeLine{1541 }
+\DoxyCodeLine{1542     \textcolor{keyword}{auto} fxcbuild = [\&](\textcolor{keywordtype}{size\_t} \&res, std::vector<cart\_t> \&batch, }
+\DoxyCodeLine{1543       std::vector<double> \&\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}, std::vector<size\_t> NBE\_vec, }
+\DoxyCodeLine{1544       std::vector<double*> BasisEval\_vec, }
+\DoxyCodeLine{1545       std::vector<std::vector<size\_t>>\& batchEvalShells\_vec, }
+\DoxyCodeLine{1546       std::vector<std::vector<std::pair<size\_t,size\_t>>>\& subMatCut\_vec) \{}
+\DoxyCodeLine{1547 }
+\DoxyCodeLine{1548 }
+\DoxyCodeLine{1549       \textcolor{keywordtype}{size\_t} NBE = NBE\_vec[0];}
+\DoxyCodeLine{1550       \textcolor{keywordtype}{double} * BasisEval = BasisEval\_vec[0];}
+\DoxyCodeLine{1551       std::vector<size\_t> \& batchEvalShells = batchEvalShells\_vec[0];}
+\DoxyCodeLine{1552       std::vector<std::pair<size\_t,size\_t>> \& subMatCut = subMatCut\_vec[0];}
+\DoxyCodeLine{1553 }
+\DoxyCodeLine{1554       \textcolor{keywordtype}{double} epsScreen = intParam.epsilon / nAtoms /}
+\DoxyCodeLine{1555         intParam.nAng / intParam.nRad;}
+\DoxyCodeLine{1556 }
+\DoxyCodeLine{1557       epsScreen = std::max(epsScreen,}
+\DoxyCodeLine{1558                            std::numeric\_limits<double>::epsilon());}
+\DoxyCodeLine{1559 }
+\DoxyCodeLine{1560 }
+\DoxyCodeLine{1561 }
+\DoxyCodeLine{1562       \textcolor{keywordtype}{size\_t} NPts = batch.size();}
+\DoxyCodeLine{1563       \textcolor{keywordtype}{size\_t} IOff = NBE*NPts;}
+\DoxyCodeLine{1564       \textcolor{keywordtype}{int} tid = \mbox{\hyperlink{namespaceChronusQ_aa348a017ee78c3450480773ddc542e5c}{GetThreadID}}();}
+\DoxyCodeLine{1565       \textcolor{keywordtype}{size\_t} nPtOff = tid * NPPB;}
+\DoxyCodeLine{1566 }
+\DoxyCodeLine{1567 }
+\DoxyCodeLine{1568       \textcolor{comment}{// Get thread Local storage}}
+\DoxyCodeLine{1569       }
+\DoxyCodeLine{1570 }
+\DoxyCodeLine{1571       \textcolor{comment}{// Density and T}}
+\DoxyCodeLine{1572       \textcolor{keywordtype}{double} *DenS\_loc = DenS + nPtOff;}
+\DoxyCodeLine{1573       \textcolor{keywordtype}{double} *DenZ\_loc = DenZ + nPtOff;}
+\DoxyCodeLine{1574       \textcolor{keywordtype}{double} *DenY\_loc = DenY + nPtOff;}
+\DoxyCodeLine{1575       \textcolor{keywordtype}{double} *DenX\_loc = DenX + nPtOff;}
+\DoxyCodeLine{1576 }
+\DoxyCodeLine{1577       \textcolor{keywordtype}{double} *GDenS\_loc = GDenS + 3 * nPtOff;}
+\DoxyCodeLine{1578       \textcolor{keywordtype}{double} *GDenZ\_loc = GDenZ + 3 * nPtOff;}
+\DoxyCodeLine{1579       \textcolor{keywordtype}{double} *GDenY\_loc = GDenY + 3 * nPtOff;}
+\DoxyCodeLine{1580       \textcolor{keywordtype}{double} *GDenX\_loc = GDenX + 3 * nPtOff;}
+\DoxyCodeLine{1581 }
+\DoxyCodeLine{1582       \textcolor{comment}{// Aux Var for 2C }}
+\DoxyCodeLine{1583       \textcolor{keywordtype}{double} * Mnorm\_loc    = Mnorm        +   nPtOff;}
+\DoxyCodeLine{1584       \textcolor{keywordtype}{double} * KScratch\_loc = KScratch     + 3*nPtOff;}
+\DoxyCodeLine{1585       \textcolor{keywordtype}{bool}   * Msmall\_loc   = Msmall       +   nPtOff;}
+\DoxyCodeLine{1586       \textcolor{keywordtype}{double} * HScratch\_loc = HScratch     + 3*nPtOff;}
+\DoxyCodeLine{1587       \textcolor{keywordtype}{double} * DSDMnorm\_loc = DSDMnorm     +   nPtOff;}
+\DoxyCodeLine{1588       \textcolor{keywordtype}{double} * signMD\_loc   = signMD       +   nPtOff;}
+\DoxyCodeLine{1589 }
+\DoxyCodeLine{1590       U *TS\_loc = TS + nPtOff;}
+\DoxyCodeLine{1591       U *TZ\_loc = TZ + nPtOff;}
+\DoxyCodeLine{1592       U *TY\_loc = TY + nPtOff;}
+\DoxyCodeLine{1593       U *TX\_loc = TX + nPtOff;}
+\DoxyCodeLine{1594 }
+\DoxyCodeLine{1595       U *GTS\_loc = GTS + 3 * nPtOff;}
+\DoxyCodeLine{1596       U *GTZ\_loc = GTZ + 3 * nPtOff;}
+\DoxyCodeLine{1597       U *GTY\_loc = GTY + 3 * nPtOff;}
+\DoxyCodeLine{1598       U *GTX\_loc = GTX + 3 * nPtOff;}
+\DoxyCodeLine{1599 }
+\DoxyCodeLine{1600       U *gPTss\_loc = gPTss + nPtOff;}
+\DoxyCodeLine{1601       U *gPTsz\_loc = gPTsz + nPtOff;}
+\DoxyCodeLine{1602       U *gPTsy\_loc = gPTsy + nPtOff;}
+\DoxyCodeLine{1603       U *gPTsx\_loc = gPTsx + nPtOff;}
+\DoxyCodeLine{1604       U *gPTxx\_loc = gPTxx + nPtOff;}
+\DoxyCodeLine{1605       U *gPTyy\_loc = gPTyy + nPtOff;}
+\DoxyCodeLine{1606       U *gPTzz\_loc = gPTzz + nPtOff;}
+\DoxyCodeLine{1607 }
+\DoxyCodeLine{1608       \textcolor{comment}{// U Vars}}
+\DoxyCodeLine{1609 }
+\DoxyCodeLine{1610       \textcolor{keywordtype}{double} *U\_n\_loc        = U\_n        + 2 * nPtOff;     }
+\DoxyCodeLine{1611       \textcolor{keywordtype}{double} *U\_gamma\_loc    = U\_gamma    + 3 * nPtOff;}
+\DoxyCodeLine{1612 }
+\DoxyCodeLine{1613       \textcolor{keywordtype}{double} *eps\_loc        = eps        +     nPtOff;}
+\DoxyCodeLine{1614       \textcolor{keywordtype}{double} *dVU\_n\_loc      = dVU\_n      + 2 * nPtOff;     }
+\DoxyCodeLine{1615       \textcolor{keywordtype}{double} *dVU\_gamma\_loc  = dVU\_gamma  + 3 * nPtOff;}
+\DoxyCodeLine{1616 }
+\DoxyCodeLine{1617       \textcolor{keywordtype}{double} *d2VU\_n\_loc       = d2VU\_n       + 3 * nPtOff;     }
+\DoxyCodeLine{1618       \textcolor{keywordtype}{double} *d2VU\_gamma\_loc   = d2VU\_gamma   + 6 * nPtOff;}
+\DoxyCodeLine{1619       \textcolor{keywordtype}{double} *d2VU\_n\_gamma\_loc = d2VU\_n\_gamma + 6 * nPtOff;}
+\DoxyCodeLine{1620 }
+\DoxyCodeLine{1621       \textcolor{keywordtype}{double} *eps\_SCR\_loc       = eps\_SCR       +     nPtOff;}
+\DoxyCodeLine{1622       \textcolor{keywordtype}{double} *dVU\_n\_SCR\_loc     = dVU\_n\_SCR     + 2 * nPtOff;     }
+\DoxyCodeLine{1623       \textcolor{keywordtype}{double} *dVU\_gamma\_SCR\_loc = dVU\_gamma\_SCR + 3 * nPtOff;}
+\DoxyCodeLine{1624 }
+\DoxyCodeLine{1625       \textcolor{keywordtype}{double} *d2VU\_n\_SCR\_loc       = d2VU\_n\_SCR       + 3 * nPtOff;     }
+\DoxyCodeLine{1626       \textcolor{keywordtype}{double} *d2VU\_gamma\_SCR\_loc   = d2VU\_gamma\_SCR   + 6 * nPtOff;}
+\DoxyCodeLine{1627       \textcolor{keywordtype}{double} *d2VU\_n\_gamma\_SCR\_loc = d2VU\_n\_gamma\_SCR + 6 * nPtOff;}
+\DoxyCodeLine{1628 }
+\DoxyCodeLine{1629 }
+\DoxyCodeLine{1630       \textcolor{comment}{// Z Vars}}
+\DoxyCodeLine{1631 }
+\DoxyCodeLine{1632       U* ZrhoVar\_loc    = ZrhoVar    + nPtOff;}
+\DoxyCodeLine{1633       U* ZgammaVar1\_loc = ZgammaVar1 + nPtOff;}
+\DoxyCodeLine{1634       U* ZgammaVar2\_loc = ZgammaVar2 + nPtOff;}
+\DoxyCodeLine{1635       U* ZgammaVar3\_loc = ZgammaVar3 + nPtOff;}
+\DoxyCodeLine{1636       U* ZgammaVar4\_loc = ZgammaVar4 + nPtOff;}
+\DoxyCodeLine{1637 }
+\DoxyCodeLine{1638       U* ZMAT\_loc = ZMAT + nPtOff*NB;}
+\DoxyCodeLine{1639 }
+\DoxyCodeLine{1640 }
+\DoxyCodeLine{1641       U* NBNBSCR\_loc = NBNBSCR + NB * NB   * tid;}
+\DoxyCodeLine{1642       U* NBNPSCR\_loc = NBNPSCR + NB * NPPB * tid;}
+\DoxyCodeLine{1643 }
+\DoxyCodeLine{1644       \textcolor{keywordtype}{double}* NBNBSCRD\_loc = NBNBSCRD + NB * NB   * tid;}
+\DoxyCodeLine{1645       \textcolor{keywordtype}{double}* NBNPSCRD\_loc = NBNPSCRD + NB * NPPB * tid;}
+\DoxyCodeLine{1646 }
+\DoxyCodeLine{1647       U* NBNBSCR\_r = NBNBSCR\_loc;}
+\DoxyCodeLine{1648       U* NBNPSCR\_r = NBNPSCR\_loc;}
+\DoxyCodeLine{1649 }
+\DoxyCodeLine{1650       \textcolor{keywordtype}{double}* NBNBSCRD\_r = NBNBSCRD\_loc;}
+\DoxyCodeLine{1651       \textcolor{keywordtype}{double}* NBNPSCRD\_r = NBNPSCRD\_loc;}
+\DoxyCodeLine{1652 }
+\DoxyCodeLine{1653       \textcolor{comment}{// Basis}}
+\DoxyCodeLine{1654       }
+\DoxyCodeLine{1655       U* Basis\_use = \textcolor{keyword}{reinterpret\_cast<}U*\textcolor{keyword}{>}(BasisEval);}
+\DoxyCodeLine{1656       \textcolor{keywordflow}{if}( std::is\_same<U,dcomplex>::value ) \{}
+\DoxyCodeLine{1657         Basis\_use = Basis\_cmplx + nPtOff*NB*NDer;}
+\DoxyCodeLine{1658         std::copy\_n(BasisEval, NDer * NPts * NBE, Basis\_use);}
+\DoxyCodeLine{1659       \} }
+\DoxyCodeLine{1660 }
+\DoxyCodeLine{1661       \textcolor{comment}{// This evaluates the V variables for all components}}
+\DoxyCodeLine{1662       \textcolor{comment}{// (Scalar, MZ (UKS) and Mx, MY (2 Comp))}}
+\DoxyCodeLine{1663       \mbox{\hyperlink{namespaceChronusQ_ae1353c367e2eae7c0d590cfeba186022}{evalDen}}((isGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), NPts, NBE, NB, subMatCut, }
+\DoxyCodeLine{1664         NBNBSCRD\_r, NBNPSCRD\_r, Re1PDM-\/>S().pointer(), DenS\_loc , }
+\DoxyCodeLine{1665         GDenS\_loc, GDenS\_loc + NPts, GDenS\_loc + 2*NPts, BasisEval);}
+\DoxyCodeLine{1666 }
+\DoxyCodeLine{1667       \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasZ() )}
+\DoxyCodeLine{1668         \mbox{\hyperlink{namespaceChronusQ_ae1353c367e2eae7c0d590cfeba186022}{evalDen}}((isGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), NPts, NBE, NB, subMatCut, }
+\DoxyCodeLine{1669           NBNBSCRD\_r ,NBNPSCRD\_r, Re1PDM-\/>Z().pointer(), DenZ\_loc, }
+\DoxyCodeLine{1670           GDenZ\_loc, GDenZ\_loc + NPts, GDenZ\_loc + 2*NPts, BasisEval);}
+\DoxyCodeLine{1671 }
+\DoxyCodeLine{1672       \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasXY() ) \{}
+\DoxyCodeLine{1673         \mbox{\hyperlink{namespaceChronusQ_ae1353c367e2eae7c0d590cfeba186022}{evalDen}}((isGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), NPts, NBE, NB, subMatCut, }
+\DoxyCodeLine{1674           NBNBSCRD\_r ,NBNPSCRD\_r, Re1PDM-\/>Y().pointer(), DenY\_loc, }
+\DoxyCodeLine{1675           GDenY\_loc, GDenY\_loc + NPts, GDenY\_loc + 2*NPts, BasisEval);}
+\DoxyCodeLine{1676         \mbox{\hyperlink{namespaceChronusQ_ae1353c367e2eae7c0d590cfeba186022}{evalDen}}((isGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), NPts, NBE, NB, subMatCut, }
+\DoxyCodeLine{1677           NBNBSCRD\_r ,NBNPSCRD\_r, Re1PDM-\/>X().pointer(), DenX\_loc, }
+\DoxyCodeLine{1678           GDenX\_loc, GDenX\_loc + NPts, GDenX\_loc + 2*NPts, BasisEval);}
+\DoxyCodeLine{1679       }
+\DoxyCodeLine{1680       \}}
+\DoxyCodeLine{1681 }
+\DoxyCodeLine{1682       \textcolor{comment}{// V -\/> U variables for evaluating the kernel derivatives.}}
+\DoxyCodeLine{1683       \mbox{\hyperlink{namespaceChronusQ_a45b9888964ad8ea63285a94626e9a2ca}{mkAuxVar}}(this-\/>onePDM,isGGA,epsScreen,NPts,}
+\DoxyCodeLine{1684         DenS\_loc,DenZ\_loc,DenY\_loc,DenX\_loc,}
+\DoxyCodeLine{1685         GDenS\_loc,GDenS\_loc + NPts,GDenS\_loc + 2*NPts,}
+\DoxyCodeLine{1686         GDenZ\_loc,GDenZ\_loc + NPts,GDenZ\_loc + 2*NPts,}
+\DoxyCodeLine{1687         GDenY\_loc,GDenY\_loc + NPts,GDenY\_loc + 2*NPts,}
+\DoxyCodeLine{1688         GDenX\_loc,GDenX\_loc + NPts,GDenX\_loc + 2*NPts,}
+\DoxyCodeLine{1689         Mnorm\_loc, }
+\DoxyCodeLine{1690         KScratch\_loc, KScratch\_loc + NPts, KScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1691         HScratch\_loc, HScratch\_loc + NPts, HScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1692         DSDMnorm\_loc, signMD\_loc, }
+\DoxyCodeLine{1693         Msmall\_loc,U\_n\_loc,U\_gamma\_loc}
+\DoxyCodeLine{1694       );}
+\DoxyCodeLine{1695 }
+\DoxyCodeLine{1696 }
+\DoxyCodeLine{1697 }
+\DoxyCodeLine{1698       loadFXCder(NPts,U\_n\_loc,U\_gamma\_loc,eps\_loc,dVU\_n\_loc,d2VU\_n\_loc,}
+\DoxyCodeLine{1699         dVU\_gamma\_loc, d2VU\_gamma\_loc,d2VU\_n\_gamma\_loc,eps\_SCR\_loc,}
+\DoxyCodeLine{1700         dVU\_n\_SCR\_loc,dVU\_gamma\_SCR\_loc, d2VU\_n\_SCR\_loc,d2VU\_gamma\_SCR\_loc,}
+\DoxyCodeLine{1701         d2VU\_n\_gamma\_SCR\_loc);}
+\DoxyCodeLine{1702 }
+\DoxyCodeLine{1703 }
+\DoxyCodeLine{1704       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iT = 0; iT < nVec; iT++) \{}
+\DoxyCodeLine{1705 }
+\DoxyCodeLine{1706         \textcolor{keywordtype}{size\_t} indx       = itOff * iT;}
+\DoxyCodeLine{1707 }
+\DoxyCodeLine{1708         \textcolor{comment}{// Transition density build }}
+\DoxyCodeLine{1709         \textcolor{comment}{// (Scalar, MZ (UKS) and Mx, MY (2 Comp))}}
+\DoxyCodeLine{1710         evalTransDen((isGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), NPts, NBE, NB, subMatCut, }
+\DoxyCodeLine{1711           NBNBSCR\_r, NBNPSCR\_r, ReTSymm[iT][\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}}] , TS\_loc,}
+\DoxyCodeLine{1712           GTS\_loc, GTS\_loc + NPts, GTS\_loc + 2*NPts, Basis\_use);}
+\DoxyCodeLine{1713 }
+\DoxyCodeLine{1714         evalTransDen((isGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), NPts, NBE, NB, subMatCut, }
+\DoxyCodeLine{1715           NBNBSCR\_r ,NBNPSCR\_r, ReTSymm[iT][\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}}] , TZ\_loc,}
+\DoxyCodeLine{1716           GTZ\_loc, GTZ\_loc + NPts, GTZ\_loc + 2*NPts, Basis\_use);}
+\DoxyCodeLine{1717 }
+\DoxyCodeLine{1718         \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasXY() ) \{}
+\DoxyCodeLine{1719 }
+\DoxyCodeLine{1720           evalTransDen((isGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), NPts, NBE, NB, subMatCut, }
+\DoxyCodeLine{1721             NBNBSCR\_r ,NBNPSCR\_r, ReTSymm[iT][\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5a91a026eba35b718e654608234c1878ba}{MY}}], TY\_loc,}
+\DoxyCodeLine{1722             GTY\_loc, GTY\_loc + NPts, GTY\_loc + 2*NPts, Basis\_use);}
+\DoxyCodeLine{1723 }
+\DoxyCodeLine{1724           evalTransDen((isGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), NPts, NBE, NB, subMatCut, }
+\DoxyCodeLine{1725             NBNBSCR\_r ,NBNPSCR\_r, ReTSymm[iT][\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5ab22d2789fda102ddabdacdb49af83bbf}{MX}}], TX\_loc,}
+\DoxyCodeLine{1726             GTX\_loc, GTX\_loc + NPts, GTX\_loc + 2*NPts, Basis\_use);}
+\DoxyCodeLine{1727 }
+\DoxyCodeLine{1728         \}}
+\DoxyCodeLine{1729 }
+\DoxyCodeLine{1730         \textcolor{comment}{//TODO: Remove nC constraint and delete gPT build in constructZVars}}
+\DoxyCodeLine{1731         \textcolor{keywordflow}{if} (isGGA and this-\/>nC == 2) \{}
+\DoxyCodeLine{1732 }
+\DoxyCodeLine{1733           mkgPTVar( NPts, }
+\DoxyCodeLine{1734             GDenS\_loc, GDenZ\_loc, GDenY\_loc, GDenX\_loc, }
+\DoxyCodeLine{1735             GTS\_loc, GTZ\_loc, GTY\_loc, GTX\_loc,}
+\DoxyCodeLine{1736             gPTss\_loc, gPTsz\_loc, gPTsy\_loc, gPTsx\_loc, gPTzz\_loc, gPTyy\_loc, gPTxx\_loc}
+\DoxyCodeLine{1737             );}
+\DoxyCodeLine{1738 }
+\DoxyCodeLine{1739         \}}
+\DoxyCodeLine{1740 }
+\DoxyCodeLine{1741         constructZVarsFXC(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}},isGGA,NPts, GDenS\_loc, GDenZ\_loc, GDenY\_loc, GDenX\_loc, }
+\DoxyCodeLine{1742           Msmall\_loc,Mnorm\_loc,}
+\DoxyCodeLine{1743           KScratch\_loc, KScratch\_loc + NPts, KScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1744           HScratch\_loc, HScratch\_loc + NPts, HScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1745           TS\_loc, TZ\_loc, TY\_loc, TX\_loc, GTS\_loc, GTZ\_loc, GTY\_loc, }
+\DoxyCodeLine{1746           GTX\_loc, }
+\DoxyCodeLine{1747           gPTss\_loc, gPTsz\_loc, gPTsy\_loc, gPTsx\_loc, gPTzz\_loc, gPTyy\_loc, gPTxx\_loc, }
+\DoxyCodeLine{1748           dVU\_n\_loc, dVU\_gamma\_loc, d2VU\_n\_loc, d2VU\_gamma\_loc, }
+\DoxyCodeLine{1749           d2VU\_n\_gamma\_loc, ZrhoVar\_loc, ZgammaVar1\_loc, ZgammaVar2\_loc,}
+\DoxyCodeLine{1750           ZgammaVar3\_loc, ZgammaVar4\_loc);}
+\DoxyCodeLine{1751 }
+\DoxyCodeLine{1752         formZ\_fxc(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}},isGGA,NPts,NBE,IOff,epsScreen,\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}},ZrhoVar\_loc,}
+\DoxyCodeLine{1753           ZgammaVar1\_loc, ZgammaVar2\_loc, ZgammaVar3\_loc, ZgammaVar4\_loc, }
+\DoxyCodeLine{1754           Msmall\_loc,Mnorm\_loc,}
+\DoxyCodeLine{1755           DSDMnorm\_loc, signMD\_loc, }
+\DoxyCodeLine{1756           GDenS\_loc, GDenZ\_loc, GDenY\_loc, GDenX\_loc, }
+\DoxyCodeLine{1757           KScratch\_loc, KScratch\_loc + NPts, KScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1758           HScratch\_loc, HScratch\_loc + NPts, HScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1759           GTS\_loc, GTZ\_loc, GTY\_loc, GTX\_loc, }
+\DoxyCodeLine{1760           gPTss\_loc, gPTsz\_loc, gPTsy\_loc, gPTsx\_loc, gPTzz\_loc, gPTyy\_loc, gPTxx\_loc, }
+\DoxyCodeLine{1761           BasisEval, ZMAT\_loc);}
+\DoxyCodeLine{1762 }
+\DoxyCodeLine{1763         blas::syr2k(blas::Layout::ColMajor,blas::Uplo::Lower,blas::Op::NoTrans,NBE,NPts,U(0.5),Basis\_use,NBE,ZMAT\_loc,NBE,U(0.),NBNBSCR\_loc,NBE);}
+\DoxyCodeLine{1764 }
+\DoxyCodeLine{1765         \mbox{\hyperlink{namespaceChronusQ_acda74ebbe19528e1829381715ccd4955}{IncBySubMat}}(NB,NB,NBE,NBE,GxcT[tid][iT][\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}}],NB,NBNBSCR\_loc,NBE,}
+\DoxyCodeLine{1766             subMatCut);}
+\DoxyCodeLine{1767 }
+\DoxyCodeLine{1768 }
+\DoxyCodeLine{1769         \textcolor{comment}{//std::cerr << "{}MZ bit "{}<< std::endl;}}
+\DoxyCodeLine{1770         constructZVarsFXC(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}},isGGA,NPts, GDenS\_loc, GDenZ\_loc, GDenY\_loc, GDenX\_loc, }
+\DoxyCodeLine{1771           Msmall\_loc,Mnorm\_loc,}
+\DoxyCodeLine{1772           KScratch\_loc, KScratch\_loc + NPts, KScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1773           HScratch\_loc, HScratch\_loc + NPts, HScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1774           TS\_loc, TZ\_loc, TY\_loc, TX\_loc, GTS\_loc, GTZ\_loc, GTY\_loc, }
+\DoxyCodeLine{1775           GTX\_loc, }
+\DoxyCodeLine{1776           gPTss\_loc, gPTsz\_loc, gPTsy\_loc, gPTsx\_loc, gPTzz\_loc, gPTyy\_loc, gPTxx\_loc, }
+\DoxyCodeLine{1777           dVU\_n\_loc, dVU\_gamma\_loc, d2VU\_n\_loc, d2VU\_gamma\_loc, }
+\DoxyCodeLine{1778           d2VU\_n\_gamma\_loc, ZrhoVar\_loc, ZgammaVar1\_loc, ZgammaVar2\_loc,}
+\DoxyCodeLine{1779           ZgammaVar3\_loc, ZgammaVar4\_loc);}
+\DoxyCodeLine{1780 }
+\DoxyCodeLine{1781         formZ\_fxc(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}},isGGA,NPts,NBE,IOff,epsScreen,\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}},ZrhoVar\_loc,}
+\DoxyCodeLine{1782           ZgammaVar1\_loc, ZgammaVar2\_loc, ZgammaVar3\_loc, ZgammaVar4\_loc,  }
+\DoxyCodeLine{1783           Msmall\_loc,Mnorm\_loc,}
+\DoxyCodeLine{1784           DSDMnorm\_loc, signMD\_loc, }
+\DoxyCodeLine{1785           GDenS\_loc, GDenZ\_loc, GDenY\_loc, GDenX\_loc, }
+\DoxyCodeLine{1786           KScratch\_loc, KScratch\_loc + NPts, KScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1787           HScratch\_loc, HScratch\_loc + NPts, HScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1788           GTS\_loc, GTZ\_loc, GTY\_loc, GTX\_loc, }
+\DoxyCodeLine{1789           gPTss\_loc, gPTsz\_loc, gPTsy\_loc, gPTsx\_loc, gPTzz\_loc, gPTyy\_loc, gPTxx\_loc, }
+\DoxyCodeLine{1790           BasisEval, ZMAT\_loc);}
+\DoxyCodeLine{1791 }
+\DoxyCodeLine{1792         blas::syr2k(blas::Layout::ColMajor,blas::Uplo::Lower,blas::Op::NoTrans,NBE,NPts,U(0.5),Basis\_use,NBE,ZMAT\_loc,NBE,U(0.),NBNBSCR\_loc,NBE);}
+\DoxyCodeLine{1793 }
+\DoxyCodeLine{1794         \mbox{\hyperlink{namespaceChronusQ_acda74ebbe19528e1829381715ccd4955}{IncBySubMat}}(NB,NB,NBE,NBE,GxcT[tid][iT][\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}}],NB,NBNBSCR\_loc,NBE,}
+\DoxyCodeLine{1795             subMatCut);}
+\DoxyCodeLine{1796 }
+\DoxyCodeLine{1797 }
+\DoxyCodeLine{1798         \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasXY() ) \{}
+\DoxyCodeLine{1799           \textcolor{comment}{// std::cerr << "{}MX bit "{}<< std::endl;}}
+\DoxyCodeLine{1800           constructZVarsFXC(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5ab22d2789fda102ddabdacdb49af83bbf}{MX}},isGGA,NPts, GDenS\_loc, GDenZ\_loc, GDenY\_loc, GDenX\_loc, }
+\DoxyCodeLine{1801             Msmall\_loc,Mnorm\_loc,}
+\DoxyCodeLine{1802             KScratch\_loc, KScratch\_loc + NPts, KScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1803             HScratch\_loc, HScratch\_loc + NPts, HScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1804             TS\_loc, TZ\_loc, TY\_loc, TX\_loc, GTS\_loc, GTZ\_loc, GTY\_loc, }
+\DoxyCodeLine{1805             GTX\_loc, }
+\DoxyCodeLine{1806             gPTss\_loc, gPTsz\_loc, gPTsy\_loc, gPTsx\_loc, gPTzz\_loc, gPTyy\_loc, gPTxx\_loc, }
+\DoxyCodeLine{1807             dVU\_n\_loc, dVU\_gamma\_loc, d2VU\_n\_loc, d2VU\_gamma\_loc, }
+\DoxyCodeLine{1808             d2VU\_n\_gamma\_loc, ZrhoVar\_loc, ZgammaVar1\_loc, ZgammaVar2\_loc,}
+\DoxyCodeLine{1809             ZgammaVar3\_loc, ZgammaVar4\_loc);}
+\DoxyCodeLine{1810 }
+\DoxyCodeLine{1811           formZ\_fxc(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5ab22d2789fda102ddabdacdb49af83bbf}{MX}},isGGA,NPts,NBE,IOff,epsScreen,\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}},ZrhoVar\_loc,}
+\DoxyCodeLine{1812             ZgammaVar1\_loc, ZgammaVar2\_loc, ZgammaVar3\_loc, ZgammaVar4\_loc, }
+\DoxyCodeLine{1813             Msmall\_loc,Mnorm\_loc,}
+\DoxyCodeLine{1814             DSDMnorm\_loc, signMD\_loc, }
+\DoxyCodeLine{1815             GDenS\_loc, GDenZ\_loc, GDenY\_loc, GDenX\_loc, }
+\DoxyCodeLine{1816             KScratch\_loc, KScratch\_loc + NPts, KScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1817             HScratch\_loc, HScratch\_loc + NPts, HScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1818             GTS\_loc, GTZ\_loc, GTY\_loc, GTX\_loc, }
+\DoxyCodeLine{1819             gPTss\_loc, gPTsz\_loc, gPTsy\_loc, gPTsx\_loc, gPTzz\_loc, gPTyy\_loc, gPTxx\_loc, }
+\DoxyCodeLine{1820             BasisEval, ZMAT\_loc);}
+\DoxyCodeLine{1821 }
+\DoxyCodeLine{1822           blas::syr2k(blas::Layout::ColMajor,blas::Uplo::Lower,blas::Op::NoTrans,NBE,NPts,U(0.5),Basis\_use,NBE,ZMAT\_loc,NBE,U(0.),NBNBSCR\_loc,NBE);}
+\DoxyCodeLine{1823 }
+\DoxyCodeLine{1824           \mbox{\hyperlink{namespaceChronusQ_acda74ebbe19528e1829381715ccd4955}{IncBySubMat}}(NB,NB,NBE,NBE,GxcT[tid][iT][\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5ab22d2789fda102ddabdacdb49af83bbf}{MX}}],NB,NBNBSCR\_loc,NBE,}
+\DoxyCodeLine{1825               subMatCut);}
+\DoxyCodeLine{1826 }
+\DoxyCodeLine{1827           \textcolor{comment}{//std::cerr << "{}MY bit "{}<< std::endl;}}
+\DoxyCodeLine{1828           constructZVarsFXC(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5a91a026eba35b718e654608234c1878ba}{MY}},isGGA,NPts, GDenS\_loc, GDenZ\_loc, GDenY\_loc, GDenX\_loc, }
+\DoxyCodeLine{1829             Msmall\_loc,Mnorm\_loc,}
+\DoxyCodeLine{1830             KScratch\_loc, KScratch\_loc + NPts, KScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1831             HScratch\_loc, HScratch\_loc + NPts, HScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1832             TS\_loc, TZ\_loc, TY\_loc, TX\_loc, GTS\_loc, GTZ\_loc, GTY\_loc, }
+\DoxyCodeLine{1833             GTX\_loc, }
+\DoxyCodeLine{1834             gPTss\_loc, gPTsz\_loc, gPTsy\_loc, gPTsx\_loc, gPTzz\_loc, gPTyy\_loc, gPTxx\_loc, }
+\DoxyCodeLine{1835             dVU\_n\_loc, dVU\_gamma\_loc, d2VU\_n\_loc, d2VU\_gamma\_loc, }
+\DoxyCodeLine{1836             d2VU\_n\_gamma\_loc, ZrhoVar\_loc, ZgammaVar1\_loc, ZgammaVar2\_loc,}
+\DoxyCodeLine{1837             ZgammaVar3\_loc, ZgammaVar4\_loc);}
+\DoxyCodeLine{1838 }
+\DoxyCodeLine{1839           formZ\_fxc(\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5a91a026eba35b718e654608234c1878ba}{MY}},isGGA,NPts,NBE,IOff,epsScreen,\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}},ZrhoVar\_loc,}
+\DoxyCodeLine{1840             ZgammaVar1\_loc, ZgammaVar2\_loc, ZgammaVar3\_loc, ZgammaVar4\_loc,  }
+\DoxyCodeLine{1841             Msmall\_loc,Mnorm\_loc,}
+\DoxyCodeLine{1842             DSDMnorm\_loc, signMD\_loc, }
+\DoxyCodeLine{1843             GDenS\_loc, GDenZ\_loc, GDenY\_loc, GDenX\_loc, }
+\DoxyCodeLine{1844             KScratch\_loc, KScratch\_loc + NPts, KScratch\_loc + 2* NPts,}
+\DoxyCodeLine{1845             HScratch\_loc, HScratch\_loc + NPts, HScratch\_loc +  NPts,}
+\DoxyCodeLine{1846             GTS\_loc, GTZ\_loc, GTY\_loc, GTX\_loc, }
+\DoxyCodeLine{1847             gPTss\_loc, gPTsz\_loc, gPTsy\_loc, gPTsx\_loc, gPTzz\_loc, gPTyy\_loc, gPTxx\_loc, }
+\DoxyCodeLine{1848             BasisEval, ZMAT\_loc);}
+\DoxyCodeLine{1849 }
+\DoxyCodeLine{1850           blas::syr2k(blas::Layout::ColMajor,blas::Uplo::Lower,blas::Op::NoTrans,NBE,NPts,U(0.5),Basis\_use,NBE,ZMAT\_loc,NBE,U(0.),NBNBSCR\_loc,NBE);}
+\DoxyCodeLine{1851 }
+\DoxyCodeLine{1852           \mbox{\hyperlink{namespaceChronusQ_acda74ebbe19528e1829381715ccd4955}{IncBySubMat}}(NB,NB,NBE,NBE,GxcT[tid][iT][\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5a91a026eba35b718e654608234c1878ba}{MY}}],NB,NBNBSCR\_loc,NBE,}
+\DoxyCodeLine{1853               subMatCut);}
+\DoxyCodeLine{1854 }
+\DoxyCodeLine{1855         \} \textcolor{comment}{// 2C}}
+\DoxyCodeLine{1856 }
+\DoxyCodeLine{1857       \} \textcolor{comment}{// iT loop}}
+\DoxyCodeLine{1858 }
+\DoxyCodeLine{1859     \}; \textcolor{comment}{// VXC}}
+\DoxyCodeLine{1860 }
+\DoxyCodeLine{1861     \textcolor{comment}{// Create the BeckeIntegrator object}}
+\DoxyCodeLine{1862     \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{BeckeIntegrator<EulerMac>}} }
+\DoxyCodeLine{1863       integrator(intComm,this-\/>memManager,this-\/>molecule(),}
+\DoxyCodeLine{1864         this-\/>basisSet(), EulerMac(intParam.nRad), intParam.nAng,}
+\DoxyCodeLine{1865         intParam.nRadPerBatch, (isGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), intParam.epsilon);}
+\DoxyCodeLine{1866 }
+\DoxyCodeLine{1867     \textcolor{comment}{// Integrate the FXC}}
+\DoxyCodeLine{1868     integrator.\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a1a8bb5e114b7d23d8998efc86146b1ca}{integrate}}<\textcolor{keywordtype}{size\_t}>(fxcbuild);}
+\DoxyCodeLine{1869 }
+\DoxyCodeLine{1870     U* mpiScr = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1871 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{1872     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(intComm) == 0 and \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(intComm) > 1 )}
+\DoxyCodeLine{1873       mpiScr = this-\/>memManager.template malloc<U>(NB*NB);}
+\DoxyCodeLine{1874 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1875 }
+\DoxyCodeLine{1876     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iT = 0; iT < nVec; iT++) \{}
+\DoxyCodeLine{1877 }
+\DoxyCodeLine{1878       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iS = 0; iS < 2*this-\/>nC; iS++) \{}
+\DoxyCodeLine{1879 }
+\DoxyCodeLine{1880         \textcolor{comment}{// Add -\/Gxc[T] thread contributions into single storage}}
+\DoxyCodeLine{1881         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} ithread = 0; ithread < NT; ithread++) \{}
+\DoxyCodeLine{1882 }
+\DoxyCodeLine{1883           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0; j < NB; j++)}
+\DoxyCodeLine{1884           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = j; i < NB; i++)}
+\DoxyCodeLine{1885             GxcT[ithread][iT][iS][ j + i*NB ] =}
+\DoxyCodeLine{1886               GxcT[ithread][iT][iS][ i + j*NB ];}
+\DoxyCodeLine{1887 }
+\DoxyCodeLine{1888           U fact = (ithread == 0)  ? 0 : 1.;}
+\DoxyCodeLine{1889           \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'N'},\textcolor{charliteral}{'N'},NB,NB,}
+\DoxyCodeLine{1890             fact         , GxcT[0][iT][iS]      ,NB,}
+\DoxyCodeLine{1891             U(-\/4. * M\_PI), GxcT[ithread][iT][iS],NB,}
+\DoxyCodeLine{1892             GxcT[0][iT][iS],NB);}
+\DoxyCodeLine{1893         \}}
+\DoxyCodeLine{1894 }
+\DoxyCodeLine{1895 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{1896         \textcolor{comment}{// Add MPI Contributions together}}
+\DoxyCodeLine{1897         \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(intComm) > 1 )}
+\DoxyCodeLine{1898           mxx::reduce(GxcT[0][iT][iS],NB2,mpiScr,0,std::plus<U>(),intComm);}
+\DoxyCodeLine{1899 }
+\DoxyCodeLine{1900         \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(intComm) == 0 and \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(intComm) > 1 )}
+\DoxyCodeLine{1901           std::copy\_n(mpiScr,NB2,GxcT[0][iT][iS]);}
+\DoxyCodeLine{1902 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1903 }
+\DoxyCodeLine{1904         \textcolor{comment}{// Add GxcT to K}}
+\DoxyCodeLine{1905         \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(intComm) == 0 )}
+\DoxyCodeLine{1906           \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'N'},\textcolor{charliteral}{'N'},NB,NB,}
+\DoxyCodeLine{1907             U(functionals.back()-\/>xHFX), cList[iT*itOff + iS + 1].AX, NB,}
+\DoxyCodeLine{1908             U(1.),                       GxcT[0][iT][iS],             NB,}
+\DoxyCodeLine{1909             cList[iT*itOff + iS + 1].AX, NB);}
+\DoxyCodeLine{1910 }
+\DoxyCodeLine{1911       \}}
+\DoxyCodeLine{1912 }
+\DoxyCodeLine{1913     \}}
+\DoxyCodeLine{1914 }
+\DoxyCodeLine{1915 }
+\DoxyCodeLine{1916     \textcolor{comment}{// Free up the memory}}
+\DoxyCodeLine{1917     \textcolor{keywordflow}{if}( mpiScr ) this-\/>memManager.free(mpiScr);}
+\DoxyCodeLine{1918     this-\/>memManager.free( GxcT\_raw, NBNBSCR, NBNPSCR, NBNBSCRD, NBNPSCRD );}
+\DoxyCodeLine{1919 }
+\DoxyCodeLine{1920     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa57cec4137b614c87cb4e24a3d003a3e0}{Y}} : ReTSymm) \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}} : \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa57cec4137b614c87cb4e24a3d003a3e0}{Y}}) this-\/>memManager.free(\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}});}
+\DoxyCodeLine{1921     Re1PDM = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1922 }
+\DoxyCodeLine{1923     \textcolor{keywordflow}{if}( DenS ) this-\/>memManager.free( DenS );}
+\DoxyCodeLine{1924     \textcolor{keywordflow}{if}( DenZ ) this-\/>memManager.free( DenZ );}
+\DoxyCodeLine{1925     \textcolor{keywordflow}{if}( DenY ) this-\/>memManager.free( DenY );}
+\DoxyCodeLine{1926     \textcolor{keywordflow}{if}( DenX ) this-\/>memManager.free( DenX );}
+\DoxyCodeLine{1927 }
+\DoxyCodeLine{1928     \textcolor{keywordflow}{if}( Mnorm ) this-\/>memManager.free( Mnorm ); }
+\DoxyCodeLine{1929     \textcolor{keywordflow}{if}( KScratch ) this-\/>memManager.free( KScratch ); }
+\DoxyCodeLine{1930     \textcolor{keywordflow}{if}( Msmall ) this-\/>memManager.free( Msmall ); }
+\DoxyCodeLine{1931     \textcolor{keywordflow}{if}( HScratch ) this-\/>memManager.free( HScratch ); }
+\DoxyCodeLine{1932     \textcolor{keywordflow}{if}( DSDMnorm ) this-\/>memManager.free( DSDMnorm );}
+\DoxyCodeLine{1933     \textcolor{keywordflow}{if}( signMD ) this-\/>memManager.free( signMD ); }
+\DoxyCodeLine{1934     \textcolor{keywordflow}{if}( Basis\_cmplx ) this-\/>memManager.free( Basis\_cmplx ); }
+\DoxyCodeLine{1935 }
+\DoxyCodeLine{1936     \textcolor{keywordflow}{if}( GDenS ) this-\/>memManager.free( GDenS );}
+\DoxyCodeLine{1937     \textcolor{keywordflow}{if}( GDenZ ) this-\/>memManager.free( GDenZ );}
+\DoxyCodeLine{1938     \textcolor{keywordflow}{if}( GDenY ) this-\/>memManager.free( GDenY );}
+\DoxyCodeLine{1939     \textcolor{keywordflow}{if}( GDenX ) this-\/>memManager.free( GDenX );}
+\DoxyCodeLine{1940 }
+\DoxyCodeLine{1941     \textcolor{keywordflow}{if}( TS ) this-\/>memManager.free( TS );}
+\DoxyCodeLine{1942     \textcolor{keywordflow}{if}( TZ ) this-\/>memManager.free( TZ );}
+\DoxyCodeLine{1943     \textcolor{keywordflow}{if}( TY ) this-\/>memManager.free( TY );}
+\DoxyCodeLine{1944     \textcolor{keywordflow}{if}( TX ) this-\/>memManager.free( TX );}
+\DoxyCodeLine{1945 }
+\DoxyCodeLine{1946     \textcolor{keywordflow}{if}( GTS ) this-\/>memManager.free( GTS );}
+\DoxyCodeLine{1947     \textcolor{keywordflow}{if}( GTZ ) this-\/>memManager.free( GTZ );}
+\DoxyCodeLine{1948     \textcolor{keywordflow}{if}( GTY ) this-\/>memManager.free( GTY );}
+\DoxyCodeLine{1949     \textcolor{keywordflow}{if}( GTX ) this-\/>memManager.free( GTX );}
+\DoxyCodeLine{1950 }
+\DoxyCodeLine{1951     \textcolor{keywordflow}{if}( gPTss ) this-\/>memManager.free( gPTss );}
+\DoxyCodeLine{1952     \textcolor{keywordflow}{if}( gPTsx ) this-\/>memManager.free( gPTsx );}
+\DoxyCodeLine{1953     \textcolor{keywordflow}{if}( gPTsy ) this-\/>memManager.free( gPTsy );}
+\DoxyCodeLine{1954     \textcolor{keywordflow}{if}( gPTsz ) this-\/>memManager.free( gPTsz );}
+\DoxyCodeLine{1955     \textcolor{keywordflow}{if}( gPTzz ) this-\/>memManager.free( gPTzz );}
+\DoxyCodeLine{1956     \textcolor{keywordflow}{if}( gPTyy ) this-\/>memManager.free( gPTyy );}
+\DoxyCodeLine{1957     \textcolor{keywordflow}{if}( gPTxx ) this-\/>memManager.free( gPTxx );}
+\DoxyCodeLine{1958 }
+\DoxyCodeLine{1959     this-\/>memManager.free( eps, U\_n, dVU\_n, d2VU\_n );}
+\DoxyCodeLine{1960     \textcolor{keywordflow}{if}( U\_gamma )      this-\/>memManager.free( U\_gamma );}
+\DoxyCodeLine{1961     \textcolor{keywordflow}{if}( dVU\_gamma )    this-\/>memManager.free( dVU\_gamma );}
+\DoxyCodeLine{1962     \textcolor{keywordflow}{if}( d2VU\_gamma )   this-\/>memManager.free( d2VU\_gamma );}
+\DoxyCodeLine{1963     \textcolor{keywordflow}{if}( d2VU\_n\_gamma ) this-\/>memManager.free( d2VU\_n\_gamma );}
+\DoxyCodeLine{1964 }
+\DoxyCodeLine{1965 }
+\DoxyCodeLine{1966     \textcolor{keywordflow}{if}( eps\_SCR )       this-\/>memManager.free( eps\_SCR );}
+\DoxyCodeLine{1967     \textcolor{keywordflow}{if}( dVU\_n\_SCR )     this-\/>memManager.free( dVU\_n\_SCR );}
+\DoxyCodeLine{1968     \textcolor{keywordflow}{if}( dVU\_gamma\_SCR ) this-\/>memManager.free( dVU\_gamma\_SCR );}
+\DoxyCodeLine{1969     \textcolor{keywordflow}{if}( d2VU\_n\_SCR )     this-\/>memManager.free( d2VU\_n\_SCR );}
+\DoxyCodeLine{1970     \textcolor{keywordflow}{if}( d2VU\_gamma\_SCR ) this-\/>memManager.free( d2VU\_gamma\_SCR );}
+\DoxyCodeLine{1971     \textcolor{keywordflow}{if}( d2VU\_n\_gamma\_SCR ) this-\/>memManager.free( d2VU\_n\_gamma\_SCR );}
+\DoxyCodeLine{1972 }
+\DoxyCodeLine{1973     this-\/>memManager.free( ZrhoVar, ZMAT );}
+\DoxyCodeLine{1974     \textcolor{keywordflow}{if}( isGGA ) \{}
+\DoxyCodeLine{1975       this-\/>memManager.free( ZgammaVar1, ZgammaVar2, ZgammaVar3, ZgammaVar4 );}
+\DoxyCodeLine{1976     \}}
+\DoxyCodeLine{1977 }
+\DoxyCodeLine{1978 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{1979     \mbox{\hyperlink{namespaceChronusQ_ae9c2c6f04046395ca738d3adb27543d7}{MPICommFree}}(intComm); \textcolor{comment}{// Free communicator}}
+\DoxyCodeLine{1980 }
+\DoxyCodeLine{1981     \} \textcolor{comment}{// End of the MPI}}
+\DoxyCodeLine{1982 }
+\DoxyCodeLine{1983     \mbox{\hyperlink{namespaceChronusQ_a23c2e4eb26f9455d90831342328f3b91}{MPI\_Barrier}}(c);}
+\DoxyCodeLine{1984 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1985 }
+\DoxyCodeLine{1986     \textcolor{comment}{// Turn back on LA threads}}
+\DoxyCodeLine{1987     \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(LAThreads);}
+\DoxyCodeLine{1988 }
+\DoxyCodeLine{1989 }
+\DoxyCodeLine{1990   \}}
+\DoxyCodeLine{1991 }
+\DoxyCodeLine{1992 }
+\DoxyCodeLine{1993 }
+\DoxyCodeLine{1994 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{1995 }
+
+\end{DoxyCode}

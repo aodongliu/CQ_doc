@@ -1,0 +1,611 @@
+\hypertarget{contract_2incore_8hpp_source}{}\doxysection{incore.\+hpp}
+\label{contract_2incore_8hpp_source}\index{include/particleintegrals/contract/incore.hpp@{include/particleintegrals/contract/incore.hpp}}
+\mbox{\hyperlink{contract_2incore_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{integrals_8hpp}{integrals.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{timer_8hpp}{util/timer.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{threads_8hpp}{util/threads.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas3_8hpp}{cqlinalg/blas3.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasext_8hpp}{cqlinalg/blasext.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incore4indextpi_8hpp}{particleintegrals/twopints/incore4indextpi.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incoreritpi_8hpp}{particleintegrals/twopints/incoreritpi.hpp}}>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incore4indexreleri_8hpp}{particleintegrals/twopints/incore4indexreleri.hpp}}>}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gradints_2incore_8hpp}{particleintegrals/gradints/incore.hpp}}>}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{comment}{// Use stupid but bullet proof incore contraction for debug}}
+\DoxyCodeLine{38 \textcolor{comment}{//\#define \_BULLET\_PROOF\_INCORE}}
+\DoxyCodeLine{39 \textcolor{comment}{//\#define \_REPORT\_INTEGRAL\_TIMINGS}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{58   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{59   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction_a32ae5d08d2f5c0d08499f8bbc8f96139}{InCore4indexTPIContraction<MatsT, IntsT>::twoBodyContract}}(}
+\DoxyCodeLine{60       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{61       \textcolor{keyword}{const} \textcolor{keywordtype}{bool},}
+\DoxyCodeLine{62       std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}> \&list,}
+\DoxyCodeLine{63       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{64     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm);}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \textcolor{keywordflow}{if} (\textcolor{keyword}{typeid}(*\textcolor{keyword}{this}) == \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction}{InCore4indexRelERIContraction<MatsT,IntsT>}})}
+\DoxyCodeLine{67         and \textcolor{keyword}{typeid}(this-\/>ints\_) != \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI}{InCore4indexRelERI<IntsT>}}))}
+\DoxyCodeLine{68       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}InCore4indexRelTPIContraction expect a InCore4indexRelTPI reference."{}});}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     \textcolor{keywordflow}{if} (\textcolor{keyword}{typeid}(*\textcolor{keyword}{this}) == \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction}{InCore4indexTPIContraction<MatsT,IntsT>}}))}
+\DoxyCodeLine{71       \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{72         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsT>}}\&\textcolor{keyword}{>}(this-\/>ints\_);}
+\DoxyCodeLine{73       \} \textcolor{keywordflow}{catch} (\textcolor{keyword}{const} std::bad\_cast\&) \{}
+\DoxyCodeLine{74         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}InCore4indexTPIContraction expect a InCore4indexTPI reference."{}});}
+\DoxyCodeLine{75       \}}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77     \textcolor{keywordflow}{if} (\textcolor{keyword}{typeid}(*\textcolor{keyword}{this}) == \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1InCoreRITPIContraction}{InCoreRITPIContraction<MatsT,IntsT>}}))}
+\DoxyCodeLine{78       \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{79         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI}{InCoreRITPI<IntsT>}}\&\textcolor{keyword}{>}(this-\/>ints\_);}
+\DoxyCodeLine{80       \} \textcolor{keywordflow}{catch} (\textcolor{keyword}{const} std::bad\_cast\&) \{}
+\DoxyCodeLine{81         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}InCoreRITPIContraction expect a InCoreRITPI reference."{}});}
+\DoxyCodeLine{82       \}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9698b57cd81ca4095a7668b46683eb71}{ProgramTimer::timeOp}}(\textcolor{stringliteral}{"{}Contraction Total"{}}, [\&]()\{}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86       \textcolor{comment}{// Loop over matricies to contract with}}
+\DoxyCodeLine{87       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&C : list) \{}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89         \textcolor{comment}{// Coulomb-\/type (34,12) ERI contraction}}
+\DoxyCodeLine{90         \textcolor{comment}{// AX(mn) = (mn | kl) X(kl)}}
+\DoxyCodeLine{91         \textcolor{keywordflow}{if}( C.contType == \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cba973881f532185390135a2845f80eb3ae}{TWOBODY\_CONTRACTION\_TYPE::COULOMB}} ) \{}
+\DoxyCodeLine{92           JContract(comm,C);}
+\DoxyCodeLine{93         \textcolor{comment}{// Exchange-\/type (23,12) ERI contraction}}
+\DoxyCodeLine{94         \textcolor{comment}{// AX(mn) = (mk |ln) X(kl)}}
+\DoxyCodeLine{95         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( C.contType == \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaa095106eab8e9a7a1e33352295d00093}{TWOBODY\_CONTRACTION\_TYPE::EXCHANGE}} ) \{}
+\DoxyCodeLine{96           KContract(comm,C);}
+\DoxyCodeLine{97         \}}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99       \} \textcolor{comment}{// loop over matricies}}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101     \});}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103   \} \textcolor{comment}{// InCore4indexTPIContraction::twoBodyContract}}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105 }
+\DoxyCodeLine{110   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{111   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction_ac03da53623df24fcca17a3893a64925d}{InCore4indexTPIContraction<MatsT, IntsT>::JContract}}(}
+\DoxyCodeLine{112       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}} \&C)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}J Contract"{}});}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsT>}} \&tpi4I =}
+\DoxyCodeLine{117         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsT>}}\&\textcolor{keyword}{>}(this-\/>ints\_);}
+\DoxyCodeLine{118     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& memManager\_ = tpi4I.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}();}
+\DoxyCodeLine{119     \textcolor{keywordtype}{size\_t} NB   = tpi4I.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}();}
+\DoxyCodeLine{120     \textcolor{keywordtype}{size\_t} NB2  = NB*NB;}
+\DoxyCodeLine{121     \textcolor{keywordtype}{size\_t} sNB  = tpi4I.\mbox{\hyperlink{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}{snBasis}}();}
+\DoxyCodeLine{122     \textcolor{keywordtype}{size\_t} sNB2 = sNB*sNB;}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124     \textcolor{comment}{// need to swap NB and sNB if contraction is done in aux}}
+\DoxyCodeLine{125     \textcolor{keywordflow}{if} (this-\/>contractSecond) \{}
+\DoxyCodeLine{126       std::swap(NB,sNB);}
+\DoxyCodeLine{127       std::swap(NB2,sNB2);}
+\DoxyCodeLine{128     \}}
+\DoxyCodeLine{129     }
+\DoxyCodeLine{130     \textcolor{keyword}{const} \textcolor{keywordtype}{bool} sameIntsTMatsT = std::is\_same<IntsT,MatsT>::value;}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132     \textcolor{comment}{// for Hermitian densities, output Coulomb Matrix is same type as IntsT}}
+\DoxyCodeLine{133     \textcolor{keywordflow}{if} (C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2bc6fb16f318b0e1919da14f76ea77e5}{HER}} or sameIntsTMatsT) \{}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135       IntsT *\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}  = \textcolor{keyword}{reinterpret\_cast<}IntsT*\textcolor{keyword}{>}(C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}});}
+\DoxyCodeLine{136       IntsT *AX = \textcolor{keyword}{reinterpret\_cast<}IntsT*\textcolor{keyword}{>}(C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}});}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138       \textcolor{comment}{// Extract the real part of X if X is Hermetian and if the ints are}}
+\DoxyCodeLine{139       \textcolor{comment}{// real}}
+\DoxyCodeLine{140       \textcolor{keyword}{const} \textcolor{keywordtype}{bool} extractRealPartX = }
+\DoxyCodeLine{141         C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2bc6fb16f318b0e1919da14f76ea77e5}{HER}} and std::is\_same<IntsT,double>::value and }
+\DoxyCodeLine{142         std::is\_same<MatsT,dcomplex>::value;}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144       \textcolor{comment}{// Allocate scratch if IntsT and MatsT are different}}
+\DoxyCodeLine{145       \textcolor{keyword}{const} \textcolor{keywordtype}{bool} allocAXScratch = not std::is\_same<IntsT,MatsT>::value;}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147       \textcolor{keywordflow}{if}( extractRealPartX ) \{}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149       \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}} = memManager\_.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ab8bbfb142366f42be809ab18b7835a85}{malloc}}<IntsT>(sNB2);}
+\DoxyCodeLine{150       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0ul; k < sNB2; k++) \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}[k] = std::real(C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}}[k]);}
+\DoxyCodeLine{151     \}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153       \textcolor{keywordflow}{if}( allocAXScratch ) \{}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155         AX = memManager\_.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ab8bbfb142366f42be809ab18b7835a85}{malloc}}<IntsT>(NB2);}
+\DoxyCodeLine{156         std::fill\_n(AX,NB2,0.);}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158       \}}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161 \textcolor{preprocessor}{      \#ifdef \_BULLET\_PROOF\_INCORE}}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163     \textcolor{keywordtype}{size\_t} NB3 = NB * NB2;}
+\DoxyCodeLine{164 \textcolor{preprocessor}{    \#pragma omp parallel for}}
+\DoxyCodeLine{165     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < NB; ++i)}
+\DoxyCodeLine{166     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0; j < NB; ++j)}
+\DoxyCodeLine{167     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < sNB; ++k)}
+\DoxyCodeLine{168     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} l = 0; l < sNB; ++l)}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170       AX[i + j*NB] += tpi4I.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}()[i+j*NB+k*NB2+l*NB3] * \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}[l + k*NB];}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172 \textcolor{preprocessor}{      \#else}}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174     \textcolor{keywordflow}{if}( std::is\_same<IntsT,dcomplex>::value )}
+\DoxyCodeLine{175       blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,NB2,1,sNB2,IntsT(1.),tpi4I.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}(),NB2,\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}},sNB2,IntsT(0.),AX,NB2);}
+\DoxyCodeLine{176     \textcolor{keywordflow}{else} }
+\DoxyCodeLine{177       \textcolor{keywordflow}{if} (not this-\/>contractSecond)}
+\DoxyCodeLine{178         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB2,1,sNB2,IntsT(1.),tpi4I.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}(),NB2,\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}},sNB2,IntsT(0.),AX,NB2);}
+\DoxyCodeLine{179       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{180         blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,NB2,1,sNB2,IntsT(1.),tpi4I.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}(),sNB2,\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}},sNB2,IntsT(0.),AX,NB2);}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182       \textcolor{comment}{// if Complex ints + Hermitian, conjugate}}
+\DoxyCodeLine{183       \textcolor{keywordflow}{if}( std::is\_same<IntsT,dcomplex>::value and C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2bc6fb16f318b0e1919da14f76ea77e5}{HER}} )}
+\DoxyCodeLine{184         \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'R'},NB,NB,IntsT(1.),AX,NB,NB);}
+\DoxyCodeLine{185 }
+\DoxyCodeLine{186       \textcolor{comment}{// If non-\/hermetian, transpose}}
+\DoxyCodeLine{187       \textcolor{keywordflow}{if}( not C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2bc6fb16f318b0e1919da14f76ea77e5}{HER}} )  \{}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189         \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'},NB,NB,IntsT(1.),AX,NB,NB);}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191       \}}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193 \textcolor{preprocessor}{      \#endif}}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195       \textcolor{comment}{// Cleanup temporaries}}
+\DoxyCodeLine{196       \textcolor{keywordflow}{if}( extractRealPartX ) memManager\_.free(\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}});}
+\DoxyCodeLine{197       \textcolor{keywordflow}{if}( allocAXScratch ) \{}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199         std::copy\_n(AX,NB2,C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}});}
+\DoxyCodeLine{200         memManager\_.free(AX);}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202       \}}
+\DoxyCodeLine{203     }
+\DoxyCodeLine{204     \textcolor{comment}{// for non-\/hermiatin and MatsT = dcomplex, IntsT = double}}
+\DoxyCodeLine{205     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{206       \textcolor{keywordflow}{if} (not this-\/>contractSecond)}
+\DoxyCodeLine{207         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB2,1,sNB2,MatsT(1.),tpi4I.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}(),NB2,C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}},sNB2,MatsT(0.),C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}},NB2);}
+\DoxyCodeLine{208       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{209         blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,NB2,1,sNB2,MatsT(1.),tpi4I.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}(),sNB2,C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}},sNB2,MatsT(0.),C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}},NB2);}
+\DoxyCodeLine{210     \}}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}J Contract"{}});}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214   \}; \textcolor{comment}{// InCore4indexTPIContraction::JContract}}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{217   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction_acbbee78cbb3546268e1b91c8b5761ccd}{InCore4indexTPIContraction<MatsT, IntsT>::KContract}}(}
+\DoxyCodeLine{218       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}} \&C)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{219 }
+\DoxyCodeLine{220     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}K Contract"{}});}
+\DoxyCodeLine{221  }
+\DoxyCodeLine{222     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsT>}} \&tpi4I =}
+\DoxyCodeLine{223         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsT>}}\&\textcolor{keyword}{>}(this-\/>ints\_);}
+\DoxyCodeLine{224     \textcolor{comment}{// check to see whether the two basis sets are different}}
+\DoxyCodeLine{225     \textcolor{keywordtype}{size\_t} NB = tpi4I.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}();}
+\DoxyCodeLine{226     \textcolor{keywordtype}{size\_t} NB2 = NB*NB;}
+\DoxyCodeLine{227     \textcolor{keywordtype}{size\_t} NB3 = NB * NB2;}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229     \textcolor{comment}{//\#ifdef \_BULLET\_PROOF\_INCORE}}
+\DoxyCodeLine{230 \textcolor{preprocessor}{    \#if 0}}
+\DoxyCodeLine{231 }
+\DoxyCodeLine{232     std::fill\_n(C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}},NB2,0.);}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234 \textcolor{preprocessor}{    \#pragma omp parallel for}}
+\DoxyCodeLine{235     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < NB; ++i)}
+\DoxyCodeLine{236     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0; j < NB; ++j)}
+\DoxyCodeLine{237     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < NB; ++k)}
+\DoxyCodeLine{238     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} l = 0; l < NB; ++l) \{}
+\DoxyCodeLine{239       C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}}[i + j*NB] += tpi4I.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}()[i+l*NB+k*NB2+j*NB3] * C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}}[l + k*NB];}
+\DoxyCodeLine{240     \}}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242 \textcolor{preprocessor}{    \#else}}
+\DoxyCodeLine{243 }
+\DoxyCodeLine{244     \textcolor{keywordtype}{size\_t} LAThreads = \mbox{\hyperlink{namespaceChronusQ_a3152808c4819d6cbf8a29aef92728866}{GetLAThreads}}();}
+\DoxyCodeLine{245     \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(1);}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{247 \textcolor{preprocessor}{    \#pragma omp parallel for}}
+\DoxyCodeLine{248     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} nu = 0; nu < NB; nu++) }
+\DoxyCodeLine{249       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,1,NB2,MatsT(1.),tpi4I.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}()+nu*NB3,NB,C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}},NB2,MatsT(0.),C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}}+nu*NB,NB);}
+\DoxyCodeLine{250 }
+\DoxyCodeLine{251     \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(LAThreads);}
+\DoxyCodeLine{252 }
+\DoxyCodeLine{253 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}K Contract"{}});}
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257   \}; \textcolor{comment}{// InCore4indexTPIContraction::KContract}}
+\DoxyCodeLine{258 }
+\DoxyCodeLine{259 }
+\DoxyCodeLine{264   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{265   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction_ac90e537c3a2f5caa218bf25abcb09922}{InCore4indexRelERIContraction<MatsT, IntsT>::JContract}}(}
+\DoxyCodeLine{266       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}} \&C)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{267 }
+\DoxyCodeLine{268     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI}{InCore4indexRelERI<IntsT>}} \&tpi4I =}
+\DoxyCodeLine{269         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI}{InCore4indexRelERI<IntsT>}}\&\textcolor{keyword}{>}(this-\/>ints\_);}
+\DoxyCodeLine{270     \textcolor{keywordtype}{size\_t} NB = tpi4I.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}();}
+\DoxyCodeLine{271     \textcolor{keywordtype}{size\_t} NB2 = NB * NB;}
+\DoxyCodeLine{272     \textcolor{keywordtype}{size\_t} NB3 = NB * NB2;}
+\DoxyCodeLine{273 }
+\DoxyCodeLine{274     \textcolor{keywordflow}{if}( C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_adbb5b526c2043efb4215209a5e8f309b}{ERI4}} == \textcolor{keyword}{nullptr} ) C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_adbb5b526c2043efb4215209a5e8f309b}{ERI4}} = \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{double}*\textcolor{keyword}{>}(tpi4I.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}());}
+\DoxyCodeLine{275 }
+\DoxyCodeLine{276     memset(C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}},0.,NB2*\textcolor{keyword}{sizeof}(MatsT));}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278     \textcolor{keywordflow}{if}( C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ac7785af46860afa407a5da091e7c8067}{intTrans}} == \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903a7a18aa43bb072fdc1e16635c617bb655}{TRANS\_KL}} ) \{}
+\DoxyCodeLine{279 }
+\DoxyCodeLine{280       \textcolor{comment}{// D(μν) = D(λκ)(μν|[κλ]\string^T) = D(λκ)(μν|λκ)}}
+\DoxyCodeLine{281 \textcolor{preprocessor}{      \#pragma omp parallel for}}
+\DoxyCodeLine{282       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} m = 0; m < NB; ++m)}
+\DoxyCodeLine{283       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} n = 0; n < NB; ++n)}
+\DoxyCodeLine{284       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < NB; ++k)}
+\DoxyCodeLine{285       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} l = 0; l < NB; ++l) \{}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287         C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}}[m + n*NB] += C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_adbb5b526c2043efb4215209a5e8f309b}{ERI4}}[m + n*NB + l*NB2 + k*NB3] * C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}}[l + k*NB];}
+\DoxyCodeLine{288 }
+\DoxyCodeLine{289       \}}
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ac7785af46860afa407a5da091e7c8067}{intTrans}} == \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903a5180f3386f923301dcddd2e3e69d35b9}{TRANS\_MN\_TRANS\_KL}}) \{ }
+\DoxyCodeLine{292       }
+\DoxyCodeLine{293       \textcolor{comment}{// D(μν) = D(λκ)([μν]\string^T|[κλ]\string^T) = D(λκ)(νμ|λκ)}}
+\DoxyCodeLine{294 \textcolor{preprocessor}{      \#pragma omp parallel for}}
+\DoxyCodeLine{295       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} m = 0; m < NB; ++m)}
+\DoxyCodeLine{296       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} n = 0; n < NB; ++n)}
+\DoxyCodeLine{297       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < NB; ++k)}
+\DoxyCodeLine{298       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} l = 0; l < NB; ++l) \{}
+\DoxyCodeLine{299 }
+\DoxyCodeLine{300         C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}}[m + n*NB] += C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_adbb5b526c2043efb4215209a5e8f309b}{ERI4}}[n + m*NB + l*NB2 + k*NB3]*C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}}[l + k*NB];}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302       \}}
+\DoxyCodeLine{303     }
+\DoxyCodeLine{304     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ac7785af46860afa407a5da091e7c8067}{intTrans}} == \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903ac722a2e7fee120ee9cb7831757093b36}{TRANS\_MN}}) \{ }
+\DoxyCodeLine{305       }
+\DoxyCodeLine{306       \textcolor{comment}{// D(μν) = D(λκ)([μν]\string^T|κλ) = D(λκ)(νμ|κλ)}}
+\DoxyCodeLine{307 \textcolor{preprocessor}{      \#pragma omp parallel for}}
+\DoxyCodeLine{308       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} m = 0; m < NB; ++m)}
+\DoxyCodeLine{309       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} n = 0; n < NB; ++n)}
+\DoxyCodeLine{310       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < NB; ++k)}
+\DoxyCodeLine{311       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} l = 0; l < NB; ++l) \{}
+\DoxyCodeLine{312 }
+\DoxyCodeLine{313         C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}}[m + n*NB] += C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_adbb5b526c2043efb4215209a5e8f309b}{ERI4}}[n + m*NB + k*NB2 + l*NB3]*C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}}[l + k*NB];}
+\DoxyCodeLine{314 }
+\DoxyCodeLine{315       \}}
+\DoxyCodeLine{316     }
+\DoxyCodeLine{317     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ac7785af46860afa407a5da091e7c8067}{intTrans}} == \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903a78e69a6d2bbe065a8b5d5809fbeb09b6}{TRANS\_MNKL}} ) \{}
+\DoxyCodeLine{318 }
+\DoxyCodeLine{319       \textcolor{comment}{// D(μν) = D(λκ)(μν|κλ)\string^T = D(λκ)(κλ|μν)}}
+\DoxyCodeLine{320 \textcolor{preprocessor}{      \#pragma omp parallel for}}
+\DoxyCodeLine{321       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} m = 0; m < NB; ++m)}
+\DoxyCodeLine{322       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} n = 0; n < NB; ++n)}
+\DoxyCodeLine{323       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < NB; ++k)}
+\DoxyCodeLine{324       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} l = 0; l < NB; ++l) \{}
+\DoxyCodeLine{325 }
+\DoxyCodeLine{326         C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}}[m + n*NB] += C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_adbb5b526c2043efb4215209a5e8f309b}{ERI4}}[k + l*NB + m*NB2 + n*NB3]*C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}}[l + k*NB];}
+\DoxyCodeLine{327 }
+\DoxyCodeLine{328       \}}
+\DoxyCodeLine{329 }
+\DoxyCodeLine{330     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ac7785af46860afa407a5da091e7c8067}{intTrans}} == \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903a9807d5059b4859be330e484f2fcd9775}{TRANS\_NONE}} ) \{}
+\DoxyCodeLine{331 }
+\DoxyCodeLine{332       \textcolor{comment}{// D(μν) = D(λκ)(μν|κλ)}}
+\DoxyCodeLine{333 \textcolor{preprocessor}{      \#pragma omp parallel for}}
+\DoxyCodeLine{334       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} m = 0; m < NB; ++m)}
+\DoxyCodeLine{335       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} n = 0; n < NB; ++n)}
+\DoxyCodeLine{336       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < NB; ++k)}
+\DoxyCodeLine{337       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} l = 0; l < NB; ++l) \{}
+\DoxyCodeLine{338 }
+\DoxyCodeLine{339         C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}}[m + n*NB] += C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_adbb5b526c2043efb4215209a5e8f309b}{ERI4}}[m + n*NB + k*NB2 + l*NB3] * C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}}[l + k*NB];}
+\DoxyCodeLine{340 }
+\DoxyCodeLine{341       \}}
+\DoxyCodeLine{342 }
+\DoxyCodeLine{343     \}}
+\DoxyCodeLine{344 }
+\DoxyCodeLine{345 }
+\DoxyCodeLine{346   \}; \textcolor{comment}{// InCore4indexRelERIContraction::JContract}}
+\DoxyCodeLine{347 }
+\DoxyCodeLine{348 }
+\DoxyCodeLine{349   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{350   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction_a2e5a9672dcf5c2726cb7e3c7a3b57436}{InCore4indexRelERIContraction<MatsT, IntsT>::KContract}}(}
+\DoxyCodeLine{351       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}} \&C)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{352 }
+\DoxyCodeLine{353     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI}{InCore4indexRelERI<IntsT>}} \&tpi4I =}
+\DoxyCodeLine{354         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI}{InCore4indexRelERI<IntsT>}}\&\textcolor{keyword}{>}(this-\/>ints\_);}
+\DoxyCodeLine{355     \textcolor{keywordtype}{size\_t} NB = tpi4I.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}();}
+\DoxyCodeLine{356     \textcolor{keywordtype}{size\_t} NB2 = NB * NB;}
+\DoxyCodeLine{357     \textcolor{keywordtype}{size\_t} NB3 = NB * NB2;}
+\DoxyCodeLine{358 }
+\DoxyCodeLine{359     \textcolor{keywordflow}{if}( C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_adbb5b526c2043efb4215209a5e8f309b}{ERI4}} == \textcolor{keyword}{nullptr}) C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_adbb5b526c2043efb4215209a5e8f309b}{ERI4}} = \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{double}*\textcolor{keyword}{>}(tpi4I.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}());}
+\DoxyCodeLine{360 }
+\DoxyCodeLine{361     memset(C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}},0.,NB2*\textcolor{keyword}{sizeof}(MatsT));}
+\DoxyCodeLine{362 }
+\DoxyCodeLine{363     \textcolor{keywordflow}{if} ( C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ac7785af46860afa407a5da091e7c8067}{intTrans}} == \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903a5180f3386f923301dcddd2e3e69d35b9}{TRANS\_MN\_TRANS\_KL}} ) \{}
+\DoxyCodeLine{364 }
+\DoxyCodeLine{365       \textcolor{comment}{// D(μν) = D(λκ)([μλ]\string^T|[κν]\string^T) = D(λκ)(λμ|νκ)}}
+\DoxyCodeLine{366 \textcolor{preprocessor}{      \#pragma omp parallel for}}
+\DoxyCodeLine{367       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} m = 0; m < NB; ++m)}
+\DoxyCodeLine{368       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} n = 0; n < NB; ++n)}
+\DoxyCodeLine{369       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} k = 0; k < NB; ++k)}
+\DoxyCodeLine{370       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} l = 0; l < NB; ++l) \{}
+\DoxyCodeLine{371 }
+\DoxyCodeLine{372         C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}}[m + n*NB] += C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_adbb5b526c2043efb4215209a5e8f309b}{ERI4}}[l + m * NB + n * NB2 + k * NB3] * C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}}[l + k * NB];}
+\DoxyCodeLine{373 }
+\DoxyCodeLine{374       \}}
+\DoxyCodeLine{375     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ac7785af46860afa407a5da091e7c8067}{intTrans}} == \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903a7a18aa43bb072fdc1e16635c617bb655}{TRANS\_KL}} ) \{}
+\DoxyCodeLine{376 }
+\DoxyCodeLine{377       \textcolor{comment}{// D(μν) = D(λκ)(μλ|[κν]\string^T) = D(λκ)(μλ|νκ)}}
+\DoxyCodeLine{378 \textcolor{preprocessor}{      \#pragma omp parallel for}}
+\DoxyCodeLine{379       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} m = 0; m < NB; ++m)}
+\DoxyCodeLine{380       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} n = 0; n < NB; ++n)}
+\DoxyCodeLine{381       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < NB; ++k)}
+\DoxyCodeLine{382       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} l = 0; l < NB; ++l) \{}
+\DoxyCodeLine{383 }
+\DoxyCodeLine{384         C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}}[m + n*NB] += C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_adbb5b526c2043efb4215209a5e8f309b}{ERI4}}[m + l*NB + n*NB2 + k*NB3] * C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}}[l + k*NB];}
+\DoxyCodeLine{385 }
+\DoxyCodeLine{386       \}}
+\DoxyCodeLine{387 }
+\DoxyCodeLine{388     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ac7785af46860afa407a5da091e7c8067}{intTrans}} == \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903a78e69a6d2bbe065a8b5d5809fbeb09b6}{TRANS\_MNKL}} ) \{}
+\DoxyCodeLine{389 }
+\DoxyCodeLine{390       \textcolor{comment}{// D(μν) = D(λκ)(μλ|κν)\string^T = D(λκ)(κν|μλ)}}
+\DoxyCodeLine{391 \textcolor{preprocessor}{      \#pragma omp parallel for}}
+\DoxyCodeLine{392       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} m = 0; m < NB; ++m)}
+\DoxyCodeLine{393       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} n = 0; n < NB; ++n)}
+\DoxyCodeLine{394       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < NB; ++k)}
+\DoxyCodeLine{395       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} l = 0; l < NB; ++l) \{}
+\DoxyCodeLine{396 }
+\DoxyCodeLine{397         C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}}[m + l*NB] += C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_adbb5b526c2043efb4215209a5e8f309b}{ERI4}}[k + l*NB + m*NB2 + n*NB3] * C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}}[n + k*NB];}
+\DoxyCodeLine{398 }
+\DoxyCodeLine{399       \}}
+\DoxyCodeLine{400 }
+\DoxyCodeLine{401     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ac7785af46860afa407a5da091e7c8067}{intTrans}} == \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903a9807d5059b4859be330e484f2fcd9775}{TRANS\_NONE}} ) \{}
+\DoxyCodeLine{402 }
+\DoxyCodeLine{403       \textcolor{comment}{// D(μν) = D(λκ)(μλ|κν)}}
+\DoxyCodeLine{404 \textcolor{preprocessor}{      \#pragma omp parallel for}}
+\DoxyCodeLine{405       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} m = 0; m < NB; ++m)}
+\DoxyCodeLine{406       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} n = 0; n < NB; ++n)}
+\DoxyCodeLine{407       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < NB; ++k)}
+\DoxyCodeLine{408       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} l = 0; l < NB; ++l) \{}
+\DoxyCodeLine{409 }
+\DoxyCodeLine{410         C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}}[m + n*NB] += C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_adbb5b526c2043efb4215209a5e8f309b}{ERI4}}[m + l*NB + k*NB2 + n*NB3] * C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}}[l + k*NB];}
+\DoxyCodeLine{411 }
+\DoxyCodeLine{412       \}}
+\DoxyCodeLine{413     \}}
+\DoxyCodeLine{414 }
+\DoxyCodeLine{415   \}; \textcolor{comment}{// InCore4indexRelTPIContraction::KContract}}
+\DoxyCodeLine{416 }
+\DoxyCodeLine{417 }
+\DoxyCodeLine{422   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{423   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCoreRITPIContraction_a20eb026d532e0103c9c6aae264010fe6}{InCoreRITPIContraction<MatsT, IntsT>::JContract}}(}
+\DoxyCodeLine{424       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}} \&C)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{425 }
+\DoxyCodeLine{426     \mbox{\hyperlink{classChronusQ_1_1InCoreRITPI}{InCoreRITPI<IntsT>}} \&eri3j =}
+\DoxyCodeLine{427         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI}{InCoreRITPI<IntsT>}}\&\textcolor{keyword}{>}(this-\/>ints\_);}
+\DoxyCodeLine{428     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& memManager\_ = eri3j.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}();}
+\DoxyCodeLine{429     \textcolor{keywordtype}{size\_t} NB = eri3j.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}();}
+\DoxyCodeLine{430     \textcolor{keywordtype}{size\_t} NB2 = NB*NB;}
+\DoxyCodeLine{431     \textcolor{keywordtype}{size\_t} NBRI = eri3j.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a24130646ea2ccf99c9b5c5b102758731}{nRIBasis}}();}
+\DoxyCodeLine{432 }
+\DoxyCodeLine{433     IntsT *\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}  = \textcolor{keyword}{reinterpret\_cast<}IntsT*\textcolor{keyword}{>}(C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}});}
+\DoxyCodeLine{434     IntsT *AX = \textcolor{keyword}{reinterpret\_cast<}IntsT*\textcolor{keyword}{>}(C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}});}
+\DoxyCodeLine{435 }
+\DoxyCodeLine{436     \textcolor{comment}{// Extract the real part of X if X is Hermetian and if the ints are real}}
+\DoxyCodeLine{437     \textcolor{keyword}{const} \textcolor{keywordtype}{bool} extractRealPartX = }
+\DoxyCodeLine{438       C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2bc6fb16f318b0e1919da14f76ea77e5}{HER}} and std::is\_same<IntsT,double>::value and }
+\DoxyCodeLine{439       std::is\_same<MatsT,dcomplex>::value;}
+\DoxyCodeLine{440 }
+\DoxyCodeLine{441     \textcolor{comment}{// Allocate scratch if IntsT and MatsT are different}}
+\DoxyCodeLine{442     \textcolor{keyword}{const} \textcolor{keywordtype}{bool} allocAXScratch = not std::is\_same<IntsT,MatsT>::value;}
+\DoxyCodeLine{443 }
+\DoxyCodeLine{444     \textcolor{keywordflow}{if}( extractRealPartX ) \{}
+\DoxyCodeLine{445 }
+\DoxyCodeLine{446       \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}} = memManager\_.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_ade6305420f24a022504e69ce1ba92325}{malloc}}<IntsT>(NB2);}
+\DoxyCodeLine{447       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0ul; k < NB2; k++) \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}[k] = std::real(C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}}[k]);}
+\DoxyCodeLine{448 }
+\DoxyCodeLine{449     \}}
+\DoxyCodeLine{450 }
+\DoxyCodeLine{451     \textcolor{keywordflow}{if}( allocAXScratch ) \{}
+\DoxyCodeLine{452 }
+\DoxyCodeLine{453       AX = memManager\_.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_ade6305420f24a022504e69ce1ba92325}{malloc}}<IntsT>(NB2);}
+\DoxyCodeLine{454       std::fill\_n(AX,NB2,0.);}
+\DoxyCodeLine{455 }
+\DoxyCodeLine{456     \}}
+\DoxyCodeLine{457 }
+\DoxyCodeLine{458 }
+\DoxyCodeLine{459     \textcolor{keyword}{auto} Jtemp = memManager\_.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_ade6305420f24a022504e69ce1ba92325}{malloc}}<IntsT>(NBRI);}
+\DoxyCodeLine{460     \textcolor{comment}{// (ij|Q)S\string^\{-\/1/2\} -\/> ERI3J}}
+\DoxyCodeLine{461     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NBRI,1,NB2,IntsT(1.),eri3j.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a044a784af3ca919053a10f7be2aa0edc}{pointer}}(),NBRI,\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}},NB2,IntsT(0.),Jtemp,NBRI);}
+\DoxyCodeLine{462     blas::gemm(blas::Layout::ColMajor,blas::Op::Trans,blas::Op::NoTrans,NB2,1,NBRI,IntsT(1.),eri3j.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a044a784af3ca919053a10f7be2aa0edc}{pointer}}(),NBRI,Jtemp,NBRI,IntsT(0.),AX,NB2);}
+\DoxyCodeLine{463     memManager\_.free(Jtemp);}
+\DoxyCodeLine{464 }
+\DoxyCodeLine{465     \textcolor{comment}{// if Complex ints + Hermitian, conjugate}}
+\DoxyCodeLine{466 \textcolor{comment}{//    if( std::is\_same<IntsT,dcomplex>::value and C.HER )}}
+\DoxyCodeLine{467 \textcolor{comment}{//      IMatCopy('R',NB,NB,IntsT(1.),AX,NB,NB);}}
+\DoxyCodeLine{468 }
+\DoxyCodeLine{469     \textcolor{comment}{// If non-\/hermetian, transpose}}
+\DoxyCodeLine{470 \textcolor{comment}{//    if( not C.HER )  \{}}
+\DoxyCodeLine{471 }
+\DoxyCodeLine{472 \textcolor{comment}{//      IMatCopy('T',NB,NB,IntsT(1.),AX,NB,NB);}}
+\DoxyCodeLine{473 }
+\DoxyCodeLine{474 \textcolor{comment}{//    \}}}
+\DoxyCodeLine{475 }
+\DoxyCodeLine{476     \textcolor{comment}{// Cleanup temporaries}}
+\DoxyCodeLine{477     \textcolor{keywordflow}{if}( extractRealPartX ) memManager\_.free(\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}});}
+\DoxyCodeLine{478     \textcolor{keywordflow}{if}( allocAXScratch ) \{}
+\DoxyCodeLine{479 }
+\DoxyCodeLine{480       std::copy\_n(AX,NB2,C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}});}
+\DoxyCodeLine{481       memManager\_.free(AX);}
+\DoxyCodeLine{482 }
+\DoxyCodeLine{483     \}}
+\DoxyCodeLine{484 }
+\DoxyCodeLine{485   \}; \textcolor{comment}{// InCoreRIERIContraction::JContract}}
+\DoxyCodeLine{486 }
+\DoxyCodeLine{491   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{492   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCoreRITPIContraction_a139f63d06f5e02a6af0ff14bf3bd1dc9}{InCoreRITPIContraction<MatsT, IntsT>::KContract}}(}
+\DoxyCodeLine{493       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}, \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}} \&C)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{494 }
+\DoxyCodeLine{495     \mbox{\hyperlink{classChronusQ_1_1InCoreRITPI}{InCoreRITPI<IntsT>}} \&eri3j =}
+\DoxyCodeLine{496         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI}{InCoreRITPI<IntsT>}}\&\textcolor{keyword}{>}(this-\/>ints\_);}
+\DoxyCodeLine{497     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& memManager\_ = eri3j.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}();}
+\DoxyCodeLine{498     \textcolor{keywordtype}{size\_t} NB = eri3j.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}();}
+\DoxyCodeLine{499     \textcolor{keywordtype}{size\_t} NBRI = eri3j.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a24130646ea2ccf99c9b5c5b102758731}{nRIBasis}}();}
+\DoxyCodeLine{500     \textcolor{keywordtype}{size\_t} NBNBRI = NB*NBRI;}
+\DoxyCodeLine{501     \textcolor{keywordtype}{size\_t} NB2NBRI= NB*NBNBRI;}
+\DoxyCodeLine{502 }
+\DoxyCodeLine{503     MatsT *\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}  = C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}};}
+\DoxyCodeLine{504     MatsT *AX = C.\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}};}
+\DoxyCodeLine{505 }
+\DoxyCodeLine{506     \textcolor{keyword}{auto} Ktemp = memManager\_.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_ade6305420f24a022504e69ce1ba92325}{malloc}}<MatsT>(NB2NBRI);}
+\DoxyCodeLine{507 \textcolor{preprocessor}{\#if 1}}
+\DoxyCodeLine{508     \textcolor{comment}{// (ij|Q)S\string^\{-\/1/2\} -\/> ERI3J}}
+\DoxyCodeLine{509     \textcolor{keywordtype}{size\_t} LAThreads = \mbox{\hyperlink{namespaceChronusQ_a3152808c4819d6cbf8a29aef92728866}{GetLAThreads}}();}
+\DoxyCodeLine{510     \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(1);}
+\DoxyCodeLine{511 }
+\DoxyCodeLine{512 \textcolor{preprocessor}{    \#pragma omp parallel for}}
+\DoxyCodeLine{513     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} nu = 0ul; nu < NB; nu++)}
+\DoxyCodeLine{514       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::Trans,NBRI,NB,NB,MatsT(1.),eri3j.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a044a784af3ca919053a10f7be2aa0edc}{pointer}}()+nu*NBNBRI,NBRI,\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}},NB,MatsT(0.),Ktemp+nu*NBNBRI,NBRI);}
+\DoxyCodeLine{515 }
+\DoxyCodeLine{516     \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(LAThreads);}
+\DoxyCodeLine{517 }
+\DoxyCodeLine{518     blas::gemm(blas::Layout::ColMajor,blas::Op::Trans,blas::Op::NoTrans,NB,NB,NBNBRI,MatsT(1.),eri3j.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a044a784af3ca919053a10f7be2aa0edc}{pointer}}(),NBNBRI,Ktemp,NBNBRI,MatsT(0.),AX,NB);}
+\DoxyCodeLine{519 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{520     \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'},NB,NBNBRI,IntsT(1.),ERI3J,NB,NBNBRI);}
+\DoxyCodeLine{521     blas::gemm(blas::Layout::ColMajor,blas::Op::Trans,blas::Op::NoTrans,NBNBRI,NB,NB,IntsT(1.),ERI3J,NB,\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}},NB,IntsT(0.),Ktemp,NBNBRI);}
+\DoxyCodeLine{522     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::Trans,NB,NB,NBNBRI,IntsT(1.),Ktemp,NB,ERI3J,NB2,IntsT(0.),AX,NB);}
+\DoxyCodeLine{523     \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'},NBNBRI,NB,IntsT(1.),ERI3J,NBNBRI,NB);}
+\DoxyCodeLine{524 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{525     memManager\_.free(Ktemp);}
+\DoxyCodeLine{526 }
+\DoxyCodeLine{527   \}; \textcolor{comment}{// InCoreRIERIContraction::KContract}}
+\DoxyCodeLine{528 }
+\DoxyCodeLine{533   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{534   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCoreRITPIContraction_a338e71a896b95173a684f6f826368aa4}{InCoreRITPIContraction<MatsT, IntsT>::KCoefContract}}(}
+\DoxyCodeLine{535       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm, \textcolor{keywordtype}{size\_t} NO, MatsT *C, MatsT *AX)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{536     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm);}
+\DoxyCodeLine{537 }
+\DoxyCodeLine{538     \mbox{\hyperlink{classChronusQ_1_1InCoreRITPI}{InCoreRITPI<IntsT>}} \&eri3j =}
+\DoxyCodeLine{539         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI}{InCoreRITPI<IntsT>}}\&\textcolor{keyword}{>}(this-\/>ints\_);}
+\DoxyCodeLine{540     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& memManager\_ = eri3j.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}();}
+\DoxyCodeLine{541     \textcolor{keywordtype}{size\_t} NB = eri3j.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}();}
+\DoxyCodeLine{542     \textcolor{keywordtype}{size\_t} NBRI = eri3j.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a24130646ea2ccf99c9b5c5b102758731}{nRIBasis}}();}
+\DoxyCodeLine{543     \textcolor{keywordtype}{size\_t} NBNBRI = NB*NBRI;}
+\DoxyCodeLine{544     \textcolor{keywordtype}{size\_t} NONBRI= NO*NBRI;}
+\DoxyCodeLine{545 }
+\DoxyCodeLine{546     MatsT *Btemp1 = memManager\_.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_ade6305420f24a022504e69ce1ba92325}{malloc}}<MatsT>(NBNBRI*NO);}
+\DoxyCodeLine{547     MatsT *Btemp2 = memManager\_.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_ade6305420f24a022504e69ce1ba92325}{malloc}}<MatsT>(NBNBRI*NO);}
+\DoxyCodeLine{548 }
+\DoxyCodeLine{549     \textcolor{comment}{// 1. Bt1(i, L | nu) = C(lambda, i)\string^H @ B(L, lambda | nu)\string^T}}
+\DoxyCodeLine{550     \textcolor{keywordtype}{size\_t} LAThreads = \mbox{\hyperlink{namespaceChronusQ_a3152808c4819d6cbf8a29aef92728866}{GetLAThreads}}();}
+\DoxyCodeLine{551     \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(1);}
+\DoxyCodeLine{552 \textcolor{preprocessor}{    \#pragma omp parallel for}}
+\DoxyCodeLine{553     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} nu = 0ul; nu < NB; nu++)}
+\DoxyCodeLine{554       blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::Trans,NO,NBRI,NB,MatsT(1.),C,NB,}
+\DoxyCodeLine{555            eri3j.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a044a784af3ca919053a10f7be2aa0edc}{pointer}}()+nu*NBNBRI,NBRI,}
+\DoxyCodeLine{556            MatsT(0.),Btemp1+nu*NONBRI,NO);}
+\DoxyCodeLine{557     \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(LAThreads);}
+\DoxyCodeLine{558 }
+\DoxyCodeLine{559     \textcolor{comment}{// 2. Bt2(i, L mu) = C(sigma, i)\string^T @ B(L mu, sigma)\string^T}}
+\DoxyCodeLine{560     blas::gemm(blas::Layout::ColMajor,blas::Op::Trans,blas::Op::Trans,NO,NBNBRI,NB,MatsT(1.),C,NB,}
+\DoxyCodeLine{561          \textcolor{keyword}{reinterpret\_cast<}MatsT*\textcolor{keyword}{>}(eri3j.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a044a784af3ca919053a10f7be2aa0edc}{pointer}}()),NBNBRI,}
+\DoxyCodeLine{562          MatsT(0.),Btemp2,NO);}
+\DoxyCodeLine{563 }
+\DoxyCodeLine{564     \textcolor{comment}{// 3. K(mu, nu) = Bt2(i L, mu)\string^T @ Bt1(i L, nu)}}
+\DoxyCodeLine{565     blas::gemm(blas::Layout::ColMajor,blas::Op::Trans,blas::Op::NoTrans,NB,NB,NONBRI,MatsT(1.),Btemp2,NONBRI,Btemp1,NONBRI,}
+\DoxyCodeLine{566          MatsT(0.),AX,NB);}
+\DoxyCodeLine{567 }
+\DoxyCodeLine{568     memManager\_.free(Btemp1, Btemp2);}
+\DoxyCodeLine{569 }
+\DoxyCodeLine{570   \}; \textcolor{comment}{// InCoreRIERIContraction::KCoefContract}}
+\DoxyCodeLine{571 }
+\DoxyCodeLine{572   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{573   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCoreRITPIContraction_a338e71a896b95173a684f6f826368aa4}{InCoreRITPIContraction<dcomplex, double>::KCoefContract}}(}
+\DoxyCodeLine{574       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm, \textcolor{keywordtype}{size\_t} NO, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} *C, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} *AX)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{575     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm);}
+\DoxyCodeLine{576 }
+\DoxyCodeLine{577     \mbox{\hyperlink{classChronusQ_1_1InCoreRITPI}{InCoreRITPI<double>}} \&eri3j =}
+\DoxyCodeLine{578         \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI}{InCoreRITPI<double>}}\&\textcolor{keyword}{>}(this-\/>ints\_);}
+\DoxyCodeLine{579     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& memManager\_ = eri3j.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}();}
+\DoxyCodeLine{580     \textcolor{keywordtype}{size\_t} NB = eri3j.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}();}
+\DoxyCodeLine{581     \textcolor{keywordtype}{size\_t} NBRI = eri3j.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a24130646ea2ccf99c9b5c5b102758731}{nRIBasis}}();}
+\DoxyCodeLine{582     \textcolor{keywordtype}{size\_t} NBNBRI = NB*NBRI;}
+\DoxyCodeLine{583     \textcolor{keywordtype}{size\_t} NONBRI= NO*NBRI;}
+\DoxyCodeLine{584 }
+\DoxyCodeLine{585     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} *Btemp1 = memManager\_.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_ade6305420f24a022504e69ce1ba92325}{malloc}}<\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}>(NBNBRI*NO);}
+\DoxyCodeLine{586     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} *Btemp2 = memManager\_.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_ade6305420f24a022504e69ce1ba92325}{malloc}}<\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}>(NBNBRI*NO);}
+\DoxyCodeLine{587     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} *Btemp3 = memManager\_.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_ade6305420f24a022504e69ce1ba92325}{malloc}}<\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}>(NBNBRI*NO);}
+\DoxyCodeLine{588 }
+\DoxyCodeLine{589     \textcolor{keywordtype}{size\_t} LAThreads = \mbox{\hyperlink{namespaceChronusQ_a3152808c4819d6cbf8a29aef92728866}{GetLAThreads}}();}
+\DoxyCodeLine{590     \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(1);}
+\DoxyCodeLine{591 \textcolor{preprocessor}{    \#pragma omp parallel for}}
+\DoxyCodeLine{592     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} nu = 0ul; nu < NB; nu++) \{}
+\DoxyCodeLine{593     \textcolor{comment}{// 1.1. Bt3(L, i | nu) = B(L, lambda | nu) @ C(lambda, i)}}
+\DoxyCodeLine{594       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NBRI,NO,NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(1.),}
+\DoxyCodeLine{595            eri3j.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a044a784af3ca919053a10f7be2aa0edc}{pointer}}()+nu*NBNBRI,NBRI,C,NB,}
+\DoxyCodeLine{596            \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.),Btemp3+nu*NONBRI,NBRI);}
+\DoxyCodeLine{597     \textcolor{comment}{// 1.2. Bt1(i, L | nu) = Bt3(L, i | nu)\string^H}}
+\DoxyCodeLine{598       \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'C'},NBRI,NO,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(1.),Btemp3+nu*NONBRI,NBRI,}
+\DoxyCodeLine{599              Btemp1+nu*NONBRI,NO);}
+\DoxyCodeLine{600     \}}
+\DoxyCodeLine{601     \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(LAThreads);}
+\DoxyCodeLine{602 }
+\DoxyCodeLine{603     \textcolor{comment}{// 2.1. Bt3(L mu, i) = B(L mu, sigma) @ C(sigma, i)}}
+\DoxyCodeLine{604     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NBNBRI,NO,NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(1.),eri3j.\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a044a784af3ca919053a10f7be2aa0edc}{pointer}}(),NBNBRI,C,NB,}
+\DoxyCodeLine{605          \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.),Btemp3,NBNBRI);}
+\DoxyCodeLine{606     \textcolor{comment}{// 2.2. Bt2(i, L mu) = Bt3(L mu, i)\string^T}}
+\DoxyCodeLine{607     \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'T'},NBNBRI,NO,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(1.),Btemp3,NBNBRI,Btemp2,NO);}
+\DoxyCodeLine{608 }
+\DoxyCodeLine{609     \textcolor{comment}{// 3. K(mu, nu) = Bt2(i L, mu)\string^T @ Bt1(i L, nu)}}
+\DoxyCodeLine{610     blas::gemm(blas::Layout::ColMajor,blas::Op::Trans,blas::Op::NoTrans,NB,NB,NONBRI,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(1.),Btemp2,NONBRI,Btemp1,NONBRI,}
+\DoxyCodeLine{611          \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.),AX,NB);}
+\DoxyCodeLine{612 }
+\DoxyCodeLine{613     memManager\_.free(Btemp1, Btemp2, Btemp3);}
+\DoxyCodeLine{614 }
+\DoxyCodeLine{615   \}; \textcolor{comment}{// InCoreRIERIContraction::KCoefContract}}
+\DoxyCodeLine{616 }
+\DoxyCodeLine{617 }
+\DoxyCodeLine{618   \textcolor{comment}{// Contraction into separate storages}}
+\DoxyCodeLine{619   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{620   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexGradContraction_a7e4f3a0eb5b431f81f18431e907b0870}{InCore4indexGradContraction<MatsT,IntsT>::gradTwoBodyContract}}(}
+\DoxyCodeLine{621     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{622     \textcolor{keyword}{const} \textcolor{keywordtype}{bool} screen,}
+\DoxyCodeLine{623     std::vector<std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}>>\& list,}
+\DoxyCodeLine{624     \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{625 }
+\DoxyCodeLine{626     \textcolor{comment}{// Contract over each 3N gradient component}}
+\DoxyCodeLine{627     \textcolor{keywordtype}{size\_t} nGrad = this-\/>grad\_.size();}
+\DoxyCodeLine{628     assert(nGrad == list.size());}
+\DoxyCodeLine{629 }
+\DoxyCodeLine{630     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0; i < nGrad; i++) \{}
+\DoxyCodeLine{631       \textcolor{keyword}{auto} casted = std::dynamic\_pointer\_cast<InCore4indexTPI<IntsT>>(this-\/>grad\_[i]);}
+\DoxyCodeLine{632       \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction}{InCore4indexTPIContraction<MatsT,IntsT>}} contraction(*casted);}
+\DoxyCodeLine{633       contraction.contractSecond = this-\/>contractSecond;}
+\DoxyCodeLine{634       contraction.twoBodyContract(comm, screen, list[i], pert);}
+\DoxyCodeLine{635     \}}
+\DoxyCodeLine{636 }
+\DoxyCodeLine{637   \}; \textcolor{comment}{// InCore4indexGradContraction::gradTwoBodyContract}}
+\DoxyCodeLine{638 }
+\DoxyCodeLine{639 }
+\DoxyCodeLine{640 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

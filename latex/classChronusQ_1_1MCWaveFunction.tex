@@ -1,0 +1,621 @@
+\hypertarget{classChronusQ_1_1MCWaveFunction}{}\doxysection{ChronusQ\+::MCWave\+Function\texorpdfstring{$<$}{<} MatsT, IntsT \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1MCWaveFunction}\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+
+
+The \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} class. The typed abstract interface for all classes for which the wave function is described by a single slater determinant (HF, KS, PHF, etc).  
+
+
+
+
+{\ttfamily \#include $<$mcwavefunction.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::MCWave\+Function\texorpdfstring{$<$}{<} MatsT, IntsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=247pt]{classChronusQ_1_1MCWaveFunction__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::MCWave\+Function\texorpdfstring{$<$}{<} MatsT, IntsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename MatsU $>$ }\\\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_aee1d882b208b511eacfaeedd668fe4e1}{MCWave\+Function}} (\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsU, IntsT $>$ \&ref, size\+\_\+t NS)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} Constructor by \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a3525c6ecd5b2a1e0708d09114c3d04dd}{MCWave\+Function}} ()=delete
+\item 
+{\footnotesize template$<$typename MatsU $>$ }\\\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_ad558577cd2d8d0869e2dc9da431db4eb}{MCWave\+Function}} (const \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}}$<$ MatsU, IntsT $>$ \&, int dummy=0)
+\item 
+{\footnotesize template$<$typename MatsU $>$ }\\\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_abf296f1e188a7ebb8de38dea39c27194}{MCWave\+Function}} (\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}}$<$ MatsU, IntsT $>$ \&\&, int dummy=0)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a81f8d0c25bdb940b330b72e001b86827}{MCWave\+Function}} (const \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}}$<$ MatsT, IntsT $>$ \&)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a504155eeab6a01252a301257f6dc844a}{MCWave\+Function}} (\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}}$<$ MatsT, IntsT $>$ \&\&)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a0de26caa000dceb1deb087c3dbe4b02c}{$\sim$\+MCWave\+Function}} ()
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a5d1e50f554cf5dbd4c86022d93e61d17}{run}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&)=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_ad2e970c6c9b8f50e3cf1ac7265d3598b}{compute\+One\+RDM}} (size\+\_\+t)
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_aff027a84dd40c741dde8adccdaf1154b}{compute\+One\+RDM}} ()
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a9125d252858e5e980417bda8457b55ea}{compute\+TDMs}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a5d57443d6388a669ba18b6593d4dc555}{rdm2pdm}} (\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ \&, double scale=1.)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{Wave\+Function\+Base}} \& \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_ab817904a4e9f9f254c1a868b9bf0e3f9}{reference\+Wave\+Function}} ()
+\item 
+\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_acad5d92de9633efdd02cbabfe8a8b0fd}{reference}} () const
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a0f054ac532138f6749e11b74b1b717cd}{swap\+MOs}} (std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ $>$ \&mo\+Pairs, \mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19d}{Spin\+Type}} sp)
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_ab55737cc5e5196937814f00d328ffa8f}{save\+Current\+States}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a07e50dde8975711c0d2243bbf9f4e5bc}{set\+MORanges}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a700a1089f64411ed3356f2afa16ca128}{transform\+Ints}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a662831de30a52985eb7fa0152671f751}{print\+MOSpace\+Patition}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a893a4f5edc1b70cabfeca023c046cd1a}{print1\+RDMs}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a575beaf269cc740f4fd8708c770a00e3}{print\+MOInfo}} (std\+::ostream \&, size\+\_\+t a=0)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a976b23a29bf2825e5b6f05abd2e27a00}{population\+Analysis}} (size\+\_\+t)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a8d7e553d88c2ce450ee6a2f78f23ed64}{population\+Analysis}} ()
+\item 
+double \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a99a24b90879fa825515cda219c7b685a}{oscillator\+\_\+strength}} (size\+\_\+t, size\+\_\+t s1=0)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a2fb23d2d38b981c4f42b4fa9813dc74d}{alloc}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a23002fe6341d08665594d2629e91c9a4}{dealloc}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{MOInts\+Transformer}}$<$ MatsT, IntsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a1e610e885c5f05f263040f94b55bbffa}{moints\+TF}}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{Integrals\+Collection}} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_ad4e1ab666e36453c019f1350d51ebc85}{moints}} = \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{Integrals\+Collection}}()
+\begin{DoxyCompactList}\small\item\em MOIntegrals for the storage of integrals. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a9a21ff76e48bc76f8914a79b64ecdb5c}{oper\+\_\+t\+\_\+coll}} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a1e15d8447cb718a44a2f9ddc34b2abaf}{CIVecs}}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1CIBuilder}{CIBuilder}}$<$ MatsT, IntsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a7de0a244fa9480ff3f187477887708a3}{ci\+Builder}} = nullptr
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a4a23bb371e383e7ab0aad2501cefbe7c}{one\+RDM}}
+\item 
+std\+::vector$<$ std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_adcc38d14100fa76ce75a23a77b329248}{TDMs}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef MatsT $\ast$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a64894dbcdcd17e2f5ba9e4989751936a}{oper\+\_\+t}}
+\item 
+typedef std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a64894dbcdcd17e2f5ba9e4989751936a}{oper\+\_\+t}} $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a9a21ff76e48bc76f8914a79b64ecdb5c}{oper\+\_\+t\+\_\+coll}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_af6aa19f5ac94106585e5f843544a975f}{ref\+\_\+}}
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a9bcd20cdd013e578b25dcf270e57f859}{cache\+Half\+Trans\+TPI\+\_\+}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename MatsT, typename IntsT$>$\newline
+class Chronus\+Q\+::\+MCWave\+Function$<$ Mats\+T, Ints\+T $>$}
+The \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} class. The typed abstract interface for all classes for which the wave function is described by a single slater determinant (HF, KS, PHF, etc). 
+
+Adds knowledge of storage type to \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWave\+Function\+Base}} 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a64894dbcdcd17e2f5ba9e4989751936a}\label{classChronusQ_1_1MCWaveFunction_a64894dbcdcd17e2f5ba9e4989751936a}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!oper\_t@{oper\_t}}
+\index{oper\_t@{oper\_t}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{oper\_t}{oper\_t}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+typedef MatsT$\ast$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::oper\+\_\+t\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a9a21ff76e48bc76f8914a79b64ecdb5c}\label{classChronusQ_1_1MCWaveFunction_a9a21ff76e48bc76f8914a79b64ecdb5c}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!oper\_t\_coll@{oper\_t\_coll}}
+\index{oper\_t\_coll@{oper\_t\_coll}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{oper\_t\_coll}{oper\_t\_coll}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+typedef std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a64894dbcdcd17e2f5ba9e4989751936a}{oper\+\_\+t}}$>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::oper\+\_\+t\+\_\+coll\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_aee1d882b208b511eacfaeedd668fe4e1}\label{classChronusQ_1_1MCWaveFunction_aee1d882b208b511eacfaeedd668fe4e1}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!MCWaveFunction@{MCWaveFunction}}
+\index{MCWaveFunction@{MCWaveFunction}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{MCWaveFunction()}{MCWaveFunction()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename MatsU $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::\+MCWave\+Function (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsU, IntsT $>$ \&}]{ref,  }\item[{size\+\_\+t}]{NS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} Constructor by \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}}. 
+
+Stores references to a \char`\"{}reference\char`\"{} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} object and \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} and makes a copy of the reference into a complex \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} object for the propagation. Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_aee1d882b208b511eacfaeedd668fe4e1_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a3525c6ecd5b2a1e0708d09114c3d04dd}\label{classChronusQ_1_1MCWaveFunction_a3525c6ecd5b2a1e0708d09114c3d04dd}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!MCWaveFunction@{MCWaveFunction}}
+\index{MCWaveFunction@{MCWaveFunction}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{MCWaveFunction()}{MCWaveFunction()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::\+MCWave\+Function (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_ad558577cd2d8d0869e2dc9da431db4eb}\label{classChronusQ_1_1MCWaveFunction_ad558577cd2d8d0869e2dc9da431db4eb}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!MCWaveFunction@{MCWaveFunction}}
+\index{MCWaveFunction@{MCWaveFunction}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{MCWaveFunction()}{MCWaveFunction()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename MatsU $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::\+MCWave\+Function (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}}$<$ MatsU, IntsT $>$ \&}]{other,  }\item[{int}]{dummy = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Constructs a \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} object from another of a another (possibly the same) type by copy.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em other} & \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} object to copy \\
+\hline
+\mbox{\texttt{ in}}  & {\em dummy} & Dummy argument to fix calling signature for delegation to copy constructor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_abf296f1e188a7ebb8de38dea39c27194}\label{classChronusQ_1_1MCWaveFunction_abf296f1e188a7ebb8de38dea39c27194}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!MCWaveFunction@{MCWaveFunction}}
+\index{MCWaveFunction@{MCWaveFunction}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{MCWaveFunction()}{MCWaveFunction()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+template$<$typename MatsU $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::\+MCWave\+Function (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}}$<$ MatsU, IntsT $>$ \&\&}]{other,  }\item[{int}]{dummy = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Constructs a \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} object from another of a another (possibly the same) type by move.
+
+\begin{DoxyWarning}{Warning}
+Deallocates the passed \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} object
+\end{DoxyWarning}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em other} & \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} object to move \\
+\hline
+\mbox{\texttt{ in}}  & {\em dummy} & Dummy argument to fix calling signature for delegation to move constructor \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a81f8d0c25bdb940b330b72e001b86827}\label{classChronusQ_1_1MCWaveFunction_a81f8d0c25bdb940b330b72e001b86827}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!MCWaveFunction@{MCWaveFunction}}
+\index{MCWaveFunction@{MCWaveFunction}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{MCWaveFunction()}{MCWaveFunction()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::\+MCWave\+Function (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}}$<$ MatsT, IntsT $>$ \&}]{other }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a504155eeab6a01252a301257f6dc844a}\label{classChronusQ_1_1MCWaveFunction_a504155eeab6a01252a301257f6dc844a}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!MCWaveFunction@{MCWaveFunction}}
+\index{MCWaveFunction@{MCWaveFunction}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{MCWaveFunction()}{MCWaveFunction()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::\+MCWave\+Function (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}}$<$ MatsT, IntsT $>$ \&\&}]{other }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a0de26caa000dceb1deb087c3dbe4b02c}\label{classChronusQ_1_1MCWaveFunction_a0de26caa000dceb1deb087c3dbe4b02c}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!````~MCWaveFunction@{$\sim$MCWaveFunction}}
+\index{````~MCWaveFunction@{$\sim$MCWaveFunction}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$MCWaveFunction()}{~MCWaveFunction()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::$\sim$\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a0de26caa000dceb1deb087c3dbe4b02c_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a2fb23d2d38b981c4f42b4fa9813dc74d}\label{classChronusQ_1_1MCWaveFunction_a2fb23d2d38b981c4f42b4fa9813dc74d}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!alloc@{alloc}}
+\index{alloc@{alloc}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{alloc()}{alloc()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::alloc}
+
+Allocates the internal memory a \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} object Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a2fb23d2d38b981c4f42b4fa9813dc74d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a2fb23d2d38b981c4f42b4fa9813dc74d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_aff027a84dd40c741dde8adccdaf1154b}\label{classChronusQ_1_1MCWaveFunction_aff027a84dd40c741dde8adccdaf1154b}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!computeOneRDM@{computeOneRDM}}
+\index{computeOneRDM@{computeOneRDM}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeOneRDM()}{computeOneRDM()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::compute\+One\+RDM\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classChronusQ_1_1MCSCF_ad8685976f55a00c4e10ccc41fa2d65ba}{Chronus\+Q\+::\+MCSCF$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_aff027a84dd40c741dde8adccdaf1154b_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_ad2e970c6c9b8f50e3cf1ac7265d3598b}\label{classChronusQ_1_1MCWaveFunction_ad2e970c6c9b8f50e3cf1ac7265d3598b}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!computeOneRDM@{computeOneRDM}}
+\index{computeOneRDM@{computeOneRDM}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeOneRDM()}{computeOneRDM()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::compute\+One\+RDM (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classChronusQ_1_1MCSCF_a7b095536c3efc7effbee37657527f11e}{Chronus\+Q\+::\+MCSCF$<$ Mats\+T, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a9125d252858e5e980417bda8457b55ea}\label{classChronusQ_1_1MCWaveFunction_a9125d252858e5e980417bda8457b55ea}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!computeTDMs@{computeTDMs}}
+\index{computeTDMs@{computeTDMs}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeTDMs()}{computeTDMs()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::compute\+TDMs\hspace{0.3cm}{\ttfamily [virtual]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a23002fe6341d08665594d2629e91c9a4}\label{classChronusQ_1_1MCWaveFunction_a23002fe6341d08665594d2629e91c9a4}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!dealloc@{dealloc}}
+\index{dealloc@{dealloc}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{dealloc()}{dealloc()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::dealloc}
+
+Deallocates the internal memory a \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWave\+Function}} object Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a23002fe6341d08665594d2629e91c9a4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a99a24b90879fa825515cda219c7b685a}\label{classChronusQ_1_1MCWaveFunction_a99a24b90879fa825515cda219c7b685a}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!oscillator\_strength@{oscillator\_strength}}
+\index{oscillator\_strength@{oscillator\_strength}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{oscillator\_strength()}{oscillator\_strength()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::oscillator\+\_\+strength (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{s2,  }\item[{size\+\_\+t}]{s1 = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a99a24b90879fa825515cda219c7b685a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a99a24b90879fa825515cda219c7b685a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a8d7e553d88c2ce450ee6a2f78f23ed64}\label{classChronusQ_1_1MCWaveFunction_a8d7e553d88c2ce450ee6a2f78f23ed64}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!populationAnalysis@{populationAnalysis}}
+\index{populationAnalysis@{populationAnalysis}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{populationAnalysis()}{populationAnalysis()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::population\+Analysis}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=225pt]{classChronusQ_1_1MCWaveFunction_a8d7e553d88c2ce450ee6a2f78f23ed64_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a8d7e553d88c2ce450ee6a2f78f23ed64_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a976b23a29bf2825e5b6f05abd2e27a00}\label{classChronusQ_1_1MCWaveFunction_a976b23a29bf2825e5b6f05abd2e27a00}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!populationAnalysis@{populationAnalysis}}
+\index{populationAnalysis@{populationAnalysis}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{populationAnalysis()}{populationAnalysis()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::population\+Analysis (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{i }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a976b23a29bf2825e5b6f05abd2e27a00_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a893a4f5edc1b70cabfeca023c046cd1a}\label{classChronusQ_1_1MCWaveFunction_a893a4f5edc1b70cabfeca023c046cd1a}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!print1RDMs@{print1RDMs}}
+\index{print1RDMs@{print1RDMs}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{print1RDMs()}{print1RDMs()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::print1\+RDMs}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a893a4f5edc1b70cabfeca023c046cd1a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a575beaf269cc740f4fd8708c770a00e3}\label{classChronusQ_1_1MCWaveFunction_a575beaf269cc740f4fd8708c770a00e3}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!printMOInfo@{printMOInfo}}
+\index{printMOInfo@{printMOInfo}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{printMOInfo()}{printMOInfo()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::print\+MOInfo (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{size\+\_\+t}]{a = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a575beaf269cc740f4fd8708c770a00e3_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a662831de30a52985eb7fa0152671f751}\label{classChronusQ_1_1MCWaveFunction_a662831de30a52985eb7fa0152671f751}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!printMOSpacePatition@{printMOSpacePatition}}
+\index{printMOSpacePatition@{printMOSpacePatition}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{printMOSpacePatition()}{printMOSpacePatition()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::print\+MOSpace\+Patition}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a662831de30a52985eb7fa0152671f751_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a5d57443d6388a669ba18b6593d4dc555}\label{classChronusQ_1_1MCWaveFunction_a5d57443d6388a669ba18b6593d4dc555}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!rdm2pdm@{rdm2pdm}}
+\index{rdm2pdm@{rdm2pdm}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{rdm2pdm()}{rdm2pdm()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::rdm2pdm (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ \&}]{rdm,  }\item[{double}]{scale = {\ttfamily 1.} }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a5d57443d6388a669ba18b6593d4dc555_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_acad5d92de9633efdd02cbabfe8a8b0fd}\label{classChronusQ_1_1MCWaveFunction_acad5d92de9633efdd02cbabfe8a8b0fd}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!reference@{reference}}
+\index{reference@{reference}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{reference()}{reference()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::reference (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_acad5d92de9633efdd02cbabfe8a8b0fd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_ab817904a4e9f9f254c1a868b9bf0e3f9}\label{classChronusQ_1_1MCWaveFunction_ab817904a4e9f9f254c1a868b9bf0e3f9}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!referenceWaveFunction@{referenceWaveFunction}}
+\index{referenceWaveFunction@{referenceWaveFunction}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{referenceWaveFunction()}{referenceWaveFunction()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{Wave\+Function\+Base}} \& \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::reference\+Wave\+Function (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a426e18e72ad8c5671ca65a42fc3500fe}{Chronus\+Q\+::\+MCWave\+Function\+Base}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a5d1e50f554cf5dbd4c86022d93e61d17}\label{classChronusQ_1_1MCWaveFunction_a5d1e50f554cf5dbd4c86022d93e61d17}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!run@{run}}
+\index{run@{run}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::run (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a27c499158c3e19c5342088c58ebf6fb2}{Chronus\+Q\+::\+MCWave\+Function\+Base}}.
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MCSCF_ae2b5040ab5221af280964057bf5d9a18}{Chronus\+Q\+::\+MCSCF$<$ Mats\+T, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_ab55737cc5e5196937814f00d328ffa8f}\label{classChronusQ_1_1MCWaveFunction_ab55737cc5e5196937814f00d328ffa8f}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!saveCurrentStates@{saveCurrentStates}}
+\index{saveCurrentStates@{saveCurrentStates}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{saveCurrentStates()}{saveCurrentStates()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::save\+Current\+States\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classChronusQ_1_1MCSCF_a04a5b3bc7924b6ef9fa5df9d94f86477}{Chronus\+Q\+::\+MCSCF$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_ab55737cc5e5196937814f00d328ffa8f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a07e50dde8975711c0d2243bbf9f4e5bc}\label{classChronusQ_1_1MCWaveFunction_a07e50dde8975711c0d2243bbf9f4e5bc}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!setMORanges@{setMORanges}}
+\index{setMORanges@{setMORanges}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{setMORanges()}{setMORanges()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::set\+MORanges\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a7631c0cf10b0d7c19d96f526b30299be}{Chronus\+Q\+::\+MCWave\+Function\+Base}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a0f054ac532138f6749e11b74b1b717cd}\label{classChronusQ_1_1MCWaveFunction_a0f054ac532138f6749e11b74b1b717cd}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!swapMOs@{swapMOs}}
+\index{swapMOs@{swapMOs}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{swapMOs()}{swapMOs()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::swap\+MOs (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ $>$ \&}]{mo\+Pairs,  }\item[{\mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19d}{Spin\+Type}}}]{sp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a7d3be045939df179ddc8faf398360b47}{Chronus\+Q\+::\+MCWave\+Function\+Base}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a0f054ac532138f6749e11b74b1b717cd_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a700a1089f64411ed3356f2afa16ca128}\label{classChronusQ_1_1MCWaveFunction_a700a1089f64411ed3356f2afa16ca128}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!transformInts@{transformInts}}
+\index{transformInts@{transformInts}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{transformInts()}{transformInts()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::transform\+Ints (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a700a1089f64411ed3356f2afa16ca128_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MCWaveFunction_a700a1089f64411ed3356f2afa16ca128_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a9bcd20cdd013e578b25dcf270e57f859}\label{classChronusQ_1_1MCWaveFunction_a9bcd20cdd013e578b25dcf270e57f859}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!cacheHalfTransTPI\_@{cacheHalfTransTPI\_}}
+\index{cacheHalfTransTPI\_@{cacheHalfTransTPI\_}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{cacheHalfTransTPI\_}{cacheHalfTransTPI\_}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::cache\+Half\+Trans\+TPI\+\_\+ = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a7de0a244fa9480ff3f187477887708a3}\label{classChronusQ_1_1MCWaveFunction_a7de0a244fa9480ff3f187477887708a3}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!ciBuilder@{ciBuilder}}
+\index{ciBuilder@{ciBuilder}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{ciBuilder}{ciBuilder}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1CIBuilder}{CIBuilder}}$<$MatsT,IntsT$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::ci\+Builder = nullptr}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a1e15d8447cb718a44a2f9ddc34b2abaf}\label{classChronusQ_1_1MCWaveFunction_a1e15d8447cb718a44a2f9ddc34b2abaf}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!CIVecs@{CIVecs}}
+\index{CIVecs@{CIVecs}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{CIVecs}{CIVecs}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a9a21ff76e48bc76f8914a79b64ecdb5c}{oper\+\_\+t\+\_\+coll}} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::\+CIVecs}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_ad4e1ab666e36453c019f1350d51ebc85}\label{classChronusQ_1_1MCWaveFunction_ad4e1ab666e36453c019f1350d51ebc85}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!moints@{moints}}
+\index{moints@{moints}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{moints}{moints}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{Integrals\+Collection}} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::moints = \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{Integrals\+Collection}}()}
+
+
+
+MOIntegrals for the storage of integrals. 
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a1e610e885c5f05f263040f94b55bbffa}\label{classChronusQ_1_1MCWaveFunction_a1e610e885c5f05f263040f94b55bbffa}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!mointsTF@{mointsTF}}
+\index{mointsTF@{mointsTF}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{mointsTF}{mointsTF}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{MOInts\+Transformer}}$<$MatsT,IntsT$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::moints\+TF}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_a4a23bb371e383e7ab0aad2501cefbe7c}\label{classChronusQ_1_1MCWaveFunction_a4a23bb371e383e7ab0aad2501cefbe7c}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!oneRDM@{oneRDM}}
+\index{oneRDM@{oneRDM}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{oneRDM}{oneRDM}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$MatsT$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::one\+RDM}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_af6aa19f5ac94106585e5f843544a975f}\label{classChronusQ_1_1MCWaveFunction_af6aa19f5ac94106585e5f843544a975f}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!ref\_@{ref\_}}
+\index{ref\_@{ref\_}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{ref\_}{ref\_}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$MatsT, IntsT$>$\& \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::ref\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MCWaveFunction_adcc38d14100fa76ce75a23a77b329248}\label{classChronusQ_1_1MCWaveFunction_adcc38d14100fa76ce75a23a77b329248}} 
+\index{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}!TDMs@{TDMs}}
+\index{TDMs@{TDMs}!ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$@{ChronusQ::MCWaveFunction$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{TDMs}{TDMs}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$MatsT$>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{Chronus\+Q\+::\+MCWave\+Function}}$<$ MatsT, IntsT $>$\+::\+TDMs}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{mcwavefunction_8hpp}{mcwavefunction.\+hpp}}\item 
+include/mcwavefunction/\mbox{\hyperlink{mcwavefunction_2impl_8hpp}{impl.\+hpp}}\item 
+include/mcwavefunction/\mbox{\hyperlink{moints_8hpp}{moints.\+hpp}}\item 
+include/mcwavefunction/\mbox{\hyperlink{mcwavefunction_2print_8hpp}{print.\+hpp}}\item 
+include/mcwavefunction/\mbox{\hyperlink{property_8hpp}{property.\+hpp}}\item 
+include/mcwavefunction/\mbox{\hyperlink{mcwavefunction_2rdm_8hpp}{rdm.\+hpp}}\end{DoxyCompactItemize}

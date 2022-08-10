@@ -1,0 +1,464 @@
+\hypertarget{classChronusQ_1_1QuantumBase}{}\doxysection{ChronusQ\+::Quantum\+Base Class Reference}
+\label{classChronusQ_1_1QuantumBase}\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+
+
+The \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{Quantum\+Base}} class. The abstraction of information relating to the \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} class which are independent of storage type.  
+
+
+
+
+{\ttfamily \#include $<$base.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::Quantum\+Base\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1QuantumBase__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::Quantum\+Base\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1QuantumBase__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6ed15d36d43fc3433f83c6a6a42a53a5}{Quantum\+Base}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a8a6b2cfa353efd9e862e8ad71b2262cd}{Quantum\+Base}} (const \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{Quantum\+Base}} \&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1QuantumBase_ab5d395f15ddb9968aed602dc5d2bfc32}{Quantum\+Base}} (\mbox{\hyperlink{classChronusQ_1_1QuantumBase}{Quantum\+Base}} \&\&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0b12d31447c09f3cabd57f5ee6a6c9b8}{Quantum\+Base}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem, size\+\_\+t \+\_\+nC, bool \+\_\+i\+CS, \mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}} p)
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a9c786fcea80de9218a49b0640fc86c76}{form\+Density}} ()=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a22dae7f7707d3e4db05b66a367d609d4}{compute\+Energy}} ()=0
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1QuantumBase_aabcb230c3be04d02df3160f6f28ef391}{compute\+Energy}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert)
+\item 
+virtual std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1QuantumBase_ac2eca987ab50e84b7fbdb9a68007ed11}{get\+Energy\+Summary}} ()
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a36061ba6528d204613a6e075365e29c3}{compute\+Multipole}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&)=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a56b16ba0c1567b33aba8d3de08db3798}{compute\+Spin}} ()=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a9d66e7cf375b6a8d922372d33d293bdd}{method\+Specific\+Properties}} ()=0
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a4c2e0e14116d87505f9aa61953d11194}{compute\+Properties}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert)
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1QuantumBase_aabb2cfa1546838b8c9b783fcb88e4f91}{print1\+PDM}} (std\+::ostream \&)=0
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1QuantumBase_aedcce2518a1e9011d92ab8cf881de33e}{print\+Multipoles}} (std\+::ostream \&)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a406ba9024fcfa5e2b7ce6b176f397030}{print\+Spin}} (std\+::ostream \&)
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a8f4367e2adf918c689f381a2eaf15599}{print\+Misc\+Properties}} (std\+::ostream \&)=0
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}}
+\begin{DoxyCompactList}\small\item\em MPI Communicator. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{mem\+Manager}}
+\begin{DoxyCompactList}\small\item\em Memory manager for matrix allocation. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}}
+\begin{DoxyCompactList}\small\item\em Number of spin components. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{i\+CS}}
+\begin{DoxyCompactList}\small\item\em is closed shell? \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_adaad72707210363e1b5745bb2aa1de29}{particle}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}} Type. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\+\_\+t}} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elec\+Dipole}}
+\begin{DoxyCompactList}\small\item\em Electric Dipole in the length gauge. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceChronusQ_a9bf20cdeba81cac206335ed92f5c5b63}{cartmat\+\_\+t}} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elec\+Quadrupole}}
+\begin{DoxyCompactList}\small\item\em Electric Quadrupole in the length gauge. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceChronusQ_ac8db0e221d9ee09219e0e3777702f8ea}{cartrk3\+\_\+t}} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elec\+Octupole}}
+\begin{DoxyCompactList}\small\item\em Electric Octupole in the length gauge. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\+\_\+t}} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_ad3d7ed67a8de917566c3bd3747ad63f0}{SExpect}}
+\begin{DoxyCompactList}\small\item\em Expectation values of Sx, Sy and Sz. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1QuantumBase_aff3cce4ca98b229f27f305b4683b9249}{SSq}}
+\begin{DoxyCompactList}\small\item\em Expectation value of S$^\wedge$2. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1QuantumBase_af007378c10a589824ce0be369f8536dc}{OBEnergy}}
+\begin{DoxyCompactList}\small\item\em 1-\/Body operator contribution to the energy \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1QuantumBase_adcba63b2677fd23463c7625dfadaf66b}{MBEnergy}}
+\begin{DoxyCompactList}\small\item\em Many(2)-\/Body operator contribution to the energy. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a05097259c902c136ca3e500d8d6b0904}{PPEnergy}} = 0.
+\item 
+double \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a4cbb1f36148d9b24504a8a73953438bf}{extra\+Energy}} = 0
+\item 
+double \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}{total\+Energy}}
+\begin{DoxyCompactList}\small\item\em The total energy. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{Quantum\+Base}} class. The abstraction of information relating to the \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} class which are independent of storage type. 
+
+See \mbox{\hyperlink{classChronusQ_1_1Quantum}{Quantum}} for further docs 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a6ed15d36d43fc3433f83c6a6a42a53a5}\label{classChronusQ_1_1QuantumBase_a6ed15d36d43fc3433f83c6a6a42a53a5}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!QuantumBase@{QuantumBase}}
+\index{QuantumBase@{QuantumBase}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{QuantumBase()}{QuantumBase()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Quantum\+Base\+::\+Quantum\+Base (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a8a6b2cfa353efd9e862e8ad71b2262cd}\label{classChronusQ_1_1QuantumBase_a8a6b2cfa353efd9e862e8ad71b2262cd}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!QuantumBase@{QuantumBase}}
+\index{QuantumBase@{QuantumBase}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{QuantumBase()}{QuantumBase()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Quantum\+Base\+::\+Quantum\+Base (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{Quantum\+Base}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_ab5d395f15ddb9968aed602dc5d2bfc32}\label{classChronusQ_1_1QuantumBase_ab5d395f15ddb9968aed602dc5d2bfc32}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!QuantumBase@{QuantumBase}}
+\index{QuantumBase@{QuantumBase}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{QuantumBase()}{QuantumBase()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Quantum\+Base\+::\+Quantum\+Base (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1QuantumBase}{Quantum\+Base}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a0b12d31447c09f3cabd57f5ee6a6c9b8}\label{classChronusQ_1_1QuantumBase_a0b12d31447c09f3cabd57f5ee6a6c9b8}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!QuantumBase@{QuantumBase}}
+\index{QuantumBase@{QuantumBase}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{QuantumBase()}{QuantumBase()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Quantum\+Base\+::\+Quantum\+Base (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{c,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem,  }\item[{size\+\_\+t}]{\+\_\+nC,  }\item[{bool}]{\+\_\+i\+CS,  }\item[{\mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}}}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\hyperlink{classChronusQ_1_1QuantumBase}{Quantum\+Base}} Constructor. Constructs a \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{Quantum\+Base}} object.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em mem} & \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} to handle to allocation of densities \\
+\hline
+\mbox{\texttt{ in}}  & {\em \+\_\+nC} & Number of spin components (1 and 2 are supported) \\
+\hline
+\mbox{\texttt{ in}}  & {\em \+\_\+i\+CS} & Whether or not system is closed shell (only used when \+\_\+nC == 1) \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a22dae7f7707d3e4db05b66a367d609d4}\label{classChronusQ_1_1QuantumBase_a22dae7f7707d3e4db05b66a367d609d4}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!computeEnergy@{computeEnergy}}
+\index{computeEnergy@{computeEnergy}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{computeEnergy()}{computeEnergy()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Quantum\+Base\+::compute\+Energy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Function to compute the field free energy expectation value(s) 
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a18d2ba2b05e8b80f8ae57e28ae75a715}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1KohnSham_aa64cd93643e8785577a28d2d5e519c3f}{Chronus\+Q\+::\+Kohn\+Sham$<$ Mats\+T, Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1NEOSS_af694b8107faa52ab5c5d1226f3a7a1c5}{Chronus\+Q\+::\+NEOSS$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1QuantumBase_a22dae7f7707d3e4db05b66a367d609d4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_aabcb230c3be04d02df3160f6f28ef391}\label{classChronusQ_1_1QuantumBase_aabcb230c3be04d02df3160f6f28ef391}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!computeEnergy@{computeEnergy}}
+\index{computeEnergy@{computeEnergy}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{computeEnergy()}{computeEnergy()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Quantum\+Base\+::compute\+Energy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Function to compute the energy expectation values including field terms Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1QuantumBase_aabcb230c3be04d02df3160f6f28ef391_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a36061ba6528d204613a6e075365e29c3}\label{classChronusQ_1_1QuantumBase_a36061ba6528d204613a6e075365e29c3}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!computeMultipole@{computeMultipole}}
+\index{computeMultipole@{computeMultipole}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{computeMultipole()}{computeMultipole()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Quantum\+Base\+::compute\+Multipole (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a67c95963a02d02dd6e7e7791b44b867e}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1NEOSS_a789a1286c9c8ca336bc1598fc7c18446}{Chronus\+Q\+::\+NEOSS$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1QuantumBase_a36061ba6528d204613a6e075365e29c3_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a4c2e0e14116d87505f9aa61953d11194}\label{classChronusQ_1_1QuantumBase_a4c2e0e14116d87505f9aa61953d11194}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!computeProperties@{computeProperties}}
+\index{computeProperties@{computeProperties}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{computeProperties()}{computeProperties()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Quantum\+Base\+::compute\+Properties (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1QuantumBase_a4c2e0e14116d87505f9aa61953d11194_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a56b16ba0c1567b33aba8d3de08db3798}\label{classChronusQ_1_1QuantumBase_a56b16ba0c1567b33aba8d3de08db3798}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!computeSpin@{computeSpin}}
+\index{computeSpin@{computeSpin}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{computeSpin()}{computeSpin()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Quantum\+Base\+::compute\+Spin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a788a2f32f06c22a9dd21293747b2e4e4}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1NEOSS_a7ec88a61def36b30f1f84cbca0b48bf5}{Chronus\+Q\+::\+NEOSS$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1QuantumBase_a56b16ba0c1567b33aba8d3de08db3798_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a9c786fcea80de9218a49b0640fc86c76}\label{classChronusQ_1_1QuantumBase_a9c786fcea80de9218a49b0640fc86c76}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!formDensity@{formDensity}}
+\index{formDensity@{formDensity}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{formDensity()}{formDensity()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Quantum\+Base\+::form\+Density (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+Function to form the density. Pure virtual 
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a45669addf520b9615ef9575144c69eb9}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1NEOSS_aafd6cf5b6280d6cf599dc0e4fed577fd}{Chronus\+Q\+::\+NEOSS$<$ Mats\+T, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_ac2eca987ab50e84b7fbdb9a68007ed11}\label{classChronusQ_1_1QuantumBase_ac2eca987ab50e84b7fbdb9a68007ed11}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!getEnergySummary@{getEnergySummary}}
+\index{getEnergySummary@{getEnergySummary}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{getEnergySummary()}{getEnergySummary()}}
+{\footnotesize\ttfamily virtual std\+::vector$<$ double $>$ Chronus\+Q\+::\+Quantum\+Base\+::get\+Energy\+Summary (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ade8bc140484560ef0c3c2d9bd7dfc25d}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1QuantumBase_ac2eca987ab50e84b7fbdb9a68007ed11_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a9d66e7cf375b6a8d922372d33d293bdd}\label{classChronusQ_1_1QuantumBase_a9d66e7cf375b6a8d922372d33d293bdd}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!methodSpecificProperties@{methodSpecificProperties}}
+\index{methodSpecificProperties@{methodSpecificProperties}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{methodSpecificProperties()}{methodSpecificProperties()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Quantum\+Base\+::method\+Specific\+Properties (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a459022353e4edb2a49c0e2a10c14b248}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1NEOSS_a42902ca6888a29c5bd0bffaec5901cfd}{Chronus\+Q\+::\+NEOSS$<$ Mats\+T, Ints\+T $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1QuantumBase_a9d66e7cf375b6a8d922372d33d293bdd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_aabb2cfa1546838b8c9b783fcb88e4f91}\label{classChronusQ_1_1QuantumBase_aabb2cfa1546838b8c9b783fcb88e4f91}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!print1PDM@{print1PDM}}
+\index{print1PDM@{print1PDM}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{print1PDM()}{print1PDM()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Quantum\+Base\+::print1\+PDM (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1Quantum_af2b9998f2a08124daa19709b75765489}{Chronus\+Q\+::\+Quantum$<$ Mats\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a8f4367e2adf918c689f381a2eaf15599}\label{classChronusQ_1_1QuantumBase_a8f4367e2adf918c689f381a2eaf15599}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!printMiscProperties@{printMiscProperties}}
+\index{printMiscProperties@{printMiscProperties}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{printMiscProperties()}{printMiscProperties()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Quantum\+Base\+::print\+Misc\+Properties (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a4a4fbbf854e5f10d44bd721c87d347e3}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_aedcce2518a1e9011d92ab8cf881de33e}\label{classChronusQ_1_1QuantumBase_aedcce2518a1e9011d92ab8cf881de33e}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!printMultipoles@{printMultipoles}}
+\index{printMultipoles@{printMultipoles}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{printMultipoles()}{printMultipoles()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Quantum\+Base\+::print\+Multipoles (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a406ba9024fcfa5e2b7ce6b176f397030}\label{classChronusQ_1_1QuantumBase_a406ba9024fcfa5e2b7ce6b176f397030}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!printSpin@{printSpin}}
+\index{printSpin@{printSpin}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{printSpin()}{printSpin()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Quantum\+Base\+::print\+Spin (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1QuantumBase_a406ba9024fcfa5e2b7ce6b176f397030_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}\label{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!comm@{comm}}
+\index{comm@{comm}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{comm}{comm}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} Chronus\+Q\+::\+Quantum\+Base\+::comm}
+
+
+
+MPI Communicator. 
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}\label{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!elecDipole@{elecDipole}}
+\index{elecDipole@{elecDipole}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{elecDipole}{elecDipole}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\+\_\+t}} Chronus\+Q\+::\+Quantum\+Base\+::elec\+Dipole}
+
+
+
+Electric Dipole in the length gauge. 
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}\label{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!elecOctupole@{elecOctupole}}
+\index{elecOctupole@{elecOctupole}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{elecOctupole}{elecOctupole}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceChronusQ_ac8db0e221d9ee09219e0e3777702f8ea}{cartrk3\+\_\+t}} Chronus\+Q\+::\+Quantum\+Base\+::elec\+Octupole}
+
+
+
+Electric Octupole in the length gauge. 
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}\label{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!elecQuadrupole@{elecQuadrupole}}
+\index{elecQuadrupole@{elecQuadrupole}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{elecQuadrupole}{elecQuadrupole}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceChronusQ_a9bf20cdeba81cac206335ed92f5c5b63}{cartmat\+\_\+t}} Chronus\+Q\+::\+Quantum\+Base\+::elec\+Quadrupole}
+
+
+
+Electric Quadrupole in the length gauge. 
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a4cbb1f36148d9b24504a8a73953438bf}\label{classChronusQ_1_1QuantumBase_a4cbb1f36148d9b24504a8a73953438bf}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!extraEnergy@{extraEnergy}}
+\index{extraEnergy@{extraEnergy}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{extraEnergy}{extraEnergy}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+Quantum\+Base\+::extra\+Energy = 0}
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}\label{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!iCS@{iCS}}
+\index{iCS@{iCS}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{iCS}{iCS}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+Quantum\+Base\+::i\+CS}
+
+
+
+is closed shell? 
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_adcba63b2677fd23463c7625dfadaf66b}\label{classChronusQ_1_1QuantumBase_adcba63b2677fd23463c7625dfadaf66b}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!MBEnergy@{MBEnergy}}
+\index{MBEnergy@{MBEnergy}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{MBEnergy}{MBEnergy}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+Quantum\+Base\+::\+MBEnergy}
+
+
+
+Many(2)-\/Body operator contribution to the energy. 
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}\label{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!memManager@{memManager}}
+\index{memManager@{memManager}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{memManager}{memManager}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}}\& Chronus\+Q\+::\+Quantum\+Base\+::mem\+Manager}
+
+
+
+Memory manager for matrix allocation. 
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}\label{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!nC@{nC}}
+\index{nC@{nC}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{nC}{nC}}
+{\footnotesize\ttfamily int Chronus\+Q\+::\+Quantum\+Base\+::nC}
+
+
+
+Number of spin components. 
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_af007378c10a589824ce0be369f8536dc}\label{classChronusQ_1_1QuantumBase_af007378c10a589824ce0be369f8536dc}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!OBEnergy@{OBEnergy}}
+\index{OBEnergy@{OBEnergy}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{OBEnergy}{OBEnergy}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+Quantum\+Base\+::\+OBEnergy}
+
+
+
+1-\/Body operator contribution to the energy 
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_adaad72707210363e1b5745bb2aa1de29}\label{classChronusQ_1_1QuantumBase_adaad72707210363e1b5745bb2aa1de29}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!particle@{particle}}
+\index{particle@{particle}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{particle}{particle}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}} Chronus\+Q\+::\+Quantum\+Base\+::particle}
+
+
+
+\mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}} Type. 
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a05097259c902c136ca3e500d8d6b0904}\label{classChronusQ_1_1QuantumBase_a05097259c902c136ca3e500d8d6b0904}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!PPEnergy@{PPEnergy}}
+\index{PPEnergy@{PPEnergy}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{PPEnergy}{PPEnergy}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+Quantum\+Base\+::\+PPEnergy = 0.}
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_ad3d7ed67a8de917566c3bd3747ad63f0}\label{classChronusQ_1_1QuantumBase_ad3d7ed67a8de917566c3bd3747ad63f0}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!SExpect@{SExpect}}
+\index{SExpect@{SExpect}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{SExpect}{SExpect}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\+\_\+t}} Chronus\+Q\+::\+Quantum\+Base\+::\+SExpect}
+
+
+
+Expectation values of Sx, Sy and Sz. 
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_aff3cce4ca98b229f27f305b4683b9249}\label{classChronusQ_1_1QuantumBase_aff3cce4ca98b229f27f305b4683b9249}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!SSq@{SSq}}
+\index{SSq@{SSq}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{SSq}{SSq}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+Quantum\+Base\+::\+SSq}
+
+
+
+Expectation value of S$^\wedge$2. 
+
+\mbox{\Hypertarget{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}\label{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}} 
+\index{ChronusQ::QuantumBase@{ChronusQ::QuantumBase}!totalEnergy@{totalEnergy}}
+\index{totalEnergy@{totalEnergy}!ChronusQ::QuantumBase@{ChronusQ::QuantumBase}}
+\doxysubsubsection{\texorpdfstring{totalEnergy}{totalEnergy}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+Quantum\+Base\+::total\+Energy}
+
+
+
+The total energy. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/quantum/\mbox{\hyperlink{quantum_2base_8hpp}{base.\+hpp}}\item 
+include/quantum/\mbox{\hyperlink{quantum_2print_8hpp}{print.\+hpp}}\end{DoxyCompactItemize}

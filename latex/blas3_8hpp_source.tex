@@ -1,0 +1,53 @@
+\hypertarget{blas3_8hpp_source}{}\doxysection{blas3.\+hpp}
+\label{blas3_8hpp_source}\index{include/cqlinalg/blas3.hpp@{include/cqlinalg/blas3.hpp}}
+\mbox{\hyperlink{blas3_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg__config_8hpp}{cqlinalg/cqlinalg\_config.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{33   \textcolor{keywordtype}{void} Gemm\_MPI(\textcolor{keywordtype}{char} TRANSA, \textcolor{keywordtype}{char} TRANSB, \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} N, \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8a8e3950a3df211dc18e0099561e0f6f0a}{K}}, \_F ALPHA,}
+\DoxyCodeLine{34     \_F *A, \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} IA, \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} JA, CXXBLACS::ScaLAPACK\_Desc\_t DESCA, }
+\DoxyCodeLine{35     \_F *B, \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} IB, \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} JB, CXXBLACS::ScaLAPACK\_Desc\_t DESCB, }
+\DoxyCodeLine{36     \_F BETA, \_F *C, \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} IC, \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} JC, CXXBLACS::ScaLAPACK\_Desc\_t DESCC) \{}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     CXXBLACS::PGEMM(TRANSA,TRANSB,\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},N,\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8a8e3950a3df211dc18e0099561e0f6f0a}{K}},ALPHA,A,IA,JA,DESCA,B,IB,JB,DESCB,}
+\DoxyCodeLine{39       BETA,C,IC,JC,DESCC);}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41   \}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 }
+
+\end{DoxyCode}

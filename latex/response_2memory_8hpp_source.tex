@@ -1,0 +1,97 @@
+\hypertarget{response_2memory_8hpp_source}{}\doxysection{memory.\+hpp}
+\label{response_2memory_8hpp_source}\index{include/response/memory.hpp@{include/response/memory.hpp}}
+\mbox{\hyperlink{response_2memory_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{tbase_8hpp}{response/tbase.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{31   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ab0adf826c4a54c4cff0ca4c24857258f}{ResponseTBase<T>::allocResidueResults}}() \{}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{keywordtype}{bool} isRoot = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm\_) == 0;}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keywordflow}{if}( isRoot and genSettings.printLevel > 0 )}
+\DoxyCodeLine{36       std::cout << \textcolor{stringliteral}{"{}  * ALLOCATING RESIDUE RESPONSE RESULTS\(\backslash\)n"{}};}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     nSingleDim\_ = getNSingleDim(genSettings.doTDA);}
+\DoxyCodeLine{39     \textcolor{keywordtype}{size\_t} N = nSingleDim\_;}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keywordtype}{size\_t} nVec = genSettings.doFull ? nSingleDim\_ : resSettings.nRoots;}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{comment}{//std::cerr << "{} NV "{} << nVec << std::endl;}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     resResults.W  = memManager\_.template malloc<double>(nVec);}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keywordflow}{if}( isRoot ) \{ \textcolor{comment}{// Don't allocate the vector results on non-\/root process}}
+\DoxyCodeLine{48       resResults.VR = resSettings.needVR ? }
+\DoxyCodeLine{49         memManager\_.template malloc<T>(nVec*N) : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{50       resResults.VL = resSettings.needVL ? }
+\DoxyCodeLine{51         memManager\_.template malloc<T>(nVec*N) : \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{52     \}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55   \};}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{58   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a8471d5879ac8bfa857765fa925356a46}{ResponseTBase<T>::allocFDRResults}}() \{}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     \textcolor{keywordtype}{bool} isRoot = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm\_) == 0;}
+\DoxyCodeLine{61     \textcolor{keywordflow}{if}( isRoot and genSettings.printLevel > 0 )}
+\DoxyCodeLine{62       std::cout << \textcolor{stringliteral}{"{}  * ALLOCATING FDR RESPONSE RESULTS\(\backslash\)n"{}};}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     std::vector<ResponseOperator> ops = genSettings.bOps;}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     fdrSettings.nRHS = 0;}
+\DoxyCodeLine{67     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&op : ops) fdrSettings.nRHS += \mbox{\hyperlink{namespaceChronusQ_ab1b51887e98f0e79fce683b473712002}{OperatorSize}}[op];}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69     nSingleDim\_ = getNSingleDim(genSettings.doTDA);}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{keywordtype}{size\_t} nOmega = fdrSettings.bFreq.size();}
+\DoxyCodeLine{72     \textcolor{keywordtype}{size\_t} nRHSN  = fdrSettings.nRHS * nSingleDim\_;}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74     \textcolor{keywordflow}{if}( not isRoot ) \textcolor{keywordflow}{return}; \textcolor{comment}{// Don't allocate the results on non-\/root process}}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \textcolor{comment}{// RHS allocated delagated to formRHS}}
+\DoxyCodeLine{77     \textcolor{keywordflow}{if}( fdrSettings.dampFactor == 0. and not fdrSettings.forceDamp ) \{}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79       fdrResults.SOL = memManager\_.template malloc<T>(nRHSN*nOmega);}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83       dfdrResults.SOL = }
+\DoxyCodeLine{84         memManager\_.template malloc<dcomplex>(nRHSN*nOmega);}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     \}}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88   \};}
+\DoxyCodeLine{89 \};}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91 }
+
+\end{DoxyCode}

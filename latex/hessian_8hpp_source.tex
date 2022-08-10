@@ -1,0 +1,219 @@
+\hypertarget{hessian_8hpp_source}{}\doxysection{hessian.\+hpp}
+\label{hessian_8hpp_source}\index{include/orbitalrotation/hessian.hpp@{include/orbitalrotation/hessian.hpp}}
+\mbox{\hyperlink{hessian_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you ca redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{orbitalrotation_8hpp}{orbitalrotation.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incore4indexreleri_8hpp}{particleintegrals/twopints/incore4indexreleri.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas3_8hpp}{cqlinalg/blas3.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{ortho_8hpp}{cqlinalg/ortho.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{comment}{// \#define DEBUG\_ORBITALROTATION\_HESSIAN}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{35   }
+\DoxyCodeLine{36   }
+\DoxyCodeLine{37   \textcolor{comment}{/*}}
+\DoxyCodeLine{38 \textcolor{comment}{   * Build orbital hessian diagonals block-\/wisely:}}
+\DoxyCodeLine{39 \textcolor{comment}{   *   IN -\/> inactive,      indexed by i, j, k, l}}
+\DoxyCodeLine{40 \textcolor{comment}{   *   CO -\/> correlated,    indexed by t, u, v, w}}
+\DoxyCodeLine{41 \textcolor{comment}{   *   FV -\/> frozen virtual indexed by a, b, c, d}}
+\DoxyCodeLine{42 \textcolor{comment}{   *   NA -\/> negative energy orbitals, indexed by m, n}}
+\DoxyCodeLine{43 \textcolor{comment}{   */}}
+\DoxyCodeLine{44   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>  }
+\DoxyCodeLine{45   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1OrbitalRotation_a6e7aad550d9317ef669b95dfbc2cd826}{OrbitalRotation<MatsT, IntsT>::computeOrbOrbHessianDiag}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert, }
+\DoxyCodeLine{46     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \& oneRDM, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<MatsT>}} \& twoRDM, MatsT * H) \{}
+\DoxyCodeLine{47     }
+\DoxyCodeLine{48     \textcolor{keywordtype}{bool} oneETermApproximation = settings.alg == \mbox{\hyperlink{namespaceChronusQ_a363928d5820800185dd84fa5eedfb226a27d5b5beb6283cbf9babf44f21178cc3}{ORB\_ROT\_APPROX\_QUASI\_2ND\_ORDER}};}
+\DoxyCodeLine{49     MatsT notRotatedHessian = MatsT (1 / settings.hessianDiagScale);}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keyword}{auto} \& mopart = mcwfn\_.MOPartition;}
+\DoxyCodeLine{52     \textcolor{keyword}{auto} \& mem    = mcwfn\_.memManager;}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{keywordtype}{size\_t} nTOrb   = mopart.nMO;}
+\DoxyCodeLine{55     \textcolor{keywordtype}{size\_t} nCorrO  = mopart.nCorrO;}
+\DoxyCodeLine{56     \textcolor{keywordtype}{size\_t} nInact  = mopart.nInact;}
+\DoxyCodeLine{57     \textcolor{keywordtype}{size\_t} nFVirt  = mopart.nFVirt;}
+\DoxyCodeLine{58     \textcolor{keywordtype}{size\_t} nNegMO  = mopart.nNegMO;}
+\DoxyCodeLine{59     }
+\DoxyCodeLine{60     \textcolor{keywordtype}{size\_t} nINCO   = nInact + nCorrO;}
+\DoxyCodeLine{61     \textcolor{keywordtype}{size\_t} SCRDim  = std::max(nCorrO, std::max(nInact, nFVirt));}
+\DoxyCodeLine{62     \textcolor{keywordtype}{size\_t} SCRDim2 = SCRDim * SCRDim; }
+\DoxyCodeLine{63     \textcolor{keywordtype}{double} fc   = (mcwfn\_.reference().nC > 1) ? 1.0: 2.0;}
+\DoxyCodeLine{64     }
+\DoxyCodeLine{65     \textcolor{comment}{// Allocate SCR}}
+\DoxyCodeLine{66     MatsT * SCR   = mem.template malloc<MatsT>(SCRDim2);}
+\DoxyCodeLine{67     MatsT * F1\_ii = \textcolor{keyword}{nullptr}, * F1\_aa = \textcolor{keyword}{nullptr}, * F1\_nn = \textcolor{keyword}{nullptr}; }
+\DoxyCodeLine{68     MatsT * RDM1\_tt = mem.template malloc<MatsT>(nCorrO); }
+\DoxyCodeLine{69     MatsT * F1\_tt = mem.template malloc<MatsT>(nCorrO);}
+\DoxyCodeLine{70     MatsT * F2\_tt = mem.template malloc<MatsT>(nCorrO);}
+\DoxyCodeLine{71     }
+\DoxyCodeLine{72     \textcolor{comment}{// populate One electron terms}}
+\DoxyCodeLine{73     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} t = 0ul; t < nCorrO; t++) RDM1\_tt[t] = oneRDM(t,t) / fc;}
+\DoxyCodeLine{74     \textcolor{comment}{//  F1\_tt -\/> SCR}}
+\DoxyCodeLine{75     this-\/>formGeneralizedFock1(pert, oneRDM, F1\_tt, \textcolor{stringliteral}{"{}tt"{}}, \textcolor{keyword}{true}); }
+\DoxyCodeLine{76     }
+\DoxyCodeLine{77     \textcolor{comment}{//  F2\_tt -\/> SCR}}
+\DoxyCodeLine{78     this-\/>formGeneralizedFock2(pert, oneRDM, twoRDM, SCR, \textcolor{stringliteral}{"{}t"{}}); }
+\DoxyCodeLine{79     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} t = 0ul; t < nCorrO; t++) F2\_tt[t] = SCR[t + t * nCorrO]; }
+\DoxyCodeLine{80     }
+\DoxyCodeLine{81     \textcolor{keywordflow}{if} (nInact > 0) \{}
+\DoxyCodeLine{82       \textcolor{comment}{//  F1\_ii -\/> SCR}}
+\DoxyCodeLine{83       F1\_ii = mem.template malloc<MatsT>(nInact);}
+\DoxyCodeLine{84       this-\/>formGeneralizedFock1(pert, oneRDM, F1\_ii, \textcolor{stringliteral}{"{}ii"{}}, \textcolor{keyword}{true});}
+\DoxyCodeLine{85     \}}
+\DoxyCodeLine{86     }
+\DoxyCodeLine{87     \textcolor{keywordflow}{if} (nFVirt > 0) \{ }
+\DoxyCodeLine{88       \textcolor{comment}{//  F1\_aa -\/> SCR}}
+\DoxyCodeLine{89       F1\_aa = mem.template malloc<MatsT>(nFVirt);}
+\DoxyCodeLine{90       this-\/>formGeneralizedFock1(pert, oneRDM, F1\_aa, \textcolor{stringliteral}{"{}aa"{}}, \textcolor{keyword}{true}); }
+\DoxyCodeLine{91     \}}
+\DoxyCodeLine{92     }
+\DoxyCodeLine{93     \textcolor{keywordflow}{if} (nNegMO > 0) \{}
+\DoxyCodeLine{94       \textcolor{comment}{//  F1\_nn -\/> SCR}}
+\DoxyCodeLine{95       F1\_nn = mem.template malloc<MatsT>(nNegMO);}
+\DoxyCodeLine{96       this-\/>formGeneralizedFock1(pert, oneRDM, F1\_nn, \textcolor{stringliteral}{"{}nn"{}}, \textcolor{keyword}{true}); }
+\DoxyCodeLine{97     \}}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99     \textcolor{comment}{// intialize H as all one}}
+\DoxyCodeLine{100     std::fill\_n(H, nTOrb*nTOrb, notRotatedHessian);}
+\DoxyCodeLine{101     }
+\DoxyCodeLine{102     \textcolor{comment}{// CO-\/CO block}}
+\DoxyCodeLine{103     \textcolor{keywordflow}{if} (settings.rotate\_within\_correlated) \{}
+\DoxyCodeLine{104       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}rotate MOs within correlated orbitals not implemented"{}});}
+\DoxyCodeLine{105     \} }
+\DoxyCodeLine{106     }
+\DoxyCodeLine{107     \textcolor{comment}{// point to start of the positive energy MO part }}
+\DoxyCodeLine{108     MatsT * HP = H + nNegMO * (nTOrb + 1);}
+\DoxyCodeLine{109     }
+\DoxyCodeLine{110     \textcolor{comment}{// IN-\/CO block}}
+\DoxyCodeLine{111     \textcolor{keywordflow}{if} (settings.rotate\_inact\_correlated) \{}
+\DoxyCodeLine{112       \textcolor{comment}{// H\_\{it,it\} = F1\_tt + 1RDM\_tt * F1\_ii -\/ F1\_ii -\/ F2\_tt}}
+\DoxyCodeLine{113 \textcolor{preprocessor}{\#pragma omp parallel for schedule(static) default(shared)       }}
+\DoxyCodeLine{114       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} t = 0ul; t < nCorrO; t++)}
+\DoxyCodeLine{115       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nInact; i++)}
+\DoxyCodeLine{116         SCR[i + t * nInact] = F1\_tt[t] + RDM1\_tt[t] * F1\_ii[i] -\/ F2\_tt[t]-\/ F1\_ii[i];}
+\DoxyCodeLine{117       }
+\DoxyCodeLine{118       \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'}, nInact, nCorrO, MatsT(1.), SCR, nInact, HP + nTOrb * nInact, nTOrb);}
+\DoxyCodeLine{119       \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'C'}, nInact, nCorrO, MatsT(1.), SCR, nInact, HP + nInact, nTOrb);}
+\DoxyCodeLine{120     \} }
+\DoxyCodeLine{121     }
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123     \textcolor{comment}{// IN-\/FV block}}
+\DoxyCodeLine{124     \textcolor{keywordflow}{if} (settings.rotate\_inact\_virtual) \{}
+\DoxyCodeLine{125       \textcolor{comment}{// H\_\{ia,ia\} = F1\_aa -\/ F1\_ii  }}
+\DoxyCodeLine{126 \textcolor{preprocessor}{\#pragma omp parallel for schedule(static) default(shared)       }}
+\DoxyCodeLine{127       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} a = 0ul; a < nFVirt; a++)}
+\DoxyCodeLine{128       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nInact; i++)}
+\DoxyCodeLine{129         SCR[i + a * nInact] = F1\_aa[a] -\/ F1\_ii[i];}
+\DoxyCodeLine{130       }
+\DoxyCodeLine{131       \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'}, nInact, nFVirt, MatsT(1.), SCR, nInact, HP + nTOrb * nINCO, nTOrb);}
+\DoxyCodeLine{132       \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'C'}, nInact, nFVirt, MatsT(1.), SCR, nInact, HP + nINCO, nTOrb);}
+\DoxyCodeLine{133     \} }
+\DoxyCodeLine{134     }
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     \textcolor{comment}{// CO-\/FV block}}
+\DoxyCodeLine{137     \textcolor{keywordflow}{if} (settings.rotate\_correlated\_virtual) \{ }
+\DoxyCodeLine{138       \textcolor{comment}{// H\_\{ta,ta\} = 1RDM\_tt * F1\_aa -\/ F2\_tt}}
+\DoxyCodeLine{139 \textcolor{preprocessor}{\#pragma omp parallel for schedule(static) default(shared)       }}
+\DoxyCodeLine{140       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} a = 0ul; a < nFVirt; a++)}
+\DoxyCodeLine{141       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} t = 0ul; t < nCorrO; t++)}
+\DoxyCodeLine{142         SCR[t + a * nCorrO] = RDM1\_tt[t] * F1\_aa[a] -\/ F2\_tt[t];}
+\DoxyCodeLine{143     }
+\DoxyCodeLine{144       \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'}, nCorrO, nFVirt, MatsT(1.), SCR, nCorrO, HP + nTOrb * nINCO + nInact, nTOrb);}
+\DoxyCodeLine{145       \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'C'}, nCorrO, nFVirt, MatsT(1.), SCR, nCorrO, HP + nTOrb * nInact + nINCO, nTOrb);}
+\DoxyCodeLine{146     \} }
+\DoxyCodeLine{147     }
+\DoxyCodeLine{148     \textcolor{keywordflow}{if}(SCR) mem.free(SCR); }
+\DoxyCodeLine{149     }
+\DoxyCodeLine{150     \textcolor{comment}{// NA-\/PO block}}
+\DoxyCodeLine{151     \textcolor{keywordflow}{if} (settings.rotate\_negative\_positive) \{}
+\DoxyCodeLine{152       }
+\DoxyCodeLine{153       SCR = mem.template malloc<MatsT>(nNegMO * std::max(nInact, nCorrO));}
+\DoxyCodeLine{154       }
+\DoxyCodeLine{155       \textcolor{comment}{// IN-\/NA block}}
+\DoxyCodeLine{156       \textcolor{keywordflow}{if} (nInact > 0) \{}
+\DoxyCodeLine{157 \textcolor{preprocessor}{\#pragma omp parallel for schedule(static) default(shared)       }}
+\DoxyCodeLine{158         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} n = 0ul; n < nNegMO; n++)}
+\DoxyCodeLine{159         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nInact; i++)}
+\DoxyCodeLine{160           SCR[i + n * nInact] = F1\_nn[n] -\/ F1\_ii[i];}
+\DoxyCodeLine{161       }
+\DoxyCodeLine{162         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'}, nInact, nNegMO, MatsT(1.), SCR, nInact, H + nNegMO, nTOrb);}
+\DoxyCodeLine{163         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'C'}, nInact, nNegMO, MatsT(1.), SCR, nInact, H + nNegMO * nTOrb, nTOrb);}
+\DoxyCodeLine{164       \}}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166 \textcolor{preprocessor}{\#pragma omp parallel for schedule(static) default(shared)       }}
+\DoxyCodeLine{167       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} n = 0ul; n < nNegMO; n++)}
+\DoxyCodeLine{168       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} t = 0ul; t < nCorrO; t++)}
+\DoxyCodeLine{169         SCR[t + n * nCorrO] = RDM1\_tt[t] * F1\_nn[n] -\/ F2\_tt[t];}
+\DoxyCodeLine{170     }
+\DoxyCodeLine{171       \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'}, nCorrO, nNegMO, MatsT(1.), SCR, nCorrO, H + nNegMO + nInact, nTOrb);}
+\DoxyCodeLine{172       \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'C'}, nCorrO, nNegMO, MatsT(1.), SCR, nCorrO, H + (nNegMO + nInact) * nTOrb, nTOrb);}
+\DoxyCodeLine{173       }
+\DoxyCodeLine{174       mem.free(SCR);}
+\DoxyCodeLine{175     \}}
+\DoxyCodeLine{176     }
+\DoxyCodeLine{177     \textcolor{comment}{// Free SCRs}}
+\DoxyCodeLine{178     \textcolor{keywordflow}{if}(F1\_ii)   mem.free(F1\_ii);}
+\DoxyCodeLine{179     \textcolor{keywordflow}{if}(F2\_tt)   mem.free(F2\_tt);}
+\DoxyCodeLine{180     \textcolor{keywordflow}{if}(F1\_tt)   mem.free(F1\_tt);}
+\DoxyCodeLine{181     \textcolor{keywordflow}{if}(F1\_aa)   mem.free(F1\_aa);}
+\DoxyCodeLine{182     \textcolor{keywordflow}{if}(F1\_nn)   mem.free(F1\_nn);}
+\DoxyCodeLine{183     \textcolor{keywordflow}{if}(RDM1\_tt) mem.free(RDM1\_tt);}
+\DoxyCodeLine{184     }
+\DoxyCodeLine{185     \textcolor{comment}{// Scale Hessian}}
+\DoxyCodeLine{186     blas::scal(nTOrb * nTOrb, MatsT(settings.hessianDiagScale), H, 1);}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188 \textcolor{comment}{/*}}
+\DoxyCodeLine{189 \textcolor{comment}{ *  TODO: Test Damping }}
+\DoxyCodeLine{190 \textcolor{comment}{ */}}
+\DoxyCodeLine{191     \textcolor{comment}{// Dampping and taking care of negative or small eigenvalues }}
+\DoxyCodeLine{192 \textcolor{preprocessor}{\#pragma omp parallel for schedule(static) default(shared)       }}
+\DoxyCodeLine{193     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} pq = 0ul; pq < nTOrb * nTOrb; pq++) \{}
+\DoxyCodeLine{194 \textcolor{comment}{//      if (std::abs(OOHessianD[i]) > this-\/>hessianDiagDampingThreshold)}}
+\DoxyCodeLine{195 \textcolor{comment}{//        OOHessianD[i] /= this-\/>hessianDiagDamping;}}
+\DoxyCodeLine{196 \textcolor{comment}{//      else }}
+\DoxyCodeLine{197       \textcolor{keywordflow}{if} (std::abs(H[pq]) < settings.hessianDiagMinTol) \{}
+\DoxyCodeLine{198         \textcolor{keywordflow}{if} ( std::real(H[pq]) > 0.) H[pq]  = MatsT(1.0e6);}
+\DoxyCodeLine{199         \textcolor{keywordflow}{else} H[pq] = -\/MatsT(1.0e6);}
+\DoxyCodeLine{200       \}}
+\DoxyCodeLine{201     \}}
+\DoxyCodeLine{202 \textcolor{comment}{//*/}}
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204 \textcolor{preprocessor}{\#ifdef DEBUG\_ORBITALROTATION\_HESSIAN }}
+\DoxyCodeLine{205     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout, \textcolor{stringliteral}{"{}OR Orbital-\/Orbital Hessian Approximated Diagonal"{}},}
+\DoxyCodeLine{206       H, nTOrb, nTOrb, nTOrb);}
+\DoxyCodeLine{207     \textcolor{keywordtype}{double} HDNorm = lapack::lange(lapack::Norm::Fro, nTOrb, nTOrb, H, nTOrb); }
+\DoxyCodeLine{208     std::cout << \textcolor{stringliteral}{"{}Hessian Approximated Diagonal Norm = "{}} << HDNorm << std::endl;}
+\DoxyCodeLine{209 \textcolor{preprocessor}{\#endif  }}
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211   \}; \textcolor{comment}{// OrbitalRotation<MatsT>::computeOrbOrbHessianDiag}}
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

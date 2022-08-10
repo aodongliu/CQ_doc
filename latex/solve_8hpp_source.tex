@@ -1,0 +1,79 @@
+\hypertarget{solve_8hpp_source}{}\doxysection{solve.\+hpp}
+\label{solve_8hpp_source}\index{include/cqlinalg/solve.hpp@{include/cqlinalg/solve.hpp}}
+\mbox{\hyperlink{solve_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg__config_8hpp}{cqlinalg/cqlinalg\_config.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{34   \textcolor{keyword}{inline} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} LinSolve(\textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} N, \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} NRHS, \_F *A, }
+\DoxyCodeLine{35     \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} IA, \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} JA, \textcolor{keyword}{const} CXXBLACS::ScaLAPACK\_Desc\_t DESCA, }
+\DoxyCodeLine{36     \_F *B, \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} IB, \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} JB,}
+\DoxyCodeLine{37     \textcolor{keyword}{const} CXXBLACS::ScaLAPACK\_Desc\_t DESCB, \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} *IPIV) \{}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keywordflow}{return} CXXBLACS::PGESV(N,NRHS,A,IA,JA,DESCA,IPIV,B,IB,JB,DESCB);}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41   \}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{44   \textcolor{keyword}{inline} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} LinSolve(\textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} N, \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} NRHS, \_F *A, }
+\DoxyCodeLine{45     \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} IA, \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} JA, \textcolor{keyword}{const} CXXBLACS::ScaLAPACK\_Desc\_t DESCA, }
+\DoxyCodeLine{46     \_F *B, \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} IB, \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} JB,}
+\DoxyCodeLine{47     \textcolor{keyword}{const} CXXBLACS::ScaLAPACK\_Desc\_t DESCB, CQMemManager \&mem) \{}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}}* iPIV = mem.malloc<\mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}}>(DESCA[8] + DESCA[4]); \textcolor{comment}{// LLD + MB}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} INFO = LinSolve(N,NRHS,A,IA,JA,DESCA,B,IB,JB,DESCB,iPIV);}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     mem.free(iPIV);}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{keywordflow}{return} INFO;}
+\DoxyCodeLine{56   \}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{59   \textcolor{keyword}{inline} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} LinSolve(\textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} N, \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} NRHS, \_F *A, }
+\DoxyCodeLine{60     \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} IA, \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} JA, \textcolor{keyword}{const} CXXBLACS::ScaLAPACK\_Desc\_t DESCA, }
+\DoxyCodeLine{61     \_F *B, \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} IB, \textcolor{keyword}{const} \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} JB,}
+\DoxyCodeLine{62     \textcolor{keyword}{const} CXXBLACS::ScaLAPACK\_Desc\_t DESCB) \{}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     std::vector<CB\_INT> iPIV(DESCA[8] + DESCA[4],0); \textcolor{comment}{// LLD + MB}}
+\DoxyCodeLine{65     \textcolor{keywordflow}{return} LinSolve(N,NRHS,A,IA,JA,DESCA,B,IB,JB,DESCB,\&iPIV[0]);}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67   \}}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{73 }
+
+\end{DoxyCode}

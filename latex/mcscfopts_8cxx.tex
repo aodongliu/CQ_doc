@@ -1,0 +1,111 @@
+\hypertarget{mcscfopts_8cxx}{}\doxysection{src/cxxapi/input/mcscfopts.cxx File Reference}
+\label{mcscfopts_8cxx}\index{src/cxxapi/input/mcscfopts.cxx@{src/cxxapi/input/mcscfopts.cxx}}
+{\ttfamily \#include $<$cxxapi/options.\+hpp$>$}\newline
+{\ttfamily \#include $<$cerr.\+hpp$>$}\newline
+{\ttfamily \#include $<$mcwavefunction/base.\+hpp$>$}\newline
+{\ttfamily \#include $<$mcscf.\+hpp$>$}\newline
+{\ttfamily \#include $<$fockbuilder/rofock.\+hpp$>$}\newline
+Include dependency graph for mcscfopts.\+cxx\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mcscfopts_8cxx__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{mcscfopts_8cxx_ac73c077f24b7a607e17e151b30121c09}{Is\+RO}}(MT,  IT)~    std\+::dynamic\+\_\+pointer\+\_\+cast$<$Single\+Slater$<$MT,IT$>$$>$(ss) ? (std\+::dynamic\+\_\+pointer\+\_\+cast$<$ROFock$<$MT,IT$>$$>$(std\+::dynamic\+\_\+pointer\+\_\+cast$<$Single\+Slater$<$MT,IT$>$$>$(ss)-\/$>$fock\+Builder) != nullptr) \+: false
+\item 
+\#define \mbox{\hyperlink{mcscfopts_8cxx_aaa572b130a571a611b003efd21fa1924}{CONSTRUCT\+\_\+\+MCSCF}}(\+\_\+\+MT,  \+\_\+\+IT)
+\item 
+\#define \mbox{\hyperlink{mcscfopts_8cxx_add7f821dfb427712c928816e7384264c}{SET\+\_\+\+ORBITAL\+\_\+\+INDEX}}(ORBINDEX,  INPUTSTRING,  C)
+\item 
+\#define \mbox{\hyperlink{mcscfopts_8cxx_a32c68987426875404b6c1c6e6abc9f7f}{FILL\+\_\+\+DEFAULT\+\_\+\+INDEX}}(ORBINDEX,  ITER,  C,  N)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a4e0583a06aba4d09f0a82b09d3e39b17}{Chronus\+Q\+::\+CQMCSCF\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a02ef0066a3286bca2053ab361007aac3}{Chronus\+Q\+::\+Handle\+RDMPrinting}} (std\+::ostream \&out, CQInput\+File \&input, std\+::shared\+\_\+ptr$<$ MCWave\+Function\+Base $>$ \&mcwf)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a654c73dda8b5a00e5d490327c67a9349}{Chronus\+Q\+::\+Handle\+MCSCFOrbital\+Swaps}} (std\+::ostream \&out, CQInput\+File \&input, std\+::shared\+\_\+ptr$<$ Single\+Slater\+Base $>$ \&ss, std\+::shared\+\_\+ptr$<$ MCWave\+Function\+Base $>$ \&mcwf)
+\item 
+std\+::shared\+\_\+ptr$<$ MCWave\+Function\+Base $>$ \mbox{\hyperlink{namespaceChronusQ_a5db44cca14bf350d52aa511858a70402}{Chronus\+Q\+::\+CQMCSCFOptions}} (std\+::ostream \&out, CQInput\+File \&input, std\+::shared\+\_\+ptr$<$ Single\+Slater\+Base $>$ \&ss)
+\begin{DoxyCompactList}\small\item\em Construct a \mbox{\hyperlink{classChronusQ_1_1MCSCF}{MCSCF}} object using the input file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, int $>$ \mbox{\hyperlink{namespaceChronusQ_a41c214caad1d7100357018b2d53ae65b}{Chronus\+Q\+::\+MCSCFSpin\+Map}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{mcscfopts_8cxx_aaa572b130a571a611b003efd21fa1924}\label{mcscfopts_8cxx_aaa572b130a571a611b003efd21fa1924}} 
+\index{mcscfopts.cxx@{mcscfopts.cxx}!CONSTRUCT\_MCSCF@{CONSTRUCT\_MCSCF}}
+\index{CONSTRUCT\_MCSCF@{CONSTRUCT\_MCSCF}!mcscfopts.cxx@{mcscfopts.cxx}}
+\doxysubsubsection{\texorpdfstring{CONSTRUCT\_MCSCF}{CONSTRUCT\_MCSCF}}
+{\footnotesize\ttfamily \#define CONSTRUCT\+\_\+\+MCSCF(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+MT,  }\item[{}]{\+\_\+\+IT }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keywordflow}{if}( not found ) \textcolor{keywordflow}{try} \{                          \(\backslash\)}
+\DoxyCodeLine{      mcscf = std::dynamic\_pointer\_cast<MCWaveFunctionBase>( \(\backslash\)}
+\DoxyCodeLine{          std::make\_shared<MCSCF<\_MT,\_IT>>( \(\backslash\)}
+\DoxyCodeLine{            \textcolor{keyword}{dynamic\_cast<}SingleSlater<\_MT,\_IT>\& \textcolor{keyword}{>}(*ss), nR)); \(\backslash\)}
+\DoxyCodeLine{      mcscfSettings = \&(std::dynamic\_pointer\_cast<MCSCF<\_MT,\_IT>>(mcscf)-\/>settings); \(\backslash\)}
+\DoxyCodeLine{      found = \textcolor{keyword}{true};                 \(\backslash\)}
+\DoxyCodeLine{        \} \textcolor{keywordflow}{catch}(...) \{ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{mcscfopts_8cxx_a32c68987426875404b6c1c6e6abc9f7f}\label{mcscfopts_8cxx_a32c68987426875404b6c1c6e6abc9f7f}} 
+\index{mcscfopts.cxx@{mcscfopts.cxx}!FILL\_DEFAULT\_INDEX@{FILL\_DEFAULT\_INDEX}}
+\index{FILL\_DEFAULT\_INDEX@{FILL\_DEFAULT\_INDEX}!mcscfopts.cxx@{mcscfopts.cxx}}
+\doxysubsubsection{\texorpdfstring{FILL\_DEFAULT\_INDEX}{FILL\_DEFAULT\_INDEX}}
+{\footnotesize\ttfamily \#define FILL\+\_\+\+DEFAULT\+\_\+\+INDEX(\begin{DoxyParamCaption}\item[{}]{ORBINDEX,  }\item[{}]{ITER,  }\item[{}]{C,  }\item[{}]{N }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{      \{ \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < N; i++) \{ \(\backslash\)}
+\DoxyCodeLine{          while (ITER < ORBINDEX.size()) \{ \(\backslash\)}
+\DoxyCodeLine{            if (ORBINDEX[ITER] == \textcolor{charliteral}{'N'}) break; \(\backslash\)}
+\DoxyCodeLine{            ITER++; \(\backslash\)}
+\DoxyCodeLine{          \} \(\backslash\)}
+\DoxyCodeLine{          ORBINDEX[ITER] = C; \}\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{mcscfopts_8cxx_ac73c077f24b7a607e17e151b30121c09}\label{mcscfopts_8cxx_ac73c077f24b7a607e17e151b30121c09}} 
+\index{mcscfopts.cxx@{mcscfopts.cxx}!IsRO@{IsRO}}
+\index{IsRO@{IsRO}!mcscfopts.cxx@{mcscfopts.cxx}}
+\doxysubsubsection{\texorpdfstring{IsRO}{IsRO}}
+{\footnotesize\ttfamily \#define Is\+RO(\begin{DoxyParamCaption}\item[{}]{MT,  }\item[{}]{IT }\end{DoxyParamCaption})~    std\+::dynamic\+\_\+pointer\+\_\+cast$<$Single\+Slater$<$MT,IT$>$$>$(ss) ? (std\+::dynamic\+\_\+pointer\+\_\+cast$<$ROFock$<$MT,IT$>$$>$(std\+::dynamic\+\_\+pointer\+\_\+cast$<$Single\+Slater$<$MT,IT$>$$>$(ss)-\/$>$fock\+Builder) != nullptr) \+: false}
+
+\mbox{\Hypertarget{mcscfopts_8cxx_add7f821dfb427712c928816e7384264c}\label{mcscfopts_8cxx_add7f821dfb427712c928816e7384264c}} 
+\index{mcscfopts.cxx@{mcscfopts.cxx}!SET\_ORBITAL\_INDEX@{SET\_ORBITAL\_INDEX}}
+\index{SET\_ORBITAL\_INDEX@{SET\_ORBITAL\_INDEX}!mcscfopts.cxx@{mcscfopts.cxx}}
+\doxysubsubsection{\texorpdfstring{SET\_ORBITAL\_INDEX}{SET\_ORBITAL\_INDEX}}
+{\footnotesize\ttfamily \#define SET\+\_\+\+ORBITAL\+\_\+\+INDEX(\begin{DoxyParamCaption}\item[{}]{ORBINDEX,  }\item[{}]{INPUTSTRING,  }\item[{}]{C }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{      \textcolor{keywordflow}{if} (not ORBINDEX.empty()) \{ \(\backslash\)}
+\DoxyCodeLine{        std::vector<std::string> moTokens; \(\backslash\)}
+\DoxyCodeLine{        split(moTokens, INPUTSTRING, \textcolor{stringliteral}{"{}, "{}}); \(\backslash\)}
+\DoxyCodeLine{        for (\textcolor{keyword}{auto} \& mo: moTokens)  \{ \(\backslash\)}
+\DoxyCodeLine{          std::vector<std::string> mo2; \(\backslash\)}
+\DoxyCodeLine{          split(mo2, mo, \textcolor{stringliteral}{"{}-\/"{}}); \(\backslash\)}
+\DoxyCodeLine{          if (mo2.size() == 1) \{ \(\backslash\)}
+\DoxyCodeLine{            ORBINDEX[std::stoul(mo2[0])-\/1] = C; \(\backslash\)}
+\DoxyCodeLine{          \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (mo2.size() == 2) \{ \(\backslash\)}
+\DoxyCodeLine{            for (\textcolor{keyword}{auto} i = std::stoul(mo2[0]); i <= std::stoul(mo2[1]); i++) \(\backslash\)}
+\DoxyCodeLine{              ORBINDEX[i-\/1] = C; \(\backslash\)}
+\DoxyCodeLine{          \} \textcolor{keywordflow}{else} \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Unrecogonized pattern in orbital selection"{}}); \}\}}
+
+\end{DoxyCode}

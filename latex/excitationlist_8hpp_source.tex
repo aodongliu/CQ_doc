@@ -1,0 +1,168 @@
+\hypertarget{excitationlist_8hpp_source}{}\doxysection{excitationlist.\+hpp}
+\label{excitationlist_8hpp_source}\index{include/detstringmanager/excitationlist.hpp@{include/detstringmanager/excitationlist.hpp}}
+\mbox{\hyperlink{excitationlist_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{memmanager_8hpp}{memmanager.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{31   }
+\DoxyCodeLine{32   \textcolor{comment}{// use macro for now, TODO: change to structured binding in the future}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{  \#define UNPACK\_EXCITATIONLIST\_4(PTR, \_0, \_1, \_2, \_3) \(\backslash\)}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{    \_0 = PTR[0]; \(\backslash\)}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{    \_1 = PTR[1]; \(\backslash\)}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{    \_2 = PTR[2]; \(\backslash\)}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{    \_3 = PTR[3]; \(\backslash\)}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{ }}
+\DoxyCodeLine{39 \textcolor{preprocessor}{  \#define UNPACK\_EXCITATIONLIST\_5(PTR, \_0, \_1, \_2, \_3, \_4) \(\backslash\)}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{    \_0 = PTR[0]; \(\backslash\)}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{    \_1 = PTR[1]; \(\backslash\)}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{    \_2 = PTR[2]; \(\backslash\)}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{    \_3 = PTR[3]; \(\backslash\)}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{    \_4 = PTR[4];}}
+\DoxyCodeLine{45  }
+\DoxyCodeLine{46   \textcolor{comment}{/* }}
+\DoxyCodeLine{47 \textcolor{comment}{   * A data container class for excitation list to }}
+\DoxyCodeLine{48 \textcolor{comment}{   * handle the indexing of the non-\/zero matrix }}
+\DoxyCodeLine{49 \textcolor{comment}{   * elements ... }}
+\DoxyCodeLine{50 \textcolor{comment}{   * This could be a three-\/ or four-\/dimensional integer tensor container }}
+\DoxyCodeLine{51 \textcolor{comment}{   */}}
+\DoxyCodeLine{52   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1ExcitationList}{ExcitationList}} \{}
+\DoxyCodeLine{53       }
+\DoxyCodeLine{54   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{55     }
+\DoxyCodeLine{56     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \& \mbox{\hyperlink{classChronusQ_1_1ExcitationList_aed85a2a3eb335f500cc14edd253e0f45}{memManager\_}};}
+\DoxyCodeLine{57     \textcolor{keywordtype}{int} * \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{58     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a793137df6d60533fa64103ff811f3f46}{nElement\_}};}
+\DoxyCodeLine{59     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_ab890dcb6b5d6662e3c65f551ed406de5}{nNonZero\_}};}
+\DoxyCodeLine{60     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9fd58a31b9c846c7076aec20652affa7}{nStr1\_}};}
+\DoxyCodeLine{61     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a425a800beaf154d910013be4725fc49e}{nStr2\_}};}
+\DoxyCodeLine{62     }
+\DoxyCodeLine{63     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a735e46710d40da449e06588bec293c97}{N1\_}};}
+\DoxyCodeLine{64     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a24d58db4924d9462aa74e333d62632f3}{N2\_}};}
+\DoxyCodeLine{65     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a508c470ebdba46de217131e2d5690f9d}{N3\_}};}
+\DoxyCodeLine{66     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a491df8727e6bcca03c4465e9a88754f4}{N\_}};}
+\DoxyCodeLine{67   }
+\DoxyCodeLine{68   \textcolor{keyword}{public}:}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     \textcolor{comment}{// default Constructors}}
+\DoxyCodeLine{71     \mbox{\hyperlink{classChronusQ_1_1ExcitationList_acbcbe6aa52e1c8083b46416c642eb52f}{ExcitationList}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{72     \mbox{\hyperlink{classChronusQ_1_1ExcitationList_abab778d1adb8af1c383c1e5c4a459bbc}{ExcitationList}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ExcitationList}{ExcitationList}} \& other):}
+\DoxyCodeLine{73         \mbox{\hyperlink{classChronusQ_1_1ExcitationList}{ExcitationList}}(other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_aed85a2a3eb335f500cc14edd253e0f45}{memManager\_}}, other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a793137df6d60533fa64103ff811f3f46}{nElement\_}},}
+\DoxyCodeLine{74         other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_ab890dcb6b5d6662e3c65f551ed406de5}{nNonZero\_}}, other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9fd58a31b9c846c7076aec20652affa7}{nStr1\_}}, other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a425a800beaf154d910013be4725fc49e}{nStr2\_}}) \{}
+\DoxyCodeLine{75       std::copy\_n(other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}}, \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a491df8727e6bcca03c4465e9a88754f4}{N\_}}, \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}});}
+\DoxyCodeLine{76     \}}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a8f49fb5449d12835ee9d54ed9301cd55}{ExcitationList}}(\mbox{\hyperlink{classChronusQ_1_1ExcitationList}{ExcitationList}} \&\& other):}
+\DoxyCodeLine{79       \mbox{\hyperlink{classChronusQ_1_1ExcitationList_aed85a2a3eb335f500cc14edd253e0f45}{memManager\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_aed85a2a3eb335f500cc14edd253e0f45}{memManager\_}}), \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a793137df6d60533fa64103ff811f3f46}{nElement\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a793137df6d60533fa64103ff811f3f46}{nElement\_}}),}
+\DoxyCodeLine{80       \mbox{\hyperlink{classChronusQ_1_1ExcitationList_ab890dcb6b5d6662e3c65f551ed406de5}{nNonZero\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_ab890dcb6b5d6662e3c65f551ed406de5}{nNonZero\_}}), \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9fd58a31b9c846c7076aec20652affa7}{nStr1\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9fd58a31b9c846c7076aec20652affa7}{nStr1\_}}),}
+\DoxyCodeLine{81       \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a425a800beaf154d910013be4725fc49e}{nStr2\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a425a800beaf154d910013be4725fc49e}{nStr2\_}}), \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a735e46710d40da449e06588bec293c97}{N1\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a735e46710d40da449e06588bec293c97}{N1\_}}), \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a24d58db4924d9462aa74e333d62632f3}{N2\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a24d58db4924d9462aa74e333d62632f3}{N2\_}}),}
+\DoxyCodeLine{82       \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a508c470ebdba46de217131e2d5690f9d}{N3\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a508c470ebdba46de217131e2d5690f9d}{N3\_}}), \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}}) \{ other.ptr\_ = \textcolor{keyword}{nullptr}; \}}
+\DoxyCodeLine{83     }
+\DoxyCodeLine{84     \mbox{\hyperlink{classChronusQ_1_1ExcitationList_af6b43bcf48462ab06c732422f3bbdff1}{ExcitationList}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_aa424ea1f1573dc1575c679d5a47f5ae6}{nElement}}, }
+\DoxyCodeLine{85       \textcolor{keywordtype}{size\_t} nNZ, \textcolor{keywordtype}{size\_t} nStr): \mbox{\hyperlink{classChronusQ_1_1ExcitationList_aed85a2a3eb335f500cc14edd253e0f45}{memManager\_}}(mem),}
+\DoxyCodeLine{86       \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a793137df6d60533fa64103ff811f3f46}{nElement\_}}(\mbox{\hyperlink{classChronusQ_1_1ExcitationList_aa424ea1f1573dc1575c679d5a47f5ae6}{nElement}}), \mbox{\hyperlink{classChronusQ_1_1ExcitationList_ab890dcb6b5d6662e3c65f551ed406de5}{nNonZero\_}}(nNZ), \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9fd58a31b9c846c7076aec20652affa7}{nStr1\_}}(nStr), }
+\DoxyCodeLine{87       \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a425a800beaf154d910013be4725fc49e}{nStr2\_}}(1) \{ \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a3e8435e0ff5103760a8eeab1c335d63c}{alloc}}(); \}}
+\DoxyCodeLine{88     }
+\DoxyCodeLine{89     \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a87aca5d222ec880ed9aef67ac13c1e5e}{ExcitationList}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_aa424ea1f1573dc1575c679d5a47f5ae6}{nElement}}, }
+\DoxyCodeLine{90       \textcolor{keywordtype}{size\_t} nNZ, \textcolor{keywordtype}{size\_t} nStr1, \textcolor{keywordtype}{size\_t} nStr2): \mbox{\hyperlink{classChronusQ_1_1ExcitationList_aed85a2a3eb335f500cc14edd253e0f45}{memManager\_}}(mem),}
+\DoxyCodeLine{91       \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a793137df6d60533fa64103ff811f3f46}{nElement\_}}(\mbox{\hyperlink{classChronusQ_1_1ExcitationList_aa424ea1f1573dc1575c679d5a47f5ae6}{nElement}}), \mbox{\hyperlink{classChronusQ_1_1ExcitationList_ab890dcb6b5d6662e3c65f551ed406de5}{nNonZero\_}}(nNZ), \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9fd58a31b9c846c7076aec20652affa7}{nStr1\_}}(nStr1), }
+\DoxyCodeLine{92       \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a425a800beaf154d910013be4725fc49e}{nStr2\_}}(nStr2) \{ \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a3e8435e0ff5103760a8eeab1c335d63c}{alloc}}(); \}}
+\DoxyCodeLine{93     }
+\DoxyCodeLine{94     \mbox{\hyperlink{classChronusQ_1_1ExcitationList_aa79b535a59d13b0686fee8ec58ca6e9d}{\string~ExcitationList}}() \{ \mbox{\hyperlink{classChronusQ_1_1ExcitationList_adf50c6f1a50e61a2272e86632b7b8ea3}{dealloc}}(); \};}
+\DoxyCodeLine{95  }
+\DoxyCodeLine{96     \textcolor{keywordtype}{int} * \mbox{\hyperlink{classChronusQ_1_1ExcitationList_aef40ed2519b3fe5329749af90fee3558}{pointer}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}}; \}}
+\DoxyCodeLine{97     \textcolor{keywordtype}{int} * \mbox{\hyperlink{classChronusQ_1_1ExcitationList_ad88f893a9f509142cc045e5a7acba8ff}{pointerAtDet}}(\textcolor{keywordtype}{size\_t} iDet) \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}} + iDet*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a24d58db4924d9462aa74e333d62632f3}{N2\_}}; \}}
+\DoxyCodeLine{98     \textcolor{keywordtype}{int} * \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a760ef4da207312604fb70ae1e4f3e100}{pointerAtDet}}(\textcolor{keywordtype}{size\_t} iDet, \textcolor{keywordtype}{size\_t} jDet) \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}} + iDet*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a24d58db4924d9462aa74e333d62632f3}{N2\_}} + jDet*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a508c470ebdba46de217131e2d5690f9d}{N3\_}};\}}
+\DoxyCodeLine{99     }
+\DoxyCodeLine{100     \textcolor{keyword}{const} \textcolor{keywordtype}{int} * \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a85ecb2ccdd850ab35b35cdb959755507}{pointer}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}}; \}}
+\DoxyCodeLine{101     \textcolor{keyword}{const} \textcolor{keywordtype}{int} * \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a09ad8f60e60b3664aed75a2131757140}{pointerAtDet}}(\textcolor{keywordtype}{size\_t} iDet)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}} + iDet*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a24d58db4924d9462aa74e333d62632f3}{N2\_}}; \}}
+\DoxyCodeLine{102     \textcolor{keyword}{const} \textcolor{keywordtype}{int} * \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a1da8a9e0ec1c53290200015f4b160389}{pointerAtDet}}(\textcolor{keywordtype}{size\_t} iDet, \textcolor{keywordtype}{size\_t} jDet)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}} + iDet*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a24d58db4924d9462aa74e333d62632f3}{N2\_}} + jDet*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a508c470ebdba46de217131e2d5690f9d}{N3\_}};\}}
+\DoxyCodeLine{103     }
+\DoxyCodeLine{104     \textcolor{keywordtype}{int} \& \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a86fd22082d980a832f9e9fb1810f1504}{operator []}}(\textcolor{keywordtype}{size\_t} Loc) \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}}[Loc]; \}}
+\DoxyCodeLine{105     \textcolor{keywordtype}{int} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a86fd22082d980a832f9e9fb1810f1504}{operator [] }}(\textcolor{keywordtype}{size\_t} Loc)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}}[Loc]; \}}
+\DoxyCodeLine{106     }
+\DoxyCodeLine{107     \textcolor{comment}{// method used by 3-\/dimensional tensor}}
+\DoxyCodeLine{108     \textcolor{keywordtype}{int} \& \mbox{\hyperlink{classChronusQ_1_1ExcitationList_afe7e4e096f3b4f95102bbde2ce9d48ff}{operator ()}}(\textcolor{keywordtype}{size\_t} i, \textcolor{keywordtype}{size\_t} iNZ, \textcolor{keywordtype}{size\_t} iDet) \{}
+\DoxyCodeLine{109         \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}}[i + iNZ*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a735e46710d40da449e06588bec293c97}{N1\_}} + iDet*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a24d58db4924d9462aa74e333d62632f3}{N2\_}}];}
+\DoxyCodeLine{110     \}}
+\DoxyCodeLine{111     \textcolor{keywordtype}{int} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_afe7e4e096f3b4f95102bbde2ce9d48ff}{operator ()}}(\textcolor{keywordtype}{size\_t} i, \textcolor{keywordtype}{size\_t} iNZ, \textcolor{keywordtype}{size\_t} iDet)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{112         \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}}[i + iNZ*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a735e46710d40da449e06588bec293c97}{N1\_}} + iDet*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a24d58db4924d9462aa74e333d62632f3}{N2\_}}];}
+\DoxyCodeLine{113     \}}
+\DoxyCodeLine{114     \textcolor{comment}{// method used by 4-\/dimensional tensor}}
+\DoxyCodeLine{115     \textcolor{keywordtype}{int} \& \mbox{\hyperlink{classChronusQ_1_1ExcitationList_afe7e4e096f3b4f95102bbde2ce9d48ff}{operator ()}}(\textcolor{keywordtype}{size\_t} i, \textcolor{keywordtype}{size\_t} iNZ, \textcolor{keywordtype}{size\_t} iDet, \textcolor{keywordtype}{size\_t} jDet) \{}
+\DoxyCodeLine{116         \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}}[i + iNZ*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a735e46710d40da449e06588bec293c97}{N1\_}} + iDet*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a24d58db4924d9462aa74e333d62632f3}{N2\_}} + jDet*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a508c470ebdba46de217131e2d5690f9d}{N3\_}}];}
+\DoxyCodeLine{117     \}}
+\DoxyCodeLine{118     \textcolor{keywordtype}{int} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_afe7e4e096f3b4f95102bbde2ce9d48ff}{operator ()}}(\textcolor{keywordtype}{size\_t} i, \textcolor{keywordtype}{size\_t} iNZ, \textcolor{keywordtype}{size\_t} iDet, \textcolor{keywordtype}{size\_t} jDet)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{119         \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}}[i + iNZ*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a735e46710d40da449e06588bec293c97}{N1\_}} + iDet*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a24d58db4924d9462aa74e333d62632f3}{N2\_}} + jDet*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a508c470ebdba46de217131e2d5690f9d}{N3\_}}];}
+\DoxyCodeLine{120     \}}
+\DoxyCodeLine{121     }
+\DoxyCodeLine{122     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_aa424ea1f1573dc1575c679d5a47f5ae6}{nElement}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a793137df6d60533fa64103ff811f3f46}{nElement\_}};\}}
+\DoxyCodeLine{123     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a221c57fd0dcfa88bf4a918abc621283a}{nNonZero}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_ab890dcb6b5d6662e3c65f551ed406de5}{nNonZero\_}};\}}
+\DoxyCodeLine{124     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a3612a48e72e8e0489d63ebc728960012}{nString}}()\textcolor{keyword}{  const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9fd58a31b9c846c7076aec20652affa7}{nStr1\_}}*\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a425a800beaf154d910013be4725fc49e}{nStr2\_}}; \}}
+\DoxyCodeLine{125  }
+\DoxyCodeLine{126     std::pair<size\_t,size\_t> \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a7a65658a07cdf7360a8c833f2bb59d73}{nStrings}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \{\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9fd58a31b9c846c7076aec20652affa7}{nStr1\_}}, \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a425a800beaf154d910013be4725fc49e}{nStr2\_}}\};\}}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_aa2882cb201456ba87d25c285969950c8}{clear}}()   \{ std::fill\_n(\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}}, \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a491df8727e6bcca03c4465e9a88754f4}{N\_}}, 0); \}}
+\DoxyCodeLine{129     }
+\DoxyCodeLine{130     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9a93eddc5c7dc09d6fcc5f7b157015a7}{output}}(std::ostream \& out)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{131       out << \textcolor{stringliteral}{"{}Excitation List,  "{}};}
+\DoxyCodeLine{132       \textcolor{comment}{// three dimension tensor output}}
+\DoxyCodeLine{133       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a793137df6d60533fa64103ff811f3f46}{nElement\_}} == 4) \{}
+\DoxyCodeLine{134          std::cout << \textcolor{stringliteral}{"{} for total number of string = "{}} << \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9fd58a31b9c846c7076aec20652affa7}{nStr1\_}} << std::endl;}
+\DoxyCodeLine{135          \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9fd58a31b9c846c7076aec20652affa7}{nStr1\_}}; i++)}
+\DoxyCodeLine{136            \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out, \textcolor{stringliteral}{"{}iStr = "{}} + std::to\_string(i), }
+\DoxyCodeLine{137              \mbox{\hyperlink{classChronusQ_1_1ExcitationList_ad88f893a9f509142cc045e5a7acba8ff}{pointerAtDet}}(i), \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a793137df6d60533fa64103ff811f3f46}{nElement\_}}, \mbox{\hyperlink{classChronusQ_1_1ExcitationList_ab890dcb6b5d6662e3c65f551ed406de5}{nNonZero\_}}, \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a793137df6d60533fa64103ff811f3f46}{nElement\_}});}
+\DoxyCodeLine{138       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{139          std::cout << \textcolor{stringliteral}{"{} for total number of string1 and string2 = ("{}} << \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9fd58a31b9c846c7076aec20652affa7}{nStr1\_}} }
+\DoxyCodeLine{140                    << \textcolor{stringliteral}{"{},"{}} << \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a425a800beaf154d910013be4725fc49e}{nStr2\_}} << \textcolor{stringliteral}{"{})"{}} << std::endl;}
+\DoxyCodeLine{141          \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9fd58a31b9c846c7076aec20652affa7}{nStr1\_}}; i++)}
+\DoxyCodeLine{142          \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j = 0ul; j < \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a425a800beaf154d910013be4725fc49e}{nStr2\_}}; j++)}
+\DoxyCodeLine{143            \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out, }
+\DoxyCodeLine{144              \textcolor{stringliteral}{"{}(iStr, jStr) = ("{}} + std::to\_string(i) + \textcolor{stringliteral}{"{},"{}} + std::to\_string(j) + \textcolor{stringliteral}{"{})"{}}, }
+\DoxyCodeLine{145              \mbox{\hyperlink{classChronusQ_1_1ExcitationList_ad88f893a9f509142cc045e5a7acba8ff}{pointerAtDet}}(i, j), \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a793137df6d60533fa64103ff811f3f46}{nElement\_}}, \mbox{\hyperlink{classChronusQ_1_1ExcitationList_ab890dcb6b5d6662e3c65f551ed406de5}{nNonZero\_}}, \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a793137df6d60533fa64103ff811f3f46}{nElement\_}});}
+\DoxyCodeLine{146       \} }
+\DoxyCodeLine{147     \}}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a3e8435e0ff5103760a8eeab1c335d63c}{alloc}}() \{}
+\DoxyCodeLine{150       \mbox{\hyperlink{classChronusQ_1_1ExcitationList_adf50c6f1a50e61a2272e86632b7b8ea3}{dealloc}}();}
+\DoxyCodeLine{151       \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a735e46710d40da449e06588bec293c97}{N1\_}} = \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a793137df6d60533fa64103ff811f3f46}{nElement\_}};}
+\DoxyCodeLine{152       \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a24d58db4924d9462aa74e333d62632f3}{N2\_}} = \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a735e46710d40da449e06588bec293c97}{N1\_}} * \mbox{\hyperlink{classChronusQ_1_1ExcitationList_ab890dcb6b5d6662e3c65f551ed406de5}{nNonZero\_}};}
+\DoxyCodeLine{153       \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a508c470ebdba46de217131e2d5690f9d}{N3\_}} = \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a24d58db4924d9462aa74e333d62632f3}{N2\_}} * \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a9fd58a31b9c846c7076aec20652affa7}{nStr1\_}};}
+\DoxyCodeLine{154       \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a491df8727e6bcca03c4465e9a88754f4}{N\_}}  = \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a508c470ebdba46de217131e2d5690f9d}{N3\_}} * \mbox{\hyperlink{classChronusQ_1_1ExcitationList_a425a800beaf154d910013be4725fc49e}{nStr2\_}};}
+\DoxyCodeLine{155       this-\/>ptr\_ = this-\/>memManager\_.template malloc<int>(\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a491df8727e6bcca03c4465e9a88754f4}{N\_}});}
+\DoxyCodeLine{156     \}}
+\DoxyCodeLine{157     }
+\DoxyCodeLine{158     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ExcitationList_adf50c6f1a50e61a2272e86632b7b8ea3}{dealloc}}() \{ \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}}) \mbox{\hyperlink{classChronusQ_1_1ExcitationList_aed85a2a3eb335f500cc14edd253e0f45}{memManager\_}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1ExcitationList_a890fc574823da78cc0a3e9d2dbbefd66}{ptr\_}}); \}}
+\DoxyCodeLine{159   }
+\DoxyCodeLine{160   \}; \textcolor{comment}{// ExcitationList}}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162 \}; \textcolor{comment}{// namespace::ChronusQ}}
+
+\end{DoxyCode}

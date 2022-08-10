@@ -1,0 +1,137 @@
+\hypertarget{extrapolate_8hpp_source}{}\doxysection{extrapolate.\+hpp}
+\label{extrapolate_8hpp_source}\index{include/extrapolate.hpp@{include/extrapolate.hpp}}
+\mbox{\hyperlink{extrapolate_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{solve_8hpp}{cqlinalg/solve.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrix_8hpp}{matrix.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{38   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{39   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} \{}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{comment}{// Useful typedefs}}
+\DoxyCodeLine{44     \textcolor{keyword}{typedef} T*                        \mbox{\hyperlink{classChronusQ_1_1DIIS_a59d4c931b594c0a1dc54abd4f09c444d}{oper\_t}};}
+\DoxyCodeLine{45     \textcolor{keyword}{typedef} std::vector<oper\_t>       \mbox{\hyperlink{classChronusQ_1_1DIIS_a0d301eb4ae978510f74a6fb5ed7ec391}{oper\_t\_coll}};}
+\DoxyCodeLine{46     \textcolor{keyword}{typedef} std::vector<oper\_t\_coll>  \mbox{\hyperlink{classChronusQ_1_1DIIS_aff1c144da7e60752c90014ece2c07f72}{oper\_t\_coll2}};}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48   \textcolor{keyword}{public}:}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     \textcolor{keywordtype}{size\_t}         \mbox{\hyperlink{classChronusQ_1_1DIIS_ab5d02f851fd766b7cfd14feaaf4f621f}{nExtrap}};     }
+\DoxyCodeLine{51     std::vector<T> \mbox{\hyperlink{classChronusQ_1_1DIIS_a912d1eca00e2f054965fb6f12b020b8f}{coeffs}};      }
+\DoxyCodeLine{52     \textcolor{keyword}{const} std::vector<std::vector<SquareMatrix<T>>> \&\mbox{\hyperlink{classChronusQ_1_1DIIS_accf57719bce7767cc7c19f2ef548a5de}{errorMetric}}; }
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{55       }
+\DoxyCodeLine{65     \mbox{\hyperlink{classChronusQ_1_1DIIS_aebb418390d4bf7db6e619afc0ef90450}{DIIS}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1DIIS_ab5d02f851fd766b7cfd14feaaf4f621f}{nExtrap}}, \textcolor{keyword}{const} std::vector<std::vector<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<T>}}>> \&\mbox{\hyperlink{classChronusQ_1_1DIIS_accf57719bce7767cc7c19f2ef548a5de}{errorMetric}}) :}
+\DoxyCodeLine{66       \mbox{\hyperlink{classChronusQ_1_1DIIS_ab5d02f851fd766b7cfd14feaaf4f621f}{nExtrap}}(\mbox{\hyperlink{classChronusQ_1_1DIIS_ab5d02f851fd766b7cfd14feaaf4f621f}{nExtrap}}), \mbox{\hyperlink{classChronusQ_1_1DIIS_accf57719bce7767cc7c19f2ef548a5de}{errorMetric}}(\mbox{\hyperlink{classChronusQ_1_1DIIS_accf57719bce7767cc7c19f2ef548a5de}{errorMetric}}) \{}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68       \mbox{\hyperlink{classChronusQ_1_1DIIS_a912d1eca00e2f054965fb6f12b020b8f}{coeffs}}.resize(\mbox{\hyperlink{classChronusQ_1_1DIIS_ab5d02f851fd766b7cfd14feaaf4f621f}{nExtrap}}+1);}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     \};}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{comment}{// Constructors for default, copy, and move}}
+\DoxyCodeLine{74     \mbox{\hyperlink{classChronusQ_1_1DIIS_aa8127d9a7048854c95f35c84e0b552dc}{DIIS}}() = \textcolor{keyword}{delete}; }
+\DoxyCodeLine{75     \mbox{\hyperlink{classChronusQ_1_1DIIS_a3c404d5cacecadc96c23c6ca58e7077c}{DIIS}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} \&) = \textcolor{keyword}{delete}; }
+\DoxyCodeLine{76     \mbox{\hyperlink{classChronusQ_1_1DIIS_aff28457032a2de7b1ebe8281e97f697c}{DIIS}}(\mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} \&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{comment}{// Public Member functions}}
+\DoxyCodeLine{79     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1DIIS_a67e482424a7b9775e24ce1cc2ba09ab9}{extrapolate}}();}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81   \}; \textcolor{comment}{// class DIIS}}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 }
+\DoxyCodeLine{90   \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{91   \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1DIIS_a67e482424a7b9775e24ce1cc2ba09ab9}{DIIS<T>::extrapolate}}()\{}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \textcolor{keywordtype}{int} N          = nExtrap + 1;}
+\DoxyCodeLine{94     \textcolor{keywordtype}{int} NRHS       = 1;}
+\DoxyCodeLine{95     \textcolor{keywordtype}{bool} InvFail   = \textcolor{keyword}{false};}
+\DoxyCodeLine{96     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<T>}} B(errorMetric[0][0].memManager(), N);}
+\DoxyCodeLine{97     B.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae9ad6b2639dfd62c37d5ede32b6a4101}{clear}}();}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99     \textcolor{comment}{// Build the B matrix}}
+\DoxyCodeLine{100     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} l=0ul; l<errorMetric[0].size(); l++)\{}
+\DoxyCodeLine{101       \textcolor{keywordtype}{size\_t} NB = errorMetric[0][l].dimension();}
+\DoxyCodeLine{102       \textcolor{keywordtype}{size\_t} OSize = NB*NB;}
+\DoxyCodeLine{103       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0ul; j < nExtrap; j++)\{}
+\DoxyCodeLine{104         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0ul; k <= j; k++)\{}
+\DoxyCodeLine{105           B(k,j) += \mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(OSize,errorMetric[k][l].pointer(),1,}
+\DoxyCodeLine{106                                  errorMetric[j][l].pointer(),1);}
+\DoxyCodeLine{107           \textcolor{comment}{/*}}
+\DoxyCodeLine{108 \textcolor{comment}{          if (errorMetric[k].hasZ())}}
+\DoxyCodeLine{109 \textcolor{comment}{            B(k,j) += blas::dot(OSize,errorMetric[k][l].Z().pointer(),1,}}
+\DoxyCodeLine{110 \textcolor{comment}{                                   errorMetric[j][l].Z().pointer(),1);}}
+\DoxyCodeLine{111 \textcolor{comment}{          if (errorMetric[k].hasXY()) \{}}
+\DoxyCodeLine{112 \textcolor{comment}{            B(k,j) += blas::dot(OSize,errorMetric[k][l].Y().pointer(),1,}}
+\DoxyCodeLine{113 \textcolor{comment}{                                   errorMetric[j][l].Y().pointer(),1);}}
+\DoxyCodeLine{114 \textcolor{comment}{            B(k,j) += blas::dot(OSize,errorMetric[k][l].X().pointer(),1,}}
+\DoxyCodeLine{115 \textcolor{comment}{                                 errorMetric[j][l].X().pointer(),1);}}
+\DoxyCodeLine{116 \textcolor{comment}{           */}}
+\DoxyCodeLine{117         \}}
+\DoxyCodeLine{118       \}}
+\DoxyCodeLine{119     \}}
+\DoxyCodeLine{120     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0ul; j < nExtrap; j++)\{}
+\DoxyCodeLine{121       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0ul; k < j; k++)\{}
+\DoxyCodeLine{122          B(j,k) = B(k,j);}
+\DoxyCodeLine{123       \}}
+\DoxyCodeLine{124     \}}
+\DoxyCodeLine{125     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} l = 0ul; l < nExtrap; l++)\{}
+\DoxyCodeLine{126       B(nExtrap,l) = -\/1.0;}
+\DoxyCodeLine{127       B(l,nExtrap) = -\/1.0;}
+\DoxyCodeLine{128     \}}
+\DoxyCodeLine{129     B(nExtrap,nExtrap) = 0.0;}
+\DoxyCodeLine{130   \textcolor{comment}{//prettyPrintSmart(std::cout,"{}B Matrix"{},\&B[0],N,N,N);}}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132     \textcolor{comment}{// Initialize LHS of the linear problem}}
+\DoxyCodeLine{133     std::fill\_n(\&coeffs[0],N,0.);}
+\DoxyCodeLine{134     coeffs[nExtrap] = -\/1.0;}
+\DoxyCodeLine{135  }
+\DoxyCodeLine{136     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem = errorMetric[0][0].memManager();}
+\DoxyCodeLine{137     int64\_t* IPIV = mem.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981}{malloc}}<int64\_t>(N);}
+\DoxyCodeLine{138     \textcolor{keywordtype}{int} INFO = lapack::gesv(N, 1, B.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), N, IPIV, \&coeffs[0], N);}
+\DoxyCodeLine{139     mem.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(IPIV);}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 \textcolor{comment}{//  for(auto i = 0ul; i < N; i++)}}
+\DoxyCodeLine{142 \textcolor{comment}{//    std::cout << "{}coeff = "{} << coeffs[i] << std::endl;}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144   \textcolor{comment}{//prettyPrintSmart(std::cout,"{}B Matrix Factored"{},\&B[0],N,N,N);}}
+\DoxyCodeLine{145     InvFail = (INFO != 0);}
+\DoxyCodeLine{146     \textcolor{keywordflow}{return} !InvFail;}
+\DoxyCodeLine{147   \}; \textcolor{comment}{// function DIIS}}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{151 }
+
+\end{DoxyCode}

@@ -1,0 +1,115 @@
+\hypertarget{cqlinalg__config_8hpp_source}{}\doxysection{cqlinalg\+\_\+config.\+hpp}
+\label{cqlinalg__config_8hpp_source}\index{include/cqlinalg/cqlinalg\_config.hpp@{include/cqlinalg/cqlinalg\_config.hpp}}
+\mbox{\hyperlink{cqlinalg__config_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{comment}{// Includes typedefs }}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#ifndef LAPACK\_COMPLEX\_CPP}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{  \#define LAPACK\_COMPLEX\_CPP}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <lapack/config.h>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#ifdef CQ\_HAS\_TA}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{  \#include <tiledarray.h>}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{comment}{// Choose linear algebra headers}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#ifdef \_CQ\_MKL}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{  \#define MKL\_Complex16 dcomplex }\textcolor{comment}{// Redefine MKL complex type}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{  \#define MKL\_Complex8  std::complex<float> }\textcolor{comment}{// Redefine MKL complex type }}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{preprocessor}{  \#include <mkl.h>} \textcolor{comment}{// MKL}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{  \#include <blas/fortran.h>}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 \textcolor{preprocessor}{  \#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{    \#include <mkl\_scalapack.h>}  }
+\DoxyCodeLine{49 \textcolor{preprocessor}{    \#include <mkl\_pblas.h>}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \textcolor{preprocessor}{    \#define CXXBLACS\_BLACS\_Complex16 double}}
+\DoxyCodeLine{52 \textcolor{preprocessor}{    \#define CXXBLACS\_BLACS\_Complex8  float}}
+\DoxyCodeLine{53     }
+\DoxyCodeLine{54 \textcolor{preprocessor}{    \#define CXXBLACS\_HAS\_BLAS}}
+\DoxyCodeLine{55 \textcolor{preprocessor}{    \#define CXXBLACS\_HAS\_LAPACK}}
+\DoxyCodeLine{56 \textcolor{preprocessor}{    \#define CXXBLACS\_HAS\_PBLAS}}
+\DoxyCodeLine{57 \textcolor{preprocessor}{    \#define CXXBLACS\_HAS\_SCALAPACK}}
+\DoxyCodeLine{58 \textcolor{preprocessor}{  \#endif}}
+\DoxyCodeLine{59 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 \textcolor{preprocessor}{  \#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{62 \textcolor{comment}{//  \#error CXXBLAS + nonMKL Not Tested!}}
+\DoxyCodeLine{63 \textcolor{preprocessor}{  \#endif}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 \textcolor{preprocessor}{  \#define CXXBLACS\_HAS\_BLAS}}
+\DoxyCodeLine{66 \textcolor{preprocessor}{  \#define CXXBLACS\_HAS\_LAPACK}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68   \textcolor{comment}{// Why?}}
+\DoxyCodeLine{69 \textcolor{preprocessor}{  \#ifndef CQ\_HAS\_TA}}
+\DoxyCodeLine{70 \textcolor{preprocessor}{    \#define CXXBLACS\_BLAS\_Complex16 std::complex<double>}}
+\DoxyCodeLine{71 \textcolor{preprocessor}{    \#define CXXBLACS\_BLAS\_Complex8  std::complex<float>}}
+\DoxyCodeLine{72     \textcolor{comment}{//\#define CXXBLACS\_LAPACK\_Complex16 double}}
+\DoxyCodeLine{73     \textcolor{comment}{//\#define CXXBLACS\_LAPACK\_Complex8  float}}
+\DoxyCodeLine{74 \textcolor{preprocessor}{  \#endif}}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76 \textcolor{preprocessor}{  \#include <blas/fortran.h>}}
+\DoxyCodeLine{77 \textcolor{preprocessor}{  \#include <lapack/fortran.h>}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79   \textcolor{keyword}{extern} \textcolor{stringliteral}{"{}C"{}} \{}
+\DoxyCodeLine{80     \textcolor{keywordtype}{int} \mbox{\hyperlink{cqlinalg__config_8hpp_a74e6485b663ba19f93bc439ec123b356}{openblas\_get\_num\_threads}}();}
+\DoxyCodeLine{81     \textcolor{keywordtype}{void} \mbox{\hyperlink{cqlinalg__config_8hpp_a60e32a188fc8772571ab21f5ef6803e1}{openblas\_set\_num\_threads}}(\textcolor{keywordtype}{int}*);}
+\DoxyCodeLine{82   \}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85 \textcolor{preprocessor}{\#ifdef CQ\_HAS\_TA}}
+\DoxyCodeLine{86 \textcolor{preprocessor}{  \#define TA\_Complex16 dcomplex }\textcolor{comment}{// Redefine MKL complex type}}
+\DoxyCodeLine{87 \textcolor{preprocessor}{  \#define TA\_Complex8  std::complex<float> }\textcolor{comment}{// Redefine MKL complex type}}
+\DoxyCodeLine{88 \textcolor{preprocessor}{  \#define TA\_INT int }}
+\DoxyCodeLine{89 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94 \textcolor{preprocessor}{\#include <blas.hh>}}
+\DoxyCodeLine{95 \textcolor{preprocessor}{\#include <lapack.hh>}}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{98 \textcolor{preprocessor}{  \#include <cxxblacs.hpp>}}
+\DoxyCodeLine{99 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{100 \textcolor{preprocessor}{  \#define CB\_INT int32\_t}}
+\DoxyCodeLine{101 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{memmanager_8hpp}{memmanager.hpp}}>}}
+\DoxyCodeLine{105 \textcolor{preprocessor}{\#include <Eigen/Core>}}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107 \textcolor{keyword}{extern} \textcolor{stringliteral}{"{}C"{}} \textcolor{keywordtype}{void} \mbox{\hyperlink{cqlinalg__config_8hpp_af499cf2a680852e90dd01c75b7e3c217}{openblas\_get\_num\_threads\_}}(\textcolor{keywordtype}{int}*);}
+\DoxyCodeLine{108 \textcolor{keyword}{extern} \textcolor{stringliteral}{"{}C"{}} \textcolor{keywordtype}{void} \mbox{\hyperlink{cqlinalg__config_8hpp_a8198aa435302825eefdcae5b5be0311f}{openblas\_set\_num\_threads\_}}(\textcolor{keywordtype}{int}*);}
+\DoxyCodeLine{109 }
+
+\end{DoxyCode}

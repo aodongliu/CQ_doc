@@ -1,0 +1,50 @@
+\hypertarget{rtopts_8cxx}{}\doxysection{src/cxxapi/input/rtopts.cxx File Reference}
+\label{rtopts_8cxx}\index{src/cxxapi/input/rtopts.cxx@{src/cxxapi/input/rtopts.cxx}}
+{\ttfamily \#include $<$cxxapi/options.\+hpp$>$}\newline
+{\ttfamily \#include $<$cerr.\+hpp$>$}\newline
+Include dependency graph for rtopts.\+cxx\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{rtopts_8cxx__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{rtopts_8cxx_a190b764324655a97f269b9497d0ee278}{CONSTRUCT\+\_\+\+RT}}(\+\_\+\+REF,  \+\_\+\+MT,  \+\_\+\+IT)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a0e9f851e4c1d7c68ca3b2acee7575391}{Chronus\+Q\+::\+CQRT\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+std\+::shared\+\_\+ptr$<$ Real\+Time\+Base $>$ \mbox{\hyperlink{namespaceChronusQ_aea523910e009a64f20c62424046c3f01}{Chronus\+Q\+::\+CQReal\+Time\+Options}} (std\+::ostream \&out, CQInput\+File \&input, std\+::shared\+\_\+ptr$<$ Single\+Slater\+Base $>$ \&ss, EMPerturbation \&scf\+Pert)
+\begin{DoxyCompactList}\small\item\em Construct a \mbox{\hyperlink{classChronusQ_1_1RealTime}{Real\+Time}} object using the input file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{rtopts_8cxx_a190b764324655a97f269b9497d0ee278}\label{rtopts_8cxx_a190b764324655a97f269b9497d0ee278}} 
+\index{rtopts.cxx@{rtopts.cxx}!CONSTRUCT\_RT@{CONSTRUCT\_RT}}
+\index{CONSTRUCT\_RT@{CONSTRUCT\_RT}!rtopts.cxx@{rtopts.cxx}}
+\doxysubsubsection{\texorpdfstring{CONSTRUCT\_RT}{CONSTRUCT\_RT}}
+{\footnotesize\ttfamily \#define CONSTRUCT\+\_\+\+RT(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+REF,  }\item[{}]{\+\_\+\+MT,  }\item[{}]{\+\_\+\+IT }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keywordflow}{if}( not found ) \textcolor{keywordflow}{try} \{                          \(\backslash\)}
+\DoxyCodeLine{      rt = std::dynamic\_pointer\_cast<RealTimeBase>( \(\backslash\)}
+\DoxyCodeLine{          std::make\_shared< RealTime<\_REF,\_IT> >(  \(\backslash\)}
+\DoxyCodeLine{            \textcolor{keyword}{dynamic\_cast<} \_REF<\_MT,\_IT>\& \textcolor{keyword}{>}(*ss)    \(\backslash\)}
+\DoxyCodeLine{          )                                        \(\backslash\)}
+\DoxyCodeLine{        );                                         \(\backslash\)}
+\DoxyCodeLine{      found = \textcolor{keyword}{true};                                \(\backslash\)}
+\DoxyCodeLine{    \} \textcolor{keywordflow}{catch}(...) \{ \}}
+
+\end{DoxyCode}

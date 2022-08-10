@@ -1,0 +1,1046 @@
+\hypertarget{classChronusQ_1_1ResponseTBase}{}\doxysection{ChronusQ\+::Response\+TBase\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1ResponseTBase}\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+
+
+Type dependent interface for Response classes.  
+
+
+
+
+{\ttfamily \#include $<$tbase.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::Response\+TBase\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=244pt]{classChronusQ_1_1ResponseTBase__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::Response\+TBase\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a057b6cae4877af0abd48be96f9a2b0bc}{Response\+TBase}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} c, \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616}{Response\+Type}} job, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem, T $\ast$\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ad6a038e936f9f4ef2678a67a0fb65f2c}{full\+Matrix}}=nullptr)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a4dee85a3919c38722f6cfe20c3782318}{$\sim$\+Response\+TBase}} ()
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ad24559d54cc858509a63f846b60bea34}{Response\+TBase}} (const \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Response\+TBase}} \&other)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a0381f7e5402b5942e48577db767e81f4}{reset}} ()
+\item 
+virtual size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a66eb888fe9dc31fd13119ad3a91e395a}{get\+NSingle\+Dim}} (const bool do\+TDA)=0
+\item 
+virtual T $\ast$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a68ac9eba61f5cc1013732dc7568223ba}{form\+Full\+Matrix}} ()=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a66e39c49959b549111cfc51b430ac29c}{form\+RHS}} ()=0
+\item 
+virtual std\+::pair$<$ size\+\_\+t, T $\ast$ $>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a60fe80fdb582118f716e3956909515b1}{form\+Prop\+Grad}} (\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67da}{Response\+Operator}})=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a48eba3991958a27ca948284484b7980a}{config\+Options}} ()=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a686e94185c19eda18d1329dc0aa2ba28}{eig\+Vec\+Norm}} ()=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_af183860b3906a18accfda43980326e3b}{res\+Guess}} (size\+\_\+t, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ T $>$ \&, size\+\_\+t)=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a075dadeb0d6cf36d66e4e732f25c528d}{form\+Linear\+Trans}} (std\+::vector$<$ \mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION}{RESPONSE\+\_\+\+CONTRACTION}}$<$ double $>$ $>$)=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ac8d2805806159edf0af8ed930b5862d7}{form\+Linear\+Trans}} (std\+::vector$<$ \mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION}{RESPONSE\+\_\+\+CONTRACTION}}$<$ \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $>$ $>$)=0
+\item 
+virtual T $\ast$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a219e4594a902e45b90f57fca72cd6ee7}{form\+Full\+From\+Memory}} ()
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6682fab4deb936a5edb392573c00f214}{construct\+Shifts}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ab0adf826c4a54c4cff0ca4c24857258f}{alloc\+Residue\+Results}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a8471d5879ac8bfa857765fa925356a46}{alloc\+FDRResults}} ()
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a306895d18cf4363035e69fc035ca9050}{run}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ad55a66945e04270f446681669cbc47b9}{run\+Residue}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a308285e40b80ff4a4734adb0a40a9960}{run\+Full\+Residue}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ada2d198e6e9f6ef81b8cceff96bfdc64}{run\+Iter\+Residue}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a64e85bff6f87b80274240025f85cb127}{run\+FDR}} ()
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aa601ce793a2481d6d06a18298956e4d7}{post\+Linear\+Solve}} ()
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a5b0401e77585cab2fe4a67d4f53ac8c5}{post\+Diagonalization}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a97e2d1988d56a4e87c2d8a40df0858f5}{run\+Full\+FDR}} ()
+\item 
+{\footnotesize template$<$typename U $>$ }\\void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ac9cf6ee4177470fe3b38ef2a4d7210f6}{run\+Full\+FDR}} (\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponse\+Results}}$<$ T, U $>$ \&results)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ac4044409a3c46f38331d2d1322cb738c}{run\+Iter\+FDR}} ()
+\item 
+{\footnotesize template$<$typename U $>$ }\\void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_afaa848991b1df8ee3b50bebb2c55294d}{run\+Iter\+FDR}} (\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponse\+Results}}$<$ T, U $>$ \&results, std\+::function$<$ void(size\+\_\+t, U, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ U $>$ \&, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ U $>$ \&) $>$ \&pre\+Cond)
+\item 
+{\footnotesize template$<$typename U $>$ }\\std\+::map$<$ \mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67da}{Response\+Operator}}, U $\ast$ $>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_af1c6be5c260d51dec21a217be7104adb}{eval\+Properties}} (std\+::vector$<$ \mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67da}{Response\+Operator}} $>$ ops, size\+\_\+t n\+Vec, U $\ast$V)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a2bf9054eb5c335c0dff9a947ee55660f}{residue\+Properties}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a59328a3fc21ee1a6a0cd0e625ee36633}{residue\+TMoments}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ad121046612e977ce8e95654a7ae415fd}{residue\+Observables}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ab7bac30d3a262ca058f0dd8dc973df93}{fdr\+Properties}} ()
+\item 
+{\footnotesize template$<$typename U $>$ }\\void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a08b35d6035dfda36cc08a14c040f4905}{fdr\+RF}} (\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponse\+Results}}$<$ T, U $>$ \&results)
+\item 
+{\footnotesize template$<$typename U $>$ }\\void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a871e733b20dd77520a0ca9cac133a460}{fdr\+Observables}} (\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponse\+Results}}$<$ T, U $>$ \&results)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_abd7ade01dac95dff26e378be9e630d7d}{print\+Results}} (std\+::ostream \&out)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a716878a9edfeb29cfd730c4684970d72}{print\+Residue\+Results}} (std\+::ostream \&out)
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a3711a5c55e0c1995233e09d7ede066da}{print\+Res\+MO}} (std\+::ostream \&out)=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a67d93d0344c1ab5c65885866a099e1ba}{print\+Res\+MO}} (std\+::ostream \&out, size\+\_\+t n\+Roots, double $\ast$W, std\+::vector$<$ std\+::pair$<$ std\+::string, double $\ast$ $>$ $>$ data, double $\ast$VL, double $\ast$VR)=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ae47f62ec3c5f9b68391613d3268fd80c}{print\+Res\+MO}} (std\+::ostream \&out, size\+\_\+t n\+Roots, double $\ast$W, std\+::vector$<$ std\+::pair$<$ std\+::string, double $\ast$ $>$ $>$ data, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$VL, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$VR)=0
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a07e07c66021ddda2b7feabf41c6e2819}{print\+TMoments}} (std\+::ostream \&out)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a51c358708630696f04940c9f954f9631}{print\+Res\+Observables}} (std\+::ostream \&out)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a2723a78773d9fa42a8741e24e70f0e28}{print\+FDRResults}} (std\+::ostream \&out)
+\item 
+{\footnotesize template$<$typename U $>$ }\\void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a0f491559bb80090b1b4a0d9d1c371707}{print\+RF}} (\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponse\+Results}}$<$ T, U $>$ \&results, std\+::ostream \&out)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aa7e60452158554614ce3fb50af0e8743}{print\+FDObservables}} (std\+::ostream \&out)
+\item 
+T $\ast$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ad6a038e936f9f4ef2678a67a0fb65f2c}{full\+Matrix}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1ResidueResponseResults}{Residue\+Response\+Results}}$<$ T $>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a54bb56d4f7944b9ac36a921927a2f16d}{res\+Results}}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponse\+Results}}$<$ T, T $>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aa364fe25bc6d530c9105311c3c74302c}{fdr\+Results}}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponse\+Results}}$<$ T, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6ac21d9902ff40789bee86e9ac19e40b}{dfdr\+Results}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ab265a394382969cb698c09de26ebcc27}{write\+Meta}} ()
+\item 
+{\footnotesize template$<$typename U $>$ }\\void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ab4c730bb7b5dfb611367c1022f829d86}{iter\+Linear\+Trans}} (size\+\_\+t n\+Vec, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ U $>$ \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ U $>$ \&AV)
+\begin{DoxyCompactList}\small\item\em General implementation of linear transformation required for iterative solvers (\mbox{\hyperlink{classChronusQ_1_1GMRES}{GMRES}}, \mbox{\hyperlink{classChronusQ_1_1GPLHR}{GPLHR}}, etc) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}{comm\+\_\+}}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6ef0e81cb9f0c649c2fc8dbebacfbff4}{rcomm\+\_\+}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a4d34ddf73e3bd21431bbe7b614b114b3}{mem\+Manager\+\_\+}}
+\item 
+std\+::function$<$ void(size\+\_\+t, T, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ T $>$ \&, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ T $>$ \&) $>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ae52b9eec75f28b9214f223106fe36435}{PC\+\_\+}}
+\item 
+std\+::function$<$ void(size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $>$ \&, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $>$ \&) $>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ae7da72238f54c8e2a74947479fc4a918}{cmplx\+PC\+\_\+}}
+\item 
+std\+::function$<$ void(size\+\_\+t, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ T $>$ \&, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ T $>$ \&) $>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a9216891438650042e69dbba65f7a0de2}{n\+SPC\+\_\+}}
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a279e338b468f034208ab64167d047e95}{n\+Single\+Dim\+\_\+}}
+\item 
+T $\ast$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aea41156db938a6a05108509d1b1668da}{full\+Matrix\+\_\+}}
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a1c6ef6d0793fe011f472c911a946023c}{already\+Ran\+\_\+}} = false
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_acfb70bc8eaf99912a6ca3ad622ad3cff}{has\+Res\+Guess\+\_\+}} = true
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class U $>$ }\\class \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ab6bdb35a60f8b631769cbf8016522a9e}{Response\+TBase}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class Chronus\+Q\+::\+Response\+TBase$<$ T $>$}
+Type dependent interface for Response classes. 
+
+
+\begin{DoxyItemize}
+\item Defines problem dimension / (optional) matrix storage
+\item Stores the response (RESIDUE / FDR) results
+\item Provides access to memory manager
+\item Defines the preconditioner
+\item Allocates memory
+\item General \char`\"{}run\char`\"{} functions for response calculations
+\item Provides pure virtual interface for method specific specializations
+\begin{DoxyItemize}
+\item Form full matrix
+\item Form RHS
+\item Configuration options (set up)
+\item Normalizing eigenvectors
+\item Forming linear transformations 
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a057b6cae4877af0abd48be96f9a2b0bc}\label{classChronusQ_1_1ResponseTBase_a057b6cae4877af0abd48be96f9a2b0bc}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!ResponseTBase@{ResponseTBase}}
+\index{ResponseTBase@{ResponseTBase}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ResponseTBase()}{ResponseTBase()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::\+Response\+TBase (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{c,  }\item[{\mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616}{Response\+Type}}}]{job,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem,  }\item[{T $\ast$}]{full\+Matrix = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a057b6cae4877af0abd48be96f9a2b0bc_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a4dee85a3919c38722f6cfe20c3782318}\label{classChronusQ_1_1ResponseTBase_a4dee85a3919c38722f6cfe20c3782318}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!````~ResponseTBase@{$\sim$ResponseTBase}}
+\index{````~ResponseTBase@{$\sim$ResponseTBase}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$ResponseTBase()}{~ResponseTBase()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::$\sim$\mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Response\+TBase}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a4dee85a3919c38722f6cfe20c3782318_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ad24559d54cc858509a63f846b60bea34}\label{classChronusQ_1_1ResponseTBase_ad24559d54cc858509a63f846b60bea34}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!ResponseTBase@{ResponseTBase}}
+\index{ResponseTBase@{ResponseTBase}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ResponseTBase()}{ResponseTBase()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::\+Response\+TBase (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Response\+TBase}}$<$ T $>$ \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a8471d5879ac8bfa857765fa925356a46}\label{classChronusQ_1_1ResponseTBase_a8471d5879ac8bfa857765fa925356a46}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!allocFDRResults@{allocFDRResults}}
+\index{allocFDRResults@{allocFDRResults}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{allocFDRResults()}{allocFDRResults()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::alloc\+FDRResults\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a773100cd8a3cf081d1f730ff884270c2}{Chronus\+Q\+::\+Response\+Base}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a8471d5879ac8bfa857765fa925356a46_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ab0adf826c4a54c4cff0ca4c24857258f}\label{classChronusQ_1_1ResponseTBase_ab0adf826c4a54c4cff0ca4c24857258f}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!allocResidueResults@{allocResidueResults}}
+\index{allocResidueResults@{allocResidueResults}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{allocResidueResults()}{allocResidueResults()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::alloc\+Residue\+Results\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structChronusQ_1_1ResponseBase_ad58f4ac6e929cf4bb80ffa5831f6ff54}{Chronus\+Q\+::\+Response\+Base}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_ab0adf826c4a54c4cff0ca4c24857258f_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a48eba3991958a27ca948284484b7980a}\label{classChronusQ_1_1ResponseTBase_a48eba3991958a27ca948284484b7980a}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!configOptions@{configOptions}}
+\index{configOptions@{configOptions}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{configOptions()}{configOptions()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::config\+Options (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MORSpec_a132ad1b32fd501bd32ec897bb65df4d5}{Chronus\+Q\+::\+MORSpec$<$ Reference $>$}}, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aa616eb325374c2578a01cb89eb65b58e}{Chronus\+Q\+::\+Particle\+Particle\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, and \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a48cf62bd378ce369f791214246172ef0}{Chronus\+Q\+::\+Polarization\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a48eba3991958a27ca948284484b7980a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a6682fab4deb936a5edb392573c00f214}\label{classChronusQ_1_1ResponseTBase_a6682fab4deb936a5edb392573c00f214}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!constructShifts@{constructShifts}}
+\index{constructShifts@{constructShifts}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{constructShifts()}{constructShifts()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::construct\+Shifts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classChronusQ_1_1MORSpec_a693d50e79fa14203990d667c0e05a3e1}{Chronus\+Q\+::\+MORSpec$<$ Reference $>$}}, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a7d3a06ad76c02340f7b35d25f5f5cb9a}{Chronus\+Q\+::\+Particle\+Particle\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, and \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_af285605060182b24fa0e4c9bc0055616}{Chronus\+Q\+::\+Polarization\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a6682fab4deb936a5edb392573c00f214_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a686e94185c19eda18d1329dc0aa2ba28}\label{classChronusQ_1_1ResponseTBase_a686e94185c19eda18d1329dc0aa2ba28}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!eigVecNorm@{eigVecNorm}}
+\index{eigVecNorm@{eigVecNorm}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{eigVecNorm()}{eigVecNorm()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::eig\+Vec\+Norm (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MORSpec_a47b1f16838495a94c91e9def35734483}{Chronus\+Q\+::\+MORSpec$<$ Reference $>$}}, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a5a6c5641f9d5b65e9931e4dabfd67d4e}{Chronus\+Q\+::\+Particle\+Particle\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, and \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a05501cef859fb257960a193dd9c3d243}{Chronus\+Q\+::\+Polarization\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_af1c6be5c260d51dec21a217be7104adb}\label{classChronusQ_1_1ResponseTBase_af1c6be5c260d51dec21a217be7104adb}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!evalProperties@{evalProperties}}
+\index{evalProperties@{evalProperties}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{evalProperties()}{evalProperties()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+std\+::map$<$ \mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67da}{Response\+Operator}}, U $\ast$ $>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::eval\+Properties (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67da}{Response\+Operator}} $>$}]{ops,  }\item[{size\+\_\+t}]{n\+Vec,  }\item[{U $\ast$}]{V }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_af1c6be5c260d51dec21a217be7104adb_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a871e733b20dd77520a0ca9cac133a460}\label{classChronusQ_1_1ResponseTBase_a871e733b20dd77520a0ca9cac133a460}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!fdrObservables@{fdrObservables}}
+\index{fdrObservables@{fdrObservables}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{fdrObservables()}{fdrObservables()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+template void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::fdr\+Observables (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponse\+Results}}$<$ T, U $>$ \&}]{results }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ab7bac30d3a262ca058f0dd8dc973df93}\label{classChronusQ_1_1ResponseTBase_ab7bac30d3a262ca058f0dd8dc973df93}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!fdrProperties@{fdrProperties}}
+\index{fdrProperties@{fdrProperties}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{fdrProperties()}{fdrProperties()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::fdr\+Properties (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structChronusQ_1_1ResponseBase_afb7ab6a00f757164e1d051a6502bdbee}{Chronus\+Q\+::\+Response\+Base}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_ab7bac30d3a262ca058f0dd8dc973df93_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a08b35d6035dfda36cc08a14c040f4905}\label{classChronusQ_1_1ResponseTBase_a08b35d6035dfda36cc08a14c040f4905}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!fdrRF@{fdrRF}}
+\index{fdrRF@{fdrRF}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{fdrRF()}{fdrRF()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::fdr\+RF (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponse\+Results}}$<$ T, U $>$ \&}]{results }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a08b35d6035dfda36cc08a14c040f4905_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a219e4594a902e45b90f57fca72cd6ee7}\label{classChronusQ_1_1ResponseTBase_a219e4594a902e45b90f57fca72cd6ee7}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!formFullFromMemory@{formFullFromMemory}}
+\index{formFullFromMemory@{formFullFromMemory}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{formFullFromMemory()}{formFullFromMemory()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual T $\ast$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::form\+Full\+From\+Memory (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a46dd9043a5ab80f0f8eb52cc6da06e79}{Chronus\+Q\+::\+Particle\+Particle\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, and \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aeb18c18e40df64f24a4333e66b40f1f7}{Chronus\+Q\+::\+Polarization\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a219e4594a902e45b90f57fca72cd6ee7_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a68ac9eba61f5cc1013732dc7568223ba}\label{classChronusQ_1_1ResponseTBase_a68ac9eba61f5cc1013732dc7568223ba}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!formFullMatrix@{formFullMatrix}}
+\index{formFullMatrix@{formFullMatrix}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{formFullMatrix()}{formFullMatrix()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual T $\ast$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::form\+Full\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MORSpec_af14318bff684749e88b85a8e130d3ab0}{Chronus\+Q\+::\+MORSpec$<$ Reference $>$}}, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a96d0fb30c916e1b3dd19771b65a00172}{Chronus\+Q\+::\+Particle\+Particle\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, and \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aeb57b4dc85177d61df54bb32b8367951}{Chronus\+Q\+::\+Polarization\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a68ac9eba61f5cc1013732dc7568223ba_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ac8d2805806159edf0af8ed930b5862d7}\label{classChronusQ_1_1ResponseTBase_ac8d2805806159edf0af8ed930b5862d7}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!formLinearTrans@{formLinearTrans}}
+\index{formLinearTrans@{formLinearTrans}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{formLinearTrans()}{formLinearTrans()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::form\+Linear\+Trans (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION}{RESPONSE\+\_\+\+CONTRACTION}}$<$ \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $>$ $>$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MORSpec_a808dff2d357c546b61c71e7351d229f1}{Chronus\+Q\+::\+MORSpec$<$ Reference $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a075dadeb0d6cf36d66e4e732f25c528d}\label{classChronusQ_1_1ResponseTBase_a075dadeb0d6cf36d66e4e732f25c528d}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!formLinearTrans@{formLinearTrans}}
+\index{formLinearTrans@{formLinearTrans}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{formLinearTrans()}{formLinearTrans()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::form\+Linear\+Trans (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION}{RESPONSE\+\_\+\+CONTRACTION}}$<$ double $>$ $>$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MORSpec_a58b8285caff8d68d9945ba8f8f9d1e92}{Chronus\+Q\+::\+MORSpec$<$ Reference $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a60fe80fdb582118f716e3956909515b1}\label{classChronusQ_1_1ResponseTBase_a60fe80fdb582118f716e3956909515b1}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!formPropGrad@{formPropGrad}}
+\index{formPropGrad@{formPropGrad}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{formPropGrad()}{formPropGrad()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual std\+::pair$<$ size\+\_\+t, T $\ast$ $>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::form\+Prop\+Grad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67da}{Response\+Operator}}}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MORSpec_a3d38127496d0b1393cfd400b57435648}{Chronus\+Q\+::\+MORSpec$<$ Reference $>$}}, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a659c5e565c9108bc918e3a98494687ae}{Chronus\+Q\+::\+Particle\+Particle\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a0e412b5f2a37bfccbe07324d62897c20}{Chronus\+Q\+::\+Polarization\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, and \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01NEOSS_3_01MatsT_00_01IntsT_01_4_01_4_a75752e3d791daf059dc69dc5d3434ca6}{Chronus\+Q\+::\+Polarization\+Propagator$<$ NEOSS$<$ Mats\+T, Ints\+T $>$ $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a66e39c49959b549111cfc51b430ac29c}\label{classChronusQ_1_1ResponseTBase_a66e39c49959b549111cfc51b430ac29c}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!formRHS@{formRHS}}
+\index{formRHS@{formRHS}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{formRHS()}{formRHS()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::form\+RHS (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MORSpec_a48670667dc2d597d37bb37a1870abc4b}{Chronus\+Q\+::\+MORSpec$<$ Reference $>$}}, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aa7fab2935d3555f0890f2eafde3b40a8}{Chronus\+Q\+::\+Particle\+Particle\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, and \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aacd5fb85a5acb1b8bdac3010d9989d9a}{Chronus\+Q\+::\+Polarization\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a66e39c49959b549111cfc51b430ac29c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ad6a038e936f9f4ef2678a67a0fb65f2c}\label{classChronusQ_1_1ResponseTBase_ad6a038e936f9f4ef2678a67a0fb65f2c}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!fullMatrix@{fullMatrix}}
+\index{fullMatrix@{fullMatrix}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{fullMatrix()}{fullMatrix()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T $\ast$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::full\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_ad6a038e936f9f4ef2678a67a0fb65f2c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a66eb888fe9dc31fd13119ad3a91e395a}\label{classChronusQ_1_1ResponseTBase_a66eb888fe9dc31fd13119ad3a91e395a}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!getNSingleDim@{getNSingleDim}}
+\index{getNSingleDim@{getNSingleDim}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getNSingleDim()}{getNSingleDim()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::get\+NSingle\+Dim (\begin{DoxyParamCaption}\item[{const bool}]{do\+TDA }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a1c8855a7026207630318d71f0d278397}{Chronus\+Q\+::\+Response\+Base}}.
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MORSpec_a022e242dafd59e1d8a39c3325f6ae53b}{Chronus\+Q\+::\+MORSpec$<$ Reference $>$}}, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ac5da86647afc03bb2a9e0bc060176e8d}{Chronus\+Q\+::\+Particle\+Particle\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_aebe8324f3828c5baa15e1682b5087edd}{Chronus\+Q\+::\+Polarization\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, and \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01NEOSS_3_01MatsT_00_01IntsT_01_4_01_4_a39cce9750b4662b8e9de235463a4d491}{Chronus\+Q\+::\+Polarization\+Propagator$<$ NEOSS$<$ Mats\+T, Ints\+T $>$ $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ab4c730bb7b5dfb611367c1022f829d86}\label{classChronusQ_1_1ResponseTBase_ab4c730bb7b5dfb611367c1022f829d86}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!iterLinearTrans@{iterLinearTrans}}
+\index{iterLinearTrans@{iterLinearTrans}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{iterLinearTrans()}{iterLinearTrans()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::iter\+Linear\+Trans (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n\+Vec,  }\item[{\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ U $>$ \&}]{V,  }\item[{\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ U $>$ \&}]{AV }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+General implementation of linear transformation required for iterative solvers (\mbox{\hyperlink{classChronusQ_1_1GMRES}{GMRES}}, \mbox{\hyperlink{classChronusQ_1_1GPLHR}{GPLHR}}, etc) 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_ab4c730bb7b5dfb611367c1022f829d86_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a5b0401e77585cab2fe4a67d4f53ac8c5}\label{classChronusQ_1_1ResponseTBase_a5b0401e77585cab2fe4a67d4f53ac8c5}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!postDiagonalization@{postDiagonalization}}
+\index{postDiagonalization@{postDiagonalization}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{postDiagonalization()}{postDiagonalization()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::post\+Diagonalization (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a5b0401e77585cab2fe4a67d4f53ac8c5_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_aa601ce793a2481d6d06a18298956e4d7}\label{classChronusQ_1_1ResponseTBase_aa601ce793a2481d6d06a18298956e4d7}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!postLinearSolve@{postLinearSolve}}
+\index{postLinearSolve@{postLinearSolve}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{postLinearSolve()}{postLinearSolve()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::post\+Linear\+Solve (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a05c6dc8d3385f76acb3f45374d3ccf39}{Chronus\+Q\+::\+Particle\+Particle\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, and \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a85f79b6888e0ec965e817eb484897e5d}{Chronus\+Q\+::\+Polarization\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_aa601ce793a2481d6d06a18298956e4d7_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_aa601ce793a2481d6d06a18298956e4d7_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_aa7e60452158554614ce3fb50af0e8743}\label{classChronusQ_1_1ResponseTBase_aa7e60452158554614ce3fb50af0e8743}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!printFDObservables@{printFDObservables}}
+\index{printFDObservables@{printFDObservables}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{printFDObservables()}{printFDObservables()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::print\+FDObservables (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a2723a78773d9fa42a8741e24e70f0e28}\label{classChronusQ_1_1ResponseTBase_a2723a78773d9fa42a8741e24e70f0e28}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!printFDRResults@{printFDRResults}}
+\index{printFDRResults@{printFDRResults}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{printFDRResults()}{printFDRResults()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::print\+FDRResults (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a33963a76d5a07777977d3f4739ba4aea}{Chronus\+Q\+::\+Response\+Base}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a716878a9edfeb29cfd730c4684970d72}\label{classChronusQ_1_1ResponseTBase_a716878a9edfeb29cfd730c4684970d72}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!printResidueResults@{printResidueResults}}
+\index{printResidueResults@{printResidueResults}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{printResidueResults()}{printResidueResults()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::print\+Residue\+Results (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0c0501aeac16a9629889587f344fc521}{Chronus\+Q\+::\+Response\+Base}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a3711a5c55e0c1995233e09d7ede066da}\label{classChronusQ_1_1ResponseTBase_a3711a5c55e0c1995233e09d7ede066da}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!printResMO@{printResMO}}
+\index{printResMO@{printResMO}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{printResMO()}{printResMO()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::print\+Res\+MO (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MORSpec_a38eae0c08e73627b9b443fabb800062d}{Chronus\+Q\+::\+MORSpec$<$ Reference $>$}}, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a2a5c99f37b8ddd737b29ca42d1eceda8}{Chronus\+Q\+::\+Particle\+Particle\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, and \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a43d99bbbe9e689cefe7a5926e3c8d99d}{Chronus\+Q\+::\+Polarization\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ae47f62ec3c5f9b68391613d3268fd80c}\label{classChronusQ_1_1ResponseTBase_ae47f62ec3c5f9b68391613d3268fd80c}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!printResMO@{printResMO}}
+\index{printResMO@{printResMO}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{printResMO()}{printResMO()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::print\+Res\+MO (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{size\+\_\+t}]{n\+Roots,  }\item[{double $\ast$}]{W,  }\item[{std\+::vector$<$ std\+::pair$<$ std\+::string, double $\ast$ $>$ $>$}]{data,  }\item[{\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$}]{VL,  }\item[{\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$}]{VR }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MORSpec_a91068c92e85aa902bda53b3c8b8bec87}{Chronus\+Q\+::\+MORSpec$<$ Reference $>$}}, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a2457828f563cde3dd0bab7ab181c74d6}{Chronus\+Q\+::\+Particle\+Particle\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a2835c5e9b2d6f37feffd5903611a17ad}{Chronus\+Q\+::\+Polarization\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, and \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01NEOSS_3_01MatsT_00_01IntsT_01_4_01_4_af5d1beb4b24cf13844bab4030b941c3e}{Chronus\+Q\+::\+Polarization\+Propagator$<$ NEOSS$<$ Mats\+T, Ints\+T $>$ $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a67d93d0344c1ab5c65885866a099e1ba}\label{classChronusQ_1_1ResponseTBase_a67d93d0344c1ab5c65885866a099e1ba}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!printResMO@{printResMO}}
+\index{printResMO@{printResMO}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{printResMO()}{printResMO()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::print\+Res\+MO (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{size\+\_\+t}]{n\+Roots,  }\item[{double $\ast$}]{W,  }\item[{std\+::vector$<$ std\+::pair$<$ std\+::string, double $\ast$ $>$ $>$}]{data,  }\item[{double $\ast$}]{VL,  }\item[{double $\ast$}]{VR }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MORSpec_ab0860b254e1d401cecb03008c6288529}{Chronus\+Q\+::\+MORSpec$<$ Reference $>$}}, \mbox{\hyperlink{classChronusQ_1_1ParticleParticlePropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_afd640f70b54de508655a92867c778e30}{Chronus\+Q\+::\+Particle\+Particle\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_a16a05b4c928ca5cf7ada502b3c2be0b3}{Chronus\+Q\+::\+Polarization\+Propagator$<$ Single\+Slater$<$ Mats\+T, Ints\+T $>$ $>$}}, and \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01NEOSS_3_01MatsT_00_01IntsT_01_4_01_4_a6441d46ff8f60791294ef3f8ee3e21c0}{Chronus\+Q\+::\+Polarization\+Propagator$<$ NEOSS$<$ Mats\+T, Ints\+T $>$ $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a51c358708630696f04940c9f954f9631}\label{classChronusQ_1_1ResponseTBase_a51c358708630696f04940c9f954f9631}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!printResObservables@{printResObservables}}
+\index{printResObservables@{printResObservables}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{printResObservables()}{printResObservables()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::print\+Res\+Observables (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_abd7ade01dac95dff26e378be9e630d7d}\label{classChronusQ_1_1ResponseTBase_abd7ade01dac95dff26e378be9e630d7d}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!printResults@{printResults}}
+\index{printResults@{printResults}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{printResults()}{printResults()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::print\+Results (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a0f491559bb80090b1b4a0d9d1c371707}\label{classChronusQ_1_1ResponseTBase_a0f491559bb80090b1b4a0d9d1c371707}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!printRF@{printRF}}
+\index{printRF@{printRF}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{printRF()}{printRF()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+template void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::print\+RF (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponse\+Results}}$<$ T, U $>$ \&}]{results,  }\item[{std\+::ostream \&}]{out }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a07e07c66021ddda2b7feabf41c6e2819}\label{classChronusQ_1_1ResponseTBase_a07e07c66021ddda2b7feabf41c6e2819}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!printTMoments@{printTMoments}}
+\index{printTMoments@{printTMoments}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{printTMoments()}{printTMoments()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::print\+TMoments (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a0381f7e5402b5942e48577db767e81f4}\label{classChronusQ_1_1ResponseTBase_a0381f7e5402b5942e48577db767e81f4}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!reset@{reset}}
+\index{reset@{reset}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a0381f7e5402b5942e48577db767e81f4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a0381f7e5402b5942e48577db767e81f4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_af183860b3906a18accfda43980326e3b}\label{classChronusQ_1_1ResponseTBase_af183860b3906a18accfda43980326e3b}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!resGuess@{resGuess}}
+\index{resGuess@{resGuess}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{resGuess()}{resGuess()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::res\+Guess (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{,  }\item[{\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ T $>$ \&}]{,  }\item[{size\+\_\+t}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1MORSpec_a823fa8be1a67eaa29292e1a26d073538}{Chronus\+Q\+::\+MORSpec$<$ Reference $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ad121046612e977ce8e95654a7ae415fd}\label{classChronusQ_1_1ResponseTBase_ad121046612e977ce8e95654a7ae415fd}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!residueObservables@{residueObservables}}
+\index{residueObservables@{residueObservables}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{residueObservables()}{residueObservables()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::residue\+Observables}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a2bf9054eb5c335c0dff9a947ee55660f}\label{classChronusQ_1_1ResponseTBase_a2bf9054eb5c335c0dff9a947ee55660f}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!residueProperties@{residueProperties}}
+\index{residueProperties@{residueProperties}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{residueProperties()}{residueProperties()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::residue\+Properties (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a24793ab664bda217def5e9a8a10cc308}{Chronus\+Q\+::\+Response\+Base}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a2bf9054eb5c335c0dff9a947ee55660f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a59328a3fc21ee1a6a0cd0e625ee36633}\label{classChronusQ_1_1ResponseTBase_a59328a3fc21ee1a6a0cd0e625ee36633}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!residueTMoments@{residueTMoments}}
+\index{residueTMoments@{residueTMoments}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{residueTMoments()}{residueTMoments()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::residue\+TMoments}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a59328a3fc21ee1a6a0cd0e625ee36633_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a306895d18cf4363035e69fc035ca9050}\label{classChronusQ_1_1ResponseTBase_a306895d18cf4363035e69fc035ca9050}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!run@{run}}
+\index{run@{run}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structChronusQ_1_1ResponseBase_ae11ff7c98179382d91c49942824c380e}{Chronus\+Q\+::\+Response\+Base}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classChronusQ_1_1MORSpec_a784c3fbb183ad7efbc70d7932cef748b}{Chronus\+Q\+::\+MORSpec$<$ Reference $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a306895d18cf4363035e69fc035ca9050_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a306895d18cf4363035e69fc035ca9050_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a64e85bff6f87b80274240025f85cb127}\label{classChronusQ_1_1ResponseTBase_a64e85bff6f87b80274240025f85cb127}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!runFDR@{runFDR}}
+\index{runFDR@{runFDR}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{runFDR()}{runFDR()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::run\+FDR (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a64e85bff6f87b80274240025f85cb127_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a64e85bff6f87b80274240025f85cb127_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a97e2d1988d56a4e87c2d8a40df0858f5}\label{classChronusQ_1_1ResponseTBase_a97e2d1988d56a4e87c2d8a40df0858f5}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!runFullFDR@{runFullFDR}}
+\index{runFullFDR@{runFullFDR}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{runFullFDR()}{runFullFDR()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::run\+Full\+FDR (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a97e2d1988d56a4e87c2d8a40df0858f5_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ac9cf6ee4177470fe3b38ef2a4d7210f6}\label{classChronusQ_1_1ResponseTBase_ac9cf6ee4177470fe3b38ef2a4d7210f6}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!runFullFDR@{runFullFDR}}
+\index{runFullFDR@{runFullFDR}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{runFullFDR()}{runFullFDR()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::run\+Full\+FDR (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponse\+Results}}$<$ T, U $>$ \&}]{results }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_ac9cf6ee4177470fe3b38ef2a4d7210f6_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a308285e40b80ff4a4734adb0a40a9960}\label{classChronusQ_1_1ResponseTBase_a308285e40b80ff4a4734adb0a40a9960}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!runFullResidue@{runFullResidue}}
+\index{runFullResidue@{runFullResidue}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{runFullResidue()}{runFullResidue()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::run\+Full\+Residue}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a308285e40b80ff4a4734adb0a40a9960_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_a308285e40b80ff4a4734adb0a40a9960_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ac4044409a3c46f38331d2d1322cb738c}\label{classChronusQ_1_1ResponseTBase_ac4044409a3c46f38331d2d1322cb738c}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!runIterFDR@{runIterFDR}}
+\index{runIterFDR@{runIterFDR}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{runIterFDR()}{runIterFDR()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::run\+Iter\+FDR (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_ac4044409a3c46f38331d2d1322cb738c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_afaa848991b1df8ee3b50bebb2c55294d}\label{classChronusQ_1_1ResponseTBase_afaa848991b1df8ee3b50bebb2c55294d}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!runIterFDR@{runIterFDR}}
+\index{runIterFDR@{runIterFDR}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{runIterFDR()}{runIterFDR()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$typename U $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::run\+Iter\+FDR (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponse\+Results}}$<$ T, U $>$ \&}]{results,  }\item[{std\+::function$<$ void(size\+\_\+t, U, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ U $>$ \&, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$ U $>$ \&) $>$ \&}]{pre\+Cond }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_afaa848991b1df8ee3b50bebb2c55294d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ada2d198e6e9f6ef81b8cceff96bfdc64}\label{classChronusQ_1_1ResponseTBase_ada2d198e6e9f6ef81b8cceff96bfdc64}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!runIterResidue@{runIterResidue}}
+\index{runIterResidue@{runIterResidue}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{runIterResidue()}{runIterResidue()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::run\+Iter\+Residue}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_ada2d198e6e9f6ef81b8cceff96bfdc64_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_ada2d198e6e9f6ef81b8cceff96bfdc64_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ad55a66945e04270f446681669cbc47b9}\label{classChronusQ_1_1ResponseTBase_ad55a66945e04270f446681669cbc47b9}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!runResidue@{runResidue}}
+\index{runResidue@{runResidue}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{runResidue()}{runResidue()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::run\+Residue (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_ad55a66945e04270f446681669cbc47b9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_ad55a66945e04270f446681669cbc47b9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ab265a394382969cb698c09de26ebcc27}\label{classChronusQ_1_1ResponseTBase_ab265a394382969cb698c09de26ebcc27}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!writeMeta@{writeMeta}}
+\index{writeMeta@{writeMeta}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{writeMeta()}{writeMeta()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::write\+Meta\hspace{0.3cm}{\ttfamily [protected]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ResponseTBase_ab265a394382969cb698c09de26ebcc27_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ab6bdb35a60f8b631769cbf8016522a9e}\label{classChronusQ_1_1ResponseTBase_ab6bdb35a60f8b631769cbf8016522a9e}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!ResponseTBase@{ResponseTBase}}
+\index{ResponseTBase@{ResponseTBase}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ResponseTBase}{ResponseTBase}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+template$<$class U $>$ \\
+friend class \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Response\+TBase}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a1c6ef6d0793fe011f472c911a946023c}\label{classChronusQ_1_1ResponseTBase_a1c6ef6d0793fe011f472c911a946023c}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!alreadyRan\_@{alreadyRan\_}}
+\index{alreadyRan\_@{alreadyRan\_}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{alreadyRan\_}{alreadyRan\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::already\+Ran\+\_\+ = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ae7da72238f54c8e2a74947479fc4a918}\label{classChronusQ_1_1ResponseTBase_ae7da72238f54c8e2a74947479fc4a918}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!cmplxPC\_@{cmplxPC\_}}
+\index{cmplxPC\_@{cmplxPC\_}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{cmplxPC\_}{cmplxPC\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::function$<$ void(size\+\_\+t,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}},\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}$>$\&,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}$>$\&) $>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::cmplx\+PC\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}\label{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!comm\_@{comm\_}}
+\index{comm\_@{comm\_}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{comm\_}{comm\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::comm\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a6ac21d9902ff40789bee86e9ac19e40b}\label{classChronusQ_1_1ResponseTBase_a6ac21d9902ff40789bee86e9ac19e40b}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!dfdrResults@{dfdrResults}}
+\index{dfdrResults@{dfdrResults}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{dfdrResults}{dfdrResults}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponse\+Results}}$<$T,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}$>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::dfdr\+Results}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_aa364fe25bc6d530c9105311c3c74302c}\label{classChronusQ_1_1ResponseTBase_aa364fe25bc6d530c9105311c3c74302c}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!fdrResults@{fdrResults}}
+\index{fdrResults@{fdrResults}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{fdrResults}{fdrResults}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponse\+Results}}$<$T,T$>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::fdr\+Results}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_aea41156db938a6a05108509d1b1668da}\label{classChronusQ_1_1ResponseTBase_aea41156db938a6a05108509d1b1668da}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!fullMatrix\_@{fullMatrix\_}}
+\index{fullMatrix\_@{fullMatrix\_}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{fullMatrix\_}{fullMatrix\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T$\ast$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::full\+Matrix\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_acfb70bc8eaf99912a6ca3ad622ad3cff}\label{classChronusQ_1_1ResponseTBase_acfb70bc8eaf99912a6ca3ad622ad3cff}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!hasResGuess\_@{hasResGuess\_}}
+\index{hasResGuess\_@{hasResGuess\_}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{hasResGuess\_}{hasResGuess\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::has\+Res\+Guess\+\_\+ = true\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a4d34ddf73e3bd21431bbe7b614b114b3}\label{classChronusQ_1_1ResponseTBase_a4d34ddf73e3bd21431bbe7b614b114b3}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!memManager\_@{memManager\_}}
+\index{memManager\_@{memManager\_}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{memManager\_}{memManager\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}}\& \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::mem\+Manager\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a279e338b468f034208ab64167d047e95}\label{classChronusQ_1_1ResponseTBase_a279e338b468f034208ab64167d047e95}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!nSingleDim\_@{nSingleDim\_}}
+\index{nSingleDim\_@{nSingleDim\_}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{nSingleDim\_}{nSingleDim\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::n\+Single\+Dim\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a9216891438650042e69dbba65f7a0de2}\label{classChronusQ_1_1ResponseTBase_a9216891438650042e69dbba65f7a0de2}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!nSPC\_@{nSPC\_}}
+\index{nSPC\_@{nSPC\_}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{nSPC\_}{nSPC\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::function$<$ void(size\+\_\+t,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$T$>$\&,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$T$>$\&) $>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::n\+SPC\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_ae52b9eec75f28b9214f223106fe36435}\label{classChronusQ_1_1ResponseTBase_ae52b9eec75f28b9214f223106fe36435}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!PC\_@{PC\_}}
+\index{PC\_@{PC\_}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{PC\_}{PC\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::function$<$ void(size\+\_\+t,T,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$T$>$\&,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{Solver\+Vectors}}$<$T$>$\&) $>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::\+PC\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a6ef0e81cb9f0c649c2fc8dbebacfbff4}\label{classChronusQ_1_1ResponseTBase_a6ef0e81cb9f0c649c2fc8dbebacfbff4}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!rcomm\_@{rcomm\_}}
+\index{rcomm\_@{rcomm\_}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{rcomm\_}{rcomm\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::rcomm\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ResponseTBase_a54bb56d4f7944b9ac36a921927a2f16d}\label{classChronusQ_1_1ResponseTBase_a54bb56d4f7944b9ac36a921927a2f16d}} 
+\index{ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}!resResults@{resResults}}
+\index{resResults@{resResults}!ChronusQ::ResponseTBase$<$ T $>$@{ChronusQ::ResponseTBase$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{resResults}{resResults}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{structChronusQ_1_1ResidueResponseResults}{Residue\+Response\+Results}}$<$T$>$ \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{Chronus\+Q\+::\+Response\+TBase}}$<$ T $>$\+::res\+Results}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/response/\mbox{\hyperlink{tbase_8hpp}{tbase.\+hpp}}\item 
+include/response/\mbox{\hyperlink{fdr_8hpp}{fdr.\+hpp}}\item 
+include/response/\mbox{\hyperlink{response_2memory_8hpp}{memory.\+hpp}}\item 
+include/response/\mbox{\hyperlink{response_2print_8hpp}{print.\+hpp}}\item 
+include/response/\mbox{\hyperlink{response_2properties_8hpp}{properties.\+hpp}}\item 
+include/response/\mbox{\hyperlink{residue_8hpp}{residue.\+hpp}}\item 
+src/response/\mbox{\hyperlink{response_2impl_8cxx}{impl.\+cxx}}\end{DoxyCompactItemize}

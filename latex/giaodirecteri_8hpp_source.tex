@@ -1,0 +1,67 @@
+\hypertarget{giaodirecteri_8hpp_source}{}\doxysection{giaodirecteri.\+hpp}
+\label{giaodirecteri_8hpp_source}\index{include/particleintegrals/twopints/giaodirecteri.hpp@{include/particleintegrals/twopints/giaodirecteri.hpp}}
+\mbox{\hyperlink{giaodirecteri_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of WashinGIAOn)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gtodirecttpi_8hpp}{particleintegrals/twopints/gtodirecttpi.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1GIAODirectERIContraction}{GIAODirectERIContraction}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1GTODirectTPIContraction}{GTODirectTPIContraction}}<dcomplex,dcomplex> \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keyword}{public}:}
+\DoxyCodeLine{33     \textcolor{keyword}{typedef} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{classChronusQ_1_1GIAODirectERIContraction_a5ecb56e7320cadbc8db118b59ee03080}{ResultsT}};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \mbox{\hyperlink{classChronusQ_1_1GIAODirectERIContraction_a99b96fe0f9a54199ba2e26dbfa92c029}{GIAODirectERIContraction}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{38     \mbox{\hyperlink{classChronusQ_1_1GIAODirectERIContraction_a6e0c253ff25705c98b1cf9ba8182de85}{GIAODirectERIContraction}}(\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts<dcomplex>}} \&eri):}
+\DoxyCodeLine{39       \mbox{\hyperlink{classChronusQ_1_1GTODirectTPIContraction}{GTODirectTPIContraction}}<\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}},\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}>(eri) \{}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41       \textcolor{keywordflow}{if} (\textcolor{keyword}{typeid}(eri) != \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1DirectTPI}{DirectTPI<dcomplex>}}))}
+\DoxyCodeLine{42         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}GIAODirectERIContraction expect a DirectERI<dcomplex> reference."{}});}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \mbox{\hyperlink{classChronusQ_1_1GIAODirectERIContraction_a68c011e8cecd995d346969f333b58784}{GIAODirectERIContraction}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1GIAODirectERIContraction}{GIAODirectERIContraction}} \&other ):}
+\DoxyCodeLine{47       \mbox{\hyperlink{classChronusQ_1_1GIAODirectERIContraction}{GIAODirectERIContraction}}(other.\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\_}}) \{\}}
+\DoxyCodeLine{48     \mbox{\hyperlink{classChronusQ_1_1GIAODirectERIContraction_aa23e9e047d75c8f8b30046d3edac4234}{GIAODirectERIContraction}}( \mbox{\hyperlink{classChronusQ_1_1GIAODirectERIContraction}{GIAODirectERIContraction}} \&\&other ):}
+\DoxyCodeLine{49       \mbox{\hyperlink{classChronusQ_1_1GIAODirectERIContraction}{GIAODirectERIContraction}}(other.\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\_}}) \{\}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GIAODirectERIContraction_a1c929146ed20f558e0e247e9736ca23d}{twoBodyContract}}(}
+\DoxyCodeLine{52         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,}
+\DoxyCodeLine{53         \textcolor{keyword}{const} \textcolor{keywordtype}{bool} screen,}
+\DoxyCodeLine{54         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<dcomplex>}}> \&list,}
+\DoxyCodeLine{55         \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert) \textcolor{keyword}{const};}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1GIAODirectERIContraction_a95c953468e16e724a464da163ebcc530}{\string~GIAODirectERIContraction}}() \{\}}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59   \}; \textcolor{comment}{// class GIAODirectERIContraction}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

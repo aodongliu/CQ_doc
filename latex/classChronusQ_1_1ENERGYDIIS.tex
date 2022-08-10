@@ -1,0 +1,350 @@
+\hypertarget{classChronusQ_1_1ENERGYDIIS}{}\doxysection{ChronusQ\+::ENERGYDIIS\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1ENERGYDIIS}\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+
+
+The Energy \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} class. A class to perform a \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} interpolation based on a series of energies and couplings.  
+
+
+
+
+{\ttfamily \#include $<$interpolate.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::ENERGYDIIS\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=265pt]{classChronusQ_1_1ENERGYDIIS__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::ENERGYDIIS\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ENERGYDIIS__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a116aa1b351401c682e49266c2c4c79f9}{ENERGYDIIS}} (size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a9e646b4a77bb641f274848afc3e698a1}{n\+Inter}}, double $\ast$\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ae8fb676491a209781316a962748b1bef}{B}}, size\+\_\+t nD, std\+::vector$<$ T $>$ en, size\+\_\+t t, double conv, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a4efd47188704e1f3aacb2338ddcbaad5}{ENERGYDIIS}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a7355c345cc2504339f08abbb4addaa83}{ENERGYDIIS}} (const \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{ENERGYDIIS}} \&)=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a0124eb00c6edce01ca2d20e94f121f0d}{ENERGYDIIS}} (\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{ENERGYDIIS}} \&\&)=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a185bcdf7bba39445fb77833d78e2aeef}{$\sim$\+ENERGYDIIS}} ()
+\item 
+T $\ast$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_adef956ec88a123d1befb357307f89f06}{x\+Pointer}} ()
+\item 
+T $\ast$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a84ebdc4989842d32887cdc340f57eb5a}{g\+Pointer}} ()
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a6a104c3fe82064a7ced89f8f9a916f58}{interpolate}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_af5f144dbf4d8ddc82066ef9d4c83340b}{compute\+Coeffs}} ()
+\item 
+double \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a6915a8f58e82b4fdffc4957068f01490}{obj\+Func}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a844d76d655ed5076f6eea95251ff1728}{grad\+Func}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a9e646b4a77bb641f274848afc3e698a1}{n\+Inter}}
+\begin{DoxyCompactList}\small\item\em Size of extrapolation space. \end{DoxyCompactList}\item 
+std\+::vector$<$ T $>$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ac82cb84c8a7fb89985118886b117ef81}{energy}}
+\begin{DoxyCompactList}\small\item\em Energies of each SCF interation. \end{DoxyCompactList}\item 
+double $\ast$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ae8fb676491a209781316a962748b1bef}{B}}
+\begin{DoxyCompactList}\small\item\em Error metric. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a88040a53f3ac04377e12db4ccc68d6e6}{n\+DimB}}
+\begin{DoxyCompactList}\small\item\em The leading dimension of B. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ab8f2ccc45eccfa1120fdb3e6ae7b3e8c}{target}}
+\begin{DoxyCompactList}\small\item\em Integer for the target state (guess) \end{DoxyCompactList}\item 
+std\+::vector$<$ T $>$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ad346f9605a1bc908702246ff984ec55a}{coeffs}}
+\begin{DoxyCompactList}\small\item\em Vector of extrapolation coeficients. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef T $\ast$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a5419022fdac27c13b0c48551daeafd83}{oper\+\_\+t}}
+\item 
+typedef std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a5419022fdac27c13b0c48551daeafd83}{oper\+\_\+t}} $>$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_aa53ca655167555cc53b17db56eeffb7e}{oper\+\_\+t\+\_\+coll}}
+\item 
+typedef std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_aa53ca655167555cc53b17db56eeffb7e}{oper\+\_\+t\+\_\+coll}} $>$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a8ad47adff7dfc76f43da308f9c526e98}{oper\+\_\+t\+\_\+coll2}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_abdc914d37630706f273bfc29fa2c6d20}{mem\+Manager}}
+\item 
+T $\ast$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ae8e393ebe5a58e35eeb1b1474a824b06}{x\+Opt}}
+\begin{DoxyCompactList}\small\item\em Unconstrained optimization variables. \end{DoxyCompactList}\item 
+T $\ast$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a2b9ffb2efeb4012ea7d2269e0d26b4b9}{g\+Opt}}
+\begin{DoxyCompactList}\small\item\em gradient of optimization variables \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class Chronus\+Q\+::\+ENERGYDIIS$<$ T $>$}
+The Energy \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} class. A class to perform a \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} interpolation based on a series of energies and couplings. 
+
+In general it solves the equation energy$\ast$c -\/ 1/2 c$^\wedge$\+T$\ast$\+B$\ast$c where c are a set of coefficients between 0. and 1. This object uses a set of optimization variable that maintain this constraint, which allows for unconstrained optimization of the function. ~\newline
+
+
+This object inherits the \mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS}} optimizer to find the ~\newline
+ minimum for the coefficients. 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_a5419022fdac27c13b0c48551daeafd83}\label{classChronusQ_1_1ENERGYDIIS_a5419022fdac27c13b0c48551daeafd83}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!oper\_t@{oper\_t}}
+\index{oper\_t@{oper\_t}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{oper\_t}{oper\_t}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+typedef T$\ast$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::oper\+\_\+t\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_aa53ca655167555cc53b17db56eeffb7e}\label{classChronusQ_1_1ENERGYDIIS_aa53ca655167555cc53b17db56eeffb7e}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!oper\_t\_coll@{oper\_t\_coll}}
+\index{oper\_t\_coll@{oper\_t\_coll}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{oper\_t\_coll}{oper\_t\_coll}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+typedef std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a5419022fdac27c13b0c48551daeafd83}{oper\+\_\+t}}$>$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::oper\+\_\+t\+\_\+coll\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_a8ad47adff7dfc76f43da308f9c526e98}\label{classChronusQ_1_1ENERGYDIIS_a8ad47adff7dfc76f43da308f9c526e98}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!oper\_t\_coll2@{oper\_t\_coll2}}
+\index{oper\_t\_coll2@{oper\_t\_coll2}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{oper\_t\_coll2}{oper\_t\_coll2}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+typedef std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_aa53ca655167555cc53b17db56eeffb7e}{oper\+\_\+t\+\_\+coll}}$>$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::oper\+\_\+t\+\_\+coll2\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_a116aa1b351401c682e49266c2c4c79f9}\label{classChronusQ_1_1ENERGYDIIS_a116aa1b351401c682e49266c2c4c79f9}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!ENERGYDIIS@{ENERGYDIIS}}
+\index{ENERGYDIIS@{ENERGYDIIS}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ENERGYDIIS()}{ENERGYDIIS()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::\+ENERGYDIIS (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n\+Inter,  }\item[{double $\ast$}]{B,  }\item[{size\+\_\+t}]{nD,  }\item[{std\+::vector$<$ T $>$}]{en,  }\item[{size\+\_\+t}]{t,  }\item[{double}]{conv,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ENERGYDIIS_a116aa1b351401c682e49266c2c4c79f9_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_a4efd47188704e1f3aacb2338ddcbaad5}\label{classChronusQ_1_1ENERGYDIIS_a4efd47188704e1f3aacb2338ddcbaad5}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!ENERGYDIIS@{ENERGYDIIS}}
+\index{ENERGYDIIS@{ENERGYDIIS}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ENERGYDIIS()}{ENERGYDIIS()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::\+ENERGYDIIS (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_a7355c345cc2504339f08abbb4addaa83}\label{classChronusQ_1_1ENERGYDIIS_a7355c345cc2504339f08abbb4addaa83}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!ENERGYDIIS@{ENERGYDIIS}}
+\index{ENERGYDIIS@{ENERGYDIIS}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ENERGYDIIS()}{ENERGYDIIS()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::\+ENERGYDIIS (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{ENERGYDIIS}}$<$ T $>$ \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_a0124eb00c6edce01ca2d20e94f121f0d}\label{classChronusQ_1_1ENERGYDIIS_a0124eb00c6edce01ca2d20e94f121f0d}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!ENERGYDIIS@{ENERGYDIIS}}
+\index{ENERGYDIIS@{ENERGYDIIS}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ENERGYDIIS()}{ENERGYDIIS()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::\+ENERGYDIIS (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{ENERGYDIIS}}$<$ T $>$ \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_a185bcdf7bba39445fb77833d78e2aeef}\label{classChronusQ_1_1ENERGYDIIS_a185bcdf7bba39445fb77833d78e2aeef}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!````~ENERGYDIIS@{$\sim$ENERGYDIIS}}
+\index{````~ENERGYDIIS@{$\sim$ENERGYDIIS}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$ENERGYDIIS()}{~ENERGYDIIS()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::$\sim$\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{ENERGYDIIS}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ENERGYDIIS_a185bcdf7bba39445fb77833d78e2aeef_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_af5f144dbf4d8ddc82066ef9d4c83340b}\label{classChronusQ_1_1ENERGYDIIS_af5f144dbf4d8ddc82066ef9d4c83340b}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!computeCoeffs@{computeCoeffs}}
+\index{computeCoeffs@{computeCoeffs}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{computeCoeffs()}{computeCoeffs()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::compute\+Coeffs}
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_a84ebdc4989842d32887cdc340f57eb5a}\label{classChronusQ_1_1ENERGYDIIS_a84ebdc4989842d32887cdc340f57eb5a}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!gPointer@{gPointer}}
+\index{gPointer@{gPointer}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{gPointer()}{gPointer()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T $\ast$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::g\+Pointer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_a844d76d655ed5076f6eea95251ff1728}\label{classChronusQ_1_1ENERGYDIIS_a844d76d655ed5076f6eea95251ff1728}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!gradFunc@{gradFunc}}
+\index{gradFunc@{gradFunc}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{gradFunc()}{gradFunc()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::grad\+Func\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1NonLinearOpt_a81f4a27f81c69b0fdf60d151eb629e2f}{Chronus\+Q\+::\+Non\+Linear\+Opt}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_a6a104c3fe82064a7ced89f8f9a916f58}\label{classChronusQ_1_1ENERGYDIIS_a6a104c3fe82064a7ced89f8f9a916f58}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!interpolate@{interpolate}}
+\index{interpolate@{interpolate}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{interpolate()}{interpolate()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::interpolate}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ENERGYDIIS_a6a104c3fe82064a7ced89f8f9a916f58_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1ENERGYDIIS_a6a104c3fe82064a7ced89f8f9a916f58_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_a6915a8f58e82b4fdffc4957068f01490}\label{classChronusQ_1_1ENERGYDIIS_a6915a8f58e82b4fdffc4957068f01490}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!objFunc@{objFunc}}
+\index{objFunc@{objFunc}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{objFunc()}{objFunc()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::obj\+Func\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1NonLinearOpt_a3587f01b95cad81ee99de42aadd314f1}{Chronus\+Q\+::\+Non\+Linear\+Opt}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_adef956ec88a123d1befb357307f89f06}\label{classChronusQ_1_1ENERGYDIIS_adef956ec88a123d1befb357307f89f06}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!xPointer@{xPointer}}
+\index{xPointer@{xPointer}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{xPointer()}{xPointer()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T $\ast$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::x\+Pointer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_ae8fb676491a209781316a962748b1bef}\label{classChronusQ_1_1ENERGYDIIS_ae8fb676491a209781316a962748b1bef}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!B@{B}}
+\index{B@{B}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{B}{B}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+double$\ast$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::B}
+
+
+
+Error metric. 
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_ad346f9605a1bc908702246ff984ec55a}\label{classChronusQ_1_1ENERGYDIIS_ad346f9605a1bc908702246ff984ec55a}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!coeffs@{coeffs}}
+\index{coeffs@{coeffs}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{coeffs}{coeffs}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::vector$<$T$>$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::coeffs}
+
+
+
+Vector of extrapolation coeficients. 
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_ac82cb84c8a7fb89985118886b117ef81}\label{classChronusQ_1_1ENERGYDIIS_ac82cb84c8a7fb89985118886b117ef81}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!energy@{energy}}
+\index{energy@{energy}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{energy}{energy}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::vector$<$T$>$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::energy}
+
+
+
+Energies of each SCF interation. 
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_a2b9ffb2efeb4012ea7d2269e0d26b4b9}\label{classChronusQ_1_1ENERGYDIIS_a2b9ffb2efeb4012ea7d2269e0d26b4b9}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!gOpt@{gOpt}}
+\index{gOpt@{gOpt}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{gOpt}{gOpt}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T$\ast$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::g\+Opt\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+gradient of optimization variables 
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_abdc914d37630706f273bfc29fa2c6d20}\label{classChronusQ_1_1ENERGYDIIS_abdc914d37630706f273bfc29fa2c6d20}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!memManager@{memManager}}
+\index{memManager@{memManager}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{memManager}{memManager}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}}\& \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::mem\+Manager\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_a88040a53f3ac04377e12db4ccc68d6e6}\label{classChronusQ_1_1ENERGYDIIS_a88040a53f3ac04377e12db4ccc68d6e6}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!nDimB@{nDimB}}
+\index{nDimB@{nDimB}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{nDimB}{nDimB}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::n\+DimB}
+
+
+
+The leading dimension of B. 
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_a9e646b4a77bb641f274848afc3e698a1}\label{classChronusQ_1_1ENERGYDIIS_a9e646b4a77bb641f274848afc3e698a1}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!nInter@{nInter}}
+\index{nInter@{nInter}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{nInter}{nInter}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::n\+Inter}
+
+
+
+Size of extrapolation space. 
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_ab8f2ccc45eccfa1120fdb3e6ae7b3e8c}\label{classChronusQ_1_1ENERGYDIIS_ab8f2ccc45eccfa1120fdb3e6ae7b3e8c}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!target@{target}}
+\index{target@{target}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{target}{target}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::target}
+
+
+
+Integer for the target state (guess) 
+
+\mbox{\Hypertarget{classChronusQ_1_1ENERGYDIIS_ae8e393ebe5a58e35eeb1b1474a824b06}\label{classChronusQ_1_1ENERGYDIIS_ae8e393ebe5a58e35eeb1b1474a824b06}} 
+\index{ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}!xOpt@{xOpt}}
+\index{xOpt@{xOpt}!ChronusQ::ENERGYDIIS$<$ T $>$@{ChronusQ::ENERGYDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{xOpt}{xOpt}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T$\ast$ \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{Chronus\+Q\+::\+ENERGYDIIS}}$<$ T $>$\+::x\+Opt\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Unconstrained optimization variables. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{interpolate_8hpp}{interpolate.\+hpp}}\end{DoxyCompactItemize}

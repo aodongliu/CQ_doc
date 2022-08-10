@@ -1,0 +1,181 @@
+\hypertarget{neofock_8hpp_source}{}\doxysection{neofock.\+hpp}
+\label{neofock_8hpp_source}\index{include/fockbuilder/neofock.hpp@{include/fockbuilder/neofock.hpp}}
+\mbox{\hyperlink{neofock_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{fockbuilder_8hpp}{fockbuilder.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{31   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1NEOFockBase}{NEOFockBase}} \{}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder<MatsT, IntsT>}}* \mbox{\hyperlink{classChronusQ_1_1NEOFockBase_a156eff4c709ca68ec23199faf215c2fd}{upstream}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{36     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}* \mbox{\hyperlink{classChronusQ_1_1NEOFockBase_af17b02043c71b6db3588d8af0d05a5a6}{outMat}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{37     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}* \mbox{\hyperlink{classChronusQ_1_1NEOFockBase_af8e0c5931ac2e5bcd6ff3a659669ed0e}{aux\_ss}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keyword}{public}:}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder<MatsT,IntsT>}}* \mbox{\hyperlink{classChronusQ_1_1NEOFockBase_ab674410fd905b896e0ef82e9513e257a}{getNonNEOUpstream}}() \{}
+\DoxyCodeLine{42       \textcolor{keywordflow}{if}( \textcolor{keyword}{auto} p = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1NEOFockBase}{NEOFockBase<MatsT,IntsT>}}*\textcolor{keyword}{>}(\mbox{\hyperlink{classChronusQ_1_1NEOFockBase_a156eff4c709ca68ec23199faf215c2fd}{upstream}}) ) \{}
+\DoxyCodeLine{43         \textcolor{keywordflow}{return} p-\/>getNonNEOUpstream();}
+\DoxyCodeLine{44       \}}
+\DoxyCodeLine{45       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{46         \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1NEOFockBase_a156eff4c709ca68ec23199faf215c2fd}{upstream}};}
+\DoxyCodeLine{47       \}}
+\DoxyCodeLine{48     \}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     \textcolor{comment}{// Setters}}
+\DoxyCodeLine{51     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOFockBase_ab1fe32acc646290076f87f4a7f6d54f9}{setAux}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}* ss) \{}
+\DoxyCodeLine{52       \mbox{\hyperlink{classChronusQ_1_1NEOFockBase_af8e0c5931ac2e5bcd6ff3a659669ed0e}{aux\_ss}} = ss;}
+\DoxyCodeLine{53     \}}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOFockBase_a9e27ffda4f46ab7de0feb57980a6fb3f}{setOutput}}(\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}* out) \{}
+\DoxyCodeLine{56       \mbox{\hyperlink{classChronusQ_1_1NEOFockBase_af17b02043c71b6db3588d8af0d05a5a6}{outMat}} = out;}
+\DoxyCodeLine{57     \}}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOFockBase_ab4924047136b2770ca5e1fd986b30221}{setUpstream}}(\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder<MatsT,IntsT>}}* up) \{}
+\DoxyCodeLine{60       \mbox{\hyperlink{classChronusQ_1_1NEOFockBase_a156eff4c709ca68ec23199faf215c2fd}{upstream}} = up;}
+\DoxyCodeLine{61     \}}
+\DoxyCodeLine{62   \};}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{65   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{NEOFockBuilder}}:}
+\DoxyCodeLine{66     \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsT,IntsT>,}
+\DoxyCodeLine{67     \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1NEOFockBase}{NEOFockBase}}<MatsT,IntsT>}
+\DoxyCodeLine{68   \{}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsU, \textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{71     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{NEOFockBuilder}};}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     std::shared\_ptr<TPIContractions<MatsT,IntsT>> \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_aa14ca30cc71c76e705a4c537f7be2be6}{contraction}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{76     \mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts<TwoPInts,IntsT>}}* \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_adc1ad192694e7146a5406d2a398ec32b}{gradTPI}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{keyword}{public}:}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{comment}{//}}
+\DoxyCodeLine{81     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{82     \textcolor{comment}{// XXX: Constructors do NOT populate the protected members -\/ not even the}}
+\DoxyCodeLine{83     \textcolor{comment}{//      copy/move (since they can't convert types)}}
+\DoxyCodeLine{84     \textcolor{comment}{//}}
+\DoxyCodeLine{85     \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a89956920cee3f475c06767ba7485df82}{NEOFockBuilder}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{86     \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_acd46ac22a8a98e61c8dff385f335ea64}{NEOFockBuilder}}(\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} hamiltonianOptions) :}
+\DoxyCodeLine{87       \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsT,IntsT>(hamiltonianOptions) \{ \}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \textcolor{comment}{// Other type constructors}}
+\DoxyCodeLine{90     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{91     \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a5ca65b4cc08dddf7526a867a5bee841a}{NEOFockBuilder}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{NEOFockBuilder<MatsU,IntsT>}} \&other ) : }
+\DoxyCodeLine{92       \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsT,IntsT>( dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsU,IntsT>\&>(other) )}
+\DoxyCodeLine{93       \{ \}}
+\DoxyCodeLine{94     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{95     \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_aaab38ae98fbbb9e57b3f48c007af037d}{NEOFockBuilder}}(\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder<MatsU,IntsT>}} \&\&other ) :}
+\DoxyCodeLine{96       \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsT,IntsT>( dynamic\_cast<\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsU,IntsT>\&\&>(other) )}
+\DoxyCodeLine{97       \{ \}}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99     \textcolor{comment}{// Setters}}
+\DoxyCodeLine{100     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a61e88a806c874e257a09de7504fc880a}{setContraction}}(std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions<MatsT,IntsT>}}> cont) \{}
+\DoxyCodeLine{101       \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_aa14ca30cc71c76e705a4c537f7be2be6}{contraction}} = cont;}
+\DoxyCodeLine{102     \}}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a3d800e92c63e2dac2efb35be830ad72d}{setGradientIntegrals}}(\mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts<TwoPInts,IntsT>}}* tpi) \{}
+\DoxyCodeLine{105       \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_adc1ad192694e7146a5406d2a398ec32b}{gradTPI}} = tpi;}
+\DoxyCodeLine{106     \}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108     \textcolor{comment}{// Inter-\/SingleSlater interaction}}
+\DoxyCodeLine{109     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a0d35d66f383828bf0afdc0f476f4d228}{formepJ}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&, \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false});}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     std::vector<double> \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a83c708063db88664e5633661c662b03f}{formepJGrad}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&,}
+\DoxyCodeLine{112       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&, \textcolor{keywordtype}{double} xHFX);}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114     \textcolor{comment}{// Interface method}}
+\DoxyCodeLine{115     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a41e9a3ae141c0dae34db32cac969760a}{formFock}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{116       \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false}, \textcolor{keywordtype}{double} xHFX = 1.);}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118     \textcolor{keyword}{virtual} std::vector<double> \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_afdf4602a4a99fed692db96451b539af2}{getGDGrad}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&,}
+\DoxyCodeLine{119       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&, \textcolor{keywordtype}{double} xHFX = 1.);}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121   \};}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{125   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder}{NEOKohnShamBuilder}} :}
+\DoxyCodeLine{126     \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsT, IntsT>,}
+\DoxyCodeLine{127     \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1NEOFockBase}{NEOFockBase}}<MatsT, IntsT>}
+\DoxyCodeLine{128   \{}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130     \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsU, \textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{131     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder}{NEOKohnShamBuilder}};}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135     std::vector<std::shared\_ptr<DFTFunctional>> \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_a5930b49bcadfbc6122179e240277bfb4}{epc\_functionals}};}
+\DoxyCodeLine{136     \mbox{\hyperlink{structChronusQ_1_1IntegrationParam}{IntegrationParam}} \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_a906bafe4b6070946579ecedac805e060}{intParam}};}
+\DoxyCodeLine{137     std::shared\_ptr<PauliSpinorSquareMatrices<double>> \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_aa1bb76369e56450beb57331e5e5552e4}{VXC}};}
+\DoxyCodeLine{138     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_a0e3d6d4b4393c39325614da00e683d90}{XCEnergy}};}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140     \textcolor{keyword}{public}:}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142     \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_abceece1fdd9486d1096313e1066dee87}{NEOKohnShamBuilder}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{143     \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_ad591a63661e4a45217f38de82c29f413}{NEOKohnShamBuilder}}(\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} hamiltonianOptions) :}
+\DoxyCodeLine{144       \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsT,IntsT>(hamiltonianOptions) \{ \}}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146     \textcolor{comment}{// Other type constructors}}
+\DoxyCodeLine{147     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{148     \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_a55307337958bc20b20feed5be4e85d54}{NEOKohnShamBuilder}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder}{NEOKohnShamBuilder<MatsU,IntsT>}} \&other ) : }
+\DoxyCodeLine{149       \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsT,IntsT>( dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsU,IntsT>\&>(other) )}
+\DoxyCodeLine{150       \{ \}}
+\DoxyCodeLine{151     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{152     \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_aa15e69ea24fb3a033f83447abb528e52}{NEOKohnShamBuilder}}(\mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder}{NEOKohnShamBuilder<MatsU,IntsT>}} \&\&other ) :}
+\DoxyCodeLine{153       \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsT,IntsT>( dynamic\_cast<\mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsU,IntsT>\&\&>(other) )}
+\DoxyCodeLine{154       \{ \}}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_ad06befee3a9fcd19c10e35d39b695489}{setFunctionals}}(std::vector<std::shared\_ptr<DFTFunctional>> funcs) \{}
+\DoxyCodeLine{157       \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_a5930b49bcadfbc6122179e240277bfb4}{epc\_functionals}}.clear();}
+\DoxyCodeLine{158       \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_a5930b49bcadfbc6122179e240277bfb4}{epc\_functionals}}.insert(\mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_a5930b49bcadfbc6122179e240277bfb4}{epc\_functionals}}.end(), funcs.begin(), funcs.end());}
+\DoxyCodeLine{159     \}}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_a9ac6a8c25e7c70b0174d599e9b9d016b}{formVXC}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&);}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163     \textcolor{comment}{// Interface method}}
+\DoxyCodeLine{164     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_a2f93c85a6ba1e45e70d15974a7612652}{formFock}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{165       \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false}, \textcolor{keywordtype}{double} xHFX = 1.);}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167     \textcolor{keyword}{virtual} std::vector<double> \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_a58a55a1837c477301d135d253f49547d}{getGDGrad}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\&,}
+\DoxyCodeLine{168       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&, \textcolor{keywordtype}{double} xHFX = 1.) \{}
+\DoxyCodeLine{169         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Gradients of NEOKohnShamBuilder NYI!"{}});}
+\DoxyCodeLine{170     \}}
+\DoxyCodeLine{171   \};}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173 \}}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{fockbuilder_2neofock_2impl_8hpp}{fockbuilder/neofock/impl.hpp}}>}}
+
+\end{DoxyCode}

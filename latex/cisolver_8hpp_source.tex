@@ -1,0 +1,227 @@
+\hypertarget{cisolver_8hpp_source}{}\doxysection{cisolver.\+hpp}
+\label{cisolver_8hpp_source}\index{include/mcscf/cisolver.hpp@{include/mcscf/cisolver.hpp}}
+\mbox{\hyperlink{cisolver_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you ca redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcscf_8hpp}{mcscf.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cibuilder_2casci_2impl_8hpp}{cibuilder/casci/impl.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cibuilder_2rasci_2impl_8hpp}{cibuilder/rasci/impl.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{eig_8hpp}{cqlinalg/eig.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{itersolver_8hpp}{itersolver.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{comment}{// \#define \_DEBUG\_CISOLVER\_IMPL}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36   \textcolor{comment}{// Different type}}
+\DoxyCodeLine{37   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{38   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{39   \mbox{\hyperlink{classChronusQ_1_1CISolver_ad1fbf4bf17c4d0e8aaa1a2148ba87481}{CISolver<MatsT,IntsT>::CISolver}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1CISolver}{CISolver<MatsU,IntsT>}} \& other) \{\};}
+\DoxyCodeLine{40   }
+\DoxyCodeLine{41   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{42   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{43   \mbox{\hyperlink{classChronusQ_1_1CISolver_ad1fbf4bf17c4d0e8aaa1a2148ba87481}{CISolver<MatsT,IntsT>::CISolver}}(\mbox{\hyperlink{classChronusQ_1_1CISolver}{CISolver<MatsU,IntsT>}} \&\& other) \{\};}
+\DoxyCodeLine{44   }
+\DoxyCodeLine{45   \textcolor{comment}{/*}}
+\DoxyCodeLine{46 \textcolor{comment}{   * \(\backslash\)brief solve CI Hamiltonian for N States }}
+\DoxyCodeLine{47 \textcolor{comment}{   * }}
+\DoxyCodeLine{48 \textcolor{comment}{   * Options:}}
+\DoxyCodeLine{49 \textcolor{comment}{   * 1. build full matrix and then direct diagonalize it}}
+\DoxyCodeLine{50 \textcolor{comment}{   * 2. pass functions of build sigma to davidson iterative solver}}
+\DoxyCodeLine{51 \textcolor{comment}{   *}}
+\DoxyCodeLine{52 \textcolor{comment}{   */} }
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{55   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CISolver_a63c983317ce7be09a718025036199f07}{CISolver<MatsT, IntsT>::solveCI}}(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsT, IntsT>}} \& mcwfn) \{}
+\DoxyCodeLine{56     }
+\DoxyCodeLine{57         \textcolor{keywordtype}{size\_t} NDet = mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0ad25ed51be67666dfec4df8b3de6bce}{NDet}};}
+\DoxyCodeLine{58     \textcolor{keywordtype}{size\_t} nR   = mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a933e57263d7a49bfe655de67b8590cff}{NStates}};}
+\DoxyCodeLine{59     \textcolor{keyword}{auto} \& StateEnergy = mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_ad94c23274a04fba12703fbaa1af5e177}{StateEnergy}};}
+\DoxyCodeLine{60     \textcolor{keyword}{auto} \& CIVecs = mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a1e15d8447cb718a44a2f9ddc34b2abaf}{CIVecs}};}
+\DoxyCodeLine{61         \textcolor{keyword}{auto} \& mem    = mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \textcolor{keywordflow}{if} (alg\_ == \mbox{\hyperlink{namespaceChronusQ_a23b92b13363b305aea46ac88f40cc774a0df9524a3d4e8b048631a60d8eb1ec74}{CI\_FULL\_MATRIX}}) \{}
+\DoxyCodeLine{64       }
+\DoxyCodeLine{65       std::cout << \textcolor{stringliteral}{"{}  Diagonalize CI Full Hamitonian Matrix ... \(\backslash\)n"{}} << std::endl;}
+\DoxyCodeLine{66       \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} * Energy = mem.template malloc<dcomplex>(NDet); }
+\DoxyCodeLine{67       MatsT * fullH     = mem.template malloc<MatsT>(NDet*NDet); }
+\DoxyCodeLine{68       MatsT * EigVec    = mem.template malloc<MatsT>(NDet*NDet); }
+\DoxyCodeLine{69       MatsT * dummy     = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{70       }
+\DoxyCodeLine{71       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Full Matrix"{}});}
+\DoxyCodeLine{72       mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a7de0a244fa9480ff3f187477887708a3}{ciBuilder}}-\/>buildFullH(mcwfn, fullH);}
+\DoxyCodeLine{73       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Full Matrix"{}});}
+\DoxyCodeLine{74       }
+\DoxyCodeLine{75 \textcolor{preprocessor}{\#ifdef \_DEBUG\_CIENGINE\_IMPL}}
+\DoxyCodeLine{76       std::cout << \textcolor{stringliteral}{"{} <0|H|0> = "{}}  << std::setprecision(16) }
+\DoxyCodeLine{77                 << *fullH + mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_acad5d92de9633efdd02cbabfe8a8b0fd}{reference}}().molecule().nucRepEnergy + mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0d37a12d6d2dbb7b99e67e5285eef04a}{InactEnergy}}}
+\DoxyCodeLine{78                 << std::endl;}
+\DoxyCodeLine{79 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82       \mbox{\hyperlink{namespaceChronusQ_a5d3260732d7f2c9102c6974ea3a04d4a}{GeneralEigen}}(\textcolor{charliteral}{'N'},\textcolor{charliteral}{'V'}, NDet, fullH, NDet, Energy, dummy, 1, EigVec, NDet);}
+\DoxyCodeLine{83       \textcolor{comment}{//HermetianEigen('V', 'L', NDet, fullH, NDet, Energy, mem);}}
+\DoxyCodeLine{84       }
+\DoxyCodeLine{85 \textcolor{preprocessor}{\#ifdef \_DEBUG\_CIENGINE\_IMPL}}
+\DoxyCodeLine{86       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}HH full H"{}}, fullH, NDet, NDet, NDet);}
+\DoxyCodeLine{87       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}HH Eigenvectors"{}}, EigVec, NDet, NDet, NDet);}
+\DoxyCodeLine{88       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}HH Eigenvalues"{}}, Energy, NDet, 1, NDet);}
+\DoxyCodeLine{89 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{90     }
+\DoxyCodeLine{91       \textcolor{comment}{// copy over eigenvalues and eigenvectors}}
+\DoxyCodeLine{92           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nR; i++) \{}
+\DoxyCodeLine{93             StateEnergy[i] = std::real(Energy[i]);}
+\DoxyCodeLine{94         std::copy\_n(EigVec+i*NDet, NDet, CIVecs[i]);}
+\DoxyCodeLine{95           \}}
+\DoxyCodeLine{96           mem.free(Energy, fullH, EigVec);}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (alg\_ == \mbox{\hyperlink{namespaceChronusQ_a23b92b13363b305aea46ac88f40cc774a3b3e69cf5805043f1826e9cd81e2512d}{CI\_DAVIDSON}}) \{}
+\DoxyCodeLine{99       }
+\DoxyCodeLine{100       \textcolor{comment}{// build diagonal H}}
+\DoxyCodeLine{101       MatsT  * diagH  = mem.template malloc<MatsT>(NDet); }
+\DoxyCodeLine{102       mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a7de0a244fa9480ff3f187477887708a3}{ciBuilder}}-\/>buildDiagH(mcwfn, diagH);}
+\DoxyCodeLine{103       }
+\DoxyCodeLine{104 \textcolor{preprocessor}{\#ifdef \_DEBUG\_CISOLVER\_IMPL}}
+\DoxyCodeLine{105       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}HH Diagonal H "{}}, diagH, NDet, 1, NDet);}
+\DoxyCodeLine{106 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{107       }
+\DoxyCodeLine{108       \textcolor{comment}{// set davidson parameters}}
+\DoxyCodeLine{109       \textcolor{keywordtype}{size\_t} kG = nDavidsonGuess\_;}
+\DoxyCodeLine{110       \textcolor{keywordtype}{size\_t} m  = std::max(maxDavidsonSpace\_, kG);}
+\DoxyCodeLine{111       \textcolor{keywordtype}{size\_t} nG = kG*nR;}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113       \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} * curEig = mem.template malloc<dcomplex>(nG);}
+\DoxyCodeLine{114       }
+\DoxyCodeLine{115       \textcolor{keyword}{using }LinearTrans\_t = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ab7586fef05543121a62a1616596cf498}{IterDiagonalizer<MatsT>::LinearTrans\_t}};}
+\DoxyCodeLine{116       }
+\DoxyCodeLine{117       \textcolor{comment}{// define linear transformation}}
+\DoxyCodeLine{118       LinearTrans\_t func = [\&] (\textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&AV) \{}
+\DoxyCodeLine{119           }
+\DoxyCodeLine{120 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{121             \textcolor{comment}{// disable MPI for now}}
+\DoxyCodeLine{122             \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aa29310d86ed737acb570d160dc971f1f}{comm}});}
+\DoxyCodeLine{123 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{124         }
+\DoxyCodeLine{125         \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Sigma"{}});}
+\DoxyCodeLine{126             mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a7de0a244fa9480ff3f187477887708a3}{ciBuilder}}-\/>buildSigma(mcwfn, nVec, V.getPtr(), AV.getPtr());}
+\DoxyCodeLine{127         \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Sigma"{}});}
+\DoxyCodeLine{128       }
+\DoxyCodeLine{129       \}; }
+\DoxyCodeLine{130       }
+\DoxyCodeLine{131       \textcolor{comment}{// define preconditioner}}
+\DoxyCodeLine{132       LinearTrans\_t PC = [\&] (\textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}}, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&R) \{}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{135             \textcolor{comment}{// disable MPI for now}}
+\DoxyCodeLine{136             \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aa29310d86ed737acb570d160dc971f1f}{comm}});}
+\DoxyCodeLine{137 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{138             this-\/>davidsonPC(nVec, NDet, \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}}.getPtr(), R.getPtr(), diagH, curEig);}
+\DoxyCodeLine{139       \}; }
+\DoxyCodeLine{140       }
+\DoxyCodeLine{141       std::cout << \textcolor{stringliteral}{"{}  Use Davidson Diagonalization ... \(\backslash\)n"{}} << std::endl;}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143       \mbox{\hyperlink{classChronusQ_1_1Davidson}{Davidson<MatsT>}} davidson(mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_aa29310d86ed737acb570d160dc971f1f}{comm}}, mem, NDet, 5, maxIter\_,}
+\DoxyCodeLine{144         vectorConv\_, nR, func, PC);}
+\DoxyCodeLine{145        }
+\DoxyCodeLine{146       davidson.\mbox{\hyperlink{classChronusQ_1_1Davidson_ad5f0acc27bfc915f9f6a2730b984d7a7}{setM}}(m);}
+\DoxyCodeLine{147       davidson.\mbox{\hyperlink{classChronusQ_1_1Davidson_a99726a3c35b5d5df18c945dfe8ff0eb3}{setkG}}(kG);}
+\DoxyCodeLine{148       davidson.\mbox{\hyperlink{classChronusQ_1_1Davidson_a2576cf8df8ffb018572a097937f5ac7f}{setEigForT}}(curEig);}
+\DoxyCodeLine{149       davidson.\mbox{\hyperlink{classChronusQ_1_1Davidson_a7032d3164782f8cc0ff21ac226f9f0da}{setGuess}}(nG, [\&] (\textcolor{keywordtype}{size\_t} nGuess, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<MatsT>}} \&Guess, \textcolor{keywordtype}{size\_t} N) \{}
+\DoxyCodeLine{150         this-\/>davidsonGS(nGuess, N, diagH, Guess.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a7b3f8467612fd8fb970a05f6711ea2a4}{getPtr}}());}
+\DoxyCodeLine{151       \});}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153       davidson.\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a18628b94591b268872c91ba3cd1bc557}{run}}();}
+\DoxyCodeLine{154       }
+\DoxyCodeLine{155       \textcolor{comment}{// copy over eigenvalues and eigenvectors}}
+\DoxyCodeLine{156       \textcolor{keyword}{auto} davidsonEig = davidson.\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a5e28649578b12456cfa95642b1b2841d}{eigVal}}();}
+\DoxyCodeLine{157       \textcolor{keyword}{auto} davidsonVec = davidson.\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a81cdfb81b93c9aedfec1b2331bd4d127}{VR}}()-\/>getPtr();}
+\DoxyCodeLine{158           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nR; i++) \{}
+\DoxyCodeLine{159                 StateEnergy[i] = std::real(davidsonEig[i]);}
+\DoxyCodeLine{160         std::copy\_n(davidsonVec+i*NDet, NDet, CIVecs[i]);}
+\DoxyCodeLine{161           \}}
+\DoxyCodeLine{162       }
+\DoxyCodeLine{163       mem.free(curEig, diagH);}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165     \} \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{166       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Haven't Inplement Other Diagonalization yet"{}});}
+\DoxyCodeLine{167     \}}
+\DoxyCodeLine{168       }
+\DoxyCodeLine{169     \textcolor{comment}{// add other parts of the energy }}
+\DoxyCodeLine{170      \textcolor{keywordtype}{double} EOther = mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_acad5d92de9633efdd02cbabfe8a8b0fd}{reference}}().molecule().nucRepEnergy + mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a0d37a12d6d2dbb7b99e67e5285eef04a}{InactEnergy}};}
+\DoxyCodeLine{171      \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nR; i++) StateEnergy[i] += EOther;}
+\DoxyCodeLine{172   }
+\DoxyCodeLine{173   \} \textcolor{comment}{// CISolver::solveCI}}
+\DoxyCodeLine{174   }
+\DoxyCodeLine{175   }
+\DoxyCodeLine{176   \textcolor{comment}{// davidson guess}}
+\DoxyCodeLine{177   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{178   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CISolver_adb7f8fc7791ae8aa3b3b76741bd32c87}{CISolver<MatsT,IntsT>::davidsonGS}}(\textcolor{keywordtype}{size\_t} nGuess, \textcolor{keywordtype}{size\_t} N, MatsT * HDiag, MatsT * Guess) \{ }
+\DoxyCodeLine{179     }
+\DoxyCodeLine{180     std::cout << \textcolor{stringliteral}{"{}  * use unit vector guess based on diagonal elements:"{}} << std::endl;}
+\DoxyCodeLine{181      }
+\DoxyCodeLine{182     std::vector<int> indx(N);        }
+\DoxyCodeLine{183     std::iota(indx.begin(), indx.end(), 0);}
+\DoxyCodeLine{184     }
+\DoxyCodeLine{185     std::stable\_sort(indx.begin(), indx.end(), }
+\DoxyCodeLine{186       [\&] (\textcolor{keywordtype}{size\_t} i , \textcolor{keywordtype}{size\_t} j) \{}
+\DoxyCodeLine{187         return std::real(HDiag[i]) < std::real(HDiag[j]);}
+\DoxyCodeLine{188       \}}
+\DoxyCodeLine{189     );}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191     std::fill\_n(Guess, nGuess*N, MatsT(0.));}
+\DoxyCodeLine{192     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul; i < nGuess; i++) \{ }
+\DoxyCodeLine{193       Guess[i*N+indx[i]] = 1.0;}
+\DoxyCodeLine{194       std::cout << \textcolor{stringliteral}{"{}    "{}} << std::setw(9) << std::left << indx[i]}
+\DoxyCodeLine{195                 << std::setw(40) << std::left << HDiag[indx[i]] << std::endl;}
+\DoxyCodeLine{196     \}}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198   \} \textcolor{comment}{// CISolver::davidsonGS}}
+\DoxyCodeLine{199   }
+\DoxyCodeLine{200   \textcolor{comment}{// davidson preconditioner}}
+\DoxyCodeLine{201   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{202   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CISolver_aeed48dff4928d000add20358a405ac49}{CISolver<MatsT,IntsT>::davidsonPC}}(\textcolor{keywordtype}{size\_t} nVec, \textcolor{keywordtype}{size\_t} N, MatsT * R, MatsT * S, }
+\DoxyCodeLine{203     MatsT * HDiag, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} * curEig) \{}
+\DoxyCodeLine{204     }
+\DoxyCodeLine{205     \textcolor{keyword}{auto} D = HDiag;}
+\DoxyCodeLine{206     \textcolor{keyword}{auto} L = curEig;}
+\DoxyCodeLine{207     \textcolor{keywordtype}{double} small = 1e-\/12;}
+\DoxyCodeLine{208     \textcolor{keywordtype}{double} P; }
+\DoxyCodeLine{209     }
+\DoxyCodeLine{210     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nVec; i++) \{}
+\DoxyCodeLine{211       \textcolor{keyword}{auto} Ri = R + i*N; }
+\DoxyCodeLine{212       \textcolor{keyword}{auto} Si = \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}} + i*N; }
+\DoxyCodeLine{213       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j = 0ul; j < N; j++) \{ }
+\DoxyCodeLine{214         P = std::real(D[j]) -\/ std::real(L[i]);}
+\DoxyCodeLine{215             \textcolor{keywordflow}{if}(std::abs(P) > small) Si[j] = Ri[j] / P;}
+\DoxyCodeLine{216       \}}
+\DoxyCodeLine{217     \}}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219   \} \textcolor{comment}{// CISolver::davidsonPC}}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

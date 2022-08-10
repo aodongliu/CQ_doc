@@ -1,0 +1,537 @@
+\hypertarget{tpi__ssfock_8hpp_source}{}\doxysection{tpi\+\_\+ssfock.\+hpp}
+\label{tpi__ssfock_8hpp_source}\index{include/mointstransformer/tpi\_ssfock.hpp@{include/mointstransformer/tpi\_ssfock.hpp}}
+\mbox{\hyperlink{tpi__ssfock_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mointstransformer_8hpp}{mointstransformer.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{timer_8hpp}{util/timer.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{batchgd_8hpp}{fockbuilder/fourcompfock/batchgd.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg_8hpp}{cqlinalg.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrix_8hpp}{matrix.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incoreritpi_8hpp}{particleintegrals/twopints/incoreritpi.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasutil_8hpp}{cqlinalg/blasutil.hpp}}>}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{preprocessor}{  \#define ALLOCATE\_AND\_CLEAR\_CACHE\_IF\_NECESSARY(ALLOCATION) \(\backslash\)}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{    try \{ ALLOCATION; \} \(\backslash\)}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{    catch (...) \{ \(\backslash\)}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{      ints\_cache\_.clear(); \(\backslash\)}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{      try \{ ALLOCATION; \} \(\backslash\)}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{      catch (...) \{ CErr("{}Not Enough Memory in subsetTransformTPISSFockN6"{}});\} \(\backslash\)}
+\DoxyCodeLine{43     \}}
+\DoxyCodeLine{44  }
+\DoxyCodeLine{49   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{50   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a6c6b599b2d5bd89400c82bd799236a09}{MOIntsTransformer<MatsT,IntsT>::subsetTransformTPISSFockN6}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert, }
+\DoxyCodeLine{51     \textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&off\_sizes, MatsT* MOTPI, }
+\DoxyCodeLine{52     \textcolor{keyword}{const} std::string \& moType, \textcolor{keywordtype}{bool} cacheIntermediates,}
+\DoxyCodeLine{53     \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\_TRANS\_DELTA\_TYPE}} delta) \{}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{keywordtype}{size\_t} poff = off\_sizes[0].first;}
+\DoxyCodeLine{56     \textcolor{keywordtype}{size\_t} qoff = off\_sizes[1].first;}
+\DoxyCodeLine{57     \textcolor{keywordtype}{size\_t} roff = off\_sizes[2].first;}
+\DoxyCodeLine{58     \textcolor{keywordtype}{size\_t} soff = off\_sizes[3].first;}
+\DoxyCodeLine{59     \textcolor{keywordtype}{size\_t} np = off\_sizes[0].second;}
+\DoxyCodeLine{60     \textcolor{keywordtype}{size\_t} nq = off\_sizes[1].second;}
+\DoxyCodeLine{61     \textcolor{keywordtype}{size\_t} nr = off\_sizes[2].second;}
+\DoxyCodeLine{62     \textcolor{keywordtype}{size\_t} ns = off\_sizes[3].second;}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{keywordtype}{size\_t} nAO  = ss\_.nAlphaOrbital() * ss\_.nC;}
+\DoxyCodeLine{65     }
+\DoxyCodeLine{66     \textcolor{comment}{// Initial Batching if can not hold all the HalfTransTPI}}
+\DoxyCodeLine{67     }
+\DoxyCodeLine{68     \textcolor{keywordtype}{size\_t} npq = (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}} or }
+\DoxyCodeLine{69                   delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}} ) ? np: np*nq;}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{keywordtype}{size\_t} nrs = (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a77e794165a2acc9091e1a10d69e64b5f}{KRONECKER\_DELTA\_RS}} or }
+\DoxyCodeLine{72                   delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}} ) ? nr: nr*ns;}
+\DoxyCodeLine{73     }
+\DoxyCodeLine{74     \textcolor{keywordtype}{size\_t} halfTMOTPISize = nAO * nAO * std::min(npq, nrs); }
+\DoxyCodeLine{75     }
+\DoxyCodeLine{76     \textcolor{keyword}{auto} nBatch = memManager\_.max\_avail\_allocatable<MatsT>(halfTMOTPISize);}
+\DoxyCodeLine{77     }
+\DoxyCodeLine{78     \textcolor{comment}{// clear cache for more memory }}
+\DoxyCodeLine{79     \textcolor{keywordflow}{if} ( nBatch <= 1) \{}
+\DoxyCodeLine{80       ints\_cache\_.clear();}
+\DoxyCodeLine{81       nBatch = memManager\_.max\_avail\_allocatable<MatsT>(halfTMOTPISize);}
+\DoxyCodeLine{82     \}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     \textcolor{comment}{// No batch at this level if remaining memory can allocate at }}
+\DoxyCodeLine{85     \textcolor{comment}{// least two halfTransTPI }}
+\DoxyCodeLine{86     \textcolor{keywordflow}{if} (nBatch > 1) \{}
+\DoxyCodeLine{87       performSubsetTransformTPISSFockN6(pert, off\_sizes, MOTPI, }
+\DoxyCodeLine{88         moType, cacheIntermediates, delta);}
+\DoxyCodeLine{89       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{90     \} }
+\DoxyCodeLine{91     }
+\DoxyCodeLine{92     \textcolor{comment}{// TODO: preserve the rs symmetry if presented}}
+\DoxyCodeLine{93     \textcolor{comment}{// simple batch over s here }}
+\DoxyCodeLine{94     \textcolor{keywordtype}{size\_t} nsMax = ns;}
+\DoxyCodeLine{95     halfTMOTPISize = nAO * nAO * nr * nsMax;}
+\DoxyCodeLine{96     nBatch = memManager\_.max\_avail\_allocatable<MatsT>(halfTMOTPISize);}
+\DoxyCodeLine{97     }
+\DoxyCodeLine{98     \textcolor{keywordflow}{while} (nBatch < 1) \{}
+\DoxyCodeLine{99       }
+\DoxyCodeLine{100       nsMax /= 2;}
+\DoxyCodeLine{101       }
+\DoxyCodeLine{102       std::cout << \textcolor{stringliteral}{"{}nsMax = "{}} << nsMax << std::endl;}
+\DoxyCodeLine{103       }
+\DoxyCodeLine{104       \textcolor{keywordflow}{if} (nsMax < 1) \{}
+\DoxyCodeLine{105         std::cout << \textcolor{stringliteral}{"{}Memory not enough to batch over last index"{}} << std::endl;}
+\DoxyCodeLine{106         \textcolor{keywordtype}{double} mem\_avail  = this-\/>memManager\_.template max\_avail\_allocatable<double>() }
+\DoxyCodeLine{107                            * \textcolor{keyword}{sizeof}(double) / 1e9; }
+\DoxyCodeLine{108         \textcolor{keywordtype}{double} mem\_needed = nAO * nAO * nr * \textcolor{keyword}{sizeof}(MatsT) / 1e9;}
+\DoxyCodeLine{109             }
+\DoxyCodeLine{110         std::cout << \textcolor{stringliteral}{"{}  -\/ Memory available before batch integral transformation: "{}} }
+\DoxyCodeLine{111                   << mem\_avail << \textcolor{stringliteral}{"{} GB"{}} << std::endl; }
+\DoxyCodeLine{112         std::cout << \textcolor{stringliteral}{"{}  -\/ Memory needed at least for nsMax = 1: "{}} }
+\DoxyCodeLine{113                   << mem\_needed << \textcolor{stringliteral}{"{} GB"{}} << std::endl; }
+\DoxyCodeLine{114         }
+\DoxyCodeLine{115         \textcolor{keywordflow}{throw} std::bad\_alloc();}
+\DoxyCodeLine{116       \}}
+\DoxyCodeLine{117       }
+\DoxyCodeLine{118       halfTMOTPISize = nAO * nAO * nr * nsMax;}
+\DoxyCodeLine{119       nBatch = memManager\_.max\_avail\_allocatable<MatsT>(halfTMOTPISize);}
+\DoxyCodeLine{120     \}}
+\DoxyCodeLine{121     }
+\DoxyCodeLine{122     \textcolor{comment}{// balance batching inside the work loop}}
+\DoxyCodeLine{123     \textcolor{keywordflow}{if} (nsMax > 1) \{}
+\DoxyCodeLine{124       \textcolor{keywordtype}{size\_t} nMatsTAvail = memManager\_.max\_avail\_allocatable<MatsT>();}
+\DoxyCodeLine{125       \textcolor{comment}{// with extra memory as 20\%}}
+\DoxyCodeLine{126       \textcolor{keywordtype}{size\_t} fockGDSCRSize = ss\_.fockBuilder-\/>formRawGDSCRSizePerBatch(ss\_, \textcolor{keyword}{false}, \textcolor{keyword}{false}) * 1.2; }
+\DoxyCodeLine{127       }
+\DoxyCodeLine{128       \textcolor{comment}{// try different nsMax and use the smallest total batch}}
+\DoxyCodeLine{129       \textcolor{keywordtype}{size\_t} nrnsMax = nr * nsMax; }
+\DoxyCodeLine{130       \textcolor{keywordtype}{size\_t} maxNBatch = (nMatsTAvail -\/ halfTMOTPISize)/fockGDSCRSize; }
+\DoxyCodeLine{131       \textcolor{keywordtype}{size\_t} minTotalBatch = ((nrnsMax -\/ 1)/maxNBatch + 1) * nBatch;}
+\DoxyCodeLine{132       \textcolor{keywordtype}{size\_t} bestnsMax = nsMax;}
+\DoxyCodeLine{133       \textcolor{keywordtype}{size\_t} curTotalBatch = minTotalBatch;}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 1ul; i < nsMax; i++) \{}
+\DoxyCodeLine{136         nrnsMax = nr * i;}
+\DoxyCodeLine{137         nBatch  = (ns -\/ 1) / i + 1;}
+\DoxyCodeLine{138         halfTMOTPISize = nAO * nAO * nr * i;}
+\DoxyCodeLine{139         maxNBatch = (nMatsTAvail -\/ halfTMOTPISize)/fockGDSCRSize;}
+\DoxyCodeLine{140         curTotalBatch = ((nrnsMax -\/ 1)/maxNBatch + 1) * nBatch;}
+\DoxyCodeLine{141         \textcolor{keywordflow}{if} (curTotalBatch < minTotalBatch) \{}
+\DoxyCodeLine{142           minTotalBatch = curTotalBatch;}
+\DoxyCodeLine{143           bestnsMax = i;}
+\DoxyCodeLine{144         \}}
+\DoxyCodeLine{145       \}}
+\DoxyCodeLine{146       }
+\DoxyCodeLine{147       \textcolor{comment}{// update nsMax}}
+\DoxyCodeLine{148       nsMax = bestnsMax;}
+\DoxyCodeLine{149       halfTMOTPISize = nAO * nAO * nr * nsMax;}
+\DoxyCodeLine{150       nBatch  = (ns -\/ 1) / nsMax + 1;}
+\DoxyCodeLine{151     \}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     std::cout << \textcolor{stringliteral}{"{}* Batch over last indice s: with maxNs =  "{}} << nsMax << std::endl;}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155     \textcolor{keywordtype}{size\_t} npqr = np * nq * nr; }
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} si = 0ul, sioff = soff, iBatch = 1ul; si < ns; iBatch++) \{}
+\DoxyCodeLine{158       }
+\DoxyCodeLine{159       \textcolor{keywordtype}{size\_t} nsi = std::min(nsMax, ns -\/ si); }
+\DoxyCodeLine{160       }
+\DoxyCodeLine{161       std::cout << \textcolor{stringliteral}{"{}   -\/ Batch "{}} << iBatch << \textcolor{stringliteral}{"{}: s range from "{}} }
+\DoxyCodeLine{162                 << std::setw(5) << sioff + 1 << \textcolor{stringliteral}{"{} \string~ "{}} }
+\DoxyCodeLine{163                 << std::setw(5) << sioff + nsi <<std::endl;  }
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165       std::vector<std::pair<size\_t,size\_t>> batch\_off\_sizes = off\_sizes; }
+\DoxyCodeLine{166       batch\_off\_sizes[3].first = sioff;}
+\DoxyCodeLine{167       batch\_off\_sizes[3].second = nsi;}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169       performSubsetTransformTPISSFockN6(pert, batch\_off\_sizes, MOTPI + npqr * si,}
+\DoxyCodeLine{170         moType, \textcolor{keyword}{false}, delta);}
+\DoxyCodeLine{171       }
+\DoxyCodeLine{172       si += nsi;}
+\DoxyCodeLine{173       sioff += nsi;}
+\DoxyCodeLine{174     \}}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176     \textcolor{keywordflow}{return}; }
+\DoxyCodeLine{177   }
+\DoxyCodeLine{178   \} \textcolor{comment}{// subsetTransformTPISSFockN6}}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{184   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{185   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a625262d53171a0bf11da09547df8c022}{MOIntsTransformer<MatsT,IntsT>::performSubsetTransformTPISSFockN6}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert, }
+\DoxyCodeLine{186     \textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&off\_sizes, MatsT* MOTPI, }
+\DoxyCodeLine{187     \textcolor{keyword}{const} std::string \& moType, \textcolor{keywordtype}{bool} cacheIntermediates,}
+\DoxyCodeLine{188     \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\_TRANS\_DELTA\_TYPE}} delta) \{}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190     \textcolor{keywordtype}{size\_t} poff = off\_sizes[0].first;}
+\DoxyCodeLine{191     \textcolor{keywordtype}{size\_t} qoff = off\_sizes[1].first;}
+\DoxyCodeLine{192     \textcolor{keywordtype}{size\_t} roff = off\_sizes[2].first;}
+\DoxyCodeLine{193     \textcolor{keywordtype}{size\_t} soff = off\_sizes[3].first;}
+\DoxyCodeLine{194     \textcolor{keywordtype}{size\_t} np = off\_sizes[0].second;}
+\DoxyCodeLine{195     \textcolor{keywordtype}{size\_t} nq = off\_sizes[1].second;}
+\DoxyCodeLine{196     \textcolor{keywordtype}{size\_t} nr = off\_sizes[2].second;}
+\DoxyCodeLine{197     \textcolor{keywordtype}{size\_t} ns = off\_sizes[3].second;}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199     \textcolor{keywordtype}{bool} pqSymm = (poff == qoff) and (np == nq); }
+\DoxyCodeLine{200     std::string moType\_cache = \textcolor{stringliteral}{"{}HalfTMOTPI-\/"{}};}
+\DoxyCodeLine{201     moType\_cache += getUniqueSymbol(moType[0]);}
+\DoxyCodeLine{202     moType\_cache += getUniqueSymbol(moType[1]);}
+\DoxyCodeLine{203     std::string rs\_moType\_cache = \textcolor{stringliteral}{"{}HalfTMOTPI-\/"{}};}
+\DoxyCodeLine{204     rs\_moType\_cache += getUniqueSymbol(moType[2]);}
+\DoxyCodeLine{205     rs\_moType\_cache += getUniqueSymbol(moType[3]);}
+\DoxyCodeLine{206     }
+\DoxyCodeLine{207     \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}} or delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}}) }
+\DoxyCodeLine{208       moType\_cache += \textcolor{stringliteral}{"{}-\/delta"{}};}
+\DoxyCodeLine{209     \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a77e794165a2acc9091e1a10d69e64b5f}{KRONECKER\_DELTA\_RS}} or delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}}) }
+\DoxyCodeLine{210       rs\_moType\_cache += \textcolor{stringliteral}{"{}-\/delta"{}};}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212     \textcolor{comment}{// check pq and rs can be swapped to accelarate the computation }}
+\DoxyCodeLine{213     \textcolor{keywordtype}{bool} rsSymm = (roff == soff) and (nr == ns); }
+\DoxyCodeLine{214     \textcolor{keywordtype}{bool} swap\_pq\_rs = \textcolor{keyword}{false};}
+\DoxyCodeLine{215     \textcolor{keyword}{auto} pqCache = ints\_cache\_.getIntegral<\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI}{InCoreRITPI}}, MatsT>(moType\_cache); }
+\DoxyCodeLine{216     \textcolor{keyword}{auto} rsCache = ints\_cache\_.getIntegral<\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI}{InCoreRITPI}}, MatsT>(rs\_moType\_cache); }
+\DoxyCodeLine{217     }
+\DoxyCodeLine{218     \textcolor{keywordflow}{if} (not pqCache and rsCache)     swap\_pq\_rs = \textcolor{keyword}{true};}
+\DoxyCodeLine{219     \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a77e794165a2acc9091e1a10d69e64b5f}{KRONECKER\_DELTA\_RS}}) swap\_pq\_rs = \textcolor{keyword}{true};}
+\DoxyCodeLine{220     }
+\DoxyCodeLine{221     \textcolor{comment}{//if (rsSymm and not pqSymm)   swap\_pq\_rs = true; }}
+\DoxyCodeLine{222     }
+\DoxyCodeLine{223     \textcolor{comment}{// swap pq rs when nrs\_batch < npq\_batch because first half is N6 and second is N5}}
+\DoxyCodeLine{224     \textcolor{keywordflow}{if} (not swap\_pq\_rs) \{}
+\DoxyCodeLine{225       }
+\DoxyCodeLine{226       \textcolor{keywordtype}{size\_t} npq\_batch = pqSymm ? np * (np + 1) / 2: np*nq; }
+\DoxyCodeLine{227       \textcolor{keywordtype}{size\_t} nrs\_batch = rsSymm ? nr * (nr + 1) / 2: nr*ns; }
+\DoxyCodeLine{228       }
+\DoxyCodeLine{229       \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}} or delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}}) }
+\DoxyCodeLine{230         npq\_batch = np;}
+\DoxyCodeLine{231       \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a77e794165a2acc9091e1a10d69e64b5f}{KRONECKER\_DELTA\_RS}} or delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}}) }
+\DoxyCodeLine{232         nrs\_batch = nr;}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234       \textcolor{keywordflow}{if} (npq\_batch > nrs\_batch) swap\_pq\_rs = \textcolor{keyword}{true};  }
+\DoxyCodeLine{235     \}}
+\DoxyCodeLine{236     }
+\DoxyCodeLine{237     \textcolor{keywordflow}{if} (swap\_pq\_rs) \{}
+\DoxyCodeLine{238       std::swap(poff, roff); }
+\DoxyCodeLine{239       std::swap(qoff, soff); }
+\DoxyCodeLine{240       std::swap(np, nr); }
+\DoxyCodeLine{241       std::swap(nq, ns); }
+\DoxyCodeLine{242       std::swap(pqSymm, rsSymm);}
+\DoxyCodeLine{243       moType\_cache = rs\_moType\_cache; }
+\DoxyCodeLine{244       }
+\DoxyCodeLine{245       \textcolor{keywordflow}{if}      (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}}) delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a77e794165a2acc9091e1a10d69e64b5f}{KRONECKER\_DELTA\_RS}};}
+\DoxyCodeLine{246       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a77e794165a2acc9091e1a10d69e64b5f}{KRONECKER\_DELTA\_RS}}) delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}};}
+\DoxyCodeLine{247       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a374916baf8a940c1e97f4edb1a1266e2}{KRONECKER\_DELTA\_PS}}) delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3ab4168543d010a7d2fa10da5a1b96fdd7}{KRONECKER\_DELTA\_RQ}};}
+\DoxyCodeLine{248       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3ab4168543d010a7d2fa10da5a1b96fdd7}{KRONECKER\_DELTA\_RQ}}) delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a374916baf8a940c1e97f4edb1a1266e2}{KRONECKER\_DELTA\_PS}};}
+\DoxyCodeLine{249     \}}
+\DoxyCodeLine{250     }
+\DoxyCodeLine{251 \textcolor{preprocessor}{\#ifdef \_DEBUG\_MOINTSTRANSFORMER\_CACHE}}
+\DoxyCodeLine{252     std::cout << \textcolor{stringliteral}{"{}moType = "{}} << moType   << \textcolor{stringliteral}{"{}, kronecker\_delta = "{}} << delta }
+\DoxyCodeLine{253               << \textcolor{stringliteral}{"{}, swap\_pq\_rs = "{}} << swap\_pq\_rs << std::endl;}
+\DoxyCodeLine{254     std::cout << \textcolor{stringliteral}{"{}moType\_cache = "{}} << std::setw(20) << moType\_cache;}
+\DoxyCodeLine{255 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257     \textcolor{keywordtype}{size\_t} npr  = np * nr;}
+\DoxyCodeLine{258     \textcolor{keywordtype}{size\_t} npq  = np * nq;}
+\DoxyCodeLine{259     \textcolor{keywordtype}{size\_t} npqr = npq * nr;}
+\DoxyCodeLine{260     \textcolor{keywordtype}{size\_t} npqDim = (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}} or }
+\DoxyCodeLine{261                      delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}}) ? np: npq;}
+\DoxyCodeLine{262 }
+\DoxyCodeLine{263     \textcolor{keywordtype}{size\_t} nAO  = ss\_.nAlphaOrbital() * ss\_.nC;}
+\DoxyCodeLine{264     \textcolor{keywordtype}{size\_t} NB   = ss\_.nAlphaOrbital();}
+\DoxyCodeLine{265     \textcolor{keywordtype}{size\_t} nAO2 = nAO * nAO;}
+\DoxyCodeLine{266     }
+\DoxyCodeLine{267     MatsT * dummy\_ptr = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{268     std::shared\_ptr<InCoreRITPI<MatsT>> halfTMOTPI = \textcolor{keyword}{nullptr}; }
+\DoxyCodeLine{269     }
+\DoxyCodeLine{270     \textcolor{keywordflow}{if} (cacheIntermediates) \{}
+\DoxyCodeLine{271       halfTMOTPI = ints\_cache\_.getIntegral<\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI}{InCoreRITPI}}, MatsT>(moType\_cache);}
+\DoxyCodeLine{272 \textcolor{preprocessor}{\#ifdef \_DEBUG\_MOINTSTRANSFORMER\_CACHE}}
+\DoxyCodeLine{273       \textcolor{keywordflow}{if} (halfTMOTPI) std::cout << \textcolor{stringliteral}{"{}-\/-\/-\/-\/Find cache!!!"{}} << std::endl;}
+\DoxyCodeLine{274 \textcolor{preprocessor}{\#endif    }}
+\DoxyCodeLine{275     \} }
+\DoxyCodeLine{276     }
+\DoxyCodeLine{277     \textcolor{comment}{//}}
+\DoxyCodeLine{278     \textcolor{comment}{// 1/2 transformation to obtain halfTMOTPI(mu, nu, p, q)}}
+\DoxyCodeLine{279     \textcolor{comment}{//}}
+\DoxyCodeLine{280     \textcolor{keywordflow}{if} (not halfTMOTPI) \{}
+\DoxyCodeLine{281       }
+\DoxyCodeLine{282 \textcolor{preprocessor}{\#ifdef \_DEBUG\_MOINTSTRANSFORMER\_CACHE}}
+\DoxyCodeLine{283       std::cout << \textcolor{stringliteral}{"{}-\/-\/-\/-\/Not find cache, do transformation"{}} << std::endl;}
+\DoxyCodeLine{284 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{285 }
+\DoxyCodeLine{286       \mbox{\hyperlink{tpi__ssfock_8hpp_a733f11e74d53241161256b22fcde1c80}{ALLOCATE\_AND\_CLEAR\_CACHE\_IF\_NECESSARY}}(}
+\DoxyCodeLine{287         halfTMOTPI = std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1InCoreRITPI}{InCoreRITPI<MatsT>}}>(memManager\_, nAO, npqDim);}
+\DoxyCodeLine{288       )}
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290       \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} SCR(memManager\_, nAO);}
+\DoxyCodeLine{291       std::vector<std::shared\_ptr<PauliSpinorSquareMatrices<MatsT>>> pq1PDMs, pqMOTPIs, dummy;}
+\DoxyCodeLine{292       MatsT *MOTPIpq\_ptr = \textcolor{keyword}{nullptr}, *density\_ptr = \textcolor{keyword}{nullptr}; }
+\DoxyCodeLine{293       \textcolor{keywordtype}{bool} is4C = ss\_.nC == 4;}
+\DoxyCodeLine{294       \textcolor{keywordtype}{bool} is2C = ss\_.nC == 2;}
+\DoxyCodeLine{295       \textcolor{keywordtype}{bool} is1C = ss\_.nC == 1;}
+\DoxyCodeLine{296       \textcolor{keywordtype}{size\_t} pqSCRSize = is4C ? 2*NB: NB;}
+\DoxyCodeLine{297       }
+\DoxyCodeLine{298       \textcolor{comment}{// find out maximum batch size base on current memory limit}}
+\DoxyCodeLine{299       }
+\DoxyCodeLine{300       \textcolor{comment}{// SCR size form fockbuilder}}
+\DoxyCodeLine{301       \textcolor{keywordtype}{size\_t} fockGDSCRSize = ss\_.fockBuilder-\/>formRawGDSCRSizePerBatch(ss\_, \textcolor{keyword}{false}, \textcolor{keyword}{false}); }
+\DoxyCodeLine{302       }
+\DoxyCodeLine{303       \textcolor{comment}{// SCR size for spinor density and half-\/transformed integrals}}
+\DoxyCodeLine{304       fockGDSCRSize += is4C ? pqSCRSize*pqSCRSize: 2*pqSCRSize*pqSCRSize;  }
+\DoxyCodeLine{305       \textcolor{keywordtype}{size\_t} maxNBatch = 0;}
+\DoxyCodeLine{306       \textcolor{keywordtype}{double} allow\_extra = 0.2;}
+\DoxyCodeLine{307       }
+\DoxyCodeLine{308       \mbox{\hyperlink{tpi__ssfock_8hpp_a733f11e74d53241161256b22fcde1c80}{ALLOCATE\_AND\_CLEAR\_CACHE\_IF\_NECESSARY}}(}
+\DoxyCodeLine{309         maxNBatch = memManager\_.max\_avail\_allocatable<MatsT>(\textcolor{keywordtype}{size\_t}(fockGDSCRSize*(1.+allow\_extra))); }
+\DoxyCodeLine{310         \textcolor{keywordflow}{if}(maxNBatch == 0) }
+\DoxyCodeLine{311           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{} Memory is not enough for 1 density in subsetTransformTPISSFockN6"{}});}
+\DoxyCodeLine{312       )}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314       std::vector<std::pair<size\_t,size\_t>> pqJobs;}
+\DoxyCodeLine{315       }
+\DoxyCodeLine{316       \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}} or delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}}) \{}
+\DoxyCodeLine{317         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} p = 0ul; p <  np; p++) pqJobs.push\_back(\{p,p\});}
+\DoxyCodeLine{318       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{319         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} q = 0ul; q <  nq; q++) }
+\DoxyCodeLine{320         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} p = 0ul; p <  np; p++) \{}
+\DoxyCodeLine{321           pqJobs.push\_back(\{p,q\});}
+\DoxyCodeLine{322           \textcolor{keywordflow}{if} (pqSymm and p == q) \textcolor{keywordflow}{break}; }
+\DoxyCodeLine{323         \}}
+\DoxyCodeLine{324       \}}
+\DoxyCodeLine{325 }
+\DoxyCodeLine{326       \textcolor{keywordtype}{size\_t} NJob = pqJobs.size();}
+\DoxyCodeLine{327       \textcolor{keywordtype}{size\_t} NJobComplete  = 0ul;}
+\DoxyCodeLine{328       \textcolor{keywordtype}{size\_t} NJobToDo = 0ul;}
+\DoxyCodeLine{329 }
+\DoxyCodeLine{330 \textcolor{preprocessor}{\#ifdef \_DEBUG\_MOINTSTRANSFORMER\_CACHE}}
+\DoxyCodeLine{331       std::cout << \textcolor{stringliteral}{"{}First Half transfromation with maxNBatch = "{}} << maxNBatch << std::endl;}
+\DoxyCodeLine{332 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{333       }
+\DoxyCodeLine{334       \textcolor{keywordflow}{while} (NJobComplete < NJob) \{ }
+\DoxyCodeLine{335         }
+\DoxyCodeLine{336         \textcolor{keywordtype}{size\_t} p, q;}
+\DoxyCodeLine{337         NJobToDo = std::min(maxNBatch, NJob-\/NJobComplete);}
+\DoxyCodeLine{338 }
+\DoxyCodeLine{339 \textcolor{preprocessor}{\#ifdef \_DEBUG\_MOINTSTRANSFORMER\_CACHE}}
+\DoxyCodeLine{340         std::cout << \textcolor{stringliteral}{"{}-\/-\/-\/-\/"{}} << std::endl;}
+\DoxyCodeLine{341         std::cout << \textcolor{stringliteral}{"{}NJob         = "{}} << NJob << std::endl;}
+\DoxyCodeLine{342         std::cout << \textcolor{stringliteral}{"{}NJobComplete = "{}} << NJobComplete << std::endl;}
+\DoxyCodeLine{343         std::cout << \textcolor{stringliteral}{"{}NJobToDo     = "{}} << NJobToDo << std::endl;}
+\DoxyCodeLine{344 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{345         }
+\DoxyCodeLine{346         \textcolor{comment}{// build fake densities in batch}}
+\DoxyCodeLine{347         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < NJobToDo; i++) \{ }
+\DoxyCodeLine{348           }
+\DoxyCodeLine{349           p = pqJobs[i + NJobComplete].first; }
+\DoxyCodeLine{350           q = pqJobs[i + NJobComplete].second; }
+\DoxyCodeLine{351           }
+\DoxyCodeLine{352           pq1PDMs.push\_back(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}>(memManager\_, pqSCRSize, is4C, is4C));  }
+\DoxyCodeLine{353           }
+\DoxyCodeLine{354           \textcolor{comment}{// 4C will reuse pq1PDM as densities are component scattered anyways}}
+\DoxyCodeLine{355           \textcolor{keywordflow}{if} (is4C) pqMOTPIs.push\_back(pq1PDMs.back());}
+\DoxyCodeLine{356           \textcolor{keywordflow}{else} pqMOTPIs.push\_back(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}>(memManager\_, pqSCRSize, is4C, is4C));  }
+\DoxyCodeLine{357           }
+\DoxyCodeLine{358           \textcolor{keywordflow}{if} (is1C) \{}
+\DoxyCodeLine{359             density\_ptr = pq1PDMs.back()-\/>S().pointer();}
+\DoxyCodeLine{360           \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{361             density\_ptr = SCR.pointer();}
+\DoxyCodeLine{362           \}}
+\DoxyCodeLine{363         }
+\DoxyCodeLine{364           blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::ConjTrans, }
+\DoxyCodeLine{365             nAO, nAO, 1, MatsT(1.), ss\_.mo[0].pointer() + (q+qoff)*nAO, nAO,}
+\DoxyCodeLine{366             ss\_.mo[0].pointer() + (p+poff)*nAO, nAO, MatsT(0.), density\_ptr, nAO);}
+\DoxyCodeLine{367           }
+\DoxyCodeLine{368           \textcolor{keywordflow}{if} (not is1C) *pq1PDMs.back() = SCR.template spinScatter<MatsT>(is4C, is4C); }
+\DoxyCodeLine{369         }
+\DoxyCodeLine{370         \}}
+\DoxyCodeLine{371         }
+\DoxyCodeLine{372         \textcolor{comment}{// do contraction to get half-\/transformed integrals}}
+\DoxyCodeLine{373         \textcolor{keywordflow}{if} (is1C) ss\_.fockBuilder-\/>formRawGDInBatches(ss\_, pert, \textcolor{keyword}{false}, 0., \textcolor{keyword}{false}, pq1PDMs, pqMOTPIs, dummy, dummy);}
+\DoxyCodeLine{374         \textcolor{keywordflow}{else}      ss\_.fockBuilder-\/>formRawGDInBatches(ss\_, pert, \textcolor{keyword}{false}, 0., \textcolor{keyword}{false}, pq1PDMs, dummy, dummy, pqMOTPIs);}
+\DoxyCodeLine{375         }
+\DoxyCodeLine{376         \textcolor{comment}{// copy over to SCR}}
+\DoxyCodeLine{377         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < NJobToDo; i++) \{ }
+\DoxyCodeLine{378            }
+\DoxyCodeLine{379           \textcolor{keywordflow}{if} (not is1C) \{}
+\DoxyCodeLine{380             SCR = pqMOTPIs[i]-\/>template spinGather<MatsT>();}
+\DoxyCodeLine{381             MOTPIpq\_ptr = SCR.pointer(); }
+\DoxyCodeLine{382           \} \textcolor{keywordflow}{else} MOTPIpq\_ptr = pqMOTPIs[i]-\/>S().pointer();}
+\DoxyCodeLine{383           }
+\DoxyCodeLine{384           p = pqJobs[i + NJobComplete].first; }
+\DoxyCodeLine{385           }
+\DoxyCodeLine{386           \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}} or delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}}) \{}
+\DoxyCodeLine{387             \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'}, nAO, nAO, MatsT(1.), MOTPIpq\_ptr, nAO, halfTMOTPI-\/>pointer() + p*nAO2, nAO);}
+\DoxyCodeLine{388           \} \textcolor{keywordflow}{else} \{  }
+\DoxyCodeLine{389             q = pqJobs[i + NJobComplete].second; }
+\DoxyCodeLine{390             \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'}, nAO, nAO, MatsT(1.), MOTPIpq\_ptr, nAO, halfTMOTPI-\/>pointer() + (p + q*np)*nAO2, nAO);}
+\DoxyCodeLine{391             \textcolor{keywordflow}{if} (pqSymm and p < q)  }
+\DoxyCodeLine{392               \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'C'}, nAO, nAO, MatsT(1.), MOTPIpq\_ptr, nAO, halfTMOTPI-\/>pointer() + (q + p*np)*nAO2, nAO); }
+\DoxyCodeLine{393           \}}
+\DoxyCodeLine{394         \}}
+\DoxyCodeLine{395 }
+\DoxyCodeLine{396         \textcolor{comment}{// increment and clear SCR after job done}}
+\DoxyCodeLine{397         NJobComplete += NJobToDo; }
+\DoxyCodeLine{398         pq1PDMs.clear();}
+\DoxyCodeLine{399         pqMOTPIs.clear();}
+\DoxyCodeLine{400       }
+\DoxyCodeLine{401       \} \textcolor{comment}{// main loop}}
+\DoxyCodeLine{402       }
+\DoxyCodeLine{403       \textcolor{keywordflow}{if} (cacheIntermediates) ints\_cache\_.addIntegral(moType\_cache, halfTMOTPI);}
+\DoxyCodeLine{404      }
+\DoxyCodeLine{405     \} \textcolor{comment}{//  if there is no cache}}
+\DoxyCodeLine{406     }
+\DoxyCodeLine{407     \textcolor{comment}{// allocate intermediate SCR}}
+\DoxyCodeLine{408     MatsT * SCR = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{409     \textcolor{keywordtype}{size\_t} SCRSize;}
+\DoxyCodeLine{410     \textcolor{keywordflow}{if}      (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\_KRONECKER\_DELTA}})    SCRSize = nAO*npqr;  }
+\DoxyCodeLine{411     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}})    SCRSize = nAO*np*nr;  }
+\DoxyCodeLine{412     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a77e794165a2acc9091e1a10d69e64b5f}{KRONECKER\_DELTA\_RS}})    SCRSize = nAO*npq;  }
+\DoxyCodeLine{413     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a374916baf8a940c1e97f4edb1a1266e2}{KRONECKER\_DELTA\_PS}})    SCRSize = nAO*npqr;  }
+\DoxyCodeLine{414     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3ab4168543d010a7d2fa10da5a1b96fdd7}{KRONECKER\_DELTA\_RQ}})    SCRSize = nAO*npr;  }
+\DoxyCodeLine{415     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}}) SCRSize = nAO*np;  }
+\DoxyCodeLine{416     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a430294079b490936f721fce9c96540b4}{KRONECKER\_DELTA\_PS\_RQ}}) SCRSize = nAO*npr;  }
+\DoxyCodeLine{417     }
+\DoxyCodeLine{418     SCR = memManager\_.malloc<MatsT>(SCRSize);}
+\DoxyCodeLine{419     }
+\DoxyCodeLine{420     \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\_KRONECKER\_DELTA}} or delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}}) \{}
+\DoxyCodeLine{421       }
+\DoxyCodeLine{422       \textcolor{keywordtype}{char} TransMOTPI = swap\_pq\_rs ? \textcolor{charliteral}{'N'}: \textcolor{charliteral}{'T'};}
+\DoxyCodeLine{423       \textcolor{keywordtype}{size\_t} ndim = delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\_KRONECKER\_DELTA}} ? npq: np;     }
+\DoxyCodeLine{424 }
+\DoxyCodeLine{425       \mbox{\hyperlink{namespaceChronusQ_ac13a4f7f3ddfcc2ac4796dde2519027e}{PairTransformation}}(\textcolor{charliteral}{'N'}, ss\_.mo[0].pointer(), nAO, roff, soff,}
+\DoxyCodeLine{426         \textcolor{charliteral}{'N'}, halfTMOTPI-\/>pointer(), nAO, nAO, ndim, }
+\DoxyCodeLine{427         TransMOTPI, MOTPI, nr, ns, dummy\_ptr, SCR, \textcolor{keyword}{false}); }
+\DoxyCodeLine{428     }
+\DoxyCodeLine{429     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a77e794165a2acc9091e1a10d69e64b5f}{KRONECKER\_DELTA\_RS}} or delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}}) \{}
+\DoxyCodeLine{430 }
+\DoxyCodeLine{431       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} r = 0ul; r < nr; r++) \{}
+\DoxyCodeLine{432 }
+\DoxyCodeLine{433         \textcolor{keyword}{auto} rMO = ss\_.mo[0].pointer() + (r + roff) * nAO;      }
+\DoxyCodeLine{434         }
+\DoxyCodeLine{435         \textcolor{comment}{// SCR(nu p q, r) = (mu, nu p q)\string^H MO(mu, r) }}
+\DoxyCodeLine{436         blas::gemm(blas::Layout::ColMajor, blas::Op::ConjTrans, blas::Op::NoTrans, }
+\DoxyCodeLine{437           nAO*npqDim, 1, nAO, MatsT(1.), halfTMOTPI-\/>pointer(), nAO, }
+\DoxyCodeLine{438           rMO, nAO, MatsT(0.), SCR, nAO*npqDim);}
+\DoxyCodeLine{439       }
+\DoxyCodeLine{440         \textcolor{comment}{// MOTPI(p q, r) = SCR(nu, p q)\string^H MO(nu, r) }}
+\DoxyCodeLine{441         blas::gemm(blas::Layout::ColMajor, blas::Op::ConjTrans, blas::Op::NoTrans, }
+\DoxyCodeLine{442           npqDim, 1, nAO, MatsT(1.), SCR, nAO, }
+\DoxyCodeLine{443           rMO, nAO, MatsT(0.), MOTPI + r*npqDim, npqDim);}
+\DoxyCodeLine{444       }
+\DoxyCodeLine{445       \}}
+\DoxyCodeLine{446 }
+\DoxyCodeLine{447       \textcolor{keywordflow}{if}(swap\_pq\_rs) \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, npqDim, nr, MatsT(1.), MOTPI, npqDim, nr); }
+\DoxyCodeLine{448 }
+\DoxyCodeLine{449     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a374916baf8a940c1e97f4edb1a1266e2}{KRONECKER\_DELTA\_PS}}) \{}
+\DoxyCodeLine{450         }
+\DoxyCodeLine{451       \textcolor{comment}{// SCR(nu p q, r) = (mu, nu p q)\string^H MO(mu, r) }}
+\DoxyCodeLine{452       blas::gemm(blas::Layout::ColMajor, blas::Op::ConjTrans, blas::Op::NoTrans, }
+\DoxyCodeLine{453         nAO*npq, nr, nAO, MatsT(1.), halfTMOTPI-\/>pointer(), nAO, }
+\DoxyCodeLine{454         ss\_.mo[0].pointer() + roff*nAO, nAO, MatsT(0.), SCR, nAO*npq);}
+\DoxyCodeLine{455     }
+\DoxyCodeLine{456       MatsT * SCR2 = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{457       SCR2 = memManager\_.malloc<MatsT>(nAO*nq*nr);}
+\DoxyCodeLine{458       }
+\DoxyCodeLine{459       \textcolor{keywordtype}{size\_t} nqr = nq*nr;}
+\DoxyCodeLine{460 }
+\DoxyCodeLine{461       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} p = 0ul; p < np; p++) \{}
+\DoxyCodeLine{462         }
+\DoxyCodeLine{463         \textcolor{comment}{// Gather SCR2(nu, q, r) from SCR(nu p q, r)}}
+\DoxyCodeLine{464 \textcolor{preprocessor}{        \#pragma omp parallel for}}
+\DoxyCodeLine{465         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} r = 0ul; r < nr; r++) }
+\DoxyCodeLine{466         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} q = 0ul; q < nq; q++) \{}
+\DoxyCodeLine{467           std::copy\_n(SCR + p*nAO + q*nAO*np + r*nAO*npq,}
+\DoxyCodeLine{468             nAO, SCR2 + q*nAO + r*nAO*nq);}
+\DoxyCodeLine{469         \}}
+\DoxyCodeLine{470 }
+\DoxyCodeLine{471         \textcolor{comment}{// MOTPI(q r, p) = SCR2(nu, q r)\string^H MO(nu, p) }}
+\DoxyCodeLine{472         blas::gemm(blas::Layout::ColMajor, blas::Op::ConjTrans, blas::Op::NoTrans, }
+\DoxyCodeLine{473           nqr, 1, nAO, MatsT(1.), SCR2, nAO,}
+\DoxyCodeLine{474           ss\_.mo[0].pointer() + (p+poff)*nAO, nAO, }
+\DoxyCodeLine{475           MatsT(0.), MOTPI + p*nqr, nqr);  }
+\DoxyCodeLine{476       \}}
+\DoxyCodeLine{477       }
+\DoxyCodeLine{478       \textcolor{comment}{// MOTPI(q r, p) -\/> MOTPI(p,q,r)}}
+\DoxyCodeLine{479       \textcolor{keywordflow}{if} (not swap\_pq\_rs) \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nqr, np, MatsT(1.), MOTPI, nqr, np);}
+\DoxyCodeLine{480       \textcolor{comment}{// MOTPI(q r, p) -\/> MOTPI(r,p,q)}}
+\DoxyCodeLine{481       \textcolor{keywordflow}{else}                \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nq, nr*np, MatsT(1.), MOTPI, nq, nr*np);  }
+\DoxyCodeLine{482 }
+\DoxyCodeLine{483       \textcolor{keywordflow}{if} (SCR2) memManager\_.free(SCR2);}
+\DoxyCodeLine{484     }
+\DoxyCodeLine{485     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3ab4168543d010a7d2fa10da5a1b96fdd7}{KRONECKER\_DELTA\_RQ}} or delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a430294079b490936f721fce9c96540b4}{KRONECKER\_DELTA\_PS\_RQ}}) \{}
+\DoxyCodeLine{486       }
+\DoxyCodeLine{487       \textcolor{keywordtype}{size\_t} nAOp = nAO * np;}
+\DoxyCodeLine{488       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} r = 0ul; r < nr; r++) \{}
+\DoxyCodeLine{489         \textcolor{comment}{// SCR(nu p, r) = (mu, nu p)\string^H MO(mu, r) }}
+\DoxyCodeLine{490         blas::gemm(blas::Layout::ColMajor, blas::Op::ConjTrans, blas::Op::NoTrans, }
+\DoxyCodeLine{491           nAOp, 1, nAO, MatsT(1.), halfTMOTPI-\/>pointer() + r*nAO2*np, nAO, }
+\DoxyCodeLine{492           ss\_.mo[0].pointer() + (r+roff)*nAO, nAO, MatsT(0.), SCR+r*nAOp, nAOp);}
+\DoxyCodeLine{493       \}}
+\DoxyCodeLine{494       }
+\DoxyCodeLine{495       \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3ab4168543d010a7d2fa10da5a1b96fdd7}{KRONECKER\_DELTA\_RQ}}) \{}
+\DoxyCodeLine{496         \textcolor{comment}{// MOTPI(p,r,s) = SCR(nu p, r)\string^H MO(nu, s)}}
+\DoxyCodeLine{497         blas::gemm(blas::Layout::ColMajor, blas::Op::ConjTrans, blas::Op::NoTrans, }
+\DoxyCodeLine{498           npr, ns, nAO, MatsT(1.), SCR, nAO, }
+\DoxyCodeLine{499           ss\_.mo[0].pointer() + soff*nAO, nAO, MatsT(0.), MOTPI, npr);}
+\DoxyCodeLine{500         }
+\DoxyCodeLine{501         \textcolor{comment}{// MOTPI(p,r,s) -\/> MOTPI(r,s,p)}}
+\DoxyCodeLine{502         \textcolor{keywordflow}{if} (swap\_pq\_rs) \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, np, ns*nr, MatsT(1.), MOTPI, np, ns*nr);}
+\DoxyCodeLine{503        }
+\DoxyCodeLine{504        \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a430294079b490936f721fce9c96540b4}{KRONECKER\_DELTA\_PS\_RQ}}) \{}
+\DoxyCodeLine{505        }
+\DoxyCodeLine{506          MatsT * SCR2 = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{507          SCR2 = memManager\_.malloc<MatsT>(nAO*nr);}
+\DoxyCodeLine{508          }
+\DoxyCodeLine{509          \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} p = 0ul; p < np; p++) \{}
+\DoxyCodeLine{510            }
+\DoxyCodeLine{511            \textcolor{comment}{// Gather SCR2(nu, r) from SCR(nu, p, r)}}
+\DoxyCodeLine{512 \textcolor{preprocessor}{           \#pragma omp parallel for}}
+\DoxyCodeLine{513            \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} r = 0ul; r < nr; r++) \{ }
+\DoxyCodeLine{514              std::copy\_n(SCR + p*nAO + r*nAO*np, nAO, SCR2 + r*nAO);}
+\DoxyCodeLine{515            \}}
+\DoxyCodeLine{516            }
+\DoxyCodeLine{517            \textcolor{comment}{// MOTPI(r,p) = SCR2(nu, r)\string^H MO(nu, p)}}
+\DoxyCodeLine{518            blas::gemm(blas::Layout::ColMajor, blas::Op::ConjTrans, blas::Op::NoTrans, }
+\DoxyCodeLine{519              nr, 1, nAO, MatsT(1.), SCR2, nAO, }
+\DoxyCodeLine{520              ss\_.mo[0].pointer() + (p+poff)*nAO, nAO, MatsT(0.), MOTPI + p*nr, nr);}
+\DoxyCodeLine{521            }
+\DoxyCodeLine{522          \}}
+\DoxyCodeLine{523          }
+\DoxyCodeLine{524          \textcolor{comment}{// MOTPI(r,p) -\/> MOTPI(p,r)}}
+\DoxyCodeLine{525          \textcolor{keywordflow}{if} (not swap\_pq\_rs) \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nr, np, MatsT(1.), MOTPI, nr, np);}
+\DoxyCodeLine{526          }
+\DoxyCodeLine{527          \textcolor{keywordflow}{if} (SCR2) memManager\_.free(SCR2);}
+\DoxyCodeLine{528        \}}
+\DoxyCodeLine{529 }
+\DoxyCodeLine{530     \} \textcolor{comment}{// delta }}
+\DoxyCodeLine{531     }
+\DoxyCodeLine{532     \textcolor{comment}{// free memories}}
+\DoxyCodeLine{533     halfTMOTPI = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{534     \textcolor{keywordflow}{if} (SCR) memManager\_.free(SCR);}
+\DoxyCodeLine{535  }
+\DoxyCodeLine{536   \}; \textcolor{comment}{// MOIntsTransformer::perfromSubsetTransformTPISSFockN6}}
+\DoxyCodeLine{537   }
+\DoxyCodeLine{538 }
+\DoxyCodeLine{539 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

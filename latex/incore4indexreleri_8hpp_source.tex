@@ -1,0 +1,277 @@
+\hypertarget{incore4indexreleri_8hpp_source}{}\doxysection{incore4indexreleri.\+hpp}
+\label{incore4indexreleri_8hpp_source}\index{include/particleintegrals/twopints/incore4indexreleri.hpp@{include/particleintegrals/twopints/incore4indexreleri.hpp}}
+\mbox{\hyperlink{incore4indexreleri_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{relativisticints_8hpp}{particleintegrals/onepints/relativisticints.hpp}}>}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incore4indextpi_8hpp}{particleintegrals/twopints/incore4indextpi.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   \textcolor{comment}{// define a macro to handle ERI and 4C ERI subsetTransfrom Calls}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{  \#define INCORE4CINDEXERI\_SUBSETTRANSFROM(ERI, ERI4C, ...) \(\backslash\)}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{    if (ERI4C) ERI4C-\/>subsetTransform(\_\_VA\_ARGS\_\_); \(\backslash\)}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{    else ERI-\/>subsetTransform(\_\_VA\_ARGS\_\_);}}
+\DoxyCodeLine{34   }
+\DoxyCodeLine{44   \textcolor{keyword}{template} <\textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{45   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI}{InCore4indexRelERI}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI}}<IntsT> \{}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keyword}{template} <\textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{48     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI}{InCore4indexRelERI}};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{51     std::vector<InCore4indexTPI<IntsT>> \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53   \textcolor{keyword}{public}:}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{56     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_af4fd5e786f722f3106470a5a0598e8b2}{InCore4indexRelERI}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{57     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a5aa97a766e0641d181c741c7e784e1b6}{InCore4indexRelERI}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI}{InCore4indexRelERI}} \& ) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{58     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a333dbdddab5e6c0e8fd1a70b03b5d7e3}{InCore4indexRelERI}}( \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI}{InCore4indexRelERI}} \&\& ) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{59     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a8da6ad223488d69792f45385f88b3c88}{InCore4indexRelERI}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} nb, \textcolor{keywordtype}{size\_t} nRel):}
+\DoxyCodeLine{60         \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI}}<IntsT>(mem, nb) \{}
+\DoxyCodeLine{61       \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}.reserve(nRel);}
+\DoxyCodeLine{62       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nRel; i++)}
+\DoxyCodeLine{63         \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}.emplace\_back(mem, nb);}
+\DoxyCodeLine{64     \}}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \textcolor{keyword}{template} <\textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{67     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_afbeac89b6f596abf67e68ae35a73dcb3}{InCore4indexRelERI}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI}{InCore4indexRelERI<IntsU>}} \&other, \textcolor{keywordtype}{int} = 0 ):}
+\DoxyCodeLine{68         \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI}}<IntsT>(other, 0) \{}
+\DoxyCodeLine{69       \textcolor{keywordflow}{if} (std::is\_same<IntsU, dcomplex>::value}
+\DoxyCodeLine{70           and std::is\_same<IntsT, double>::value)}
+\DoxyCodeLine{71         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cannot create a Real InCore4indexRelERI from a Complex one."{}});}
+\DoxyCodeLine{72       \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}.reserve(other.\mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}.size());}
+\DoxyCodeLine{73       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \&p : other.\mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}})}
+\DoxyCodeLine{74         \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}.emplace\_back(p);}
+\DoxyCodeLine{75     \}}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_aaa981ba15456bb24db521715f7ad7b2b}{nRelComp}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}.size(); \}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsT>}}\& \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a9cacd75a3f4f6de5d76e5d1c91e40775}{operator[]}}(\textcolor{keywordtype}{size\_t} i) \{}
+\DoxyCodeLine{80       \textcolor{keywordflow}{if} (i >= \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}.size())}
+\DoxyCodeLine{81         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Requested component is NOT in this RelativisticInts object."{}});}
+\DoxyCodeLine{82       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}[i];}
+\DoxyCodeLine{83     \}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsT>}}\& \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_ad400eb003b6135cf6cb163ee8b072b0e}{operator[]}}(\mbox{\hyperlink{namespaceChronusQ_abe9756000ce61aafa0bdd52a9969e1d6}{REL\_INTS\_COMPS}} comp) \{}
+\DoxyCodeLine{86       \textcolor{keywordflow}{if} (comp == \mbox{\hyperlink{namespaceChronusQ_abe9756000ce61aafa0bdd52a9969e1d6af186217753c37b9b9f958d906208506e}{REL\_INTS\_COMPS::O}})}
+\DoxyCodeLine{87         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{88       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a9cacd75a3f4f6de5d76e5d1c91e40775}{operator[]}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(comp));}
+\DoxyCodeLine{89     \}}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsT>}}\& \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a8f0dcc0738c1dbd642618daf2da9a3ea}{operator[]}}(\textcolor{keywordtype}{size\_t} i)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{92       \textcolor{keywordflow}{if} (i >= \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}.size())}
+\DoxyCodeLine{93         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Requested component is NOT in this RelativisticInts object."{}});}
+\DoxyCodeLine{94       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}[i];}
+\DoxyCodeLine{95     \}}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97     \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsT>}}\& \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_afd827992442a6ea442bf3dcb1ecb522c}{operator[]}}(\mbox{\hyperlink{namespaceChronusQ_abe9756000ce61aafa0bdd52a9969e1d6}{REL\_INTS\_COMPS}} comp)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{98       \textcolor{keywordflow}{if} (comp == \mbox{\hyperlink{namespaceChronusQ_abe9756000ce61aafa0bdd52a9969e1d6af186217753c37b9b9f958d906208506e}{REL\_INTS\_COMPS::O}})}
+\DoxyCodeLine{99         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{100       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a9cacd75a3f4f6de5d76e5d1c91e40775}{operator[]}}(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(comp));}
+\DoxyCodeLine{101     \}}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     std::vector<InCore4indexTPI<IntsT>>\& \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_ae27368939f1083ab0df1fba67dd2b0b2}{relComps}}() \{}
+\DoxyCodeLine{104       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}};}
+\DoxyCodeLine{105     \}}
+\DoxyCodeLine{106     \textcolor{keyword}{const} std::vector<InCore4indexTPI<IntsT>>\& \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a046405a62f48f51580b45f0878029cb9}{relComps}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{107       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}};}
+\DoxyCodeLine{108     \}}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110     }
+\DoxyCodeLine{111     \textcolor{comment}{// Computation interfaces}}
+\DoxyCodeLine{112     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a043c2e2b9d5b907d17a2d8bba46b38da}{computeAOInts}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basisSet, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol,}
+\DoxyCodeLine{113         \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&emPert, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}} op, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} \&hamiltonianOptions) \{}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115       \textcolor{keywordflow}{if}(hamiltonianOptions.\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a866c61de43c70758e0f1a6929827ac4d}{Libcint}}) \{}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117         \textcolor{comment}{// Use Libcint to compute nonrelativistic and DCB integrals}}
+\DoxyCodeLine{118         \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a53e256078287baa018927fa59eefd6ad}{computeERICINT}}(basisSet, mol, emPert, op, hamiltonianOptions);}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120         \textcolor{comment}{//if( hamiltonianOptions.Gauge )}}
+\DoxyCodeLine{121           \textcolor{comment}{//computeERIGauge(basisSet, mol, emPert, op, hamiltonianOptions);}}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125         \textcolor{comment}{// Use Libint to compute nonrelativistic}}
+\DoxyCodeLine{126         \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ad097a18e26243cecc105fd401f11422d}{InCore4indexTPI<IntsT>::computeAOInts}}(basisSet, mol, emPert, op, hamiltonianOptions);}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128         \textcolor{comment}{// Use Libint to compute DCB integrals}}
+\DoxyCodeLine{129         \textcolor{keywordflow}{if} (hamiltonianOptions.\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_aad60a13d42b60f4c5e4e9a22cc436da0}{DiracCoulomb}} or hamiltonianOptions.\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a312c6169880a73167a357f387b6c76e6}{Gaunt}})}
+\DoxyCodeLine{130           \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a0c0932805f087245882e7eecd11a73d2}{computeERIDCB}}(basisSet, mol, emPert, op, hamiltonianOptions);}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132         \textcolor{comment}{// use in house code to compute gauge integral}}
+\DoxyCodeLine{133         \textcolor{keywordflow}{if} (hamiltonianOptions.\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a4a5c0851b9968ed8998ca03d3d258fd4}{Gauge}})}
+\DoxyCodeLine{134           \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a4feac5f572a91a6939ed1c8a1e60e7a5}{computeERIGauge}}(basisSet, mol, emPert, op, hamiltonianOptions);}
+\DoxyCodeLine{135       \}}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137     \}}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{140     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a0c0932805f087245882e7eecd11a73d2}{computeERIDCB}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{141         \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\&);}
+\DoxyCodeLine{142     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a4feac5f572a91a6939ed1c8a1e60e7a5}{computeERIGauge}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{143         \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\&);}
+\DoxyCodeLine{144     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a53e256078287baa018927fa59eefd6ad}{computeERICINT}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{145         \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\&);}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a62874e34021d6f216d7326357aca1468}{clear}}() \{}
+\DoxyCodeLine{148       \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a6456bc2e33060e618820720bd03e1fd2}{InCore4indexTPI<IntsT>::clear}}();}
+\DoxyCodeLine{149       \textcolor{keywordflow}{for} (\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsT>}}\& c : \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}})}
+\DoxyCodeLine{150         c.clear();}
+\DoxyCodeLine{151     \}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a968846adf83f80dc179a32d3bc2c7923}{output}}(std::ostream \&out, \textcolor{keyword}{const} std::string \&s = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{154                         \textcolor{keywordtype}{bool} printFull = \textcolor{keyword}{false})\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{155       \textcolor{keywordflow}{if} (printFull) \{}
+\DoxyCodeLine{156         std::string oeiStr;}
+\DoxyCodeLine{157         \textcolor{keywordflow}{if} (s == \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{158           oeiStr = \textcolor{stringliteral}{"{}RelIncore4IndexERI"{}};}
+\DoxyCodeLine{159         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{160           oeiStr = \textcolor{stringliteral}{"{}RelIncore4IndexERI["{}} + s + \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{161         \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out, oeiStr+\textcolor{stringliteral}{"{}.NR"{}}, this-\/>\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}(),}
+\DoxyCodeLine{162             this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}(), this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}(), this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}());}
+\DoxyCodeLine{163         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_aaa981ba15456bb24db521715f7ad7b2b}{nRelComp}}(); i++) \{}
+\DoxyCodeLine{164           \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out, oeiStr+\textcolor{stringliteral}{"{}."{}}+std::to\_string(i), (*\textcolor{keyword}{this})[i].\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}(),}
+\DoxyCodeLine{165               this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}(), this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}(), this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}());}
+\DoxyCodeLine{166         \}}
+\DoxyCodeLine{167       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{168         std::string oeiStr;}
+\DoxyCodeLine{169         \textcolor{keywordflow}{if} (s == \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{170           oeiStr = \textcolor{stringliteral}{"{}Relativistic incore 4-\/index electron repulsion integral"{}};}
+\DoxyCodeLine{171         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{172           oeiStr = \textcolor{stringliteral}{"{}RelIncore4IndexERI["{}} + s + \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{173         out << oeiStr;}
+\DoxyCodeLine{174         out << \textcolor{stringliteral}{"{} with "{}} << \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_aaa981ba15456bb24db521715f7ad7b2b}{nRelComp}}();}
+\DoxyCodeLine{175         out << \textcolor{stringliteral}{"{} DCB integrals"{}} << std::endl;}
+\DoxyCodeLine{176       \}}
+\DoxyCodeLine{177     \}}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_adf35b528ae542c2b6ceaba895b0a7e7f}{broadcast}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm = \mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\_COMM\_WORLD}}, \textcolor{keywordtype}{int} root = 0)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{180       \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aefedef91bcdbacee91f731285454f4a6}{InCore4indexTPI<IntsT>::broadcast}}(comm, root);}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{183       \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm) > 1 ) \{}
+\DoxyCodeLine{184         \textcolor{keywordtype}{size\_t} nRel = \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}.size();}
+\DoxyCodeLine{185         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(nRel,root,comm);}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187         \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}.size() != nRel) \{}
+\DoxyCodeLine{188           \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}.clear();}
+\DoxyCodeLine{189           \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}.reserve(nRel);}
+\DoxyCodeLine{190           \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nRel; i++) \{}
+\DoxyCodeLine{191             \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}}.emplace\_back(this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4060c48fc42986b6d431e005dcff8dba}{memManager\_}}, this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a33f3859297ad20c4957f85e8d623d227}{NB}});}
+\DoxyCodeLine{192           \}}
+\DoxyCodeLine{193         \}}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195         \textcolor{keywordflow}{for} (\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsT>}}\& comp : \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a17bb36ecf0083d5bb80a989644b74034}{components\_}})}
+\DoxyCodeLine{196           comp.broadcast(comm, root);}
+\DoxyCodeLine{197       \}}
+\DoxyCodeLine{198 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{199     \}}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201     \textcolor{comment}{// Pauil Matrice representation to spinor representation}}
+\DoxyCodeLine{202     \textcolor{keyword}{template} <\textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{203     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI}{InCore4indexRelERI<IntsU>}} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a8321db7381743d9de68b5878de8ac26b}{spatialToSpinBlock}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{204     }
+\DoxyCodeLine{205     \textcolor{keyword}{template} <\textcolor{keyword}{typename} TransT>}
+\DoxyCodeLine{206     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI}{InCore4indexRelERI}}<\textcolor{keyword}{typename} std::conditional<}
+\DoxyCodeLine{207     (std::is\_same<IntsT, dcomplex>::value or}
+\DoxyCodeLine{208      std::is\_same<TransT, dcomplex>::value),}
+\DoxyCodeLine{209     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{double}>::type> \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a7be883ec94eb28e515bfd6961113478b}{transform}}(}
+\DoxyCodeLine{210         \textcolor{keywordtype}{char} TRANS, \textcolor{keyword}{const} TransT* T, \textcolor{keywordtype}{int} NT, \textcolor{keywordtype}{int} LDT) \textcolor{keyword}{const} \{}
+\DoxyCodeLine{211       \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI}{InCore4indexRelERI}}<\textcolor{keyword}{typename} std::conditional<}
+\DoxyCodeLine{212       (std::is\_same<IntsT, dcomplex>::value or}
+\DoxyCodeLine{213        std::is\_same<TransT, dcomplex>::value),}
+\DoxyCodeLine{214       \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{double}>::type> transInts(}
+\DoxyCodeLine{215           this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{ParticleIntegrals::memManager}}(), NT, \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_aaa981ba15456bb24db521715f7ad7b2b}{nRelComp}}());}
+\DoxyCodeLine{216       transInts[\mbox{\hyperlink{namespaceChronusQ_abe9756000ce61aafa0bdd52a9969e1d6af186217753c37b9b9f958d906208506e}{REL\_INTS\_COMPS::O}}] =}
+\DoxyCodeLine{217           (*this)[\mbox{\hyperlink{namespaceChronusQ_abe9756000ce61aafa0bdd52a9969e1d6af186217753c37b9b9f958d906208506e}{REL\_INTS\_COMPS::O}}].\mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a7be883ec94eb28e515bfd6961113478b}{transform}}(TRANS, T, NT, LDT);}
+\DoxyCodeLine{218       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_aaa981ba15456bb24db521715f7ad7b2b}{nRelComp}}(); i++)}
+\DoxyCodeLine{219         transInts[i] = (*\textcolor{keyword}{this})[i].transform(TRANS, T, NT, LDT);}
+\DoxyCodeLine{220       \textcolor{keywordflow}{return} transInts;}
+\DoxyCodeLine{221     \}}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223     \textcolor{keyword}{template} <\textcolor{keyword}{typename} TransT, \textcolor{keyword}{typename} OutT>}
+\DoxyCodeLine{224     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a963d22bb85d34aa8feaa2e112a013dc4}{subsetTransform}}(}
+\DoxyCodeLine{225         \textcolor{keywordtype}{char} TRANS, \textcolor{keyword}{const} TransT* T, \textcolor{keywordtype}{int} LDT,}
+\DoxyCodeLine{226         \textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&off\_size,}
+\DoxyCodeLine{227         OutT* out, \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false}) \textcolor{keyword}{const};}
+\DoxyCodeLine{228     }
+\DoxyCodeLine{229     \textcolor{keyword}{template} <\textcolor{keyword}{typename} TransT, \textcolor{keyword}{typename} OutT>}
+\DoxyCodeLine{230     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_a58999ebd75e75aca911ecedaf3e94c13}{subsetTransformWithLSComps}}(}
+\DoxyCodeLine{231         \textcolor{keyword}{const} std::string \& LSComps, \textcolor{keywordtype}{char} TRANS, }
+\DoxyCodeLine{232         \textcolor{keyword}{const} TransT* TL, \textcolor{keywordtype}{int} LDTL, \textcolor{keyword}{const} TransT* TS, \textcolor{keywordtype}{int} LDTS,}
+\DoxyCodeLine{233         \textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&off\_size,}
+\DoxyCodeLine{234         \textcolor{keyword}{const} IntsT * in, OutT* out, \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false}) \textcolor{keyword}{const};}
+\DoxyCodeLine{235     }
+\DoxyCodeLine{236     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_aa54731e181f39707acb3abca9af9c403}{\string~InCore4indexRelERI}}() \{\}}
+\DoxyCodeLine{237 }
+\DoxyCodeLine{238   \}; \textcolor{comment}{// class InCore4indexRelERI}}
+\DoxyCodeLine{239 }
+\DoxyCodeLine{240   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{241   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction}{InCore4indexRelERIContraction}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction}{InCore4indexTPIContraction}}<MatsT,IntsT> \{}
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU, \textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{244     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction}{InCore4indexRelERIContraction}};}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{246   \textcolor{keyword}{public}:}
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction_ad29ed8e5eb3f6c436b45bb6e4b19ef75}{InCore4indexRelERIContraction}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{251     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction_abf6715ccaf39c81f220027b771ced95e}{InCore4indexRelERIContraction}}(\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts<IntsT>}} \&tpi):}
+\DoxyCodeLine{252       \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction}{InCore4indexTPIContraction}}<MatsT,IntsT>(tpi) \{\}}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{254     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{255     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction_a30abffa37fd04cda664c229d372599ba}{InCore4indexRelERIContraction}}(}
+\DoxyCodeLine{256         \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction}{InCore4indexRelERIContraction<MatsU,IntsT>}} \&other, \textcolor{keywordtype}{int} dummy = 0 ):}
+\DoxyCodeLine{257       \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction}{InCore4indexRelERIContraction}}(other.\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\_}}) \{\}}
+\DoxyCodeLine{258     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{259     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction_a33110fed6681086f92866296f450c884}{InCore4indexRelERIContraction}}(}
+\DoxyCodeLine{260         \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction}{InCore4indexRelERIContraction<MatsU,IntsT>}} \&\&other, \textcolor{keywordtype}{int} dummy = 0 ):}
+\DoxyCodeLine{261       \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction}{InCore4indexRelERIContraction}}(other.\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\_}}) \{\}}
+\DoxyCodeLine{262 }
+\DoxyCodeLine{263     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction_a4f727b286ef6c642a049f14f009e38eb}{InCore4indexRelERIContraction}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction}{InCore4indexRelERIContraction}} \&other ):}
+\DoxyCodeLine{264       \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction}{InCore4indexRelERIContraction}}(other, 0) \{\}}
+\DoxyCodeLine{265     \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction_ad9ac7a792614f140ed9b5bcd8cb50add}{InCore4indexRelERIContraction}}( \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction}{InCore4indexRelERIContraction}} \&\&other ):}
+\DoxyCodeLine{266       \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction}{InCore4indexRelERIContraction}}(std::move(other), 0) \{\}}
+\DoxyCodeLine{267 }
+\DoxyCodeLine{268     \textcolor{comment}{// Computation interfaces}}
+\DoxyCodeLine{269     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction_ac90e537c3a2f5caa218bf25abcb09922}{JContract}}(}
+\DoxyCodeLine{270         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}},}
+\DoxyCodeLine{271         \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction_a2e5a9672dcf5c2726cb7e3c7a3b57436}{KContract}}(}
+\DoxyCodeLine{274         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}},}
+\DoxyCodeLine{275         \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{276 }
+\DoxyCodeLine{277     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERIContraction_a977689cad5badc25af8ed6c0479f9321}{\string~InCore4indexRelERIContraction}}() \{\}}
+\DoxyCodeLine{278 }
+\DoxyCodeLine{279   \}; \textcolor{comment}{// class InCore4indexRelERIContraction}}
+\DoxyCodeLine{280 }
+\DoxyCodeLine{281 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

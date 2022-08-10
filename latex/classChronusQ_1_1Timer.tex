@@ -1,0 +1,447 @@
+\hypertarget{classChronusQ_1_1Timer}{}\doxysection{ChronusQ\+::Timer Class Reference}
+\label{classChronusQ_1_1Timer}\index{ChronusQ::Timer@{ChronusQ::Timer}}
+
+
+{\ttfamily \#include $<$timer.\+hpp$>$}
+
+
+
+Collaboration diagram for ChronusQ\+::Timer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} = \mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Time\+Section\+::\+Id\+Type}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Timer_aab80a10810210db16e5eebf48ab82f54}{Timer}} ()=default
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1Timer_ae94bd7b8394b737e6de03d28481e8f7c}{initialize}} (std\+::string base\+Label, size\+\_\+t n\+Threads)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Timer_a2ca08c669272c770c53b08b37b8b0f8e}{Timer}} (const \mbox{\hyperlink{classChronusQ_1_1Timer}{Timer}} \&)=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Timer_afe82bcc339c831c38ba45d0d92acd0af}{Timer}} (\mbox{\hyperlink{classChronusQ_1_1Timer}{Timer}} \&\&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} \mbox{\hyperlink{classChronusQ_1_1Timer_ade19721dcb8191dce545ca01d5d124e8}{tick}} (std\+::string label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} parent\+Id=0, bool add\+Context=true)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1Timer_a98232753212170fba9ba8a8e049e2949}{tock}} (\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} id=0)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1Timer_affe4f6db0d8b60df4f0e252121cbd1e6}{tock}} (std\+::string label)
+\item 
+{\footnotesize template$<$typename F , typename... Args$>$ }\\auto \mbox{\hyperlink{classChronusQ_1_1Timer_ab6a8cc3977c7b144df69a042592468de}{time\+Op}} (std\+::string label, const F \&func, Args \&\&... args)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} \mbox{\hyperlink{classChronusQ_1_1Timer_af8526e1e5ae01b988b79686352b6c9ae}{get\+Label\+Id}} (std\+::string label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} base=0)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} \mbox{\hyperlink{classChronusQ_1_1Timer_a6379d230a1fa3c2215b8973d00bae65f}{get\+Context\+Id}} ()
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1Timer_a842231dc006a931a56a6371fad206e0f}{get\+Call\+Level}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1Timer_a3b488237cb390eb953159d2783a400aa}{set\+Context}} (\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} id, size\+\_\+t level)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} \mbox{\hyperlink{classChronusQ_1_1Timer_a0c1ecd028af0ff0536756625bf768558}{pop\+Context}} ()
+\item 
+{\footnotesize template$<$typename DurT $>$ }\\DurT \mbox{\hyperlink{classChronusQ_1_1Timer_a673421f45833c4120f9e681655b45264}{get\+Id\+Duration}} (\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} id)
+\item 
+{\footnotesize template$<$typename DurT $>$ }\\std\+::vector$<$ DurT $>$ \mbox{\hyperlink{classChronusQ_1_1Timer_a7b280ccbaa1e4f250df6a743bc079f99}{get\+Durations}} (std\+::string label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} base=0, std\+::string filter=\char`\"{}\char`\"{})
+\item 
+{\footnotesize template$<$typename DurT $>$ }\\std\+::pair$<$ DurT, DurT $>$ \mbox{\hyperlink{classChronusQ_1_1Timer_ac27826bff9bbe11a57f590cb4a37ad27}{get\+Duration\+Summary}} (std\+::string label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} base=0, std\+::string filter=\char`\"{}\char`\"{})
+\item 
+{\footnotesize template$<$typename DurT $>$ }\\std\+::pair$<$ DurT, DurT $>$ \mbox{\hyperlink{classChronusQ_1_1Timer_a7578dc1fb70036f0f5584f90f31f963c}{get\+Agg\+Dur\+Summary}} (std\+::string label, std\+::string parent\+Label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} base=0)
+\item 
+{\footnotesize template$<$typename DurT $>$ }\\DurT \mbox{\hyperlink{classChronusQ_1_1Timer_a071569aa8c0eee16583e6f92f001da60}{get\+Duration\+Avg}} (std\+::string label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} base=0, std\+::string filter=\char`\"{}\char`\"{})
+\item 
+{\footnotesize template$<$typename DurT $>$ }\\DurT \mbox{\hyperlink{classChronusQ_1_1Timer_aea47628da469757115d93b16e5a4381e}{get\+Duration\+Total}} (std\+::string label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} base=0, std\+::string filter=\char`\"{}\char`\"{})
+\item 
+{\footnotesize template$<$typename DurT $>$ }\\std\+::vector$<$ std\+::vector$<$ DurT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1Timer_ae711e8b9091d7a040e1ccd92001ee781}{get\+Thread\+Durations}} (std\+::string label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} base=0, std\+::string filter\+Label=\char`\"{}\char`\"{})
+\item 
+{\footnotesize template$<$typename DurT $>$ }\\std\+::vector$<$ std\+::vector$<$ DurT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1Timer_a0608706dcc7ce83d55a3756a8ebb3c1a}{get\+Aggregate\+Durations}} (std\+::string label, std\+::string parent\+Label, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} base=0)
+\item 
+{\footnotesize template$<$typename DurT $>$ }\\void \mbox{\hyperlink{classChronusQ_1_1Timer_a81e8894c1bca6bf589472aa2c2614316}{print\+Timings}} (std\+::ostream \&out, std\+::string unit=\char`\"{}\char`\"{}, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} id=0, int max\+Depth=3)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1Timer_a2d125b32c6ebbb4a5d82b726355c9502}{print\+Timings}} (std\+::ostream \&out, \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} id=0)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1TimerOpts}{Timer\+Opts}} \mbox{\hyperlink{classChronusQ_1_1Timer_ad60a04c79cba394f76c10b2183830489}{options}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}} $\ast$ $>$ \mbox{\hyperlink{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}{contexts\+\_\+}}
+\item 
+std\+::vector$<$ size\+\_\+t $>$ \mbox{\hyperlink{classChronusQ_1_1Timer_a22aba9d7df45f34a80485994b7b92531}{levels\+\_\+}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}} \mbox{\hyperlink{classChronusQ_1_1Timer_a47cd4529a044b50c9bc12d1511c79670}{base\+\_\+}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1Registry}{Registry}}$<$ \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}, \mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}} $\ast$ $>$ \mbox{\hyperlink{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}{registry\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}\label{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!IdType@{IdType}}
+\index{IdType@{IdType}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{IdType}{IdType}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Chronus\+Q\+::\+Timer\+::\+Id\+Type}} =  \mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Time\+Section\+::\+Id\+Type}}}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_aab80a10810210db16e5eebf48ab82f54}\label{classChronusQ_1_1Timer_aab80a10810210db16e5eebf48ab82f54}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!Timer@{Timer}}
+\index{Timer@{Timer}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{Timer()}{Timer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Timer\+::\+Timer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a2ca08c669272c770c53b08b37b8b0f8e}\label{classChronusQ_1_1Timer_a2ca08c669272c770c53b08b37b8b0f8e}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!Timer@{Timer}}
+\index{Timer@{Timer}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{Timer()}{Timer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Timer\+::\+Timer (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1Timer}{Timer}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1Timer_afe82bcc339c831c38ba45d0d92acd0af}\label{classChronusQ_1_1Timer_afe82bcc339c831c38ba45d0d92acd0af}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!Timer@{Timer}}
+\index{Timer@{Timer}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{Timer()}{Timer()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Timer\+::\+Timer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1Timer}{Timer}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a7578dc1fb70036f0f5584f90f31f963c}\label{classChronusQ_1_1Timer_a7578dc1fb70036f0f5584f90f31f963c}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!getAggDurSummary@{getAggDurSummary}}
+\index{getAggDurSummary@{getAggDurSummary}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{getAggDurSummary()}{getAggDurSummary()}}
+{\footnotesize\ttfamily template$<$typename DurT $>$ \\
+std\+::pair$<$ DurT, DurT $>$ Chronus\+Q\+::\+Timer\+::get\+Agg\+Dur\+Summary (\begin{DoxyParamCaption}\item[{std\+::string}]{label,  }\item[{std\+::string}]{parent\+Label,  }\item[{\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}}]{base = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_a7578dc1fb70036f0f5584f90f31f963c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a0608706dcc7ce83d55a3756a8ebb3c1a}\label{classChronusQ_1_1Timer_a0608706dcc7ce83d55a3756a8ebb3c1a}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!getAggregateDurations@{getAggregateDurations}}
+\index{getAggregateDurations@{getAggregateDurations}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{getAggregateDurations()}{getAggregateDurations()}}
+{\footnotesize\ttfamily template$<$typename DurT $>$ \\
+std\+::vector$<$ std\+::vector$<$ DurT $>$ $>$ Chronus\+Q\+::\+Timer\+::get\+Aggregate\+Durations (\begin{DoxyParamCaption}\item[{std\+::string}]{label,  }\item[{std\+::string}]{parent\+Label,  }\item[{\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}}]{base = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a842231dc006a931a56a6371fad206e0f}\label{classChronusQ_1_1Timer_a842231dc006a931a56a6371fad206e0f}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!getCallLevel@{getCallLevel}}
+\index{getCallLevel@{getCallLevel}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{getCallLevel()}{getCallLevel()}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Timer\+::get\+Call\+Level (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_a842231dc006a931a56a6371fad206e0f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a6379d230a1fa3c2215b8973d00bae65f}\label{classChronusQ_1_1Timer_a6379d230a1fa3c2215b8973d00bae65f}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!getContextId@{getContextId}}
+\index{getContextId@{getContextId}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{getContextId()}{getContextId()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} Chronus\+Q\+::\+Timer\+::get\+Context\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_a6379d230a1fa3c2215b8973d00bae65f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a071569aa8c0eee16583e6f92f001da60}\label{classChronusQ_1_1Timer_a071569aa8c0eee16583e6f92f001da60}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!getDurationAvg@{getDurationAvg}}
+\index{getDurationAvg@{getDurationAvg}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{getDurationAvg()}{getDurationAvg()}}
+{\footnotesize\ttfamily template$<$typename DurT $>$ \\
+DurT Chronus\+Q\+::\+Timer\+::get\+Duration\+Avg (\begin{DoxyParamCaption}\item[{std\+::string}]{label,  }\item[{\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}}]{base = {\ttfamily 0},  }\item[{std\+::string}]{filter = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_a071569aa8c0eee16583e6f92f001da60_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a7b280ccbaa1e4f250df6a743bc079f99}\label{classChronusQ_1_1Timer_a7b280ccbaa1e4f250df6a743bc079f99}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!getDurations@{getDurations}}
+\index{getDurations@{getDurations}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{getDurations()}{getDurations()}}
+{\footnotesize\ttfamily template$<$typename DurT $>$ \\
+std\+::vector$<$ DurT $>$ Chronus\+Q\+::\+Timer\+::get\+Durations (\begin{DoxyParamCaption}\item[{std\+::string}]{label,  }\item[{\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}}]{base = {\ttfamily 0},  }\item[{std\+::string}]{filter = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_a7b280ccbaa1e4f250df6a743bc079f99_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_ac27826bff9bbe11a57f590cb4a37ad27}\label{classChronusQ_1_1Timer_ac27826bff9bbe11a57f590cb4a37ad27}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!getDurationSummary@{getDurationSummary}}
+\index{getDurationSummary@{getDurationSummary}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{getDurationSummary()}{getDurationSummary()}}
+{\footnotesize\ttfamily template$<$typename DurT $>$ \\
+std\+::pair$<$ DurT, DurT $>$ Chronus\+Q\+::\+Timer\+::get\+Duration\+Summary (\begin{DoxyParamCaption}\item[{std\+::string}]{label,  }\item[{\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}}]{base = {\ttfamily 0},  }\item[{std\+::string}]{filter = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_ac27826bff9bbe11a57f590cb4a37ad27_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_aea47628da469757115d93b16e5a4381e}\label{classChronusQ_1_1Timer_aea47628da469757115d93b16e5a4381e}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!getDurationTotal@{getDurationTotal}}
+\index{getDurationTotal@{getDurationTotal}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{getDurationTotal()}{getDurationTotal()}}
+{\footnotesize\ttfamily template$<$typename DurT $>$ \\
+DurT Chronus\+Q\+::\+Timer\+::get\+Duration\+Total (\begin{DoxyParamCaption}\item[{std\+::string}]{label,  }\item[{\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}}]{base = {\ttfamily 0},  }\item[{std\+::string}]{filter = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_aea47628da469757115d93b16e5a4381e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a673421f45833c4120f9e681655b45264}\label{classChronusQ_1_1Timer_a673421f45833c4120f9e681655b45264}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!getIdDuration@{getIdDuration}}
+\index{getIdDuration@{getIdDuration}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{getIdDuration()}{getIdDuration()}}
+{\footnotesize\ttfamily template$<$typename DurT $>$ \\
+DurT Chronus\+Q\+::\+Timer\+::get\+Id\+Duration (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_a673421f45833c4120f9e681655b45264_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_af8526e1e5ae01b988b79686352b6c9ae}\label{classChronusQ_1_1Timer_af8526e1e5ae01b988b79686352b6c9ae}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!getLabelId@{getLabelId}}
+\index{getLabelId@{getLabelId}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{getLabelId()}{getLabelId()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} Chronus\+Q\+::\+Timer\+::get\+Label\+Id (\begin{DoxyParamCaption}\item[{std\+::string}]{label,  }\item[{\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}}]{base = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_af8526e1e5ae01b988b79686352b6c9ae_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_ae711e8b9091d7a040e1ccd92001ee781}\label{classChronusQ_1_1Timer_ae711e8b9091d7a040e1ccd92001ee781}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!getThreadDurations@{getThreadDurations}}
+\index{getThreadDurations@{getThreadDurations}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{getThreadDurations()}{getThreadDurations()}}
+{\footnotesize\ttfamily template$<$typename DurT $>$ \\
+std\+::vector$<$ std\+::vector$<$ DurT $>$ $>$ Chronus\+Q\+::\+Timer\+::get\+Thread\+Durations (\begin{DoxyParamCaption}\item[{std\+::string}]{label,  }\item[{\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}}]{base = {\ttfamily 0},  }\item[{std\+::string}]{filter\+Label = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1Timer_ae94bd7b8394b737e6de03d28481e8f7c}\label{classChronusQ_1_1Timer_ae94bd7b8394b737e6de03d28481e8f7c}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!initialize@{initialize}}
+\index{initialize@{initialize}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Timer\+::initialize (\begin{DoxyParamCaption}\item[{std\+::string}]{base\+Label,  }\item[{size\+\_\+t}]{n\+Threads }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_ae94bd7b8394b737e6de03d28481e8f7c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a0c1ecd028af0ff0536756625bf768558}\label{classChronusQ_1_1Timer_a0c1ecd028af0ff0536756625bf768558}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!popContext@{popContext}}
+\index{popContext@{popContext}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{popContext()}{popContext()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} Chronus\+Q\+::\+Timer\+::pop\+Context (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a2d125b32c6ebbb4a5d82b726355c9502}\label{classChronusQ_1_1Timer_a2d125b32c6ebbb4a5d82b726355c9502}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!printTimings@{printTimings}}
+\index{printTimings@{printTimings}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{printTimings()}{printTimings()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Timer\+::print\+Timings (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}}]{id = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a81e8894c1bca6bf589472aa2c2614316}\label{classChronusQ_1_1Timer_a81e8894c1bca6bf589472aa2c2614316}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!printTimings@{printTimings}}
+\index{printTimings@{printTimings}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{printTimings()}{printTimings()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename DurT $>$ \\
+void Chronus\+Q\+::\+Timer\+::print\+Timings (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{std\+::string}]{unit = {\ttfamily \char`\"{}\char`\"{}},  }\item[{\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}}]{id = {\ttfamily 0},  }\item[{int}]{max\+Depth = {\ttfamily 3} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_a81e8894c1bca6bf589472aa2c2614316_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_a81e8894c1bca6bf589472aa2c2614316_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a3b488237cb390eb953159d2783a400aa}\label{classChronusQ_1_1Timer_a3b488237cb390eb953159d2783a400aa}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!setContext@{setContext}}
+\index{setContext@{setContext}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{setContext()}{setContext()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Timer\+::set\+Context (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}}]{id,  }\item[{size\+\_\+t}]{level }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_a3b488237cb390eb953159d2783a400aa_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_ade19721dcb8191dce545ca01d5d124e8}\label{classChronusQ_1_1Timer_ade19721dcb8191dce545ca01d5d124e8}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!tick@{tick}}
+\index{tick@{tick}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{tick()}{tick()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}} Chronus\+Q\+::\+Timer\+::tick (\begin{DoxyParamCaption}\item[{std\+::string}]{label,  }\item[{\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}}]{parent\+Id = {\ttfamily 0},  }\item[{bool}]{add\+Context = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_ade19721dcb8191dce545ca01d5d124e8_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_ade19721dcb8191dce545ca01d5d124e8_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_ab6a8cc3977c7b144df69a042592468de}\label{classChronusQ_1_1Timer_ab6a8cc3977c7b144df69a042592468de}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!timeOp@{timeOp}}
+\index{timeOp@{timeOp}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{timeOp()}{timeOp()}}
+{\footnotesize\ttfamily template$<$typename F , typename... Args$>$ \\
+auto Chronus\+Q\+::\+Timer\+::time\+Op (\begin{DoxyParamCaption}\item[{std\+::string}]{label,  }\item[{const F \&}]{func,  }\item[{Args \&\&...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_ab6a8cc3977c7b144df69a042592468de_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_ab6a8cc3977c7b144df69a042592468de_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a98232753212170fba9ba8a8e049e2949}\label{classChronusQ_1_1Timer_a98232753212170fba9ba8a8e049e2949}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!tock@{tock}}
+\index{tock@{tock}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{tock()}{tock()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Timer\+::tock (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}}}]{id = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_a98232753212170fba9ba8a8e049e2949_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_a98232753212170fba9ba8a8e049e2949_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_affe4f6db0d8b60df4f0e252121cbd1e6}\label{classChronusQ_1_1Timer_affe4f6db0d8b60df4f0e252121cbd1e6}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!tock@{tock}}
+\index{tock@{tock}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{tock()}{tock()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Timer\+::tock (\begin{DoxyParamCaption}\item[{std\+::string}]{label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1Timer_affe4f6db0d8b60df4f0e252121cbd1e6_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a47cd4529a044b50c9bc12d1511c79670}\label{classChronusQ_1_1Timer_a47cd4529a044b50c9bc12d1511c79670}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!base\_@{base\_}}
+\index{base\_@{base\_}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{base\_}{base\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}} Chronus\+Q\+::\+Timer\+::base\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}\label{classChronusQ_1_1Timer_a332c7020505693fe26947a81b46b1e41}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!contexts\_@{contexts\_}}
+\index{contexts\_@{contexts\_}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{contexts\_}{contexts\_}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}}$\ast$$>$ Chronus\+Q\+::\+Timer\+::contexts\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a22aba9d7df45f34a80485994b7b92531}\label{classChronusQ_1_1Timer_a22aba9d7df45f34a80485994b7b92531}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!levels\_@{levels\_}}
+\index{levels\_@{levels\_}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{levels\_}{levels\_}}
+{\footnotesize\ttfamily std\+::vector$<$size\+\_\+t$>$ Chronus\+Q\+::\+Timer\+::levels\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1Timer_ad60a04c79cba394f76c10b2183830489}\label{classChronusQ_1_1Timer_ad60a04c79cba394f76c10b2183830489}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!options@{options}}
+\index{options@{options}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{options}{options}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1TimerOpts}{Timer\+Opts}} Chronus\+Q\+::\+Timer\+::options}
+
+\mbox{\Hypertarget{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}\label{classChronusQ_1_1Timer_a22f66bdb34295b491c2a570af8ef6bc3}} 
+\index{ChronusQ::Timer@{ChronusQ::Timer}!registry\_@{registry\_}}
+\index{registry\_@{registry\_}!ChronusQ::Timer@{ChronusQ::Timer}}
+\doxysubsubsection{\texorpdfstring{registry\_}{registry\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1Registry}{Registry}}$<$\mbox{\hyperlink{classChronusQ_1_1Timer_accba8a5f3f8fe06a10818b9028c1f2e2}{Id\+Type}},\mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}}$\ast$$>$ Chronus\+Q\+::\+Timer\+::registry\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/util/\mbox{\hyperlink{timer_8hpp}{timer.\+hpp}}\end{DoxyCompactItemize}

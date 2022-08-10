@@ -1,0 +1,83 @@
+\hypertarget{basisset__util_8hpp_source}{}\doxysection{basisset\+\_\+util.\+hpp}
+\label{basisset__util_8hpp_source}\index{include/basisset/basisset\_util.hpp@{include/basisset/basisset\_util.hpp}}
+\mbox{\hyperlink{basisset__util_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <libint2/shell.h>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{memmanager_8hpp}{memmanager.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{basisset__def_8hpp}{basisset/basisset\_def.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 }
+\DoxyCodeLine{39   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\_EVAL\_TYPE}} \{}
+\DoxyCodeLine{40     \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}},}
+\DoxyCodeLine{41     \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}}
+\DoxyCodeLine{42   \};}
+\DoxyCodeLine{43  }
+\DoxyCodeLine{48   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a8771d0c9717951111130fa2b68b2f19f}{evalShellSet}}(CQMemManager \&,\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\_EVAL\_TYPE}}, std::vector<libint2::Shell> \&, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50   \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a8771d0c9717951111130fa2b68b2f19f}{evalShellSet}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&memManager,\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\_EVAL\_TYPE}} typ, std::vector<libint2::Shell> \&shells, }
+\DoxyCodeLine{51     std::vector<std::array<double,3>> \&\mbox{\hyperlink{lebedev__110_8cxx_a86e67370eee99277122aa8614f0d6a66}{pts}}, \textcolor{keywordtype}{double} *eval, \textcolor{keywordtype}{bool} \&forceCart)\{}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \mbox{\hyperlink{namespaceChronusQ_a8771d0c9717951111130fa2b68b2f19f}{evalShellSet}}(memManager,typ,shells,\&(\mbox{\hyperlink{lebedev__110_8cxx_a86e67370eee99277122aa8614f0d6a66}{pts}}[0][0]),\mbox{\hyperlink{lebedev__110_8cxx_a86e67370eee99277122aa8614f0d6a66}{pts}}.size(),eval,forceCart);}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55   \}; \textcolor{comment}{// evalShellSet (over vector of arrays)}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{63   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a8771d0c9717951111130fa2b68b2f19f}{evalShellSet}}(\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\_EVAL\_TYPE}}, std::vector<libint2::Shell> \&, std::vector<bool> \&,\textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{size\_t}, }
+\DoxyCodeLine{64     \textcolor{keywordtype}{size\_t}, std::vector<size\_t>\&, \textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{double}*, \textcolor{keywordtype}{double}*, \textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{bool} );}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{72   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a8771d0c9717951111130fa2b68b2f19f}{evalShellSet}}(\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\_EVAL\_TYPE}},\textcolor{keyword}{const} libint2::Shell\&,\textcolor{keywordtype}{double},\textcolor{keyword}{const} std::array<double,3>\&, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{79   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a4c150d1e43391e68cf98bc74ab1ed4ad}{CarToSpDEval}}(\mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7}{SHELL\_EVAL\_TYPE}}, \textcolor{keywordtype}{size\_t} , \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double}*, \textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a9701049857e0051a40bbafd07ce0bef4}{testEval}}(CQMemManager \&,\textcolor{keywordtype}{double} *, std::vector<libint2::Shell> \&, \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{104 }
+
+\end{DoxyCode}

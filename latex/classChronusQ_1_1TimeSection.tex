@@ -1,0 +1,265 @@
+\hypertarget{classChronusQ_1_1TimeSection}{}\doxysection{ChronusQ\+::Time\+Section Class Reference}
+\label{classChronusQ_1_1TimeSection}\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+
+
+{\ttfamily \#include $<$timer.\+hpp$>$}
+
+
+
+Collaboration diagram for ChronusQ\+::Time\+Section\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{classChronusQ_1_1TimeSection__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TimeSection_ab5b243f3b33620396725910ee8ce0043}{Time\+Section}} ()
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TimeSection_a74a05389f7f1caa73bc496fbe990fc86}{Time\+Section}} (std\+::string label, \mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Id\+Type}} id, \mbox{\hyperlink{classChronusQ_1_1TimeSection_ad84f7b527f156dd4a4a0242b76283af5}{Reg\+Type}} $\ast$reg, \mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}} $\ast$parent)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1TimeSection_aeb20a5693690833a2343c931596c5391}{stop}} ()
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Id\+Type}} \mbox{\hyperlink{classChronusQ_1_1TimeSection_a1f98ad9e671c350b9be599171a8b2f76}{tick}} (std\+::string label, size\+\_\+t thread\+Id=0)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1TimeSection_a9ef16697b71e3afc88dde7a2ee69bafe}{tock}} (size\+\_\+t id, size\+\_\+t thread\+Id=0)
+\item 
+{\footnotesize template$<$typename DurT $>$ }\\DurT \mbox{\hyperlink{classChronusQ_1_1TimeSection_a544dcc8803a85bd10291d7a31dab4f95}{duration}} ()
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1TimeSection_ab263aad75f33dfbf0bb2d01ae2e07e96}{is\+Ancestor}} (\mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Id\+Type}} id)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}} $\ast$ \mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ea5d1773173643d9bfd8cdfbe8ad573}{find\+Ancestor}} (std\+::string label)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Id\+Type}} = size\+\_\+t
+\item 
+using \mbox{\hyperlink{classChronusQ_1_1TimeSection_a5ce5881f661fe707e4b3151f51a0cb08}{Clock}} = std\+::chrono\+::steady\+\_\+clock
+\item 
+using \mbox{\hyperlink{classChronusQ_1_1TimeSection_a650c4d27eff248cde4577f2aae39a0aa}{Time\+Point}} = std\+::chrono\+::time\+\_\+point$<$ \mbox{\hyperlink{classChronusQ_1_1TimeSection_a5ce5881f661fe707e4b3151f51a0cb08}{Clock}} $>$
+\item 
+using \mbox{\hyperlink{classChronusQ_1_1TimeSection_ad84f7b527f156dd4a4a0242b76283af5}{Reg\+Type}} = \mbox{\hyperlink{classChronusQ_1_1Registry}{Registry}}$<$ \mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Id\+Type}}, \mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}} $\ast$ $>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{classChronusQ_1_1TimeSection_a245165e301c43dfb65b1c003852554df}{label\+\_\+}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Id\+Type}} \mbox{\hyperlink{classChronusQ_1_1TimeSection_ae1625bac7287bfe0cb064398ef77f7c4}{id\+\_\+}}
+\item 
+std\+::unordered\+\_\+map$<$ size\+\_\+t, std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Id\+Type}}, std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}} $>$ $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}{children\+\_\+}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}} $\ast$ \mbox{\hyperlink{classChronusQ_1_1TimeSection_ad62204a042ef69d91d58ff6a0b12b8db}{parent\+\_\+}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TimeSection_ad84f7b527f156dd4a4a0242b76283af5}{Reg\+Type}} $\ast$ \mbox{\hyperlink{classChronusQ_1_1TimeSection_a6deafef3cbe355f60b4e94d04c774a95}{registry\+\_\+}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TimeSection_a650c4d27eff248cde4577f2aae39a0aa}{Time\+Point}} \mbox{\hyperlink{classChronusQ_1_1TimeSection_a2569f4000122903e37ce8998b4aeb3ca}{start\+\_\+}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TimeSection_a650c4d27eff248cde4577f2aae39a0aa}{Time\+Point}} \mbox{\hyperlink{classChronusQ_1_1TimeSection_a499aada3f7e7cc6c30e8653017a2eca0}{stop\+\_\+}}
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1TimeSection_ac28038723845ad52fb152c3ab4e537bc}{stopped\+\_\+}} = false
+\item 
+std\+::mutex \mbox{\hyperlink{classChronusQ_1_1TimeSection_a00d11964f05f6995a938a442e1992527}{mutex\+\_\+}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classChronusQ_1_1TimeSection_a50de43af5bed41f30c071d8cce0e81bc}{Timer}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a5ce5881f661fe707e4b3151f51a0cb08}\label{classChronusQ_1_1TimeSection_a5ce5881f661fe707e4b3151f51a0cb08}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!Clock@{Clock}}
+\index{Clock@{Clock}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{Clock}{Clock}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classChronusQ_1_1TimeSection_a5ce5881f661fe707e4b3151f51a0cb08}{Chronus\+Q\+::\+Time\+Section\+::\+Clock}} =  std\+::chrono\+::steady\+\_\+clock\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}\label{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!IdType@{IdType}}
+\index{IdType@{IdType}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{IdType}{IdType}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Chronus\+Q\+::\+Time\+Section\+::\+Id\+Type}} =  size\+\_\+t\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_ad84f7b527f156dd4a4a0242b76283af5}\label{classChronusQ_1_1TimeSection_ad84f7b527f156dd4a4a0242b76283af5}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!RegType@{RegType}}
+\index{RegType@{RegType}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{RegType}{RegType}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classChronusQ_1_1TimeSection_ad84f7b527f156dd4a4a0242b76283af5}{Chronus\+Q\+::\+Time\+Section\+::\+Reg\+Type}} =  \mbox{\hyperlink{classChronusQ_1_1Registry}{Registry}}$<$\mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Id\+Type}},\mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}}$\ast$$>$\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a650c4d27eff248cde4577f2aae39a0aa}\label{classChronusQ_1_1TimeSection_a650c4d27eff248cde4577f2aae39a0aa}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!TimePoint@{TimePoint}}
+\index{TimePoint@{TimePoint}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{TimePoint}{TimePoint}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{classChronusQ_1_1TimeSection_a650c4d27eff248cde4577f2aae39a0aa}{Chronus\+Q\+::\+Time\+Section\+::\+Time\+Point}} =  std\+::chrono\+::time\+\_\+point$<$\mbox{\hyperlink{classChronusQ_1_1TimeSection_a5ce5881f661fe707e4b3151f51a0cb08}{Clock}}$>$\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_ab5b243f3b33620396725910ee8ce0043}\label{classChronusQ_1_1TimeSection_ab5b243f3b33620396725910ee8ce0043}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!TimeSection@{TimeSection}}
+\index{TimeSection@{TimeSection}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{TimeSection()}{TimeSection()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Time\+Section\+::\+Time\+Section (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a74a05389f7f1caa73bc496fbe990fc86}\label{classChronusQ_1_1TimeSection_a74a05389f7f1caa73bc496fbe990fc86}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!TimeSection@{TimeSection}}
+\index{TimeSection@{TimeSection}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{TimeSection()}{TimeSection()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Time\+Section\+::\+Time\+Section (\begin{DoxyParamCaption}\item[{std\+::string}]{label,  }\item[{\mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Id\+Type}}}]{id,  }\item[{\mbox{\hyperlink{classChronusQ_1_1TimeSection_ad84f7b527f156dd4a4a0242b76283af5}{Reg\+Type}} $\ast$}]{reg,  }\item[{\mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}} $\ast$}]{parent }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a544dcc8803a85bd10291d7a31dab4f95}\label{classChronusQ_1_1TimeSection_a544dcc8803a85bd10291d7a31dab4f95}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!duration@{duration}}
+\index{duration@{duration}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{duration()}{duration()}}
+{\footnotesize\ttfamily template$<$typename DurT $>$ \\
+DurT Chronus\+Q\+::\+Time\+Section\+::duration (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TimeSection_a544dcc8803a85bd10291d7a31dab4f95_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a7ea5d1773173643d9bfd8cdfbe8ad573}\label{classChronusQ_1_1TimeSection_a7ea5d1773173643d9bfd8cdfbe8ad573}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!findAncestor@{findAncestor}}
+\index{findAncestor@{findAncestor}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{findAncestor()}{findAncestor()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}} $\ast$ Chronus\+Q\+::\+Time\+Section\+::find\+Ancestor (\begin{DoxyParamCaption}\item[{std\+::string}]{label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TimeSection_a7ea5d1773173643d9bfd8cdfbe8ad573_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_ab263aad75f33dfbf0bb2d01ae2e07e96}\label{classChronusQ_1_1TimeSection_ab263aad75f33dfbf0bb2d01ae2e07e96}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!isAncestor@{isAncestor}}
+\index{isAncestor@{isAncestor}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{isAncestor()}{isAncestor()}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+Time\+Section\+::is\+Ancestor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Id\+Type}}}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_aeb20a5693690833a2343c931596c5391}\label{classChronusQ_1_1TimeSection_aeb20a5693690833a2343c931596c5391}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!stop@{stop}}
+\index{stop@{stop}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Time\+Section\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TimeSection_aeb20a5693690833a2343c931596c5391_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a1f98ad9e671c350b9be599171a8b2f76}\label{classChronusQ_1_1TimeSection_a1f98ad9e671c350b9be599171a8b2f76}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!tick@{tick}}
+\index{tick@{tick}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{tick()}{tick()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Id\+Type}} Chronus\+Q\+::\+Time\+Section\+::tick (\begin{DoxyParamCaption}\item[{std\+::string}]{label,  }\item[{size\+\_\+t}]{thread\+Id = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TimeSection_a1f98ad9e671c350b9be599171a8b2f76_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TimeSection_a1f98ad9e671c350b9be599171a8b2f76_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a9ef16697b71e3afc88dde7a2ee69bafe}\label{classChronusQ_1_1TimeSection_a9ef16697b71e3afc88dde7a2ee69bafe}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!tock@{tock}}
+\index{tock@{tock}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{tock()}{tock()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Time\+Section\+::tock (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{id,  }\item[{size\+\_\+t}]{thread\+Id = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a50de43af5bed41f30c071d8cce0e81bc}\label{classChronusQ_1_1TimeSection_a50de43af5bed41f30c071d8cce0e81bc}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!Timer@{Timer}}
+\index{Timer@{Timer}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{Timer}{Timer}}
+{\footnotesize\ttfamily friend class \mbox{\hyperlink{classChronusQ_1_1Timer}{Timer}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}\label{classChronusQ_1_1TimeSection_a7ca2314cff8a883eab991fcd5309e2e8}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!children\_@{children\_}}
+\index{children\_@{children\_}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{children\_}{children\_}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$size\+\_\+t,std\+::unordered\+\_\+map$<$\mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Id\+Type}},std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}}$>$ $>$ $>$ Chronus\+Q\+::\+Time\+Section\+::children\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_ae1625bac7287bfe0cb064398ef77f7c4}\label{classChronusQ_1_1TimeSection_ae1625bac7287bfe0cb064398ef77f7c4}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!id\_@{id\_}}
+\index{id\_@{id\_}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{id\_}{id\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1TimeSection_a991413503aabb03fab59bfef5108b5d4}{Id\+Type}} Chronus\+Q\+::\+Time\+Section\+::id\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a245165e301c43dfb65b1c003852554df}\label{classChronusQ_1_1TimeSection_a245165e301c43dfb65b1c003852554df}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!label\_@{label\_}}
+\index{label\_@{label\_}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{label\_}{label\_}}
+{\footnotesize\ttfamily std\+::string Chronus\+Q\+::\+Time\+Section\+::label\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a00d11964f05f6995a938a442e1992527}\label{classChronusQ_1_1TimeSection_a00d11964f05f6995a938a442e1992527}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!mutex\_@{mutex\_}}
+\index{mutex\_@{mutex\_}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{mutex\_}{mutex\_}}
+{\footnotesize\ttfamily std\+::mutex Chronus\+Q\+::\+Time\+Section\+::mutex\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_ad62204a042ef69d91d58ff6a0b12b8db}\label{classChronusQ_1_1TimeSection_ad62204a042ef69d91d58ff6a0b12b8db}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!parent\_@{parent\_}}
+\index{parent\_@{parent\_}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{parent\_}{parent\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1TimeSection}{Time\+Section}}$\ast$ Chronus\+Q\+::\+Time\+Section\+::parent\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a6deafef3cbe355f60b4e94d04c774a95}\label{classChronusQ_1_1TimeSection_a6deafef3cbe355f60b4e94d04c774a95}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!registry\_@{registry\_}}
+\index{registry\_@{registry\_}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{registry\_}{registry\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1TimeSection_ad84f7b527f156dd4a4a0242b76283af5}{Reg\+Type}}$\ast$ Chronus\+Q\+::\+Time\+Section\+::registry\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a2569f4000122903e37ce8998b4aeb3ca}\label{classChronusQ_1_1TimeSection_a2569f4000122903e37ce8998b4aeb3ca}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!start\_@{start\_}}
+\index{start\_@{start\_}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{start\_}{start\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1TimeSection_a650c4d27eff248cde4577f2aae39a0aa}{Time\+Point}} Chronus\+Q\+::\+Time\+Section\+::start\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_a499aada3f7e7cc6c30e8653017a2eca0}\label{classChronusQ_1_1TimeSection_a499aada3f7e7cc6c30e8653017a2eca0}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!stop\_@{stop\_}}
+\index{stop\_@{stop\_}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{stop\_}{stop\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChronusQ_1_1TimeSection_a650c4d27eff248cde4577f2aae39a0aa}{Time\+Point}} Chronus\+Q\+::\+Time\+Section\+::stop\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TimeSection_ac28038723845ad52fb152c3ab4e537bc}\label{classChronusQ_1_1TimeSection_ac28038723845ad52fb152c3ab4e537bc}} 
+\index{ChronusQ::TimeSection@{ChronusQ::TimeSection}!stopped\_@{stopped\_}}
+\index{stopped\_@{stopped\_}!ChronusQ::TimeSection@{ChronusQ::TimeSection}}
+\doxysubsubsection{\texorpdfstring{stopped\_}{stopped\_}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+Time\+Section\+::stopped\+\_\+ = false\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/util/\mbox{\hyperlink{timer_8hpp}{timer.\+hpp}}\end{DoxyCompactItemize}

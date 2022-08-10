@@ -1,0 +1,300 @@
+\hypertarget{incore4indextpi_8hpp_source}{}\doxysection{incore4indextpi.\+hpp}
+\label{incore4indextpi_8hpp_source}\index{include/particleintegrals/twopints/incore4indextpi.hpp@{include/particleintegrals/twopints/incore4indextpi.hpp}}
+\mbox{\hyperlink{incore4indextpi_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{twopints_8hpp}{particleintegrals/twopints.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{comment}{//\#include <util/time.hpp>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{output_8hpp}{cxxapi/output.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33   \textcolor{keyword}{template} <\textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{34   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts}}<IntsT> \{}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \textcolor{keyword}{template} <\textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{37     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI}};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{40     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aab79e81c202fedf581df90227748267d}{sNB2}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ab14fe7f466471f2c95a7f170d6365a30}{NB3}};}
+\DoxyCodeLine{41     IntsT* \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}} = \textcolor{keyword}{nullptr}; }
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \textcolor{keyword}{public}:}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{46     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a0b81109132450f9789b994022299b63b}{InCore4indexTPI}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{47     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ae15f78bb10e09085be60b36bb75aa72c}{InCore4indexTPI}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} nb, \textcolor{keywordtype}{size\_t} snb = 0):}
+\DoxyCodeLine{48         \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts}}<IntsT>(mem, nb, snb) \{}
+\DoxyCodeLine{49       \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}  = this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}()*this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}();}
+\DoxyCodeLine{50       sNB2 = this-\/>\mbox{\hyperlink{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}{snBasis}}()*this-\/>\mbox{\hyperlink{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}{snBasis}}();}
+\DoxyCodeLine{51       NB3  = \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}} * this-\/>\mbox{\hyperlink{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}{snBasis}}();}
+\DoxyCodeLine{52       \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ab8bbfb142366f42be809ab18b7835a85}{malloc}}();}
+\DoxyCodeLine{53     \}}
+\DoxyCodeLine{54     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aa3290670eeeae786d86ca9bb1d6b791f}{InCore4indexTPI}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI}} \&other ):}
+\DoxyCodeLine{55         \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI}}(other.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}(), other.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}(), other.\mbox{\hyperlink{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}{snBasis}}()) \{}
+\DoxyCodeLine{56       std::copy\_n(other.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}*\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aab79e81c202fedf581df90227748267d}{sNB2}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}});}
+\DoxyCodeLine{57     \}}
+\DoxyCodeLine{58     \textcolor{keyword}{template} <\textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{59     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a41d81a8c44f7aa88c54f69498dc9ff2f}{InCore4indexTPI}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsU>}} \&other, \textcolor{keywordtype}{int} = 0 ):}
+\DoxyCodeLine{60         \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI}}(other.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}(), other.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}(), other.\mbox{\hyperlink{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}{snBasis}}()) \{}
+\DoxyCodeLine{61       \textcolor{keywordflow}{if} (std::is\_same<IntsU, dcomplex>::value}
+\DoxyCodeLine{62           and std::is\_same<IntsT, double>::value)}
+\DoxyCodeLine{63         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cannot create a Real InCore4indexTPI from a Complex one."{}});}
+\DoxyCodeLine{64       std::copy\_n(other.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}*\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aab79e81c202fedf581df90227748267d}{sNB2}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}});}
+\DoxyCodeLine{65     \}}
+\DoxyCodeLine{66     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ae39f18878f8004448c906288e2552103}{InCore4indexTPI}}( \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI}} \&\&other ): \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts}}<IntsT>(std::move(other)),}
+\DoxyCodeLine{67       \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}(other.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}), \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aab79e81c202fedf581df90227748267d}{sNB2}}(other.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aab79e81c202fedf581df90227748267d}{sNB2}}), \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ab14fe7f466471f2c95a7f170d6365a30}{NB3}}(other.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ab14fe7f466471f2c95a7f170d6365a30}{NB3}}), \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}}(other.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}}) \{}
+\DoxyCodeLine{68       other.TPI = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{69     \}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI}}\& \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a57a56ed890193232dabba85f0992df1a}{operator=}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI}} \&other ) \{}
+\DoxyCodeLine{72       \textcolor{keywordflow}{if} (\textcolor{keyword}{this} != \&other) \{ \textcolor{comment}{// self-\/assignment check expected}}
+\DoxyCodeLine{73         \textcolor{keywordflow}{if} (this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}() != other.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}() or this-\/>snBasis() != other.\mbox{\hyperlink{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}{snBasis}}()) \{}
+\DoxyCodeLine{74           this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a33f3859297ad20c4957f85e8d623d227}{NB}} = other.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a33f3859297ad20c4957f85e8d623d227}{NB}};}
+\DoxyCodeLine{75           this-\/>\mbox{\hyperlink{classChronusQ_1_1TwoPInts_a0ba00e8e7cca60d05fe3ca5bab6a2652}{sNB}} = other.\mbox{\hyperlink{classChronusQ_1_1TwoPInts_a0ba00e8e7cca60d05fe3ca5bab6a2652}{sNB}};}
+\DoxyCodeLine{76           \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}  = other.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}};}
+\DoxyCodeLine{77           \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aab79e81c202fedf581df90227748267d}{sNB2}} = other.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aab79e81c202fedf581df90227748267d}{sNB2}};}
+\DoxyCodeLine{78           \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ab14fe7f466471f2c95a7f170d6365a30}{NB3}}  = other.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ab14fe7f466471f2c95a7f170d6365a30}{NB3}};}
+\DoxyCodeLine{79           \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ab8bbfb142366f42be809ab18b7835a85}{malloc}}(); \textcolor{comment}{// reallocate memory}}
+\DoxyCodeLine{80         \}}
+\DoxyCodeLine{81         std::copy\_n(other.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}*\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aab79e81c202fedf581df90227748267d}{sNB2}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}});}
+\DoxyCodeLine{82       \}}
+\DoxyCodeLine{83       \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{84     \}}
+\DoxyCodeLine{85     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI}}\& \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1072ca509421438e762c98b1b02e8688}{operator=}}( \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI}} \&\&other ) \{}
+\DoxyCodeLine{86       \textcolor{keywordflow}{if} (\textcolor{keyword}{this} != \&other) \{ \textcolor{comment}{// self-\/assignment check expected}}
+\DoxyCodeLine{87         this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}().\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(TPI);}
+\DoxyCodeLine{88         this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a33f3859297ad20c4957f85e8d623d227}{NB}}  = other.NB;}
+\DoxyCodeLine{89         this-\/>\mbox{\hyperlink{classChronusQ_1_1TwoPInts_a0ba00e8e7cca60d05fe3ca5bab6a2652}{sNB}} = other.sNB;}
+\DoxyCodeLine{90         \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}  = other.NB2;}
+\DoxyCodeLine{91         \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aab79e81c202fedf581df90227748267d}{sNB2}} = other.sNB2;}
+\DoxyCodeLine{92         \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ab14fe7f466471f2c95a7f170d6365a30}{NB3}} = other.NB3;}
+\DoxyCodeLine{93         \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}} = other.TPI;}
+\DoxyCodeLine{94         other.TPI = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{95       \}}
+\DoxyCodeLine{96       \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{97     \}}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99     \textcolor{comment}{// Single element interfaces}}
+\DoxyCodeLine{100     \textcolor{keyword}{virtual} IntsT \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ae49b43e0fba3a07caacb67a2c10fdc19}{operator()}}(\textcolor{keywordtype}{size\_t} p, \textcolor{keywordtype}{size\_t} q, \textcolor{keywordtype}{size\_t} r, \textcolor{keywordtype}{size\_t} s)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{101       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}}[p + q*this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}() + r*\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}} + s*\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ab14fe7f466471f2c95a7f170d6365a30}{NB3}}];}
+\DoxyCodeLine{102     \}}
+\DoxyCodeLine{103     IntsT\& \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a6c4b46bcd16243d50232130ebfe9d734}{operator()}}(\textcolor{keywordtype}{size\_t} p, \textcolor{keywordtype}{size\_t} q, \textcolor{keywordtype}{size\_t} r, \textcolor{keywordtype}{size\_t} s) \{}
+\DoxyCodeLine{104       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}}[p + q*this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}() + r*\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}} + s*\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ab14fe7f466471f2c95a7f170d6365a30}{NB3}}];}
+\DoxyCodeLine{105     \}}
+\DoxyCodeLine{106     \textcolor{keyword}{virtual} IntsT \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a4eba898ed4427df6c7a2139ab4e67502}{operator()}}(\textcolor{keywordtype}{size\_t} pq, \textcolor{keywordtype}{size\_t} rs)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{107       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}}[pq + rs*\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}];}
+\DoxyCodeLine{108     \}}
+\DoxyCodeLine{109     IntsT\& \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_af20d36c54fc8499d3cefae2b44c3e3a1}{operator()}}(\textcolor{keywordtype}{size\_t} pq, \textcolor{keywordtype}{size\_t} rs) \{}
+\DoxyCodeLine{110       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}}[pq + rs*\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}];}
+\DoxyCodeLine{111     \}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     \textcolor{comment}{// Tensor direct access}}
+\DoxyCodeLine{114     IntsT* \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}}; \}}
+\DoxyCodeLine{115     \textcolor{keyword}{const} IntsT* \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2649b9aa00c43642c56f36cb36b1bf6a}{pointer}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}}; \}}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     \textcolor{comment}{// Computation interfaces}}
+\DoxyCodeLine{118     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ad097a18e26243cecc105fd401f11422d}{computeAOInts}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basisSet, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol,}
+\DoxyCodeLine{119         \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&emPert, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}} op, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} \&hamiltonianOptions) \{}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121       \textcolor{comment}{// Use Libcint to compute nonrelativistic integrals}}
+\DoxyCodeLine{122       \textcolor{keywordflow}{if} ( hamiltonianOptions.\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a866c61de43c70758e0f1a6929827ac4d}{Libcint}} ) \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a4c8962792a715c8a78cddd5f6b411611}{computeERIGCCINT}}(basisSet, mol, emPert, op, hamiltonianOptions);}
+\DoxyCodeLine{123       \textcolor{comment}{// Use Libint to compute nonrelativistic integrals}}
+\DoxyCodeLine{124       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (hamiltonianOptions.\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a16ea984e2af234724f3f3bb5b788ac1e}{basisType}} == \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86a99bed979d11d294977dfc4a2f4c8c052}{COMPLEX\_GIAO}})}
+\DoxyCodeLine{125         \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8e0d806323d5f0578c4817f0589cfe18}{computeERINR}}(basisSet, basisSet, mol, emPert, op, hamiltonianOptions);}
+\DoxyCodeLine{126       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{127         \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aa8498d9b1b3fbea77788f50eb18553db}{computeERIGCNR}}(basisSet, mol, emPert, op, hamiltonianOptions);}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129     \}}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{132     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8e0d806323d5f0578c4817f0589cfe18}{computeERINR}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{133         \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\&);}
+\DoxyCodeLine{134     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aa8498d9b1b3fbea77788f50eb18553db}{computeERIGCNR}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{135         \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\&);}
+\DoxyCodeLine{136     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a55bfb0ccbc451ddc65bbedea2a516af9}{computeERINRCINT}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{137         \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\&);}
+\DoxyCodeLine{138     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a4c8962792a715c8a78cddd5f6b411611}{computeERIGCCINT}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{139         \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\&);}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ada91d1f05147712557cfb7c750442b61}{computeAOInts}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basisSet, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basisSet2, }
+\DoxyCodeLine{143       \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&emPert, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}} op, }
+\DoxyCodeLine{144       \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} \&hamiltonianOptions) \{ }
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146       \textcolor{comment}{// Use Libint to compute nonrelativistic integrals}}
+\DoxyCodeLine{147       \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8e0d806323d5f0578c4817f0589cfe18}{computeERINR}}(basisSet, basisSet2, mol, emPert, op, hamiltonianOptions);     }
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149     \};}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a6456bc2e33060e618820720bd03e1fd2}{clear}}() \{}
+\DoxyCodeLine{152       std::fill\_n(\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}*\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aab79e81c202fedf581df90227748267d}{sNB2}}, IntsT(0.));}
+\DoxyCodeLine{153     \}}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a3cd51a40d2fbf9c44fe388e87ebc7c98}{output}}(std::ostream \&out, \textcolor{keyword}{const} std::string \&s = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{156                         \textcolor{keywordtype}{bool} printFull = \textcolor{keyword}{false})\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{157       \textcolor{keywordflow}{if} (s == \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{158         out << \textcolor{stringliteral}{"{}  Two particle integral:"{}} << std::endl;}
+\DoxyCodeLine{159       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{160         out << \textcolor{stringliteral}{"{}  TPI["{}} << s << \textcolor{stringliteral}{"{}]:"{}} << std::endl;}
+\DoxyCodeLine{161       out << \textcolor{stringliteral}{"{}    * Contraction Algorithm: "{}};}
+\DoxyCodeLine{162       out << \textcolor{stringliteral}{"{}INCORE (Gemm)"{}};}
+\DoxyCodeLine{163       out << std::endl;}
+\DoxyCodeLine{164       \textcolor{keywordflow}{if} (printFull) \{}
+\DoxyCodeLine{165         out << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}} << std::endl;}
+\DoxyCodeLine{166         \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a33f3859297ad20c4957f85e8d623d227}{NB}} = this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}();}
+\DoxyCodeLine{167         \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a0ba00e8e7cca60d05fe3ca5bab6a2652}{sNB}} = this-\/>\mbox{\hyperlink{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}{snBasis}}();}
+\DoxyCodeLine{168         out << std::scientific << std::left << std::setprecision(8);}
+\DoxyCodeLine{169         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul; i < \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a33f3859297ad20c4957f85e8d623d227}{NB}}; i++)}
+\DoxyCodeLine{170         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0ul; j < \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a33f3859297ad20c4957f85e8d623d227}{NB}}; j++)}
+\DoxyCodeLine{171         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0ul; k < \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a0ba00e8e7cca60d05fe3ca5bab6a2652}{sNB}}; k++)}
+\DoxyCodeLine{172         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} l = 0ul; l < \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a0ba00e8e7cca60d05fe3ca5bab6a2652}{sNB}}; l++)\{}
+\DoxyCodeLine{173           \textcolor{keywordflow}{if} (std::abs(\textcolor{keyword}{operator}()(i,j,k,l)) > \mbox{\hyperlink{namespaceChronusQ_a770008c51b3479ebf7b647b73625962c}{PRINT\_SMALL}}) \{}
+\DoxyCodeLine{174             out << \textcolor{stringliteral}{"{}    ("{}} << i << \textcolor{stringliteral}{"{},"{}} << j << \textcolor{stringliteral}{"{}|"{}} << k << \textcolor{stringliteral}{"{},"{}} << l << \textcolor{stringliteral}{"{})  "{}};}
+\DoxyCodeLine{175             out << \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ae49b43e0fba3a07caacb67a2c10fdc19}{operator()}}(i,j,k,l) << std::endl;}
+\DoxyCodeLine{176           \}}
+\DoxyCodeLine{177         \};}
+\DoxyCodeLine{178         out << \mbox{\hyperlink{namespaceChronusQ_a7ec03a45c0666f106c60a4ee2fa36f0c}{bannerEnd}} << std::endl;}
+\DoxyCodeLine{179       \}}
+\DoxyCodeLine{180     \}}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aefedef91bcdbacee91f731285454f4a6}{broadcast}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm = \mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\_COMM\_WORLD}}, \textcolor{keywordtype}{int} root = 0) \{}
+\DoxyCodeLine{183       \mbox{\hyperlink{classChronusQ_1_1TwoPInts_ac4afb19c13c9966736f5bb1b2553164f}{TwoPInts<IntsT>::broadcast}}(comm, root);}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{186       \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm) > 1 ) \{}
+\DoxyCodeLine{187         \textcolor{keywordtype}{size\_t} NB2\_bcast = \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}};}
+\DoxyCodeLine{188         \textcolor{keywordtype}{size\_t} sNB2\_bcast = \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aab79e81c202fedf581df90227748267d}{sNB2}};}
+\DoxyCodeLine{189         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(NB2\_bcast,root,comm);}
+\DoxyCodeLine{190         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(sNB2\_bcast,root,comm);}
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192         \textcolor{keywordflow}{if} (NB2\_bcast != \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}} or sNB2\_bcast != \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aab79e81c202fedf581df90227748267d}{sNB2}}) \{}
+\DoxyCodeLine{193           \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}  = this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}()*this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}();}
+\DoxyCodeLine{194           sNB2 = this-\/>\mbox{\hyperlink{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}{snBasis}}()*this-\/>\mbox{\hyperlink{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}{snBasis}}();}
+\DoxyCodeLine{195           NB3  = \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}} * this-\/>\mbox{\hyperlink{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}{snBasis}}();}
+\DoxyCodeLine{196           \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ab8bbfb142366f42be809ab18b7835a85}{malloc}}();}
+\DoxyCodeLine{197         \}}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(TPI,\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}*\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aab79e81c202fedf581df90227748267d}{sNB2}},root,comm);}
+\DoxyCodeLine{200       \}}
+\DoxyCodeLine{201 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203     \}}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ab8bbfb142366f42be809ab18b7835a85}{malloc}}() \{}
+\DoxyCodeLine{206       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}}) this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}().\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(TPI);}
+\DoxyCodeLine{207       \textcolor{keywordtype}{size\_t} NB4 = \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8cf178f1cf6b681a878df6b53a86bea5}{NB2}}*\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aab79e81c202fedf581df90227748267d}{sNB2}};}
+\DoxyCodeLine{208       \textcolor{keywordflow}{try} \{ \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}} = this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}().template malloc<IntsT>(NB4); \}}
+\DoxyCodeLine{209       \textcolor{keywordflow}{catch}(...) \{}
+\DoxyCodeLine{210         std::cout << std::fixed;}
+\DoxyCodeLine{211         std::cout << \textcolor{stringliteral}{"{}Insufficient memory for the full TPI tensor ("{}}}
+\DoxyCodeLine{212                   << (NB4/1e9) * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}) << \textcolor{stringliteral}{"{} GB)"{}} << std::endl;}
+\DoxyCodeLine{213         std::cout << std::endl << this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}() << std::endl;}
+\DoxyCodeLine{214         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}();}
+\DoxyCodeLine{215       \}}
+\DoxyCodeLine{216     \}}
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218     \textcolor{keyword}{template} <\textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{219     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsU>}} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a8555ed167cae4b5c3bd2a0fadebb0c24}{spatialToSpinBlock}}(\textcolor{keywordtype}{char} TRANS1 = \textcolor{charliteral}{'I'}, \textcolor{keywordtype}{char} TRANS2 = \textcolor{charliteral}{'I'}) \textcolor{keyword}{const};}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221     \textcolor{keyword}{template} <\textcolor{keyword}{typename} TransT>}
+\DoxyCodeLine{222     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI}}<\textcolor{keyword}{typename} std::conditional<}
+\DoxyCodeLine{223     (std::is\_same<IntsT, dcomplex>::value or}
+\DoxyCodeLine{224      std::is\_same<TransT, dcomplex>::value),}
+\DoxyCodeLine{225     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{double}>::type> \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ac784170c828670f848b7f9e48c9f9024}{transform}}(}
+\DoxyCodeLine{226         \textcolor{keywordtype}{char} TRANS, \textcolor{keyword}{const} TransT* T, \textcolor{keywordtype}{int} NT, \textcolor{keywordtype}{int} LDT) \textcolor{keyword}{const};}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228     \textcolor{keyword}{template} <\textcolor{keyword}{typename} TransT, \textcolor{keyword}{typename} OutT>}
+\DoxyCodeLine{229     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a4127b6145ee7cd675185b675433fd0b4}{subsetTransform}}(}
+\DoxyCodeLine{230         \textcolor{keywordtype}{char} TRANS, \textcolor{keyword}{const} TransT* T, \textcolor{keywordtype}{int} LDT,}
+\DoxyCodeLine{231         \textcolor{keyword}{const} std::vector<std::pair<size\_t,size\_t>> \&off\_size,}
+\DoxyCodeLine{232         OutT* out, \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false}) \textcolor{keyword}{const};}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ad191c936869bc18f7d16e1b39e960625}{\string~InCore4indexTPI}}() \{}
+\DoxyCodeLine{235       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a2a70cd37f5c349cb81b54ff2d217383b}{TPI}}) this-\/>\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}().\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(TPI);}
+\DoxyCodeLine{236     \}}
+\DoxyCodeLine{237 }
+\DoxyCodeLine{238   \}; \textcolor{comment}{// class InCore4indexTPI}}
+\DoxyCodeLine{239 }
+\DoxyCodeLine{240   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{241   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction}{InCore4indexTPIContraction}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}<MatsT,IntsT> \{}
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU, \textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{244     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction}{InCore4indexTPIContraction}};}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{246   \textcolor{keyword}{public}:}
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction_afc45ffca4d12c29400ca7bda1364c82c}{InCore4indexTPIContraction}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{251     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction_abc98ec5f223fa448405a59c189f8393f}{InCore4indexTPIContraction}}(\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts<IntsT>}} \&tpi):}
+\DoxyCodeLine{252       \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}<MatsT,IntsT>(tpi) \{\}}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{254     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{255     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction_a987d8b30c88c450c839cb162ada3e59d}{InCore4indexTPIContraction}}(}
+\DoxyCodeLine{256       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction}{InCore4indexTPIContraction<MatsU,IntsT>}} \&other, \textcolor{keywordtype}{int} dummy = 0 ):}
+\DoxyCodeLine{257       \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction}{InCore4indexTPIContraction}}(other.\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\_}}) \{}
+\DoxyCodeLine{258       this-\/>\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}{contractSecond}} = other.\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}{contractSecond}};}
+\DoxyCodeLine{259     \}}
+\DoxyCodeLine{260     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{261     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction_a464df28b8e030c9eba5494c221e08ff4}{InCore4indexTPIContraction}}(}
+\DoxyCodeLine{262       \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction}{InCore4indexTPIContraction<MatsU,IntsT>}} \&\&other, \textcolor{keywordtype}{int} dummy = 0 ):}
+\DoxyCodeLine{263       \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction}{InCore4indexTPIContraction}}(other.\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\_}}) \{}
+\DoxyCodeLine{264       this-\/>\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}{contractSecond}} = other.contractSecond;}
+\DoxyCodeLine{265     \}}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction_a1df2b340f458aa928b157703e52713cb}{InCore4indexTPIContraction}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction}{InCore4indexTPIContraction}} \&other ):}
+\DoxyCodeLine{268       \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction}{InCore4indexTPIContraction}}(other, 0) \{}
+\DoxyCodeLine{269       this-\/>\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}{contractSecond}} = other.\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}{contractSecond}};}
+\DoxyCodeLine{270     \}}
+\DoxyCodeLine{271     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction_a56b33fb40e78369d0634192d310b7227}{InCore4indexTPIContraction}}( \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction}{InCore4indexTPIContraction}} \&\&other ):}
+\DoxyCodeLine{272       \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction}{InCore4indexTPIContraction}}(std::move(other), 0) \{}
+\DoxyCodeLine{273       this-\/>\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}{contractSecond}} = other.contractSecond;}
+\DoxyCodeLine{274     \}}
+\DoxyCodeLine{275 }
+\DoxyCodeLine{276     \textcolor{comment}{// Computation interfaces}}
+\DoxyCodeLine{277     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction_a32ae5d08d2f5c0d08499f8bbc8f96139}{twoBodyContract}}(}
+\DoxyCodeLine{278         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{279         \textcolor{keyword}{const} \textcolor{keywordtype}{bool},}
+\DoxyCodeLine{280         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}>\&,}
+\DoxyCodeLine{281         \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{282 }
+\DoxyCodeLine{283     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction_ac03da53623df24fcca17a3893a64925d}{JContract}}(}
+\DoxyCodeLine{284         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}},}
+\DoxyCodeLine{285         \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction_acbbee78cbb3546268e1b91c8b5761ccd}{KContract}}(}
+\DoxyCodeLine{288         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}},}
+\DoxyCodeLine{289         \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPIContraction_a92fa60520f3bc333f1cc5b3e86ac7da6}{\string~InCore4indexTPIContraction}}() \{\}}
+\DoxyCodeLine{292 }
+\DoxyCodeLine{293   \}; \textcolor{comment}{// class InCore4indexTPIContraction}}
+\DoxyCodeLine{294 }
+\DoxyCodeLine{295 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

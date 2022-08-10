@@ -1,0 +1,344 @@
+\hypertarget{singleslater_2quantum_8hpp_source}{}\doxysection{quantum.\+hpp}
+\label{singleslater_2quantum_8hpp_source}\index{include/singleslater/quantum.hpp@{include/singleslater/quantum.hpp}}
+\mbox{\hyperlink{singleslater_2quantum_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 \textcolor{comment}{//\#define \_DEBUGGIAO }}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasext_8hpp}{cqlinalg/blasext.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasutil_8hpp}{cqlinalg/blasutil.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas3_8hpp}{cqlinalg/blas3.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{quantum_2properties_8hpp}{quantum/properties.hpp}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{43   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{44   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a45669addf520b9615ef9575144c69eb9}{SingleSlater<MatsT,IntsT>::formDensity}}() \{}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{keywordtype}{size\_t} NB  = this-\/>nAlphaOrbital() * nC;}
+\DoxyCodeLine{47     \textcolor{keywordtype}{bool} iRO = (std::dynamic\_pointer\_cast<ROFock<MatsT, IntsT>>(this-\/>fockBuilder) != \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{comment}{// ROHF copy modified orbitals to redundant set}}
+\DoxyCodeLine{50     \textcolor{keywordflow}{if}( iRO )\{}
+\DoxyCodeLine{51       std::copy\_n(this-\/>mo[0].pointer(),NB*NB,this-\/>mo[1].pointer());}
+\DoxyCodeLine{52       std::copy\_n(this-\/>eps1,NB,this-\/>eps2);}
+\DoxyCodeLine{53     \}}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{comment}{// Form the 1PDM on the root MPI process as slave processes}}
+\DoxyCodeLine{56     \textcolor{comment}{// do not posses the up-\/to-\/date MO coefficients}}
+\DoxyCodeLine{57     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm) == 0 ) \{}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59       \textcolor{keywordflow}{if}(nC == 1) \{}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61         \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} DA(memManager, NB);}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63         \textcolor{comment}{//this-\/>mo[0].output(std::cout, "{}mo1"{}, true);}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65         \textcolor{comment}{// DA = CA * CA**H}}
+\DoxyCodeLine{66         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans, blas::Op::ConjTrans, NB, NB, this-\/>nOA, MatsT(1.), this-\/>mo[0].pointer(), NB,}
+\DoxyCodeLine{67             this-\/>mo[0].pointer(), NB, MatsT(0.), DA.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), NB);}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69         \textcolor{keywordflow}{if}(iCS) \{}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71           \textcolor{comment}{// DS = 2 * DA}}
+\DoxyCodeLine{72           *this-\/>onePDM = \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a13968b15aa05e3a94b74ca90415e6d04}{PauliSpinorSquareMatrices<MatsT>::spinBlockScatterBuild}}(DA);}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76           \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} DB(memManager, NB);}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78           \textcolor{comment}{// DB = CB * CB**H}}
+\DoxyCodeLine{79           blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans, blas::Op::ConjTrans, NB, NB, this-\/>nOB, MatsT(1.), this-\/>mo[1].pointer(), NB,}
+\DoxyCodeLine{80               this-\/>mo[1].pointer(), NB, MatsT(0.), DB.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), NB);}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82           \textcolor{comment}{// DS = DA + DB}}
+\DoxyCodeLine{83           \textcolor{comment}{// DZ = DA -\/ DB}}
+\DoxyCodeLine{84           *this-\/>onePDM = \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a13968b15aa05e3a94b74ca90415e6d04}{PauliSpinorSquareMatrices<MatsT>::spinBlockScatterBuild}}(DA,DB);}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86         \}}
+\DoxyCodeLine{87       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89         \textcolor{comment}{// 2C or 4C cases}}
+\DoxyCodeLine{90         \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} spinBlockForm(memManager, NB);}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92         \textcolor{keywordflow}{if}( nC == 2 ) \{}
+\DoxyCodeLine{93           blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans, blas::Op::ConjTrans, NB, NB, this-\/>nO, MatsT(1.), this-\/>mo[0].pointer(), NB,}
+\DoxyCodeLine{94               this-\/>mo[0].pointer(), NB, MatsT(0.), spinBlockForm.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), NB);}
+\DoxyCodeLine{95         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( nC == 4 ) \{}
+\DoxyCodeLine{96           blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans, blas::Op::ConjTrans, NB, NB, this-\/>nO, MatsT(1.), this-\/>mo[0].pointer()+(2*(NB/nC))*NB, NB,}
+\DoxyCodeLine{97               this-\/>mo[0].pointer()+(2*(NB/nC))*NB, NB, MatsT(0.), spinBlockForm.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), NB);}
+\DoxyCodeLine{98         \}}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100         *this-\/>onePDM = spinBlockForm.template spinScatter<MatsT>();}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102       \}}
+\DoxyCodeLine{103       ao2orthoDen();}
+\DoxyCodeLine{104     \}}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109     \textcolor{comment}{// Broadcast the 1PDM to all MPI processes}}
+\DoxyCodeLine{110     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm) > 1 ) \{}
+\DoxyCodeLine{111       std::cerr  << \textcolor{stringliteral}{"{}  *** Scattering the 1PDM ***\(\backslash\)n"{}};}
+\DoxyCodeLine{112       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} p : this-\/>onePDM-\/>SZYXPointers())}
+\DoxyCodeLine{113         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(p,NB*NB/nC/nC,0,comm);}
+\DoxyCodeLine{114     \}}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{120       print1PDM(std::cerr);}
+\DoxyCodeLine{121 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123   \}; \textcolor{comment}{// SingleSlater<T>::formDensity}}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125 }
+\DoxyCodeLine{146   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{147   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a18d2ba2b05e8b80f8ae57e28ae75a715}{SingleSlater<MatsT,IntsT>::computeEnergy}}() \{}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm);}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151     \textcolor{comment}{// Scalar core hamiltonian contribution to the energy}}
+\DoxyCodeLine{152     this-\/>OBEnergy = }
+\DoxyCodeLine{153       this-\/>\textcolor{keyword}{template} computeOBProperty<DENSITY\_TYPE::SCALAR>(}
+\DoxyCodeLine{154          coreH-\/>S().pointer());}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156     }
+\DoxyCodeLine{157     }
+\DoxyCodeLine{158     \textcolor{comment}{// One body Spin Orbit}}
+\DoxyCodeLine{159     \textcolor{keywordtype}{double} SOEnergy = 0.;}
+\DoxyCodeLine{160     \textcolor{keywordflow}{if} (coreH-\/>hasZ())}
+\DoxyCodeLine{161       SOEnergy =}
+\DoxyCodeLine{162         this-\/>\textcolor{keyword}{template} computeOBProperty<DENSITY\_TYPE::MZ>(}
+\DoxyCodeLine{163            coreH-\/>Z().pointer());}
+\DoxyCodeLine{164     \textcolor{keywordflow}{if} (coreH-\/>hasXY()) \{}
+\DoxyCodeLine{165       SOEnergy +=}
+\DoxyCodeLine{166         this-\/>\textcolor{keyword}{template} computeOBProperty<DENSITY\_TYPE::MY>(}
+\DoxyCodeLine{167            coreH-\/>Y().pointer());}
+\DoxyCodeLine{168       SOEnergy +=}
+\DoxyCodeLine{169         this-\/>\textcolor{keyword}{template} computeOBProperty<DENSITY\_TYPE::MX>(}
+\DoxyCodeLine{170            coreH-\/>X().pointer());}
+\DoxyCodeLine{171     \}}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173  }
+\DoxyCodeLine{174     this-\/>OBEnergy += SOEnergy;}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177     this-\/>OBEnergy *= 0.5;}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179     \textcolor{comment}{// Compute many-\/body contribution to energy}}
+\DoxyCodeLine{180     \textcolor{comment}{// *** These calls are safe as proper zeros are returned by}}
+\DoxyCodeLine{181     \textcolor{comment}{// property engine ***}}
+\DoxyCodeLine{182     this-\/>MBEnergy = }
+\DoxyCodeLine{183       this-\/>\textcolor{keyword}{template} computeOBProperty<DENSITY\_TYPE::SCALAR>(}
+\DoxyCodeLine{184           twoeH-\/>S().pointer());}
+\DoxyCodeLine{185 }
+\DoxyCodeLine{186     \textcolor{keywordflow}{if} (twoeH-\/>hasZ())}
+\DoxyCodeLine{187       this-\/>MBEnergy +=}
+\DoxyCodeLine{188         this-\/>\textcolor{keyword}{template} computeOBProperty<DENSITY\_TYPE::MZ>(}
+\DoxyCodeLine{189             twoeH-\/>Z().pointer());}
+\DoxyCodeLine{190     \textcolor{keywordflow}{if} (twoeH-\/>hasXY()) \{}
+\DoxyCodeLine{191       this-\/>MBEnergy +=}
+\DoxyCodeLine{192         this-\/>\textcolor{keyword}{template} computeOBProperty<DENSITY\_TYPE::MY>(}
+\DoxyCodeLine{193             twoeH-\/>Y().pointer());}
+\DoxyCodeLine{194       this-\/>MBEnergy +=}
+\DoxyCodeLine{195         this-\/>\textcolor{keyword}{template} computeOBProperty<DENSITY\_TYPE::MX>(}
+\DoxyCodeLine{196             twoeH-\/>X().pointer());}
+\DoxyCodeLine{197     \}}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199     this-\/>MBEnergy *= 0.25;}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201     \textcolor{comment}{// Assemble total energy}}
+\DoxyCodeLine{202     this-\/>totalEnergy = }
+\DoxyCodeLine{203       this-\/>OBEnergy + this-\/>MBEnergy + this-\/>molecule().nucRepEnergy}
+\DoxyCodeLine{204        + this-\/>extraEnergy;}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206     \textcolor{comment}{// Sanity checks}}
+\DoxyCodeLine{207     assert( not std::isnan(this-\/>OBEnergy) );}
+\DoxyCodeLine{208     assert( not std::isnan(this-\/>MBEnergy) );}
+\DoxyCodeLine{209     assert( not std::isinf(this-\/>OBEnergy) );}
+\DoxyCodeLine{210     assert( not std::isinf(this-\/>MBEnergy) );}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212   \}; \textcolor{comment}{// SingleSlater<T>::computeEnergy}}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{215   std::vector<double> \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ade8bc140484560ef0c3c2d9bd7dfc25d}{SingleSlater<MatsT,IntsT>::getEnergySummary}}() \{}
+\DoxyCodeLine{216     std::vector<double> result = \mbox{\hyperlink{classChronusQ_1_1QuantumBase_ac2eca987ab50e84b7fbdb9a68007ed11}{QuantumBase::getEnergySummary}}();}
+\DoxyCodeLine{217     result.push\_back(this-\/>molecule().nucRepEnergy);}
+\DoxyCodeLine{218     \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{219   \};}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{222   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a67c95963a02d02dd6e7e7791b44b867e}{SingleSlater<MatsT,IntsT>::computeMultipole}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert) \{}
+\DoxyCodeLine{223     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm);}
+\DoxyCodeLine{224     \textcolor{comment}{// Compute elecric contribution to the dipoles}}
+\DoxyCodeLine{225     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iXYZ = 0; iXYZ < 3; iXYZ++) }
+\DoxyCodeLine{226       this-\/>elecDipole[iXYZ] = -\/this-\/>\textcolor{keyword}{template} computeOBProperty<SCALAR>((*this-\/>aoints.lenElectric)[iXYZ].pointer());}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229     \textcolor{comment}{// Nuclear contributions to the dipoles}}
+\DoxyCodeLine{230     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&atom : this-\/>molecule().atoms)\{}
+\DoxyCodeLine{231     \textcolor{keywordflow}{if} (atom.quantum) \textcolor{keywordflow}{continue};  }
+\DoxyCodeLine{232     \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'N'},\textcolor{charliteral}{'N'},3,1,1.,\&this-\/>elecDipole[0],3,atom.nucCharge,}
+\DoxyCodeLine{233         \&atom.coord[0],3,\&this-\/>elecDipole[0],3);}
+\DoxyCodeLine{234     \}}
+\DoxyCodeLine{235     \textcolor{comment}{// Electric contribution to the quadrupoles}}
+\DoxyCodeLine{236     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iXYZ = 0, iX = 0; iXYZ < 3; iXYZ++)}
+\DoxyCodeLine{237     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} jXYZ = iXYZ     ; jXYZ < 3; jXYZ++, iX++)\{}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239       this-\/>elecQuadrupole[iXYZ][jXYZ] = -\/}
+\DoxyCodeLine{240         this-\/>\textcolor{keyword}{template} computeOBProperty<SCALAR>((*this-\/>aoints.lenElectric)[iX+3].pointer());}
+\DoxyCodeLine{241       }
+\DoxyCodeLine{242       this-\/>elecQuadrupole[jXYZ][iXYZ] = this-\/>elecQuadrupole[iXYZ][jXYZ]; }
+\DoxyCodeLine{243     \}}
+\DoxyCodeLine{244     }
+\DoxyCodeLine{245     \textcolor{comment}{// Nuclear contributions to the quadrupoles}}
+\DoxyCodeLine{246     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&atom : this-\/>molecule().atoms)\{}
+\DoxyCodeLine{247     }
+\DoxyCodeLine{248     \textcolor{keywordflow}{if} (atom.quantum) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iXYZ = 0; iXYZ < 3; iXYZ++)}
+\DoxyCodeLine{251     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} jXYZ = 0; jXYZ < 3; jXYZ++) }
+\DoxyCodeLine{252       this-\/>elecQuadrupole[iXYZ][jXYZ] +=}
+\DoxyCodeLine{253         atom.nucCharge * atom.coord[iXYZ] * atom.coord[jXYZ];}
+\DoxyCodeLine{254     \}}
+\DoxyCodeLine{255     \textcolor{comment}{// Electric contribution to the octupoles}}
+\DoxyCodeLine{256     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iXYZ = 0, iX = 0; iXYZ < 3; iXYZ++)}
+\DoxyCodeLine{257     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} jXYZ = iXYZ     ; jXYZ < 3; jXYZ++)}
+\DoxyCodeLine{258     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} kXYZ = jXYZ     ; kXYZ < 3; kXYZ++, iX++)\{}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260       this-\/>elecOctupole[iXYZ][jXYZ][kXYZ] = -\/}
+\DoxyCodeLine{261         this-\/>\textcolor{keyword}{template} computeOBProperty<SCALAR>(}
+\DoxyCodeLine{262           (*this-\/>aoints.lenElectric)[iX+9].pointer());}
+\DoxyCodeLine{263 }
+\DoxyCodeLine{264       this-\/>elecOctupole[iXYZ][kXYZ][jXYZ] = this-\/>elecOctupole[iXYZ][jXYZ][kXYZ]; }
+\DoxyCodeLine{265 }
+\DoxyCodeLine{266       this-\/>elecOctupole[jXYZ][iXYZ][kXYZ] = this-\/>elecOctupole[iXYZ][jXYZ][kXYZ]; }
+\DoxyCodeLine{267 }
+\DoxyCodeLine{268       this-\/>elecOctupole[jXYZ][kXYZ][iXYZ] = this-\/>elecOctupole[iXYZ][jXYZ][kXYZ]; }
+\DoxyCodeLine{269 }
+\DoxyCodeLine{270       this-\/>elecOctupole[kXYZ][iXYZ][jXYZ] = this-\/>elecOctupole[iXYZ][jXYZ][kXYZ]; }
+\DoxyCodeLine{271 }
+\DoxyCodeLine{272       this-\/>elecOctupole[kXYZ][jXYZ][iXYZ] = this-\/>elecOctupole[iXYZ][jXYZ][kXYZ]; }
+\DoxyCodeLine{273     \}}
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275     \textcolor{comment}{// Nuclear contributions to the octupoles}}
+\DoxyCodeLine{276     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&atom : this-\/>molecule().atoms)\{}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278     \textcolor{keywordflow}{if} (atom.quantum) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{279 }
+\DoxyCodeLine{280     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} iXYZ = 0; iXYZ < 3; iXYZ++)}
+\DoxyCodeLine{281     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} jXYZ = 0; jXYZ < 3; jXYZ++)}
+\DoxyCodeLine{282     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} kXYZ = 0; kXYZ < 3; kXYZ++)}
+\DoxyCodeLine{283       this-\/>elecOctupole[iXYZ][jXYZ][kXYZ] +=}
+\DoxyCodeLine{284         atom.nucCharge * atom.coord[iXYZ] * atom.coord[jXYZ] *}
+\DoxyCodeLine{285         atom.coord[kXYZ];}
+\DoxyCodeLine{286     \}}
+\DoxyCodeLine{287   \};}
+\DoxyCodeLine{288 }
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{291   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a788a2f32f06c22a9dd21293747b2e4e4}{SingleSlater<MatsT,IntsT>::computeSpin}}() \{}
+\DoxyCodeLine{292 }
+\DoxyCodeLine{293     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm);}
+\DoxyCodeLine{294 }
+\DoxyCodeLine{295     this-\/>SExpect[0] = 0.5 * this-\/>\textcolor{keyword}{template} computeOBProperty<MX>(}
+\DoxyCodeLine{296       this-\/>aoints.overlap-\/>pointer());}
+\DoxyCodeLine{297     this-\/>SExpect[1] = 0.5 * this-\/>\textcolor{keyword}{template} computeOBProperty<MY>(}
+\DoxyCodeLine{298       this-\/>aoints.overlap-\/>pointer());}
+\DoxyCodeLine{299     this-\/>SExpect[2] = 0.5 * this-\/>\textcolor{keyword}{template} computeOBProperty<MZ>(}
+\DoxyCodeLine{300       this-\/>aoints.overlap-\/>pointer());}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302     \textcolor{keywordflow}{if}( not this-\/>onePDM-\/>hasZ() ) this-\/>SSq = 0;}
+\DoxyCodeLine{303     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{304       \textcolor{keywordtype}{size\_t} NB = this-\/>basisSet().nBasis;}
+\DoxyCodeLine{305       MatsT * SCR  = this-\/>memManager.template malloc<MatsT>(NB*NB);}
+\DoxyCodeLine{306       MatsT * SCR2 = this-\/>memManager.template malloc<MatsT>(NB*NB);}
+\DoxyCodeLine{307 }
+\DoxyCodeLine{308 }
+\DoxyCodeLine{309       \textcolor{comment}{// SCR2 = S * D(S) * S}}
+\DoxyCodeLine{310 \textcolor{comment}{/*      }}
+\DoxyCodeLine{311 \textcolor{comment}{      blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::ConjTrans,NB,NB,NB,T(1.),aoints.overlap,NB,this-\/>onePDM[SCALAR],NB,}}
+\DoxyCodeLine{312 \textcolor{comment}{        T(0.),SCR,NB);}}
+\DoxyCodeLine{313 \textcolor{comment}{      blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::ConjTrans,NB,NB,NB,T(1.),SCR,NB,aoints.overlap,NB,T(0.),SCR2,NB);}}
+\DoxyCodeLine{314 \textcolor{comment}{*/}}
+\DoxyCodeLine{315       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(1.),this-\/>aoints.overlap-\/>pointer(),NB,}
+\DoxyCodeLine{316            this-\/>onePDM-\/>S().pointer(),NB,MatsT(0.),SCR,NB);}
+\DoxyCodeLine{317       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::ConjTrans,NB,NB,NB,MatsT(1.),this-\/>aoints.overlap-\/>pointer(),NB,}
+\DoxyCodeLine{318            SCR,NB,MatsT(0.),SCR2,NB);}
+\DoxyCodeLine{319 }
+\DoxyCodeLine{320       }
+\DoxyCodeLine{321       this-\/>SSq = 3 * this-\/>nO -\/ (3./2.) * }
+\DoxyCodeLine{322         this-\/>\textcolor{keyword}{template} computeOBProperty<SCALAR>(SCR2);}
+\DoxyCodeLine{323   }
+\DoxyCodeLine{324 }
+\DoxyCodeLine{325       \textcolor{comment}{// SCR2 = D(Z) * S * D(Z)}}
+\DoxyCodeLine{326       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(1.),this-\/>aoints.overlap-\/>pointer(),NB,}
+\DoxyCodeLine{327            this-\/>onePDM-\/>Z().pointer(),NB,MatsT(0.),SCR,NB);}
+\DoxyCodeLine{328       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::ConjTrans,NB,NB,NB,MatsT(1.),this-\/>aoints.overlap-\/>pointer(),NB,}
+\DoxyCodeLine{329            SCR,NB,MatsT(0.),SCR2,NB);}
+\DoxyCodeLine{330       }
+\DoxyCodeLine{331       this-\/>SSq += 0.5 * this-\/>\textcolor{keyword}{template} computeOBProperty<MZ>(SCR2);}
+\DoxyCodeLine{332 }
+\DoxyCodeLine{333       \textcolor{keywordflow}{if}( this-\/>onePDM-\/>hasXY() ) \{}
+\DoxyCodeLine{334   }
+\DoxyCodeLine{335         \textcolor{comment}{// SCR2 = D(Y) * S * D(Y)}}
+\DoxyCodeLine{336         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(1.),this-\/>aoints.overlap-\/>pointer(),NB,}
+\DoxyCodeLine{337              this-\/>onePDM-\/>Y().pointer(),NB,MatsT(0.),SCR,NB);}
+\DoxyCodeLine{338         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::ConjTrans,NB,NB,NB,MatsT(1.),this-\/>aoints.overlap-\/>pointer(),NB,}
+\DoxyCodeLine{339              SCR,NB,MatsT(0.),SCR2,NB);}
+\DoxyCodeLine{340         }
+\DoxyCodeLine{341         this-\/>SSq += 0.5 * this-\/>\textcolor{keyword}{template} computeOBProperty<MY>(SCR2);}
+\DoxyCodeLine{342 }
+\DoxyCodeLine{343 }
+\DoxyCodeLine{344         \textcolor{comment}{// SCR2 = D(X) * S * D(X)}}
+\DoxyCodeLine{345         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,MatsT(1.),this-\/>aoints.overlap-\/>pointer(),NB,}
+\DoxyCodeLine{346              this-\/>onePDM-\/>X().pointer(),NB,MatsT(0.),SCR,NB);}
+\DoxyCodeLine{347         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::ConjTrans,NB,NB,NB,MatsT(1.),this-\/>aoints.overlap-\/>pointer(),NB,}
+\DoxyCodeLine{348              SCR,NB,MatsT(0.),SCR2,NB);}
+\DoxyCodeLine{349         }
+\DoxyCodeLine{350         this-\/>SSq += 0.5 * this-\/>\textcolor{keyword}{template} computeOBProperty<MX>(SCR2);}
+\DoxyCodeLine{351 }
+\DoxyCodeLine{352       \}}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < 3; i++) }
+\DoxyCodeLine{355         this-\/>SSq += 4 * this-\/>SExpect[i] * this-\/>SExpect[i];}
+\DoxyCodeLine{356 }
+\DoxyCodeLine{357       this-\/>SSq *= 0.25;}
+\DoxyCodeLine{358 }
+\DoxyCodeLine{359       this-\/>memManager.free(SCR,SCR2);}
+\DoxyCodeLine{360     \}}
+\DoxyCodeLine{361 }
+\DoxyCodeLine{362   \};}
+\DoxyCodeLine{363   }
+\DoxyCodeLine{364 }
+\DoxyCodeLine{365 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{366 }
+
+\end{DoxyCode}

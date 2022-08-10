@@ -1,0 +1,188 @@
+\hypertarget{classChronusQ_1_1DIIS}{}\doxysection{ChronusQ\+::DIIS\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1DIIS}\index{ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}}
+
+
+The \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} class. A class to perform a \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} extrapolation based on a series of error metrics stored in core.  
+
+
+
+
+{\ttfamily \#include $<$extrapolate.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1DIIS_aebb418390d4bf7db6e619afc0ef90450}{DIIS}} (size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1DIIS_ab5d02f851fd766b7cfd14feaaf4f621f}{n\+Extrap}}, const std\+::vector$<$ std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ T $>$ $>$ $>$ \&\mbox{\hyperlink{classChronusQ_1_1DIIS_accf57719bce7767cc7c19f2ef548a5de}{error\+Metric}})
+\item 
+\mbox{\hyperlink{classChronusQ_1_1DIIS_aa8127d9a7048854c95f35c84e0b552dc}{DIIS}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1DIIS_a3c404d5cacecadc96c23c6ca58e7077c}{DIIS}} (const \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} \&)=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1DIIS_aff28457032a2de7b1ebe8281e97f697c}{DIIS}} (\mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} \&\&)=delete
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1DIIS_a67e482424a7b9775e24ce1cc2ba09ab9}{extrapolate}} ()
+\begin{DoxyCompactList}\small\item\em Performs a \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} extrapolation using the vectors stored in error\+Metric. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1DIIS_ab5d02f851fd766b7cfd14feaaf4f621f}{n\+Extrap}}
+\begin{DoxyCompactList}\small\item\em Size of extrapolation space. \end{DoxyCompactList}\item 
+std\+::vector$<$ T $>$ \mbox{\hyperlink{classChronusQ_1_1DIIS_a912d1eca00e2f054965fb6f12b020b8f}{coeffs}}
+\begin{DoxyCompactList}\small\item\em Vector of extrapolation coeficients. \end{DoxyCompactList}\item 
+const std\+::vector$<$ std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ T $>$ $>$ $>$ \& \mbox{\hyperlink{classChronusQ_1_1DIIS_accf57719bce7767cc7c19f2ef548a5de}{error\+Metric}}
+\begin{DoxyCompactList}\small\item\em Vector of vectors containing error metrics. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef T $\ast$ \mbox{\hyperlink{classChronusQ_1_1DIIS_a59d4c931b594c0a1dc54abd4f09c444d}{oper\+\_\+t}}
+\item 
+typedef std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1DIIS_a59d4c931b594c0a1dc54abd4f09c444d}{oper\+\_\+t}} $>$ \mbox{\hyperlink{classChronusQ_1_1DIIS_a0d301eb4ae978510f74a6fb5ed7ec391}{oper\+\_\+t\+\_\+coll}}
+\item 
+typedef std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1DIIS_a0d301eb4ae978510f74a6fb5ed7ec391}{oper\+\_\+t\+\_\+coll}} $>$ \mbox{\hyperlink{classChronusQ_1_1DIIS_aff1c144da7e60752c90014ece2c07f72}{oper\+\_\+t\+\_\+coll2}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class Chronus\+Q\+::\+DIIS$<$ T $>$}
+The \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} class. A class to perform a \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} extrapolation based on a series of error metrics stored in core. 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1DIIS_a59d4c931b594c0a1dc54abd4f09c444d}\label{classChronusQ_1_1DIIS_a59d4c931b594c0a1dc54abd4f09c444d}} 
+\index{ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}!oper\_t@{oper\_t}}
+\index{oper\_t@{oper\_t}!ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{oper\_t}{oper\_t}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+typedef T$\ast$ \mbox{\hyperlink{classChronusQ_1_1DIIS}{Chronus\+Q\+::\+DIIS}}$<$ T $>$\+::oper\+\_\+t\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1DIIS_a0d301eb4ae978510f74a6fb5ed7ec391}\label{classChronusQ_1_1DIIS_a0d301eb4ae978510f74a6fb5ed7ec391}} 
+\index{ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}!oper\_t\_coll@{oper\_t\_coll}}
+\index{oper\_t\_coll@{oper\_t\_coll}!ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{oper\_t\_coll}{oper\_t\_coll}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+typedef std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1DIIS_a59d4c931b594c0a1dc54abd4f09c444d}{oper\+\_\+t}}$>$ \mbox{\hyperlink{classChronusQ_1_1DIIS}{Chronus\+Q\+::\+DIIS}}$<$ T $>$\+::oper\+\_\+t\+\_\+coll\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1DIIS_aff1c144da7e60752c90014ece2c07f72}\label{classChronusQ_1_1DIIS_aff1c144da7e60752c90014ece2c07f72}} 
+\index{ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}!oper\_t\_coll2@{oper\_t\_coll2}}
+\index{oper\_t\_coll2@{oper\_t\_coll2}!ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{oper\_t\_coll2}{oper\_t\_coll2}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+typedef std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1DIIS_a0d301eb4ae978510f74a6fb5ed7ec391}{oper\+\_\+t\+\_\+coll}}$>$ \mbox{\hyperlink{classChronusQ_1_1DIIS}{Chronus\+Q\+::\+DIIS}}$<$ T $>$\+::oper\+\_\+t\+\_\+coll2\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1DIIS_aebb418390d4bf7db6e619afc0ef90450}\label{classChronusQ_1_1DIIS_aebb418390d4bf7db6e619afc0ef90450}} 
+\index{ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}!DIIS@{DIIS}}
+\index{DIIS@{DIIS}!ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{DIIS()}{DIIS()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1DIIS}{Chronus\+Q\+::\+DIIS}}$<$ T $>$\+::\+DIIS (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n\+Extrap,  }\item[{const std\+::vector$<$ std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ T $>$ $>$ $>$ \&}]{error\+Metric }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} Constructor. Constructs a \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} object
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em n\+Extrap} & Size of extrapolation space \\
+\hline
+\mbox{\texttt{ in}}  & {\em n\+Mat} & Number of matrices to trace for each element of B \\
+\hline
+\mbox{\texttt{ in}}  & {\em OSize} & Size of the error metrics used to construct B \\
+\hline
+\mbox{\texttt{ in}}  & {\em error\+Metric} & Vector of vectors containing error metrics \\
+\hline
+\mbox{\texttt{ out}}  & {\em Inv\+Fail} & Boolean of whether matrix inversion failed \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1DIIS_aa8127d9a7048854c95f35c84e0b552dc}\label{classChronusQ_1_1DIIS_aa8127d9a7048854c95f35c84e0b552dc}} 
+\index{ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}!DIIS@{DIIS}}
+\index{DIIS@{DIIS}!ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{DIIS()}{DIIS()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1DIIS}{Chronus\+Q\+::\+DIIS}}$<$ T $>$\+::\+DIIS (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1DIIS_a3c404d5cacecadc96c23c6ca58e7077c}\label{classChronusQ_1_1DIIS_a3c404d5cacecadc96c23c6ca58e7077c}} 
+\index{ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}!DIIS@{DIIS}}
+\index{DIIS@{DIIS}!ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{DIIS()}{DIIS()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1DIIS}{Chronus\+Q\+::\+DIIS}}$<$ T $>$\+::\+DIIS (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}}$<$ T $>$ \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1DIIS_aff28457032a2de7b1ebe8281e97f697c}\label{classChronusQ_1_1DIIS_aff28457032a2de7b1ebe8281e97f697c}} 
+\index{ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}!DIIS@{DIIS}}
+\index{DIIS@{DIIS}!ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{DIIS()}{DIIS()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1DIIS}{Chronus\+Q\+::\+DIIS}}$<$ T $>$\+::\+DIIS (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}}$<$ T $>$ \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1DIIS_a67e482424a7b9775e24ce1cc2ba09ab9}\label{classChronusQ_1_1DIIS_a67e482424a7b9775e24ce1cc2ba09ab9}} 
+\index{ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}!extrapolate@{extrapolate}}
+\index{extrapolate@{extrapolate}!ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{extrapolate()}{extrapolate()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1DIIS}{Chronus\+Q\+::\+DIIS}}$<$ T $>$\+::extrapolate}
+
+
+
+Performs a \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} extrapolation using the vectors stored in error\+Metric. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1DIIS_a67e482424a7b9775e24ce1cc2ba09ab9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1DIIS_a67e482424a7b9775e24ce1cc2ba09ab9_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1DIIS_a912d1eca00e2f054965fb6f12b020b8f}\label{classChronusQ_1_1DIIS_a912d1eca00e2f054965fb6f12b020b8f}} 
+\index{ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}!coeffs@{coeffs}}
+\index{coeffs@{coeffs}!ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{coeffs}{coeffs}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::vector$<$T$>$ \mbox{\hyperlink{classChronusQ_1_1DIIS}{Chronus\+Q\+::\+DIIS}}$<$ T $>$\+::coeffs}
+
+
+
+Vector of extrapolation coeficients. 
+
+\mbox{\Hypertarget{classChronusQ_1_1DIIS_accf57719bce7767cc7c19f2ef548a5de}\label{classChronusQ_1_1DIIS_accf57719bce7767cc7c19f2ef548a5de}} 
+\index{ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}!errorMetric@{errorMetric}}
+\index{errorMetric@{errorMetric}!ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{errorMetric}{errorMetric}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+const std\+::vector$<$std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$T$>$ $>$ $>$\& \mbox{\hyperlink{classChronusQ_1_1DIIS}{Chronus\+Q\+::\+DIIS}}$<$ T $>$\+::error\+Metric}
+
+
+
+Vector of vectors containing error metrics. 
+
+\mbox{\Hypertarget{classChronusQ_1_1DIIS_ab5d02f851fd766b7cfd14feaaf4f621f}\label{classChronusQ_1_1DIIS_ab5d02f851fd766b7cfd14feaaf4f621f}} 
+\index{ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}!nExtrap@{nExtrap}}
+\index{nExtrap@{nExtrap}!ChronusQ::DIIS$<$ T $>$@{ChronusQ::DIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{nExtrap}{nExtrap}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1DIIS}{Chronus\+Q\+::\+DIIS}}$<$ T $>$\+::n\+Extrap}
+
+
+
+Size of extrapolation space. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{extrapolate_8hpp}{extrapolate.\+hpp}}\end{DoxyCompactItemize}

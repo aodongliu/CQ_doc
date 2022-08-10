@@ -1,0 +1,243 @@
+\hypertarget{integrals_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{integrals_2impl_8hpp_source}\index{include/integrals/impl.hpp@{include/integrals/impl.hpp}}
+\mbox{\hyperlink{integrals_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{integrals_8hpp}{integrals.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incore4indextpi_8hpp}{particleintegrals/twopints/incore4indextpi.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incoreritpi_8hpp}{particleintegrals/twopints/incoreritpi.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{relativisticints_8hpp}{particleintegrals/onepints/relativisticints.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrix_8hpp}{matrix.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{46   \textcolor{keyword}{template} <\textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{47   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Integrals_ad82f2455375bf592a5e92469a3d8c444}{Integrals<IntsT>::computeAOOneP}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{48       \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&emPert,}
+\DoxyCodeLine{49       \textcolor{keyword}{const} std::vector<std::pair<OPERATOR,size\_t>> \&ops,}
+\DoxyCodeLine{50       \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} \&options) \{}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{keyword}{const} std::array<std::string,3> dipoleList =}
+\DoxyCodeLine{53       \{ \textcolor{stringliteral}{"{}X"{}},\textcolor{stringliteral}{"{}Y"{}},\textcolor{stringliteral}{"{}Z"{}} \};}
+\DoxyCodeLine{54     \textcolor{keyword}{const} std::array<std::string,6> quadrupoleList =}
+\DoxyCodeLine{55       \{ \textcolor{stringliteral}{"{}XX"{}},\textcolor{stringliteral}{"{}XY"{}},\textcolor{stringliteral}{"{}XZ"{}},\textcolor{stringliteral}{"{}YY"{}},\textcolor{stringliteral}{"{}YZ"{}},\textcolor{stringliteral}{"{}ZZ"{}} \};}
+\DoxyCodeLine{56     \textcolor{keyword}{const} std::array<std::string,10> octupoleList =}
+\DoxyCodeLine{57       \{ \textcolor{stringliteral}{"{}XXX"{}},\textcolor{stringliteral}{"{}XXY"{}},\textcolor{stringliteral}{"{}XXZ"{}},\textcolor{stringliteral}{"{}XYY"{}},\textcolor{stringliteral}{"{}XYZ"{}},\textcolor{stringliteral}{"{}XZZ"{}},\textcolor{stringliteral}{"{}YYY"{}},}
+\DoxyCodeLine{58         \textcolor{stringliteral}{"{}YYZ"{}},\textcolor{stringliteral}{"{}YZZ"{}},\textcolor{stringliteral}{"{}ZZZ"{}} \};}
+\DoxyCodeLine{59     \textcolor{keyword}{const} std::array<std::string,9> quadrupoleListAsymm =}
+\DoxyCodeLine{60       \{ \textcolor{stringliteral}{"{}XX"{}},\textcolor{stringliteral}{"{}XY"{}},\textcolor{stringliteral}{"{}XZ"{}},\textcolor{stringliteral}{"{}YX"{}},\textcolor{stringliteral}{"{}YY"{}},\textcolor{stringliteral}{"{}YZ"{}},\textcolor{stringliteral}{"{}ZX"{}},\textcolor{stringliteral}{"{}ZY"{}},\textcolor{stringliteral}{"{}ZZ"{}} \};}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \textcolor{keywordtype}{size\_t} NB = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{keywordtype}{bool} electron = (options.\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a47613325ad178432fb34e14bac03d206}{particle}}.\mbox{\hyperlink{structChronusQ_1_1Particle_aac8b44e2392d5d5ccdee6b5963561683}{charge}} < 0.);}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     std::string prefix = electron ? \textcolor{stringliteral}{"{}INTS/"{}} : \textcolor{stringliteral}{"{}PINTS/"{}};}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{69       std::cout << std::endl<<\textcolor{stringliteral}{"{}Molecular Geometry in ComputeOneP: (Bohr)"{}}<<std::endl;}
+\DoxyCodeLine{70       \textcolor{keywordtype}{size\_t} i = 0;}
+\DoxyCodeLine{71       \textcolor{keywordflow}{for}( \mbox{\hyperlink{structChronusQ_1_1Atom}{Atom}}\& atom : mol.\mbox{\hyperlink{structChronusQ_1_1Molecule_a21a4326a73a48d5e20de3b4117fe08cf}{atoms}} ) \{}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73         std::cout << std::right <<\textcolor{stringliteral}{"{}AtomicNumber = "{}} << std::setw(4) << atom.\mbox{\hyperlink{structChronusQ_1_1Atom_ac304c587a6eff864371d8d2d7558b13f}{atomicNumber}} }
+\DoxyCodeLine{74                   << std::right <<\textcolor{stringliteral}{"{}  X= "{}}<< std::setw(16) << atom.\mbox{\hyperlink{structChronusQ_1_1Atom_a523cfb92fd227059becf5360535813ea}{coord}}[0]}
+\DoxyCodeLine{75                   << std::right <<\textcolor{stringliteral}{"{}  Y= "{}}<< std::setw(16) << atom.\mbox{\hyperlink{structChronusQ_1_1Atom_a523cfb92fd227059becf5360535813ea}{coord}}[1]}
+\DoxyCodeLine{76                   << std::right <<\textcolor{stringliteral}{"{}  Z= "{}}<< std::setw(16) << atom.\mbox{\hyperlink{structChronusQ_1_1Atom_a523cfb92fd227059becf5360535813ea}{coord}}[2] <<std::endl;}
+\DoxyCodeLine{77         i += 3;}
+\DoxyCodeLine{78  }
+\DoxyCodeLine{79       \}}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\& shell: basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}})}
+\DoxyCodeLine{82         \textcolor{keywordflow}{for}(i = 0; i < 3; i++)}
+\DoxyCodeLine{83           std::cout << shell.O[i] << std::endl;}
+\DoxyCodeLine{84 \#endif}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     for (\textcolor{keyword}{const} std::pair<OPERATOR,size\_t> \&op : ops)}
+\DoxyCodeLine{87       \textcolor{keywordflow}{switch} (op.first) \{}
+\DoxyCodeLine{88       \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a50d3dcf23983850753f7a91a33c2733d}{OVERLAP}}:}
+\DoxyCodeLine{89         overlap = std::make\_shared<OnePInts<IntsT>>(mem, NB);}
+\DoxyCodeLine{90         overlap-\/>computeAOInts(basis, mol, emPert, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a50d3dcf23983850753f7a91a33c2733d}{OVERLAP}}, options);}
+\DoxyCodeLine{91         \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{92           savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}OVERLAP"{}}, overlap-\/>pointer(), \{NB,NB\});}
+\DoxyCodeLine{93         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95       \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a5de2ac5f9f0de72188c49e0ff4e718fd}{KINETIC}}:}
+\DoxyCodeLine{96         kinetic = std::make\_shared<OnePInts<IntsT>>(mem, NB);}
+\DoxyCodeLine{97         kinetic-\/>computeAOInts(basis, mol, emPert, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a5de2ac5f9f0de72188c49e0ff4e718fd}{KINETIC}}, options);}
+\DoxyCodeLine{98         \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{99           savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}KINETIC"{}}, kinetic-\/>pointer(), \{NB,NB\});}
+\DoxyCodeLine{100         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102       \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a317c81ed705c7830f4f22d41d014d060}{NUCLEAR\_POTENTIAL}}:}
+\DoxyCodeLine{103         \textcolor{comment}{// Use Libint for point nuclei, in-\/house for Gaussian nuclei}}
+\DoxyCodeLine{104         \textcolor{keywordflow}{if} (options.\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a183319f87f1106e4cc6345b9c0015d04}{OneEScalarRelativity}})}
+\DoxyCodeLine{105           potential = std::make\_shared<OnePRelInts<IntsT>>(}
+\DoxyCodeLine{106               mem, NB, options.\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_ae844f3a0c1130959297f483e282b65eb}{OneESpinOrbit}});}
+\DoxyCodeLine{107         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{108           potential = std::make\_shared<OnePInts<IntsT>>(mem, NB);}
+\DoxyCodeLine{109         potential-\/>computeAOInts(basis, mol, emPert, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a317c81ed705c7830f4f22d41d014d060}{NUCLEAR\_POTENTIAL}}, options);}
+\DoxyCodeLine{110         \textcolor{keywordflow}{if}( savFile.exists() ) \{}
+\DoxyCodeLine{111           std::string potentialTag = options.\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a432b38315c583dab85d49c7b506a6b0b}{finiteWidthNuc}} ? \textcolor{stringliteral}{"{}\_FINITE\_WIDTH"{}} : \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{112           savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}POTENTIAL"{}} + potentialTag,potential-\/>pointer(),\{NB,NB\});}
+\DoxyCodeLine{113         \}}
+\DoxyCodeLine{114         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116       \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554af7fb95c48b23fa556d86672757ebd28c}{LEN\_ELECTRIC\_MULTIPOLE}}:}
+\DoxyCodeLine{117         lenElectric = std::make\_shared<MultipoleInts<IntsT>>(mem, NB, op.second, \textcolor{keyword}{true});}
+\DoxyCodeLine{118         lenElectric-\/>computeAOInts(basis, mol, emPert, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554af7fb95c48b23fa556d86672757ebd28c}{LEN\_ELECTRIC\_MULTIPOLE}}, options);}
+\DoxyCodeLine{119         \textcolor{keywordflow}{if}( savFile.exists() ) \{}
+\DoxyCodeLine{120           \textcolor{comment}{// Length Gauge electric dipole}}
+\DoxyCodeLine{121           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < 3; i++)}
+\DoxyCodeLine{122             savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}ELEC\_DIPOLE\_LEN\_"{}} +}
+\DoxyCodeLine{123               dipoleList[i], (*lenElectric)[dipoleList[i]].pointer(), \{NB,NB\} );}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125           \textcolor{comment}{// Length Gauge electric quadrupole}}
+\DoxyCodeLine{126           \textcolor{keywordflow}{if}(op.second >= 2)}
+\DoxyCodeLine{127             \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < 6; i++)}
+\DoxyCodeLine{128               savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}ELEC\_QUADRUPOLE\_LEN\_"{}} +}
+\DoxyCodeLine{129                 quadrupoleList[i], (*lenElectric)[quadrupoleList[i]].pointer(), \{NB,NB\} );}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131           \textcolor{comment}{// Length Gauge electric octupole}}
+\DoxyCodeLine{132           \textcolor{keywordflow}{if}(op.second >= 3)}
+\DoxyCodeLine{133             \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < 10; i++)}
+\DoxyCodeLine{134               savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}/ELEC\_OCTUPOLE\_LEN\_"{}} +}
+\DoxyCodeLine{135                 octupoleList[i], (*lenElectric)[octupoleList[i]].pointer(), \{NB,NB\} );}
+\DoxyCodeLine{136         \}}
+\DoxyCodeLine{137         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139       \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a07fc18b7a3d02079de45fb32abea45d3}{VEL\_ELECTRIC\_MULTIPOLE}}:}
+\DoxyCodeLine{140         velElectric = std::make\_shared<MultipoleInts<IntsT>>(mem, NB, op.second, \textcolor{keyword}{true});}
+\DoxyCodeLine{141         velElectric-\/>computeAOInts(basis, mol, emPert, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a07fc18b7a3d02079de45fb32abea45d3}{VEL\_ELECTRIC\_MULTIPOLE}}, options);}
+\DoxyCodeLine{142         \textcolor{keywordflow}{if}( savFile.exists() ) \{}
+\DoxyCodeLine{143           \textcolor{comment}{// Velocity Gauge electric dipole}}
+\DoxyCodeLine{144           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < 3; i++)}
+\DoxyCodeLine{145             savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}ELEC\_DIPOLE\_VEL\_"{}} +}
+\DoxyCodeLine{146               dipoleList[i], (*velElectric)[dipoleList[i]].pointer(), \{NB,NB\} );}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148           \textcolor{comment}{// Velocity Gauge electric quadrupole}}
+\DoxyCodeLine{149           \textcolor{keywordflow}{if}(op.second >= 2)}
+\DoxyCodeLine{150             \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < 6; i++)}
+\DoxyCodeLine{151               savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}ELEC\_QUADRUPOLE\_VEL\_"{}} +}
+\DoxyCodeLine{152                 quadrupoleList[i], (*velElectric)[quadrupoleList[i]].pointer(), \{NB,NB\} );}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154           \textcolor{comment}{// Velocity Gauge electric octupole}}
+\DoxyCodeLine{155           \textcolor{keywordflow}{if}(op.second >= 3)}
+\DoxyCodeLine{156             \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < 10; i++)}
+\DoxyCodeLine{157               savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}ELEC\_OCTUPOLE\_VEL\_"{}} +}
+\DoxyCodeLine{158                 octupoleList[i], (*velElectric)[octupoleList[i]].pointer(), \{NB,NB\} );}
+\DoxyCodeLine{159         \}}
+\DoxyCodeLine{160         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162       \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a533207599a21052611bda397942eb0f9}{MAGNETIC\_MULTIPOLE}}:}
+\DoxyCodeLine{163         magnetic = std::make\_shared<MultipoleInts<IntsT>>(mem, NB, op.second, \textcolor{keyword}{false});}
+\DoxyCodeLine{164         magnetic-\/>computeAOInts(basis, mol, emPert, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a533207599a21052611bda397942eb0f9}{MAGNETIC\_MULTIPOLE}}, options);}
+\DoxyCodeLine{165         \textcolor{keywordflow}{if}( savFile.exists() ) \{}
+\DoxyCodeLine{166           \textcolor{comment}{// Magnetic Dipole}}
+\DoxyCodeLine{167           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < 3; i++)}
+\DoxyCodeLine{168             savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}MAG\_DIPOLE\_"{}} +}
+\DoxyCodeLine{169               dipoleList[i], (*magnetic)[dipoleList[i]].pointer(), \{NB,NB\} );}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171           \textcolor{comment}{// Magnetic Quadrupole}}
+\DoxyCodeLine{172           \textcolor{keywordflow}{if}(op.second >= 2)}
+\DoxyCodeLine{173             \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < 6; i++)}
+\DoxyCodeLine{174               savFile.safeWriteData(prefix + \textcolor{stringliteral}{"{}MAG\_QUADRUPOLE\_"{}} +}
+\DoxyCodeLine{175                 quadrupoleList[i], (*magnetic)[i+3].pointer(), \{NB,NB\} );}
+\DoxyCodeLine{176         \}}
+\DoxyCodeLine{177         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179       \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554aafe7a7f3e7a054d992c707c63f674c08}{ELECTRON\_REPULSION}}:}
+\DoxyCodeLine{180         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Electron repulsion integrals are not implemented in computeAOOneP,"{}}}
+\DoxyCodeLine{181              \textcolor{stringliteral}{"{} they are implemented in TwoPInts"{}},std::cout);}
+\DoxyCodeLine{182         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{183       \}}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185   \}; \textcolor{comment}{// AOIntegrals<IntsT>::computeAOOneP}}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189   \textcolor{comment}{// Computes the integrals necessary for the gradients}}
+\DoxyCodeLine{190   \textcolor{keyword}{template} <\textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{191   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Integrals_af61a8042af88d9fa2e3f8dcbe10122eb}{Integrals<IntsT>::computeGradInts}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{192     \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&emPert,}
+\DoxyCodeLine{193     \textcolor{keyword}{const} std::vector<std::pair<OPERATOR,size\_t>> \&ops,}
+\DoxyCodeLine{194     \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} \&options) \{}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196     \textcolor{keywordtype}{size\_t} NB = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{197     \textcolor{keywordtype}{size\_t} NAt = mol.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}};}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199     \textcolor{keyword}{auto} computeOneE = [\&](std::shared\_ptr<GradInts<OnePInts,IntsT>>\& p, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}} o) \{}
+\DoxyCodeLine{200       \textcolor{keywordflow}{if} (p == \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{201         p = std::make\_shared<GradInts<OnePInts,IntsT>>(mem, NB, NAt);}
+\DoxyCodeLine{202       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{203         p-\/>clear();}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205       p-\/>computeAOInts(basis, mol, emPert, o, options);}
+\DoxyCodeLine{206     \};}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208     \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto}\& op: ops ) \{}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211       \textcolor{keywordflow}{switch} (op.first) \{}
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213         \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a50d3dcf23983850753f7a91a33c2733d}{OVERLAP}}:}
+\DoxyCodeLine{214           computeOneE(gradOverlap, op.first);}
+\DoxyCodeLine{215           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{216 }
+\DoxyCodeLine{217         \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a5de2ac5f9f0de72188c49e0ff4e718fd}{KINETIC}}:}
+\DoxyCodeLine{218           computeOneE(gradKinetic, op.first);}
+\DoxyCodeLine{219           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221         \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a317c81ed705c7830f4f22d41d014d060}{NUCLEAR\_POTENTIAL}}:}
+\DoxyCodeLine{222           \textcolor{keywordflow}{if} ( options.\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a183319f87f1106e4cc6345b9c0015d04}{OneEScalarRelativity}} )}
+\DoxyCodeLine{223             \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Relativistic gradients not yet implemented!"{}});}
+\DoxyCodeLine{224           computeOneE(gradPotential, op.first);}
+\DoxyCodeLine{225           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227         \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a533207599a21052611bda397942eb0f9}{MAGNETIC\_MULTIPOLE}}:}
+\DoxyCodeLine{228         \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554af7fb95c48b23fa556d86672757ebd28c}{LEN\_ELECTRIC\_MULTIPOLE}}:}
+\DoxyCodeLine{229         \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a07fc18b7a3d02079de45fb32abea45d3}{VEL\_ELECTRIC\_MULTIPOLE}}:}
+\DoxyCodeLine{230           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Gradients of multipoles are not yet implemented"{}});}
+\DoxyCodeLine{231           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{232 }
+\DoxyCodeLine{233         \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554aafe7a7f3e7a054d992c707c63f674c08}{ELECTRON\_REPULSION}}:}
+\DoxyCodeLine{234           \textcolor{keywordflow}{if} ( gradERI == \textcolor{keyword}{nullptr} )}
+\DoxyCodeLine{235             \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}ERI gradients must be allocated outside of computeGradInts!"{}});}
+\DoxyCodeLine{236 }
+\DoxyCodeLine{237           gradERI-\/>computeAOInts(basis, mol, emPert, op.first, options);}
+\DoxyCodeLine{238           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{239       \}}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{241       \textcolor{comment}{// TODO: Write code to save gradient integrals to binary file. Should be}}
+\DoxyCodeLine{242       \textcolor{comment}{//   toggleable with default off to keep binary file to reasonable size.}}
+\DoxyCodeLine{243 }
+\DoxyCodeLine{244     \}}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{246   \}; \textcolor{comment}{// AOIntegrals<IntsT>::computeGradInts}}
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248 }
+\DoxyCodeLine{249 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

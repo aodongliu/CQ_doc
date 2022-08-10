@@ -1,0 +1,600 @@
+\hypertarget{inhouseaointegral_8hpp_source}{}\doxysection{inhouseaointegral.\+hpp}
+\label{inhouseaointegral_8hpp_source}\index{include/particleintegrals/inhouseaointegral.hpp@{include/particleintegrals/inhouseaointegral.hpp}}
+\mbox{\hyperlink{inhouseaointegral_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{molecule_8hpp}{molecule.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{basisset__def_8hpp}{basisset/basisset\_def.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{memmanager_8hpp}{memmanager.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <libint2/engine.h>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{files_8hpp}{util/files.hpp}}>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \textcolor{comment}{// Indexmap}}
+\DoxyCodeLine{37     \textcolor{keywordtype}{int} \mbox{\hyperlink{namespaceChronusQ_a50c7499f6a0262d114b362809ac0dc48}{indexmap}}(\textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keywordtype}{double} * \mbox{\hyperlink{namespaceChronusQ_ae6ec99741bb4772e1159ba8238dc5a51}{cross}}(\textcolor{keywordtype}{double}*, \textcolor{keywordtype}{double}*);}
+\DoxyCodeLine{40     \textcolor{keywordtype}{int} * \mbox{\hyperlink{namespaceChronusQ_ae6ec99741bb4772e1159ba8238dc5a51}{cross}}(\textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}*);}
+\DoxyCodeLine{41     \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{dot}}(\textcolor{keywordtype}{double}*, \textcolor{keywordtype}{double}*);}
+\DoxyCodeLine{42     \textcolor{keywordtype}{int} \mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{dot}}(\textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}*);}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine}{RealGTOIntEngine}} \{}
+\DoxyCodeLine{45     \textcolor{comment}{// overlap integral of a shell pair  }}
+\DoxyCodeLine{46     \textcolor{keyword}{static} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a49e7990175c5c8da088f2e522c3201e6}{computeOverlapS}}(libint2::ShellPair\&,}
+\DoxyCodeLine{47                                          libint2::Shell\&,libint2::Shell\&);}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{comment}{// horizontal recursion of contracted overlap integral }}
+\DoxyCodeLine{50     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a060897d35c7d32528b18b45de7cf149e}{hRRSab}}(libint2::ShellPair\&, libint2::Shell\&,libint2::Shell\&,}
+\DoxyCodeLine{51                   \textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*);}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     }
+\DoxyCodeLine{54     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_acae3b556b4b3f5cf470c69780ad146bc}{Overlapformula}}(\textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}*, libint2::ShellPair\&,libint2::Shell\&,libint2::Shell\&);}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_ad25311745a622a1dc81ce2a8030b726e}{f\_k}}(\textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}*, libint2::ShellPair::PrimPairData\&,libint2::Shell\&,libint2::Shell\&);}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_aedf7fa3f9fe06c32a3004e3b452b973e}{I\_w}}(\textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}*, libint2::ShellPair::PrimPairData\&,libint2::Shell\&,libint2::Shell\&);}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_ac7c1170896a1ecbd613749d2364e2826}{unconoverlap}}(\textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}*, libint2::ShellPair::PrimPairData\&,libint2::Shell\&,libint2::Shell\&);}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \textcolor{comment}{// horizontal recursion of uncontracted overlap integral}}
+\DoxyCodeLine{63     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_ac2edab080ae1fa7d46ce0757c067326f}{hRRiPPSab}}(libint2::ShellPair::PrimPairData\&,libint2::Shell\&,libint2::Shell\&,}
+\DoxyCodeLine{64                   \textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*);}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \textcolor{comment}{// vertical recursion of uncontracted overlap integral}}
+\DoxyCodeLine{67     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a68a197554dfa3ae05a7228fe4021b19a}{vRRSa0}}(libint2::ShellPair::PrimPairData\&,libint2::Shell\&,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*);}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69     \textcolor{comment}{/* Kinetic Integrals */}}
+\DoxyCodeLine{70     }
+\DoxyCodeLine{71     \textcolor{comment}{// kinetic integrals of a shell pair}}
+\DoxyCodeLine{72     \textcolor{keyword}{static} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a4c3d0dded4404209b50e319d2287dabf}{computeKineticT}}(libint2::ShellPair\&,}
+\DoxyCodeLine{73                                          libint2::Shell\&,libint2::Shell\&);}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \textcolor{comment}{// kinetic integral by just calling overlap integral}}
+\DoxyCodeLine{76     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a2651add8b95a0c016f92623e9f120fad}{RRTab}}(libint2::ShellPair\&, libint2::Shell\&,libint2::Shell\&,}
+\DoxyCodeLine{77                  \textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*);}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \textcolor{comment}{// vertical recursion of contracted kinetic integral }}
+\DoxyCodeLine{80     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a4a29d57e1e3e3a791698777c938d5444}{vRRTab}}(libint2::ShellPair\&, libint2::Shell\&,libint2::Shell\&,}
+\DoxyCodeLine{81                   \textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*);}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83     \textcolor{comment}{// vertical recursion of uncontracted kinetic integral}}
+\DoxyCodeLine{84     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a499abb099737593fdef82ad8d04659c0}{vRRiPPTab}}(libint2::ShellPair::PrimPairData\&,libint2::Shell\&,libint2::Shell\&,}
+\DoxyCodeLine{85                   \textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*);}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87     \textcolor{comment}{/* Angular Momentum Integrals */}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \textcolor{comment}{// angular momentum integrals of a shell pair}}
+\DoxyCodeLine{90     \textcolor{keyword}{static} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a27390353b59caed253085d68e4fb97b1}{computeAngularL}}(libint2::ShellPair\&,}
+\DoxyCodeLine{91                                         libint2::Shell\&,libint2::Shell\&);}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \textcolor{comment}{// vertical recursion of uncontracted angular momentum integral}}
+\DoxyCodeLine{94     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_af1d630ec720b4e8373cde0ebe20d3ed3}{Labmu}}(libint2::ShellPair::PrimPairData\&,libint2::Shell\&,libint2::Shell\&,}
+\DoxyCodeLine{95                  \textcolor{keywordtype}{double}*,\textcolor{keywordtype}{double}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int});}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97     \textcolor{comment}{/* Momentum Integrals */}}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99     \textcolor{comment}{// electric dipole (velocity gauge) integrals of a shell pair}}
+\DoxyCodeLine{100     \textcolor{keyword}{static} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_ab0a55839558745b296d72d8815c3d89f}{computeEDipoleE1\_vel}}(libint2::ShellPair\&,}
+\DoxyCodeLine{101                       libint2::Shell\&, libint2::Shell\&);}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     \textcolor{comment}{// contracted momentum integral}}
+\DoxyCodeLine{104     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a9b7ada049e0add227afb41acdb2d9a2b}{Momentummu}}(libint2::ShellPair\&,libint2::Shell\&,libint2::Shell\&,}
+\DoxyCodeLine{105                       \textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int});}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     \textcolor{comment}{/* Electric Dipole Integrals */}}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109     \textcolor{comment}{// electric dipole (length gauge) integrals of a shell pair}}
+\DoxyCodeLine{110     \textcolor{keyword}{static} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_adab366db599a1f0d9438e02c653898aa}{computeDipoleE1}}(libint2::ShellPair\&,}
+\DoxyCodeLine{111                                          libint2::Shell\&,libint2::Shell\&);}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     \textcolor{comment}{// contracted electric dipole integrals}}
+\DoxyCodeLine{114     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_ab65d82b1f482b319fe81091d00ff31be}{DipoleE1}}(libint2::ShellPair\&,libint2::Shell\&,libint2::Shell\&,}
+\DoxyCodeLine{115                     \textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int});}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     \textcolor{comment}{/* Electric Quadrupole Integrals */}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \textcolor{comment}{// electric quadrupole integrals of a shell pair}}
+\DoxyCodeLine{120     \textcolor{keyword}{static} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_ae7cfea3def08fc553af31261d5791874}{computeEQuadrupoleE2\_vel}}(libint2::ShellPair\&,}
+\DoxyCodeLine{121                                                   libint2::Shell\&,libint2::Shell\&); }
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123     \textcolor{comment}{// contracted electric quadrupole integrals of a shell pair}}
+\DoxyCodeLine{124     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a33f644940a4c4da0bf23653c116d51bd}{QuadrupoleE2\_vel}}( libint2::ShellPair\&,libint2::Shell\&,libint2::Shell\&,}
+\DoxyCodeLine{125                              \textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int} );}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127     \textcolor{comment}{/* Magnetic Dipole Integrals */}}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129     \textcolor{comment}{// contracted magnetic dipole integral}}
+\DoxyCodeLine{130     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a29612b550080f0635b3cf763f9ef99cc}{MDipoleM1}}( libint2::ShellPair\&,libint2::Shell\&,libint2::Shell\&,}
+\DoxyCodeLine{131                       \textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int} );}
+\DoxyCodeLine{132   }
+\DoxyCodeLine{133     \textcolor{comment}{/* Magnetic Quadrupole Integrals */}}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135     \textcolor{comment}{// contracted magnetic quadrupole integrals }}
+\DoxyCodeLine{136     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a131475303ea4536ce60e2cdcbdeee051}{QuadrupoleM2\_vel}}( libint2::ShellPair\&,libint2::Shell\&,libint2::Shell\&,}
+\DoxyCodeLine{137                              \textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int} );}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139     \textcolor{comment}{// magnetic quadrupole integrals of a shell pair}}
+\DoxyCodeLine{140     \textcolor{keyword}{static} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_ab5a59ba60d4fa2c1edeac4ccf9b11836}{computeMQuadrupoleM2\_vel}}( libint2::ShellPair\&,}
+\DoxyCodeLine{141                                                   libint2::Shell\&,libint2::Shell\&);}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143     \textcolor{comment}{/* Electric Octupole Integrals */}}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145     \textcolor{comment}{// electric octupole integrals of a shell pair}}
+\DoxyCodeLine{146     \textcolor{keyword}{static} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_ad7d24702b7bbfcd2ae4b40e13e3d9e98}{computeEOctupoleE3\_vel}}( libint2::ShellPair\&,}
+\DoxyCodeLine{147                                                  libint2::Shell\&,libint2::Shell\&);}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149     \textcolor{comment}{// contracted electric octupole integral}}
+\DoxyCodeLine{150     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a5873d7b488f8358f423445d0e3c5c2dc}{OctupoleE3\_vel}}( libint2::ShellPair\&,libint2::Shell\&,libint2::Shell\&,}
+\DoxyCodeLine{151                            \textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int},\textcolor{keywordtype}{int} );}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     \textcolor{comment}{/* Nuclear Potential Integrals */}}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155     \textcolor{comment}{// contracted nuclear potential integrals of a shell pair}}
+\DoxyCodeLine{156     \textcolor{keyword}{static} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_ae0b5fa7734f88dd548371934f73c6b4d}{computePotentialV}}(}
+\DoxyCodeLine{157       \textcolor{keyword}{const} std::vector<libint2::Shell> \&, libint2::ShellPair\&, }
+\DoxyCodeLine{158       libint2::Shell\&,libint2::Shell\&,\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&); }
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160     \textcolor{keyword}{static} \textcolor{keyword}{inline} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a00d2e189bd774b426bd4313fbc77c802}{computePotentialV}}(}
+\DoxyCodeLine{161       libint2::ShellPair\& pair, libint2::Shell \&s1, libint2::Shell \&s2, }
+\DoxyCodeLine{162       \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& molecule) \{}
+\DoxyCodeLine{163     }
+\DoxyCodeLine{164       std::vector<libint2::Shell> dummy;}
+\DoxyCodeLine{165       \textcolor{keywordflow}{return} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_ae0b5fa7734f88dd548371934f73c6b4d}{computePotentialV}}(dummy,pair,s1,s2,molecule);}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167     \}}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169     \textcolor{comment}{// horizontal recursion of contracted nuclear potential integrals}}
+\DoxyCodeLine{170     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_ab9dc503d663720cf1e710eeb401d8829}{hRRVab}}(\textcolor{keyword}{const} std::vector<libint2::Shell>\&,libint2::ShellPair\&,}
+\DoxyCodeLine{171                   libint2::Shell\&,libint2::Shell\&,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&);}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173     \textcolor{comment}{// Bra vertical recursion of uncontracted nuclear potential integrals}}
+\DoxyCodeLine{174     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a1a515753e8043fd90478e7fd4576872a}{vRRVa0}}(\textcolor{keyword}{const} std::vector<libint2::Shell>\&,}
+\DoxyCodeLine{175                   libint2::ShellPair::PrimPairData\&,libint2::Shell\&,}
+\DoxyCodeLine{176                   \textcolor{keywordtype}{double}*,\textcolor{keywordtype}{double}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int});}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178     \textcolor{comment}{// horizontal recursion of uncontracted nuclear potential integrals}}
+\DoxyCodeLine{179     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_ac0e1b089b74e65aa5fd4c7a222e04c8e}{hRRiPPVab}}(\textcolor{keyword}{const} std::vector<libint2::Shell>\&,}
+\DoxyCodeLine{180       libint2::ShellPair::PrimPairData\&, libint2::Shell\&,}
+\DoxyCodeLine{181       libint2::Shell\&, \textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{double}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int},\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&);}
+\DoxyCodeLine{182     }
+\DoxyCodeLine{183     \textcolor{comment}{// Ket vertical recursion of uncontracted nuclear potential integrals}}
+\DoxyCodeLine{184     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_af8729e177456f65386cb8b0e5b75302e}{vRRV0b}}(\textcolor{keyword}{const} std::vector<libint2::Shell>\&,}
+\DoxyCodeLine{185                   libint2::ShellPair::PrimPairData\&,libint2::Shell\&,}
+\DoxyCodeLine{186                   \textcolor{keywordtype}{double}*,\textcolor{keywordtype}{double}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&);}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188     \textcolor{comment}{/* Spin-\/Orbit Integrals */}}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190     \textcolor{comment}{// spin orbit integrals of a shell pair}}
+\DoxyCodeLine{191     \textcolor{keyword}{static} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a43273899686afd7d30a939e45bcfe596}{computeSL}}(}
+\DoxyCodeLine{192       \textcolor{keyword}{const} std::vector<libint2::Shell>\&, libint2::ShellPair\&,}
+\DoxyCodeLine{193       libint2::Shell\&,libint2::Shell\&,\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&);}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195     \textcolor{keyword}{static} \textcolor{keyword}{inline} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_af9927ba8afd53e40ca7453195d62e379}{computeSL}}(libint2::ShellPair \&pair,}
+\DoxyCodeLine{196       libint2::Shell \&s1, libint2::Shell \&s2,\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& mol) \{}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198       std::vector<libint2::Shell> dummy;}
+\DoxyCodeLine{199       \textcolor{keywordflow}{return} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a43273899686afd7d30a939e45bcfe596}{computeSL}}(dummy,pair,s1,s2,mol);}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201     \}}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203     \textcolor{comment}{// vertical recursion of uncontracted spin orbit integral}}
+\DoxyCodeLine{204     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a3dea084cf8522a5370536a66611749fb}{Slabmu}}(\textcolor{keyword}{const} std::vector<libint2::Shell>\&, }
+\DoxyCodeLine{205       libint2::ShellPair::PrimPairData\&,libint2::Shell\&,}
+\DoxyCodeLine{206       libint2::Shell\&, \textcolor{keywordtype}{double}*,\textcolor{keywordtype}{double}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int},\textcolor{keywordtype}{int},\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&);}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208     \textcolor{comment}{/* pV dot p Integrals */}}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210     \textcolor{comment}{// pV dot p integrals of a shell pair}}
+\DoxyCodeLine{211     \textcolor{keyword}{static} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a87bc61b5b2ed50a4e9b7d98e5443c2ab}{computepVdotp}}(}
+\DoxyCodeLine{212       \textcolor{keyword}{const} std::vector<libint2::Shell>\&, libint2::ShellPair\&,}
+\DoxyCodeLine{213       libint2::Shell\&,libint2::Shell\&,\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&);}
+\DoxyCodeLine{214 }
+\DoxyCodeLine{215     \textcolor{keyword}{static} \textcolor{keyword}{inline} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a9364505e6428de143df44a1130607ba7}{computepVdotp}}(}
+\DoxyCodeLine{216       libint2::ShellPair \&pair, libint2::Shell \&s1, libint2::Shell \&s2,}
+\DoxyCodeLine{217       \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& mol) \{}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219       std::vector<libint2::Shell> dummy;}
+\DoxyCodeLine{220       \textcolor{keywordflow}{return} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a87bc61b5b2ed50a4e9b7d98e5443c2ab}{computepVdotp}}(dummy,pair,s1,s2,mol);}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222     \}}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224     \textcolor{comment}{// vertical recursion of uncontracted pV dot p integrals}}
+\DoxyCodeLine{225     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_aaaccf2b80a26627afcf5fb4b3cdefb2c}{pVpab}}(\textcolor{keyword}{const} std::vector<libint2::Shell>\&,}
+\DoxyCodeLine{226       libint2::ShellPair::PrimPairData\&,libint2::Shell\&,}
+\DoxyCodeLine{227       libint2::Shell\&, \textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int}*,\textcolor{keywordtype}{int},\textcolor{keywordtype}{int},\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&); }
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231     \textcolor{comment}{/* ERI Integrals */}}
+\DoxyCodeLine{232 }
+\DoxyCodeLine{233     \textcolor{comment}{// Bottumup HGP}}
+\DoxyCodeLine{234     \textcolor{keyword}{static} std::vector<double> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a874c033d28bb335fe22a93ad1a1c223e}{BottomupHGP}}( }
+\DoxyCodeLine{235       libint2::ShellPair \&, libint2::ShellPair \&, }
+\DoxyCodeLine{236       libint2::Shell \&, libint2::Shell \&,}
+\DoxyCodeLine{237       libint2::Shell \&, libint2::Shell \&,}
+\DoxyCodeLine{238       \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{239 }
+\DoxyCodeLine{240     \textcolor{comment}{// HBL 4C:  Bottomup HGP for 2e SOC ERI}}
+\DoxyCodeLine{241     \textcolor{keyword}{static} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a7361e4d7a556ef51a4ebd881fbd46275}{BottomupHGP\_TwoESP}}( }
+\DoxyCodeLine{242       libint2::ShellPair \&, libint2::ShellPair \&, }
+\DoxyCodeLine{243       libint2::Shell \&, libint2::Shell \&,}
+\DoxyCodeLine{244       libint2::Shell \&, libint2::Shell \&);}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{246     \textcolor{comment}{// SS shit : gradient of AC atoms for ERI}}
+\DoxyCodeLine{247     \textcolor{keyword}{static} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_affd8f2575bf04c149f481213b89f7032}{ACderiv}}( }
+\DoxyCodeLine{248       libint2::ShellPair \&, libint2::ShellPair \&, }
+\DoxyCodeLine{249       libint2::Shell \&, libint2::Shell \&,}
+\DoxyCodeLine{250       libint2::Shell \&, libint2::Shell \&);}
+\DoxyCodeLine{251 }
+\DoxyCodeLine{252     \textcolor{comment}{// SS: bottom up integral code }}
+\DoxyCodeLine{253     \textcolor{keyword}{static} std::vector<double> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a1d733d7b1e17e2ad2e878fe1b495b309}{bottomupERI}}(libint2::ShellPair\&,}
+\DoxyCodeLine{254       libint2::ShellPair\&,libint2::Shell\&,libint2::Shell\&,libint2::Shell\&,libint2::Shell\&,}
+\DoxyCodeLine{255       \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int} );}
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257     \textcolor{comment}{// compute ERI of shell pair 1 and 2}}
+\DoxyCodeLine{258     \textcolor{keyword}{static} std::vector<double> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a67969a1bf4d1068ec3f21abd548b71b7}{computeERIabcd}}(libint2::ShellPair\&,libint2::ShellPair\&,}
+\DoxyCodeLine{259       libint2::Shell\&,libint2::Shell\&,libint2::Shell\&,libint2::Shell\&);}
+\DoxyCodeLine{260 }
+\DoxyCodeLine{261     \textcolor{comment}{// horizontal recursion (ab||cd)}}
+\DoxyCodeLine{262     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a9a4b86d24cb618a1a54a11905e41ca5a}{twoehRRabcd}}( libint2::ShellPair\&, libint2::ShellPair\&, libint2::Shell\& , }
+\DoxyCodeLine{263       libint2::Shell\&, libint2::Shell\&, libint2::Shell\&, }
+\DoxyCodeLine{264       std::vector<std::vector<std::vector<double>>>\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, }
+\DoxyCodeLine{265       \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267     \textcolor{comment}{// horizontal recursion (a0||cd)}}
+\DoxyCodeLine{268     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a60965790324ec55812882879fe6669e9}{twoehRRa0cd}}( libint2::ShellPair\&, libint2::ShellPair\&, libint2::Shell\& , }
+\DoxyCodeLine{269       libint2::Shell\&, libint2::Shell\&, libint2::Shell\&, }
+\DoxyCodeLine{270       std::vector<std::vector<std::vector<double>>>\&,\textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{271 }
+\DoxyCodeLine{272     \textcolor{comment}{// vertical recursion (a0||c0)}}
+\DoxyCodeLine{273     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a620c99c8ac938a6ad08586579093e875}{twoevRRa0c0}}( libint2::ShellPair::PrimPairData\&, }
+\DoxyCodeLine{274       libint2::ShellPair::PrimPairData\&, std::vector<double>\&, }
+\DoxyCodeLine{275       libint2::Shell\& , libint2::Shell\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{276 }
+\DoxyCodeLine{277     \textcolor{comment}{// vertical recursion (a0||00)}}
+\DoxyCodeLine{278     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a26e1b15315a970999c31f1c7abc1912e}{twoevRRa000}}( libint2::ShellPair::PrimPairData\&, }
+\DoxyCodeLine{279       libint2::ShellPair::PrimPairData\&, std::vector<double>\&, }
+\DoxyCodeLine{280       libint2::Shell\& , \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{281 }
+\DoxyCodeLine{282     \textcolor{comment}{// (ss||ss) type integral with m=0 }}
+\DoxyCodeLine{283     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a8de49bd207783a24721ead70faed9d21}{twoeSSSS0}}( libint2::ShellPair\&, libint2::ShellPair\&, libint2::Shell\&,}
+\DoxyCodeLine{284       libint2::Shell\&, libint2::Shell\&, libint2::Shell\& ); }
+\DoxyCodeLine{285 }
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288     \textcolor{comment}{// compute gauge integral of shell pair 1 and 2}}
+\DoxyCodeLine{289     \textcolor{keyword}{static} std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_ac89fa6412cdb545a4b4a10354a79a217}{computegaugeabcd}}(libint2::ShellPair\&,libint2::ShellPair\&,}
+\DoxyCodeLine{290       libint2::Shell\&,libint2::Shell\&,libint2::Shell\&,libint2::Shell\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int} );}
+\DoxyCodeLine{291 }
+\DoxyCodeLine{292     \textcolor{comment}{// horizontal recursion (ab||cd)}}
+\DoxyCodeLine{293     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_ae6f597d2ebc0238ccfdddcd6598e780f}{twoegaugehRRabcd}}( libint2::ShellPair\&, libint2::ShellPair\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, }
+\DoxyCodeLine{294       libint2::Shell\& , libint2::Shell\&, libint2::Shell\&, libint2::Shell\&, }
+\DoxyCodeLine{295       std::vector<std::vector<std::vector<double>>>\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, }
+\DoxyCodeLine{296       \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{297 }
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299     \textcolor{comment}{// horizontal recursion (a0||cd)}}
+\DoxyCodeLine{300     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a9d854cb59bdd9f98ebea26133bbf7f4e}{twoegaugehRRa0cd}}( libint2::ShellPair\&, libint2::ShellPair\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, }
+\DoxyCodeLine{301       libint2::Shell\& ,  libint2::Shell\&, libint2::Shell\&, libint2::Shell\&, }
+\DoxyCodeLine{302       std::vector<std::vector<std::vector<double>>>\&,\textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304     \textcolor{comment}{// vertical recursion (a0||c0)}}
+\DoxyCodeLine{305     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a10e9e606dcb2d995a17dd429f6bdafbb}{twoegaugevRRa0c0}}( libint2::ShellPair::PrimPairData\&,  }
+\DoxyCodeLine{306       libint2::ShellPair::PrimPairData\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, std::vector<double>\&, }
+\DoxyCodeLine{307       libint2::Shell\& , libint2::Shell\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{308 }
+\DoxyCodeLine{309     \textcolor{comment}{// vertical recursion (a0||00)}}
+\DoxyCodeLine{310     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a582212ad9bf2b745b3b6515f3d5e1dda}{twoegaugevRRa000}}( libint2::ShellPair::PrimPairData\&,  }
+\DoxyCodeLine{311       libint2::ShellPair::PrimPairData\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, std::vector<double>\&, }
+\DoxyCodeLine{312       libint2::Shell\& , libint2::Shell\& ,\textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314     \textcolor{comment}{// (ss||ss) type integral with m=0 }}
+\DoxyCodeLine{315     \textcolor{keyword}{static} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a3493f75d9751c820120b0805a37c0545}{twoegaugeSSSS0}}( libint2::ShellPair\&, libint2::ShellPair\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, }
+\DoxyCodeLine{316       libint2::Shell\&, libint2::Shell\&, libint2::Shell\&, libint2::Shell\& ); }
+\DoxyCodeLine{317 }
+\DoxyCodeLine{318     \textcolor{comment}{// SS shit : gradient of AC atoms for gauge integral}}
+\DoxyCodeLine{319     \textcolor{keyword}{static} std::vector<std::vector<std::vector<double>>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_af43548a17703f4fe8d8d73d2a011cd4f}{ACgaugederiv}}( }
+\DoxyCodeLine{320       libint2::ShellPair \&, libint2::ShellPair \&, }
+\DoxyCodeLine{321       libint2::Shell \&, libint2::Shell \&,}
+\DoxyCodeLine{322       libint2::Shell \&, libint2::Shell \&);}
+\DoxyCodeLine{323 }
+\DoxyCodeLine{324     \textcolor{comment}{// SS shit : gradient of BC atoms for gauge integral}}
+\DoxyCodeLine{325     \textcolor{keyword}{static} std::vector<std::vector<std::vector<double>>> \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a0cb300c05c08fc6f2a4ba431f0946565}{BCgaugederiv}}( }
+\DoxyCodeLine{326       libint2::ShellPair \&, libint2::ShellPair \&, }
+\DoxyCodeLine{327       libint2::Shell \&, libint2::Shell \&,}
+\DoxyCodeLine{328       libint2::Shell \&, libint2::Shell \&);}
+\DoxyCodeLine{329 }
+\DoxyCodeLine{330     \textcolor{comment}{// Taylor intrapolation of Boys function}}
+\DoxyCodeLine{331     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1RealGTOIntEngine_a51c6397579bb0170289c3a68741c81db}{computeFmTTaylor}}(\textcolor{keywordtype}{double}*,\textcolor{keywordtype}{double},\textcolor{keywordtype}{int},\textcolor{keywordtype}{int});}
+\DoxyCodeLine{332 }
+\DoxyCodeLine{333   \};}
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335 }
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337 }
+\DoxyCodeLine{338 }
+\DoxyCodeLine{339   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine}{ComplexGIAOIntEngine}} \{}
+\DoxyCodeLine{340     \textcolor{comment}{/* 1e GIAO Integrals */}}
+\DoxyCodeLine{341  }
+\DoxyCodeLine{342     \textcolor{comment}{// local one body GIAO integral start}}
+\DoxyCodeLine{343     \textcolor{keyword}{static} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_afcdb59877e13424436884785d6b5465d}{computeGIAOOverlapS}}(libint2::ShellPair\&,}
+\DoxyCodeLine{344       libint2::Shell\&, libint2::Shell\&, \textcolor{keywordtype}{double}* );}
+\DoxyCodeLine{345 }
+\DoxyCodeLine{346     \textcolor{comment}{// calculate the uncontracted overlap of (s||s) type for a shellpair}}
+\DoxyCodeLine{347     \textcolor{keyword}{static} std::vector<dcomplex> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_af25c8e43eeea244ef8150e509353fa12}{computecompOverlapss}}( libint2::ShellPair\&, }
+\DoxyCodeLine{348       libint2::Shell\&, \textcolor{keywordtype}{double}*, libint2::Shell\&, \textcolor{keywordtype}{double}* ); }
+\DoxyCodeLine{349 }
+\DoxyCodeLine{350     \textcolor{comment}{// complex overlap horizontal recursion for contracted case}}
+\DoxyCodeLine{351     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_aa460d880f32a986e0261ebadbe710ea9}{comphRRSab}}( libint2::ShellPair\&, libint2::Shell\&, }
+\DoxyCodeLine{352       libint2::Shell\&, \textcolor{keywordtype}{double}*, std::vector<dcomplex>\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*); }
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354     \textcolor{comment}{// complex overlap horizontal recursion iPP specific for uncontracted case}}
+\DoxyCodeLine{355     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_ab4973985a08cdc8659e30dd8c078d20f}{comphRRiPPSab}}( libint2::ShellPair::PrimPairData\&, libint2::Shell\&, }
+\DoxyCodeLine{356       libint2::Shell\&, \textcolor{keywordtype}{double}*, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{357 }
+\DoxyCodeLine{358     \textcolor{comment}{// complex overlap vertical recursion for uncontracted case}}
+\DoxyCodeLine{359     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_aee3f7a27d2de0db6e8a004d878b67a97}{compvRRSa0}}(libint2::ShellPair::PrimPairData\&, libint2::Shell\&, \textcolor{keywordtype}{double}*, }
+\DoxyCodeLine{360       \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{361 }
+\DoxyCodeLine{362     \textcolor{comment}{// complex overlap vertical recursion for uncontracted case}}
+\DoxyCodeLine{363     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a5af4eb9ec1b1a5ae1a4f4d74221a157b}{compvRRS0b}}(libint2::ShellPair::PrimPairData\&, libint2::Shell\&, \textcolor{keywordtype}{double}*, }
+\DoxyCodeLine{364       \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{365 }
+\DoxyCodeLine{366     \textcolor{comment}{// compute a shell pair of GIAO Kinetic integral}}
+\DoxyCodeLine{367     \textcolor{keyword}{static} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a4a2c90384c2ebddb25983d0d4231eb05}{computeGIAOKineticT}}( libint2::ShellPair\&,}
+\DoxyCodeLine{368       libint2::Shell\&, libint2::Shell\&, \textcolor{keywordtype}{double}* );}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370     \textcolor{comment}{// calculate the uncontracted kinetic integrals of (s||s) type for a shellpair}}
+\DoxyCodeLine{371     \textcolor{keyword}{static} std::vector<dcomplex> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a6b6eb657735299210dfccd7033695707}{computecompKineticss}}( libint2::ShellPair\&,}
+\DoxyCodeLine{372       libint2::Shell\&, \textcolor{keywordtype}{double}*, libint2::Shell\&, \textcolor{keywordtype}{double}*, std::vector<dcomplex>\& );}
+\DoxyCodeLine{373 }
+\DoxyCodeLine{374     \textcolor{comment}{// complex kinetic integral for contracted case}}
+\DoxyCodeLine{375     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a5ee6e09ccb8fd8066960547b3a6f2844}{compRRTab}}( libint2::ShellPair\&, libint2::Shell\&, }
+\DoxyCodeLine{376       libint2::Shell\&, \textcolor{keywordtype}{double}*, \textcolor{keywordtype}{double}*, std::vector<dcomplex>\&, }
+\DoxyCodeLine{377       std::vector<dcomplex>\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* ); }
+\DoxyCodeLine{378 }
+\DoxyCodeLine{379     \textcolor{comment}{// compute a shell pair of GIAO angular momentum integral }}
+\DoxyCodeLine{380     \textcolor{keyword}{static} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a91713002c8c626c3d7706c0f79f856ac}{computeGIAOAngularL}}( libint2::ShellPair\&,}
+\DoxyCodeLine{381       libint2::Shell\&, libint2::Shell\&, \textcolor{keywordtype}{double}* );}
+\DoxyCodeLine{382 }
+\DoxyCodeLine{383     \textcolor{comment}{// complex angular momentum integral for uncontracted case}}
+\DoxyCodeLine{384     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a3fab998568068a91aaf24c681d941954}{compLabmu}}( libint2::ShellPair::PrimPairData\&, }
+\DoxyCodeLine{385       libint2::Shell\&,libint2::Shell\&, \textcolor{keywordtype}{double}*, \textcolor{keywordtype}{double}*, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, }
+\DoxyCodeLine{386       \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int} );}
+\DoxyCodeLine{387 }
+\DoxyCodeLine{388     \textcolor{comment}{// compute a shell pair of GIAO electric dipole length gauge integral}}
+\DoxyCodeLine{389     \textcolor{keyword}{static} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a88fa69331899c7624e116cac9e04889a}{computeGIAOEDipoleE1\_len}}( libint2::ShellPair\&,}
+\DoxyCodeLine{390       libint2::Shell\&, libint2::Shell\&, \textcolor{keywordtype}{double}* );}
+\DoxyCodeLine{391 }
+\DoxyCodeLine{392     \textcolor{comment}{// complex GIAO electric dipole length gauge}}
+\DoxyCodeLine{393     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a1c257ee2eb80ac4572a9cc01663a8d80}{compDipoleD1\_len}}( libint2::ShellPair\&, }
+\DoxyCodeLine{394       libint2::Shell\&,libint2::Shell\&, \textcolor{keywordtype}{double}*, std::vector<dcomplex>\&, }
+\DoxyCodeLine{395       \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int} );}
+\DoxyCodeLine{396 }
+\DoxyCodeLine{397     \textcolor{comment}{// compute a shell pair of GIAO electric quadrupole momentum length gauge integral }}
+\DoxyCodeLine{398     \textcolor{keyword}{static} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a1e7b885cc0a9eeeb2603721820ea912a}{computeGIAOEQuadrupoleE2\_len}}( libint2::ShellPair\&,}
+\DoxyCodeLine{399       libint2::Shell\&, libint2::Shell\&, \textcolor{keywordtype}{double}* );}
+\DoxyCodeLine{400 }
+\DoxyCodeLine{401     \textcolor{comment}{// complex GIAO electric quadrupole momentum length gauge }}
+\DoxyCodeLine{402     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_afbf94a91272a8dbd07428973aa45828b}{compQuadrupoleE2\_len}}( libint2::ShellPair\&, }
+\DoxyCodeLine{403       libint2::Shell\&,libint2::Shell\&, \textcolor{keywordtype}{double}*, std::vector<dcomplex>\&, }
+\DoxyCodeLine{404       \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int},\textcolor{keywordtype}{int} );}
+\DoxyCodeLine{405 }
+\DoxyCodeLine{406     \textcolor{comment}{// compute a shell pair of GIAO electric octupole length gauge integral}}
+\DoxyCodeLine{407     \textcolor{keyword}{static} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_af24ddc4bcfdbc14269e18a79f35cbec7}{computeGIAOEOctupoleE3\_len}}( libint2::ShellPair\&,}
+\DoxyCodeLine{408       libint2::Shell\&, libint2::Shell\&, \textcolor{keywordtype}{double}* );}
+\DoxyCodeLine{409 }
+\DoxyCodeLine{410     \textcolor{comment}{// complex GIAO electric octupole length gauge}}
+\DoxyCodeLine{411     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a042152309aedcf4a4b39bd5dc384b3c0}{compOctupoleE3\_len}}( libint2::ShellPair\&, }
+\DoxyCodeLine{412       libint2::Shell\&,libint2::Shell\&, \textcolor{keywordtype}{double}*, std::vector<dcomplex>\&, }
+\DoxyCodeLine{413       \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int},\textcolor{keywordtype}{int},\textcolor{keywordtype}{int} );}
+\DoxyCodeLine{414 }
+\DoxyCodeLine{415     \textcolor{comment}{// compute a shell pair of GIAO Potential integral}}
+\DoxyCodeLine{416     \textcolor{keyword}{static} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_ac28ef90a0b8a665122e83e9a971dcdd9}{computeGIAOPotentialV}}( \textcolor{keyword}{const} std::vector<libint2::Shell>\&,}
+\DoxyCodeLine{417       libint2::ShellPair\&, libint2::Shell\&, libint2::Shell\&, \textcolor{keywordtype}{double}*, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&);}
+\DoxyCodeLine{418 }
+\DoxyCodeLine{419     \textcolor{keyword}{static} \textcolor{keyword}{inline} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a6eb37b1d0014e221f5ac36604238f3ad}{computeGIAOPotentialV}}( libint2::ShellPair\& pair, }
+\DoxyCodeLine{420       libint2::Shell \&s1, libint2::Shell \&s2, \textcolor{keywordtype}{double} *H, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& mol) \{}
+\DoxyCodeLine{421 }
+\DoxyCodeLine{422       std::vector<libint2::Shell> dummy;}
+\DoxyCodeLine{423       \textcolor{keywordflow}{return} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_ac28ef90a0b8a665122e83e9a971dcdd9}{computeGIAOPotentialV}}(dummy,pair,s1,s2,H,mol);}
+\DoxyCodeLine{424     \}   }
+\DoxyCodeLine{425 }
+\DoxyCodeLine{426     \textcolor{comment}{// complex potential horizontal recursion for contracted case}}
+\DoxyCodeLine{427     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_ada07619bef9f7d182ab5aaee287e23d0}{comphRRVab}}( \textcolor{keyword}{const} std::vector<libint2::Shell>\&,}
+\DoxyCodeLine{428       libint2::ShellPair\&, libint2::Shell\&, }
+\DoxyCodeLine{429       libint2::Shell\&, \textcolor{keywordtype}{double}*, std::vector<dcomplex>\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&); }
+\DoxyCodeLine{430 }
+\DoxyCodeLine{431     \textcolor{comment}{// complex potential vertical recursion for uncontracted case}}
+\DoxyCodeLine{432     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a97671f5535c50305b43899f23272a334}{compvRRVa0}}( \textcolor{keyword}{const} std::vector<libint2::Shell>\&,}
+\DoxyCodeLine{433       libint2::ShellPair::PrimPairData\&, libint2::Shell\&, \textcolor{keywordtype}{double}*, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}*, \textcolor{keywordtype}{double}*,}
+\DoxyCodeLine{434       \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{435 }
+\DoxyCodeLine{436     \textcolor{comment}{// complex potential horizontal recursion for uncontracted case}}
+\DoxyCodeLine{437     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_ac0d3039eb3a4b08bf1a62e54c09fa8d3}{comphRRiPPVab}}( \textcolor{keyword}{const} std::vector<libint2::Shell>\&,}
+\DoxyCodeLine{438       libint2::ShellPair::PrimPairData\&, libint2::Shell\&, }
+\DoxyCodeLine{439       libint2::Shell\&, \textcolor{keywordtype}{double}*, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&); }
+\DoxyCodeLine{440 }
+\DoxyCodeLine{441     \textcolor{comment}{// complex potential vertical recursion for uncontracted case}}
+\DoxyCodeLine{442     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_af4061984580e5c913af006e8146bc776}{compvRRV0b}}( \textcolor{keyword}{const} std::vector<libint2::Shell>\&,}
+\DoxyCodeLine{443       libint2::ShellPair::PrimPairData\&, libint2::Shell\&, \textcolor{keywordtype}{double}*, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}*, \textcolor{keywordtype}{double}*,}
+\DoxyCodeLine{444       \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{445 }
+\DoxyCodeLine{446     \textcolor{comment}{/* Complex Spin-\/Orbit Integrals */}}
+\DoxyCodeLine{447 }
+\DoxyCodeLine{448     \textcolor{comment}{// spin orbit integrals of a shell pair  }}
+\DoxyCodeLine{449     \textcolor{keyword}{static} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a944c134b2e81f65eecd1e52db8653edf}{computeGIAOSL}}( }
+\DoxyCodeLine{450       \textcolor{keyword}{const} std::vector<libint2::Shell>\&, libint2::ShellPair\&, libint2::Shell\&, }
+\DoxyCodeLine{451       libint2::Shell\&, \textcolor{keywordtype}{double}*, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& ); }
+\DoxyCodeLine{452   }
+\DoxyCodeLine{453     \textcolor{keyword}{static} \textcolor{keyword}{inline} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a876bbe3c495c75f12d3bd68f61d8970f}{computeGIAOSL}}( }
+\DoxyCodeLine{454       libint2::ShellPair \&pair, libint2::Shell \&s1, libint2::Shell \&s2, \textcolor{keywordtype}{double}* H, }
+\DoxyCodeLine{455       \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& mol ) \{}
+\DoxyCodeLine{456       }
+\DoxyCodeLine{457       std::vector<libint2::Shell> dummy;   }
+\DoxyCodeLine{458       \textcolor{keywordflow}{return} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a944c134b2e81f65eecd1e52db8653edf}{computeGIAOSL}}(dummy,pair,s1,s2,H,mol);}
+\DoxyCodeLine{459 }
+\DoxyCodeLine{460     \}  }
+\DoxyCodeLine{461 }
+\DoxyCodeLine{462     \textcolor{comment}{// calculate spin orbit integral for an element}}
+\DoxyCodeLine{463     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_af092bbf1b8dd8ed433aa3a7f8e12ee45}{compSLabmu}}(\textcolor{keyword}{const} std::vector<libint2::Shell>\&, }
+\DoxyCodeLine{464       libint2::ShellPair::PrimPairData\&, libint2::Shell\&, libint2::Shell\&, \textcolor{keywordtype}{double}*, }
+\DoxyCodeLine{465       \textcolor{keywordtype}{double}*, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& );   }
+\DoxyCodeLine{466 }
+\DoxyCodeLine{467 }
+\DoxyCodeLine{468     \textcolor{comment}{/* GIAO pV dot p Integrals */} }
+\DoxyCodeLine{469 }
+\DoxyCodeLine{470     \textcolor{comment}{// spin free integrals of a shell pair  }}
+\DoxyCodeLine{471     \textcolor{keyword}{static} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a81b85681e599f11b4ea944a353c61ed3}{computeGIAOpVdotp}}( }
+\DoxyCodeLine{472       \textcolor{keyword}{const} std::vector<libint2::Shell>\&, libint2::ShellPair\&, libint2::Shell\&, }
+\DoxyCodeLine{473       libint2::Shell\&, \textcolor{keywordtype}{double}*, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& ); }
+\DoxyCodeLine{474   }
+\DoxyCodeLine{475     \textcolor{keyword}{static} \textcolor{keyword}{inline} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a1fd8631c5ce7fefc0bc8504145edacc3}{computeGIAOpVdotp}}( }
+\DoxyCodeLine{476       libint2::ShellPair \&pair, libint2::Shell \&s1, libint2::Shell \&s2, \textcolor{keywordtype}{double}* H, }
+\DoxyCodeLine{477       \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& mol ) \{}
+\DoxyCodeLine{478       }
+\DoxyCodeLine{479       std::vector<libint2::Shell> dummy;   }
+\DoxyCodeLine{480       \textcolor{keywordflow}{return} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a81b85681e599f11b4ea944a353c61ed3}{computeGIAOpVdotp}}(dummy,pair,s1,s2,H,mol);}
+\DoxyCodeLine{481 }
+\DoxyCodeLine{482     \}  }
+\DoxyCodeLine{483 }
+\DoxyCodeLine{484     \textcolor{comment}{// calculate spin free integral for an element}}
+\DoxyCodeLine{485     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a84ebf4b648134c4a306a26ec628caeeb}{comppVpab}}(\textcolor{keyword}{const} std::vector<libint2::Shell>\&, }
+\DoxyCodeLine{486       libint2::ShellPair::PrimPairData\&, libint2::Shell\&, libint2::Shell\&, \textcolor{keywordtype}{double}*, }
+\DoxyCodeLine{487       \textcolor{keywordtype}{double}*, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& );   }
+\DoxyCodeLine{488 }
+\DoxyCodeLine{489     \textcolor{comment}{/* GIAO X2C integrals */}}
+\DoxyCodeLine{490     \textcolor{keyword}{static} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_afdaa8bba8f3b0d1470283653391f0d79}{computeGIAOrVr}}(}
+\DoxyCodeLine{491       \textcolor{keyword}{const} std::vector<libint2::Shell>\&, libint2::ShellPair\&, libint2::Shell\&, }
+\DoxyCodeLine{492       libint2::Shell\&, \textcolor{keywordtype}{double}*, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& ); }
+\DoxyCodeLine{493       }
+\DoxyCodeLine{494     \textcolor{keyword}{static} \textcolor{keyword}{inline} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a8324c24875cbb2ccdaad945861e7818a}{computeGIAOrVrp}}( }
+\DoxyCodeLine{495       libint2::ShellPair \&pair, libint2::Shell \&s1, libint2::Shell \&s2, \textcolor{keywordtype}{double}* H, }
+\DoxyCodeLine{496       \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& mol ) \{}
+\DoxyCodeLine{497       }
+\DoxyCodeLine{498       std::vector<libint2::Shell> dummy;   }
+\DoxyCodeLine{499       \textcolor{keywordflow}{return} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_afdaa8bba8f3b0d1470283653391f0d79}{computeGIAOrVr}}(dummy,pair,s1,s2,H,mol);}
+\DoxyCodeLine{500 }
+\DoxyCodeLine{501     \}  }
+\DoxyCodeLine{502 }
+\DoxyCodeLine{503     \textcolor{comment}{// complex rVr integral for contracted case}}
+\DoxyCodeLine{504     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a97c560580c657a8b4f81dab0c58e056d}{comprVr}}( \textcolor{keyword}{const} std::vector<libint2::Shell>\&,}
+\DoxyCodeLine{505       libint2::ShellPair\&, libint2::Shell\&, }
+\DoxyCodeLine{506       libint2::Shell\&, \textcolor{keywordtype}{double}*, std::vector<dcomplex>\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, }
+\DoxyCodeLine{507       \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&); }
+\DoxyCodeLine{508 }
+\DoxyCodeLine{509 }
+\DoxyCodeLine{510 }
+\DoxyCodeLine{511     \textcolor{comment}{// pVr + rVp integrals of a shell pair  }}
+\DoxyCodeLine{512     \textcolor{keyword}{static} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a6a4f8501ba3b747699c6327a28cd1e7a}{computeGIAOpVrprVp}}( }
+\DoxyCodeLine{513       \textcolor{keyword}{const} std::vector<libint2::Shell>\&, libint2::ShellPair\&, libint2::Shell\&, }
+\DoxyCodeLine{514       libint2::Shell\&, \textcolor{keywordtype}{double}*, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& ); }
+\DoxyCodeLine{515   }
+\DoxyCodeLine{516     \textcolor{keyword}{static} \textcolor{keyword}{inline} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_ace284941ef9afaeb0a604f9d3ccb4de0}{computeGIAOpVrprVp}}( }
+\DoxyCodeLine{517       libint2::ShellPair \&pair, libint2::Shell \&s1, libint2::Shell \&s2, \textcolor{keywordtype}{double}* H, }
+\DoxyCodeLine{518       \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& mol ) \{}
+\DoxyCodeLine{519       }
+\DoxyCodeLine{520       std::vector<libint2::Shell> dummy;   }
+\DoxyCodeLine{521       \textcolor{keywordflow}{return} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a6a4f8501ba3b747699c6327a28cd1e7a}{computeGIAOpVrprVp}}(dummy,pair,s1,s2,H,mol);}
+\DoxyCodeLine{522 }
+\DoxyCodeLine{523     \}  }
+\DoxyCodeLine{524 }
+\DoxyCodeLine{525     \textcolor{comment}{// calculate pVr + rVp integral for an element in uncontracted case }}
+\DoxyCodeLine{526     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a615e1b58ee99781433132ece4a9e32e4}{comppVrprVp}}(\textcolor{keyword}{const} std::vector<libint2::Shell>\&, }
+\DoxyCodeLine{527       libint2::ShellPair::PrimPairData\&, libint2::Shell\&, libint2::Shell\&, \textcolor{keywordtype}{double}*, }
+\DoxyCodeLine{528       \textcolor{keywordtype}{double}*, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& );   }
+\DoxyCodeLine{529 }
+\DoxyCodeLine{530 }
+\DoxyCodeLine{531     \textcolor{comment}{// pVr -\/ rVp integrals of a shell pair  }}
+\DoxyCodeLine{532     \textcolor{keyword}{static} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a628a95bbf71e466f389366cb28612e20}{computeGIAOpVrmrVp}}( }
+\DoxyCodeLine{533       \textcolor{keyword}{const} std::vector<libint2::Shell>\&, libint2::ShellPair\&, libint2::Shell\&, }
+\DoxyCodeLine{534       libint2::Shell\&, \textcolor{keywordtype}{double}*, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& ); }
+\DoxyCodeLine{535   }
+\DoxyCodeLine{536     \textcolor{keyword}{static} \textcolor{keyword}{inline} std::vector<std::vector<dcomplex>> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_ac47a84e8c724861ef26e937e11c36ba7}{computeGIAOpVrmrVp}}( }
+\DoxyCodeLine{537       libint2::ShellPair \&pair, libint2::Shell \&s1, libint2::Shell \&s2, \textcolor{keywordtype}{double}* H, }
+\DoxyCodeLine{538       \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& mol ) \{}
+\DoxyCodeLine{539       }
+\DoxyCodeLine{540       std::vector<libint2::Shell> dummy;   }
+\DoxyCodeLine{541       \textcolor{keywordflow}{return} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a628a95bbf71e466f389366cb28612e20}{computeGIAOpVrmrVp}}(dummy,pair,s1,s2,H,mol);}
+\DoxyCodeLine{542 }
+\DoxyCodeLine{543     \}  }
+\DoxyCodeLine{544 }
+\DoxyCodeLine{545     \textcolor{comment}{// calculate pVr -\/ rVp integral for an element in uncontracted case }}
+\DoxyCodeLine{546     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_afb464c03a87fe976a134aaaf3c09e508}{comppVrmrVp}}(\textcolor{keyword}{const} std::vector<libint2::Shell>\&, }
+\DoxyCodeLine{547       libint2::ShellPair::PrimPairData\&, libint2::Shell\&, libint2::Shell\&, \textcolor{keywordtype}{double}*, }
+\DoxyCodeLine{548       \textcolor{keywordtype}{double}*, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& );   }
+\DoxyCodeLine{549 }
+\DoxyCodeLine{550 }
+\DoxyCodeLine{551 }
+\DoxyCodeLine{552 }
+\DoxyCodeLine{553 }
+\DoxyCodeLine{554 }
+\DoxyCodeLine{555     \textcolor{comment}{/* GIAO ERI */}}
+\DoxyCodeLine{556     }
+\DoxyCodeLine{557     \textcolor{comment}{// compute GIAO ERI of shell pair 1 and 2 }}
+\DoxyCodeLine{558     \textcolor{keyword}{static} std::vector<dcomplex> \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a06a5f01f62023f1c08f6d01ff21667c0}{computeGIAOERIabcd}}(libint2::ShellPair\&,libint2::ShellPair\&,}
+\DoxyCodeLine{559       libint2::Shell\&,libint2::Shell\&,libint2::Shell\&,libint2::Shell\&,\textcolor{keywordtype}{double}* );}
+\DoxyCodeLine{560 }
+\DoxyCodeLine{561     \textcolor{comment}{// complex horizontal recursion (ab||cd)}}
+\DoxyCodeLine{562     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a09a0c387a013f83911abe75c248cb2d1}{twoecomphRRabcd}}( libint2::ShellPair\&, libint2::ShellPair\&, libint2::Shell\& ,}
+\DoxyCodeLine{563       libint2::Shell\&, libint2::Shell\&, libint2::Shell\&, }
+\DoxyCodeLine{564       std::vector<std::vector<std::vector<dcomplex>>>\&, \textcolor{keywordtype}{double}*, \textcolor{keywordtype}{double}*, }
+\DoxyCodeLine{565       std::vector<dcomplex>\&, std::vector<dcomplex>\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{566 }
+\DoxyCodeLine{567     \textcolor{comment}{// complex horizontal recursion (a0||cd)}}
+\DoxyCodeLine{568     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a42b390e84409c9c472ac2d94479a87a7}{twoecomphRRa0cd}}( libint2::ShellPair\&, libint2::ShellPair\&, libint2::Shell\& ,}
+\DoxyCodeLine{569       libint2::Shell\&, libint2::Shell\&, libint2::Shell\&, }
+\DoxyCodeLine{570       std::vector<std::vector<std::vector<dcomplex>>>\&, \textcolor{keywordtype}{double}*, \textcolor{keywordtype}{double}*, }
+\DoxyCodeLine{571       std::vector<dcomplex>\&, std::vector<dcomplex>\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{572 }
+\DoxyCodeLine{573     \textcolor{comment}{// complex vertical recursion (a0||c0)}}
+\DoxyCodeLine{574     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_ab87ab08311ec3fb67a684e6540b30426}{twoecompvRRa0c0}}(libint2::ShellPair::PrimPairData\&,libint2::ShellPair::PrimPairData\&, }
+\DoxyCodeLine{575       std::vector<dcomplex>\&, \textcolor{keywordtype}{double}*, \textcolor{keywordtype}{double}*, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, }
+\DoxyCodeLine{576       libint2::Shell\& , libint2::Shell\&, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}*, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{577 }
+\DoxyCodeLine{578     \textcolor{comment}{// complex vertical recursion (a0||00)}}
+\DoxyCodeLine{579     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a7e8410ebb5209ceee9d581711048c875}{twoecompvRRa000}}( libint2::ShellPair::PrimPairData\&, libint2::ShellPair::PrimPairData\&, }
+\DoxyCodeLine{580       std::vector<dcomplex>\&, \textcolor{keywordtype}{double}*, \textcolor{keywordtype}{double}*, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, }
+\DoxyCodeLine{581       libint2::Shell\& , \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}* );}
+\DoxyCodeLine{582 }
+\DoxyCodeLine{583     \textcolor{comment}{// complex SSSS integral (contracted)}}
+\DoxyCodeLine{584     \textcolor{keyword}{static} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_aef661640ded2193d06734d4ba4bd583e}{twoecompSSSS0}}( libint2::ShellPair\&, libint2::ShellPair\&, libint2::Shell\& ,}
+\DoxyCodeLine{585       libint2::Shell\&, libint2::Shell\&, libint2::Shell\&, }
+\DoxyCodeLine{586       std::vector<std::vector<std::vector<dcomplex>>>\&, }
+\DoxyCodeLine{587       std::vector<dcomplex>\&, std::vector<dcomplex>\& );}
+\DoxyCodeLine{588 }
+\DoxyCodeLine{589     \textcolor{comment}{// compute complex boys function }}
+\DoxyCodeLine{590     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1ComplexGIAOIntEngine_a0626dfc9d96263ed32f72590c449cc89}{computecompFmT}}(\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}*,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}},\textcolor{keywordtype}{int},\textcolor{keywordtype}{int});}
+\DoxyCodeLine{591 }
+\DoxyCodeLine{592   \};}
+\DoxyCodeLine{593 \}}
+\DoxyCodeLine{594 }
+
+\end{DoxyCode}

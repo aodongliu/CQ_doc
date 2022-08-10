@@ -1,0 +1,66 @@
+\hypertarget{math_8hpp_source}{}\doxysection{math.\+hpp}
+\label{math_8hpp_source}\index{include/util/math.hpp@{include/util/math.hpp}}
+\mbox{\hyperlink{math_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{34   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{35   \textcolor{keyword}{inline} T \mbox{\hyperlink{namespaceChronusQ_afe3e41cf782d225ede67d9450e48aa34}{SmartConj}}(\textcolor{keyword}{const} T\&);}
+\DoxyCodeLine{36  }
+\DoxyCodeLine{37   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{38   \textcolor{keyword}{inline} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_afe3e41cf782d225ede67d9450e48aa34}{SmartConj}}(\textcolor{keyword}{const} \textcolor{keywordtype}{double} \&x) \{ \textcolor{keywordflow}{return} x; \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{41   \textcolor{keyword}{inline} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \mbox{\hyperlink{namespaceChronusQ_afe3e41cf782d225ede67d9450e48aa34}{SmartConj}}(\textcolor{keyword}{const} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \&x) \{ \textcolor{keywordflow}{return} std::conj(x); \}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \textcolor{comment}{// Combinaiton}}
+\DoxyCodeLine{44   \textcolor{keyword}{inline} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}}(\textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8a8e3950a3df211dc18e0099561e0f6f0a}{K}})\{}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46         \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8a8e3950a3df211dc18e0099561e0f6f0a}{K}} > N) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Can not do combinations of choosing a K larger than N"{}}); }
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keywordtype}{size\_t} KMin = std::min(\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8a8e3950a3df211dc18e0099561e0f6f0a}{K}}, N -\/ \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8a8e3950a3df211dc18e0099561e0f6f0a}{K}}); }
+\DoxyCodeLine{49     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}}, Comb\_tmp;}
+\DoxyCodeLine{50     }
+\DoxyCodeLine{51     \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}} = 1ul;}
+\DoxyCodeLine{52     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 1ul; i <= KMin; i ++) \{}
+\DoxyCodeLine{53       Comb\_tmp = \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}};}
+\DoxyCodeLine{54       \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}} *= (N -\/ KMin + i);}
+\DoxyCodeLine{55       \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}} /= i;}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57       \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}}  < Comb\_tmp) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Overflow of long unsign int detected in Comb"{}}); }
+\DoxyCodeLine{58     \}}
+\DoxyCodeLine{59     }
+\DoxyCodeLine{60     \textcolor{keywordflow}{return} \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}};}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62   \}; \textcolor{comment}{// Combination}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

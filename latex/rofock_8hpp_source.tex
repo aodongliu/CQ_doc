@@ -1,0 +1,74 @@
+\hypertarget{rofock_8hpp_source}{}\doxysection{rofock.\+hpp}
+\label{rofock_8hpp_source}\index{include/fockbuilder/rofock.hpp@{include/fockbuilder/rofock.hpp}}
+\mbox{\hyperlink{rofock_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{fockbuilder_8hpp}{fockbuilder.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{34   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{35   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1ROFock}{ROFock}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsT,IntsT> \{}
+\DoxyCodeLine{36   \textcolor{keyword}{public}:}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{39     \mbox{\hyperlink{classChronusQ_1_1ROFock_a74fa28f386f1322918342fb7e518dbeb}{ROFock}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{40     \mbox{\hyperlink{classChronusQ_1_1ROFock_a75ccf060363a011fcb4865102335bd61}{ROFock}}(\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} hamiltonianOptions):}
+\DoxyCodeLine{41         \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsT,IntsT>(hamiltonianOptions) \{\}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{comment}{// Different type}}
+\DoxyCodeLine{44     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{45     \mbox{\hyperlink{classChronusQ_1_1ROFock_afa6814a21513b04333357cbb4a829a97}{ROFock}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ROFock}{ROFock<MatsU,IntsT>}} \&other):}
+\DoxyCodeLine{46         \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsT,IntsT>(other)\{\}}
+\DoxyCodeLine{47     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{48     \mbox{\hyperlink{classChronusQ_1_1ROFock_ae1c7838beb0683d3c8298b6106ab5909}{ROFock}}(\mbox{\hyperlink{classChronusQ_1_1ROFock}{ROFock<MatsU,IntsT>}} \&\&other):}
+\DoxyCodeLine{49         \mbox{\hyperlink{classChronusQ_1_1FockBuilder}{FockBuilder}}<MatsT,IntsT>(other)\{\}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{comment}{// Virtual destructor}}
+\DoxyCodeLine{52     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1ROFock_af60c6b1ad32c1ac61873449dd5b6edbd}{\string~ROFock}}() \{\}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{comment}{// Public member functions}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{comment}{// Form an Roothaan's effective fock for ROHF (see include/fockbuilder/ROFock/impl.hpp for docs)}}
+\DoxyCodeLine{58     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ROFock_a311546d33055e93d21916777528ef5ef}{rohfFock}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&);}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     \textcolor{comment}{// Form a fock matrix (see include/fockbuilder/impl.hpp for docs)}}
+\DoxyCodeLine{61     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ROFock_a6ce39a0bebba2f5ef56b002134b193cf}{formFock}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}} \&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false}, \textcolor{keywordtype}{double} xHFX = 1.);}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \textcolor{comment}{// Compute the gradient}}
+\DoxyCodeLine{64     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ROFock_af1abb407433d21bad6ea5af4469c4618}{getGrad}}() \{}
+\DoxyCodeLine{65       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}ROHF Fock gradient NYI"{}},std::cout);}
+\DoxyCodeLine{66     \}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69   \};}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,198 @@
+\hypertarget{integrals_8hpp_source}{}\doxysection{integrals.\+hpp}
+\label{integrals_8hpp_source}\index{include/integrals.hpp@{include/integrals.hpp}}
+\mbox{\hyperlink{integrals_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{files_8hpp}{util/files.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{realtime_2fields_8hpp}{fields.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gradints_8hpp}{particleintegrals/gradints.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{onepints_8hpp}{particleintegrals/onepints.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{twopints_8hpp}{particleintegrals/twopints.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{multipoleints_8hpp}{particleintegrals/multipoleints.hpp}}>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6e}{TPI\_TRANSFORMATION\_ALG}} \{}
+\DoxyCodeLine{37       \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea23f85e1ce32b3156975f33061df36077}{INCORE\_N6}} = 0, \textcolor{comment}{// hack thru ss.formfock}}
+\DoxyCodeLine{38       \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea8b867f203314c3678405cb4c1217c24c}{DIRECT\_N6}} = 1, \textcolor{comment}{// hack thru ss.formfock}}
+\DoxyCodeLine{39       \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea36b82d7f3d298fd8d0bb7c867d0b932a}{INCORE\_N5}} = 2,}
+\DoxyCodeLine{40       \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea9eb1f7e40eeaf05988e1ebd4d046fbc8}{DIRECT\_N5}} = 3, \textcolor{comment}{// NYI}}
+\DoxyCodeLine{41   \};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{47   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{IntegralsCollection}} \{}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     std::map<std::string, std::shared\_ptr<ParticleIntegrals>> \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection_a4eb831e12f97629eb2e3676687c1e327}{integrals}};}
+\DoxyCodeLine{50     }
+\DoxyCodeLine{51     \textcolor{comment}{// Default copy and move ctors}}
+\DoxyCodeLine{52     \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection_a0021b94c16c4beae2b8134d577751705}{IntegralsCollection}}( \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{IntegralsCollection}} \& ) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{53     \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection_af39c1d37937d268882c8ae0e1060845b}{IntegralsCollection}}( \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{IntegralsCollection}} \&\& )      = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{54     \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{IntegralsCollection}}\& \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection_a6b7556eaa4be359e616be6f08da88da0}{operator=}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{IntegralsCollection}}\&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{55     \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection_abba75113a2492b065fdd497ef7bb0d1d}{IntegralsCollection}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{56     }
+\DoxyCodeLine{57     \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}> \textcolor{keyword}{class }AddT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{58     \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection_a6effec51a617cc2faa0f0c9957712610}{addIntegral}}(\textcolor{keyword}{const} std::string \& name, std::shared\_ptr<AddT<IntsT>> integral) \{}
+\DoxyCodeLine{59   }
+\DoxyCodeLine{60       \textcolor{keywordflow}{if} (this-\/>integrals.find(name) != \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection_a4eb831e12f97629eb2e3676687c1e327}{integrals}}.end()) \{ }
+\DoxyCodeLine{61         this-\/>integrals.erase(name);}
+\DoxyCodeLine{62       \}}
+\DoxyCodeLine{63      }
+\DoxyCodeLine{64       \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{65         this-\/>integrals.emplace(name, std::dynamic\_pointer\_cast<ParticleIntegrals>(integral));}
+\DoxyCodeLine{66       \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{67         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(  name + \textcolor{stringliteral}{"{} is not an ParticleIntegrals"{}}); }
+\DoxyCodeLine{68       \}}
+\DoxyCodeLine{69      }
+\DoxyCodeLine{70     \}; \textcolor{comment}{// add to ints}}
+\DoxyCodeLine{71   }
+\DoxyCodeLine{72     \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}> \textcolor{keyword}{class }GetT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{73     std::shared\_ptr<GetT<IntsT>> \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection_a7449be2e17c370bb9899e280516a5831}{getIntegral}}(\textcolor{keyword}{const} std::string \& name)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{74       }
+\DoxyCodeLine{75       \textcolor{keywordflow}{if}(this-\/>integrals.find(name) == \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection_a4eb831e12f97629eb2e3676687c1e327}{integrals}}.end()) \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{76       }
+\DoxyCodeLine{77           std::shared\_ptr<GetT<IntsT>> integral;}
+\DoxyCodeLine{78     }
+\DoxyCodeLine{79       \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{80         integral = std::dynamic\_pointer\_cast<GetT<IntsT>>(this-\/>integrals.at(name));}
+\DoxyCodeLine{81       \} \textcolor{keywordflow}{catch} (...) \{}
+\DoxyCodeLine{82         \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{83       \}}
+\DoxyCodeLine{84     }
+\DoxyCodeLine{85       \textcolor{keywordflow}{return} integral; }
+\DoxyCodeLine{86     \}; \textcolor{comment}{// get from ints}}
+\DoxyCodeLine{87     }
+\DoxyCodeLine{88     \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection_a4face37fb35af532a8557345100c0316}{clear}}() \{ \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection_a4eb831e12f97629eb2e3676687c1e327}{integrals}}.clear(); \} }
+\DoxyCodeLine{89   }
+\DoxyCodeLine{90   \}; \textcolor{comment}{// struct IntegralsCollection}}
+\DoxyCodeLine{91   }
+\DoxyCodeLine{99   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1IntegralsBase}{IntegralsBase}} \{}
+\DoxyCodeLine{100     }
+\DoxyCodeLine{101     \mbox{\hyperlink{classChronusQ_1_1SafeFile}{SafeFile}} \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_ad9bc5017ef7d6e4b8d5b5dc0180511bc}{savFile}}; }
+\DoxyCodeLine{102     \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_ab02798cd06360caf30b6be7aa0af053d}{options\_}};}
+\DoxyCodeLine{103     \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6e}{TPI\_TRANSFORMATION\_ALG}} \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_a636db91b40a4ce04c20bc1ec65b0968d}{TPITransAlg}} = \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea8b867f203314c3678405cb4c1217c24c}{TPI\_TRANSFORMATION\_ALG::DIRECT\_N6}};}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105     \textcolor{comment}{// Default copy and move ctors}}
+\DoxyCodeLine{106     \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_adba4d0f029102e55b39bec29700496ac}{IntegralsBase}}( \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1IntegralsBase}{IntegralsBase}} \& ) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{107     \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_a4f4ef1f4b1005f0ed3ba69d0cb0168b0}{IntegralsBase}}( \mbox{\hyperlink{structChronusQ_1_1IntegralsBase}{IntegralsBase}} \&\& )      = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{108     \mbox{\hyperlink{structChronusQ_1_1IntegralsBase}{IntegralsBase}}\& \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_a3f420dcebc5e361b27bd106a584766f0}{operator=}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1IntegralsBase}{IntegralsBase}}\&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{109     \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_a55a12f0b4a2be97483cd2666e2e4dbf8}{IntegralsBase}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     \textcolor{comment}{// Interfaces}}
+\DoxyCodeLine{112     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_afdd03249f2222c76662c9141eac09fbd}{computeAOOneP}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol,}
+\DoxyCodeLine{113         \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{114         \textcolor{keyword}{const} std::vector<std::pair<OPERATOR,size\_t>>\&,}
+\DoxyCodeLine{115         \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\&) = 0;}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_a9094481f5a9885cc9c3c456c953f1279}{computeAOTwoE}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&) = 0;}
+\DoxyCodeLine{118     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_accc72d9ec666ee9b8d95124fb9556cd4}{computeAOTwoE}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&) = 0;}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_ac5fab84c70f28b92265b02fe1e935123}{computeGradInts}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&,}
+\DoxyCodeLine{121         \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&, \textcolor{keyword}{const} std::vector<std::pair<OPERATOR,size\_t>>\&, \textcolor{keyword}{const}}
+\DoxyCodeLine{122         \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\&) = 0;}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124     \textcolor{comment}{// Print (see src/aointegrals/print.cxx for docs)}}
+\DoxyCodeLine{125     \textcolor{keyword}{template} <\textcolor{keyword}{typename} G> }
+\DoxyCodeLine{126       \textcolor{keyword}{friend} std::ostream \& \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_a9ee4f7588c5858dbca4c383b5959f30a}{operator<<}}(std::ostream \&, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1IntegralsBase}{IntegralsBase}}\& );}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128     \textcolor{keyword}{virtual} \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_ab3b0f467e157cba9ba1ae7f4ae84be8b}{\string~IntegralsBase}}() \{\}}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130   \};}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{143   \textcolor{keyword}{template} <\textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{144   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} : \textcolor{keyword}{public} \mbox{\hyperlink{structChronusQ_1_1IntegralsBase}{IntegralsBase}} \{}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146   \textcolor{keyword}{public}:}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148     \textcolor{comment}{// 1-\/particle storage}}
+\DoxyCodeLine{149     std::shared\_ptr<OnePInts<IntsT>> \mbox{\hyperlink{classChronusQ_1_1Integrals_a49bbc35b0710b354db3fd6785f1d5cbe}{overlap}}   = \textcolor{keyword}{nullptr};   }
+\DoxyCodeLine{150     std::shared\_ptr<OnePInts<IntsT>> \mbox{\hyperlink{classChronusQ_1_1Integrals_a9072986ec084d98503ed4e6a0cd5b506}{kinetic}}   = \textcolor{keyword}{nullptr};   }
+\DoxyCodeLine{151     std::shared\_ptr<OnePInts<IntsT>> \mbox{\hyperlink{classChronusQ_1_1Integrals_a2998d9d3d05a41c8eb5c60a7768e01d0}{potential}} = \textcolor{keyword}{nullptr};   }
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     std::shared\_ptr<MultipoleInts<IntsT>> \mbox{\hyperlink{classChronusQ_1_1Integrals_a0511a6a05ac474687b789c6d515512be}{lenElectric}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{154     std::shared\_ptr<MultipoleInts<IntsT>> \mbox{\hyperlink{classChronusQ_1_1Integrals_acc1d574fc3419df58fbeb5c7dfe5e925}{velElectric}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{155     std::shared\_ptr<MultipoleInts<IntsT>> \mbox{\hyperlink{classChronusQ_1_1Integrals_a82d40103f806dc7883570d2d78bdf3da}{magnetic}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157     \textcolor{comment}{// 2-\/particle storage}}
+\DoxyCodeLine{158     std::shared\_ptr<TwoPInts<IntsT>> \mbox{\hyperlink{classChronusQ_1_1Integrals_ac474387d4fd4f3371bc77855ad150d8c}{TPI}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160     \textcolor{comment}{// Gradient storage}}
+\DoxyCodeLine{161     std::shared\_ptr<GradInts<OnePInts,IntsT>> \mbox{\hyperlink{classChronusQ_1_1Integrals_a4f4203711c72b87976d74ba81e232544}{gradOverlap}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{162     std::shared\_ptr<GradInts<OnePInts,IntsT>> \mbox{\hyperlink{classChronusQ_1_1Integrals_a58d6f5183917bd32bfeebfae22023d15}{gradKinetic}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{163     std::shared\_ptr<GradInts<OnePInts,IntsT>> \mbox{\hyperlink{classChronusQ_1_1Integrals_a4a2857cdfcfa3a91a71160de3f6e5826}{gradPotential}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165     std::shared\_ptr<GradInts<TwoPInts,IntsT>> \mbox{\hyperlink{classChronusQ_1_1Integrals_a3d7d494038c9008f94638491db97115f}{gradERI}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167     \textcolor{comment}{// miscellaneous storage}}
+\DoxyCodeLine{168     \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{IntegralsCollection}} \mbox{\hyperlink{classChronusQ_1_1Integrals_a1a3f9b9c60c8bfe105097c6161096cec}{misc}};}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{171     \mbox{\hyperlink{classChronusQ_1_1Integrals_aed8aadbda5a1a313341bd75f07398bc6}{Integrals}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173     \mbox{\hyperlink{classChronusQ_1_1Integrals_aac79e5f7c5e8249f4cb7be57cbfa7371}{Integrals}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} \&) = \textcolor{keywordflow}{default}; \textcolor{comment}{// Copy constructor}}
+\DoxyCodeLine{174     \mbox{\hyperlink{classChronusQ_1_1Integrals_a9e7b7286cb2f24ba2d06a1c76f542254}{Integrals}}(\mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} \&\&)      = \textcolor{keywordflow}{default}; \textcolor{comment}{// Move constructor}}
+\DoxyCodeLine{175     \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}}\& \mbox{\hyperlink{classChronusQ_1_1Integrals_a78d33747963dfc8e69ac84e181fc0cea}{operator=}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}}\&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177     \textcolor{comment}{// Destructor.}}
+\DoxyCodeLine{178     \mbox{\hyperlink{classChronusQ_1_1Integrals_a34d238b9b60002a9106c10181b23a909}{\string~Integrals}}() \{\}}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180     \textcolor{comment}{// Integral evaluation}}
+\DoxyCodeLine{181     \textcolor{comment}{// Evaluate the 1-\/particle ints (general)}}
+\DoxyCodeLine{182     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Integrals_ad82f2455375bf592a5e92469a3d8c444}{computeAOOneP}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol,}
+\DoxyCodeLine{183         \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{184         \textcolor{keyword}{const} std::vector<std::pair<OPERATOR,size\_t>>\&,}
+\DoxyCodeLine{185         \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\&);}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Integrals_a3cc34892865985c8ac0fed987d16b7f1}{computeAOTwoE}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\& basis, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& mol,}
+\DoxyCodeLine{188       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& emPert) \{}
+\DoxyCodeLine{189       \mbox{\hyperlink{classChronusQ_1_1Integrals_ac474387d4fd4f3371bc77855ad150d8c}{TPI}}-\/>computeAOInts(basis, mol, emPert, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554aafe7a7f3e7a054d992c707c63f674c08}{ELECTRON\_REPULSION}},}
+\DoxyCodeLine{190                          \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_ab02798cd06360caf30b6be7aa0af053d}{options\_}});}
+\DoxyCodeLine{191     \}}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Integrals_a7e32464dd2954d168bd015911131382f}{computeAOTwoE}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\& basis, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\& basis2, }
+\DoxyCodeLine{194                                \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& mol, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& emPert) \{}
+\DoxyCodeLine{195       \mbox{\hyperlink{classChronusQ_1_1Integrals_ac474387d4fd4f3371bc77855ad150d8c}{TPI}}-\/>computeAOInts(basis, basis2, mol, emPert, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a4e181fd5da079c77d15f3e2d63999caa}{EP\_ATTRACTION}},}
+\DoxyCodeLine{196                          \mbox{\hyperlink{structChronusQ_1_1IntegralsBase_ab02798cd06360caf30b6be7aa0af053d}{options\_}});}
+\DoxyCodeLine{197     \}}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Integrals_af61a8042af88d9fa2e3f8dcbe10122eb}{computeGradInts}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&,}
+\DoxyCodeLine{200         \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&, \textcolor{keyword}{const} std::vector<std::pair<OPERATOR,size\_t>>\&, \textcolor{keyword}{const}}
+\DoxyCodeLine{201         \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}}\&);}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{204     \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}}<\textcolor{keyword}{typename} std::conditional<}
+\DoxyCodeLine{205     (std::is\_same<IntsT, dcomplex>::value or}
+\DoxyCodeLine{206      std::is\_same<MatsT, dcomplex>::value),}
+\DoxyCodeLine{207     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \textcolor{keywordtype}{double}>::type> \mbox{\hyperlink{classChronusQ_1_1Integrals_af325a2eab75d567059936fc1842004e6}{transform}}(}
+\DoxyCodeLine{208         \textcolor{keyword}{const} std::vector<OPERATOR>\&, \textcolor{keyword}{const} std::vector<std::string>\&,}
+\DoxyCodeLine{209         \textcolor{keywordtype}{char} TRANS, \textcolor{keyword}{const} MatsT* T, \textcolor{keywordtype}{int} NT, \textcolor{keywordtype}{int} LDT) \textcolor{keyword}{const};}
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211   \}; \textcolor{comment}{// class Integrals}}
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

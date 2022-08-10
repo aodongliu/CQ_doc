@@ -1,0 +1,54 @@
+\hypertarget{singleslater_2neoss_2impl_8hpp}{}\doxysection{include/singleslater/neoss/impl.hpp File Reference}
+\label{singleslater_2neoss_2impl_8hpp}\index{include/singleslater/neoss/impl.hpp@{include/singleslater/neoss/impl.hpp}}
+{\ttfamily \#include $<$singleslater/neoss.\+hpp$>$}\newline
+{\ttfamily \#include $<$singleslater/neoss/scf.\+hpp$>$}\newline
+{\ttfamily \#include $<$cerr.\+hpp$>$}\newline
+Include dependency graph for impl.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{singleslater_2neoss_2impl_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{singleslater_2neoss_2impl_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{singleslater_2neoss_2impl_8hpp_a69e0ea27762a82b23ba0edfe5da54424}{TRY\+\_\+\+REF}}(\+\_\+\+REF,  input,  output)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename MatsT , typename IntsT , typename MatsU $>$ }\\std\+::shared\+\_\+ptr$<$ Single\+Slater$<$ MatsT, IntsT $>$ $>$ \mbox{\hyperlink{namespaceChronusQ_a7bee28544fd1876184b3be727e1a1624}{Chronus\+Q\+::make\+New\+SS}} (const std\+::shared\+\_\+ptr$<$ Single\+Slater$<$ MatsU, IntsT $>$ $>$ \&old\+\_\+ss)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{singleslater_2neoss_2impl_8hpp_a69e0ea27762a82b23ba0edfe5da54424}\label{singleslater_2neoss_2impl_8hpp_a69e0ea27762a82b23ba0edfe5da54424}} 
+\index{impl.hpp@{impl.hpp}!TRY\_REF@{TRY\_REF}}
+\index{TRY\_REF@{TRY\_REF}!impl.hpp@{impl.hpp}}
+\doxysubsubsection{\texorpdfstring{TRY\_REF}{TRY\_REF}}
+{\footnotesize\ttfamily \#define TRY\+\_\+\+REF(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+REF,  }\item[{}]{input,  }\item[{}]{output }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \textcolor{keywordflow}{if}( output == \textcolor{keyword}{nullptr} ) \(\backslash\)}
+\DoxyCodeLine{    if( \textcolor{keyword}{auto} casted = std::dynamic\_pointer\_cast<\_REF<MatsU,IntsT>>(input) ) \(\backslash\)}
+\DoxyCodeLine{      output = std::dynamic\_pointer\_cast<SingleSlater<MatsT,IntsT>>( \(\backslash\)}
+\DoxyCodeLine{        std::make\_shared< \_REF<MatsT,IntsT> >(*casted) \(\backslash\)}
+\DoxyCodeLine{      );}
+
+\end{DoxyCode}

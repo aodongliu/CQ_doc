@@ -1,0 +1,127 @@
+\hypertarget{gtodirectreleri_8hpp_source}{}\doxysection{gtodirectreleri.\+hpp}
+\label{gtodirectreleri_8hpp_source}\index{include/particleintegrals/twopints/gtodirectreleri.hpp@{include/particleintegrals/twopints/gtodirectreleri.hpp}}
+\mbox{\hyperlink{gtodirectreleri_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of WashinGIAOn)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gtodirecttpi_8hpp}{particleintegrals/twopints/gtodirecttpi.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{31   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction}{GTODirectRelERIContraction}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1GTODirectTPIContraction}{GTODirectTPIContraction}}<MatsT,IntsT> \{}
+\DoxyCodeLine{32   }
+\DoxyCodeLine{33   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{34     }
+\DoxyCodeLine{35     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_ae86d02826b5528329d43ec9394615b51}{libcintCacheSize}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cb}{TWOBODY\_CONTRACTION\_TYPE}} \&, \textcolor{keywordtype}{int} *, \textcolor{keyword}{const} \textcolor{keywordtype}{int}, }
+\DoxyCodeLine{36       \textcolor{keywordtype}{int} *, \textcolor{keyword}{const} \textcolor{keywordtype}{int}, \textcolor{keywordtype}{double} *) \textcolor{keyword}{const}; }
+\DoxyCodeLine{37   }
+\DoxyCodeLine{38   \textcolor{keyword}{public}:}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     IntsT *\mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_acf7f20c7f07010dc65b30760dfc7a1ac}{ERI4DCB}} = \textcolor{keyword}{nullptr}; \textcolor{comment}{// Storage for 3-\/index DCB ERI intermediates}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_a0390ac59f02e9dbb5b0f85d9927c44a6}{GTODirectRelERIContraction}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{45     \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_a652de0b02bdbec58e6639edbea625ae1}{GTODirectRelERIContraction}}(\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts<IntsT>}} \&tpi):}
+\DoxyCodeLine{46       \mbox{\hyperlink{classChronusQ_1_1GTODirectTPIContraction}{GTODirectTPIContraction}}<MatsT,IntsT>(tpi) \{}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48       \textcolor{keywordflow}{if} (\textcolor{keyword}{typeid}(tpi) != \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1DirectTPI}{DirectTPI<IntsT>}}))}
+\DoxyCodeLine{49         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}GTODirectRelERIContraction expect a DirectTPI<IntsT> reference."{}});}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_ae2bd2f9a18b6ab0bb90925c8fe0d0886}{GTODirectRelERIContraction}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction}{GTODirectRelERIContraction}} \&other ):}
+\DoxyCodeLine{54       \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction}{GTODirectRelERIContraction}}(other.\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\_}}) \{\}}
+\DoxyCodeLine{55     \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_a396c39d6d5992fe0f703c0521266ba5d}{GTODirectRelERIContraction}}( \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction}{GTODirectRelERIContraction}} \&\&other ):}
+\DoxyCodeLine{56       \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction}{GTODirectRelERIContraction}}(other.\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\_}}) \{\}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     \textcolor{comment}{// Computation interfaces}}
+\DoxyCodeLine{59     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_a5955f7a723b23fd7162fe7edbbf8c8d2}{twoBodyContract}}(}
+\DoxyCodeLine{60         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{61         \textcolor{keyword}{const} \textcolor{keywordtype}{bool} screen,}
+\DoxyCodeLine{62         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}> \&list,}
+\DoxyCodeLine{63         \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{64         \textcolor{keyword}{const} \textcolor{keywordtype}{bool} computeExchange = \textcolor{keyword}{true})\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{65       }
+\DoxyCodeLine{66       \textcolor{keywordflow}{if} (computeExchange) \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_a958c5d3fc117a71037c81481da7dc719}{directScaffoldLibcint}}(comm, screen, list); }
+\DoxyCodeLine{67       \textcolor{keywordflow}{else} \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}twoBodyContract with Coulomb Only is deprecated "{}}); }
+\DoxyCodeLine{68      \textcolor{comment}{// directScaffold(comm, screen, list);}}
+\DoxyCodeLine{69 \textcolor{comment}{//      twoBodyContract3Index(comm, list);}}
+\DoxyCodeLine{70     \}}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_aaefbb3e24338e99af6ba7708cd25e1c0}{twoBodyRelContract}}(}
+\DoxyCodeLine{73         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{74         \textcolor{keyword}{const} \textcolor{keywordtype}{bool} screen,}
+\DoxyCodeLine{75         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyRelContraction}{TwoBodyRelContraction<MatsT>}}> \&list,}
+\DoxyCodeLine{76         \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{77         \textcolor{keyword}{const} \textcolor{keywordtype}{bool} computeExchange = \textcolor{keyword}{true})\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{78       }
+\DoxyCodeLine{79       \textcolor{keywordflow}{if} (computeExchange) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Exchange Term NYI in twoBodyRelContract"{}}); }
+\DoxyCodeLine{80       \textcolor{keywordflow}{else} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_adb354ad0582c068409f9c76c4b728ea9}{directRelScaffoldLibcintCoulombOnly}}(comm, screen, list);}
+\DoxyCodeLine{81     }
+\DoxyCodeLine{82     \}}
+\DoxyCodeLine{83     }
+\DoxyCodeLine{84     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_a1cd97cf0101c08cfd8a4b297a6bece3f}{directScaffold}}(}
+\DoxyCodeLine{85         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}},}
+\DoxyCodeLine{86         \textcolor{keyword}{const} \textcolor{keywordtype}{bool},}
+\DoxyCodeLine{87         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}>\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_a958c5d3fc117a71037c81481da7dc719}{directScaffoldLibcint}}(}
+\DoxyCodeLine{90         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}},}
+\DoxyCodeLine{91         \textcolor{keyword}{const} \textcolor{keywordtype}{bool},}
+\DoxyCodeLine{92         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}>\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_adb354ad0582c068409f9c76c4b728ea9}{directRelScaffoldLibcintCoulombOnly}}(}
+\DoxyCodeLine{95         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}},}
+\DoxyCodeLine{96         \textcolor{keyword}{const} \textcolor{keywordtype}{bool},}
+\DoxyCodeLine{97         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyRelContraction}{TwoBodyRelContraction<MatsT>}}>\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{98    }
+\DoxyCodeLine{99     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_aa450d1a91fe79be3ae93885d26e2d7ea}{directRelScaffoldLibcintSCRSize}}(}
+\DoxyCodeLine{100       \textcolor{keyword}{const} \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cb}{TWOBODY\_CONTRACTION\_TYPE}} \&,}
+\DoxyCodeLine{101       \textcolor{keyword}{const} \textcolor{keywordtype}{bool}) \textcolor{keyword}{const};}
+\DoxyCodeLine{102     }
+\DoxyCodeLine{103     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_aaa8acd346279d89c8c82c06f2f8c1967}{twoBodyContract3Index}}(}
+\DoxyCodeLine{104         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}},}
+\DoxyCodeLine{105         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}>\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_a50fdb307a06593ee402fe2a5833cad1a}{JContract3Index}}(}
+\DoxyCodeLine{108         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}},}
+\DoxyCodeLine{109         \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_ad7222858dcfa78677c3a4cf62b2206c0}{KContract3Index}}(}
+\DoxyCodeLine{112         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}},}
+\DoxyCodeLine{113         \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_aacd3345007c74ebc14461473529963b5}{computeERI3Index}}(\textcolor{keywordtype}{size\_t}); \textcolor{comment}{// Evaluate Spin-\/Own-\/Orbit ERIs in the CGTO basis}}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1GTODirectRelERIContraction_a5e53cdafc13c958535aba65ae3f77446}{\string~GTODirectRelERIContraction}}() \{\}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119   \}; \textcolor{comment}{// class GTODirectRelERIContraction}}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

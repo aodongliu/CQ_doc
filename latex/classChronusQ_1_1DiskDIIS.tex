@@ -1,0 +1,324 @@
+\hypertarget{classChronusQ_1_1DiskDIIS}{}\doxysection{ChronusQ\+::Disk\+DIIS\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1DiskDIIS}\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+
+
+A general \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} class for extrapolations based on a series of error metrics stored on disk.  
+
+
+
+
+{\ttfamily \#include $<$Disk\+DIIS.\+hpp$>$}
+
+
+
+Collaboration diagram for ChronusQ\+::Disk\+DIIS\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{classChronusQ_1_1DiskDIIS__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1DiskDIIS_ac76a7bc5041404fa01b06a81f7eed176}{Disk\+DIIS}} (int n, int maxdiis, \mbox{\hyperlink{classChronusQ_1_1SafeFile}{Safe\+File}} sav\+File, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem\+Manager)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a54b9e8fbb8a63abab3fed5a9e519dcae}{$\sim$\+Disk\+DIIS}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a4c3962c81f5a9a1a5e92f79c678bd9ab}{get\+Vector}} (T $\ast$vector, int dim, int off)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_aad246d2aa7e3dbb4407b0fa678cc9b56}{set\+Vector}} (T $\ast$vector, int dim, int off)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a58237ee0a6a74ebe719fd82079aff692}{set\+Error\+Vector}} (T $\ast$vector, int dim, int off)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a2d1a31b1215ae6efe8f96c45cfb58660}{extrapolate}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a6959231947822e4221006aae3fd734bf}{write\+\_\+error\+\_\+vector}} (T $\ast$vector)
+\begin{DoxyCompactList}\small\item\em write current error vector to disk \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a285ad7fe41ae51772118beea6820d191}{write\+\_\+vector}} (T $\ast$vector)
+\begin{DoxyCompactList}\small\item\em write current solution to disk \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a413d03d1729d7b48b665ff76904ed42c}{DIISCoefficients}} (int nvec)
+\begin{DoxyCompactList}\small\item\em determine \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} expansion coefficients \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1SafeFile}{Safe\+File}} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a9b5cfa673307d131bf5cf0040db85a54}{sav\+File\+\_\+}}
+\begin{DoxyCompactList}\small\item\em file manager \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a33b9f9b9039b4a39a69223ffd113ba99}{mem\+Manager\+\_\+}}
+\begin{DoxyCompactList}\small\item\em memory manager \end{DoxyCompactList}\item 
+T $\ast$ \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_ab605c3cc9952d321a4a266c956935f12}{tmp1\+\_\+}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} temporary storage 1. \end{DoxyCompactList}\item 
+T $\ast$ \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a4df989642d4806e60e1ac58d5dcb9dff}{tmp2\+\_\+}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} temporary storage 2. \end{DoxyCompactList}\item 
+unsigned \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_a9882de403d0a676fbfa164bb72781ba2}{maxdiis\+\_\+}}
+\begin{DoxyCompactList}\small\item\em maximum number of vectors \end{DoxyCompactList}\item 
+T $\ast$ \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_af2ffb878fbc46645a52d3c2c34bafdab}{diisvec\+\_\+}}
+\begin{DoxyCompactList}\small\item\em array containing \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} expansion coefficients \end{DoxyCompactList}\item 
+unsigned \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_abc9ac46603ea7b19460e413a2fcd0a50}{dimdiis\+\_\+}}
+\begin{DoxyCompactList}\small\item\em dimension of the solution/error vector \end{DoxyCompactList}\item 
+unsigned \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_aed15cc393277020276d183bf39042f8b}{diis\+\_\+iter\+\_\+}}
+\begin{DoxyCompactList}\small\item\em current number of \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} vectors \end{DoxyCompactList}\item 
+unsigned \mbox{\hyperlink{classChronusQ_1_1DiskDIIS_ac21e89a4eca17eab1d3f0e53b44249cd}{replace\+\_\+diis\+\_\+iter\+\_\+}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} vector to be replaced. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class Chronus\+Q\+::\+Disk\+DIIS$<$ T $>$}
+A general \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS}} class for extrapolations based on a series of error metrics stored on disk. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_ac76a7bc5041404fa01b06a81f7eed176}\label{classChronusQ_1_1DiskDIIS_ac76a7bc5041404fa01b06a81f7eed176}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!DiskDIIS@{DiskDIIS}}
+\index{DiskDIIS@{DiskDIIS}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{DiskDIIS()}{DiskDIIS()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::\+Disk\+DIIS (\begin{DoxyParamCaption}\item[{int}]{n,  }\item[{int}]{maxdiis,  }\item[{\mbox{\hyperlink{classChronusQ_1_1SafeFile}{Safe\+File}}}]{sav\+File,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem\+Manager }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} Constructor. Constructs a \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} object
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em n} & Dimension of extrapolation space. Two temporary arrays of length n will be created \\
+\hline
+\mbox{\texttt{ in}}  & {\em maxdiis} & Maximum number of error vectors \\
+\hline
+\mbox{\texttt{ in}}  & {\em sav\+File} & File manager \\
+\hline
+\mbox{\texttt{ in}}  & {\em mem\+Manager} & Memory manager \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_a54b9e8fbb8a63abab3fed5a9e519dcae}\label{classChronusQ_1_1DiskDIIS_a54b9e8fbb8a63abab3fed5a9e519dcae}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!````~DiskDIIS@{$\sim$DiskDIIS}}
+\index{````~DiskDIIS@{$\sim$DiskDIIS}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$DiskDIIS()}{~DiskDIIS()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::$\sim$\mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_a413d03d1729d7b48b665ff76904ed42c}\label{classChronusQ_1_1DiskDIIS_a413d03d1729d7b48b665ff76904ed42c}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!DIISCoefficients@{DIISCoefficients}}
+\index{DIISCoefficients@{DIISCoefficients}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{DIISCoefficients()}{DIISCoefficients()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::\+DIISCoefficients (\begin{DoxyParamCaption}\item[{int}]{nvec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+determine \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} expansion coefficients 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=303pt]{classChronusQ_1_1DiskDIIS_a413d03d1729d7b48b665ff76904ed42c_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_a2d1a31b1215ae6efe8f96c45cfb58660}\label{classChronusQ_1_1DiskDIIS_a2d1a31b1215ae6efe8f96c45cfb58660}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!extrapolate@{extrapolate}}
+\index{extrapolate@{extrapolate}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{extrapolate()}{extrapolate()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::extrapolate}
+
+extrapolate. solve \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} equations and extrapolation solution
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em vector} & Pointer to current error vector \\
+\hline
+\mbox{\texttt{ in}}  & {\em dim} & Number of elements to be copied to \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} \\
+\hline
+\mbox{\texttt{ in}}  & {\em off} & Offset in full array (if multiple quantities extrapolated simultaneously) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_a4c3962c81f5a9a1a5e92f79c678bd9ab}\label{classChronusQ_1_1DiskDIIS_a4c3962c81f5a9a1a5e92f79c678bd9ab}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!getVector@{getVector}}
+\index{getVector@{getVector}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getVector()}{getVector()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::get\+Vector (\begin{DoxyParamCaption}\item[{T $\ast$}]{vector,  }\item[{int}]{dim,  }\item[{int}]{off }\end{DoxyParamCaption})}
+
+get\+Vector. Get current solution
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em vector} & Pointer to target array \\
+\hline
+\mbox{\texttt{ in}}  & {\em dim} & Number of elements to be copied to vector \\
+\hline
+\mbox{\texttt{ in}}  & {\em off} & Offset in full array (if multiple quantities extrapolated simultaneously) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_a58237ee0a6a74ebe719fd82079aff692}\label{classChronusQ_1_1DiskDIIS_a58237ee0a6a74ebe719fd82079aff692}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!setErrorVector@{setErrorVector}}
+\index{setErrorVector@{setErrorVector}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setErrorVector()}{setErrorVector()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::set\+Error\+Vector (\begin{DoxyParamCaption}\item[{T $\ast$}]{vector,  }\item[{int}]{dim,  }\item[{int}]{off }\end{DoxyParamCaption})}
+
+set\+Error\+Vector. Set current error vector
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em vector} & Pointer to current error vector \\
+\hline
+\mbox{\texttt{ in}}  & {\em dim} & Number of elements to be copied to \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} \\
+\hline
+\mbox{\texttt{ in}}  & {\em off} & Offset in full array (if multiple quantities extrapolated simultaneously) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_aad246d2aa7e3dbb4407b0fa678cc9b56}\label{classChronusQ_1_1DiskDIIS_aad246d2aa7e3dbb4407b0fa678cc9b56}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!setVector@{setVector}}
+\index{setVector@{setVector}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setVector()}{setVector()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::set\+Vector (\begin{DoxyParamCaption}\item[{T $\ast$}]{vector,  }\item[{int}]{dim,  }\item[{int}]{off }\end{DoxyParamCaption})}
+
+set\+Vector. Set current solution
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em vector} & Pointer to current solution \\
+\hline
+\mbox{\texttt{ in}}  & {\em dim} & Number of elements to be copied to \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} \\
+\hline
+\mbox{\texttt{ in}}  & {\em off} & Offset in full array (if multiple quantities extrapolated simultaneously) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_a6959231947822e4221006aae3fd734bf}\label{classChronusQ_1_1DiskDIIS_a6959231947822e4221006aae3fd734bf}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!write\_error\_vector@{write\_error\_vector}}
+\index{write\_error\_vector@{write\_error\_vector}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{write\_error\_vector()}{write\_error\_vector()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::write\+\_\+error\+\_\+vector (\begin{DoxyParamCaption}\item[{T $\ast$}]{vector }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+write current error vector to disk 
+
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_a285ad7fe41ae51772118beea6820d191}\label{classChronusQ_1_1DiskDIIS_a285ad7fe41ae51772118beea6820d191}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!write\_vector@{write\_vector}}
+\index{write\_vector@{write\_vector}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{write\_vector()}{write\_vector()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::write\+\_\+vector (\begin{DoxyParamCaption}\item[{T $\ast$}]{vector }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+write current solution to disk 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_aed15cc393277020276d183bf39042f8b}\label{classChronusQ_1_1DiskDIIS_aed15cc393277020276d183bf39042f8b}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!diis\_iter\_@{diis\_iter\_}}
+\index{diis\_iter\_@{diis\_iter\_}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{diis\_iter\_}{diis\_iter\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+unsigned \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::diis\+\_\+iter\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+current number of \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} vectors 
+
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_af2ffb878fbc46645a52d3c2c34bafdab}\label{classChronusQ_1_1DiskDIIS_af2ffb878fbc46645a52d3c2c34bafdab}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!diisvec\_@{diisvec\_}}
+\index{diisvec\_@{diisvec\_}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{diisvec\_}{diisvec\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T$\ast$ \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::diisvec\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+array containing \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} expansion coefficients 
+
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_abc9ac46603ea7b19460e413a2fcd0a50}\label{classChronusQ_1_1DiskDIIS_abc9ac46603ea7b19460e413a2fcd0a50}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!dimdiis\_@{dimdiis\_}}
+\index{dimdiis\_@{dimdiis\_}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{dimdiis\_}{dimdiis\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+unsigned \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::dimdiis\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+dimension of the solution/error vector 
+
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_a9882de403d0a676fbfa164bb72781ba2}\label{classChronusQ_1_1DiskDIIS_a9882de403d0a676fbfa164bb72781ba2}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!maxdiis\_@{maxdiis\_}}
+\index{maxdiis\_@{maxdiis\_}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{maxdiis\_}{maxdiis\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+unsigned \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::maxdiis\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+maximum number of vectors 
+
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_a33b9f9b9039b4a39a69223ffd113ba99}\label{classChronusQ_1_1DiskDIIS_a33b9f9b9039b4a39a69223ffd113ba99}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!memManager\_@{memManager\_}}
+\index{memManager\_@{memManager\_}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{memManager\_}{memManager\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}}\& \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::mem\+Manager\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+memory manager 
+
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_ac21e89a4eca17eab1d3f0e53b44249cd}\label{classChronusQ_1_1DiskDIIS_ac21e89a4eca17eab1d3f0e53b44249cd}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!replace\_diis\_iter\_@{replace\_diis\_iter\_}}
+\index{replace\_diis\_iter\_@{replace\_diis\_iter\_}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{replace\_diis\_iter\_}{replace\_diis\_iter\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+unsigned \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::replace\+\_\+diis\+\_\+iter\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} vector to be replaced. 
+
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_a9b5cfa673307d131bf5cf0040db85a54}\label{classChronusQ_1_1DiskDIIS_a9b5cfa673307d131bf5cf0040db85a54}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!savFile\_@{savFile\_}}
+\index{savFile\_@{savFile\_}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{savFile\_}{savFile\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1SafeFile}{Safe\+File}} \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::sav\+File\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+file manager 
+
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_ab605c3cc9952d321a4a266c956935f12}\label{classChronusQ_1_1DiskDIIS_ab605c3cc9952d321a4a266c956935f12}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!tmp1\_@{tmp1\_}}
+\index{tmp1\_@{tmp1\_}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{tmp1\_}{tmp1\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T$\ast$ \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::tmp1\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} temporary storage 1. 
+
+\mbox{\Hypertarget{classChronusQ_1_1DiskDIIS_a4df989642d4806e60e1ac58d5dcb9dff}\label{classChronusQ_1_1DiskDIIS_a4df989642d4806e60e1ac58d5dcb9dff}} 
+\index{ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}!tmp2\_@{tmp2\_}}
+\index{tmp2\_@{tmp2\_}!ChronusQ::DiskDIIS$<$ T $>$@{ChronusQ::DiskDIIS$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{tmp2\_}{tmp2\_}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T$\ast$ \mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Chronus\+Q\+::\+Disk\+DIIS}}$<$ T $>$\+::tmp2\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\mbox{\hyperlink{classChronusQ_1_1DiskDIIS}{Disk\+DIIS}} temporary storage 2. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/coupledcluster/\mbox{\hyperlink{DiskDIIS_8hpp}{Disk\+DIIS.\+hpp}}\end{DoxyCompactItemize}

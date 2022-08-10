@@ -1,0 +1,188 @@
+\hypertarget{residue_8hpp_source}{}\doxysection{residue.\+hpp}
+\label{residue_8hpp_source}\index{include/response/residue.hpp@{include/response/residue.hpp}}
+\mbox{\hyperlink{residue_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{tbase_8hpp}{response/tbase.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{eig_8hpp}{cqlinalg/eig.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas3_8hpp}{cqlinalg/blas3.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{ortho_8hpp}{cqlinalg/ortho.hpp}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{itersolver_8hpp}{itersolver.hpp}}>}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{timer_8hpp}{util/timer.hpp}}>}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{41   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a308285e40b80ff4a4734adb0a40a9960}{ResponseTBase<T>::runFullResidue}}() \{}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keywordflow}{if}( this-\/>genSettings.printLevel > 0 )}
+\DoxyCodeLine{46       std::cout << \textcolor{stringliteral}{"{}PERFORMING THE FULL DIAGONALIZATION\(\backslash\)n"{}};}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     T* fMatUse = formFullFromMemory();}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{comment}{//std::cerr << "{}Top of runFullResidue\(\backslash\)n"{};}}
+\DoxyCodeLine{52     \textcolor{keywordtype}{char} JOBVR = resSettings.needVR ? \textcolor{charliteral}{'V'} : \textcolor{charliteral}{'N'};}
+\DoxyCodeLine{53     \textcolor{keywordtype}{char} JOBVL = resSettings.needVL ? \textcolor{charliteral}{'V'} : \textcolor{charliteral}{'N'};}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Full Diagonalize"{}});}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{keywordflow}{if}( genSettings.matIsHer ) \{}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59       \textcolor{comment}{//std::cerr << "{}Hermetian Diag\(\backslash\)n"{};}}
+\DoxyCodeLine{60       \textcolor{comment}{//std::cerr << "{} FM "{} << fMatUse << std::endl;}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62       T * mat = fMatUse;}
+\DoxyCodeLine{63       \textcolor{keywordflow}{if}( resSettings.needVR )  \{}
+\DoxyCodeLine{64         std::copy\_n(fMatUse,nSingleDim\_*nSingleDim\_,resResults.VR);}
+\DoxyCodeLine{65         mat = resResults.VR;}
+\DoxyCodeLine{66       \}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68       \mbox{\hyperlink{namespaceChronusQ_a1153a882d53ef1052da6ede1f8fba24b}{HermetianEigen}}(JOBVR,\textcolor{charliteral}{'U'},nSingleDim\_,mat,nSingleDim\_,}
+\DoxyCodeLine{69         resResults.W,memManager\_);}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73       \textcolor{comment}{//std::cerr << "{}NonHermetian Diag\(\backslash\)n"{};}}
+\DoxyCodeLine{74       \textcolor{comment}{//std::cerr << "{} FM "{} << fMatUse << std::endl;}}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76       \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} *W = }
+\DoxyCodeLine{77         memManager\_.template malloc<dcomplex>(nSingleDim\_);}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79       \mbox{\hyperlink{namespaceChronusQ_a5d3260732d7f2c9102c6974ea3a04d4a}{GeneralEigen}}(JOBVL, JOBVR, nSingleDim\_, fMatUse, nSingleDim\_,}
+\DoxyCodeLine{80                    W, resResults.VL, nSingleDim\_, resResults.VR, nSingleDim\_);}
+\DoxyCodeLine{81       }
+\DoxyCodeLine{82       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < nSingleDim\_; k++)}
+\DoxyCodeLine{83         resResults.W[k] = std::real(W[k]);}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85       memManager\_.free(W);}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87       \textcolor{comment}{//CErr();}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \}}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Full Diagonalize"{}});}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94     \textcolor{comment}{/*}}
+\DoxyCodeLine{95 \textcolor{comment}{    // Ensure proper orthogonality of eigenvectors}}
+\DoxyCodeLine{96 \textcolor{comment}{    eigVecNorm();}}
+\DoxyCodeLine{97 \textcolor{comment}{}}
+\DoxyCodeLine{98 \textcolor{comment}{}}
+\DoxyCodeLine{99 \textcolor{comment}{    if( fMatUse != fullMatrix\_ ) memManager\_.free(fMatUse);}}
+\DoxyCodeLine{100 \textcolor{comment}{}}
+\DoxyCodeLine{101 \textcolor{comment}{    // Write the eigensystem to disk}}
+\DoxyCodeLine{102 \textcolor{comment}{    if( savFile.exists() ) \{}}
+\DoxyCodeLine{103 \textcolor{comment}{}}
+\DoxyCodeLine{104 \textcolor{comment}{      savFile.safeWriteData("{}/RESP/RESIDUE/EIGENVALUES"{},resResults.W,}}
+\DoxyCodeLine{105 \textcolor{comment}{        \{resSettings.nRoots\});}}
+\DoxyCodeLine{106 \textcolor{comment}{      }}
+\DoxyCodeLine{107 \textcolor{comment}{      if( resSettings.needVR )}}
+\DoxyCodeLine{108 \textcolor{comment}{      savFile.safeWriteData("{}/RESP/RESIDUE/EIGENVECTORS"{},resResults.VR,}}
+\DoxyCodeLine{109 \textcolor{comment}{        \{resSettings.nRoots,nSingleDim\_\});}}
+\DoxyCodeLine{110 \textcolor{comment}{}}
+\DoxyCodeLine{111 \textcolor{comment}{    \}}}
+\DoxyCodeLine{112 \textcolor{comment}{}}
+\DoxyCodeLine{113 \textcolor{comment}{    */}}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115   \};}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{118   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ada2d198e6e9f6ef81b8cceff96bfdc64}{ResponseTBase<T>::runIterResidue}}() \{}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     \textcolor{keywordflow}{if}((not genSettings.isDist()) and genSettings.formFullMat) }
+\DoxyCodeLine{121       \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123     \textcolor{keywordtype}{bool} isRoot = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(comm\_) == 0;}
+\DoxyCodeLine{124     \textcolor{keywordtype}{bool} isDist = this-\/>genSettings.isDist();}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127     \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1GPLHR_ad8b03fff1d8b25cc3c30965ccf2f0224}{GPLHR<T>::LinearTrans\_t}} lt = [\&](\textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<T>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<T>}} \&AV) \{}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129       iterLinearTrans(nVec,V,AV);}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131     \};}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Iter Diagonalize"{}});}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1GPLHR_a6536b5a5ebade3e1c33f85ce1ad170c2}{GPLHR<T>::Shift\_t}} pc =}
+\DoxyCodeLine{137       bool(PC\_) ? PC\_ :}
+\DoxyCodeLine{138       [\&](\textcolor{keywordtype}{size\_t} nVec, T shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<T>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<T>}} \&AV) \{}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140       \textcolor{comment}{//if( not this-\/>fullMatrix\_ ) CErr();}}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142       AV.set\_data(0, nVec, V, 0);}
+\DoxyCodeLine{143     \};}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} gplhrComm = (isDist or not genSettings.formFullMat) }
+\DoxyCodeLine{147       ? comm\_ : rcomm\_;}
+\DoxyCodeLine{148     }
+\DoxyCodeLine{149     \mbox{\hyperlink{classChronusQ_1_1GPLHR}{GPLHR<T>}} gplhr(gplhrComm,this-\/>memManager\_,nSingleDim\_,}
+\DoxyCodeLine{150       genSettings.maxIter,genSettings.convCrit,}
+\DoxyCodeLine{151       resSettings.nRoots,lt,pc);}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     gplhr.\mbox{\hyperlink{classChronusQ_1_1GPLHR_a19e4f46f9d2a16fefc7768ca6b1a2b94}{setM}}(resSettings.gplhr\_m);}
+\DoxyCodeLine{154     gplhr.\mbox{\hyperlink{classChronusQ_1_1GPLHR_aeac0d1529d39790c940455d29f4e9bc3}{sigma}}   = resSettings.gplhr\_sigma;}
+\DoxyCodeLine{155     gplhr.\mbox{\hyperlink{classChronusQ_1_1GPLHR_ab1000512d1edc83a412886cb00f151f5}{hardLim}} = resSettings.deMin;}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157     \textcolor{keywordflow}{if}( hasResGuess\_ )}
+\DoxyCodeLine{158       gplhr.\mbox{\hyperlink{classChronusQ_1_1GPLHR_a1720c02fe8aaa9ec2f965bddfa474548}{setGuess}}(resSettings.nRoots,}
+\DoxyCodeLine{159           [\&](\textcolor{keywordtype}{size\_t} nG, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<T>}} \& G, \textcolor{keywordtype}{size\_t} LDG)\{ this-\/>resGuess(nG,G,LDG); \});}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163     gplhr.\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a18628b94591b268872c91ba3cd1bc557}{run}}();}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165     \textcolor{keywordflow}{if}( isRoot ) \{}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167       \textcolor{comment}{// Extract data from GPLHR storage}}
+\DoxyCodeLine{168       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < resSettings.nRoots; k++)}
+\DoxyCodeLine{169         resResults.W[k] = std::real(gplhr.\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a5e28649578b12456cfa95642b1b2841d}{eigVal}}()[k]);}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171       std::copy\_n(gplhr.\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a81cdfb81b93c9aedfec1b2331bd4d127}{VR}}()-\/>getPtr(),}
+\DoxyCodeLine{172                   this-\/>nSingleDim\_ * resSettings.nRoots,}
+\DoxyCodeLine{173                   resResults.VR);}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175     \}}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Iter Diagonalize"{}});}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179   \};}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{182 }
+
+\end{DoxyCode}

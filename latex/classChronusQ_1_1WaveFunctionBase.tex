@@ -1,0 +1,321 @@
+\hypertarget{classChronusQ_1_1WaveFunctionBase}{}\doxysection{ChronusQ\+::Wave\+Function\+Base Class Reference}
+\label{classChronusQ_1_1WaveFunctionBase}\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+
+
+The \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{Wave\+Function\+Base}} class. The abstraction of information relating to the \mbox{\hyperlink{classChronusQ_1_1WaveFunction}{Wave\+Function}} class which are independent of storage type.  
+
+
+
+
+{\ttfamily \#include $<$base.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::Wave\+Function\+Base\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1WaveFunctionBase__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::Wave\+Function\+Base\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1WaveFunctionBase__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_ada0abbf37712e3a7c831f5a23ba7f1db}{Wave\+Function\+Base}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_ad90df2d856cb99ff1b955aa08ab22a7d}{Wave\+Function\+Base}} (const \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{Wave\+Function\+Base}} \&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_aec1fbc267ec2ea471f635dcfd1dea844}{Wave\+Function\+Base}} (\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{Wave\+Function\+Base}} \&\&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a78e80735d3d39abd5e8fbc64315ef363}{Wave\+Function\+Base}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&basis, size\+\_\+t \+\_\+nC, bool \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{i\+CS}}, \mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}} p)
+\item 
+\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \& \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5f29f9a842c2d47c458e1388abb94874}{molecule}} ()
+\item 
+\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \& \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5bb8768829c6a466209aae6e9e690ab3}{basis\+Set}} ()
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a3830b10befd26044ea0cdcaed2342e17}{n\+Alpha\+Orbital}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_afc4addd44d857f22e95844398b126bd6}{n\+Beta\+Orbital}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a30c469ea2271eb757d86e31bf2f73bc0}{n\+Orbital}} () const
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a80d7512c7dae7ab5248330b3faf93eab}{print\+MO}} (std\+::ostream \&)=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a0408a089a04ac40fc756119204f6340f}{print\+EPS}} (std\+::ostream \&)=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a9d59a8af8ae1303c389bfcc6ff659d7e}{print\+MOInfo}} (std\+::ostream \&, size\+\_\+t a=0)=0
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a64152f9e85dfcb33203b55cf2ff47a06}{swap\+MOs}} (std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ $>$ \&, \mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19d}{Spin\+Type}} sp)=0
+\item 
+virtual std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a40b415b0d6fb6b2d7cf8dc43ca5819ca}{get\+Grad}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, bool equil, bool save\+Ints)=0
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \& \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a3c3a239def5283368e93e9012c0a2cff}{molecule\+\_\+}}
+\begin{DoxyCompactList}\small\item\em A reference of the \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \& \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a1c113fa223adda3ec539afecb7a9b3f0}{basis\+Set\+\_\+}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} for the GTO basis defintion. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5ce0ca36b5a2d3f8d75a623cb53aa3c0}{nO}}
+\begin{DoxyCompactList}\small\item\em Total number of occupied orbitals. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_ac01f49f00e6cfe1ccf9c5ec08c3a6cbe}{nV}}
+\begin{DoxyCompactList}\small\item\em Total number of virtual orbitals. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a34b0db62d517413e7bfb351eb3d69346}{n\+OA}}
+\begin{DoxyCompactList}\small\item\em Number of occupied alpha orbitals (nC == 1) \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5de78fe4379af80569e1ed50e7881584}{n\+OB}}
+\begin{DoxyCompactList}\small\item\em Number of occupied beta orbitals (nC == 1) \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_af34bb3176b580c3092c0d06fc58a0d58}{n\+VA}}
+\begin{DoxyCompactList}\small\item\em Number of virtual alpha orbitals (nC == 1) \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a0c19916ec88a138e1d0f1c994016da0f}{n\+VB}}
+\begin{DoxyCompactList}\small\item\em Number of virtual beta orbitals (nC == 1) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{Wave\+Function\+Base}} class. The abstraction of information relating to the \mbox{\hyperlink{classChronusQ_1_1WaveFunction}{Wave\+Function}} class which are independent of storage type. 
+
+Specializes \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{Quantum\+Base}} interface.
+
+See \mbox{\hyperlink{classChronusQ_1_1WaveFunction}{Wave\+Function}} for further docs. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_ada0abbf37712e3a7c831f5a23ba7f1db}\label{classChronusQ_1_1WaveFunctionBase_ada0abbf37712e3a7c831f5a23ba7f1db}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!WaveFunctionBase@{WaveFunctionBase}}
+\index{WaveFunctionBase@{WaveFunctionBase}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{WaveFunctionBase()}{WaveFunctionBase()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Wave\+Function\+Base\+::\+Wave\+Function\+Base (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_ad90df2d856cb99ff1b955aa08ab22a7d}\label{classChronusQ_1_1WaveFunctionBase_ad90df2d856cb99ff1b955aa08ab22a7d}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!WaveFunctionBase@{WaveFunctionBase}}
+\index{WaveFunctionBase@{WaveFunctionBase}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{WaveFunctionBase()}{WaveFunctionBase()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Wave\+Function\+Base\+::\+Wave\+Function\+Base (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{Wave\+Function\+Base}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_aec1fbc267ec2ea471f635dcfd1dea844}\label{classChronusQ_1_1WaveFunctionBase_aec1fbc267ec2ea471f635dcfd1dea844}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!WaveFunctionBase@{WaveFunctionBase}}
+\index{WaveFunctionBase@{WaveFunctionBase}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{WaveFunctionBase()}{WaveFunctionBase()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Wave\+Function\+Base\+::\+Wave\+Function\+Base (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{Wave\+Function\+Base}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a78e80735d3d39abd5e8fbc64315ef363}\label{classChronusQ_1_1WaveFunctionBase_a78e80735d3d39abd5e8fbc64315ef363}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!WaveFunctionBase@{WaveFunctionBase}}
+\index{WaveFunctionBase@{WaveFunctionBase}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{WaveFunctionBase()}{WaveFunctionBase()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Wave\+Function\+Base\+::\+Wave\+Function\+Base (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{c,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem,  }\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{mol,  }\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{basis,  }\item[{size\+\_\+t}]{\+\_\+nC,  }\item[{bool}]{i\+CS,  }\item[{\mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}}}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{Wave\+Function\+Base}} Constructor. Constructs a \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{Wave\+Function\+Base}} object
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em aoi} & AOIntegrals object (which handels the \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}}, etc) \\
+\hline
+\mbox{\texttt{ in}}  & {\em \+\_\+nC} & Number of spin components (1 and 2 are supported) \\
+\hline
+\mbox{\texttt{ in}}  & {\em i\+CS} & Whether or not to treat as closed shell \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a5bb8768829c6a466209aae6e9e690ab3}\label{classChronusQ_1_1WaveFunctionBase_a5bb8768829c6a466209aae6e9e690ab3}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!basisSet@{basisSet}}
+\index{basisSet@{basisSet}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{basisSet()}{basisSet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \& Chronus\+Q\+::\+Wave\+Function\+Base\+::basis\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classChronusQ_1_1WaveFunctionBase_a5bb8768829c6a466209aae6e9e690ab3_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a40b415b0d6fb6b2d7cf8dc43ca5819ca}\label{classChronusQ_1_1WaveFunctionBase_a40b415b0d6fb6b2d7cf8dc43ca5819ca}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!getGrad@{getGrad}}
+\index{getGrad@{getGrad}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{getGrad()}{getGrad()}}
+{\footnotesize\ttfamily virtual std\+::vector$<$ double $>$ Chronus\+Q\+::\+Wave\+Function\+Base\+::get\+Grad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{,  }\item[{bool}]{equil,  }\item[{bool}]{save\+Ints }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1SingleSlater_abe44a52a240974af91e25625e7337f33}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1NEOSS_a6f1fe3f710358197b73e77a3fd997408}{Chronus\+Q\+::\+NEOSS$<$ Mats\+T, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a5f29f9a842c2d47c458e1388abb94874}\label{classChronusQ_1_1WaveFunctionBase_a5f29f9a842c2d47c458e1388abb94874}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!molecule@{molecule}}
+\index{molecule@{molecule}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{molecule()}{molecule()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \& Chronus\+Q\+::\+Wave\+Function\+Base\+::molecule (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1WaveFunctionBase_a5f29f9a842c2d47c458e1388abb94874_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a3830b10befd26044ea0cdcaed2342e17}\label{classChronusQ_1_1WaveFunctionBase_a3830b10befd26044ea0cdcaed2342e17}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!nAlphaOrbital@{nAlphaOrbital}}
+\index{nAlphaOrbital@{nAlphaOrbital}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{nAlphaOrbital()}{nAlphaOrbital()}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Wave\+Function\+Base\+::n\+Alpha\+Orbital (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1WaveFunctionBase_a3830b10befd26044ea0cdcaed2342e17_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_afc4addd44d857f22e95844398b126bd6}\label{classChronusQ_1_1WaveFunctionBase_afc4addd44d857f22e95844398b126bd6}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!nBetaOrbital@{nBetaOrbital}}
+\index{nBetaOrbital@{nBetaOrbital}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{nBetaOrbital()}{nBetaOrbital()}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Wave\+Function\+Base\+::n\+Beta\+Orbital (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a30c469ea2271eb757d86e31bf2f73bc0}\label{classChronusQ_1_1WaveFunctionBase_a30c469ea2271eb757d86e31bf2f73bc0}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!nOrbital@{nOrbital}}
+\index{nOrbital@{nOrbital}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{nOrbital()}{nOrbital()}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Wave\+Function\+Base\+::n\+Orbital (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a0408a089a04ac40fc756119204f6340f}\label{classChronusQ_1_1WaveFunctionBase_a0408a089a04ac40fc756119204f6340f}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!printEPS@{printEPS}}
+\index{printEPS@{printEPS}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{printEPS()}{printEPS()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Wave\+Function\+Base\+::print\+EPS (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a512a39adecb82e025db649e1de4c858f}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a6d387c926ec301e02bbe12563cd75b78}{Chronus\+Q\+::\+Wave\+Function$<$ Mats\+T, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a80d7512c7dae7ab5248330b3faf93eab}\label{classChronusQ_1_1WaveFunctionBase_a80d7512c7dae7ab5248330b3faf93eab}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!printMO@{printMO}}
+\index{printMO@{printMO}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{printMO()}{printMO()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Wave\+Function\+Base\+::print\+MO (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a0817d7fb38162cdba6e4350a29a5278a}{Chronus\+Q\+::\+Wave\+Function$<$ Mats\+T, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a9d59a8af8ae1303c389bfcc6ff659d7e}\label{classChronusQ_1_1WaveFunctionBase_a9d59a8af8ae1303c389bfcc6ff659d7e}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!printMOInfo@{printMOInfo}}
+\index{printMOInfo@{printMOInfo}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{printMOInfo()}{printMOInfo()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Wave\+Function\+Base\+::print\+MOInfo (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{,  }\item[{size\+\_\+t}]{a = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ac8da56bf9032318b1eaa59260940a583}{Chronus\+Q\+::\+Single\+Slater$<$ Mats\+T, Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a7ba29f2396149233f97d9b4ba0eff22e}{Chronus\+Q\+::\+Wave\+Function$<$ Mats\+T, Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a64152f9e85dfcb33203b55cf2ff47a06}\label{classChronusQ_1_1WaveFunctionBase_a64152f9e85dfcb33203b55cf2ff47a06}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!swapMOs@{swapMOs}}
+\index{swapMOs@{swapMOs}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{swapMOs()}{swapMOs()}}
+{\footnotesize\ttfamily virtual void Chronus\+Q\+::\+Wave\+Function\+Base\+::swap\+MOs (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ $>$ \&}]{,  }\item[{\mbox{\hyperlink{namespaceChronusQ_ab3b940a963ab6b85ae20e34cc153f19d}{Spin\+Type}}}]{sp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a514a425760cb452c3c6e7627fd00376b}{Chronus\+Q\+::\+Wave\+Function$<$ Mats\+T, Ints\+T $>$}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a1c113fa223adda3ec539afecb7a9b3f0}\label{classChronusQ_1_1WaveFunctionBase_a1c113fa223adda3ec539afecb7a9b3f0}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!basisSet\_@{basisSet\_}}
+\index{basisSet\_@{basisSet\_}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{basisSet\_}{basisSet\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}}\& Chronus\+Q\+::\+Wave\+Function\+Base\+::basis\+Set\+\_\+}
+
+
+
+\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} for the GTO basis defintion. 
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a3c3a239def5283368e93e9012c0a2cff}\label{classChronusQ_1_1WaveFunctionBase_a3c3a239def5283368e93e9012c0a2cff}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!molecule\_@{molecule\_}}
+\index{molecule\_@{molecule\_}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{molecule\_}{molecule\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\& Chronus\+Q\+::\+Wave\+Function\+Base\+::molecule\+\_\+}
+
+
+
+A reference of the \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}. 
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a5ce0ca36b5a2d3f8d75a623cb53aa3c0}\label{classChronusQ_1_1WaveFunctionBase_a5ce0ca36b5a2d3f8d75a623cb53aa3c0}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!nO@{nO}}
+\index{nO@{nO}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{nO}{nO}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Wave\+Function\+Base\+::nO}
+
+
+
+Total number of occupied orbitals. 
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a34b0db62d517413e7bfb351eb3d69346}\label{classChronusQ_1_1WaveFunctionBase_a34b0db62d517413e7bfb351eb3d69346}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!nOA@{nOA}}
+\index{nOA@{nOA}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{nOA}{nOA}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Wave\+Function\+Base\+::n\+OA}
+
+
+
+Number of occupied alpha orbitals (nC == 1) 
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a5de78fe4379af80569e1ed50e7881584}\label{classChronusQ_1_1WaveFunctionBase_a5de78fe4379af80569e1ed50e7881584}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!nOB@{nOB}}
+\index{nOB@{nOB}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{nOB}{nOB}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Wave\+Function\+Base\+::n\+OB}
+
+
+
+Number of occupied beta orbitals (nC == 1) 
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_ac01f49f00e6cfe1ccf9c5ec08c3a6cbe}\label{classChronusQ_1_1WaveFunctionBase_ac01f49f00e6cfe1ccf9c5ec08c3a6cbe}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!nV@{nV}}
+\index{nV@{nV}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{nV}{nV}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Wave\+Function\+Base\+::nV}
+
+
+
+Total number of virtual orbitals. 
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_af34bb3176b580c3092c0d06fc58a0d58}\label{classChronusQ_1_1WaveFunctionBase_af34bb3176b580c3092c0d06fc58a0d58}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!nVA@{nVA}}
+\index{nVA@{nVA}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{nVA}{nVA}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Wave\+Function\+Base\+::n\+VA}
+
+
+
+Number of virtual alpha orbitals (nC == 1) 
+
+\mbox{\Hypertarget{classChronusQ_1_1WaveFunctionBase_a0c19916ec88a138e1d0f1c994016da0f}\label{classChronusQ_1_1WaveFunctionBase_a0c19916ec88a138e1d0f1c994016da0f}} 
+\index{ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}!nVB@{nVB}}
+\index{nVB@{nVB}!ChronusQ::WaveFunctionBase@{ChronusQ::WaveFunctionBase}}
+\doxysubsubsection{\texorpdfstring{nVB}{nVB}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Wave\+Function\+Base\+::n\+VB}
+
+
+
+Number of virtual beta orbitals (nC == 1) 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/wavefunction/\mbox{\hyperlink{wavefunction_2base_8hpp}{base.\+hpp}}\end{DoxyCompactItemize}

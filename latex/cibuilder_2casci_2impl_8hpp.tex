@@ -1,0 +1,64 @@
+\hypertarget{cibuilder_2casci_2impl_8hpp}{}\doxysection{include/cibuilder/casci/impl.hpp File Reference}
+\label{cibuilder_2casci_2impl_8hpp}\index{include/cibuilder/casci/impl.hpp@{include/cibuilder/casci/impl.hpp}}
+{\ttfamily \#include $<$mcwavefunction.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/incore4indextpi.\+hpp$>$}\newline
+{\ttfamily \#include $<$detstringmanager.\+hpp$>$}\newline
+{\ttfamily \#include $<$cibuilder/casci.\+hpp$>$}\newline
+{\ttfamily \#include $<$cqlinalg/blas1.\+hpp$>$}\newline
+{\ttfamily \#include $<$cqlinalg/blas3.\+hpp$>$}\newline
+{\ttfamily \#include $<$cqlinalg/blasutil.\+hpp$>$}\newline
+{\ttfamily \#include $<$cqlinalg/matfunc.\+hpp$>$}\newline
+{\ttfamily \#include $<$util/matout.\+hpp$>$}\newline
+{\ttfamily \#include $<$util/threads.\+hpp$>$}\newline
+Include dependency graph for impl.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cibuilder_2casci_2impl_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cibuilder_2casci_2impl_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{cibuilder_2casci_2impl_8hpp_a53b7453de3d581f3598b7cd49f797d52}{CASCI\+\_\+\+LOOP\+\_\+\+INIT}}()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{cibuilder_2casci_2impl_8hpp_a53b7453de3d581f3598b7cd49f797d52}\label{cibuilder_2casci_2impl_8hpp_a53b7453de3d581f3598b7cd49f797d52}} 
+\index{impl.hpp@{impl.hpp}!CASCI\_LOOP\_INIT@{CASCI\_LOOP\_INIT}}
+\index{CASCI\_LOOP\_INIT@{CASCI\_LOOP\_INIT}!impl.hpp@{impl.hpp}}
+\doxysubsubsection{\texorpdfstring{CASCI\_LOOP\_INIT}{CASCI\_LOOP\_INIT}}
+{\footnotesize\ttfamily \#define CASCI\+\_\+\+LOOP\+\_\+\+INIT(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \textcolor{keywordtype}{size\_t} nC = mcwfn.reference().nC; \(\backslash\)}
+\DoxyCodeLine{  size\_t NDet = mcwfn.NDet; \(\backslash\)}
+\DoxyCodeLine{  std::shared\_ptr<const ExcitationList> exList\_a = \(\backslash\)}
+\DoxyCodeLine{    std::dynamic\_pointer\_cast<CASStringManager>( \(\backslash\)}
+\DoxyCodeLine{      mcwfn.detStr)-\/>excitationList(); \(\backslash\)}
+\DoxyCodeLine{  std::shared\_ptr<const ExcitationList> exList\_b = \(\backslash\)}
+\DoxyCodeLine{    (nC == 1) ?  std::dynamic\_pointer\_cast<CASStringManager>( \(\backslash\)}
+\DoxyCodeLine{      mcwfn.detStrBeta)-\/>excitationList() : \textcolor{keyword}{nullptr}; \(\backslash\)}
+\DoxyCodeLine{  size\_t nStr\_a  = exList\_a-\/>nString(); \(\backslash\)}
+\DoxyCodeLine{  size\_t nStr\_b = (exList\_b) ? exList\_b-\/>nString(): 1; \(\backslash\)}
+\DoxyCodeLine{  size\_t nNZa = exList\_a-\/>nNonZero(); \(\backslash\)}
+\DoxyCodeLine{  size\_t nNZb = (exList\_b) ? exList\_b-\/>nNonZero(): 0; \(\backslash\)}
+\DoxyCodeLine{  CQMemManager \& mem = mcwfn.memManager;}
+
+\end{DoxyCode}

@@ -1,0 +1,89 @@
+\hypertarget{quadrature_8hpp}{}\doxysection{include/grid/quadrature.hpp File Reference}
+\label{quadrature_8hpp}\index{include/grid/quadrature.hpp@{include/grid/quadrature.hpp}}
+{\ttfamily \#include $<$chronusq\+\_\+sys.\+hpp$>$}\newline
+Include dependency graph for quadrature.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{quadrature_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{quadrature_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structChronusQ_1_1Quadrature}{Chronus\+Q\+::\+Quadrature$<$ \+\_\+\+Pt\+Typ $>$}}
+\begin{DoxyCompactList}\small\item\em The \mbox{\hyperlink{structChronusQ_1_1Quadrature}{Quadrature}} Struct. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{quadrature_8hpp_a23840660558ea2ce3ce1335738a1bcd0}{Quadrature\+Template}}(NAME,  TYP)
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{quadrature_8hpp_a93e5e2ec9477b0f26d2595f37bef369f}{cart\+\_\+t}} = std\+::array$<$ double, 3 $>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceChronusQ_a138137bc654f651725482aa6091ad1d4}{Chronus\+Q\+::\+Quadrature\+Template}} (Gauss\+Cheb\+Fst, double)
+\item 
+\mbox{\hyperlink{namespaceChronusQ_a46583656c30046617770b167119472e1}{Chronus\+Q\+::\+Quadrature\+Template}} (Gauss\+Cheb\+Snd, double)
+\item 
+\mbox{\hyperlink{namespaceChronusQ_a99b34731fd2441d5c3d5798f017bd68f}{Chronus\+Q\+::\+Quadrature\+Template}} (Gauss\+Legendre, double)
+\item 
+\mbox{\hyperlink{namespaceChronusQ_ac367f861395c9f48ba7f77d48e28d8fe}{Chronus\+Q\+::\+Quadrature\+Template}} (Euler\+Mac, double)
+\item 
+\mbox{\hyperlink{namespaceChronusQ_a01f61b0401a582b111fcbb8689685dfb}{Chronus\+Q\+::\+Quadrature\+Template}} (Lebedev, \mbox{\hyperlink{integrator_8hpp_a93e5e2ec9477b0f26d2595f37bef369f}{cart\+\_\+t}})
+\item 
+std\+::pair$<$ double, double $>$ \mbox{\hyperlink{namespaceChronusQ_a3dc1d00ae051dd8de14f6a23afe81e1f}{Chronus\+Q\+::unit\+Bound\+Transform}} (double low\+Bound, double up\+Bound, double pt, double wgt)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{quadrature_8hpp_a23840660558ea2ce3ce1335738a1bcd0}\label{quadrature_8hpp_a23840660558ea2ce3ce1335738a1bcd0}} 
+\index{quadrature.hpp@{quadrature.hpp}!QuadratureTemplate@{QuadratureTemplate}}
+\index{QuadratureTemplate@{QuadratureTemplate}!quadrature.hpp@{quadrature.hpp}}
+\doxysubsubsection{\texorpdfstring{QuadratureTemplate}{QuadratureTemplate}}
+{\footnotesize\ttfamily \#define Quadrature\+Template(\begin{DoxyParamCaption}\item[{}]{NAME,  }\item[{}]{TYP }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \textcolor{keyword}{struct }NAME : \textcolor{keyword}{public} Quadrature<TYP> \{\(\backslash\)}
+\DoxyCodeLine{  \(\backslash\)}
+\DoxyCodeLine{    NAME(\textcolor{keywordtype}{size\_t} N, \(\backslash\)}
+\DoxyCodeLine{         \textcolor{keywordtype}{double} a = -\/std::numeric\_limits<double>::infinity(),\(\backslash\)}
+\DoxyCodeLine{         \textcolor{keywordtype}{double} b = std::numeric\_limits<double>::infinity()) : \(\backslash\)}
+\DoxyCodeLine{      Quadrature<TYP>(N,a,b) \{\}; \(\backslash\)}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{    NAME(\textcolor{keyword}{const} NAME \&) = \textcolor{keywordflow}{default};\(\backslash\)}
+\DoxyCodeLine{    NAME(NAME \&\&)      = \textcolor{keywordflow}{default};\(\backslash\)}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{    void generateQuadrature();  \(\backslash\)}
+\DoxyCodeLine{\(\backslash\)}
+\DoxyCodeLine{  \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{quadrature_8hpp_a93e5e2ec9477b0f26d2595f37bef369f}\label{quadrature_8hpp_a93e5e2ec9477b0f26d2595f37bef369f}} 
+\index{quadrature.hpp@{quadrature.hpp}!cart\_t@{cart\_t}}
+\index{cart\_t@{cart\_t}!quadrature.hpp@{quadrature.hpp}}
+\doxysubsubsection{\texorpdfstring{cart\_t}{cart\_t}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{integrator_8hpp_a93e5e2ec9477b0f26d2595f37bef369f}{cart\+\_\+t}} =  std\+::array$<$double,3$>$}
+

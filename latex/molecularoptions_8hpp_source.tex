@@ -1,0 +1,61 @@
+\hypertarget{molecularoptions_8hpp_source}{}\doxysection{molecularoptions.\+hpp}
+\label{molecularoptions_8hpp_source}\index{include/molecularoptions.hpp@{include/molecularoptions.hpp}}
+\mbox{\hyperlink{molecularoptions_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <cmath>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{physcon_8hpp}{physcon.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1MolecularOptions}{MolecularOptions}} \{}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MolecularOptions_ac45795231a0cf56336cbd6f1a92c5d33}{nNuclearSteps}}; \textcolor{comment}{// Number of steps for molecular dynamics}}
+\DoxyCodeLine{35     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MolecularOptions_a8b698270f6d8e64cea89b8208f4e4960}{nMidpointFockSteps}} = 10; \textcolor{comment}{// Number of elctronic steps for electronic dynamics}}
+\DoxyCodeLine{36     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MolecularOptions_a37265e317173a734602f0ab5c7c14896}{nElectronicSteps}} = 5; \textcolor{comment}{// Number of elctronic steps for electronic dynamics}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \textcolor{comment}{// Molecular Dynamics Options}}
+\DoxyCodeLine{39     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1MolecularOptions_abd4b1ff56d4c62b1f9900b1056e77a4a}{timeStepAU}}; \textcolor{comment}{// Nuclear timestep for molecular dynamics in a.u.}}
+\DoxyCodeLine{40     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1MolecularOptions_a93ee40ae4ca3a1e87f10d7bcb517dd51}{timeStepFS}}; \textcolor{comment}{// Nucleartimestep for molecular dynamics in fs}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \mbox{\hyperlink{structChronusQ_1_1MolecularOptions_a22314ea94011111b09d48869b069e8f5}{MolecularOptions}}(\textcolor{keywordtype}{double} tmax, \textcolor{keywordtype}{double} deltat)}
+\DoxyCodeLine{43     \{}
+\DoxyCodeLine{44       \mbox{\hyperlink{structChronusQ_1_1MolecularOptions_abd4b1ff56d4c62b1f9900b1056e77a4a}{timeStepAU}} = deltat;}
+\DoxyCodeLine{45       \mbox{\hyperlink{structChronusQ_1_1MolecularOptions_a93ee40ae4ca3a1e87f10d7bcb517dd51}{timeStepFS}} = deltat*\mbox{\hyperlink{namespaceChronusQ_a5eb23f7f0b92e7527a5509138f761432}{FSPerAUTime}};}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47       \mbox{\hyperlink{structChronusQ_1_1MolecularOptions_ac45795231a0cf56336cbd6f1a92c5d33}{nNuclearSteps}} = size\_t(ceil(tmax/deltat));}
+\DoxyCodeLine{48     \}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50   \}; \textcolor{comment}{// struct MolecularOptions}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52   std::ostream\& \mbox{\hyperlink{namespaceChronusQ_ae965bd42e60432c83cec45044f21655a}{operator<<}}(std::ostream\&, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1MolecularOptions}{MolecularOptions}}\&);}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{55 }
+
+\end{DoxyCode}

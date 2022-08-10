@@ -1,0 +1,343 @@
+\hypertarget{basisset__def_8hpp_source}{}\doxysection{basisset\+\_\+def.\+hpp}
+\label{basisset__def_8hpp_source}\index{include/basisset/basisset\_def.hpp@{include/basisset/basisset\_def.hpp}}
+\mbox{\hyperlink{basisset__def_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{typedefs_8hpp}{util/typedefs.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{memmanager_8hpp}{memmanager.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{molecule_8hpp}{molecule.hpp}}>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <libint2/shell.h>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86}{BASIS\_FUNCTION\_TYPE}} \{}
+\DoxyCodeLine{38     \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86a9ae4d9d27a920589d9d4e4f718799a83}{REAL\_GTO}},}
+\DoxyCodeLine{39     \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86a99bed979d11d294977dfc4a2f4c8c052}{COMPLEX\_GIAO}},}
+\DoxyCodeLine{40     \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86aff2f1370a4d2c328a561025ab432a6f3}{COMPLEX\_GTO}}}
+\DoxyCodeLine{41   \};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1ShellPairData}{ShellPairData}} \{}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{comment}{// List of significant shell pairs for a given shell pair}}
+\DoxyCodeLine{46     \textcolor{keyword}{using }\mbox{\hyperlink{structChronusQ_1_1ShellPairData_a38ab8ccf00722102fe21a236a0bcf6b3}{libint2\_shellpair\_list\_t}} = }
+\DoxyCodeLine{47       std::unordered\_map<size\_t,std::vector<size\_t>>;}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{comment}{// Shell pair data from libint in the same order as }}
+\DoxyCodeLine{50     \textcolor{comment}{// libint2\_shellpair\_list\_t}}
+\DoxyCodeLine{51     \textcolor{keyword}{using }\mbox{\hyperlink{structChronusQ_1_1ShellPairData_ac448e651d34bf7faed2f10fa024ea0a9}{libint2\_shellpair\_data\_t}} = }
+\DoxyCodeLine{52       std::vector<std::vector<std::shared\_ptr<libint2::ShellPair>>>;}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \mbox{\hyperlink{structChronusQ_1_1ShellPairData_a38ab8ccf00722102fe21a236a0bcf6b3}{libint2\_shellpair\_list\_t}} \mbox{\hyperlink{structChronusQ_1_1ShellPairData_a6ec4c9f444b6971af4f7d8a0f833af53}{sigShellPair}}; }
+\DoxyCodeLine{56     \mbox{\hyperlink{structChronusQ_1_1ShellPairData_ac448e651d34bf7faed2f10fa024ea0a9}{libint2\_shellpair\_data\_t}} \mbox{\hyperlink{structChronusQ_1_1ShellPairData_a9ce9c1c8374ab7f969f8fbf661fcd9ac}{shData}};       }
+\DoxyCodeLine{57 }
+\DoxyCodeLine{61     \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1ShellPairData_ae8048f9e9f845486ce1a5ee5d95ef851}{computeShellPairs}}(std::vector<libint2::Shell> \&shs, }
+\DoxyCodeLine{62         std::vector<size\_t> \&mapSh2Cen, \textcolor{keywordtype}{size\_t} maxNPrim, \textcolor{keywordtype}{size\_t} maxL, }
+\DoxyCodeLine{63         \textcolor{keywordtype}{double} shell\_thresh, \textcolor{keywordtype}{double} ln\_prec);}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66   \};}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{74   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1PrimShellHash}{PrimShellHash}}}
+\DoxyCodeLine{75   \{}
+\DoxyCodeLine{76     std::size\_t \mbox{\hyperlink{structChronusQ_1_1PrimShellHash_a17ca74f866f52733937d7a9062159e93}{operator()}}(libint2::Shell \textcolor{keyword}{const}\& s) \textcolor{keyword}{const} \textcolor{keyword}{noexcept}}
+\DoxyCodeLine{77     \{}
+\DoxyCodeLine{78       std::vector<size\_t> hs\{}
+\DoxyCodeLine{79         std::hash<double>\{\}(s.alpha[0]),}
+\DoxyCodeLine{80         std::hash<int>\{\}(s.contr[0].l),}
+\DoxyCodeLine{81         std::hash<bool>\{\}(s.contr[0].pure),}
+\DoxyCodeLine{82         std::hash<double>\{\}(s.O[0]),}
+\DoxyCodeLine{83         std::hash<double>\{\}(s.O[1]),}
+\DoxyCodeLine{84         std::hash<double>\{\}(s.O[2])}
+\DoxyCodeLine{85       \};}
+\DoxyCodeLine{86       \textcolor{keywordtype}{size\_t} h = 0;}
+\DoxyCodeLine{87       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} hi : hs)}
+\DoxyCodeLine{88         h = hi \string^ (h << 1);}
+\DoxyCodeLine{89       \textcolor{keywordflow}{return} h;}
+\DoxyCodeLine{90     \}}
+\DoxyCodeLine{91   \};}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93 }
+\DoxyCodeLine{104   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \{}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106     std::string \mbox{\hyperlink{structChronusQ_1_1BasisSet_a242e25218feff34671efc28d31ad8157}{basisName}};}
+\DoxyCodeLine{107     std::string \mbox{\hyperlink{structChronusQ_1_1BasisSet_ab327e5529c2b14a75fbf1522c252f70a}{basisDef}};}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a5a0db2a0e93dae842e4aa9bba603e444}{inputDef}};}
+\DoxyCodeLine{110     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a87bdf52af466b6675078a34788641774}{forceCart}};}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}} = 0;  }
+\DoxyCodeLine{113     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1BasisSet_afd6c670bc1fdadd7ae58aec80ddc01c9}{nPrimitive}};  }
+\DoxyCodeLine{114     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a936871b121472a416ee6f947ccdea4b4}{nShell}};      }
+\DoxyCodeLine{115     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1BasisSet_aee354d7cf0e3268aed3a136409c23662}{maxPrim}};     }
+\DoxyCodeLine{116     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a90bfe80774a23ae70d381783a1d275ac}{maxL}};        }
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a105a64fa290e3d5833fb6793b27fdcf3}{nucBasis}};      }
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86}{BASIS\_FUNCTION\_TYPE}} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a6ff811a30a97707991cc33d2d93754a2}{basisType}} = \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86a9ae4d9d27a920589d9d4e4f718799a83}{REAL\_GTO}}; }
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122     \mbox{\hyperlink{namespaceChronusQ_a47e04063afb6df9ddf563c17663e3230}{cartvec\_t}} \mbox{\hyperlink{structChronusQ_1_1BasisSet_aa66ab288268fcf398ac2634986cd09f0}{centers}}; }
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124     std::vector<libint2::Shell> \mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}};    }
+\DoxyCodeLine{125     \mbox{\hyperlink{structChronusQ_1_1ShellPairData}{ShellPairData}}               \mbox{\hyperlink{structChronusQ_1_1BasisSet_a5256ca12a298fe9abdda8e3d574dab24}{shellData}}; }
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127     std::unordered\_map<libint2::Shell, size\_t, PrimShellHash> \mbox{\hyperlink{structChronusQ_1_1BasisSet_a4f2b82970784a895b17f0ba1ce7b9eb0}{primitives}};}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130     std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1BasisSet_a13ea1d4cfdfd8206566571d3628e2507}{unNormCont}};}
+\DoxyCodeLine{132         }
+\DoxyCodeLine{133     std::vector<size\_t> \mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{mapSh2Bf}};  }
+\DoxyCodeLine{134     std::vector<size\_t> \mbox{\hyperlink{structChronusQ_1_1BasisSet_a2e39c31c653bccb44ec140148baa1ea0}{mapSh2Cen}}; }
+\DoxyCodeLine{135     std::vector<size\_t> \mbox{\hyperlink{structChronusQ_1_1BasisSet_ad24883d35c67703cc3805197053c28f1}{mapCen2BfSt}}; }
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137     \textcolor{comment}{// Disable default constructor}}
+\DoxyCodeLine{138     \mbox{\hyperlink{structChronusQ_1_1BasisSet_abcb9394546687df1e0a042a2a91496f3}{BasisSet}}() \{ \};}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141     \textcolor{comment}{// Path / Molecule constructor.}}
+\DoxyCodeLine{142     \textcolor{comment}{// See src/basisset/basisset.cxx for documentation}}
+\DoxyCodeLine{143     \mbox{\hyperlink{structChronusQ_1_1BasisSet_abcb9394546687df1e0a042a2a91496f3}{BasisSet}}(std::string \_basisName, std::string \_basisDef,}
+\DoxyCodeLine{144       \textcolor{keywordtype}{bool} stringDef, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, }
+\DoxyCodeLine{145       \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86}{BASIS\_FUNCTION\_TYPE}} \_basisType, }
+\DoxyCodeLine{146       \textcolor{keywordtype}{bool} \_forceCart = \textcolor{keyword}{false}, \textcolor{keywordtype}{bool} doPrint = \textcolor{keyword}{true}, }
+\DoxyCodeLine{147       \textcolor{keywordtype}{bool} \_nucBasis = \textcolor{keyword}{false});}
+\DoxyCodeLine{148        }
+\DoxyCodeLine{154     \mbox{\hyperlink{structChronusQ_1_1BasisSet_ad916b3994ef1c0f9ee91f073f72fa623}{BasisSet}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156 }
+\DoxyCodeLine{162     \mbox{\hyperlink{structChronusQ_1_1BasisSet_aa675a7efcfa38afd6c4ebe38ebd1e673}{BasisSet}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&\&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164 }
+\DoxyCodeLine{170     \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\& \mbox{\hyperlink{structChronusQ_1_1BasisSet_af4debe6b4ffda4535db6640c32bf59b7}{operator=}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172 }
+\DoxyCodeLine{178     \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\& \mbox{\hyperlink{structChronusQ_1_1BasisSet_a575b1be50041399df3c494b56a435ce5}{operator=}}(\mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&\&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181     \textcolor{comment}{// Ouputs BasisSet info, see src/basisset/basisset.cxx for }}
+\DoxyCodeLine{182     \textcolor{comment}{// documentation}}
+\DoxyCodeLine{183     \textcolor{keyword}{friend} std::ostream\& \mbox{\hyperlink{structChronusQ_1_1BasisSet_a2a6cab3f5931df9b350b3dec8c08b6b2}{operator<<}}(std::ostream \&, \textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}}\&);}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185     \textcolor{comment}{// Misc functions}}
+\DoxyCodeLine{186       }
+\DoxyCodeLine{187     \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a6d77dd5087c5d1847011d03fcb047ae9}{uncontractShells}}();}
+\DoxyCodeLine{188     \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a64943b47f5c32e2ea3fdc18898cf9f79}{makeMapPrim2Cont}}(\textcolor{keyword}{const} \textcolor{keywordtype}{double}*, \textcolor{keywordtype}{double}*, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\&) \textcolor{keyword}{const};}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191     \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \mbox{\hyperlink{structChronusQ_1_1BasisSet_ab10838a79132616000e539a485abe80a}{uncontractBasis}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{192     \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a04cfa73f279aae9d94a4ee99fd720fa1}{groupGeneralContractionBasis}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{193     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1BasisSet_aa66974bc0717a4bdcb09cc61d469ebda}{getLibcintEnvLength}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol) \textcolor{keyword}{const};}
+\DoxyCodeLine{194     \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a0dea80bb1ae5e74a731372d40ebbe43e}{setLibcintEnv}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \textcolor{keywordtype}{int} *atm, \textcolor{keywordtype}{int} *bas, \textcolor{keywordtype}{double} *env,}
+\DoxyCodeLine{195                        \textcolor{keywordtype}{bool} finiteWidthNuc = \textcolor{keyword}{false}) \textcolor{keyword}{const};}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198     \textcolor{comment}{// Update BasisSet object member data (nBasis, etc).}}
+\DoxyCodeLine{199     \textcolor{comment}{// See src/basisset/basisset.cxx for documentation}}
+\DoxyCodeLine{200     \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a12f3abdc480aedbca3c00717159eb067}{update}}(\textcolor{keywordtype}{bool} computeShellPairs = \textcolor{keyword}{true});}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202     \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a8ed27ff577f7ec934a95f697fde5a06f}{updateNuclearCoordinates}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol);}
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204   \}; \textcolor{comment}{// BasisSet struct}}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208 }
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213   \textcolor{comment}{// Basis set keyword map}}
+\DoxyCodeLine{214   \textcolor{keyword}{static} std::unordered\_map<std::string,std::string> }
+\DoxyCodeLine{215     \mbox{\hyperlink{namespaceChronusQ_a917a5f06617d6514ce7d09dd899d1cf0}{basisKeyword}} = \{}
+\DoxyCodeLine{216     \{  \textcolor{stringliteral}{"{}STO-\/3G"{}}         , \textcolor{stringliteral}{"{}sto3g.gbs"{}}                                \},}
+\DoxyCodeLine{217     \{  \textcolor{stringliteral}{"{}STO-\/6G"{}}         , \textcolor{stringliteral}{"{}sto6g.gbs"{}}                                \},}
+\DoxyCodeLine{218     \{  \textcolor{stringliteral}{"{}3-\/21G"{}}          , \textcolor{stringliteral}{"{}3-\/21g.gbs"{}}                                \},}
+\DoxyCodeLine{219     \{  \textcolor{stringliteral}{"{}4-\/31G"{}}          , \textcolor{stringliteral}{"{}4-\/31g.gbs"{}}                                \},}
+\DoxyCodeLine{220     \{  \textcolor{stringliteral}{"{}6-\/31G"{}}          , \textcolor{stringliteral}{"{}6-\/31g.gbs"{}}                                \},}
+\DoxyCodeLine{221     \{  \textcolor{stringliteral}{"{}6-\/31G(D)"{}}       , \textcolor{stringliteral}{"{}6-\/31g*.gbs"{}}                               \},}
+\DoxyCodeLine{222     \{  \textcolor{stringliteral}{"{}6-\/31++G(D)"{}}     , \textcolor{stringliteral}{"{}6-\/31++g*.gbs"{}}                             \},}
+\DoxyCodeLine{223     \{  \textcolor{stringliteral}{"{}6-\/311G"{}}         , \textcolor{stringliteral}{"{}6-\/311g.gbs"{}}                               \},}
+\DoxyCodeLine{224     \{  \textcolor{stringliteral}{"{}6-\/311+G(D)"{}}     , \textcolor{stringliteral}{"{}6-\/311+g*.gbs"{}}                             \},}
+\DoxyCodeLine{225     \{  \textcolor{stringliteral}{"{}6-\/311+G(D,P)"{}}   , \textcolor{stringliteral}{"{}6-\/311+g**.gbs"{}}                            \},}
+\DoxyCodeLine{226     \{  \textcolor{stringliteral}{"{}6-\/311+G(2D,P)"{}}  , \textcolor{stringliteral}{"{}6-\/311+g\_2d\_p.gbs"{}}                         \},}
+\DoxyCodeLine{227     \{  \textcolor{stringliteral}{"{}CC-\/PVDZ"{}}        , \textcolor{stringliteral}{"{}cc-\/pvdz.gbs"{}}                              \},}
+\DoxyCodeLine{228     \{  \textcolor{stringliteral}{"{}CC-\/PVTZ"{}}        , \textcolor{stringliteral}{"{}cc-\/pvtz.gbs"{}}                              \},}
+\DoxyCodeLine{229     \{  \textcolor{stringliteral}{"{}CC-\/PVQZ"{}}        , \textcolor{stringliteral}{"{}cc-\/pvqz.gbs"{}}                              \},}
+\DoxyCodeLine{230     \{  \textcolor{stringliteral}{"{}CC-\/PV5Z"{}}        , \textcolor{stringliteral}{"{}cc-\/pv5z.gbs"{}}                              \},}
+\DoxyCodeLine{231     \{  \textcolor{stringliteral}{"{}CC-\/PV6Z"{}}        , \textcolor{stringliteral}{"{}cc-\/pv6z.gbs"{}}                              \},}
+\DoxyCodeLine{232     \{  \textcolor{stringliteral}{"{}CC-\/PVDZ-\/DK3"{}}    , \textcolor{stringliteral}{"{}cc-\/pvdz-\/dk3.gbs"{}}                          \},}
+\DoxyCodeLine{233     \{  \textcolor{stringliteral}{"{}CC-\/PVTZ-\/DK3"{}}    , \textcolor{stringliteral}{"{}cc-\/pvtz-\/dk3.gbs"{}}                          \},}
+\DoxyCodeLine{234     \{  \textcolor{stringliteral}{"{}CC-\/PVQZ-\/DK3"{}}    , \textcolor{stringliteral}{"{}cc-\/pvqz-\/dk3.gbs"{}}                          \},}
+\DoxyCodeLine{235     \{  \textcolor{stringliteral}{"{}CC-\/PVDZ-\/X2C"{}}    , \textcolor{stringliteral}{"{}cc-\/pvdz-\/x2c.gbs"{}}                          \},}
+\DoxyCodeLine{236     \{  \textcolor{stringliteral}{"{}CC-\/PVTZ-\/X2C"{}}    , \textcolor{stringliteral}{"{}cc-\/pvtz-\/x2c.gbs"{}}                          \},}
+\DoxyCodeLine{237     \{  \textcolor{stringliteral}{"{}CC-\/PVQZ-\/X2C"{}}    , \textcolor{stringliteral}{"{}cc-\/pvqz-\/x2c.gbs"{}}                          \},}
+\DoxyCodeLine{238     \{  \textcolor{stringliteral}{"{}DEF2-\/SVP"{}}                  , \textcolor{stringliteral}{"{}def2-\/svp.gbs"{}}                  \},}
+\DoxyCodeLine{239     \{  \textcolor{stringliteral}{"{}DEF2-\/SVPD"{}}                 , \textcolor{stringliteral}{"{}def2-\/svpd.gbs"{}}                 \},}
+\DoxyCodeLine{240     \{  \textcolor{stringliteral}{"{}DEF2-\/TZVP"{}}                 , \textcolor{stringliteral}{"{}def2-\/tzvp.gbs"{}}                 \},}
+\DoxyCodeLine{241     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/DZP-\/2012-\/ALL"{}} , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/dzp-\/2012\_all.gbs"{}} \},}
+\DoxyCodeLine{242     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/DZP-\/2012-\/NO"{}}  , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/dzp-\/2012\_no.gbs"{}}  \},}
+\DoxyCodeLine{243     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/DZP-\/2012-\/SP"{}}  , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/dzp-\/2012\_sp.gbs"{}}  \},}
+\DoxyCodeLine{244     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/DZP-\/ALL"{}}      , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/dzp\_all.gbs"{}}      \},}
+\DoxyCodeLine{245     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/DZP-\/NO"{}}       , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/dzp\_no.gbs"{}}       \},}
+\DoxyCodeLine{246     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/DZP-\/SP"{}}       , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/dzp\_sp.gbs"{}}       \},}
+\DoxyCodeLine{247     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/QZP-\/2012-\/ALL"{}} , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/qzp-\/2012\_all.gbs"{}} \},}
+\DoxyCodeLine{248     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/QZP-\/2012-\/NO"{}}  , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/qzp-\/2012\_no.gbs"{}}  \},}
+\DoxyCodeLine{249     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/QZP-\/2012-\/SP"{}}  , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/qzp-\/2012\_sp.gbs"{}}  \},}
+\DoxyCodeLine{250     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/QZP-\/ALL"{}}      , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/qzp\_all.gbs"{}}      \},}
+\DoxyCodeLine{251     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/QZP-\/NO"{}}       , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/qzp\_no.gbs"{}}       \},}
+\DoxyCodeLine{252     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/QZP-\/SP"{}}       , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/qzp\_sp.gbs"{}}       \},}
+\DoxyCodeLine{253     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/TZP-\/2012-\/ALL"{}} , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/tzp-\/2012\_all.gbs"{}} \},}
+\DoxyCodeLine{254     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/TZP-\/2012-\/NO"{}}  , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/tzp-\/2012\_no.gbs"{}}  \},}
+\DoxyCodeLine{255     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/TZP-\/2012-\/SP"{}}  , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/tzp-\/2012\_sp.gbs"{}}  \},}
+\DoxyCodeLine{256     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/TZP-\/ALL"{}}      , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/tzp\_all.gbs"{}}      \},}
+\DoxyCodeLine{257     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/TZP-\/NO"{}}       , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/tzp\_no.gbs"{}}       \},}
+\DoxyCodeLine{258     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DKH3-\/TZP-\/SP"{}}       , \textcolor{stringliteral}{"{}sapporo-\/dkh3-\/tzp\_sp.gbs"{}}       \},}
+\DoxyCodeLine{259     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DZP-\/2012-\/ALL"{}}      , \textcolor{stringliteral}{"{}sapporo-\/dzp-\/2012\_all.gbs"{}}      \},}
+\DoxyCodeLine{260     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DZP-\/2012-\/NO"{}}       , \textcolor{stringliteral}{"{}sapporo-\/dzp-\/2012\_no.gbs"{}}       \},}
+\DoxyCodeLine{261     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DZP-\/2012-\/SP"{}}       , \textcolor{stringliteral}{"{}sapporo-\/dzp-\/2012\_sp.gbs"{}}       \},}
+\DoxyCodeLine{262     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DZP-\/ALL"{}}           , \textcolor{stringliteral}{"{}sapporo-\/dzp\_all.gbs"{}}           \},}
+\DoxyCodeLine{263     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DZP-\/NO"{}}            , \textcolor{stringliteral}{"{}sapporo-\/dzp\_no.gbs"{}}            \},}
+\DoxyCodeLine{264     \{  \textcolor{stringliteral}{"{}SAPPORO-\/DZP-\/SP"{}}            , \textcolor{stringliteral}{"{}sapporo-\/dzp\_sp.gbs"{}}            \},}
+\DoxyCodeLine{265     \{  \textcolor{stringliteral}{"{}SAPPORO-\/QZP-\/2012-\/ALL"{}}      , \textcolor{stringliteral}{"{}sapporo-\/qzp-\/2012\_all.gbs"{}}      \},}
+\DoxyCodeLine{266     \{  \textcolor{stringliteral}{"{}SAPPORO-\/QZP-\/2012-\/NO"{}}       , \textcolor{stringliteral}{"{}sapporo-\/qzp-\/2012\_no.gbs"{}}       \},}
+\DoxyCodeLine{267     \{  \textcolor{stringliteral}{"{}SAPPORO-\/QZP-\/2012-\/SP"{}}       , \textcolor{stringliteral}{"{}sapporo-\/qzp-\/2012\_sp.gbs"{}}       \},}
+\DoxyCodeLine{268     \{  \textcolor{stringliteral}{"{}SAPPORO-\/QZP-\/ALL"{}}           , \textcolor{stringliteral}{"{}sapporo-\/qzp\_all.gbs"{}}           \},}
+\DoxyCodeLine{269     \{  \textcolor{stringliteral}{"{}SAPPORO-\/QZP-\/NO"{}}            , \textcolor{stringliteral}{"{}sapporo-\/qzp\_no.gbs"{}}            \},}
+\DoxyCodeLine{270     \{  \textcolor{stringliteral}{"{}SAPPORO-\/QZP-\/SP"{}}            , \textcolor{stringliteral}{"{}sapporo-\/qzp\_sp.gbs"{}}            \},}
+\DoxyCodeLine{271     \{  \textcolor{stringliteral}{"{}SAPPORO-\/TZP-\/2012-\/ALL"{}}      , \textcolor{stringliteral}{"{}sapporo-\/tzp-\/2012\_all.gbs"{}}      \},}
+\DoxyCodeLine{272     \{  \textcolor{stringliteral}{"{}SAPPORO-\/TZP-\/2012-\/NO"{}}       , \textcolor{stringliteral}{"{}sapporo-\/tzp-\/2012\_no.gbs"{}}       \},}
+\DoxyCodeLine{273     \{  \textcolor{stringliteral}{"{}SAPPORO-\/TZP-\/2012-\/SP"{}}       , \textcolor{stringliteral}{"{}sapporo-\/tzp-\/2012\_sp.gbs"{}}       \},}
+\DoxyCodeLine{274     \{  \textcolor{stringliteral}{"{}SAPPORO-\/TZP-\/ALL"{}}           , \textcolor{stringliteral}{"{}sapporo-\/tzp\_all.gbs"{}}           \},}
+\DoxyCodeLine{275     \{  \textcolor{stringliteral}{"{}SAPPORO-\/TZP-\/NO"{}}            , \textcolor{stringliteral}{"{}sapporo-\/tzp\_no.gbs"{}}            \},}
+\DoxyCodeLine{276     \{  \textcolor{stringliteral}{"{}SAPPORO-\/TZP-\/SP"{}}            , \textcolor{stringliteral}{"{}sapporo-\/tzp\_sp.gbs"{}}            \},}
+\DoxyCodeLine{277     \{  \textcolor{stringliteral}{"{}CC-\/PV5Z-\/JKFIT"{}}             , \textcolor{stringliteral}{"{}cc-\/pv5z-\/jkfit.gbs"{}}             \},}
+\DoxyCodeLine{278     \{  \textcolor{stringliteral}{"{}CC-\/PV5Z-\/RIFIT"{}}             , \textcolor{stringliteral}{"{}cc-\/pv5z-\/rifit.gbs"{}}             \},}
+\DoxyCodeLine{279     \{  \textcolor{stringliteral}{"{}CC-\/PV6Z-\/RIFIT"{}}             , \textcolor{stringliteral}{"{}cc-\/pv6z-\/rifit.gbs"{}}             \},}
+\DoxyCodeLine{280     \{  \textcolor{stringliteral}{"{}CC-\/PVDZ-\/RIFIT"{}}             , \textcolor{stringliteral}{"{}cc-\/pvdz-\/rifit.gbs"{}}             \},}
+\DoxyCodeLine{281     \{  \textcolor{stringliteral}{"{}CC-\/PVQZ-\/JKFIT"{}}             , \textcolor{stringliteral}{"{}cc-\/pvqz-\/jkfit.gbs"{}}             \},}
+\DoxyCodeLine{282     \{  \textcolor{stringliteral}{"{}CC-\/PVQZ-\/RIFIT"{}}             , \textcolor{stringliteral}{"{}cc-\/pvqz-\/rifit.gbs"{}}             \},}
+\DoxyCodeLine{283     \{  \textcolor{stringliteral}{"{}CC-\/PVTZ-\/JKFIT"{}}             , \textcolor{stringliteral}{"{}cc-\/pvtz-\/jkfit.gbs"{}}             \},}
+\DoxyCodeLine{284     \{  \textcolor{stringliteral}{"{}CC-\/PVTZ-\/RIFIT"{}}             , \textcolor{stringliteral}{"{}cc-\/pvtz-\/rifit.gbs"{}}             \},}
+\DoxyCodeLine{285     \{  \textcolor{stringliteral}{"{}CC-\/PWCV5Z-\/RIFIT"{}}           , \textcolor{stringliteral}{"{}cc-\/pwcv5z-\/rifit.gbs"{}}           \},}
+\DoxyCodeLine{286     \{  \textcolor{stringliteral}{"{}CC-\/PWCVDZ-\/RIFIT"{}}           , \textcolor{stringliteral}{"{}cc-\/pwcvdz-\/rifit.gbs"{}}           \},}
+\DoxyCodeLine{287     \{  \textcolor{stringliteral}{"{}CC-\/PWCVQZ-\/RIFIT"{}}           , \textcolor{stringliteral}{"{}cc-\/pwcvqz-\/rifit.gbs"{}}           \},}
+\DoxyCodeLine{288     \{  \textcolor{stringliteral}{"{}CC-\/PWCVTZ-\/RIFIT"{}}           , \textcolor{stringliteral}{"{}cc-\/pwcvtz-\/rifit.gbs"{}}           \},}
+\DoxyCodeLine{289     \{  \textcolor{stringliteral}{"{}AUG-\/CC-\/PV5Z-\/RIFIT"{}}         , \textcolor{stringliteral}{"{}aug-\/cc-\/pv5z-\/rifit.gbs"{}}         \},}
+\DoxyCodeLine{290     \{  \textcolor{stringliteral}{"{}AUG-\/CC-\/PV6Z-\/RIFIT"{}}         , \textcolor{stringliteral}{"{}aug-\/cc-\/pv6z-\/rifit.gbs"{}}         \},}
+\DoxyCodeLine{291     \{  \textcolor{stringliteral}{"{}AUG-\/CC-\/PVDZ-\/RIFIT"{}}         , \textcolor{stringliteral}{"{}aug-\/cc-\/pvdz-\/rifit.gbs"{}}         \},}
+\DoxyCodeLine{292     \{  \textcolor{stringliteral}{"{}AUG-\/CC-\/PVQZ-\/RIFIT"{}}         , \textcolor{stringliteral}{"{}aug-\/cc-\/pvqz-\/rifit.gbs"{}}         \},}
+\DoxyCodeLine{293     \{  \textcolor{stringliteral}{"{}AUG-\/CC-\/PVTZ-\/RIFIT"{}}         , \textcolor{stringliteral}{"{}aug-\/cc-\/pvtz-\/rifit.gbs"{}}         \},}
+\DoxyCodeLine{294     \{  \textcolor{stringliteral}{"{}AUG-\/CC-\/PWCV5Z-\/RIFIT"{}}       , \textcolor{stringliteral}{"{}aug-\/cc-\/pwcv5z-\/rifit.gbs"{}}       \},}
+\DoxyCodeLine{295     \{  \textcolor{stringliteral}{"{}AUG-\/CC-\/PWCVDZ-\/RIFIT"{}}       , \textcolor{stringliteral}{"{}aug-\/cc-\/pwcvdz-\/rifit.gbs"{}}       \},}
+\DoxyCodeLine{296     \{  \textcolor{stringliteral}{"{}AUG-\/CC-\/PWCVQZ-\/RIFIT"{}}       , \textcolor{stringliteral}{"{}aug-\/cc-\/pwcvqz-\/rifit.gbs"{}}       \},}
+\DoxyCodeLine{297     \{  \textcolor{stringliteral}{"{}AUG-\/CC-\/PWCVTZ-\/RIFIT"{}}       , \textcolor{stringliteral}{"{}aug-\/cc-\/pwcvtz-\/rifit.gbs"{}}       \},}
+\DoxyCodeLine{298     \{  \textcolor{stringliteral}{"{}DEF2-\/QZVP-\/RIFIT"{}}           , \textcolor{stringliteral}{"{}def2-\/qzvp-\/rifit.gbs"{}}           \},}
+\DoxyCodeLine{299     \{  \textcolor{stringliteral}{"{}DEF2-\/QZVPP-\/RIFIT"{}}          , \textcolor{stringliteral}{"{}def2-\/qzvpp-\/rifit.gbs"{}}          \},}
+\DoxyCodeLine{300     \{  \textcolor{stringliteral}{"{}DEF2-\/QZVPPD-\/RIFIT"{}}         , \textcolor{stringliteral}{"{}def2-\/qzvppd-\/rifit.gbs"{}}         \},}
+\DoxyCodeLine{301     \{  \textcolor{stringliteral}{"{}DEF2-\/SVP-\/RIFIT"{}}            , \textcolor{stringliteral}{"{}def2-\/svp-\/rifit.gbs"{}}            \},}
+\DoxyCodeLine{302     \{  \textcolor{stringliteral}{"{}DEF2-\/SVPD-\/RIFIT"{}}           , \textcolor{stringliteral}{"{}def2-\/svpd-\/rifit.gbs"{}}           \},}
+\DoxyCodeLine{303     \{  \textcolor{stringliteral}{"{}DEF2-\/TZVP-\/RIFIT"{}}           , \textcolor{stringliteral}{"{}def2-\/tzvp-\/rifit.gbs"{}}           \},}
+\DoxyCodeLine{304     \{  \textcolor{stringliteral}{"{}DEF2-\/TZVPD-\/RIFIT"{}}          , \textcolor{stringliteral}{"{}def2-\/tzvpd-\/rifit.gbs"{}}          \},}
+\DoxyCodeLine{305     \{  \textcolor{stringliteral}{"{}DEF2-\/TZVPP-\/RIFIT"{}}          , \textcolor{stringliteral}{"{}def2-\/tzvpp-\/rifit.gbs"{}}          \},}
+\DoxyCodeLine{306     \{  \textcolor{stringliteral}{"{}DEF2-\/TZVPPD-\/RIFIT"{}}         , \textcolor{stringliteral}{"{}def2-\/tzvppd-\/rifit.gbs"{}}         \},}
+\DoxyCodeLine{307     \{  \textcolor{stringliteral}{"{}DEF2-\/UNIVERSAL-\/JFIT"{}}       , \textcolor{stringliteral}{"{}def2-\/universal-\/jfit.gbs"{}}       \},}
+\DoxyCodeLine{308     \{  \textcolor{stringliteral}{"{}DEF2-\/UNIVERSAL-\/JKFIT"{}}      , \textcolor{stringliteral}{"{}def2-\/universal-\/jkfit.gbs"{}}      \},}
+\DoxyCodeLine{309     \{  \textcolor{stringliteral}{"{}SARC2-\/QZV-\/DKH2-\/JKFIT"{}}      , \textcolor{stringliteral}{"{}sarc2-\/qzv-\/dkh2-\/jkfit.gbs"{}}      \},}
+\DoxyCodeLine{310     \{  \textcolor{stringliteral}{"{}SARC2-\/QZV-\/ZORA-\/JKFIT"{}}      , \textcolor{stringliteral}{"{}sarc2-\/qzv-\/zora-\/jkfit.gbs"{}}      \},}
+\DoxyCodeLine{311     \{  \textcolor{stringliteral}{"{}SARC2-\/QZVP-\/DKH2-\/JKFIT"{}}     , \textcolor{stringliteral}{"{}sarc2-\/qzvp-\/dkh2-\/jkfit.gbs"{}}     \},}
+\DoxyCodeLine{312     \{  \textcolor{stringliteral}{"{}SARC2-\/QZVP-\/ZORA-\/JKFIT"{}}     , \textcolor{stringliteral}{"{}sarc2-\/qzvp-\/zora-\/jkfit.gbs"{}}     \},}
+\DoxyCodeLine{313     \{  \textcolor{stringliteral}{"{}X2C-\/JFIT"{}}                  , \textcolor{stringliteral}{"{}x2c-\/jfit.gbs"{}}                  \},}
+\DoxyCodeLine{314     \{  \textcolor{stringliteral}{"{}PROT-\/SP"{}}                   , \textcolor{stringliteral}{"{}prot-\/sp.gbs"{}}                   \},}
+\DoxyCodeLine{315     \{  \textcolor{stringliteral}{"{}PROT-\/PB4-\/D"{}}                , \textcolor{stringliteral}{"{}prot-\/pb4-\/d.gbs"{}}                \},}
+\DoxyCodeLine{316     \{  \textcolor{stringliteral}{"{}PROT-\/PB4-\/F1"{}}               , \textcolor{stringliteral}{"{}prot-\/pb4-\/f1.gbs"{}}               \},}
+\DoxyCodeLine{317     \{  \textcolor{stringliteral}{"{}PROT-\/PB4-\/F2"{}}               , \textcolor{stringliteral}{"{}prot-\/pb4-\/f2.gbs"{}}               \},}
+\DoxyCodeLine{318     \{  \textcolor{stringliteral}{"{}PROT-\/PB5-\/G"{}}                , \textcolor{stringliteral}{"{}prot-\/pb5-\/g.gbs"{}}                \},}
+\DoxyCodeLine{319     \{  \textcolor{stringliteral}{"{}PROT-\/PB6-\/G"{}}                , \textcolor{stringliteral}{"{}prot-\/pb6-\/g.gbs"{}}                \}}
+\DoxyCodeLine{320   \};}
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322 }
+\DoxyCodeLine{323 }
+\DoxyCodeLine{324 }
+\DoxyCodeLine{325 }
+\DoxyCodeLine{326 }
+\DoxyCodeLine{327 }
+\DoxyCodeLine{328 }
+\DoxyCodeLine{329 }
+\DoxyCodeLine{330 }
+\DoxyCodeLine{331 }
+\DoxyCodeLine{332 }
+\DoxyCodeLine{333 }
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335 }
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337 }
+\DoxyCodeLine{338 }
+\DoxyCodeLine{339 }
+\DoxyCodeLine{340 \textcolor{comment}{// SS start  }}
+\DoxyCodeLine{341   \textcolor{keyword}{extern} std::vector<std::vector<std::array<int,3>>> \mbox{\hyperlink{namespaceChronusQ_a028e35d3ffe7ef5712fadeba325b9dd6}{cart\_ang\_list}}; \textcolor{comment}{//list of cartesian angular momentum.}}
+\DoxyCodeLine{342   \textcolor{keyword}{extern} std::vector<std::vector<double>> \mbox{\hyperlink{namespaceChronusQ_aea9df6ff418f1e3aa53d46aa97c44a3d}{car2sph\_matrix}}; \textcolor{comment}{//SS: external variable,}}
+\DoxyCodeLine{343           \textcolor{comment}{//vector of transform matrix from cartesian to spherical}}
+\DoxyCodeLine{344   }
+\DoxyCodeLine{345   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a77372afd4469aacf10397f5d0df9a12c}{pop\_cart\_ang\_list}}(); \textcolor{comment}{//SS:populate angular momentum list, can only be called once.   }}
+\DoxyCodeLine{346 }
+\DoxyCodeLine{347   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a23d23e191872ec3b651b6bf594a393aa}{pop\_car2sph\_matrix}}(); \textcolor{comment}{//populate transform matrix up to L=6}}
+\DoxyCodeLine{348 }
+\DoxyCodeLine{349   std::complex<double> \mbox{\hyperlink{namespaceChronusQ_a0fd320e3d2cb96de6f4c404d4faa2b5b}{cart2sphCoeff}}(\textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}); }
+\DoxyCodeLine{350           \textcolor{comment}{//SS: calculate the matrix elements of cartesian to spherical transform}}
+\DoxyCodeLine{351 }
+\DoxyCodeLine{352   \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_ac2574f5e65c048097af09cd0dbb3a593}{factorial}}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{353   }
+\DoxyCodeLine{354   \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_adc91aad3d5c9f139c19fd28cb20637ae}{doubleFact}}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{355 }
+\DoxyCodeLine{356   \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_ac6741ec6b44fb05dc761a59e04eff012}{polyCoeff}}(\textcolor{keywordtype}{int}, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{357 }
+\DoxyCodeLine{358   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a608dd0574bfbf5e9750044d70390e8ea}{cart2sph\_transform}}( \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, std::vector<double>\&, std::vector<double>\& ); }
+\DoxyCodeLine{359   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a110881b998ecbb2129358af767069b1e}{cart2sph\_complex\_transform}}( \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, std::vector<dcomplex>\&, std::vector<dcomplex>\& ); }
+\DoxyCodeLine{360   }
+\DoxyCodeLine{361   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a75048721868ac4d21b0cdc0ae98ef12e}{cart2sph\_2e\_transform}}( \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, std::vector<double>\&, }
+\DoxyCodeLine{362     std::vector<double>\& ); }
+\DoxyCodeLine{363 }
+\DoxyCodeLine{364   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a29008d797b2a5d5b1ea938236a4aa41d}{cart2sph\_complex\_2e\_transform}}( \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{int}, std::vector<dcomplex>\&, }
+\DoxyCodeLine{365     std::vector<dcomplex>\& ); }
+\DoxyCodeLine{366 }
+\DoxyCodeLine{367   \textcolor{comment}{// pre calculate shellpair data}}
+\DoxyCodeLine{368   std::vector<libint2::ShellPair> \mbox{\hyperlink{namespaceChronusQ_af6a1237559ab5dec25fd85086d407ec8}{genShellPairs}}( std::vector<libint2::Shell>\&, \textcolor{keywordtype}{double} );}
+\DoxyCodeLine{369   std::vector<libint2::ShellPair> \mbox{\hyperlink{namespaceChronusQ_aa31e06aac36e9fc27462bbe92c2688e8}{genOrderedShellPairs}}( std::vector<libint2::Shell>\&, \textcolor{keywordtype}{double} );}
+\DoxyCodeLine{370 }
+\DoxyCodeLine{371   \textcolor{comment}{// pre calculate shellpair data}}
+\DoxyCodeLine{372   std::vector<libint2::ShellPair> \mbox{\hyperlink{namespaceChronusQ_af6a1237559ab5dec25fd85086d407ec8}{genShellPairs}}( std::vector<libint2::Shell>\&, \textcolor{keywordtype}{double} );}
+\DoxyCodeLine{373   std::vector<libint2::ShellPair> \mbox{\hyperlink{namespaceChronusQ_aa31e06aac36e9fc27462bbe92c2688e8}{genOrderedShellPairs}}( std::vector<libint2::Shell>\&, \textcolor{keywordtype}{double} );}
+\DoxyCodeLine{374 }
+\DoxyCodeLine{375 \textcolor{comment}{// SS end}}
+\DoxyCodeLine{376  }
+\DoxyCodeLine{377 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{378 }
+
+\end{DoxyCode}

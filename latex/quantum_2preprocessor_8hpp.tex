@@ -1,0 +1,34 @@
+\hypertarget{quantum_2preprocessor_8hpp}{}\doxysection{include/quantum/preprocessor.hpp File Reference}
+\label{quantum_2preprocessor_8hpp}\index{include/quantum/preprocessor.hpp@{include/quantum/preprocessor.hpp}}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{quantum_2preprocessor_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}{SPIN\+\_\+\+OPERATOR\+\_\+\+ALLOC}}(NB,  X)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}\label{quantum_2preprocessor_8hpp_ad98c0898d997b56f372bca5872d04864}} 
+\index{preprocessor.hpp@{preprocessor.hpp}!SPIN\_OPERATOR\_ALLOC@{SPIN\_OPERATOR\_ALLOC}}
+\index{SPIN\_OPERATOR\_ALLOC@{SPIN\_OPERATOR\_ALLOC}!preprocessor.hpp@{preprocessor.hpp}}
+\doxysubsubsection{\texorpdfstring{SPIN\_OPERATOR\_ALLOC}{SPIN\_OPERATOR\_ALLOC}}
+{\footnotesize\ttfamily \#define SPIN\+\_\+\+OPERATOR\+\_\+\+ALLOC(\begin{DoxyParamCaption}\item[{}]{NB,  }\item[{}]{X }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \textcolor{keywordflow}{if}(this-\/>nC > 1) \(\backslash\)}
+\DoxyCodeLine{    X = std::make\_shared<PauliSpinorSquareMatrices<MatsT>>(memManager, NB, \textcolor{keyword}{true}); \(\backslash\)}
+\DoxyCodeLine{  else \textcolor{keywordflow}{if} (not this-\/>iCS) \(\backslash\)}
+\DoxyCodeLine{    X = std::make\_shared<PauliSpinorSquareMatrices<MatsT>>(memManager, NB, \textcolor{keyword}{false}); \(\backslash\)}
+\DoxyCodeLine{  else \(\backslash\)}
+\DoxyCodeLine{    X = std::make\_shared<PauliSpinorSquareMatrices<MatsT>>(memManager, NB, \textcolor{keyword}{false}, \textcolor{keyword}{false})}
+
+\end{DoxyCode}

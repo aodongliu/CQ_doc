@@ -1,0 +1,187 @@
+\hypertarget{quantum_2base_8hpp_source}{}\doxysection{base.\+hpp}
+\label{quantum_2base_8hpp_source}\index{include/quantum/base.hpp@{include/quantum/base.hpp}}
+\mbox{\hyperlink{quantum_2base_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mpi_8hpp}{util/mpi.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{timer_8hpp}{util/timer.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{typedefs_8hpp}{util/typedefs.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{memmanager_8hpp}{memmanager.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include <fields.hpp>}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{particleintegrals_8hpp}{particleintegrals.hpp}}>}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5}{DENSITY\_TYPE}} \{}
+\DoxyCodeLine{42     \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}}=0,\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}}=1,\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5a91a026eba35b718e654608234c1878ba}{MY}}=2,\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5ab22d2789fda102ddabdacdb49af83bbf}{MX}}=3}
+\DoxyCodeLine{43   \}; }
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46   \textcolor{comment}{// Helper function for operator traces}}
+\DoxyCodeLine{47   \textcolor{keyword}{template} <\textcolor{keyword}{typename} Left, \textcolor{keyword}{typename} Right>}
+\DoxyCodeLine{48   \textcolor{keyword}{static} \textcolor{keyword}{inline} \textcolor{keywordtype}{double} \mbox{\hyperlink{namespaceChronusQ_aa856d84bb9b96b7795a666a14a84b120}{OperatorTrace}}(\textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{const} Left\& op1 , }
+\DoxyCodeLine{49     \textcolor{keyword}{const} Right\& op2) \{}
+\DoxyCodeLine{50     }
+\DoxyCodeLine{51     \textcolor{keywordflow}{return} std::real(\mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(N,op1,1,op2,1));}
+\DoxyCodeLine{52   \} }
+\DoxyCodeLine{53 }
+\DoxyCodeLine{62   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}} \{}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{65   \textcolor{keyword}{private}:}
+\DoxyCodeLine{66   \textcolor{keyword}{public}:}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}      \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}}; }
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}; }
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \textcolor{keywordtype}{int}   \mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}};   }
+\DoxyCodeLine{73     \textcolor{keywordtype}{bool}  \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}};  }
+\DoxyCodeLine{74     \mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_adaad72707210363e1b5745bb2aa1de29}{particle}}; }
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77     \textcolor{comment}{// Property storage}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \textcolor{comment}{// Length gauge electric multipoles}}
+\DoxyCodeLine{80     \mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\_t}} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elecDipole}};        }
+\DoxyCodeLine{81     \mbox{\hyperlink{namespaceChronusQ_a9bf20cdeba81cac206335ed92f5c5b63}{cartmat\_t}} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}; }
+\DoxyCodeLine{82     \mbox{\hyperlink{namespaceChronusQ_ac8db0e221d9ee09219e0e3777702f8ea}{cartrk3\_t}} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}};   }
+\DoxyCodeLine{83     }
+\DoxyCodeLine{84     \textcolor{comment}{// Spin expectation values}}
+\DoxyCodeLine{85     \mbox{\hyperlink{namespaceChronusQ_a62698095137b51164d0a86684936dafb}{cart\_t}} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_ad3d7ed67a8de917566c3bd3747ad63f0}{SExpect}}; }
+\DoxyCodeLine{86     \textcolor{keywordtype}{double}    \mbox{\hyperlink{classChronusQ_1_1QuantumBase_aff3cce4ca98b229f27f305b4683b9249}{SSq}};  }
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88     \textcolor{comment}{// Energy expectation values}}
+\DoxyCodeLine{89     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_af007378c10a589824ce0be369f8536dc}{OBEnergy}};   }
+\DoxyCodeLine{90     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_adcba63b2677fd23463c7625dfadaf66b}{MBEnergy}};   }
+\DoxyCodeLine{91     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a05097259c902c136ca3e500d8d6b0904}{PPEnergy}} = 0.;   \textcolor{comment}{//<  Many(2)-\/Body proton-\/proton repulsion energy}}
+\DoxyCodeLine{92     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a4cbb1f36148d9b24504a8a73953438bf}{extraEnergy}} = 0;}
+\DoxyCodeLine{93     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}{totalEnergy}};}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{99       }
+\DoxyCodeLine{100     \textcolor{comment}{// Disable default constructor}}
+\DoxyCodeLine{101     \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6ed15d36d43fc3433f83c6a6a42a53a5}{QuantumBase}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     \textcolor{comment}{// Default the copy and move constructors}}
+\DoxyCodeLine{104     \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a8a6b2cfa353efd9e862e8ad71b2262cd}{QuantumBase}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}}\&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{105     \mbox{\hyperlink{classChronusQ_1_1QuantumBase_ab5d395f15ddb9968aed602dc5d2bfc32}{QuantumBase}}(\mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}}\&\&)      = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{115     \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0b12d31447c09f3cabd57f5ee6a6c9b8}{QuantumBase}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} \_nC, \textcolor{keywordtype}{bool} \_iCS, \mbox{\hyperlink{structChronusQ_1_1Particle}{Particle}} p): }
+\DoxyCodeLine{116       \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}(mem), \mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}}(\_nC), \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}}(\_iCS), \mbox{\hyperlink{classChronusQ_1_1QuantumBase_adaad72707210363e1b5745bb2aa1de29}{particle}}(p), \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}}(c),}
+\DoxyCodeLine{117       \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elecDipole}}(\{0.,0.,0.\}),}
+\DoxyCodeLine{118       \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}\{\{\{0.,0.,0.\},\{0.,0.,0.\},\{0.,0.,0.\}\}\},}
+\DoxyCodeLine{119       \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}\{}
+\DoxyCodeLine{120         \{}
+\DoxyCodeLine{121           \{\{\{0.,0.,0.\},\{0.,0.,0.\},\{0.,0.,0.\}\}\},}
+\DoxyCodeLine{122           \{\{\{0.,0.,0.\},\{0.,0.,0.\},\{0.,0.,0.\}\}\},}
+\DoxyCodeLine{123           \{\{\{0.,0.,0.\},\{0.,0.,0.\},\{0.,0.,0.\}\}\}}
+\DoxyCodeLine{124         \}\}, \mbox{\hyperlink{classChronusQ_1_1QuantumBase_ad3d7ed67a8de917566c3bd3747ad63f0}{SExpect}}(\{0.,0.,0.\}), \mbox{\hyperlink{classChronusQ_1_1QuantumBase_aff3cce4ca98b229f27f305b4683b9249}{SSq}}(0.), \mbox{\hyperlink{classChronusQ_1_1QuantumBase_af007378c10a589824ce0be369f8536dc}{OBEnergy}}(0.), \mbox{\hyperlink{classChronusQ_1_1QuantumBase_adcba63b2677fd23463c7625dfadaf66b}{MBEnergy}}(0.),}
+\DoxyCodeLine{125       \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}{totalEnergy}}(0.) \{ \}; \textcolor{comment}{// Quantum::Quantum}}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129     \textcolor{comment}{// Procedural}}
+\DoxyCodeLine{130       }
+\DoxyCodeLine{134     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a9c786fcea80de9218a49b0640fc86c76}{formDensity}}() = 0;}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{139     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a22dae7f7707d3e4db05b66a367d609d4}{computeEnergy}}() = 0;}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 }
+\DoxyCodeLine{146     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_aabcb230c3be04d02df3160f6f28ef391}{computeEnergy}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert)\{}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148       \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}});}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150       \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a22dae7f7707d3e4db05b66a367d609d4}{computeEnergy}}();}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153       \textcolor{comment}{// Field contributions to the energy}}
+\DoxyCodeLine{154       \textcolor{keywordtype}{double} field\_delta(0.);}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156       \textcolor{comment}{// Purely magnetic field contributions here}}
+\DoxyCodeLine{157       \textcolor{keyword}{auto} magDipoleField = pert.\mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a074c4e7a01eb60481943b4c96a9c9749}{getDipoleAmp}}(\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9a79930d8d7bb5d90a171f83bdb0a2451f}{Magnetic}});}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160       \textcolor{comment}{// Purely electric field contributions here}}
+\DoxyCodeLine{161       \textcolor{keyword}{auto} elecDipoleField = pert.\mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a074c4e7a01eb60481943b4c96a9c9749}{getDipoleAmp}}(\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9affb099f0286d43119e7134902486543e}{Electric}});}
+\DoxyCodeLine{162       field\_delta += }
+\DoxyCodeLine{163         elecDipoleField[0] * \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elecDipole}}[0] +}
+\DoxyCodeLine{164         elecDipoleField[1] * \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elecDipole}}[1] +}
+\DoxyCodeLine{165         elecDipoleField[2] * \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elecDipole}}[2];}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168       \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}{totalEnergy}} += field\_delta; \textcolor{comment}{// Increment total energy}}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170     \};}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173     \textcolor{keyword}{virtual} std::vector<double> \mbox{\hyperlink{classChronusQ_1_1QuantumBase_ac2eca987ab50e84b7fbdb9a68007ed11}{getEnergySummary}}() \{}
+\DoxyCodeLine{174       \textcolor{keywordflow}{return} \{\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a6073d891a99b6ae1f2ef9d412a0ead15}{totalEnergy}}, \mbox{\hyperlink{classChronusQ_1_1QuantumBase_af007378c10a589824ce0be369f8536dc}{OBEnergy}}, \mbox{\hyperlink{classChronusQ_1_1QuantumBase_adcba63b2677fd23463c7625dfadaf66b}{MBEnergy}}\};}
+\DoxyCodeLine{175     \}}
+\DoxyCodeLine{176    }
+\DoxyCodeLine{177     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a36061ba6528d204613a6e075365e29c3}{computeMultipole}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&) = 0;}
+\DoxyCodeLine{178     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a56b16ba0c1567b33aba8d3de08db3798}{computeSpin}}() = 0;}
+\DoxyCodeLine{179     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a9d66e7cf375b6a8d922372d33d293bdd}{methodSpecificProperties}}() = 0;}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a4c2e0e14116d87505f9aa61953d11194}{computeProperties}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert) \{}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185       \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}});}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Compute Properties"{}});}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} != 4) \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a36061ba6528d204613a6e075365e29c3}{computeMultipole}}(pert);}
+\DoxyCodeLine{190       \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a22dae7f7707d3e4db05b66a367d609d4}{computeEnergy}}(pert);}
+\DoxyCodeLine{191       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} != 4) \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a56b16ba0c1567b33aba8d3de08db3798}{computeSpin}}();}
+\DoxyCodeLine{192       \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a9d66e7cf375b6a8d922372d33d293bdd}{methodSpecificProperties}}();}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Compute Properties"{}});}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196     \};}
+\DoxyCodeLine{197     }
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199     \textcolor{comment}{// Print functions}}
+\DoxyCodeLine{200     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_aabb2cfa1546838b8c9b783fcb88e4f91}{print1PDM}}(std::ostream\&) = 0;}
+\DoxyCodeLine{201     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_aedcce2518a1e9011d92ab8cf881de33e}{printMultipoles}}(std::ostream\&);}
+\DoxyCodeLine{202     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a406ba9024fcfa5e2b7ce6b176f397030}{printSpin}}(std::ostream\&);}
+\DoxyCodeLine{203     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a8f4367e2adf918c689f381a2eaf15599}{printMiscProperties}}(std::ostream\&) = 0;}
+\DoxyCodeLine{204   \}; \textcolor{comment}{// class QuantumBase}}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{207 }
+
+\end{DoxyCode}

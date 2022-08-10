@@ -1,0 +1,109 @@
+\hypertarget{findiff_8hpp_source}{}\doxysection{findiff.\+hpp}
+\label{findiff_8hpp_source}\index{include/findiff.hpp@{include/findiff.hpp}}
+\mbox{\hyperlink{findiff_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <functional>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keyword}{template} <\textcolor{keyword}{typename} RetT, \textcolor{keyword}{typename} ChangeT>}
+\DoxyCodeLine{33   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer}{FiniteDifferencer}} \{}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \textcolor{comment}{// Function that returns a vector of values to take the difference over}}
+\DoxyCodeLine{37     std::function<std::vector<RetT>()> \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_afe5a4e434e92e1e162c5141f7dc56bdb}{valFunc\_}};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{comment}{// Functions that change paramaters necessary for a new call to valFunc\_}}
+\DoxyCodeLine{40     std::vector<std::function<void(ChangeT)>> \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a0c7b7cffb9bd64b7085e88b758059d12}{changeFuncs\_}};}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_abf576f814bd5f642b7744d043b298311}{order\_}} = 0;  }
+\DoxyCodeLine{43     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a6b93188324ed4ec146b40310b2d17630}{acc\_}} = 0;    }
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a0193094dd38ced1eba8b8eeaf8d2620b}{maxNodes\_}} = 0; }
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{comment}{// Results}}
+\DoxyCodeLine{48     std::vector<std::vector<RetT>> \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a07f0e1b2af8afdab53ad3e1b4d3d5ad1}{results\_}};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     \textcolor{comment}{// Table of coefficents -\/ m, n, v indexed where:}}
+\DoxyCodeLine{51     \textcolor{comment}{//   m = derivative level}}
+\DoxyCodeLine{52     \textcolor{comment}{//   n = accuracy level}}
+\DoxyCodeLine{53     \textcolor{comment}{//   v = node}}
+\DoxyCodeLine{54     std::vector<std::vector<std::vector<double>>> \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_abbbd5f7fd7c634ce97005944eaabcba4}{coeffs\_}};}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     ChangeT \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a6fe239704205fc8babc4d9f64d90ef80}{h\_}}; }
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     \textcolor{comment}{// Internal procedural}}
+\DoxyCodeLine{59     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a1eb2cc2350f60d58b1ff0a06f86c446b}{makeTable}}();}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \textcolor{keyword}{public}:}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_abc65c2e1542659e2c204a3428b24e2e1}{FiniteDifferencer}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{65     \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a24cf3ecc3141383e8540eb0bbc3c2231}{FiniteDifferencer}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer}{FiniteDifferencer}}\&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{66     \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a03d9a0d262dbfed9beedcc1cdc6582e2}{FiniteDifferencer}}(\mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer}{FiniteDifferencer}}\&\&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69     \textcolor{comment}{// Setters}}
+\DoxyCodeLine{70     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a588de6638ba7481bdaa6b49fc03ff0f3}{setValFunc}}(std::function<std::vector<RetT>()> func) \{}
+\DoxyCodeLine{71       \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_afe5a4e434e92e1e162c5141f7dc56bdb}{valFunc\_}} = func;}
+\DoxyCodeLine{72     \};}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a212a92d6c61b08d4b2f69cad6fe2ffee}{setChangeFunc}}(std::vector<std::function<\textcolor{keywordtype}{void}(ChangeT)>> func) \{}
+\DoxyCodeLine{75       \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a0c7b7cffb9bd64b7085e88b758059d12}{changeFuncs\_}} = func;}
+\DoxyCodeLine{76     \};}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_ac7e1c5c79bbcd651f2e9f5fd10feab32}{addChangeFunc}}(std::function<\textcolor{keywordtype}{void}(ChangeT)> func) \{}
+\DoxyCodeLine{79       \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a0c7b7cffb9bd64b7085e88b758059d12}{changeFuncs\_}}.push\_back(func);}
+\DoxyCodeLine{80     \};}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a9e2764d68a0a40c58bee84283f2c883f}{setDerOrder}}(\textcolor{keywordtype}{size\_t} num) \{ \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_abf576f814bd5f642b7744d043b298311}{order\_}} = num; \};}
+\DoxyCodeLine{84     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_ac0cf766e3e1e2f8c44fbe1a31f7a2052}{setAccOrder}}(\textcolor{keywordtype}{size\_t} num) \{ \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a6b93188324ed4ec146b40310b2d17630}{acc\_}} = num; \};}
+\DoxyCodeLine{85     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a0074c48a43e395347b464c409cd7b3fa}{setStepSize}}(ChangeT size) \{ \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a6fe239704205fc8babc4d9f64d90ef80}{h\_}} = size; \};}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88     \textcolor{comment}{// Getters}}
+\DoxyCodeLine{89     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_ac80cf21af6e451e3677547d71250e0b3}{getDerOrder}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_abf576f814bd5f642b7744d043b298311}{order\_}}; \};}
+\DoxyCodeLine{90     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a74a9c8be97df4b3b00a1837171a36735}{getAccOrder}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a6b93188324ed4ec146b40310b2d17630}{acc\_}}; \};}
+\DoxyCodeLine{91     ChangeT \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_ad30dfb6c642ff51878d4de31f9d504ea}{getStepSize}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a6fe239704205fc8babc4d9f64d90ef80}{h\_}}; \};}
+\DoxyCodeLine{92     std::vector<std::vector<RetT>> \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a8e02f017b1230a8f97c15acb5cc8c6bd}{getResults}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a07f0e1b2af8afdab53ad3e1b4d3d5ad1}{results\_}}; \}}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     \textcolor{comment}{// Procedural}}
+\DoxyCodeLine{96     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a6cb398b26e3ef975492b158585ed3d6e}{doDifference}}();}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99   \}; \textcolor{comment}{// class FiniteDifferencer}}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101 \} \textcolor{comment}{// namespace ChronusQ }}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{findiff_2impl_8hpp}{findiff/impl.hpp}}>}}
+
+\end{DoxyCode}

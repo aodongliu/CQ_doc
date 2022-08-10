@@ -1,0 +1,132 @@
+\hypertarget{blasext_8cxx}{}\doxysection{src/cqlinalg/blasext.cxx File Reference}
+\label{blasext_8cxx}\index{src/cqlinalg/blasext.cxx@{src/cqlinalg/blasext.cxx}}
+{\ttfamily \#include $<$cqlinalg/blasext.\+hpp$>$}\newline
+{\ttfamily \#include $<$cerr.\+hpp$>$}\newline
+{\ttfamily \#include $<$util/matout.\+hpp$>$}\newline
+Include dependency graph for blasext.\+cxx\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{blasext_8cxx__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{blasext_8cxx_a194c0db47aeac325057b0636fb6f5631}{MATN}}
+\item 
+\#define \mbox{\hyperlink{blasext_8cxx_a801852edc6e4dbefc52651807c9d0499}{MATR}}~    .conjugate()
+\item 
+\#define \mbox{\hyperlink{blasext_8cxx_a3897802110e795daf2a8dcd6d66b5e2d}{MATT}}~    .transpose()
+\item 
+\#define \mbox{\hyperlink{blasext_8cxx_ad23ac4687a881e04b8d5e308bb1e8555}{MATC}}~    .adjoint()
+\item 
+\#define \mbox{\hyperlink{blasext_8cxx_a44c5ec7730b0515579cb4f1f67310d55}{MAT\+\_\+\+OP}}(OP,  X)~    X.\+block(0,0,M,N) MAT \#\# OP .template cast$<$\+\_\+\+F3$>$()
+\item 
+\#define \mbox{\hyperlink{blasext_8cxx_a191b5c3e211e7856940ef85cdbd12254}{TRY\+\_\+\+MAT\+\_\+\+ADD}}(OPA,  OPB)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename \+\_\+\+F1 , typename \+\_\+\+F2 , typename \+\_\+\+F3 , typename \+\_\+\+FScale1 , typename \+\_\+\+FScale2 $>$ }\\void \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{Chronus\+Q\+::\+Mat\+Add}} (char TRANSA, char TRANSB, size\+\_\+t M, size\+\_\+t N, \+\_\+\+FScale1 ALPHA, const \+\_\+\+F1 $\ast$A, size\+\_\+t LDA, \+\_\+\+FScale2 BETA, const \+\_\+\+F2 $\ast$B, size\+\_\+t LDB, \+\_\+\+F3 $\ast$C, size\+\_\+t LDC)
+\begin{DoxyCompactList}\small\item\em Add two (sub) matricies together. \end{DoxyCompactList}\item 
+template void \mbox{\hyperlink{namespaceChronusQ_a344e8a4d3f8e1499b9a49703529b54d7}{Chronus\+Q\+::\+Mat\+Add}} (char, char, size\+\_\+t, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_ac9588af4d31d771371bb641890db0902}{Chronus\+Q\+::\+Mat\+Add}} (char, char, size\+\_\+t, size\+\_\+t, double, const double $\ast$, size\+\_\+t, double, const double $\ast$, size\+\_\+t, double $\ast$, size\+\_\+t)
+\item 
+template$<$$>$ void \mbox{\hyperlink{namespaceChronusQ_a6198b13326863206f105e1f34cee2713}{Chronus\+Q\+::\+Mat\+Add}} (char TRANSA, char TRANSB, size\+\_\+t M, size\+\_\+t N, double ALPHA, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$A, size\+\_\+t LDA, double BETA, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$B, size\+\_\+t LDB, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$C, size\+\_\+t LDC)
+\item 
+template$<$$>$ void \mbox{\hyperlink{namespaceChronusQ_a4d4e1fb4685cbfbf16f90e0c56f08312}{Chronus\+Q\+::\+Mat\+Add}} (char TRANSA, char TRANSB, size\+\_\+t M, size\+\_\+t N, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} ALPHA, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$A, size\+\_\+t LDA, double BETA, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$B, size\+\_\+t LDB, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$C, size\+\_\+t LDC)
+\item 
+template$<$$>$ void \mbox{\hyperlink{namespaceChronusQ_a1ab04c6065863b05352fb4927a1e1e46}{Chronus\+Q\+::\+Mat\+Add}} (char TRANSA, char TRANSB, size\+\_\+t M, size\+\_\+t N, double ALPHA, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$A, size\+\_\+t LDA, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} BETA, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$B, size\+\_\+t LDB, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$C, size\+\_\+t LDC)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_add5d1840c854cc5855769904257e9910}{Chronus\+Q\+::\+Mat\+Add}} (char, char, size\+\_\+t, size\+\_\+t, double, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t, double, const double $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_adfb2c06cb19de12f0f1f5f6d396fde14}{Chronus\+Q\+::\+Mat\+Add}} (char, char, size\+\_\+t, size\+\_\+t, double, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, const double $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_a3d40212dd59b6c8c42cd51b115d7d0b7}{Chronus\+Q\+::\+Mat\+Add}} (char, char, size\+\_\+t, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t, double, const double $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_abcb99943c552be382c26cb057bb5f3ae}{Chronus\+Q\+::\+Mat\+Add}} (char, char, size\+\_\+t, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, const double $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_a1155fe7811bd9816cdce5b38d21015e7}{Chronus\+Q\+::\+Mat\+Add}} (char, char, size\+\_\+t, size\+\_\+t, double, const double $\ast$, size\+\_\+t, double, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_ac26d6d2ba56d488585e69527dfeb3f71}{Chronus\+Q\+::\+Mat\+Add}} (char, char, size\+\_\+t, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, const double $\ast$, size\+\_\+t, double, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_a2c86af2dde8176d5e7ecefc5ebdfcb6c}{Chronus\+Q\+::\+Mat\+Add}} (char, char, size\+\_\+t, size\+\_\+t, double, const double $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_a0632930f5178f06cf18b14936244c2a3}{Chronus\+Q\+::\+Mat\+Add}} (char, char, size\+\_\+t, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, const double $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, const \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_ab2a0f9d79066fd84c46bd020304341d1}{Chronus\+Q\+::\+Mat\+Add}} (char, char, size\+\_\+t, size\+\_\+t, double, const double $\ast$, size\+\_\+t, double, const double $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_ab1d228a0c3d04e4e02bb5c8eb5ea1f76}{Chronus\+Q\+::\+Mat\+Add}} (char, char, size\+\_\+t, size\+\_\+t, double, const double $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, const double $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_a2824643ff52d288d373dbd1bf85b6806}{Chronus\+Q\+::\+Mat\+Add}} (char, char, size\+\_\+t, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, const double $\ast$, size\+\_\+t, double, const double $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_aa2f573c960df74163ffe2a046a0100fb}{Chronus\+Q\+::\+Mat\+Add}} (char, char, size\+\_\+t, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, const double $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, const double $\ast$, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t)
+\item 
+{\footnotesize template$<$typename \+\_\+F , typename \+\_\+\+FScale $>$ }\\void \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{Chronus\+Q\+::\+IMat\+Copy}} (char TRANS, size\+\_\+t M, size\+\_\+t N, \+\_\+\+FScale ALPHA, \+\_\+F $\ast$A, size\+\_\+t LDA, size\+\_\+t LDB)
+\begin{DoxyCompactList}\small\item\em Perform an in-\/place matrix operation of the type. \end{DoxyCompactList}\item 
+template void \mbox{\hyperlink{namespaceChronusQ_a045d6b95fcf414a80d4a54c073f36dd5}{Chronus\+Q\+::\+IMat\+Copy}} (char, size\+\_\+t, size\+\_\+t, double, double $\ast$, size\+\_\+t, size\+\_\+t)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_ac6316aaaf3139a0b7104629540e388d5}{Chronus\+Q\+::\+IMat\+Copy}} (char, size\+\_\+t, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t, size\+\_\+t)
+\item 
+template$<$$>$ void \mbox{\hyperlink{namespaceChronusQ_a2601412df3285225c8dd5fa011a8e0b6}{Chronus\+Q\+::\+IMat\+Copy}} (char TRANS, size\+\_\+t M, size\+\_\+t N, double ALPHA, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$A, size\+\_\+t LDA, size\+\_\+t LDB)
+\item 
+{\footnotesize template$<$typename \+\_\+F $>$ }\\void \mbox{\hyperlink{namespaceChronusQ_a8de87c3f9b6b79c38f5be581c31dade9}{Chronus\+Q\+::\+Her\+Mat}} (char UPLO, size\+\_\+t N, \+\_\+F $\ast$A, size\+\_\+t LDA)
+\begin{DoxyCompactList}\small\item\em Makes a square matrix Hermetian. \end{DoxyCompactList}\item 
+template void \mbox{\hyperlink{namespaceChronusQ_abab2320cb4f3d4fc70b49ba1993b1b3f}{Chronus\+Q\+::\+Her\+Mat}} (char, size\+\_\+t, double $\ast$, size\+\_\+t)
+\item 
+template void \mbox{\hyperlink{namespaceChronusQ_aed2dd47115a9af4da95e4a3d72166b82}{Chronus\+Q\+::\+Her\+Mat}} (char, size\+\_\+t, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $\ast$, size\+\_\+t)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{blasext_8cxx_a44c5ec7730b0515579cb4f1f67310d55}\label{blasext_8cxx_a44c5ec7730b0515579cb4f1f67310d55}} 
+\index{blasext.cxx@{blasext.cxx}!MAT\_OP@{MAT\_OP}}
+\index{MAT\_OP@{MAT\_OP}!blasext.cxx@{blasext.cxx}}
+\doxysubsubsection{\texorpdfstring{MAT\_OP}{MAT\_OP}}
+{\footnotesize\ttfamily \#define MAT\+\_\+\+OP(\begin{DoxyParamCaption}\item[{}]{OP,  }\item[{}]{X }\end{DoxyParamCaption})~    X.\+block(0,0,M,N) MAT \#\# OP .template cast$<$\+\_\+\+F3$>$()}
+
+\mbox{\Hypertarget{blasext_8cxx_ad23ac4687a881e04b8d5e308bb1e8555}\label{blasext_8cxx_ad23ac4687a881e04b8d5e308bb1e8555}} 
+\index{blasext.cxx@{blasext.cxx}!MATC@{MATC}}
+\index{MATC@{MATC}!blasext.cxx@{blasext.cxx}}
+\doxysubsubsection{\texorpdfstring{MATC}{MATC}}
+{\footnotesize\ttfamily \#define MATC~    .adjoint()}
+
+\mbox{\Hypertarget{blasext_8cxx_a194c0db47aeac325057b0636fb6f5631}\label{blasext_8cxx_a194c0db47aeac325057b0636fb6f5631}} 
+\index{blasext.cxx@{blasext.cxx}!MATN@{MATN}}
+\index{MATN@{MATN}!blasext.cxx@{blasext.cxx}}
+\doxysubsubsection{\texorpdfstring{MATN}{MATN}}
+{\footnotesize\ttfamily \#define MATN}
+
+\mbox{\Hypertarget{blasext_8cxx_a801852edc6e4dbefc52651807c9d0499}\label{blasext_8cxx_a801852edc6e4dbefc52651807c9d0499}} 
+\index{blasext.cxx@{blasext.cxx}!MATR@{MATR}}
+\index{MATR@{MATR}!blasext.cxx@{blasext.cxx}}
+\doxysubsubsection{\texorpdfstring{MATR}{MATR}}
+{\footnotesize\ttfamily \#define MATR~    .conjugate()}
+
+\mbox{\Hypertarget{blasext_8cxx_a3897802110e795daf2a8dcd6d66b5e2d}\label{blasext_8cxx_a3897802110e795daf2a8dcd6d66b5e2d}} 
+\index{blasext.cxx@{blasext.cxx}!MATT@{MATT}}
+\index{MATT@{MATT}!blasext.cxx@{blasext.cxx}}
+\doxysubsubsection{\texorpdfstring{MATT}{MATT}}
+{\footnotesize\ttfamily \#define MATT~    .transpose()}
+
+\mbox{\Hypertarget{blasext_8cxx_a191b5c3e211e7856940ef85cdbd12254}\label{blasext_8cxx_a191b5c3e211e7856940ef85cdbd12254}} 
+\index{blasext.cxx@{blasext.cxx}!TRY\_MAT\_ADD@{TRY\_MAT\_ADD}}
+\index{TRY\_MAT\_ADD@{TRY\_MAT\_ADD}!blasext.cxx@{blasext.cxx}}
+\doxysubsubsection{\texorpdfstring{TRY\_MAT\_ADD}{TRY\_MAT\_ADD}}
+{\footnotesize\ttfamily \#define TRY\+\_\+\+MAT\+\_\+\+ADD(\begin{DoxyParamCaption}\item[{}]{OPA,  }\item[{}]{OPB }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keywordflow}{if} ( TRANSA == \#OPA[0] and TRANSB == \#OPB[0] ) \(\backslash\)}
+\DoxyCodeLine{       CMap.block(0,0,\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},N).noalias() = \(\backslash\)}
+\DoxyCodeLine{         ALPHA * \mbox{\hyperlink{blasext_8cxx_a44c5ec7730b0515579cb4f1f67310d55}{MAT\_OP}}(OPA, AMap) + BETA * \mbox{\hyperlink{blasext_8cxx_a44c5ec7730b0515579cb4f1f67310d55}{MAT\_OP}}(OPB, BMap);}
+
+\end{DoxyCode}

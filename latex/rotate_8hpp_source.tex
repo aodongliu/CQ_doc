@@ -1,0 +1,242 @@
+\hypertarget{rotate_8hpp_source}{}\doxysection{rotate.\+hpp}
+\label{rotate_8hpp_source}\index{include/modifyorbitals/newtonRaphsonSCF/rotate.hpp@{include/modifyorbitals/newtonRaphsonSCF/rotate.hpp}}
+\mbox{\hyperlink{rotate_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}\{}
+\DoxyCodeLine{27 \textcolor{comment}{/*}}
+\DoxyCodeLine{28 \textcolor{comment}{ * Brief: Saves the initial set of orbitals to be used as the}}
+\DoxyCodeLine{29 \textcolor{comment}{ *        reference for the unitary transformation}}
+\DoxyCodeLine{30 \textcolor{comment}{ */}}
+\DoxyCodeLine{31 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{32 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_afef0f053f46660323d0be2ce25e384e2}{NewtonRaphsonSCF<MatsT>::saveRefMOs}}(\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\& mo) \{}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34   \textcolor{comment}{// Store Reference MO's from which to compute rotations}}
+\DoxyCodeLine{35   \textcolor{keywordtype}{size\_t} nMO = mo.size();}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37   \textcolor{comment}{// Allocate Matrices}}
+\DoxyCodeLine{38   \textcolor{keywordflow}{if}( not refMOsAllocated ) \{}
+\DoxyCodeLine{39     refMO.reserve(nMO);}
+\DoxyCodeLine{40     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i = 0; i < nMO; i++ ) \{}
+\DoxyCodeLine{41       \textcolor{keywordtype}{size\_t} NBC = mo[i].get().dimension();}
+\DoxyCodeLine{42       refMO.emplace\_back(this-\/>memManager, NBC);}
+\DoxyCodeLine{43     \}}
+\DoxyCodeLine{44   \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46   \textcolor{comment}{// Copy MO's}}
+\DoxyCodeLine{47   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i = 0; i < nMO; i++ ) \{}
+\DoxyCodeLine{48     \textcolor{keywordtype}{size\_t} NBC = mo[i].get().dimension();}
+\DoxyCodeLine{49     refMO[i] = mo[i].get();}
+\DoxyCodeLine{50   \}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52   storedRef = \textcolor{keyword}{true};}
+\DoxyCodeLine{53 \}}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55 \textcolor{comment}{/*}}
+\DoxyCodeLine{56 \textcolor{comment}{ *     Brief: Rotate the vector of MO's using the computed OrbRot parameters}}
+\DoxyCodeLine{57 \textcolor{comment}{ */}}
+\DoxyCodeLine{58 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{59 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_acb3fb355328b48cfc58a10b1a67d97a0}{NewtonRaphsonSCF<MatsT>::rotateMOs}}(\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\& mo) \{}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61   std::vector<SquareMatrix<MatsT>> U = computeUnitary();}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63   \textcolor{keywordtype}{size\_t} disp = 0;}
+\DoxyCodeLine{64   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i = 0; i < mo.size(); i++ ) \{}
+\DoxyCodeLine{65     \textcolor{keywordtype}{size\_t} NBC   = mo[i].get().dimension();}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \textcolor{comment}{// Rotate MO's}}
+\DoxyCodeLine{68     blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans,}
+\DoxyCodeLine{69         NBC, NBC, NBC, }
+\DoxyCodeLine{70         MatsT(1.), refMO[i].pointer(), NBC, }
+\DoxyCodeLine{71         U[i].pointer(), NBC, }
+\DoxyCodeLine{72         MatsT(0.), mo[i].get().pointer(), NBC);}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74 \textcolor{preprocessor}{\#ifdef \_NRSCF\_PRINT\_MOS}}
+\DoxyCodeLine{75     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout, \textcolor{stringliteral}{"{}MO "{}} + std::to\_string(i), mo[i].get().pointer(), NBC, NBC, NBC);}
+\DoxyCodeLine{76 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{77   \}}
+\DoxyCodeLine{78 \}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{81 std::vector<SquareMatrix<MatsT>> \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a8e06d6df533e04ceacc13d377c662639}{NewtonRaphsonSCF<MatsT>::computeUnitary}}()\{}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83   \mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} den = this-\/>modOrbOpt.getOnePDM();}
+\DoxyCodeLine{84   \textcolor{keywordtype}{size\_t} nMat = den.size();}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86   \textcolor{comment}{// Initialize Anti-\/hermitian matrix}}
+\DoxyCodeLine{87   std::vector<SquareMatrix<MatsT>> A;}
+\DoxyCodeLine{88   A.reserve(nMat);}
+\DoxyCodeLine{89   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=0; i<nMat; ++i )}
+\DoxyCodeLine{90     A.emplace\_back(this-\/>memManager,den[i]-\/>dimension());}
+\DoxyCodeLine{91   \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& a : A ) a.clear();}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93   \textcolor{comment}{// Parse parameters to make antisymmetric matrices}}
+\DoxyCodeLine{94   \textcolor{keywordtype}{size\_t} disp = 0;}
+\DoxyCodeLine{95   \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& rO : rotOpt )\{}
+\DoxyCodeLine{96     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& iO : rO.rotIndices.first )\{}
+\DoxyCodeLine{97       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& iV : rO.rotIndices.second )\{}
+\DoxyCodeLine{98         A[rO.spaceIndex](iO, iV) += -\/orbRot[disp];}
+\DoxyCodeLine{99         A[rO.spaceIndex](iV, iO) += \mbox{\hyperlink{namespaceChronusQ_afe3e41cf782d225ede67d9450e48aa34}{SmartConj}}(orbRot[disp]);}
+\DoxyCodeLine{100         ++disp;}
+\DoxyCodeLine{101       \}}
+\DoxyCodeLine{102     \}}
+\DoxyCodeLine{103   \}}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105   \textcolor{comment}{// Compute the Unitary matrices}}
+\DoxyCodeLine{106   std::vector<SquareMatrix<MatsT>> U;}
+\DoxyCodeLine{107   U.reserve(nMat);}
+\DoxyCodeLine{108   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=0; i<nMat; ++i )}
+\DoxyCodeLine{109     U.emplace\_back(this-\/>memManager,den[i]-\/>dimension());}
+\DoxyCodeLine{110   \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& u : U ) u.clear();}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112   \textcolor{comment}{// Compute either exp(A) or Cayley transform}}
+\DoxyCodeLine{113   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=0; i<nMat; ++i )\{}
+\DoxyCodeLine{114     \textcolor{keywordtype}{size\_t} N = U[i].dimension();}
+\DoxyCodeLine{115     \textcolor{comment}{// Try to compute exp(A) or use Cayley transform if failed}}
+\DoxyCodeLine{116     \textcolor{keywordflow}{try}\{}
+\DoxyCodeLine{117       \mbox{\hyperlink{namespaceChronusQ_ad5166b3a8d2e2a42bcf1b477f608eb34}{MatExp}}(N,A[i].pointer(),N,U[i].pointer(),N,this-\/>memManager);}
+\DoxyCodeLine{118     \}}
+\DoxyCodeLine{119     \textcolor{keywordflow}{catch}(...)\{}
+\DoxyCodeLine{120         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Matrix Exponential failed to converge"{}});}
+\DoxyCodeLine{121     \}}
+\DoxyCodeLine{122 \textcolor{preprocessor}{\#ifdef \_NRSCF\_DEBUG\_UNITARY}}
+\DoxyCodeLine{123     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout, \textcolor{stringliteral}{"{}Unitary Matrix"{}}, U[i].pointer(),N,N,N);}
+\DoxyCodeLine{124     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} SCR(this-\/>memManager,N);}
+\DoxyCodeLine{125     blas::gemm(blas::Layout::ColMajor, blas::Op::ConjTrans, blas::Op::NoTrans, }
+\DoxyCodeLine{126         N, N, N, }
+\DoxyCodeLine{127         MatsT(1.), U[i].pointer(), N, }
+\DoxyCodeLine{128         U[i].pointer(), N, }
+\DoxyCodeLine{129         MatsT(0.), SCR.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), N);}
+\DoxyCodeLine{130     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} p = 0; p < N; p++ )}
+\DoxyCodeLine{131       SCR(p, p) -\/= MatsT(1.);}
+\DoxyCodeLine{132     \textcolor{keywordtype}{double} sum = 0.;}
+\DoxyCodeLine{133     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} p = 0; p < N * N; p++ )}
+\DoxyCodeLine{134       sum += std::abs(SCR.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}()[p]);}
+\DoxyCodeLine{135     std::cerr << \textcolor{stringliteral}{"{}Unitary Test:  U\string^H * U = 1 -\/> Error =  "{}} << sum << std::endl;}
+\DoxyCodeLine{136 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{137   \}}
+\DoxyCodeLine{138   \textcolor{keywordflow}{return} U;}
+\DoxyCodeLine{139 \}}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142 \textcolor{comment}{/*}}
+\DoxyCodeLine{143 \textcolor{comment}{ *  Brief: Computes the orbital gradients and the diagonal Hessian and stores}}
+\DoxyCodeLine{144 \textcolor{comment}{ *         them in their vectors. The total gradient is the concatonation of}}
+\DoxyCodeLine{145 \textcolor{comment}{ *         orbital gradients for each Fock matrix. e.g. UHF-\/>[Grad\_alpha,Grad\_beta]}}
+\DoxyCodeLine{146 \textcolor{comment}{ */}}
+\DoxyCodeLine{147 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{148 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a7f37c16ee17693edfbc2cb7a943224d8}{NewtonRaphsonSCF<MatsT>::computeGradient}}(\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\& mo) \{}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150   \textcolor{comment}{// Compute the Gradient of orbital rotations}}
+\DoxyCodeLine{151   \textcolor{keywordflow}{if}( this-\/>modOrbOpt.computeNROrbGrad ) \{}
+\DoxyCodeLine{152     \textcolor{comment}{// Compute user-\/defined gradient}}
+\DoxyCodeLine{153     this-\/>modOrbOpt.computeNROrbGrad(orbGrad);}
+\DoxyCodeLine{154   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{155     \textcolor{comment}{// Compute default gradient from fock and mo's}}
+\DoxyCodeLine{156       }
+\DoxyCodeLine{157       }
+\DoxyCodeLine{158     \textcolor{comment}{// Compute MO Fock}}
+\DoxyCodeLine{159     \textcolor{keywordtype}{size\_t} nMat = mo.size();}
+\DoxyCodeLine{160     \mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} fock = this-\/>modOrbOpt.getFock();}
+\DoxyCodeLine{161     std::vector<SquareMatrix<MatsT>> moFock;}
+\DoxyCodeLine{162     moFock.reserve(nMat);}
+\DoxyCodeLine{163     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=0; i<nMat; ++i ) \{}
+\DoxyCodeLine{164       \textcolor{keywordtype}{size\_t} NB = mo[i].get().dimension();}
+\DoxyCodeLine{165       moFock.emplace\_back( fock[i]-\/>transform(\textcolor{charliteral}{'N'},mo[i].get().pointer(),NB,NB) );}
+\DoxyCodeLine{166     \}}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168     \textcolor{comment}{// Compute Gradient for parameters}}
+\DoxyCodeLine{169     \textcolor{keywordtype}{size\_t} disp = 0;}
+\DoxyCodeLine{170     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& rO : rotOpt )\{}
+\DoxyCodeLine{171       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& iO : rO.rotIndices.first )\{}
+\DoxyCodeLine{172         \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& iV : rO.rotIndices.second )\{}
+\DoxyCodeLine{173            orbGrad[disp] = moFock[rO.spaceIndex](iO,iV);}
+\DoxyCodeLine{174           ++disp;}
+\DoxyCodeLine{175         \}}
+\DoxyCodeLine{176       \}}
+\DoxyCodeLine{177     \}}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179     \textcolor{comment}{// Conjugate the gradient for complex wave functions.}}
+\DoxyCodeLine{180     \textcolor{comment}{// this is necessary to make quasi-\/newton and gradient descent}}
+\DoxyCodeLine{181     \textcolor{comment}{// consistent with the full NR implementation}}
+\DoxyCodeLine{182     \textcolor{comment}{/*}}
+\DoxyCodeLine{183 \textcolor{comment}{    if( std::is\_same<MatsT, dcomplex>::value )\{}}
+\DoxyCodeLine{184 \textcolor{comment}{      for(size\_t iP=0; iP<nParam; ++iP)}}
+\DoxyCodeLine{185 \textcolor{comment}{          orbGrad[iP] = SmartConj(orbGrad[iP]);}}
+\DoxyCodeLine{186 \textcolor{comment}{    \}}}
+\DoxyCodeLine{187 \textcolor{comment}{    */}}
+\DoxyCodeLine{188   \} \textcolor{comment}{// if( computeNROrbGrad ) else}}
+\DoxyCodeLine{189 \textcolor{preprocessor}{\#ifdef \_NRSCF\_DEBUG\_GRAD}}
+\DoxyCodeLine{190   printParamVec(\textcolor{stringliteral}{"{}Gradient"{}},orbGrad);}
+\DoxyCodeLine{191 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{192 \}; \textcolor{comment}{// NewtonRaphsonSCF<MatsT> :: computeGradient}}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{195 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a218734fbdfd9e393a4241c6d40fe52a2}{NewtonRaphsonSCF<MatsT>::computeDiagHess}}(\mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}}\& eps)\{}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197   \textcolor{keywordtype}{size\_t} disp = 0;}
+\DoxyCodeLine{198   \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& rO : rotOpt )\{}
+\DoxyCodeLine{199     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& iO : rO.rotIndices.first )\{}
+\DoxyCodeLine{200       \textcolor{keywordtype}{double} eO = eps[rO.spaceIndex][iO] + this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nrLevelShift;}
+\DoxyCodeLine{201       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& iV : rO.rotIndices.second )\{}
+\DoxyCodeLine{202         orbDiagHess[disp] = eps[rO.spaceIndex][iV] -\/ eO;}
+\DoxyCodeLine{203         ++disp;}
+\DoxyCodeLine{204       \}}
+\DoxyCodeLine{205     \}}
+\DoxyCodeLine{206   \}}
+\DoxyCodeLine{207 \textcolor{preprocessor}{\#ifdef \_NRSCF\_DEBUG\_GRAD}}
+\DoxyCodeLine{208   printParamVec(\textcolor{stringliteral}{"{}Diagonal Orbital Hessian"{}},orbDiagHess);}
+\DoxyCodeLine{209 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{210 \}}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212 \textcolor{comment}{/*}}
+\DoxyCodeLine{213 \textcolor{comment}{ * Brief: This computes the new set of parameters from }}
+\DoxyCodeLine{214 \textcolor{comment}{ *        a given search direction (dx)}}
+\DoxyCodeLine{215 \textcolor{comment}{ */}}
+\DoxyCodeLine{216 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{217 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a28393e512f77ead84bb59487f8f9b681}{NewtonRaphsonSCF<MatsT>::takeStep}}(MatsT* dx) \{}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219   \textcolor{comment}{// Compute norm of step}}
+\DoxyCodeLine{220   \textcolor{keywordtype}{double} norm = blas::nrm2(nParam, dx, 1);}
+\DoxyCodeLine{221 \textcolor{preprocessor}{\#ifdef \_NRSCF\_DEBUG}}
+\DoxyCodeLine{222   std::cout << \textcolor{stringliteral}{"{}Search Direction Norm = "{}} << norm << std::endl;}
+\DoxyCodeLine{223   printParamVec(\textcolor{stringliteral}{"{}Search Direction"{}}, dx);}
+\DoxyCodeLine{224 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226   \textcolor{keywordtype}{double} scale = norm > this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nrTrust ? this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nrTrust / norm : 1.;}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228   \textcolor{comment}{// Perform Damping}}
+\DoxyCodeLine{229   \textcolor{keywordflow}{if}( this-\/>doingDamp )}
+\DoxyCodeLine{230     scale *= double(1. -\/ this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.dampParam);}
+\DoxyCodeLine{231 }
+\DoxyCodeLine{232   \textcolor{comment}{// take Step}}
+\DoxyCodeLine{233   blas::axpy(nParam, MatsT(-\/scale), dx, 1, orbRot, 1);}
+\DoxyCodeLine{234 \};}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236 \}\textcolor{comment}{// namespace :: ChronusQ}}
+
+\end{DoxyCode}

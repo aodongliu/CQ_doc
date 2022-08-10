@@ -1,0 +1,95 @@
+\hypertarget{geomopts_8cxx}{}\doxysection{src/cxxapi/input/geomopts.cxx File Reference}
+\label{geomopts_8cxx}\index{src/cxxapi/input/geomopts.cxx@{src/cxxapi/input/geomopts.cxx}}
+{\ttfamily \#include $<$physcon.\+hpp$>$}\newline
+{\ttfamily \#include $<$chronusq\+\_\+sys.\+hpp$>$}\newline
+{\ttfamily \#include $<$cxxapi/options.\+hpp$>$}\newline
+{\ttfamily \#include $<$cxxapi/procedural.\+hpp$>$}\newline
+{\ttfamily \#include $<$cerr.\+hpp$>$}\newline
+{\ttfamily \#include $<$geometrymodifier.\+hpp$>$}\newline
+{\ttfamily \#include $<$geometrymodifier/moleculardynamics.\+hpp$>$}\newline
+{\ttfamily \#include $<$geometrymodifier/singlepoint.\+hpp$>$}\newline
+Include dependency graph for geomopts.\+cxx\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{geomopts_8cxx__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{geomopts_8cxx_abb4f0f0096a7bdb893360d96de4078fe}{ADD\+\_\+\+GRAD\+\_\+\+INCORE}}(T)
+\item 
+\#define \mbox{\hyperlink{geomopts_8cxx_ac852a69d57976f39094b66ebb52e57de}{ADD\+\_\+\+GRAD\+\_\+\+DIRECT}}(T)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a30f495ca1bdf11c13c3d026fb7e9d744}{Chronus\+Q\+::\+CQDYNAMICS\+\_\+\+VALID}} (std\+::ostream \&out, CQInput\+File \&input)
+\item 
+Job\+Type \mbox{\hyperlink{namespaceChronusQ_a836c037859ec4dcfc183bd35fc9883d7}{Chronus\+Q\+::\+CQGeometry\+Options}} (std\+::ostream \&out, CQInput\+File \&input, Job\+Type job, Molecule \&mol, std\+::shared\+\_\+ptr$<$ Single\+Slater\+Base $>$ ss, std\+::shared\+\_\+ptr$<$ Real\+Time\+Base $>$ \&rt, std\+::shared\+\_\+ptr$<$ Integrals\+Base $>$ epints, EMPerturbation \&em\+Pert)
+\item 
+Integrals\+Base $\ast$ \mbox{\hyperlink{namespaceChronusQ_abb722edf18ba0427519db6000d3b2318}{Chronus\+Q\+::extract\+Int\+Ptr}} (std\+::shared\+\_\+ptr$<$ Single\+Slater\+Base $>$ ss)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a46ebf724390a13d7de00f69ccc77146a}{Chronus\+Q\+::create\+Gradient\+Integrals}} (CQInput\+File \&input, Molecule \&mol, std\+::shared\+\_\+ptr$<$ Single\+Slater\+Base $>$ ss, std\+::shared\+\_\+ptr$<$ Integrals\+Base $>$ epints)
+\item 
+Job\+Type \mbox{\hyperlink{namespaceChronusQ_a4a96520df68c1c39c56fc3e6ce4647b8}{Chronus\+Q\+::\+CQDynamics\+Options}} (std\+::ostream \&out, CQInput\+File \&input, Job\+Type job, Molecule \&mol, std\+::shared\+\_\+ptr$<$ Single\+Slater\+Base $>$ ss, std\+::shared\+\_\+ptr$<$ Real\+Time\+Base $>$ \&rt, std\+::shared\+\_\+ptr$<$ Integrals\+Base $>$ epints, EMPerturbation \&em\+Pert)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{geomopts_8cxx_ac852a69d57976f39094b66ebb52e57de}\label{geomopts_8cxx_ac852a69d57976f39094b66ebb52e57de}} 
+\index{geomopts.cxx@{geomopts.cxx}!ADD\_GRAD\_DIRECT@{ADD\_GRAD\_DIRECT}}
+\index{ADD\_GRAD\_DIRECT@{ADD\_GRAD\_DIRECT}!geomopts.cxx@{geomopts.cxx}}
+\doxysubsubsection{\texorpdfstring{ADD\_GRAD\_DIRECT}{ADD\_GRAD\_DIRECT}}
+{\footnotesize\ttfamily \#define ADD\+\_\+\+GRAD\+\_\+\+DIRECT(\begin{DoxyParamCaption}\item[{}]{T }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  std::vector<std::shared\_ptr<DirectTPI<T>>> gints;\(\backslash\)}
+\DoxyCodeLine{  for ( \textcolor{keyword}{auto} i = 0; i < mol.atoms.size() * 3; i++ ) \{\(\backslash\)}
+\DoxyCodeLine{    auto newg = ss2 ? \(\backslash\)}
+\DoxyCodeLine{      std::make\_shared<DirectTPI<T>>( \(\backslash\)}
+\DoxyCodeLine{        ss1-\/>memManager, ss1-\/>basisSet(), ss2-\/>basisSet(), mol, 1e-\/12) :  \(\backslash\)}
+\DoxyCodeLine{      std::make\_shared<DirectTPI<T>>( \(\backslash\)}
+\DoxyCodeLine{        ss1-\/>memManager, ss1-\/>basisSet(), ss1-\/>basisSet(), mol, 1e-\/12); \(\backslash\)}
+\DoxyCodeLine{    gints.push\_back(newg); \(\backslash\)}
+\DoxyCodeLine{  \} \(\backslash\)}
+\DoxyCodeLine{    \(\backslash\)}
+\DoxyCodeLine{  auto casted = \textcolor{keyword}{dynamic\_cast<}Integrals<T>*\textcolor{keyword}{>}(ints); \(\backslash\)}
+\DoxyCodeLine{  casted-\/>gradERI = std::make\_shared<GradInts<TwoPInts,T>>( \(\backslash\)}
+\DoxyCodeLine{    ss1-\/>memManager, ss1-\/>basisSet().nBasis, mol.atoms.size(), gints \(\backslash\)}
+\DoxyCodeLine{  );}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{geomopts_8cxx_abb4f0f0096a7bdb893360d96de4078fe}\label{geomopts_8cxx_abb4f0f0096a7bdb893360d96de4078fe}} 
+\index{geomopts.cxx@{geomopts.cxx}!ADD\_GRAD\_INCORE@{ADD\_GRAD\_INCORE}}
+\index{ADD\_GRAD\_INCORE@{ADD\_GRAD\_INCORE}!geomopts.cxx@{geomopts.cxx}}
+\doxysubsubsection{\texorpdfstring{ADD\_GRAD\_INCORE}{ADD\_GRAD\_INCORE}}
+{\footnotesize\ttfamily \#define ADD\+\_\+\+GRAD\+\_\+\+INCORE(\begin{DoxyParamCaption}\item[{}]{T }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  std::vector<std::shared\_ptr<InCore4indexTPI<T>>> gints;\(\backslash\)}
+\DoxyCodeLine{  for ( \textcolor{keyword}{auto} i = 0; i < mol.atoms.size() * 3; i++ ) \{\(\backslash\)}
+\DoxyCodeLine{    auto newg = ss2 ? \(\backslash\)}
+\DoxyCodeLine{      std::make\_shared<InCore4indexTPI<T>>( \(\backslash\)}
+\DoxyCodeLine{        ss1-\/>memManager, ss1-\/>basisSet().nBasis, \(\backslash\)}
+\DoxyCodeLine{        ss2-\/>basisSet().nBasis) : \(\backslash\)}
+\DoxyCodeLine{      std::make\_shared<InCore4indexTPI<T>>( \(\backslash\)}
+\DoxyCodeLine{        ss1-\/>memManager, ss1-\/>basisSet().nBasis); \(\backslash\)}
+\DoxyCodeLine{    gints.push\_back(newg); \(\backslash\)}
+\DoxyCodeLine{  \} \(\backslash\)}
+\DoxyCodeLine{    \(\backslash\)}
+\DoxyCodeLine{  auto casted = \textcolor{keyword}{dynamic\_cast<}Integrals<T>*\textcolor{keyword}{>}(ints); \(\backslash\)}
+\DoxyCodeLine{  casted-\/>gradERI = std::make\_shared<GradInts<TwoPInts,T>>( \(\backslash\)}
+\DoxyCodeLine{    ss1-\/>memManager, ss1-\/>basisSet().nBasis, mol.atoms.size(), gints \(\backslash\)}
+\DoxyCodeLine{  );}
+
+\end{DoxyCode}

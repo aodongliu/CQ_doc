@@ -1,0 +1,1034 @@
+\hypertarget{itersolver_8hpp_source}{}\doxysection{itersolver.\+hpp}
+\label{itersolver_8hpp_source}\index{include/itersolver.hpp@{include/itersolver.hpp}}
+\mbox{\hyperlink{itersolver_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{memmanager_8hpp}{memmanager.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{solve_8hpp}{cqlinalg/solve.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cerr_8hpp}{cerr.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mpi_8hpp}{util/mpi.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{math_8hpp}{util/math.hpp}}>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{42   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}} \{}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44   \textcolor{keyword}{public}:}
+\DoxyCodeLine{45     \textcolor{comment}{// Length of each vector}}
+\DoxyCodeLine{46     \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_ae5a0ff127986dc2e1d6f26902eaccd62}{length}}() \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{47     \textcolor{comment}{// Number of vectors in container}}
+\DoxyCodeLine{48     \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a82c9eca0dade617ee6520d3ad50ab216}{size}}() \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{49     \textcolor{comment}{// Get raw pointer of vectors, only works for RawVectors}}
+\DoxyCodeLine{50     \textcolor{keyword}{virtual} \_F* \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a7b3f8467612fd8fb970a05f6711ea2a4}{getPtr}}(\textcolor{keywordtype}{size\_t} i = 0) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{51     \textcolor{comment}{// Get element}}
+\DoxyCodeLine{52     \textcolor{keyword}{virtual} \_F \mbox{\hyperlink{classChronusQ_1_1SolverVectors_adda5717c2e512b7fe9ebdca20b91f409}{get}}(\textcolor{keywordtype}{size\_t} i, \textcolor{keywordtype}{size\_t} j) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{53     \textcolor{comment}{// Set element}}
+\DoxyCodeLine{54     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_af0c53837e0d41d408fef087962ebcffc}{set}}(\textcolor{keywordtype}{size\_t} i, \textcolor{keywordtype}{size\_t} j, \_F value) = 0;}
+\DoxyCodeLine{55     \textcolor{comment}{// Clear elements}}
+\DoxyCodeLine{56     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_ad647782d8ae04db21868bda4c8fce069}{clear}}(\textcolor{keywordtype}{size\_t} shift = 0) \{}
+\DoxyCodeLine{57       \mbox{\hyperlink{classChronusQ_1_1SolverVectors_ad647782d8ae04db21868bda4c8fce069}{clear}}(shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a82c9eca0dade617ee6520d3ad50ab216}{size}}() -\/ shift);}
+\DoxyCodeLine{58     \}}
+\DoxyCodeLine{59     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_aa9b842f673a38c3449ec6f07b14f71bd}{clear}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec) = 0;}
+\DoxyCodeLine{60     \textcolor{comment}{// Print elements}}
+\DoxyCodeLine{61     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_acc9627a7348bb63b0361ef54b04da76f}{print}}(std::ostream\& out, std::string str, \textcolor{keywordtype}{size\_t} shift = 0)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{62       \mbox{\hyperlink{classChronusQ_1_1SolverVectors_acc9627a7348bb63b0361ef54b04da76f}{print}}(out, str, shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a82c9eca0dade617ee6520d3ad50ab216}{size}}() -\/ shift);}
+\DoxyCodeLine{63     \}}
+\DoxyCodeLine{64     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a8413bc1c9de0a2c47b5f49de31387c8f}{print}}(std::ostream\& out, std::string str, \textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{65     \textcolor{comment}{// Get underlying type}}
+\DoxyCodeLine{66     \textcolor{keyword}{virtual} \textcolor{keyword}{const} std::type\_info\& \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a5ae505dd0c9006a7ad34812a25c53c9a}{underlyingType}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{67       \textcolor{keywordflow}{return} \textcolor{keyword}{typeid}(*this);}
+\DoxyCodeLine{68     \}}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{88     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a1214b21ba6da9c3d030f19f9ef170088}{multiply\_matrix}}(\textcolor{keywordtype}{size\_t} shiftA, blas::Op transB, int64\_t n, int64\_t k,}
+\DoxyCodeLine{89                                  \_F alpha, \_F \textcolor{keyword}{const} *B, int64\_t ldb,}
+\DoxyCodeLine{90                                  \_F beta, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&C, \textcolor{keywordtype}{size\_t} shiftC) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{106     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_ab88de13a712f69b8255a786431542956}{dot\_product}}(\textcolor{keywordtype}{size\_t} shiftA, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&B, \textcolor{keywordtype}{size\_t} shiftB,}
+\DoxyCodeLine{107                              int64\_t m, int64\_t n, \_F *C, int64\_t ldc, \textcolor{keywordtype}{bool} conjA = \textcolor{keyword}{true}) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{118     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_aae669768d57b0057856a9f0e7aed52e7}{set\_data}}(\textcolor{keywordtype}{size\_t} shiftA, \textcolor{keywordtype}{size\_t} nVec, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&B, \textcolor{keywordtype}{size\_t} shiftB) = 0;}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{128     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a78e38685b683869c40fb7c3e80131442}{scale}}(\_F scalar, \textcolor{keywordtype}{size\_t} shift = 0) \{}
+\DoxyCodeLine{129       \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a78e38685b683869c40fb7c3e80131442}{scale}}(scalar, shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a82c9eca0dade617ee6520d3ad50ab216}{size}}() -\/ shift);}
+\DoxyCodeLine{130     \}}
+\DoxyCodeLine{131     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a316c0ea771e8dc8d9f0cf6bed8c56468}{scale}}(\_F scalar, \textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec) = 0;}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{138     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a498fe681c64e245b81a9fded4c857108}{conjugate}}(\textcolor{keywordtype}{size\_t} shift = 0) \{}
+\DoxyCodeLine{139       \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a498fe681c64e245b81a9fded4c857108}{conjugate}}(shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a82c9eca0dade617ee6520d3ad50ab216}{size}}() -\/ shift);}
+\DoxyCodeLine{140     \}}
+\DoxyCodeLine{141     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_ac82910484a8ff8983588ebcb5f37f2ca}{conjugate}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec) = 0;}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{153     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a4ff12bfdd600ba8b083bccde9006c22c}{axpy}}(\textcolor{keywordtype}{size\_t} shiftY, \textcolor{keywordtype}{size\_t} nVec, \_F alpha, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&X, \textcolor{keywordtype}{size\_t} shiftX) = 0;}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{165     \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_aa176cc046f301be286b2119b9c0493c0}{GramSchmidt}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} Mold, \textcolor{keywordtype}{size\_t} Mnew, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{166                                \textcolor{keywordtype}{size\_t} NRe = 0, \textcolor{keywordtype}{double} eps = 1e-\/12);}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{179     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_ab665d8463578dd63c1f8af4c448fdb20}{trsm}}(\textcolor{keywordtype}{size\_t} shift, int64\_t n, \_F alpha, \_F \textcolor{keyword}{const} *A, int64\_t lda) = 0;}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{192     \textcolor{keyword}{virtual} \textcolor{keywordtype}{int} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a22491b8cc7d5e81fb4d817d42a8ebe9a}{QR}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \_F *R = \textcolor{keyword}{nullptr}, \textcolor{keywordtype}{int} LDR = 0) = 0;}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{202     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a853a642934a30f087fac8fd7ecea3f80}{norm2F}}(\textcolor{keywordtype}{size\_t} shift)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{203       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a853a642934a30f087fac8fd7ecea3f80}{norm2F}}(shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a82c9eca0dade617ee6520d3ad50ab216}{size}}() -\/ shift);}
+\DoxyCodeLine{204     \}}
+\DoxyCodeLine{205     \textcolor{keyword}{virtual} \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_ac447eda91e3b38b16b8e97a4f9db818f}{norm2F}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{214     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_af34705f9b0c9e2091a35b4c47f7a83ca}{maxNormElement}}(\textcolor{keywordtype}{size\_t} shift)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{215       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_af34705f9b0c9e2091a35b4c47f7a83ca}{maxNormElement}}(shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a82c9eca0dade617ee6520d3ad50ab216}{size}}() -\/ shift);}
+\DoxyCodeLine{216     \}}
+\DoxyCodeLine{217     \textcolor{keyword}{virtual} \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a6e85caeb29d4af2cd86b8ec4d00409fc}{maxNormElement}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1SolverVectors_a12588d6497743664e72026f344e41698}{\string~SolverVectors}}() \{\}}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221   \};}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{225   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1RawVectors}{RawVectors}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}}<\_F> \{}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}      \mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}};}
+\DoxyCodeLine{230     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&\mbox{\hyperlink{classChronusQ_1_1RawVectors_a841514842ddc885f6460930989ba5f7a}{memManager\_}};}
+\DoxyCodeLine{231     \_F* \mbox{\hyperlink{classChronusQ_1_1RawVectors_abf8c79a65db76b519cbab5fc32347350}{data\_}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{232     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a1c84468bf1e556fcb540098d98bd7d82}{len\_}};}
+\DoxyCodeLine{233     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1RawVectors_ab35ca9d91f5e4579745334af4c91d894}{size\_}} = 0;}
+\DoxyCodeLine{234 }
+\DoxyCodeLine{235   \textcolor{keyword}{public}:}
+\DoxyCodeLine{236     \mbox{\hyperlink{classChronusQ_1_1RawVectors_a6645c294479db1d42452fcb9a0cd6876}{RawVectors}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} len, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a5f175a1baaf8dfaaaf9bffd636c55def}{size}})}
+\DoxyCodeLine{237         : \mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}}(c), \mbox{\hyperlink{classChronusQ_1_1RawVectors_a841514842ddc885f6460930989ba5f7a}{memManager\_}}(mem), \mbox{\hyperlink{classChronusQ_1_1RawVectors_a1c84468bf1e556fcb540098d98bd7d82}{len\_}}(len), \mbox{\hyperlink{classChronusQ_1_1RawVectors_ab35ca9d91f5e4579745334af4c91d894}{size\_}}(\mbox{\hyperlink{classChronusQ_1_1RawVectors_a5f175a1baaf8dfaaaf9bffd636c55def}{size}}) \{}
+\DoxyCodeLine{238       \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(\mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}}) == 0 and \mbox{\hyperlink{classChronusQ_1_1RawVectors_a5f175a1baaf8dfaaaf9bffd636c55def}{size}} > 0)}
+\DoxyCodeLine{239         \mbox{\hyperlink{classChronusQ_1_1RawVectors_abf8c79a65db76b519cbab5fc32347350}{data\_}} = \mbox{\hyperlink{classChronusQ_1_1RawVectors_a841514842ddc885f6460930989ba5f7a}{memManager\_}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981}{malloc}}<\_F>(\mbox{\hyperlink{classChronusQ_1_1RawVectors_a1c84468bf1e556fcb540098d98bd7d82}{len\_}} * \mbox{\hyperlink{classChronusQ_1_1RawVectors_ab35ca9d91f5e4579745334af4c91d894}{size\_}});}
+\DoxyCodeLine{240     \}}
+\DoxyCodeLine{241     \mbox{\hyperlink{classChronusQ_1_1RawVectors_a3affda6ee2bf51ab8ba482cef8af720a}{RawVectors}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1RawVectors}{RawVectors<\_F>}} \&other)}
+\DoxyCodeLine{242         : \mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}}(other.\mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}}), \mbox{\hyperlink{classChronusQ_1_1RawVectors_a841514842ddc885f6460930989ba5f7a}{memManager\_}}(other.\mbox{\hyperlink{classChronusQ_1_1RawVectors_a841514842ddc885f6460930989ba5f7a}{memManager\_}}),}
+\DoxyCodeLine{243           \mbox{\hyperlink{classChronusQ_1_1RawVectors_a1c84468bf1e556fcb540098d98bd7d82}{len\_}}(other.\mbox{\hyperlink{classChronusQ_1_1RawVectors_a1c84468bf1e556fcb540098d98bd7d82}{len\_}}), \mbox{\hyperlink{classChronusQ_1_1RawVectors_ab35ca9d91f5e4579745334af4c91d894}{size\_}}(other.\mbox{\hyperlink{classChronusQ_1_1RawVectors_ab35ca9d91f5e4579745334af4c91d894}{size\_}}) \{}
+\DoxyCodeLine{244       \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(\mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}}) == 0 and \mbox{\hyperlink{classChronusQ_1_1RawVectors_ab35ca9d91f5e4579745334af4c91d894}{size\_}} > 0 and other.\mbox{\hyperlink{classChronusQ_1_1RawVectors_abf8c79a65db76b519cbab5fc32347350}{data\_}} != \textcolor{keyword}{nullptr}) \{}
+\DoxyCodeLine{245         \mbox{\hyperlink{classChronusQ_1_1RawVectors_abf8c79a65db76b519cbab5fc32347350}{data\_}} = \mbox{\hyperlink{classChronusQ_1_1RawVectors_a841514842ddc885f6460930989ba5f7a}{memManager\_}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981}{malloc}}<\_F>(\mbox{\hyperlink{classChronusQ_1_1RawVectors_a1c84468bf1e556fcb540098d98bd7d82}{len\_}} * \mbox{\hyperlink{classChronusQ_1_1RawVectors_ab35ca9d91f5e4579745334af4c91d894}{size\_}});}
+\DoxyCodeLine{246         std::copy\_n(other.\mbox{\hyperlink{classChronusQ_1_1RawVectors_abf8c79a65db76b519cbab5fc32347350}{data\_}}, \mbox{\hyperlink{classChronusQ_1_1RawVectors_a1c84468bf1e556fcb540098d98bd7d82}{len\_}} * \mbox{\hyperlink{classChronusQ_1_1RawVectors_ab35ca9d91f5e4579745334af4c91d894}{size\_}}, \mbox{\hyperlink{classChronusQ_1_1RawVectors_abf8c79a65db76b519cbab5fc32347350}{data\_}});}
+\DoxyCodeLine{247       \}}
+\DoxyCodeLine{248     \}}
+\DoxyCodeLine{249     \mbox{\hyperlink{classChronusQ_1_1RawVectors_aa1c803bbcc6953cb500acac4981b2e80}{RawVectors}}(\mbox{\hyperlink{classChronusQ_1_1RawVectors}{RawVectors<\_F>}} \&\&other)}
+\DoxyCodeLine{250         : \mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}}(other.\mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}}), \mbox{\hyperlink{classChronusQ_1_1RawVectors_a841514842ddc885f6460930989ba5f7a}{memManager\_}}(other.\mbox{\hyperlink{classChronusQ_1_1RawVectors_a841514842ddc885f6460930989ba5f7a}{memManager\_}}),}
+\DoxyCodeLine{251           \mbox{\hyperlink{classChronusQ_1_1RawVectors_abf8c79a65db76b519cbab5fc32347350}{data\_}}(other.\mbox{\hyperlink{classChronusQ_1_1RawVectors_abf8c79a65db76b519cbab5fc32347350}{data\_}}), \mbox{\hyperlink{classChronusQ_1_1RawVectors_a1c84468bf1e556fcb540098d98bd7d82}{len\_}}(other.\mbox{\hyperlink{classChronusQ_1_1RawVectors_a1c84468bf1e556fcb540098d98bd7d82}{len\_}}), \mbox{\hyperlink{classChronusQ_1_1RawVectors_ab35ca9d91f5e4579745334af4c91d894}{size\_}}(other.\mbox{\hyperlink{classChronusQ_1_1RawVectors_ab35ca9d91f5e4579745334af4c91d894}{size\_}}) \{}
+\DoxyCodeLine{252       other.data\_ = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{253     \}}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a47bfd0e0935b2e647ba1ee92841a52e0}{getMPIcomm}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}}; \}}
+\DoxyCodeLine{256     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& \mbox{\hyperlink{classChronusQ_1_1RawVectors_ad08fd3ce435cb093822e18efa5243167}{getMem}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a841514842ddc885f6460930989ba5f7a}{memManager\_}}; \}}
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258     \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1RawVectors_ab09db15d941b6893eb03ff508c06b68d}{length}}()\textcolor{keyword}{ const override }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a1c84468bf1e556fcb540098d98bd7d82}{len\_}}; \}}
+\DoxyCodeLine{259     \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a5f175a1baaf8dfaaaf9bffd636c55def}{size}}()\textcolor{keyword}{ const override }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1RawVectors_ab35ca9d91f5e4579745334af4c91d894}{size\_}}; \}}
+\DoxyCodeLine{260     \textcolor{keyword}{virtual} \_F* \mbox{\hyperlink{classChronusQ_1_1RawVectors_a7de5da6299c7b78d3127f3a9368df70a}{getPtr}}(\textcolor{keywordtype}{size\_t} i = 0)\textcolor{keyword}{ const override }\{}
+\DoxyCodeLine{261 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{262       \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(\mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}}) != 0 or \mbox{\hyperlink{classChronusQ_1_1RawVectors_a5f175a1baaf8dfaaaf9bffd636c55def}{size}}() == 0)}
+\DoxyCodeLine{263         \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{264 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{265       \textcolor{keywordflow}{if} (i >= \mbox{\hyperlink{classChronusQ_1_1RawVectors_a5f175a1baaf8dfaaaf9bffd636c55def}{size}}())}
+\DoxyCodeLine{266         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Requesting invalid pointer in RawVectors object."{}});}
+\DoxyCodeLine{267       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1RawVectors_abf8c79a65db76b519cbab5fc32347350}{data\_}} + i * \mbox{\hyperlink{classChronusQ_1_1RawVectors_a1c84468bf1e556fcb540098d98bd7d82}{len\_}};}
+\DoxyCodeLine{268     \}}
+\DoxyCodeLine{269     \textcolor{comment}{// Get element}}
+\DoxyCodeLine{270     \textcolor{keyword}{virtual} \_F \mbox{\hyperlink{classChronusQ_1_1RawVectors_ae12ebde5355db99dee3f20d8c81a90f4}{get}}(\textcolor{keywordtype}{size\_t} i, \textcolor{keywordtype}{size\_t} j)\textcolor{keyword}{ const override }\{}
+\DoxyCodeLine{271 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{272       \_F v;}
+\DoxyCodeLine{273       \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(\mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}}) == 0)}
+\DoxyCodeLine{274         v = \mbox{\hyperlink{classChronusQ_1_1RawVectors_a7de5da6299c7b78d3127f3a9368df70a}{getPtr}}(j)[i];}
+\DoxyCodeLine{275       \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(\mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}}) > 1)}
+\DoxyCodeLine{276         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(v, 0, \mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}});}
+\DoxyCodeLine{277       \textcolor{keywordflow}{return} v;}
+\DoxyCodeLine{278 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{279       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a7de5da6299c7b78d3127f3a9368df70a}{getPtr}}(j)[i];}
+\DoxyCodeLine{280 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{281     \}}
+\DoxyCodeLine{282     \textcolor{comment}{// Set element}}
+\DoxyCodeLine{283     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_af01f8b7ce9c326a2554ee8a61d9fdb69}{set}}(\textcolor{keywordtype}{size\_t} i, \textcolor{keywordtype}{size\_t} j, \_F value)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{284       \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(\mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}});}
+\DoxyCodeLine{285       \mbox{\hyperlink{classChronusQ_1_1RawVectors_a7de5da6299c7b78d3127f3a9368df70a}{getPtr}}(j)[i] = value;}
+\DoxyCodeLine{286     \}}
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}}<\_F>\mbox{\hyperlink{classChronusQ_1_1RawVectors_a284e4c4cc0ba7d31d6ea427e3af37e94}{::clear}};}
+\DoxyCodeLine{289     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a284e4c4cc0ba7d31d6ea427e3af37e94}{clear}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{290       \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(\mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}});}
+\DoxyCodeLine{291       \textcolor{keywordflow}{if} (nVec == std::numeric\_limits<size\_t>::max()) \{}
+\DoxyCodeLine{292         \mbox{\hyperlink{classChronusQ_1_1RawVectors_a7de5da6299c7b78d3127f3a9368df70a}{getPtr}}(shift);}
+\DoxyCodeLine{293         nVec = \mbox{\hyperlink{classChronusQ_1_1RawVectors_a5f175a1baaf8dfaaaf9bffd636c55def}{size}}() -\/ shift;}
+\DoxyCodeLine{294       \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{295         \mbox{\hyperlink{classChronusQ_1_1RawVectors_a7de5da6299c7b78d3127f3a9368df70a}{getPtr}}(shift + nVec -\/ 1);}
+\DoxyCodeLine{296       std::fill\_n(\mbox{\hyperlink{classChronusQ_1_1RawVectors_a7de5da6299c7b78d3127f3a9368df70a}{getPtr}}(shift), nVec*\mbox{\hyperlink{classChronusQ_1_1RawVectors_ab09db15d941b6893eb03ff508c06b68d}{length}}(), 0.);}
+\DoxyCodeLine{297     \}}
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}}<\_F>\mbox{\hyperlink{classChronusQ_1_1RawVectors_a6903acfd6f292a36378690451e3c65ee}{::print}};}
+\DoxyCodeLine{300     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a6903acfd6f292a36378690451e3c65ee}{print}}(std::ostream\& out, std::string str, \textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec)\textcolor{keyword}{ const override }\{}
+\DoxyCodeLine{301       \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(\mbox{\hyperlink{classChronusQ_1_1RawVectors_aaa715073d0c01f6622220fc49cacfaaf}{comm\_}});}
+\DoxyCodeLine{302       \textcolor{keywordflow}{if} (nVec == std::numeric\_limits<size\_t>::max()) \{}
+\DoxyCodeLine{303         \mbox{\hyperlink{classChronusQ_1_1RawVectors_a7de5da6299c7b78d3127f3a9368df70a}{getPtr}}(shift);}
+\DoxyCodeLine{304         nVec = \mbox{\hyperlink{classChronusQ_1_1RawVectors_a5f175a1baaf8dfaaaf9bffd636c55def}{size}}() -\/ shift;}
+\DoxyCodeLine{305       \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{306         \mbox{\hyperlink{classChronusQ_1_1RawVectors_a7de5da6299c7b78d3127f3a9368df70a}{getPtr}}(shift + nVec -\/ 1);}
+\DoxyCodeLine{307       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out, str, \mbox{\hyperlink{classChronusQ_1_1RawVectors_a7de5da6299c7b78d3127f3a9368df70a}{getPtr}}(shift), \mbox{\hyperlink{classChronusQ_1_1RawVectors_ab09db15d941b6893eb03ff508c06b68d}{length}}(), nVec, \mbox{\hyperlink{classChronusQ_1_1RawVectors_ab09db15d941b6893eb03ff508c06b68d}{length}}());}
+\DoxyCodeLine{308     \}}
+\DoxyCodeLine{309 }
+\DoxyCodeLine{310     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a8d3e724092be35e29ca2ad49a93edef4}{multiply\_matrix}}(\textcolor{keywordtype}{size\_t} shiftA, blas::Op transB, int64\_t n, int64\_t k,}
+\DoxyCodeLine{311                                  \_F alpha, \_F \textcolor{keyword}{const} *B, int64\_t ldb,}
+\DoxyCodeLine{312                                  \_F beta, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&C, \textcolor{keywordtype}{size\_t} shiftC) \textcolor{keyword}{const override};}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_ae3775a3a9b2887990f849c3f57704547}{dot\_product}}(\textcolor{keywordtype}{size\_t} shiftA, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&B, \textcolor{keywordtype}{size\_t} shiftB,}
+\DoxyCodeLine{315                              int64\_t m, int64\_t n, \_F *C, int64\_t ldc, \textcolor{keywordtype}{bool} conjA = \textcolor{keyword}{true}) \textcolor{keyword}{const override};}
+\DoxyCodeLine{316 }
+\DoxyCodeLine{317     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a94dfc3c94bb62bec432c893101b2f542}{set\_data}}(\textcolor{keywordtype}{size\_t} shiftA, \textcolor{keywordtype}{size\_t} nVec, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&B, \textcolor{keywordtype}{size\_t} shiftB) \textcolor{keyword}{override};}
+\DoxyCodeLine{318 }
+\DoxyCodeLine{319     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}}<\_F>\mbox{\hyperlink{classChronusQ_1_1RawVectors_a6ba131f41b4c89edd5f86c76ca81d871}{::scale}};}
+\DoxyCodeLine{320     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a6ba131f41b4c89edd5f86c76ca81d871}{scale}}(\_F scalar, \textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec) \textcolor{keyword}{override};}
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}}<\_F>\mbox{\hyperlink{classChronusQ_1_1RawVectors_a76e46da3b82edc6adcc0ea836e80b70e}{::conjugate}};}
+\DoxyCodeLine{323     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a76e46da3b82edc6adcc0ea836e80b70e}{conjugate}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec) \textcolor{keyword}{override};}
+\DoxyCodeLine{324 }
+\DoxyCodeLine{325     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a6a3da9fc41354566fbbf5a09206cdf26}{axpy}}(\textcolor{keywordtype}{size\_t} shiftY, \textcolor{keywordtype}{size\_t} nVec, \_F alpha, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&X, \textcolor{keywordtype}{size\_t} shiftX) \textcolor{keyword}{override};}
+\DoxyCodeLine{326 }
+\DoxyCodeLine{327     \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a3c6ce922557ea2a44d17b121abdbc843}{GramSchmidt}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} Mold, \textcolor{keywordtype}{size\_t} Mnew, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{328                                \textcolor{keywordtype}{size\_t} NRe = 0, \textcolor{keywordtype}{double} eps = 1e-\/12) \textcolor{keyword}{override};}
+\DoxyCodeLine{329 }
+\DoxyCodeLine{330     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RawVectors_ade835dcd98d0beaff24af6f9700bdd72}{trsm}}(\textcolor{keywordtype}{size\_t} shift, int64\_t n, \_F alpha, \_F \textcolor{keyword}{const} *A, int64\_t lda) \textcolor{keyword}{override};}
+\DoxyCodeLine{331 }
+\DoxyCodeLine{332     \textcolor{keyword}{virtual} \textcolor{keywordtype}{int} \mbox{\hyperlink{classChronusQ_1_1RawVectors_add4640fe33cc53ad303614a30db5e1fa}{QR}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \_F *R = \textcolor{keyword}{nullptr}, \textcolor{keywordtype}{int} LDR = 0) \textcolor{keyword}{override};}
+\DoxyCodeLine{333 }
+\DoxyCodeLine{334     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}}<\_F>\mbox{\hyperlink{classChronusQ_1_1RawVectors_a49b7d8ec16ddab11813ada9af1d43947}{::norm2F}};}
+\DoxyCodeLine{335     \textcolor{keyword}{virtual} \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a49b7d8ec16ddab11813ada9af1d43947}{norm2F}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec) \textcolor{keyword}{const override};}
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}}<\_F>\mbox{\hyperlink{classChronusQ_1_1RawVectors_ac4ddf8fdf956f0c81b3955ec686795de}{::maxNormElement}};}
+\DoxyCodeLine{338     \textcolor{keyword}{virtual} \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1RawVectors_ac4ddf8fdf956f0c81b3955ec686795de}{maxNormElement}}(\textcolor{keywordtype}{size\_t} shift, \textcolor{keywordtype}{size\_t} nVec) \textcolor{keyword}{const override};}
+\DoxyCodeLine{339 }
+\DoxyCodeLine{340     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1RawVectors_a2ba136efedad9681e2f0dab0a666efa1}{\string~RawVectors}}() \{}
+\DoxyCodeLine{341       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1RawVectors_abf8c79a65db76b519cbab5fc32347350}{data\_}})}
+\DoxyCodeLine{342         \mbox{\hyperlink{classChronusQ_1_1RawVectors_a841514842ddc885f6460930989ba5f7a}{memManager\_}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1RawVectors_abf8c79a65db76b519cbab5fc32347350}{data\_}});}
+\DoxyCodeLine{343     \}}
+\DoxyCodeLine{344 }
+\DoxyCodeLine{345   \};}
+\DoxyCodeLine{346 }
+\DoxyCodeLine{347 }
+\DoxyCodeLine{348   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{349   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView}{SolverVectorsView}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}}<\_F> \{}
+\DoxyCodeLine{350 }
+\DoxyCodeLine{351   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{352 }
+\DoxyCodeLine{353     \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}};}
+\DoxyCodeLine{354     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a9737a353765e1f24e7411f3ef7123df2}{shift\_}};}
+\DoxyCodeLine{355 }
+\DoxyCodeLine{356   \textcolor{keyword}{public}:}
+\DoxyCodeLine{357     \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a128a02f202e45abb18f9597938102294}{SolverVectorsView}}(\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&vecs, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}} = 0)}
+\DoxyCodeLine{358         : \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}}(vecs), \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a9737a353765e1f24e7411f3ef7123df2}{shift\_}}(\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}) \{}
+\DoxyCodeLine{359       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a9737a353765e1f24e7411f3ef7123df2}{shift\_}} >= \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}}.size())}
+\DoxyCodeLine{360         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Creating a view out of the vectors' capacity."{}});}
+\DoxyCodeLine{361     \}}
+\DoxyCodeLine{362     \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a44ffd8bde6742b60d50d0ec70ad786f2}{SolverVectorsView}}(\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView}{SolverVectorsView<\_F>}} \&view, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}} = 0)}
+\DoxyCodeLine{363         : \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}}(view.\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}}), \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a9737a353765e1f24e7411f3ef7123df2}{shift\_}}(\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}} + view.\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a9737a353765e1f24e7411f3ef7123df2}{shift\_}}) \{}
+\DoxyCodeLine{364       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a9737a353765e1f24e7411f3ef7123df2}{shift\_}} >= \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}}.size())}
+\DoxyCodeLine{365         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Creating a view out of the vectors' capacity."{}});}
+\DoxyCodeLine{366     \}}
+\DoxyCodeLine{367 }
+\DoxyCodeLine{368     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a9737a353765e1f24e7411f3ef7123df2}{shift\_}}; \}}
+\DoxyCodeLine{369     \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ae55046a375eac91d499c3809d5c3319e}{length}}()\textcolor{keyword}{ const override }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}}.length(); \}}
+\DoxyCodeLine{370     \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a7c401491a9466f1f5369175eb6218d6f}{size}}()\textcolor{keyword}{ const override }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}}.size() -\/ \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}(); \}}
+\DoxyCodeLine{371 }
+\DoxyCodeLine{372     \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}}\& \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ace481a5ec0ad17136b10a042424c0e13}{getVecs}}() \{}
+\DoxyCodeLine{373       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}};}
+\DoxyCodeLine{374     \}}
+\DoxyCodeLine{375     \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}}\& \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a7cc977d8f57f92cbcf8948e0ab41f9a5}{getVecs}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{376       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}};}
+\DoxyCodeLine{377     \}}
+\DoxyCodeLine{378 }
+\DoxyCodeLine{379     \textcolor{keyword}{virtual} \_F* \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_abde7f2812c13dc67822a9d1b737f938c}{getPtr}}(\textcolor{keywordtype}{size\_t} i = 0)\textcolor{keyword}{ const override }\{}
+\DoxyCodeLine{380       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}}.getPtr(\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}() + i);}
+\DoxyCodeLine{381     \}}
+\DoxyCodeLine{382     \textcolor{comment}{// Get element}}
+\DoxyCodeLine{383     \textcolor{keyword}{virtual} \_F \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a4e53ba3c196e32c4a08af94d793bd8cf}{get}}(\textcolor{keywordtype}{size\_t} i, \textcolor{keywordtype}{size\_t} j)\textcolor{keyword}{ const override }\{}
+\DoxyCodeLine{384       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}}.get(i, \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}() + j);}
+\DoxyCodeLine{385     \}}
+\DoxyCodeLine{386     \textcolor{comment}{// Set element}}
+\DoxyCodeLine{387     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a2429adc97de8623e8a6b3758a1f79667}{set}}(\textcolor{keywordtype}{size\_t} i, \textcolor{keywordtype}{size\_t} j, \_F value)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{388       \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}}.set(i, \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}() + j, value);}
+\DoxyCodeLine{389     \}}
+\DoxyCodeLine{390 }
+\DoxyCodeLine{391     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}}<\_F>\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a0b9befbcfa9da344db49dd6a0e3f0754}{::clear}};}
+\DoxyCodeLine{392     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a0b9befbcfa9da344db49dd6a0e3f0754}{clear}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}, \textcolor{keywordtype}{size\_t} nVec)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{393       \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}}.clear(this-\/>\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}() + shift, nVec);}
+\DoxyCodeLine{394     \}}
+\DoxyCodeLine{395 }
+\DoxyCodeLine{396     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}}<\_F>\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_aa2718aad44a9fd885143528a37841fdf}{::print}};}
+\DoxyCodeLine{397     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_aa2718aad44a9fd885143528a37841fdf}{print}}(std::ostream\& out, std::string str, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}, \textcolor{keywordtype}{size\_t} nVec)\textcolor{keyword}{ const override }\{}
+\DoxyCodeLine{398       out << \textcolor{stringliteral}{"{}Printing a SolverVectorsView object with shift: "{}} << this-\/>\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}() << std::endl;}
+\DoxyCodeLine{399       \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}}.print(out, str, \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}} + this-\/>\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}(), nVec);}
+\DoxyCodeLine{400     \}}
+\DoxyCodeLine{401 }
+\DoxyCodeLine{402     \textcolor{comment}{// Get underlying type}}
+\DoxyCodeLine{403     \textcolor{keyword}{virtual} \textcolor{keyword}{const} std::type\_info\& \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a892a9f7699a53b61a85ce595f27f96ff}{underlyingType}}()\textcolor{keyword}{ const override}\{}
+\DoxyCodeLine{404       \textcolor{keywordflow}{return} \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a55e26fcf5a2680076b5103e898a1b95d}{vecs\_}});}
+\DoxyCodeLine{405     \}}
+\DoxyCodeLine{406 }
+\DoxyCodeLine{407     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a868df7d8079984b007613bafa653ef2b}{multiply\_matrix}}(\textcolor{keywordtype}{size\_t} shiftA, blas::Op transB, int64\_t n, int64\_t k,}
+\DoxyCodeLine{408                                  \_F alpha, \_F \textcolor{keyword}{const} *B, int64\_t ldb,}
+\DoxyCodeLine{409                                  \_F beta, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&C, \textcolor{keywordtype}{size\_t} shiftC) \textcolor{keyword}{const override};}
+\DoxyCodeLine{410 }
+\DoxyCodeLine{411     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a910e04c877a11815c0d67c46de977029}{dot\_product}}(\textcolor{keywordtype}{size\_t} shiftA, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&B, \textcolor{keywordtype}{size\_t} shiftB,}
+\DoxyCodeLine{412                              int64\_t m, int64\_t n, \_F *C, int64\_t ldc, \textcolor{keywordtype}{bool} conjA = \textcolor{keyword}{true}) \textcolor{keyword}{const override};}
+\DoxyCodeLine{413 }
+\DoxyCodeLine{414     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a8612dbc29f2df7d7a6c8e96238678ae9}{set\_data}}(\textcolor{keywordtype}{size\_t} shiftA, \textcolor{keywordtype}{size\_t} nVec, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&B, \textcolor{keywordtype}{size\_t} shiftB) \textcolor{keyword}{override};}
+\DoxyCodeLine{415 }
+\DoxyCodeLine{416     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}}<\_F>\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a13aac7c707562ec0123c4b53da7d68a3}{::scale}};}
+\DoxyCodeLine{417     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a13aac7c707562ec0123c4b53da7d68a3}{scale}}(\_F scalar, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}, \textcolor{keywordtype}{size\_t} nVec) \textcolor{keyword}{override};}
+\DoxyCodeLine{418 }
+\DoxyCodeLine{419     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}}<\_F>\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a2e3eaf8bb5dfec5fdef542616cdba8f5}{::conjugate}};}
+\DoxyCodeLine{420     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a2e3eaf8bb5dfec5fdef542616cdba8f5}{conjugate}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}, \textcolor{keywordtype}{size\_t} nVec) \textcolor{keyword}{override};}
+\DoxyCodeLine{421 }
+\DoxyCodeLine{422     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a89e5ea1f351a4c5125e2b82fd798e302}{axpy}}(\textcolor{keywordtype}{size\_t} shiftY, \textcolor{keywordtype}{size\_t} nVec, \_F alpha, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&X, \textcolor{keywordtype}{size\_t} shiftX) \textcolor{keyword}{override};}
+\DoxyCodeLine{423 }
+\DoxyCodeLine{424     \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a291ef7079af7d820db622543ae828f5a}{GramSchmidt}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}, \textcolor{keywordtype}{size\_t} Mold, \textcolor{keywordtype}{size\_t} Mnew, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{425                                \textcolor{keywordtype}{size\_t} NRe = 0, \textcolor{keywordtype}{double} eps = 1e-\/12) \textcolor{keyword}{override};}
+\DoxyCodeLine{426 }
+\DoxyCodeLine{427     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a7c28c5eb97b6e2f8bd88f672c2898c08}{trsm}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}, int64\_t n, \_F alpha, \_F \textcolor{keyword}{const} *A, int64\_t lda) \textcolor{keyword}{override};}
+\DoxyCodeLine{428 }
+\DoxyCodeLine{429     \textcolor{keyword}{virtual} \textcolor{keywordtype}{int} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a5c53aae268919819903c6c37014f06b8}{QR}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}, \textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \_F *R = \textcolor{keyword}{nullptr}, \textcolor{keywordtype}{int} LDR = 0) \textcolor{keyword}{override};}
+\DoxyCodeLine{430 }
+\DoxyCodeLine{431     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}}<\_F>\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ab85ed62bc72a847688d2b87016cdb9aa}{::norm2F}};}
+\DoxyCodeLine{432     \textcolor{keyword}{virtual} \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ab85ed62bc72a847688d2b87016cdb9aa}{norm2F}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}, \textcolor{keywordtype}{size\_t} nVec) \textcolor{keyword}{const override};}
+\DoxyCodeLine{433 }
+\DoxyCodeLine{434     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors}}<\_F>\mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a5200450d681e873f230cfce8b7a72a9c}{::maxNormElement}};}
+\DoxyCodeLine{435     \textcolor{keyword}{virtual} \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_a5200450d681e873f230cfce8b7a72a9c}{maxNormElement}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_ad77de6834f2a1e8570924c770a1d76d9}{shift}}, \textcolor{keywordtype}{size\_t} nVec) \textcolor{keyword}{const override};}
+\DoxyCodeLine{436 }
+\DoxyCodeLine{437     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView_aba0f41ba620874b1ea0080261e9ad27e}{\string~SolverVectorsView}}() \{\}}
+\DoxyCodeLine{438 }
+\DoxyCodeLine{439   \};}
+\DoxyCodeLine{440 }
+\DoxyCodeLine{441 }
+\DoxyCodeLine{442   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{443   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1IterSolver}{IterSolver}} \{}
+\DoxyCodeLine{444 }
+\DoxyCodeLine{445   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{446 }
+\DoxyCodeLine{447     \textcolor{keyword}{typedef} std::function< std::shared\_ptr<SolverVectors<\_F>>(size\_t) >            \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}};}
+\DoxyCodeLine{448     \textcolor{keyword}{typedef} std::function< void(\textcolor{keywordtype}{size\_t},\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}}\&,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}}\&) >    \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}};}
+\DoxyCodeLine{449     \textcolor{keyword}{typedef} std::function< void(\textcolor{keywordtype}{size\_t},\_F,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}}\&,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}}\&) > \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}};}
+\DoxyCodeLine{450 }
+\DoxyCodeLine{451     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&\mbox{\hyperlink{classChronusQ_1_1IterSolver_afccf7f42e52d3073c8d69804b8adc8b5}{memManager\_}};}
+\DoxyCodeLine{452     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}     \mbox{\hyperlink{classChronusQ_1_1IterSolver_a01327020a04ee84eb18b8d3f6087518c}{comm\_}};}
+\DoxyCodeLine{453 }
+\DoxyCodeLine{454     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1IterSolver_af1f6eea529adfa4ecb0a4f0fbc19271e}{N\_}};       }
+\DoxyCodeLine{455     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a7ff0b476d2031c60dc1e032945857dd9}{mSS\_}};     }
+\DoxyCodeLine{456     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a6e0c6ff0a5a29a04ca4d519d43fd7dd9}{maxMacroIter\_}}; }
+\DoxyCodeLine{457     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a41f183aeff1673206f2b6772309a27c4}{maxMicroIter\_}}; }
+\DoxyCodeLine{458 }
+\DoxyCodeLine{459 }
+\DoxyCodeLine{460     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a5537f5a8b5805c4978aa4884dcc21e38}{convCrit\_}}; }
+\DoxyCodeLine{461 }
+\DoxyCodeLine{462     \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} \mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}}; }
+\DoxyCodeLine{463 }
+\DoxyCodeLine{464     \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \mbox{\hyperlink{classChronusQ_1_1IterSolver_af39759c18b665c689324bab0009b48fd}{linearTrans\_}};    }
+\DoxyCodeLine{465     \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a10389b1e2609a8ff640f2b2037be68e0}{preCondNoShift\_}}; }
+\DoxyCodeLine{466 }
+\DoxyCodeLine{467     \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2a67af91a87e148e80ba7b279581bc8a}{shiftVec\_}};       }
+\DoxyCodeLine{468     \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \mbox{\hyperlink{classChronusQ_1_1IterSolver_ab834b437a942bbec480006d573e1cf34}{preCondWShift\_}};  }
+\DoxyCodeLine{469 }
+\DoxyCodeLine{470     \textcolor{keyword}{inline} std::shared\_ptr<SolverVectors<\_F>> \mbox{\hyperlink{classChronusQ_1_1IterSolver_aa592eaeac0d725c4a3a3455416413028}{rawVecsGenerator\_}}(\textcolor{keywordtype}{size\_t} nVec) \{}
+\DoxyCodeLine{471 }
+\DoxyCodeLine{472       \textcolor{keywordflow}{return} std::make\_shared<RawVectors<\_F>>(\mbox{\hyperlink{classChronusQ_1_1IterSolver_a01327020a04ee84eb18b8d3f6087518c}{comm\_}}, this-\/>\mbox{\hyperlink{classChronusQ_1_1IterSolver_afccf7f42e52d3073c8d69804b8adc8b5}{memManager\_}}, this-\/>\mbox{\hyperlink{classChronusQ_1_1IterSolver_af1f6eea529adfa4ecb0a4f0fbc19271e}{N\_}}, nVec);}
+\DoxyCodeLine{473 }
+\DoxyCodeLine{474     \};}
+\DoxyCodeLine{475 }
+\DoxyCodeLine{476     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterSolver_aa5c5f3c4a52c6124f143bd18c5b0c496}{defaultShiftVec\_}}(\textcolor{keywordtype}{size\_t} nVec, \_F shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&AV) \{}
+\DoxyCodeLine{477 }
+\DoxyCodeLine{478       AV.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a4ff12bfdd600ba8b083bccde9006c22c}{axpy}}(0, nVec, shift, V, 0);}
+\DoxyCodeLine{479 }
+\DoxyCodeLine{480     \};}
+\DoxyCodeLine{481 }
+\DoxyCodeLine{482     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterSolver_aa427ad4ce341e51ac13fe6c10690c22a}{defaultPreCondShift\_}}(\textcolor{keywordtype}{size\_t} nVec, \_F shift, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&AV) \{}
+\DoxyCodeLine{483 }
+\DoxyCodeLine{484       \mbox{\hyperlink{classChronusQ_1_1IterSolver_a10389b1e2609a8ff640f2b2037be68e0}{preCondNoShift\_}}(nVec,V,AV);}
+\DoxyCodeLine{485       \textcolor{keywordflow}{if}(std::abs(std::abs(shift)) > 1e-\/15) \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2a67af91a87e148e80ba7b279581bc8a}{shiftVec\_}}(nVec,-\/1./shift,V,AV);}
+\DoxyCodeLine{486 }
+\DoxyCodeLine{487     \};}
+\DoxyCodeLine{488 }
+\DoxyCodeLine{489   \textcolor{keyword}{public}:}
+\DoxyCodeLine{490 }
+\DoxyCodeLine{491     \textcolor{comment}{// Constructor (unshifted preconditioner)}}
+\DoxyCodeLine{492     \mbox{\hyperlink{classChronusQ_1_1IterSolver_a98a82bca5a2209bd84c4d3e6d001fc93}{IterSolver}}(}
+\DoxyCodeLine{493       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,}
+\DoxyCodeLine{494       \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{495       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N,}
+\DoxyCodeLine{496       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MSS,}
+\DoxyCodeLine{497       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXMACRO,}
+\DoxyCodeLine{498       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXMICRO,}
+\DoxyCodeLine{499       \textcolor{keywordtype}{double} conv,}
+\DoxyCodeLine{500       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&linearTrans,}
+\DoxyCodeLine{501       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&preNoShift,}
+\DoxyCodeLine{502       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} \&vecGen = \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}}(),}
+\DoxyCodeLine{503       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&shiftVec = \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}}()) :}
+\DoxyCodeLine{504         \mbox{\hyperlink{classChronusQ_1_1IterSolver_a01327020a04ee84eb18b8d3f6087518c}{comm\_}}(c), \mbox{\hyperlink{classChronusQ_1_1IterSolver_afccf7f42e52d3073c8d69804b8adc8b5}{memManager\_}}(mem), \mbox{\hyperlink{classChronusQ_1_1IterSolver_af1f6eea529adfa4ecb0a4f0fbc19271e}{N\_}}(N), \mbox{\hyperlink{classChronusQ_1_1IterSolver_a7ff0b476d2031c60dc1e032945857dd9}{mSS\_}}(MSS), \mbox{\hyperlink{classChronusQ_1_1IterSolver_a6e0c6ff0a5a29a04ca4d519d43fd7dd9}{maxMacroIter\_}}(MAXMACRO),}
+\DoxyCodeLine{505         \mbox{\hyperlink{classChronusQ_1_1IterSolver_a41f183aeff1673206f2b6772309a27c4}{maxMicroIter\_}}(MAXMICRO), \mbox{\hyperlink{classChronusQ_1_1IterSolver_a5537f5a8b5805c4978aa4884dcc21e38}{convCrit\_}}(conv), \mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}}(vecGen),}
+\DoxyCodeLine{506         \mbox{\hyperlink{classChronusQ_1_1IterSolver_af39759c18b665c689324bab0009b48fd}{linearTrans\_}}(linearTrans), \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2a67af91a87e148e80ba7b279581bc8a}{shiftVec\_}}(shiftVec),}
+\DoxyCodeLine{507         \mbox{\hyperlink{classChronusQ_1_1IterSolver_a10389b1e2609a8ff640f2b2037be68e0}{preCondNoShift\_}}(preNoShift) \{}
+\DoxyCodeLine{508 }
+\DoxyCodeLine{509       \textcolor{keyword}{using namespace }std::placeholders;}
+\DoxyCodeLine{510       \textcolor{keywordflow}{if}( not \mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}} ) \{}
+\DoxyCodeLine{511         \mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}} =}
+\DoxyCodeLine{512             std::bind(\&\mbox{\hyperlink{classChronusQ_1_1IterSolver}{IterSolver<\_F>::rawVecsGenerator\_}},\textcolor{keyword}{this},\_1);}
+\DoxyCodeLine{513       \}}
+\DoxyCodeLine{514 }
+\DoxyCodeLine{515       \textcolor{keywordflow}{if}( not \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2a67af91a87e148e80ba7b279581bc8a}{shiftVec\_}} ) \{}
+\DoxyCodeLine{516         \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2a67af91a87e148e80ba7b279581bc8a}{shiftVec\_}} =}
+\DoxyCodeLine{517           std::bind(\&\mbox{\hyperlink{classChronusQ_1_1IterSolver}{IterSolver<\_F>::defaultShiftVec\_}},\textcolor{keyword}{this},\_1,\_2,\_3,\_4);}
+\DoxyCodeLine{518       \}}
+\DoxyCodeLine{519 }
+\DoxyCodeLine{520       \mbox{\hyperlink{classChronusQ_1_1IterSolver_ab834b437a942bbec480006d573e1cf34}{preCondWShift\_}} =}
+\DoxyCodeLine{521         std::bind(\&\mbox{\hyperlink{classChronusQ_1_1IterSolver}{IterSolver<\_F>::defaultPreCondShift\_}},\textcolor{keyword}{this},\_1,\_2,\_3,\_4);}
+\DoxyCodeLine{522 }
+\DoxyCodeLine{523     \}}
+\DoxyCodeLine{524 }
+\DoxyCodeLine{525     \textcolor{comment}{// Constructor (shifted preconditioner)}}
+\DoxyCodeLine{526     \mbox{\hyperlink{classChronusQ_1_1IterSolver_a698ff8354a9cc7c2b0b47ad3f22914a3}{IterSolver}}(}
+\DoxyCodeLine{527       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,}
+\DoxyCodeLine{528       \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{529       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N,}
+\DoxyCodeLine{530       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MSS,}
+\DoxyCodeLine{531       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXMACRO,}
+\DoxyCodeLine{532       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXMICRO,}
+\DoxyCodeLine{533       \textcolor{keywordtype}{double} conv,}
+\DoxyCodeLine{534       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&linearTrans,}
+\DoxyCodeLine{535       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&preShift,}
+\DoxyCodeLine{536       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} \&vecGen = \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}}(),}
+\DoxyCodeLine{537       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&shiftVec = \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}}()) :}
+\DoxyCodeLine{538         \mbox{\hyperlink{classChronusQ_1_1IterSolver_a01327020a04ee84eb18b8d3f6087518c}{comm\_}}(c), \mbox{\hyperlink{classChronusQ_1_1IterSolver_afccf7f42e52d3073c8d69804b8adc8b5}{memManager\_}}(mem), \mbox{\hyperlink{classChronusQ_1_1IterSolver_af1f6eea529adfa4ecb0a4f0fbc19271e}{N\_}}(N), \mbox{\hyperlink{classChronusQ_1_1IterSolver_a7ff0b476d2031c60dc1e032945857dd9}{mSS\_}}(MSS), \mbox{\hyperlink{classChronusQ_1_1IterSolver_a6e0c6ff0a5a29a04ca4d519d43fd7dd9}{maxMacroIter\_}}(MAXMACRO),}
+\DoxyCodeLine{539         \mbox{\hyperlink{classChronusQ_1_1IterSolver_a41f183aeff1673206f2b6772309a27c4}{maxMicroIter\_}}(MAXMICRO), \mbox{\hyperlink{classChronusQ_1_1IterSolver_a5537f5a8b5805c4978aa4884dcc21e38}{convCrit\_}}(conv), \mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}}(vecGen),}
+\DoxyCodeLine{540         \mbox{\hyperlink{classChronusQ_1_1IterSolver_af39759c18b665c689324bab0009b48fd}{linearTrans\_}}(linearTrans), \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2a67af91a87e148e80ba7b279581bc8a}{shiftVec\_}}(shiftVec),}
+\DoxyCodeLine{541         \mbox{\hyperlink{classChronusQ_1_1IterSolver_ab834b437a942bbec480006d573e1cf34}{preCondWShift\_}}(preShift) \{}
+\DoxyCodeLine{542 }
+\DoxyCodeLine{543       \textcolor{keyword}{using namespace }std::placeholders;}
+\DoxyCodeLine{544       \textcolor{keywordflow}{if}( not \mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}} ) \{}
+\DoxyCodeLine{545         \mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}} =}
+\DoxyCodeLine{546             std::bind(\&\mbox{\hyperlink{classChronusQ_1_1IterSolver}{IterSolver<\_F>::rawVecsGenerator\_}},\textcolor{keyword}{this},\_1);}
+\DoxyCodeLine{547       \}}
+\DoxyCodeLine{548 }
+\DoxyCodeLine{549       \textcolor{keywordflow}{if}( not \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2a67af91a87e148e80ba7b279581bc8a}{shiftVec\_}} ) \{}
+\DoxyCodeLine{550         \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2a67af91a87e148e80ba7b279581bc8a}{shiftVec\_}} =}
+\DoxyCodeLine{551           std::bind(\&\mbox{\hyperlink{classChronusQ_1_1IterSolver}{IterSolver<\_F>::defaultShiftVec\_}},\textcolor{keyword}{this},\_1,\_2,\_3,\_4);}
+\DoxyCodeLine{552       \}}
+\DoxyCodeLine{553 }
+\DoxyCodeLine{554     \}}
+\DoxyCodeLine{555 }
+\DoxyCodeLine{556 }
+\DoxyCodeLine{557 }
+\DoxyCodeLine{558   \};}
+\DoxyCodeLine{559 }
+\DoxyCodeLine{560 }
+\DoxyCodeLine{561 }
+\DoxyCodeLine{562 }
+\DoxyCodeLine{563   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{564   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1IterLinearSolver}{IterLinearSolver}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1IterSolver}{IterSolver}}<\_F> \{}
+\DoxyCodeLine{565 }
+\DoxyCodeLine{566   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{567 }
+\DoxyCodeLine{568     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a284325227c987b4d1c275559fe05775b}{nRHS\_}};}
+\DoxyCodeLine{569     std::shared\_ptr<SolverVectors<\_F>> \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_ac9b29a4cf5e97ef552ce7694d2caf282}{RHS\_}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{570     std::shared\_ptr<SolverVectors<\_F>> \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_aa020e7c538bae37e5b535135e1683434}{SOL\_}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{571     std::shared\_ptr<SolverVectors<\_F>> \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_af1dce72bf88e3e9cf16b55b7015b35fc}{V\_}}   = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{572     std::shared\_ptr<SolverVectors<\_F>> \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a051f2239a90e0ee0f001efe5cf566d99}{AV\_}}  = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{573     std::shared\_ptr<SolverVectors<\_F>> \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_af8e46d6f97873e62d26c9457fcbd0dad}{RES\_}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{574 }
+\DoxyCodeLine{575     std::vector<\_F> \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a928570e2f198bbd4125b17fec768a155}{shifts\_}};}
+\DoxyCodeLine{576 }
+\DoxyCodeLine{577     std::vector<double>              \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_ae524558621886a2d2d12ba7b3565624e}{rhsNorm\_}};}
+\DoxyCodeLine{578     std::vector<std::vector<double>> \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a7b635bdd8771d2a636e3b11d18ce858d}{resNorm\_}};}
+\DoxyCodeLine{579 }
+\DoxyCodeLine{580   \textcolor{keyword}{public}:}
+\DoxyCodeLine{581 }
+\DoxyCodeLine{582 }
+\DoxyCodeLine{583     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{IterSolver<\_F>::VecsGen\_t}};}
+\DoxyCodeLine{584     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{IterSolver<\_F>::LinearTrans\_t}};}
+\DoxyCodeLine{585     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}}       = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{IterSolver<\_F>::Shift\_t}};}
+\DoxyCodeLine{586 }
+\DoxyCodeLine{587     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_abb93e7f00502ae50a58bb5ec63d2f113}{shiftBS}} = 1;}
+\DoxyCodeLine{588     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a89f344c0b12ae776da4c988a1e3df2d9}{rhsBS}}   = 1;}
+\DoxyCodeLine{589 }
+\DoxyCodeLine{590     \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a634f6abb4be3febd5a02fb85e853fbea}{IterLinearSolver}}(}
+\DoxyCodeLine{591       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,}
+\DoxyCodeLine{592       \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{593       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N,}
+\DoxyCodeLine{594       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MSS,}
+\DoxyCodeLine{595       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXMACRO,}
+\DoxyCodeLine{596       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXMICRO,}
+\DoxyCodeLine{597       \textcolor{keywordtype}{double} conv,}
+\DoxyCodeLine{598       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&linearTrans,}
+\DoxyCodeLine{599       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&preNoShift,}
+\DoxyCodeLine{600       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} \&vecGen = \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a32e8d36304668a20416ff84d4b8752ce}{VecsGen\_t}}(),}
+\DoxyCodeLine{601       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&shiftVec = \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a46d55ee1b30f239fd34954ff03b30c50}{Shift\_t}}()) :}
+\DoxyCodeLine{602      \mbox{\hyperlink{classChronusQ_1_1IterSolver}{IterSolver}}<\_F>(c,mem,N,MSS,MAXMACRO,MAXMICRO,conv,linearTrans,preNoShift,}
+\DoxyCodeLine{603                     vecGen,shiftVec)\{ \}}
+\DoxyCodeLine{604 }
+\DoxyCodeLine{605     \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_aea53669ed5d004bb3c884bc4039b70f3}{IterLinearSolver}}(}
+\DoxyCodeLine{606       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,}
+\DoxyCodeLine{607       \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{608       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N,}
+\DoxyCodeLine{609       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MSS,}
+\DoxyCodeLine{610       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXMACRO,}
+\DoxyCodeLine{611       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXMICRO,}
+\DoxyCodeLine{612       \textcolor{keywordtype}{double} conv,}
+\DoxyCodeLine{613       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&linearTrans,}
+\DoxyCodeLine{614       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&preShift,}
+\DoxyCodeLine{615       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} \&vecGen = \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a32e8d36304668a20416ff84d4b8752ce}{VecsGen\_t}}(),}
+\DoxyCodeLine{616       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&shiftVec = \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a46d55ee1b30f239fd34954ff03b30c50}{Shift\_t}}()) :}
+\DoxyCodeLine{617      \mbox{\hyperlink{classChronusQ_1_1IterSolver}{IterSolver}}<\_F>(c,mem,N,MSS,MAXMACRO,MAXMICRO,conv,linearTrans,preShift,}
+\DoxyCodeLine{618                     vecGen,shiftVec)\{ \}}
+\DoxyCodeLine{619 }
+\DoxyCodeLine{620 }
+\DoxyCodeLine{621     \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_afae3b288e1c8f3a7ee403aedb7b0017c}{\string~IterLinearSolver}}() \{\};}
+\DoxyCodeLine{622 }
+\DoxyCodeLine{623 }
+\DoxyCodeLine{624 }
+\DoxyCodeLine{625 }
+\DoxyCodeLine{626     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{627     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_ace4d488066bce1e7498963c25c851837}{setRHS}}(\textcolor{keywordtype}{size\_t} nRHS, T*RHS, \textcolor{keywordtype}{size\_t} LDRHS);}
+\DoxyCodeLine{628 }
+\DoxyCodeLine{629     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{630     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a52324cc8479558cf677d7f23b923f819}{setShifts}}(\textcolor{keywordtype}{size\_t} nShift, T* shifts);}
+\DoxyCodeLine{631 }
+\DoxyCodeLine{632 }
+\DoxyCodeLine{633     std::shared\_ptr<SolverVectors<\_F>> \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a5eecb03ded9306c4db81a5bbb35fa949}{getSol}}()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{634       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_aa020e7c538bae37e5b535135e1683434}{SOL\_}};}
+\DoxyCodeLine{635     \};}
+\DoxyCodeLine{636 }
+\DoxyCodeLine{637 }
+\DoxyCodeLine{638 }
+\DoxyCodeLine{639 }
+\DoxyCodeLine{640     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a2bbe98f4170bdde8f31caaf66d577c0f}{alloc}}() \{}
+\DoxyCodeLine{641 }
+\DoxyCodeLine{642 \textcolor{comment}{//      size\_t nRHSnSN       = nRHS\_ * shifts\_.size() * this-\/>N\_;}}
+\DoxyCodeLine{643 \textcolor{comment}{//      size\_t nRHSnSN\_batch = rhsBS * shiftBS * this-\/>N\_;}}
+\DoxyCodeLine{644 }
+\DoxyCodeLine{645       \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_aa020e7c538bae37e5b535135e1683434}{SOL\_}} = this-\/>\mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}}(nRHS\_ * \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a928570e2f198bbd4125b17fec768a155}{shifts\_}}.size());}
+\DoxyCodeLine{646       \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_af1dce72bf88e3e9cf16b55b7015b35fc}{V\_}}   = this-\/>\mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}}(rhsBS * \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_abb93e7f00502ae50a58bb5ec63d2f113}{shiftBS}} * this-\/>mSS\_);}
+\DoxyCodeLine{647       \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a051f2239a90e0ee0f001efe5cf566d99}{AV\_}}  = this-\/>\mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}}(rhsBS * \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_abb93e7f00502ae50a58bb5ec63d2f113}{shiftBS}} * this-\/>mSS\_);}
+\DoxyCodeLine{648       \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_af8e46d6f97873e62d26c9457fcbd0dad}{RES\_}}  = this-\/>\mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}}(rhsBS * \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_abb93e7f00502ae50a58bb5ec63d2f113}{shiftBS}});}
+\DoxyCodeLine{649 }
+\DoxyCodeLine{650     \}}
+\DoxyCodeLine{651 }
+\DoxyCodeLine{652 }
+\DoxyCodeLine{653 }
+\DoxyCodeLine{654     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a4d91bbd0ba65ac02462af247efee00ef}{run}}();}
+\DoxyCodeLine{655 }
+\DoxyCodeLine{656     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a65d7cbe1f39b8bfdc6ce5a6303a14daa}{runBatch}}(\textcolor{keywordtype}{size\_t} nRHS, \textcolor{keywordtype}{size\_t} nShift,}
+\DoxyCodeLine{657                           std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}}> RHS, \_F *shifts,}
+\DoxyCodeLine{658                           std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}}> SOL, \textcolor{keywordtype}{double} *RHSNorm);}
+\DoxyCodeLine{659 }
+\DoxyCodeLine{660   \};}
+\DoxyCodeLine{661 }
+\DoxyCodeLine{662 }
+\DoxyCodeLine{663 }
+\DoxyCodeLine{664 }
+\DoxyCodeLine{665   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{666   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer}{IterDiagonalizer}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1IterSolver}{IterSolver}}<\_F> \{}
+\DoxyCodeLine{667 }
+\DoxyCodeLine{668 }
+\DoxyCodeLine{669   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{670 }
+\DoxyCodeLine{671     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_af79eb6150018bfecae594f14f5fc8a85}{nRoots\_}};}
+\DoxyCodeLine{672     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ac131296c3aee158355408095debf5245}{nGuess\_}};}
+\DoxyCodeLine{673     std::shared\_ptr<SolverVectors<\_F>> \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_aad2ea8ac59fff2ded96540ec26489f6d}{VR\_}}   = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{674     \_F     *\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ae87d00d571022fed59d0d8f7903769bf}{VL\_}}   = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{675     std::shared\_ptr<SolverVectors<\_F>> \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_aea5a171eaa62dc5972a88a169115de5f}{AVR\_}}  = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{676     \_F     *\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_afec7f1c1b1d2d4c6e365849b7ef49e45}{AVL\_}}  = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{677     \_F     *\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a9f1405fb80ae345f640d736f5fe9e715}{RESR\_}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{678     \_F     *\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a60260260acdae49c99e2c79400e63db6}{RESL\_}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{679 }
+\DoxyCodeLine{680 }
+\DoxyCodeLine{681     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} * \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a36c63f3b39df8c125ee60e3a3b1e6077}{eigVal\_}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{682 }
+\DoxyCodeLine{683     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a47470da22d10c68ac1c31765e0c05b1f}{RayleighRitz}}();}
+\DoxyCodeLine{684 }
+\DoxyCodeLine{685 }
+\DoxyCodeLine{686 }
+\DoxyCodeLine{687   \textcolor{keyword}{public}:}
+\DoxyCodeLine{688 }
+\DoxyCodeLine{689     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{IterSolver<\_F>::VecsGen\_t}};}
+\DoxyCodeLine{690     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{IterSolver<\_F>::LinearTrans\_t}};}
+\DoxyCodeLine{691     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}}       = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{IterSolver<\_F>::Shift\_t}};}
+\DoxyCodeLine{692 }
+\DoxyCodeLine{693     \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_abe492a7fce334e1350564f9c2ae7a63e}{IterDiagonalizer}}(}
+\DoxyCodeLine{694       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,}
+\DoxyCodeLine{695       \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{696       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N,}
+\DoxyCodeLine{697       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MSS,}
+\DoxyCodeLine{698       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXMACRO,}
+\DoxyCodeLine{699       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXMICRO,}
+\DoxyCodeLine{700       \textcolor{keywordtype}{double} conv,}
+\DoxyCodeLine{701       \textcolor{keywordtype}{size\_t} nR,}
+\DoxyCodeLine{702       \textcolor{keywordtype}{size\_t} nG,}
+\DoxyCodeLine{703       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&linearTrans,}
+\DoxyCodeLine{704       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&preNoShift,}
+\DoxyCodeLine{705       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} \&vecGen = \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ae5322b107d8be2b3ca2b0465a3e03524}{VecsGen\_t}}(),}
+\DoxyCodeLine{706       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&shiftVec = \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ae86be9e31792e8d4f635f4c1b5d1ed84}{Shift\_t}}()) :}
+\DoxyCodeLine{707       \mbox{\hyperlink{classChronusQ_1_1IterSolver}{IterSolver}}<\_F>(c,mem,N,MSS,MAXMACRO,MAXMICRO,conv,linearTrans,}
+\DoxyCodeLine{708                      preNoShift,vecGen,shiftVec),}
+\DoxyCodeLine{709         \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_af79eb6150018bfecae594f14f5fc8a85}{nRoots\_}}(nR), \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ac131296c3aee158355408095debf5245}{nGuess\_}}(nG)\{ \}}
+\DoxyCodeLine{710 }
+\DoxyCodeLine{711     \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a6bfaf18a7a7e4a68eaeecf8c36358a4c}{IterDiagonalizer}}(}
+\DoxyCodeLine{712       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,}
+\DoxyCodeLine{713       \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{714       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N,}
+\DoxyCodeLine{715       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MSS,}
+\DoxyCodeLine{716       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXMACRO,}
+\DoxyCodeLine{717       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXMICRO,}
+\DoxyCodeLine{718       \textcolor{keywordtype}{double} conv,}
+\DoxyCodeLine{719       \textcolor{keywordtype}{size\_t} nR,}
+\DoxyCodeLine{720       \textcolor{keywordtype}{size\_t} nG,}
+\DoxyCodeLine{721       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&linearTrans,}
+\DoxyCodeLine{722       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&preShift,}
+\DoxyCodeLine{723       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} \&vecGen = \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ae5322b107d8be2b3ca2b0465a3e03524}{VecsGen\_t}}(),}
+\DoxyCodeLine{724       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&shiftVec = \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ae86be9e31792e8d4f635f4c1b5d1ed84}{Shift\_t}}()) :}
+\DoxyCodeLine{725      \mbox{\hyperlink{classChronusQ_1_1IterSolver}{IterSolver}}<\_F>(c,mem,N,MSS,MAXMACRO,MAXMICRO,conv,linearTrans,}
+\DoxyCodeLine{726                     preShift,vecGen,shiftVec),}
+\DoxyCodeLine{727        \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_af79eb6150018bfecae594f14f5fc8a85}{nRoots\_}}(nR), \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ac131296c3aee158355408095debf5245}{nGuess\_}}(nG)\{ \}}
+\DoxyCodeLine{728 }
+\DoxyCodeLine{729 }
+\DoxyCodeLine{730     \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a227fa07b9cff4e7edb6506315482f913}{\string~IterDiagonalizer}}() \{}
+\DoxyCodeLine{731 }
+\DoxyCodeLine{732       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ae87d00d571022fed59d0d8f7903769bf}{VL\_}})   this-\/>memManager\_.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ae87d00d571022fed59d0d8f7903769bf}{VL\_}});}
+\DoxyCodeLine{733       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_afec7f1c1b1d2d4c6e365849b7ef49e45}{AVL\_}})  this-\/>memManager\_.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_afec7f1c1b1d2d4c6e365849b7ef49e45}{AVL\_}});}
+\DoxyCodeLine{734       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a9f1405fb80ae345f640d736f5fe9e715}{RESR\_}}) this-\/>memManager\_.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a9f1405fb80ae345f640d736f5fe9e715}{RESR\_}});}
+\DoxyCodeLine{735       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a60260260acdae49c99e2c79400e63db6}{RESL\_}}) this-\/>memManager\_.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a60260260acdae49c99e2c79400e63db6}{RESL\_}});}
+\DoxyCodeLine{736       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a36c63f3b39df8c125ee60e3a3b1e6077}{eigVal\_}}) this-\/>memManager\_.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a36c63f3b39df8c125ee60e3a3b1e6077}{eigVal\_}});}
+\DoxyCodeLine{737 }
+\DoxyCodeLine{738     \};}
+\DoxyCodeLine{739 }
+\DoxyCodeLine{740 }
+\DoxyCodeLine{741 }
+\DoxyCodeLine{742 }
+\DoxyCodeLine{743     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a020757b2bc65870125e941ce9310b327}{alloc}}() \{}
+\DoxyCodeLine{744 }
+\DoxyCodeLine{745       \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_aad2ea8ac59fff2ded96540ec26489f6d}{VR\_}}     = this-\/>\mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}}(this-\/>mSS\_);}
+\DoxyCodeLine{746 }
+\DoxyCodeLine{747       \textcolor{comment}{// NO MPI}}
+\DoxyCodeLine{748       \textcolor{comment}{// ROOT\_ONLY(this-\/>comm\_);}}
+\DoxyCodeLine{749 }
+\DoxyCodeLine{750 \textcolor{comment}{//      size\_t NNR = this-\/>N\_ * this-\/>mSS\_;}}
+\DoxyCodeLine{751 }
+\DoxyCodeLine{752       \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a36c63f3b39df8c125ee60e3a3b1e6077}{eigVal\_}} = this-\/>memManager\_.template malloc<dcomplex>(this-\/>nRoots\_);}
+\DoxyCodeLine{753       \textcolor{comment}{//AVR\_    = this-\/>memManager\_.template malloc<\_F>(NNR);}}
+\DoxyCodeLine{754       \textcolor{comment}{//RESR\_   = this-\/>memManager\_.template malloc<\_F>(NNR);}}
+\DoxyCodeLine{755 }
+\DoxyCodeLine{756     \}}
+\DoxyCodeLine{757 }
+\DoxyCodeLine{758 }
+\DoxyCodeLine{759     \textcolor{keyword}{const} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}* \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a5e28649578b12456cfa95642b1b2841d}{eigVal}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a36c63f3b39df8c125ee60e3a3b1e6077}{eigVal\_}}; \}}
+\DoxyCodeLine{760     std::shared\_ptr<SolverVectors<\_F>> \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a81cdfb81b93c9aedfec1b2331bd4d127}{VR}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_aad2ea8ac59fff2ded96540ec26489f6d}{VR\_}}; \}}
+\DoxyCodeLine{761 }
+\DoxyCodeLine{762 }
+\DoxyCodeLine{763     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a6613dee8c8a710030643c1b3d48f1855}{setGuess}}(\textcolor{keywordtype}{size\_t} nGuess,}
+\DoxyCodeLine{764         std::function<\textcolor{keywordtype}{void}(\textcolor{keywordtype}{size\_t}, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&, \textcolor{keywordtype}{size\_t})>) = 0;}
+\DoxyCodeLine{765 }
+\DoxyCodeLine{766     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a18628b94591b268872c91ba3cd1bc557}{run}}();}
+\DoxyCodeLine{767 }
+\DoxyCodeLine{768     \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a6cc1d5b01c3bb6d912d5c2130ec3e239}{runMicro}}() = 0;}
+\DoxyCodeLine{769     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a5e7f007246ae8bf4035fa773c48c9593}{restart}}() = 0;}
+\DoxyCodeLine{770 }
+\DoxyCodeLine{771   \};}
+\DoxyCodeLine{772 }
+\DoxyCodeLine{773 }
+\DoxyCodeLine{774 }
+\DoxyCodeLine{775 }
+\DoxyCodeLine{776 }
+\DoxyCodeLine{777 }
+\DoxyCodeLine{778 }
+\DoxyCodeLine{779 }
+\DoxyCodeLine{780   \textcolor{comment}{// GPLHR}}
+\DoxyCodeLine{781   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{782   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1GPLHR}{GPLHR}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer}{IterDiagonalizer}}<\_F> \{}
+\DoxyCodeLine{783 }
+\DoxyCodeLine{784     \textcolor{keywordtype}{double} *\mbox{\hyperlink{classChronusQ_1_1GPLHR_a08a2ce7d42767c9578ccd98b843afab2}{RelRes}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{785     std::shared\_ptr<SolverVectors<\_F>> \mbox{\hyperlink{classChronusQ_1_1GPLHR_a6ba868e60ea7ebc156312f5e2fddc018}{Guess}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{786 }
+\DoxyCodeLine{787 }
+\DoxyCodeLine{788   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{789 }
+\DoxyCodeLine{790 }
+\DoxyCodeLine{791     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1GPLHR_a4c5428eac0c7d2b544b574417eef553b}{useAdaptiveSigma}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \}}
+\DoxyCodeLine{792 }
+\DoxyCodeLine{793 }
+\DoxyCodeLine{794     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GPLHR_a2094422b66d1977d583a398846f29fa9}{getResidualNorms}}(\textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{size\_t} nR, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&WMAT,}
+\DoxyCodeLine{795                           \textcolor{keywordtype}{double} *\mbox{\hyperlink{classChronusQ_1_1GPLHR_a08a2ce7d42767c9578ccd98b843afab2}{RelRes}}, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} *LAMBDA, \textcolor{keywordtype}{double} nrmA);}
+\DoxyCodeLine{796 }
+\DoxyCodeLine{797     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GPLHR_a8fd7e026149f4a57a8e96c562773b0a8}{getTriU}}(\textcolor{keywordtype}{size\_t} N, \_F *TRIUA, \textcolor{keywordtype}{size\_t} LDTRIUA, \_F *TRIUB,}
+\DoxyCodeLine{798       \textcolor{keywordtype}{size\_t} LDTRIUB, \_F *MA, \textcolor{keywordtype}{size\_t} LDMA, \_F *MB, \textcolor{keywordtype}{size\_t} LDMB);}
+\DoxyCodeLine{799 }
+\DoxyCodeLine{800     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1GPLHR_a792e489ec97152f988197981b6310dc3}{checkConv}}(\textcolor{keywordtype}{size\_t} nR, \textcolor{keywordtype}{double} *\mbox{\hyperlink{classChronusQ_1_1GPLHR_a08a2ce7d42767c9578ccd98b843afab2}{RelRes}});}
+\DoxyCodeLine{801 }
+\DoxyCodeLine{802 }
+\DoxyCodeLine{803 }
+\DoxyCodeLine{804 }
+\DoxyCodeLine{805     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GPLHR_a053f72b362f79cef44b210daaf442512}{halfProj}}(\textcolor{keywordtype}{size\_t} nV, \textcolor{keywordtype}{size\_t} nS, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&V,}
+\DoxyCodeLine{806                   \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&S, \_F *smSCR, \textcolor{keywordtype}{size\_t} LDSCR);}
+\DoxyCodeLine{807 }
+\DoxyCodeLine{811     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GPLHR_a7b21f3ebdb1b076e9fa43249f93ae2db}{halfProj}}(\textcolor{keywordtype}{size\_t} nV, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&V,}
+\DoxyCodeLine{812                          \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&S, \_F *smSCR, \textcolor{keywordtype}{size\_t} LDSCR) \{}
+\DoxyCodeLine{813 }
+\DoxyCodeLine{814       \mbox{\hyperlink{classChronusQ_1_1GPLHR_a053f72b362f79cef44b210daaf442512}{halfProj}}(nV,nV,V,\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}},smSCR,LDSCR);}
+\DoxyCodeLine{815 }
+\DoxyCodeLine{816     \}}
+\DoxyCodeLine{817 }
+\DoxyCodeLine{818     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GPLHR_a761ddf087e9cd46c1069a39358a7fe6e}{halfProj2}}(\textcolor{keywordtype}{size\_t} nV, \textcolor{keywordtype}{size\_t} nS, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&V, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&AV,}
+\DoxyCodeLine{819                    \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&S, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&AS, \_F *smSCR, \textcolor{keywordtype}{size\_t} LDSCR);}
+\DoxyCodeLine{820 }
+\DoxyCodeLine{824     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GPLHR_a291fd789f5a328840effbab04902ec72}{halfProj2}}(\textcolor{keywordtype}{size\_t} nV, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&V, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&AV,}
+\DoxyCodeLine{825                           \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&S, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&AS, \_F *smSCR, \textcolor{keywordtype}{size\_t} LDSCR) \{}
+\DoxyCodeLine{826 }
+\DoxyCodeLine{827       \mbox{\hyperlink{classChronusQ_1_1GPLHR_a761ddf087e9cd46c1069a39358a7fe6e}{halfProj2}}(nV,nV,V,AV,\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}},AS,smSCR,LDSCR);}
+\DoxyCodeLine{828 }
+\DoxyCodeLine{829     \}}
+\DoxyCodeLine{830 }
+\DoxyCodeLine{831 }
+\DoxyCodeLine{832     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GPLHR_ad1860dfb1d8511495744be6bb708b1f1}{newSMatrix}}(\textcolor{keywordtype}{size\_t} nR, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&V, \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&Q,}
+\DoxyCodeLine{833                     \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&S, \_F *smSCR, \textcolor{keywordtype}{size\_t} LDSCR);}
+\DoxyCodeLine{834 }
+\DoxyCodeLine{835 }
+\DoxyCodeLine{836   \textcolor{keyword}{public}:}
+\DoxyCodeLine{837 }
+\DoxyCodeLine{838 }
+\DoxyCodeLine{839     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1GPLHR_a40838b6f5b881ba5392c0fcae14f93cc}{m}} = 1;}
+\DoxyCodeLine{840     \_F \mbox{\hyperlink{classChronusQ_1_1GPLHR_aeac0d1529d39790c940455d29f4e9bc3}{sigma}} = 0.;}
+\DoxyCodeLine{841     \_F \mbox{\hyperlink{classChronusQ_1_1GPLHR_ab1000512d1edc83a412886cb00f151f5}{hardLim}} = -\/std::numeric\_limits<double>::infinity();}
+\DoxyCodeLine{842 }
+\DoxyCodeLine{843     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{IterSolver<\_F>::VecsGen\_t}};}
+\DoxyCodeLine{844     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ab7586fef05543121a62a1616596cf498}{IterDiagonalizer<\_F>::LinearTrans\_t}};}
+\DoxyCodeLine{845     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}}       = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ae86be9e31792e8d4f635f4c1b5d1ed84}{IterDiagonalizer<\_F>::Shift\_t}};}
+\DoxyCodeLine{846 }
+\DoxyCodeLine{847     \mbox{\hyperlink{classChronusQ_1_1GPLHR_a97f28169c6ef7aa42a6c2d8a6034ec00}{GPLHR}}(}
+\DoxyCodeLine{848       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,}
+\DoxyCodeLine{849       \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{850       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N,}
+\DoxyCodeLine{851       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXITER,}
+\DoxyCodeLine{852       \textcolor{keywordtype}{double} conv,}
+\DoxyCodeLine{853       \textcolor{keywordtype}{size\_t} nR,}
+\DoxyCodeLine{854       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&linearTrans,}
+\DoxyCodeLine{855       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&preNoShift,}
+\DoxyCodeLine{856       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} \&vecGen = \mbox{\hyperlink{classChronusQ_1_1GPLHR_a63da240b368ba1e46d8a0cf477aae331}{VecsGen\_t}}(),}
+\DoxyCodeLine{857       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&shiftVec = \mbox{\hyperlink{classChronusQ_1_1GPLHR_a6536b5a5ebade3e1c33f85ce1ad170c2}{Shift\_t}}()) :}
+\DoxyCodeLine{858       \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer}{IterDiagonalizer}}<\_F>(c,mem,N,2 + \mbox{\hyperlink{classChronusQ_1_1GPLHR_a40838b6f5b881ba5392c0fcae14f93cc}{m}}*nR,1,MAXITER,conv,nR,nR,}
+\DoxyCodeLine{859                            linearTrans,preNoShift,vecGen,shiftVec)\{ \}}
+\DoxyCodeLine{860 }
+\DoxyCodeLine{861     \mbox{\hyperlink{classChronusQ_1_1GPLHR_a66aae2fb8091bfdaf4b2f586a8231976}{GPLHR}}(}
+\DoxyCodeLine{862       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,}
+\DoxyCodeLine{863       \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{864       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N,}
+\DoxyCodeLine{865       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXITER,}
+\DoxyCodeLine{866       \textcolor{keywordtype}{double} conv,}
+\DoxyCodeLine{867       \textcolor{keywordtype}{size\_t} nR,}
+\DoxyCodeLine{868       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&linearTrans,}
+\DoxyCodeLine{869       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&preShift,}
+\DoxyCodeLine{870       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} \&vecGen = \mbox{\hyperlink{classChronusQ_1_1GPLHR_a63da240b368ba1e46d8a0cf477aae331}{VecsGen\_t}}(),}
+\DoxyCodeLine{871       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&shiftVec = \mbox{\hyperlink{classChronusQ_1_1GPLHR_a6536b5a5ebade3e1c33f85ce1ad170c2}{Shift\_t}}()) :}
+\DoxyCodeLine{872       \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer}{IterDiagonalizer}}<\_F>(c,mem,N,2 + \mbox{\hyperlink{classChronusQ_1_1GPLHR_a40838b6f5b881ba5392c0fcae14f93cc}{m}}*nR,1,MAXITER,conv,nR,nR,}
+\DoxyCodeLine{873                            linearTrans,preShift,vecGen,shiftVec)\{ \}}
+\DoxyCodeLine{874 }
+\DoxyCodeLine{875     \mbox{\hyperlink{classChronusQ_1_1GPLHR_aa9383b03a4a5f42fa80994e4273ece3c}{\string~GPLHR}}() \{}
+\DoxyCodeLine{876 }
+\DoxyCodeLine{877       \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1GPLHR_a08a2ce7d42767c9578ccd98b843afab2}{RelRes}} ) this-\/>memManager\_.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1GPLHR_a08a2ce7d42767c9578ccd98b843afab2}{RelRes}});}
+\DoxyCodeLine{878 }
+\DoxyCodeLine{879     \}}
+\DoxyCodeLine{880 }
+\DoxyCodeLine{881     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GPLHR_a19e4f46f9d2a16fefc7768ca6b1a2b94}{setM}}(\textcolor{keywordtype}{size\_t} \_m) \{}
+\DoxyCodeLine{882 }
+\DoxyCodeLine{883       \mbox{\hyperlink{classChronusQ_1_1GPLHR_a40838b6f5b881ba5392c0fcae14f93cc}{m}} = \_m;}
+\DoxyCodeLine{884       this-\/>mSS\_ = (3 + \mbox{\hyperlink{classChronusQ_1_1GPLHR_a40838b6f5b881ba5392c0fcae14f93cc}{m}})*this-\/>nRoots\_;}
+\DoxyCodeLine{885 }
+\DoxyCodeLine{886     \}}
+\DoxyCodeLine{887 }
+\DoxyCodeLine{888     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GPLHR_a3619f4bcb9211490ed7466dc7614cb2f}{alloc}}() \{}
+\DoxyCodeLine{889 }
+\DoxyCodeLine{890       \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a020757b2bc65870125e941ce9310b327}{IterDiagonalizer<\_F>::alloc}}();}
+\DoxyCodeLine{891 }
+\DoxyCodeLine{892       \textcolor{comment}{// NO MPI}}
+\DoxyCodeLine{893       \textcolor{comment}{// ROOT\_ONLY(this-\/>comm\_);}}
+\DoxyCodeLine{894 }
+\DoxyCodeLine{895 }
+\DoxyCodeLine{896       \textcolor{comment}{// Allocate GPLHR specific Memory}}
+\DoxyCodeLine{897 }
+\DoxyCodeLine{898       this-\/>RelRes = this-\/>memManager\_.template malloc<double>(this-\/>nRoots\_);}
+\DoxyCodeLine{899 }
+\DoxyCodeLine{900     \}}
+\DoxyCodeLine{901 }
+\DoxyCodeLine{902     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1GPLHR_a5ec192cb9058ecf42cbe643e510a8f84}{runMicro}}();}
+\DoxyCodeLine{903 }
+\DoxyCodeLine{904     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GPLHR_ab82793dbe0112cb7f29400312727a00d}{restart}}();}
+\DoxyCodeLine{905 }
+\DoxyCodeLine{906     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GPLHR_a1720c02fe8aaa9ec2f965bddfa474548}{setGuess}}(\textcolor{keywordtype}{size\_t} nGuess,}
+\DoxyCodeLine{907         std::function<\textcolor{keywordtype}{void}(\textcolor{keywordtype}{size\_t}, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&, \textcolor{keywordtype}{size\_t})> func)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{908 }
+\DoxyCodeLine{909       \textcolor{keywordflow}{if}( nGuess != this-\/>nRoots\_ )}
+\DoxyCodeLine{910         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}GPLHR Requires nGuess = nRoots"{}},std::cout);}
+\DoxyCodeLine{911 }
+\DoxyCodeLine{912       \mbox{\hyperlink{classChronusQ_1_1GPLHR_a6ba868e60ea7ebc156312f5e2fddc018}{Guess}} = this-\/>\mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}}(nGuess);}
+\DoxyCodeLine{913 }
+\DoxyCodeLine{914       \textcolor{comment}{// NO MPI}}
+\DoxyCodeLine{915       \textcolor{comment}{// ROOT\_ONLY(this-\/>comm\_);}}
+\DoxyCodeLine{916 }
+\DoxyCodeLine{917       func(nGuess, *\mbox{\hyperlink{classChronusQ_1_1GPLHR_a6ba868e60ea7ebc156312f5e2fddc018}{Guess}}, this-\/>N\_);}
+\DoxyCodeLine{918 }
+\DoxyCodeLine{919     \}}
+\DoxyCodeLine{920 }
+\DoxyCodeLine{921   \}; \textcolor{comment}{// GPLHR}}
+\DoxyCodeLine{922 }
+\DoxyCodeLine{923 }
+\DoxyCodeLine{924 }
+\DoxyCodeLine{925 }
+\DoxyCodeLine{926 }
+\DoxyCodeLine{927   \textcolor{comment}{// Davidson}}
+\DoxyCodeLine{928   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{929   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1Davidson}{Davidson}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer}{IterDiagonalizer}}<\_F> \{}
+\DoxyCodeLine{930 }
+\DoxyCodeLine{931     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1Davidson_adf9d992d35d8c689ae275b33031144cf}{DoLeftEigVec}}   = \textcolor{keyword}{false};}
+\DoxyCodeLine{932     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1Davidson_ac8626cb2215136e5deeedc5e78fd0483}{sortByDistance}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{933     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1Davidson_ab095b2c1319ecd70eeb8fffd130b4775}{GramSchmidt\_NRe}} = 1;}
+\DoxyCodeLine{934     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1Davidson_ab6425ced30e09ebff0b886c3b471a5d0}{GramSchmidt\_eps}} = 1e-\/12;}
+\DoxyCodeLine{935 }
+\DoxyCodeLine{936     \textcolor{comment}{// Energy specific options}}
+\DoxyCodeLine{937     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1Davidson_aeeba90f2c99c88145312c4247ab75b8b}{EnergySpecific}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{938     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1Davidson_a8166ba4cc20248d1925311d91b1f79a4}{nHighERoots}}  = 0;}
+\DoxyCodeLine{939     \textcolor{keywordtype}{size\_t}  \mbox{\hyperlink{classChronusQ_1_1Davidson_a886940283e167878e0c7cf11162734a3}{nLowERoots}}  = 0;}
+\DoxyCodeLine{940     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1Davidson_a9765b7ce95f5020a642e5aea364a1fd9}{EnergyRef}}    = 0.;}
+\DoxyCodeLine{941     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1Davidson_acf85fcb7aade46d18603ccf1df199d82}{adaptiveERef}}   = \textcolor{keyword}{false}; \textcolor{comment}{// use loweset eigenvalues at current iteration}}
+\DoxyCodeLine{942 }
+\DoxyCodeLine{943     \textcolor{keywordtype}{double}   *\mbox{\hyperlink{classChronusQ_1_1Davidson_a55753ce0720db879a04d327d66349a72}{RelRes}}  = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{944     std::shared\_ptr<SolverVectors<\_F>> \mbox{\hyperlink{classChronusQ_1_1Davidson_a13eaf9f9a685696696f8aceb642637b4}{Guess}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{945     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} *\mbox{\hyperlink{classChronusQ_1_1Davidson_af03021cf7402da595c879c0769c3c57f}{EigForT}} = \textcolor{keyword}{nullptr}; \textcolor{comment}{// Eigenvalues can be used for preconditioner}}
+\DoxyCodeLine{946 }
+\DoxyCodeLine{947     \textcolor{comment}{// creating double(dcomplex) operator to accomodate the}}
+\DoxyCodeLine{948     \textcolor{comment}{// complex eigenvalue to real arithmetric}}
+\DoxyCodeLine{949     \_F \mbox{\hyperlink{classChronusQ_1_1Davidson_ac1c4a67f3241017b6f77cb1a9950d802}{dcomplexTo\_F}}(\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} \&a) \{ \textcolor{keywordflow}{return} * \textcolor{keyword}{reinterpret\_cast<}\_F*\textcolor{keyword}{>}(\&a);\}}
+\DoxyCodeLine{950 }
+\DoxyCodeLine{951   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{952 }
+\DoxyCodeLine{953   \textcolor{keyword}{public}:}
+\DoxyCodeLine{954 }
+\DoxyCodeLine{955     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1Davidson_a096af63666888bc17ecfc489b1683c94}{m}} = 50;}
+\DoxyCodeLine{956     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1Davidson_a9081b617c40b2a42aad1d7a6953c9081}{whenSc}} = 2;}
+\DoxyCodeLine{957     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1Davidson_a52d615b43bacb9f37b73933a430f27e4}{kG}} = 3;}
+\DoxyCodeLine{958 }
+\DoxyCodeLine{959     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{IterSolver<\_F>::VecsGen\_t}};}
+\DoxyCodeLine{960     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ab7586fef05543121a62a1616596cf498}{IterDiagonalizer<\_F>::LinearTrans\_t}};}
+\DoxyCodeLine{961     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}}       = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_ae86be9e31792e8d4f635f4c1b5d1ed84}{IterDiagonalizer<\_F>::Shift\_t}};}
+\DoxyCodeLine{962 }
+\DoxyCodeLine{963     \mbox{\hyperlink{classChronusQ_1_1Davidson_a589fde2d6c001cbb9fe37dd9491bc751}{Davidson}}(}
+\DoxyCodeLine{964       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,}
+\DoxyCodeLine{965       \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{966       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N,}
+\DoxyCodeLine{967       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXMACROITER,}
+\DoxyCodeLine{968       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MAXMICROITER,}
+\DoxyCodeLine{969       \textcolor{keywordtype}{double} conv,}
+\DoxyCodeLine{970       \textcolor{keywordtype}{size\_t} nR,}
+\DoxyCodeLine{971       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&linearTrans,}
+\DoxyCodeLine{972       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&preNoShift,}
+\DoxyCodeLine{973       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} \&vecGen = \mbox{\hyperlink{classChronusQ_1_1Davidson_ae3272bcff7e82c7cb9d58db48e7ec11b}{VecsGen\_t}}(),}
+\DoxyCodeLine{974       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&shiftVec = \mbox{\hyperlink{classChronusQ_1_1Davidson_a5aa40fcf2e1878b064caf46e239efc19}{Shift\_t}}()):}
+\DoxyCodeLine{975       \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer}{IterDiagonalizer}}<\_F>(c,mem,N,\mbox{\hyperlink{classChronusQ_1_1Davidson_a096af63666888bc17ecfc489b1683c94}{m}}*nR,MAXMACROITER,MAXMICROITER,conv,nR,nR*\mbox{\hyperlink{classChronusQ_1_1Davidson_a52d615b43bacb9f37b73933a430f27e4}{kG}},}
+\DoxyCodeLine{976                            linearTrans,preNoShift,vecGen,shiftVec)\{ \}}
+\DoxyCodeLine{977 }
+\DoxyCodeLine{978     \mbox{\hyperlink{classChronusQ_1_1Davidson_ad3366250b681693e29a7287b352d9e59}{\string~Davidson}}() \{}
+\DoxyCodeLine{979 }
+\DoxyCodeLine{980       \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1Davidson_a55753ce0720db879a04d327d66349a72}{RelRes}}  ) this-\/>memManager\_.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1Davidson_a55753ce0720db879a04d327d66349a72}{RelRes}});}
+\DoxyCodeLine{981 }
+\DoxyCodeLine{982     \}}
+\DoxyCodeLine{983 }
+\DoxyCodeLine{984     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Davidson_ad5f0acc27bfc915f9f6a2730b984d7a7}{setM}}(\textcolor{keywordtype}{size\_t} \_m) \{}
+\DoxyCodeLine{985       \mbox{\hyperlink{classChronusQ_1_1Davidson_a096af63666888bc17ecfc489b1683c94}{m}} = \_m;}
+\DoxyCodeLine{986       this-\/>mSS\_ = \mbox{\hyperlink{classChronusQ_1_1Davidson_a096af63666888bc17ecfc489b1683c94}{m}}*this-\/>\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_af79eb6150018bfecae594f14f5fc8a85}{nRoots\_}};}
+\DoxyCodeLine{987     \}}
+\DoxyCodeLine{988 }
+\DoxyCodeLine{989     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Davidson_a99726a3c35b5d5df18c945dfe8ff0eb3}{setkG}}(\textcolor{keywordtype}{size\_t} \_kG) \{}
+\DoxyCodeLine{990       \mbox{\hyperlink{classChronusQ_1_1Davidson_a52d615b43bacb9f37b73933a430f27e4}{kG}} = \_kG;}
+\DoxyCodeLine{991       this-\/>nGuess\_ = \mbox{\hyperlink{classChronusQ_1_1Davidson_a52d615b43bacb9f37b73933a430f27e4}{kG}}*this-\/>\mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_af79eb6150018bfecae594f14f5fc8a85}{nRoots\_}};}
+\DoxyCodeLine{992     \}}
+\DoxyCodeLine{993 }
+\DoxyCodeLine{994     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Davidson_a780552fc2810d82d7d290e521f0a7a55}{setWhenSc}}(\textcolor{keywordtype}{size\_t} \_WhenSc) \{ \mbox{\hyperlink{classChronusQ_1_1Davidson_a9081b617c40b2a42aad1d7a6953c9081}{whenSc}} = \_WhenSc;\}}
+\DoxyCodeLine{995 }
+\DoxyCodeLine{996     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Davidson_af37386785db7cc51517fa67f37c1da19}{setGramSchmidtRepeat}}(\textcolor{keywordtype}{size\_t} nRe) \{ \mbox{\hyperlink{classChronusQ_1_1Davidson_ab095b2c1319ecd70eeb8fffd130b4775}{GramSchmidt\_NRe}} = nRe;\}}
+\DoxyCodeLine{997 }
+\DoxyCodeLine{998     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Davidson_a76a1777cfced151bb5efa69bdb036894}{setGramSchmidtEps}}(\textcolor{keywordtype}{double} eps) \{ \mbox{\hyperlink{classChronusQ_1_1Davidson_ab6425ced30e09ebff0b886c3b471a5d0}{GramSchmidt\_eps}} = eps;\}}
+\DoxyCodeLine{999 }
+\DoxyCodeLine{1000     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Davidson_a2576cf8df8ffb018572a097937f5ac7f}{setEigForT}}(\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} * \_Eig) \{}
+\DoxyCodeLine{1001 }
+\DoxyCodeLine{1002       \textcolor{keywordflow}{if}( this-\/>memManager\_.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a38789366b9f173a0e0442002f51263a9}{getSize}}(\_Eig) < this-\/>nGuess\_ )}
+\DoxyCodeLine{1003         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Davison EigForT requires a memory block with size at least nGuess "{}},std::cout);}
+\DoxyCodeLine{1004 }
+\DoxyCodeLine{1005       \mbox{\hyperlink{classChronusQ_1_1Davidson_af03021cf7402da595c879c0769c3c57f}{EigForT}} = \_Eig;}
+\DoxyCodeLine{1006     \}}
+\DoxyCodeLine{1007 }
+\DoxyCodeLine{1008     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Davidson_ac7ef63d63fcfcd153852cab542f1b3c0}{alloc}}() \{}
+\DoxyCodeLine{1009 }
+\DoxyCodeLine{1010       \mbox{\hyperlink{classChronusQ_1_1IterDiagonalizer_a020757b2bc65870125e941ce9310b327}{IterDiagonalizer<\_F>::alloc}}();}
+\DoxyCodeLine{1011 }
+\DoxyCodeLine{1012       \textcolor{comment}{// NO MPI}}
+\DoxyCodeLine{1013       \textcolor{comment}{// ROOT\_ONLY(this-\/>comm\_);}}
+\DoxyCodeLine{1014 }
+\DoxyCodeLine{1015       \textcolor{comment}{// Allocate Davidson specific Memory}}
+\DoxyCodeLine{1016       this-\/>RelRes  = this-\/>memManager\_.template malloc<double>(this-\/>nGuess\_);}
+\DoxyCodeLine{1017     \}}
+\DoxyCodeLine{1018 }
+\DoxyCodeLine{1019     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1Davidson_a024e3122197eebc0a3819c980468c424}{runMicro}}();}
+\DoxyCodeLine{1020 }
+\DoxyCodeLine{1021     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Davidson_a609f85c9ea755b4f01ae8c29faccdd7d}{restart}}();}
+\DoxyCodeLine{1022 }
+\DoxyCodeLine{1023     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Davidson_ab825057e35efe5c506491c73939dcce3}{useEnergySpecific}}(\textcolor{keywordtype}{size\_t} nHER, \textcolor{keywordtype}{double} energyThd, \textcolor{keywordtype}{double} ERef) \{}
+\DoxyCodeLine{1024       assert (this-\/>nRoots\_ >= nHER);}
+\DoxyCodeLine{1025 \textcolor{comment}{//      assert (energyThd > 0);}}
+\DoxyCodeLine{1026 }
+\DoxyCodeLine{1027       this-\/>EnergySpecific = \textcolor{keyword}{true};}
+\DoxyCodeLine{1028       this-\/>nHighERoots    = nHER;}
+\DoxyCodeLine{1029       this-\/>nLowERoots     = this-\/>nRoots\_ -\/ nHER;}
+\DoxyCodeLine{1030       this-\/>EnergyRef      = ERef;}
+\DoxyCodeLine{1031     \}}
+\DoxyCodeLine{1032 }
+\DoxyCodeLine{1033     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Davidson_aecde7fe7e4011a988753826bb4f3f9e5}{useEnergySpecific}}(\textcolor{keywordtype}{size\_t} nHER, \textcolor{keywordtype}{double} energyThd) \{}
+\DoxyCodeLine{1034       this-\/>adaptiveERef = \textcolor{keyword}{true};}
+\DoxyCodeLine{1035       this-\/>\mbox{\hyperlink{classChronusQ_1_1Davidson_ab825057e35efe5c506491c73939dcce3}{useEnergySpecific}}(nHER, energyThd, 0.);}
+\DoxyCodeLine{1036     \}}
+\DoxyCodeLine{1037 }
+\DoxyCodeLine{1038     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Davidson_a7fdee4f7f18494a99651b80b21147d8c}{doLeftEigenvector}}() \{this-\/>DoLeftEigVec = \textcolor{keyword}{true}; \}}
+\DoxyCodeLine{1039 }
+\DoxyCodeLine{1040     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Davidson_a641a2534d48c14ea1bcf0f63164a5bc8}{setSortByDistance}}()\{}
+\DoxyCodeLine{1041       this-\/>sortByDistance = \textcolor{keyword}{true};}
+\DoxyCodeLine{1042     \}}
+\DoxyCodeLine{1043 }
+\DoxyCodeLine{1044     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Davidson_a7032d3164782f8cc0ff21ac226f9f0da}{setGuess}}(\textcolor{keywordtype}{size\_t} nGuess,}
+\DoxyCodeLine{1045         std::function<\textcolor{keywordtype}{void}(\textcolor{keywordtype}{size\_t}, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}} \&, \textcolor{keywordtype}{size\_t})> func)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{1046 }
+\DoxyCodeLine{1047       \textcolor{keywordflow}{if}( nGuess != this-\/>nGuess\_ )}
+\DoxyCodeLine{1048         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Davison Requires nGuess = nGuess\_"{}},std::cout);}
+\DoxyCodeLine{1049 }
+\DoxyCodeLine{1050       \mbox{\hyperlink{classChronusQ_1_1Davidson_a13eaf9f9a685696696f8aceb642637b4}{Guess}} = this-\/>\mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}}(nGuess);}
+\DoxyCodeLine{1051 }
+\DoxyCodeLine{1052       \textcolor{comment}{// NO MPI}}
+\DoxyCodeLine{1053       \textcolor{comment}{// ROOT\_ONLY(this-\/>comm\_);}}
+\DoxyCodeLine{1054 }
+\DoxyCodeLine{1055       func(nGuess, *\mbox{\hyperlink{classChronusQ_1_1Davidson_a13eaf9f9a685696696f8aceb642637b4}{Guess}}, this-\/>N\_);}
+\DoxyCodeLine{1056 }
+\DoxyCodeLine{1057     \}}
+\DoxyCodeLine{1058 }
+\DoxyCodeLine{1059 }
+\DoxyCodeLine{1060   \}; \textcolor{comment}{// Davidson}}
+\DoxyCodeLine{1061 }
+\DoxyCodeLine{1062 }
+\DoxyCodeLine{1063   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{1064   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1GMRES}{GMRES}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver}{IterLinearSolver}}<\_F> \{}
+\DoxyCodeLine{1065 }
+\DoxyCodeLine{1066 }
+\DoxyCodeLine{1067     std::shared\_ptr<SolverVectors<\_F>> \mbox{\hyperlink{classChronusQ_1_1GMRES_a376edf6c56efb4c2408a483392f9f24b}{HHR\_}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1068     std::shared\_ptr<SolverVectors<\_F>> \mbox{\hyperlink{classChronusQ_1_1GMRES_a1caf050aaf13c6e005552ab5c817596d}{U\_}}   = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1069     \_F * \mbox{\hyperlink{classChronusQ_1_1GMRES_ac343ec0580e673233185fb27134bb02e}{W\_}}   = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1070     \_F * \mbox{\hyperlink{classChronusQ_1_1GMRES_a463e0a1aa0b24c1b42cac074121ff4a8}{J\_}}   = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1071     \_F * \mbox{\hyperlink{classChronusQ_1_1GMRES_a9f06478d540ed5d1245c380e6eb6187f}{R\_}}   = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{1072 }
+\DoxyCodeLine{1073   \textcolor{keyword}{public}:}
+\DoxyCodeLine{1074 }
+\DoxyCodeLine{1075     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{IterSolver<\_F>::VecsGen\_t}};}
+\DoxyCodeLine{1076     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a045a7e874c633bff5fb980c50d186ffb}{IterLinearSolver<\_F>::LinearTrans\_t}};}
+\DoxyCodeLine{1077     \textcolor{keyword}{using }\mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}}       = \textcolor{keyword}{typename} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a46d55ee1b30f239fd34954ff03b30c50}{IterLinearSolver<\_F>::Shift\_t}};}
+\DoxyCodeLine{1078 }
+\DoxyCodeLine{1079 }
+\DoxyCodeLine{1080     \mbox{\hyperlink{classChronusQ_1_1GMRES_a32d2cadfc56782f13d34307576b33b2d}{GMRES}}(}
+\DoxyCodeLine{1081       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,}
+\DoxyCodeLine{1082       \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{1083       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N,}
+\DoxyCodeLine{1084       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MSS,}
+\DoxyCodeLine{1085       \textcolor{keywordtype}{double} conv,}
+\DoxyCodeLine{1086       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&linearTrans,}
+\DoxyCodeLine{1087       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&preNoShift,}
+\DoxyCodeLine{1088       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} \&vecGen = \mbox{\hyperlink{classChronusQ_1_1GMRES_aa8c0522877bbd3c19e358dcbd4887a0d}{VecsGen\_t}}(),}
+\DoxyCodeLine{1089       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&shiftVec = \mbox{\hyperlink{classChronusQ_1_1GMRES_a191de074c525bcca6dcc8c9bb9c84f3c}{Shift\_t}}()) :}
+\DoxyCodeLine{1090      \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver}{IterLinearSolver}}<\_F>(c,mem,N,MSS,1,MSS,conv,linearTrans,preNoShift,}
+\DoxyCodeLine{1091                           vecGen,shiftVec)\{ \}}
+\DoxyCodeLine{1092 }
+\DoxyCodeLine{1093     \mbox{\hyperlink{classChronusQ_1_1GMRES_a225575f0caf93b88a20f1f16014a3b0f}{GMRES}}(}
+\DoxyCodeLine{1094       \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c,}
+\DoxyCodeLine{1095       \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem,}
+\DoxyCodeLine{1096       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N,}
+\DoxyCodeLine{1097       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} MSS,}
+\DoxyCodeLine{1098       \textcolor{keywordtype}{double} conv,}
+\DoxyCodeLine{1099       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a68bb3b2e31bc6a583f314c647ba632da}{LinearTrans\_t}} \&linearTrans,}
+\DoxyCodeLine{1100       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&preShift,}
+\DoxyCodeLine{1101       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a9d9496bb7c5947b27bed93dfb96ed2ec}{VecsGen\_t}} \&vecGen = \mbox{\hyperlink{classChronusQ_1_1GMRES_aa8c0522877bbd3c19e358dcbd4887a0d}{VecsGen\_t}}(),}
+\DoxyCodeLine{1102       \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1IterSolver_a2462a6696b116be0cd44857c620d7456}{Shift\_t}} \&shiftVec = \mbox{\hyperlink{classChronusQ_1_1GMRES_a191de074c525bcca6dcc8c9bb9c84f3c}{Shift\_t}}()) :}
+\DoxyCodeLine{1103      \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver}{IterLinearSolver}}<\_F>(c,mem,N,MSS,1,MSS,conv,linearTrans,preShift,}
+\DoxyCodeLine{1104                           vecGen,shiftVec)\{ \}}
+\DoxyCodeLine{1105 }
+\DoxyCodeLine{1106 }
+\DoxyCodeLine{1107     \mbox{\hyperlink{classChronusQ_1_1GMRES_acaa8abadf56d900d0f2834351df9b325}{\string~GMRES}}() \{}
+\DoxyCodeLine{1108 }
+\DoxyCodeLine{1109       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1GMRES_ac343ec0580e673233185fb27134bb02e}{W\_}}  )  this-\/>memManager\_.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1GMRES_ac343ec0580e673233185fb27134bb02e}{W\_}});}
+\DoxyCodeLine{1110       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1GMRES_a463e0a1aa0b24c1b42cac074121ff4a8}{J\_}}  )  this-\/>memManager\_.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1GMRES_a463e0a1aa0b24c1b42cac074121ff4a8}{J\_}});}
+\DoxyCodeLine{1111       \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1GMRES_a9f06478d540ed5d1245c380e6eb6187f}{R\_}}  )  this-\/>memManager\_.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1GMRES_a9f06478d540ed5d1245c380e6eb6187f}{R\_}});}
+\DoxyCodeLine{1112 }
+\DoxyCodeLine{1113     \}}
+\DoxyCodeLine{1114 }
+\DoxyCodeLine{1115 }
+\DoxyCodeLine{1116     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GMRES_a119de3e829ee24ece44f191b97c361f9}{alloc}}() \{}
+\DoxyCodeLine{1117 }
+\DoxyCodeLine{1118       \textcolor{comment}{// Standard linear solver allocations}}
+\DoxyCodeLine{1119       \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a2bbe98f4170bdde8f31caaf66d577c0f}{IterLinearSolver<\_F>::alloc}}();}
+\DoxyCodeLine{1120 }
+\DoxyCodeLine{1121       \textcolor{keywordtype}{size\_t} nBatch = this-\/>rhsBS * this-\/>\mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_abb93e7f00502ae50a58bb5ec63d2f113}{shiftBS}};}
+\DoxyCodeLine{1122       \textcolor{keywordtype}{size\_t} MSSnBatch = this-\/>mSS\_ * nBatch;}
+\DoxyCodeLine{1123 }
+\DoxyCodeLine{1124       \mbox{\hyperlink{classChronusQ_1_1GMRES_a376edf6c56efb4c2408a483392f9f24b}{HHR\_}} = this-\/>\mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}}(nBatch);}
+\DoxyCodeLine{1125       \mbox{\hyperlink{classChronusQ_1_1GMRES_a1caf050aaf13c6e005552ab5c817596d}{U\_}}   = this-\/>\mbox{\hyperlink{classChronusQ_1_1IterSolver_acba977a35d4c6d76eb762362cb05bcf3}{vecGen\_}}(MSSnBatch);}
+\DoxyCodeLine{1126 }
+\DoxyCodeLine{1127       \textcolor{comment}{// No MPI for GMRES}}
+\DoxyCodeLine{1128       \textcolor{comment}{// ROOT\_ONLY(this-\/>comm\_);}}
+\DoxyCodeLine{1129 }
+\DoxyCodeLine{1130       \mbox{\hyperlink{classChronusQ_1_1GMRES_a463e0a1aa0b24c1b42cac074121ff4a8}{J\_}}   = this-\/>memManager\_.template malloc<\_F>(2 * MSSnBatch);}
+\DoxyCodeLine{1131       \mbox{\hyperlink{classChronusQ_1_1GMRES_a9f06478d540ed5d1245c380e6eb6187f}{R\_}}   = this-\/>memManager\_.template malloc<\_F>(MSSnBatch * this-\/>mSS\_);}
+\DoxyCodeLine{1132       \mbox{\hyperlink{classChronusQ_1_1GMRES_ac343ec0580e673233185fb27134bb02e}{W\_}}   = this-\/>memManager\_.template malloc<\_F>(MSSnBatch + nBatch);}
+\DoxyCodeLine{1133 }
+\DoxyCodeLine{1134     \}}
+\DoxyCodeLine{1135 }
+\DoxyCodeLine{1136     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GMRES_a55bf99d97e6e37034f9dc85d0cfec47d}{runBatch}}(\textcolor{keywordtype}{size\_t} nRHS, \textcolor{keywordtype}{size\_t} nShift,}
+\DoxyCodeLine{1137                   std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}}> RHS, \_F *shifts,}
+\DoxyCodeLine{1138                   std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}}> SOL, \textcolor{keywordtype}{double} *RHSNorm );}
+\DoxyCodeLine{1139 }
+\DoxyCodeLine{1140   \};}
+\DoxyCodeLine{1141 }
+\DoxyCodeLine{1142   }
+\DoxyCodeLine{1143 }
+\DoxyCodeLine{1144 \};}
+\DoxyCodeLine{1145 }
+
+\end{DoxyCode}

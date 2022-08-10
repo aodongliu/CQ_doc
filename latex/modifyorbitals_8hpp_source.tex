@@ -1,0 +1,149 @@
+\hypertarget{modifyorbitals_8hpp_source}{}\doxysection{modifyorbitals.\+hpp}
+\label{modifyorbitals_8hpp_source}\index{include/modifyorbitals.hpp@{include/modifyorbitals.hpp}}
+\mbox{\hyperlink{modifyorbitals_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{comment}{/*}}
+\DoxyCodeLine{27 \textcolor{comment}{ *     Brief: This header defines the inteface between ModifyOrbitals Objects and}}
+\DoxyCodeLine{28 \textcolor{comment}{ *            the objects that call them. The objects inherit the SCFInterface}}
+\DoxyCodeLine{29 \textcolor{comment}{ *            base class}}
+\DoxyCodeLine{30 \textcolor{comment}{ *}}
+\DoxyCodeLine{31 \textcolor{comment}{ */}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35   \textcolor{comment}{// Assign input types to alias for ease of use}}
+\DoxyCodeLine{36 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{37 \textcolor{keyword}{using }\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef}} = std::vector<std::reference\_wrapper<SquareMatrix<MatsT>>>;}
+\DoxyCodeLine{38 \textcolor{keyword}{using }\mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}}  = std::vector<double*>;}
+\DoxyCodeLine{39 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{40 \textcolor{keyword}{using }\mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat}} = std::vector<std::shared\_ptr<SquareMatrix<MatsT>>>;}
+\DoxyCodeLine{41 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{42 \textcolor{keyword}{using }\mbox{\hyperlink{namespaceChronusQ_a71ad93b60c8da083001c53826c18cbdc}{VecShrdPtrOrtho}} = std::vector<std::shared\_ptr<Orthogonalization<MatsT>>>;}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{comment}{/*}}
+\DoxyCodeLine{45 \textcolor{comment}{ *   These are the functions that should be defined in order to use the}}
+\DoxyCodeLine{46 \textcolor{comment}{ *   modifyOrbitals objects.}}
+\DoxyCodeLine{47 \textcolor{comment}{ *}}
+\DoxyCodeLine{48 \textcolor{comment}{ *}}
+\DoxyCodeLine{49 \textcolor{comment}{ */}}
+\DoxyCodeLine{50 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{51 \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{ModifyOrbitalsOptions}} \{}
+\DoxyCodeLine{52     \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{53     \textcolor{comment}{// I/O  FUNCTIONS}}
+\DoxyCodeLine{54     std::function<void()> \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_ada392bdf25eda6d3512e67b6ecbcd018}{printProperties}};    }
+\DoxyCodeLine{55     std::function<void()> \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a57a17d03f0b7f0e5c3fd2de8cf3d5a02}{saveCurrentState}};   }
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{60     \textcolor{comment}{// NECESSARY COMPUTATION FUNCTIONS}}
+\DoxyCodeLine{61     std::function<void(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&)> \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_ac301fd7011583db76139935398290a0f}{formFock}};            }
+\DoxyCodeLine{62     std::function<void(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&)> \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_abb20608f85f436a74c7da7ca347447e5}{computeProperties}};   }
+\DoxyCodeLine{63     std::function<void()> \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a3f10e90c5dc9e7d61191331df3982aa2}{formDensity}};                        }
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{68     \textcolor{comment}{// GETTER FUNCTIONS}}
+\DoxyCodeLine{69     std::function<double()> \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a91bccfe42853cd14c08e29493d068d3c}{getTotalEnergy}};   }
+\DoxyCodeLine{70     std::function<VecShrdPtrMat<MatsT>()>}
+\DoxyCodeLine{71         \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a8814e73a7408fc22e0708d1c2c14d3f5}{getFock}};   }
+\DoxyCodeLine{72     std::function<VecShrdPtrMat<MatsT>()>}
+\DoxyCodeLine{73         \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a65cade7a3ea16a0db76b413a60df68ee}{getOnePDM}};   }
+\DoxyCodeLine{74     std::function<VecShrdPtrOrtho<MatsT>()>}
+\DoxyCodeLine{75         \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a6a960dc0c5219558ad1f0eb110f813ce}{getOrtho}};   }
+\DoxyCodeLine{76     \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{79     \textcolor{comment}{// OPTIONAL FUNCTIONS}}
+\DoxyCodeLine{80     \textcolor{comment}{// User defined Functions to overload default gradient functions in the algorithms}}
+\DoxyCodeLine{81     \textcolor{comment}{// if you want to use your own functions then bind a function to these, otherwise the}}
+\DoxyCodeLine{82     \textcolor{comment}{// code will use the default.}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     std::function<void(MatsT*)> \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a9d03f460479af8c27f93740658d92131}{computeFullNRStep}};   }
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     std::function<void(MatsT*)> \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_ad215ed88621a190e26d8e10b2f811ba2}{computeNROrbGrad}};   }
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90     std::function<void(std::vector<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}>\&)> \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a995b112e8cc401b2c1903d9b276ba5fd}{computeErrorVector}};   }
+\DoxyCodeLine{92     \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{93 \};}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95 \textcolor{comment}{/*}}
+\DoxyCodeLine{96 \textcolor{comment}{ *   Brief: Abstract Base class for the modifyOrbitals object. This allows}}
+\DoxyCodeLine{97 \textcolor{comment}{ *          us to abstract the algorithms that modify the orbitals into one}}
+\DoxyCodeLine{98 \textcolor{comment}{ *          interface. This is the interface that the object that owns ModifyOrbitals}}
+\DoxyCodeLine{99 \textcolor{comment}{ *          runs the ModifyOrbitals algorithms.}}
+\DoxyCodeLine{100 \textcolor{comment}{ */}}
+\DoxyCodeLine{101 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{102 \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals}{ModifyOrbitals}} \{}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{105     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}};   }
+\DoxyCodeLine{106     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a3e3f5db2db8211af00ab2491e32caa11}{memManager}};}
+\DoxyCodeLine{107     \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{ModifyOrbitalsOptions<MatsT>}} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}};   }
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109   \textcolor{keyword}{public}:}
+\DoxyCodeLine{110     \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_ac2b89aa8604c4b741dc0f97540ad8418}{ModifyOrbitals}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{111     \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a7f438a793826b80d0a7b7dc2f8875bf7}{ModifyOrbitals}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{ModifyOrbitalsOptions<MatsT>}} m, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& mem): \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}}(c), \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}}(m), \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a3e3f5db2db8211af00ab2491e32caa11}{memManager}}(mem) \{}
+\DoxyCodeLine{112         \textcolor{comment}{// Check that Essential functions are bound}}
+\DoxyCodeLine{113         \textcolor{keywordflow}{if}( not \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}}.printProperties ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}printProperties was not bound in ModifyOrbitalOptions"{}});}
+\DoxyCodeLine{114         \textcolor{keywordflow}{if}( not \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}}.saveCurrentState ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}saveCurrentState was not bound in ModifyOrbitalOptions"{}});}
+\DoxyCodeLine{115         \textcolor{keywordflow}{if}( not \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}}.formFock ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}formFock was not bound in ModifyOrbitalOptions"{}});}
+\DoxyCodeLine{116         \textcolor{keywordflow}{if}( not \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}}.formDensity ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}formDensity was not bound in ModifyOrbitalOptions"{}});}
+\DoxyCodeLine{117         \textcolor{keywordflow}{if}( not \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}}.computeProperties ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}computeProperties was not bound in ModifyOrbitalOptions"{}});}
+\DoxyCodeLine{118         \textcolor{keywordflow}{if}( not \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}}.getTotalEnergy ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}getTotalEnergy was not bound in ModifyOrbitalOptions"{}});}
+\DoxyCodeLine{119         \textcolor{keywordflow}{if}( not \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}}.getFock ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}getFock was not bound in ModifyOrbitalOptions"{}});}
+\DoxyCodeLine{120         \textcolor{keywordflow}{if}( not \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}}.getOnePDM ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}getOnePDM was not bound in ModifyOrbitalOptions"{}});}
+\DoxyCodeLine{121         \textcolor{keywordflow}{if}( not \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}}.getOrtho ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}getOrtho was not bound in ModifyOrbitalOptions"{}});}
+\DoxyCodeLine{122     \};}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124     \textcolor{comment}{// Getter/Setter functions for options struct}}
+\DoxyCodeLine{125     \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{ModifyOrbitalsOptions<MatsT>}} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a89d36dc0c06c2b330c475b33a37335ed}{getModOpt}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}}; \};}
+\DoxyCodeLine{126     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a67030fe91da5926f552dfe2c3aaff1ee}{setModOpt}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{ModifyOrbitalsOptions<MatsT>}}\& mod) \{ \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_adeb8c627dd6131558cc892e292c3de65}{modOrbOpt}} = mod; \};}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128     \textcolor{comment}{// runModifyOrbitals is the driver function that performs}}
+\DoxyCodeLine{129     \textcolor{comment}{// the whole optimization/simulation}}
+\DoxyCodeLine{130     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_acdadde547e4c91530cf1ac2206995312}{runModifyOrbitals}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert, \mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\&, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}}\&) = 0;}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132     \textcolor{comment}{// getNewOrbitals performs only a single step in the}}
+\DoxyCodeLine{133     \textcolor{comment}{// optimization/simulation}}
+\DoxyCodeLine{134     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4839e2ba3f88b13f1ebcbf10aa1f2438}{getNewOrbitals}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert, \mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{VecMORef<MatsT>}}\&, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{VecEPtr}}\&) = 0;}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     \textcolor{comment}{// Printing functions}}
+\DoxyCodeLine{137     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a04a078bad24116b35f46876a911e0a74}{printRunHeader}}(std::ostream\& out, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&) \textcolor{keyword}{const}                   = 0;}
+\DoxyCodeLine{138     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a48b5c9b86b90023cfb38315ab76fc2e6}{printIteration}}(std::ostream\& out = std::cout, \textcolor{keywordtype}{bool} printDiff = \textcolor{keyword}{true}) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{139 \};}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 \};   \textcolor{comment}{// Namespace ChronusQ}}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{optOrbitals_8hpp}{modifyorbitals/optOrbitals.hpp}}>}}
+\DoxyCodeLine{144 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{conventionalSCF_8hpp}{modifyorbitals/conventionalSCF.hpp}}>}}
+\DoxyCodeLine{145 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{newtonRaphsonSCF_8hpp}{modifyorbitals/newtonRaphsonSCF.hpp}}>}}
+\DoxyCodeLine{146 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{skipSCF_8hpp}{modifyorbitals/skipSCF.hpp}}>}}
+
+\end{DoxyCode}

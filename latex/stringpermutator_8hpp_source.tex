@@ -1,0 +1,112 @@
+\hypertarget{stringpermutator_8hpp_source}{}\doxysection{stringpermutator.\+hpp}
+\label{stringpermutator_8hpp_source}\index{include/detstringmanager/stringpermutator.hpp@{include/detstringmanager/stringpermutator.hpp}}
+\mbox{\hyperlink{stringpermutator_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{memmanager_8hpp}{memmanager.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{math_8hpp}{util/math.hpp}}>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{32   }
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34   \textcolor{comment}{/* }}
+\DoxyCodeLine{35 \textcolor{comment}{   * Brief class to generate all permutation of strings}}
+\DoxyCodeLine{36 \textcolor{comment}{   * with n permuted bits within m total bits}}
+\DoxyCodeLine{37 \textcolor{comment}{   */} }
+\DoxyCodeLine{38   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1StringPermutator}{StringPermutator}} \{}
+\DoxyCodeLine{39   }
+\DoxyCodeLine{40     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a51650b5766ae552a66bd2a232a8ad9e7}{m\_}};      \textcolor{comment}{// number of total bits}}
+\DoxyCodeLine{41     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_af02d0e4ad00dd859b6d032cc9d918156}{n\_}};      \textcolor{comment}{// number of occupied bits  }}
+\DoxyCodeLine{42     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_ab301f9c32dd3b01ebf4468e21f6e4a0a}{nStr\_}};   \textcolor{comment}{// number of string in total}}
+\DoxyCodeLine{43     std::vector<size\_t> \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a523639872ba23bfe51a51e222d2b7ddf}{pos\_}}; \textcolor{comment}{// permuted bits locations}}
+\DoxyCodeLine{44     }
+\DoxyCodeLine{45     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_ae686da6b492bd572fd2e0807c8b84d38}{str\_index\_}};  \textcolor{comment}{// starting from 0}}
+\DoxyCodeLine{46     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_aa9e890f6fb7de3ff4debf341de6d230f}{cur\_ptr\_}};}
+\DoxyCodeLine{47   }
+\DoxyCodeLine{48   \textcolor{keyword}{public}:}
+\DoxyCodeLine{49     }
+\DoxyCodeLine{50     \textcolor{comment}{// disable default constructors}}
+\DoxyCodeLine{51     \mbox{\hyperlink{classChronusQ_1_1StringPermutator_ab5fe3173ab893db998fd19aa75dd3949}{StringPermutator}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{52     \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a6b50f6297f80e8628dbc7ddd473afbde}{StringPermutator}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1StringPermutator}{StringPermutator}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{53     \mbox{\hyperlink{classChronusQ_1_1StringPermutator_ab49776761be7a1c4391eb15329faf755}{StringPermutator}}(\mbox{\hyperlink{classChronusQ_1_1StringPermutator}{StringPermutator}} \&\& )     = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{54     }
+\DoxyCodeLine{55     \mbox{\hyperlink{classChronusQ_1_1StringPermutator_afe9933d8099fed6a217058a0f9c1a534}{StringPermutator}}(\textcolor{keywordtype}{size\_t} m, \textcolor{keywordtype}{size\_t} n): \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a51650b5766ae552a66bd2a232a8ad9e7}{m\_}}(m), \mbox{\hyperlink{classChronusQ_1_1StringPermutator_af02d0e4ad00dd859b6d032cc9d918156}{n\_}}(n) \{}
+\DoxyCodeLine{56       \mbox{\hyperlink{classChronusQ_1_1StringPermutator_ab301f9c32dd3b01ebf4468e21f6e4a0a}{nStr\_}} = \mbox{\hyperlink{namespaceChronusQ_ac2bd33c7c688d8d79964b3170f0088dd}{Comb}}(m,n);}
+\DoxyCodeLine{57       \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a523639872ba23bfe51a51e222d2b7ddf}{pos\_}}.resize(n);}
+\DoxyCodeLine{58       \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a6fec27cc65a11b9ebacadbb0168fe899}{reset\_seed}}();}
+\DoxyCodeLine{59     \}}
+\DoxyCodeLine{60     }
+\DoxyCodeLine{61     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a6fec27cc65a11b9ebacadbb0168fe899}{reset\_seed}}() \{}
+\DoxyCodeLine{62       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul; i < \mbox{\hyperlink{classChronusQ_1_1StringPermutator_af02d0e4ad00dd859b6d032cc9d918156}{n\_}}; i++) \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a523639872ba23bfe51a51e222d2b7ddf}{pos\_}}[i] = i; }
+\DoxyCodeLine{63       \mbox{\hyperlink{classChronusQ_1_1StringPermutator_aa9e890f6fb7de3ff4debf341de6d230f}{cur\_ptr\_}} = \mbox{\hyperlink{classChronusQ_1_1StringPermutator_af02d0e4ad00dd859b6d032cc9d918156}{n\_}} -\/ 1;}
+\DoxyCodeLine{64       \mbox{\hyperlink{classChronusQ_1_1StringPermutator_ae686da6b492bd572fd2e0807c8b84d38}{str\_index\_}} = 0;}
+\DoxyCodeLine{65     \}}
+\DoxyCodeLine{66     }
+\DoxyCodeLine{67     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a24638633cac261cfbc3b267239db9736}{stringIndex}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_ae686da6b492bd572fd2e0807c8b84d38}{str\_index\_}}; \}}
+\DoxyCodeLine{68     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a8e4926bad957e4021215084ce7f1f2f8}{maxNString}}()\textcolor{keyword}{  const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_ab301f9c32dd3b01ebf4468e21f6e4a0a}{nStr\_}}; \}}
+\DoxyCodeLine{69     std::vector<size\_t> \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a0a9b161deec92e11d7b03fc2ac4d0652}{permutedPositions}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a523639872ba23bfe51a51e222d2b7ddf}{pos\_}}; \}}
+\DoxyCodeLine{70     std::vector<size\_t> \& \mbox{\hyperlink{classChronusQ_1_1StringPermutator_acb8a98f6166810775df15247eaa8bdbf}{permutedPositions}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a523639872ba23bfe51a51e222d2b7ddf}{pos\_}}; \}}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a353372b2c72d31ae91ebef78fd2d2a61}{next}}() \{}
+\DoxyCodeLine{73       }
+\DoxyCodeLine{74       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1StringPermutator_ae686da6b492bd572fd2e0807c8b84d38}{str\_index\_}} == \mbox{\hyperlink{classChronusQ_1_1StringPermutator_ab301f9c32dd3b01ebf4468e21f6e4a0a}{nStr\_}} -\/ 1) \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_ab301f9c32dd3b01ebf4468e21f6e4a0a}{nStr\_}};}
+\DoxyCodeLine{75       }
+\DoxyCodeLine{76       \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1StringPermutator_aa9e890f6fb7de3ff4debf341de6d230f}{cur\_ptr\_}} == \mbox{\hyperlink{classChronusQ_1_1StringPermutator_af02d0e4ad00dd859b6d032cc9d918156}{n\_}} -\/ 1) \{}
+\DoxyCodeLine{77         \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a523639872ba23bfe51a51e222d2b7ddf}{pos\_}}[\mbox{\hyperlink{classChronusQ_1_1StringPermutator_aa9e890f6fb7de3ff4debf341de6d230f}{cur\_ptr\_}}] += 1;}
+\DoxyCodeLine{78       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{79         \textcolor{keyword}{auto} k = \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a523639872ba23bfe51a51e222d2b7ddf}{pos\_}}[\mbox{\hyperlink{classChronusQ_1_1StringPermutator_aa9e890f6fb7de3ff4debf341de6d230f}{cur\_ptr\_}}];}
+\DoxyCodeLine{80         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = \mbox{\hyperlink{classChronusQ_1_1StringPermutator_aa9e890f6fb7de3ff4debf341de6d230f}{cur\_ptr\_}}, j = 1ul; i < \mbox{\hyperlink{classChronusQ_1_1StringPermutator_af02d0e4ad00dd859b6d032cc9d918156}{n\_}}; i++, j++) }
+\DoxyCodeLine{81           \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a523639872ba23bfe51a51e222d2b7ddf}{pos\_}}[i] = k + j;}
+\DoxyCodeLine{82         \mbox{\hyperlink{classChronusQ_1_1StringPermutator_aa9e890f6fb7de3ff4debf341de6d230f}{cur\_ptr\_}} = \mbox{\hyperlink{classChronusQ_1_1StringPermutator_af02d0e4ad00dd859b6d032cc9d918156}{n\_}} -\/ 1;}
+\DoxyCodeLine{83       \}}
+\DoxyCodeLine{84       }
+\DoxyCodeLine{85       \textcolor{keywordflow}{while} (\mbox{\hyperlink{classChronusQ_1_1StringPermutator_a523639872ba23bfe51a51e222d2b7ddf}{pos\_}}[\mbox{\hyperlink{classChronusQ_1_1StringPermutator_aa9e890f6fb7de3ff4debf341de6d230f}{cur\_ptr\_}}] + (\mbox{\hyperlink{classChronusQ_1_1StringPermutator_af02d0e4ad00dd859b6d032cc9d918156}{n\_}} -\/ \mbox{\hyperlink{classChronusQ_1_1StringPermutator_aa9e890f6fb7de3ff4debf341de6d230f}{cur\_ptr\_}}) == \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a51650b5766ae552a66bd2a232a8ad9e7}{m\_}}) \mbox{\hyperlink{classChronusQ_1_1StringPermutator_aa9e890f6fb7de3ff4debf341de6d230f}{cur\_ptr\_}}-\/-\/;}
+\DoxyCodeLine{86       }
+\DoxyCodeLine{87       \mbox{\hyperlink{classChronusQ_1_1StringPermutator_ae686da6b492bd572fd2e0807c8b84d38}{str\_index\_}}++;}
+\DoxyCodeLine{88        }
+\DoxyCodeLine{89       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_ae686da6b492bd572fd2e0807c8b84d38}{str\_index\_}};}
+\DoxyCodeLine{90     \}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a85907e72d09dfcb43212e8adcf28bd81}{fullStringList}}(\textcolor{keywordtype}{size\_t} * strList) \{}
+\DoxyCodeLine{93       }
+\DoxyCodeLine{94       \mbox{\hyperlink{classChronusQ_1_1StringPermutator_a6fec27cc65a11b9ebacadbb0168fe899}{reset\_seed}}();}
+\DoxyCodeLine{95       \textcolor{keyword}{auto} strList\_ptr = strList;}
+\DoxyCodeLine{96       std::copy\_n(\mbox{\hyperlink{classChronusQ_1_1StringPermutator_a523639872ba23bfe51a51e222d2b7ddf}{pos\_}}.begin(), \mbox{\hyperlink{classChronusQ_1_1StringPermutator_af02d0e4ad00dd859b6d032cc9d918156}{n\_}}, strList\_ptr);}
+\DoxyCodeLine{97       }
+\DoxyCodeLine{98       \textcolor{keywordflow}{while} (\mbox{\hyperlink{classChronusQ_1_1StringPermutator_a353372b2c72d31ae91ebef78fd2d2a61}{next}}() < \mbox{\hyperlink{classChronusQ_1_1StringPermutator_ab301f9c32dd3b01ebf4468e21f6e4a0a}{nStr\_}}) \{ }
+\DoxyCodeLine{99         strList\_ptr += \mbox{\hyperlink{classChronusQ_1_1StringPermutator_af02d0e4ad00dd859b6d032cc9d918156}{n\_}};}
+\DoxyCodeLine{100         std::copy\_n(\mbox{\hyperlink{classChronusQ_1_1StringPermutator_a523639872ba23bfe51a51e222d2b7ddf}{pos\_}}.begin(), \mbox{\hyperlink{classChronusQ_1_1StringPermutator_af02d0e4ad00dd859b6d032cc9d918156}{n\_}}, strList\_ptr);}
+\DoxyCodeLine{101       \}}
+\DoxyCodeLine{102     \}}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104   \}; \textcolor{comment}{// ChronusQ::DetString}}
+\DoxyCodeLine{105   }
+\DoxyCodeLine{106 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

@@ -1,0 +1,405 @@
+\hypertarget{orthogonalization_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{orthogonalization_2impl_8hpp_source}\index{include/orthogonalization/impl.hpp@{include/orthogonalization/impl.hpp}}
+\mbox{\hyperlink{orthogonalization_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{orthogonalization_8hpp}{orthogonalization.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{comment}{//\#define \_DEBUGORTHO}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{39 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{40 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Orthogonalization_a9b22cb013d298dc01d6223be06dbaa14}{Orthogonalization<MatsT>::computeOrtho}}() \{}
+\DoxyCodeLine{41   \textcolor{keywordflow}{if}( not overlap ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Overlap has not been initialized"{}});}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \textcolor{keywordtype}{size\_t} NB  = overlap-\/>dimension();}
+\DoxyCodeLine{44   \textcolor{keywordtype}{size\_t} nSQ = NB * NB;}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46   forwardTrans-\/>clear();}
+\DoxyCodeLine{47   backwardTrans-\/>clear();}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49   \textcolor{comment}{// Allocate scratch}}
+\DoxyCodeLine{50   MatsT* SCR1 = overlap-\/>memManager().template malloc<MatsT>(nSQ);}
+\DoxyCodeLine{51   std::fill\_n(SCR1, nSQ, 0.);}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53   \textcolor{keywordflow}{if}( orthoType == \mbox{\hyperlink{namespaceChronusQ_a2cc4a0d62e92f4e9dd7c1ada19151b56aac2c5c5e5f84b96a37d01049faab0e27}{LOWDIN}} ) \{}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{comment}{// Allocate more scratch}}
+\DoxyCodeLine{56     MatsT* sE   = overlap-\/>memManager().template malloc<MatsT>(NB);}
+\DoxyCodeLine{57     MatsT* SCR2 = overlap-\/>memManager().template malloc<MatsT>(nSQ);}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{comment}{// Diagonalize the overlap in scratch S = V * s * V**T}}
+\DoxyCodeLine{60     std::copy\_n(overlap-\/>pointer(),nSQ,SCR1);}
+\DoxyCodeLine{61     \mbox{\hyperlink{namespaceChronusQ_a1153a882d53ef1052da6ede1f8fba24b}{HermetianEigen}}(\textcolor{charliteral}{'V'}, \textcolor{charliteral}{'U'}, NB, SCR1, NB, sE, overlap-\/>memManager());}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \textcolor{keywordflow}{if}( std::abs(sE[0]) < 1e-\/10 ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Contracted Basis Set is Linearly Dependent!"{}});}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{comment}{// Compute X = V * s\string^\{-\/1/2\}}}
+\DoxyCodeLine{66     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} j = 0; j < NB; j++ )}
+\DoxyCodeLine{67       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} i = 0; i < NB; i++ )}
+\DoxyCodeLine{68         SCR2[i + j * NB] = SCR1[i + j * NB] / std::sqrt(sE[j]);}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     \textcolor{comment}{// Compute O1 = X * V**T}}
+\DoxyCodeLine{71     blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans, blas::Op::ConjTrans, NB, NB, NB, MatsT(1.), SCR2, NB, SCR1, NB, MatsT(0.), forwardTrans-\/>pointer(), NB);}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{comment}{// Compute X = V * s\string^\{1/2\} in place (by multiplying by s)}}
+\DoxyCodeLine{74     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} j = 0; j < NB; j++ )}
+\DoxyCodeLine{75       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} i = 0; i < NB; i++ )}
+\DoxyCodeLine{76         SCR2[i + j * NB] = SCR2[i + j * NB] * sE[j];}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{comment}{// Compute O2 = X * V**T}}
+\DoxyCodeLine{79     blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::ConjTrans, NB, NB, NB, MatsT(1.), SCR2, NB, SCR1, NB, MatsT(0.), backwardTrans-\/>pointer(), NB);}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81 \textcolor{preprocessor}{\#ifdef \_DEBUGORTHO}}
+\DoxyCodeLine{82     \textcolor{comment}{// Debug code to validate the Lowdin orthogonalization}}
+\DoxyCodeLine{83     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}Overlap"{}}, overlap-\/>pointer(),NB,NB,NB);}
+\DoxyCodeLine{84     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}Operator Nonortho-\/>Ortho Transformation"{}}, forwardTrans-\/>pointer(),NB,NB,NB);}
+\DoxyCodeLine{85     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}Operator Ortho-\/>Nonortho Transformation"{}}, backwardTrans-\/>pointer(),NB,NB,NB);}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87     std::cerr << \textcolor{stringliteral}{"{}Debugging Lowdin Orthogonalization"{}} << std::endl;}
+\DoxyCodeLine{88     \textcolor{keywordtype}{double} maxDiff(-\/10000000);}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90     \textcolor{comment}{// Check that ortho1 and ortho2 are inverses of eachother}}
+\DoxyCodeLine{91     blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans, NB, NB, NB, MatsT(1.), forwardTrans-\/>pointer(), NB, backwardTrans-\/>pointer(), NB, MatsT(0.), SCR1, NB);}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} j = 0; j < NB; j++ )}
+\DoxyCodeLine{94       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} i = 0; i < NB; i++ ) \{}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96         \textcolor{keywordflow}{if}( i == j )}
+\DoxyCodeLine{97           maxDiff = std::max(maxDiff, std::abs(1. -\/ SCR1[i + j * NB]));}
+\DoxyCodeLine{98         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{99           maxDiff = std::max(maxDiff, std::abs(SCR1[i + j * NB]));}
+\DoxyCodeLine{100       \}}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102     std::cerr << \textcolor{stringliteral}{"{}  Ortho1 * Ortho2 = I: "{}} << maxDiff << std::endl;}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104     \textcolor{comment}{// Check that ortho2 * ortho2 is the overlap}}
+\DoxyCodeLine{105     blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans, NB, NB, NB, MatsT(1.), backwardTrans-\/>pointer(), NB, backwardTrans-\/>pointer(), NB, MatsT(0.), SCR1, NB);}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     maxDiff = -\/100000;}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} j = 0; j < NB; j++ )}
+\DoxyCodeLine{110       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} i = 0; i < NB; i++ ) \{}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112         maxDiff = std::max(maxDiff, std::abs(SCR1[i + j * NB] -\/ overlap-\/>pointer()[i + j * NB]));}
+\DoxyCodeLine{113       \}}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115     std::cerr << \textcolor{stringliteral}{"{}  Ortho2 * Ortho2 = S: "{}} << maxDiff << std::endl;}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     \textcolor{comment}{// Check that ortho1 * ortho1 is the inverse of the overlap}}
+\DoxyCodeLine{118     blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans, NB, NB, NB, MatsT(1.), forwardTrans-\/>pointer(), NB, forwardTrans-\/>pointer(), NB, MatsT(0.), SCR1, NB);}
+\DoxyCodeLine{119     blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans, NB, NB, NB, MatsT(1.), SCR1, NB, overlap-\/>pointer(), NB, MatsT(0.), SCR2, NB);}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121     maxDiff = -\/10000;}
+\DoxyCodeLine{122     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} j = 0; j < NB; j++ )}
+\DoxyCodeLine{123       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} i = 0; i < NB; i++ ) \{}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125         \textcolor{keywordflow}{if}( i == j )}
+\DoxyCodeLine{126           maxDiff = std::max(maxDiff, std::abs(1. -\/ SCR2[i + j * NB]));}
+\DoxyCodeLine{127         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{128           maxDiff = std::max(maxDiff, std::abs(SCR2[i + j * NB]));}
+\DoxyCodeLine{129       \}}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131     std::cerr << \textcolor{stringliteral}{"{}  Ortho1 * Ortho1 * S = I: "{}} << maxDiff << std::endl;}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135     \textcolor{comment}{// Free Scratch Space}}
+\DoxyCodeLine{136     overlap-\/>memManager().free(sE, SCR2);}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( orthoType == \mbox{\hyperlink{namespaceChronusQ_a2cc4a0d62e92f4e9dd7c1ada19151b56a4262774c546600e382a660837361b388}{CHOLESKY}} ) \{}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140     std::cout << \textcolor{stringliteral}{"{}*** WARNING: Cholesky orthogonalization has not yet been confirmed ***"{}} << std::endl;}
+\DoxyCodeLine{141     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cholesky orthogonalization should be checked thoroughly before using it"{}});}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143     \textcolor{comment}{// Compute the Cholesky factorization of the overlap S = L * L**T}}
+\DoxyCodeLine{144     lapack::potrf(lapack::Uplo::Lower,NB,SCR1,NB);}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146     \textcolor{comment}{// Copy the lower triangle to ortho2 (O2 = L)}}
+\DoxyCodeLine{147     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} j = 0; j < NB; j++ )}
+\DoxyCodeLine{148       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} i = j; i < NB; i++ )}
+\DoxyCodeLine{149         backwardTrans-\/>pointer()[i + j * NB] = SCR1[i + j * NB];}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151     \textcolor{comment}{// Compute the inverse of the overlap using the Cholesky factors}}
+\DoxyCodeLine{152     lapack::potri(lapack::Uplo::Lower,NB,SCR1,NB);}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154     \textcolor{comment}{// O1 = O2**T * S\string^\{-\/1\}}}
+\DoxyCodeLine{155     blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans, NB, NB, NB, MatsT(1.), backwardTrans-\/>pointer(), NB, SCR1, NB, MatsT(0.), forwardTrans-\/>pointer(), NB);}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157     \textcolor{comment}{// Remove upper triangle junk from O1}}
+\DoxyCodeLine{158     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} j = 0; j < NB; j++ )}
+\DoxyCodeLine{159       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} i = 0; i < j; i++ )}
+\DoxyCodeLine{160         forwardTrans-\/>pointer()[i + j * NB] = 0.;}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162 \textcolor{preprocessor}{\#ifdef \_DEBUGORTHO}}
+\DoxyCodeLine{163     \textcolor{comment}{// Debug code to validate the Lowdin orthogonalization}}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165     std::cerr << \textcolor{stringliteral}{"{}Debugging Cholesky Orthogonalization"{}} << std::endl;}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167     \textcolor{comment}{// Debug code to validate the Cholesky orthogonalization}}
+\DoxyCodeLine{168     MatsT* SCR2 = overlap-\/>memManager().template malloc<MatsT>(nSQ);}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170     \textcolor{keywordtype}{double} maxDiff = -\/1000;}
+\DoxyCodeLine{171     blas::gemm(blas::Layout::ColMajor, blas::Op::Trans, blas::Op::NoTrans, NB, NB, NB, MatsT(1.), forwardTrans-\/>pointer(), NB, overlap-\/>pointer(), NB, MatsT(0.), SCR1, NB);}
+\DoxyCodeLine{172     blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans, NB, NB, NB, MatsT(1.), SCR1, NB, forwardTrans-\/>pointer(), NB, MatsT(0.), SCR2, NB);}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} j = 0; j < NB; j++ )}
+\DoxyCodeLine{175       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} i = 0; i < NB; i++ ) \{}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177         \textcolor{keywordflow}{if}( i == j )}
+\DoxyCodeLine{178           maxDiff = std::max(maxDiff, std::abs(1. -\/ SCR2[i + j * NB]));}
+\DoxyCodeLine{179         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{180           maxDiff = std::max(maxDiff, std::abs(SCR2[i + j * NB]));}
+\DoxyCodeLine{181       \}}
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183     std::cerr << \textcolor{stringliteral}{"{}Ortho1**T * S ** Ortho1 = I: "{}} << maxDiff << std::endl;}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185     overlap-\/>memManager().free(SCR2);   \textcolor{comment}{// Free SCR2}}
+\DoxyCodeLine{186 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{187   \}}
+\DoxyCodeLine{188 \};}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190   \textcolor{comment}{//=======================}}
+\DoxyCodeLine{191   \textcolor{comment}{// SquareMatrix Operators}}
+\DoxyCodeLine{192   \textcolor{comment}{//=======================}}
+\DoxyCodeLine{193   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{194   \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \mbox{\hyperlink{classChronusQ_1_1Orthogonalization_ae6a8881631a7663ab35f3ae5c0ec26c5}{Orthogonalization<MatsT>::nonortho2ortho}}(\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \& mat)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{195     \textcolor{keywordflow}{if}( not overlap ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Overlap has not been initialized and computed"{}});}
+\DoxyCodeLine{196     \textcolor{keywordflow}{if}( forwardTrans-\/>dimension() != mat.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ac97ef90f50aeccd6b6ff537e42023fed}{dimension}}() ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Matrices are not the same dimension in nonortho2ortho"{}});}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198     \textcolor{keywordtype}{size\_t} NB = forwardTrans-\/>dimension();}
+\DoxyCodeLine{199     \textcolor{keywordflow}{return} mat.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ad761094d156e5e9b21c4ec7938468707}{transform}}(\textcolor{charliteral}{'N'}, forwardTrans-\/>pointer(), NB, NB);}
+\DoxyCodeLine{200   \}}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{203   \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \mbox{\hyperlink{classChronusQ_1_1Orthogonalization_ae20b14722acd74ee58036bb6813922f9}{Orthogonalization<MatsT>::ortho2nonortho}}(\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \& mat)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{204     \textcolor{keywordflow}{if}( not overlap ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Overlap has not been initialized and computed"{}});}
+\DoxyCodeLine{205     \textcolor{keywordflow}{if}( backwardTrans-\/>dimension() != mat.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ac97ef90f50aeccd6b6ff537e42023fed}{dimension}}() ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Matrices are not the same dimension in ortho2nonortho"{}});}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207     \textcolor{keywordtype}{size\_t} NB = backwardTrans-\/>dimension();}
+\DoxyCodeLine{208     \textcolor{keywordflow}{return} mat.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ad761094d156e5e9b21c4ec7938468707}{transform}}(\textcolor{charliteral}{'N'}, backwardTrans-\/>pointer(), NB, NB);}
+\DoxyCodeLine{209   \}}
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211   \textcolor{comment}{//======================}}
+\DoxyCodeLine{212   \textcolor{comment}{// PauliSpinor Operators}}
+\DoxyCodeLine{213   \textcolor{comment}{//======================}}
+\DoxyCodeLine{214   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{215   \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}} \mbox{\hyperlink{classChronusQ_1_1Orthogonalization_ae6a8881631a7663ab35f3ae5c0ec26c5}{Orthogonalization<MatsT>::nonortho2ortho}}(\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}} \& mat)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{216     \textcolor{keywordflow}{if}( not overlap ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Overlap has not been initialized and computed"{}});}
+\DoxyCodeLine{217     \textcolor{keywordflow}{if}( forwardTrans-\/>dimension() != mat.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ac97ef90f50aeccd6b6ff537e42023fed}{dimension}}() ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Matrices are not the same dimension in nonortho2ortho"{}});}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219     \textcolor{keywordtype}{size\_t} NB = forwardTrans-\/>dimension();}
+\DoxyCodeLine{220     \textcolor{keywordflow}{return} mat.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a8f416fff8a6622e25ff5b8557f6b14bd}{transform}}(\textcolor{charliteral}{'N'}, forwardTrans-\/>pointer(), NB, NB);}
+\DoxyCodeLine{221   \}}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{224   \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}} \mbox{\hyperlink{classChronusQ_1_1Orthogonalization_ae20b14722acd74ee58036bb6813922f9}{Orthogonalization<MatsT>::ortho2nonortho}}(\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}} \& mat)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{225     \textcolor{keywordflow}{if}( not overlap ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Overlap has not been initialized and computed"{}});}
+\DoxyCodeLine{226     \textcolor{keywordflow}{if}( backwardTrans-\/>dimension() != mat.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ac97ef90f50aeccd6b6ff537e42023fed}{dimension}}() ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Matrices are not the same dimension in ortho2nonortho"{}});}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228     \textcolor{keywordtype}{size\_t} NB = backwardTrans-\/>dimension();}
+\DoxyCodeLine{229     \textcolor{keywordflow}{return} mat.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a8f416fff8a6622e25ff5b8557f6b14bd}{transform}}(\textcolor{charliteral}{'N'}, backwardTrans-\/>pointer(), NB, NB);}
+\DoxyCodeLine{230   \}}
+\DoxyCodeLine{231 }
+\DoxyCodeLine{232   \textcolor{comment}{//===================}}
+\DoxyCodeLine{233   \textcolor{comment}{// Coefficients}}
+\DoxyCodeLine{234   \textcolor{comment}{// NOTE: coefficients transform}}
+\DoxyCodeLine{235   \textcolor{comment}{//       in the opposite direction}}
+\DoxyCodeLine{236   \textcolor{comment}{//       to operators}}
+\DoxyCodeLine{237   \textcolor{comment}{//===================}}
+\DoxyCodeLine{238   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{239   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Orthogonalization_a40815257748791265e88d7c14b6194ba}{Orthogonalization<MatsT>::nonortho2orthoCoeffs}}(\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}\& mo)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{240     \textcolor{keywordflow}{if}( not overlap ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Overlap has not been initialized in nonortho2orthoCoeffs"{}});}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242     \textcolor{keywordtype}{size\_t} NB = mo.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ac97ef90f50aeccd6b6ff537e42023fed}{dimension}}();}
+\DoxyCodeLine{243     \textcolor{keywordflow}{if}( forwardTrans-\/>dimension() != NB ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Matrices are not the same dimension in nonortho2orthoCoeffs"{}});}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245     MatsT* SCR = mo.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_abbad979ef83e92bc5c875dd078f80ed8}{memManager}}().template malloc<MatsT>(NB * NB);}
+\DoxyCodeLine{246     blas::gemm(blas::Layout::ColMajor, blas::Op::ConjTrans, blas::Op::NoTrans, NB, NB, NB, MatsT(1.), backwardTrans-\/>pointer(), NB, mo.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), NB, MatsT(0.), SCR, NB);}
+\DoxyCodeLine{247     \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'}, NB, NB, MatsT(1.), SCR, NB, mo.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), NB);}
+\DoxyCodeLine{248     mo.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_abbad979ef83e92bc5c875dd078f80ed8}{memManager}}().\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(SCR);}
+\DoxyCodeLine{249   \}}
+\DoxyCodeLine{250 }
+\DoxyCodeLine{251   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{252   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Orthogonalization_a93c75d8c4e8459a03b597395d4d29f2a}{Orthogonalization<MatsT>::ortho2nonorthoCoeffs}}(\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}\& mo)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{253     \textcolor{keywordflow}{if}( not overlap ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Overlap has not been initialized in nonortho2orthoCoeffs"{}});}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255     \textcolor{keywordtype}{size\_t} NB = mo.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ac97ef90f50aeccd6b6ff537e42023fed}{dimension}}();}
+\DoxyCodeLine{256     \textcolor{keywordflow}{if}( forwardTrans-\/>dimension() != NB ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Matrices are not the same dimension in ortho2nonorthoCoeffs"{}});}
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258     \textcolor{comment}{// Loop over components}}
+\DoxyCodeLine{259     MatsT* SCR = mo.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_abbad979ef83e92bc5c875dd078f80ed8}{memManager}}().template malloc<MatsT>(NB * NB);}
+\DoxyCodeLine{260     blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans, NB, NB, NB, MatsT(1.), forwardTrans-\/>pointer(), NB, mo.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), NB, MatsT(0.), SCR, NB);}
+\DoxyCodeLine{261     \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'}, NB, NB, MatsT(1.), SCR, NB, mo.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), NB);}
+\DoxyCodeLine{262     mo.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_abbad979ef83e92bc5c875dd078f80ed8}{memManager}}().\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(SCR);}
+\DoxyCodeLine{263   \}}
+\DoxyCodeLine{264 }
+\DoxyCodeLine{265   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{266   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Orthogonalization_a40815257748791265e88d7c14b6194ba}{Orthogonalization<MatsT>::nonortho2orthoCoeffs}}(std::vector<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}>\& mo)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{267     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& m : mo )}
+\DoxyCodeLine{268       nonortho2orthoCoeffs(m);}
+\DoxyCodeLine{269   \}}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{272   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Orthogonalization_a93c75d8c4e8459a03b597395d4d29f2a}{Orthogonalization<MatsT>::ortho2nonorthoCoeffs}}(std::vector<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}>\& mo)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{273     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& m : mo )}
+\DoxyCodeLine{274       ortho2nonorthoCoeffs(m);}
+\DoxyCodeLine{275   \}}
+\DoxyCodeLine{276 }
+\DoxyCodeLine{277   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{278   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Orthogonalization_a40815257748791265e88d7c14b6194ba}{Orthogonalization<MatsT>::nonortho2orthoCoeffs}}(std::vector<std::reference\_wrapper<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}>>\&  mo)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{279     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& m : mo )}
+\DoxyCodeLine{280       nonortho2orthoCoeffs(m);}
+\DoxyCodeLine{281   \}}
+\DoxyCodeLine{282 }
+\DoxyCodeLine{283   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{284   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Orthogonalization_a93c75d8c4e8459a03b597395d4d29f2a}{Orthogonalization<MatsT>::ortho2nonorthoCoeffs}}(std::vector<std::reference\_wrapper<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}>>\& mo)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{285     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& m : mo )}
+\DoxyCodeLine{286       ortho2nonorthoCoeffs(m);}
+\DoxyCodeLine{287   \}}
+\DoxyCodeLine{288 }
+\DoxyCodeLine{289   \textcolor{comment}{//===================}}
+\DoxyCodeLine{290   \textcolor{comment}{// Orthogonalize N States}}
+\DoxyCodeLine{291   \textcolor{comment}{//===================}}
+\DoxyCodeLine{292   }
+\DoxyCodeLine{293   \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{294   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Orthogonalization_adbad7fb01cfbbc8ef1bb9c47a329793d}{Orthogonalization<MatsT> :: orthogonalizeStates}}( \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}\& mo, \textcolor{keywordtype}{size\_t} nStates, \textcolor{keywordtype}{size\_t} disp )\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296     \textcolor{keywordflow}{if}( not overlap ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Overlap has not been initialized in orthogonalizeStates"{}});}
+\DoxyCodeLine{297     \textcolor{keywordflow}{if}( nStates == 0 ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299     \textcolor{keywordtype}{size\_t} NB = mo.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ac97ef90f50aeccd6b6ff537e42023fed}{dimension}}();}
+\DoxyCodeLine{300     \textcolor{keywordflow}{if}( overlap-\/>dimension() != NB ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Matrices are not the same dimension in orthogonalizeStates"{}});}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302     \textcolor{comment}{// Set pointer to start of states of interest}}
+\DoxyCodeLine{303     MatsT* moPointer = mo.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}() + disp*NB;}
+\DoxyCodeLine{304     }
+\DoxyCodeLine{305     \textcolor{comment}{// Compute Overlap Matrix for nStates}}
+\DoxyCodeLine{306     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} stateOverlap = overlap-\/>\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ad761094d156e5e9b21c4ec7938468707}{transform}}( \textcolor{charliteral}{'N'}, moPointer, nStates, NB);}
+\DoxyCodeLine{307 }
+\DoxyCodeLine{308 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{309     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout, \textcolor{stringliteral}{"{}MO Overlap"{}}, stateOverlap.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),nStates,nStates,nStates);}
+\DoxyCodeLine{310 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{311 }
+\DoxyCodeLine{312     \textcolor{comment}{// Compute Orthogonalization Matrices}}
+\DoxyCodeLine{313     \mbox{\hyperlink{classChronusQ_1_1Orthogonalization}{Orthogonalization<MatsT>}} orthoMO(stateOverlap);}
+\DoxyCodeLine{314 }
+\DoxyCodeLine{315     \textcolor{comment}{// Transform MO's in place}}
+\DoxyCodeLine{316     MatsT* SCR = mo.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_abbad979ef83e92bc5c875dd078f80ed8}{memManager}}().template malloc<MatsT>(NB * NB);}
+\DoxyCodeLine{317     MatsT* transPointer = orthoMO.\mbox{\hyperlink{classChronusQ_1_1Orthogonalization_a095429ace5172b59222626938ae3293b}{backwardPointer}}()-\/>pointer(); }
+\DoxyCodeLine{318     blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans, NB, nStates, nStates, MatsT(1.), moPointer, NB, transPointer, nStates, MatsT(0.), SCR, NB);}
+\DoxyCodeLine{319     \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'}, NB, nStates, MatsT(1.), SCR, NB, moPointer, NB);}
+\DoxyCodeLine{320     mo.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_abbad979ef83e92bc5c875dd078f80ed8}{memManager}}().\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(SCR);}
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{323     \textcolor{comment}{// Test that they are orthogonalized}}
+\DoxyCodeLine{324     \textcolor{comment}{// Compute Overlap Matrix for nStates}}
+\DoxyCodeLine{325     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} testOverlap = overlap-\/>\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ad761094d156e5e9b21c4ec7938468707}{transform}}( \textcolor{charliteral}{'N'}, moPointer, nStates, NB);}
+\DoxyCodeLine{326 }
+\DoxyCodeLine{327     \textcolor{comment}{// Compute Orthogonalization Matrices}}
+\DoxyCodeLine{328     \mbox{\hyperlink{classChronusQ_1_1Orthogonalization}{Orthogonalization<MatsT>}} testOrtho(stateOverlap);}
+\DoxyCodeLine{329     }
+\DoxyCodeLine{330     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout, \textcolor{stringliteral}{"{}Test Overlap Matrix"{}}, testOrtho.\mbox{\hyperlink{classChronusQ_1_1Orthogonalization_adc2895c5bc836c1e9d64c04c45b84eac}{overlapPointer}}()-\/>pointer(),nStates,nStates,nStates);}
+\DoxyCodeLine{331 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{332 }
+\DoxyCodeLine{333   \}}
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335   \textcolor{comment}{// ====================================================================}}
+\DoxyCodeLine{336   \textcolor{comment}{// Transform input operators with the gradient of the orthogonalization}}
+\DoxyCodeLine{337   \textcolor{comment}{// ====================================================================}}
+\DoxyCodeLine{338   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{339   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Orthogonalization_a1dde44ac42cb03e7992be7fbe17443da}{Orthogonalization<MatsT> :: getOrthogonalizationGradients}}(}
+\DoxyCodeLine{340     std::vector<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}>\& gradOrtho,}
+\DoxyCodeLine{341     std::vector<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}>\& operators)}
+\DoxyCodeLine{342   \{}
+\DoxyCodeLine{343 }
+\DoxyCodeLine{344     \textcolor{keywordflow}{if}( operators.size() == 0 )}
+\DoxyCodeLine{345       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}No operators to transform in getOrthogonalizationGradients"{}});}
+\DoxyCodeLine{346     \textcolor{keywordflow}{if}( operators.size() != gradOrtho.size() )}
+\DoxyCodeLine{347       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Different number of operators and output matrices in getOrthogonalizationGradients"{}});}
+\DoxyCodeLine{348 }
+\DoxyCodeLine{349     \textcolor{keywordtype}{size\_t} NB = operators[0].dimension();}
+\DoxyCodeLine{350     \textcolor{keywordtype}{size\_t} nSQ = NB*NB;}
+\DoxyCodeLine{351     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& memManager = overlap-\/>memManager();}
+\DoxyCodeLine{352 }
+\DoxyCodeLine{353     \textcolor{keywordflow}{if}( orthoType == \mbox{\hyperlink{namespaceChronusQ_a2cc4a0d62e92f4e9dd7c1ada19151b56aac2c5c5e5f84b96a37d01049faab0e27}{LOWDIN}} ) \{}
+\DoxyCodeLine{354       MatsT* sVecs   = memManager.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981}{malloc}}<MatsT>(nSQ);}
+\DoxyCodeLine{355       MatsT* sE      = memManager.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981}{malloc}}<MatsT>(NB);}
+\DoxyCodeLine{356       MatsT* \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}} = memManager.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981}{malloc}}<MatsT>(nSQ);}
+\DoxyCodeLine{357       MatsT* SCR1    = memManager.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981}{malloc}}<MatsT>(nSQ);}
+\DoxyCodeLine{358       MatsT* SCR2    = memManager.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a65fd0ff2ba9c702d25821de68c413981}{malloc}}<MatsT>(nSQ);}
+\DoxyCodeLine{359 }
+\DoxyCodeLine{360       \textcolor{comment}{// Diagonalize the overlap in scratch S = V * s * V**T}}
+\DoxyCodeLine{361       std::copy\_n(overlap-\/>pointer(),nSQ,sVecs);}
+\DoxyCodeLine{362       \mbox{\hyperlink{namespaceChronusQ_a1153a882d53ef1052da6ede1f8fba24b}{HermetianEigen}}(\textcolor{charliteral}{'V'},\textcolor{charliteral}{'U'},NB,sVecs,NB,sE,memManager);}
+\DoxyCodeLine{363 }
+\DoxyCodeLine{364       \textcolor{keywordflow}{if}( std::abs( sE[0] ) < 1e-\/10 )}
+\DoxyCodeLine{365         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Contracted Basis Set is Linearly Dependent!"{}});}
+\DoxyCodeLine{366 }
+\DoxyCodeLine{367 }
+\DoxyCodeLine{368       \textcolor{comment}{// Compute weights = (sqrt(si) + sqrt(sj))\string^-\/1}}
+\DoxyCodeLine{369       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} i = 0; i < NB; i++ )}
+\DoxyCodeLine{370       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} j = 0; j < NB; j++ ) \{}
+\DoxyCodeLine{371           \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[i*NB + j] = MatsT(1.) / (std::sqrt(sE[i]) + std::sqrt(sE[j]));}
+\DoxyCodeLine{372       \}}
+\DoxyCodeLine{373 }
+\DoxyCodeLine{374       \textcolor{comment}{// Loop over gradient components}}
+\DoxyCodeLine{375       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iGrad = 0; iGrad < operators.size(); iGrad++ ) \{}
+\DoxyCodeLine{376 }
+\DoxyCodeLine{377         \textcolor{comment}{//}}
+\DoxyCodeLine{378         \textcolor{comment}{// dV/dR = V . (weights x V**T . O . V) . V**T}}
+\DoxyCodeLine{379         \textcolor{comment}{//}}
+\DoxyCodeLine{380 }
+\DoxyCodeLine{381         \textcolor{comment}{// O . V}}
+\DoxyCodeLine{382         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,}
+\DoxyCodeLine{383           NB,NB,NB,MatsT(1.),operators[iGrad].pointer(),NB,sVecs,NB,MatsT(0.),SCR1,NB);}
+\DoxyCodeLine{384         \textcolor{comment}{// V**T . O . V}}
+\DoxyCodeLine{385         blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,}
+\DoxyCodeLine{386           NB,NB,NB,MatsT(1.),sVecs,NB,SCR1,NB,MatsT(0.),SCR2,NB);}
+\DoxyCodeLine{387         \textcolor{comment}{// weights x V**T . O . V}}
+\DoxyCodeLine{388         std::transform(SCR2, SCR2+nSQ, \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}, SCR2, std::multiplies<>());}
+\DoxyCodeLine{389         \textcolor{comment}{// (weights x V**T . O . V) . V**T}}
+\DoxyCodeLine{390         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::ConjTrans,}
+\DoxyCodeLine{391           NB,NB,NB,MatsT(1.),SCR2,NB,sVecs,NB,MatsT(0.),SCR1,NB);}
+\DoxyCodeLine{392         \textcolor{comment}{// dV/dR = V . (weights x V**T . O . V) . V**T}}
+\DoxyCodeLine{393         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,}
+\DoxyCodeLine{394           NB,NB,NB,MatsT(1.),sVecs,NB,SCR1,NB,MatsT(0.),gradOrtho[iGrad].pointer(),NB);}
+\DoxyCodeLine{395 }
+\DoxyCodeLine{396       \} }
+\DoxyCodeLine{397 }
+\DoxyCodeLine{398       memManager.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(sVecs, sE, \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}, SCR1, SCR2);}
+\DoxyCodeLine{399 }
+\DoxyCodeLine{400     \}}
+\DoxyCodeLine{401     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( orthoType == \mbox{\hyperlink{namespaceChronusQ_a2cc4a0d62e92f4e9dd7c1ada19151b56a4262774c546600e382a660837361b388}{CHOLESKY}} ) \{}
+\DoxyCodeLine{402       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cholesky orthogonalization gradients not yet implemented"{}});}
+\DoxyCodeLine{403     \}}
+\DoxyCodeLine{404 }
+\DoxyCodeLine{405   \}}
+\DoxyCodeLine{406 \}}
+
+\end{DoxyCode}

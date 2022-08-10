@@ -1,0 +1,57 @@
+\hypertarget{batchgd_8hpp}{}\doxysection{include/fockbuilder/fourcompfock/batchgd.hpp File Reference}
+\label{batchgd_8hpp}\index{include/fockbuilder/fourcompfock/batchgd.hpp@{include/fockbuilder/fourcompfock/batchgd.hpp}}
+{\ttfamily \#include $<$fockbuilder/fourcompfock.\+hpp$>$}\newline
+{\ttfamily \#include $<$cqlinalg.\+hpp$>$}\newline
+{\ttfamily \#include $<$physcon.\+hpp$>$}\newline
+{\ttfamily \#include $<$util/matout.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/incore4indexreleri.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/gtodirectreleri.\+hpp$>$}\newline
+Include dependency graph for batchgd.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{batchgd_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{batchgd_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{batchgd_8hpp_aeed2078d6d9ae076ef88260419faa2d3}{ALLOCATE\+\_\+\+PAULISPINOR\+\_\+\+SCR}}(SCR,  SCRSIZE,  has\+XYZ)~       SCR.\+push\+\_\+back(std\+::make\+\_\+shared$<$Pauli\+Spinor\+Square\+Matrices$<$MatsT$>$$>$(mem, SCRSIZE, has\+XYZ, has\+XYZ));
+\item 
+\#define \mbox{\hyperlink{batchgd_8hpp_ab40c0a0e696a8c93ecd1859f54810961}{UPDATE\+\_\+\+CONTRACTION\+\_\+\+SCR\+\_\+\+SIZE}}(CONTTYPE)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{batchgd_8hpp_aeed2078d6d9ae076ef88260419faa2d3}\label{batchgd_8hpp_aeed2078d6d9ae076ef88260419faa2d3}} 
+\index{batchgd.hpp@{batchgd.hpp}!ALLOCATE\_PAULISPINOR\_SCR@{ALLOCATE\_PAULISPINOR\_SCR}}
+\index{ALLOCATE\_PAULISPINOR\_SCR@{ALLOCATE\_PAULISPINOR\_SCR}!batchgd.hpp@{batchgd.hpp}}
+\doxysubsubsection{\texorpdfstring{ALLOCATE\_PAULISPINOR\_SCR}{ALLOCATE\_PAULISPINOR\_SCR}}
+{\footnotesize\ttfamily \#define ALLOCATE\+\_\+\+PAULISPINOR\+\_\+\+SCR(\begin{DoxyParamCaption}\item[{}]{SCR,  }\item[{}]{SCRSIZE,  }\item[{}]{has\+XYZ }\end{DoxyParamCaption})~       SCR.\+push\+\_\+back(std\+::make\+\_\+shared$<$Pauli\+Spinor\+Square\+Matrices$<$MatsT$>$$>$(mem, SCRSIZE, has\+XYZ, has\+XYZ));}
+
+\mbox{\Hypertarget{batchgd_8hpp_ab40c0a0e696a8c93ecd1859f54810961}\label{batchgd_8hpp_ab40c0a0e696a8c93ecd1859f54810961}} 
+\index{batchgd.hpp@{batchgd.hpp}!UPDATE\_CONTRACTION\_SCR\_SIZE@{UPDATE\_CONTRACTION\_SCR\_SIZE}}
+\index{UPDATE\_CONTRACTION\_SCR\_SIZE@{UPDATE\_CONTRACTION\_SCR\_SIZE}!batchgd.hpp@{batchgd.hpp}}
+\doxysubsubsection{\texorpdfstring{UPDATE\_CONTRACTION\_SCR\_SIZE}{UPDATE\_CONTRACTION\_SCR\_SIZE}}
+{\footnotesize\ttfamily \#define UPDATE\+\_\+\+CONTRACTION\+\_\+\+SCR\+\_\+\+SIZE(\begin{DoxyParamCaption}\item[{}]{CONTTYPE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{          \textcolor{keyword}{auto} contSCR = relERICon.directRelScaffoldLibcintSCRSize(CONTTYPE, computeExchange); \(\backslash\)}
+\DoxyCodeLine{          SCRSize  = std::max(SCRSize, contSCR);}
+
+\end{DoxyCode}

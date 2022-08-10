@@ -1,0 +1,194 @@
+\hypertarget{mcscf_8hpp_source}{}\doxysection{mcscf.\+hpp}
+\label{mcscf_8hpp_source}\index{include/mcscf.hpp@{include/mcscf.hpp}}
+\mbox{\hyperlink{mcscf_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cerr_8hpp}{cerr.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_8hpp}{singleslater.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcwavefunction_8hpp}{mcwavefunction.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{orbitalrotation_8hpp}{orbitalrotation.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{comment}{//\#include <particleintegrals/twopints/incore4indextpi.hpp>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{comment}{//\#define \_DEBUG\_MCSCF}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{36   }
+\DoxyCodeLine{37   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_a23b92b13363b305aea46ac88f40cc774}{CIDiagonalizationAlgorithm}} \{}
+\DoxyCodeLine{38     \mbox{\hyperlink{namespaceChronusQ_a23b92b13363b305aea46ac88f40cc774a0df9524a3d4e8b048631a60d8eb1ec74}{CI\_FULL\_MATRIX}},}
+\DoxyCodeLine{39     \mbox{\hyperlink{namespaceChronusQ_a23b92b13363b305aea46ac88f40cc774a3b3e69cf5805043f1826e9cd81e2512d}{CI\_DAVIDSON}},}
+\DoxyCodeLine{40     \mbox{\hyperlink{namespaceChronusQ_a23b92b13363b305aea46ac88f40cc774ab083bb889b0d1306b23709fb00648f63}{CI\_GPLHR}},}
+\DoxyCodeLine{41   \}; \textcolor{comment}{// struct CIDiagonalizationAlgorithm}}
+\DoxyCodeLine{42   }
+\DoxyCodeLine{43   \textcolor{comment}{// Settings }}
+\DoxyCodeLine{44   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1MCSCFSettings}{MCSCFSettings}} \{}
+\DoxyCodeLine{45      }
+\DoxyCodeLine{46      \textcolor{comment}{// CISettings}}
+\DoxyCodeLine{47      \mbox{\hyperlink{namespaceChronusQ_a23b92b13363b305aea46ac88f40cc774}{CIDiagonalizationAlgorithm}} \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a22e3d51cd544cca7a7261f4953def751}{ciAlg}} = \mbox{\hyperlink{namespaceChronusQ_a23b92b13363b305aea46ac88f40cc774a0df9524a3d4e8b048631a60d8eb1ec74}{CI\_FULL\_MATRIX}}; }
+\DoxyCodeLine{48      }
+\DoxyCodeLine{49      \textcolor{comment}{// for davidson and gplhr}}
+\DoxyCodeLine{50          \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a6105a10aa5ca4b4c08890af3c4731ec8}{maxCIIter}}        = 128;        }
+\DoxyCodeLine{51      \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_ade4bd0d4ccfbba46947893067c88718a}{ciVectorConv}}     = 1.0e-\/6;    }
+\DoxyCodeLine{52      \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a1d4640caaa84c30c8257f6139da5d695}{maxDavidsonSpace}} = 50;}
+\DoxyCodeLine{53      \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a9d9488ac6776fd136d9af91f9a28ecc4}{nDavidsonGuess}}   = 3;}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55      \textcolor{comment}{// SCF Settings }}
+\DoxyCodeLine{56      \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_af07d28a06d02e2237bf676fef61ff10a}{doSCF}}           = \textcolor{keyword}{false};}
+\DoxyCodeLine{57      \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_aaed1f897a95b06e51dc41df6569250a9}{doIVOs}}          = \textcolor{keyword}{false};}
+\DoxyCodeLine{58      }
+\DoxyCodeLine{59      \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a7efd7ee62f45482e320921e2678a625f}{maxSCFIter}}         = 0;}
+\DoxyCodeLine{60      \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a57275858b0a37e68c90348ee04a5e036}{scfEnergyConv}}      = 1.0e-\/8; }
+\DoxyCodeLine{61      \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a1c83250a8ad98ae0195823109d01ea29}{scfGradientConv}}    = 1.0e-\/4;}
+\DoxyCodeLine{62      \mbox{\hyperlink{structChronusQ_1_1OrbitalRotationSettings}{OrbitalRotationSettings}} \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_afa24b37bff2d3110b748c06dfadaea30}{ORSettings}};}
+\DoxyCodeLine{63   }
+\DoxyCodeLine{64      \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a63320f0c86d151edf70cc38947da3fb4}{MCSCFSettings}}() \{}
+\DoxyCodeLine{65        \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_afa24b37bff2d3110b748c06dfadaea30}{ORSettings}}.\mbox{\hyperlink{structChronusQ_1_1OrbitalRotationSettings_a8cd793b25641c2455def97df70ff6ad5}{rotate\_within\_correlated}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{66      \}}
+\DoxyCodeLine{67      }
+\DoxyCodeLine{68      \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a5518b5cef53cac9151b3e94a4f69ba54}{MCSCFSettings}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings}{MCSCFSettings}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{69      \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_af7873c6d0e1c8945e907929255c39af5}{MCSCFSettings}}(\mbox{\hyperlink{structChronusQ_1_1MCSCFSettings}{MCSCFSettings}} \&\&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71      \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a43660fc6a3d6ea34668b94d3161c5dee}{print}}(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{72   \}; \textcolor{comment}{// struct MCSCFSettings }}
+\DoxyCodeLine{73   }
+\DoxyCodeLine{74   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{75   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1CISolver}{CISolver}} \{ }
+\DoxyCodeLine{76      }
+\DoxyCodeLine{77   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{78     }
+\DoxyCodeLine{79     \mbox{\hyperlink{namespaceChronusQ_a23b92b13363b305aea46ac88f40cc774}{CIDiagonalizationAlgorithm}} \mbox{\hyperlink{classChronusQ_1_1CISolver_a824ee2d87ce6b219163d2ee5ffdc15f4}{alg\_}} = \mbox{\hyperlink{namespaceChronusQ_a23b92b13363b305aea46ac88f40cc774a0df9524a3d4e8b048631a60d8eb1ec74}{CI\_FULL\_MATRIX}};}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{comment}{// for davidson and gplhr}}
+\DoxyCodeLine{82     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1CISolver_a9e3a082788a02ff2a4651d19273807d4}{maxIter\_}}    = 128;       }
+\DoxyCodeLine{83     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1CISolver_adb1234debee852abc0f41fb07d7b5fc3}{vectorConv\_}} = 1.0e-\/6;    }
+\DoxyCodeLine{84     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1CISolver_af180f1e72dd2446933d65e45f3cdfb28}{maxDavidsonSpace\_}} = 50;  }
+\DoxyCodeLine{85     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1CISolver_af0c514e1b46f7df57d5db4c03906502b}{nDavidsonGuess\_}} = 3;     }
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CISolver_adb7f8fc7791ae8aa3b3b76741bd32c87}{davidsonGS}}(\textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{size\_t}, MatsT *, MatsT *);}
+\DoxyCodeLine{88     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CISolver_aeed48dff4928d000add20358a405ac49}{davidsonPC}}(\textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{size\_t}, MatsT *, MatsT *, MatsT *, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} *);}
+\DoxyCodeLine{89   }
+\DoxyCodeLine{90   \textcolor{keyword}{public}:}
+\DoxyCodeLine{91     }
+\DoxyCodeLine{92     \textcolor{comment}{// default Constructor}}
+\DoxyCodeLine{93     \mbox{\hyperlink{classChronusQ_1_1CISolver_ad1fbf4bf17c4d0e8aaa1a2148ba87481}{CISolver}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{94     \mbox{\hyperlink{classChronusQ_1_1CISolver_a4b827c8b70a407a21c437f8300bd4060}{CISolver}}(\mbox{\hyperlink{namespaceChronusQ_a23b92b13363b305aea46ac88f40cc774}{CIDiagonalizationAlgorithm}} alg, \textcolor{keywordtype}{size\_t} maxIter = 128,}
+\DoxyCodeLine{95       \textcolor{keywordtype}{double} vectorConv =  1.0e-\/6, \textcolor{keywordtype}{size\_t} maxDSpace = 50, \textcolor{keywordtype}{size\_t} nDGuess = 3) \{}
+\DoxyCodeLine{96       \mbox{\hyperlink{classChronusQ_1_1CISolver_a020665f32a1d1f621797c383b5bb952f}{switchAlgorithm}}(alg, maxIter, vectorConv, maxDSpace, nDGuess);}
+\DoxyCodeLine{97     \};}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99     \textcolor{comment}{// typeconversion}}
+\DoxyCodeLine{100         \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{101     \mbox{\hyperlink{classChronusQ_1_1CISolver_ad1fbf4bf17c4d0e8aaa1a2148ba87481}{CISolver}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1CISolver}{CISolver<MatsU,IntsT>}} \&);}
+\DoxyCodeLine{102         }
+\DoxyCodeLine{103         \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{104     \mbox{\hyperlink{classChronusQ_1_1CISolver_ad1fbf4bf17c4d0e8aaa1a2148ba87481}{CISolver}}(\mbox{\hyperlink{classChronusQ_1_1CISolver}{CISolver<MatsU,IntsT>}} \&\&);}
+\DoxyCodeLine{105     }
+\DoxyCodeLine{106         \mbox{\hyperlink{classChronusQ_1_1CISolver_abf6973edac90e0747a56750f467abfd8}{\string~CISolver}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{107   }
+\DoxyCodeLine{108     \textcolor{comment}{// Pointer convertor}}
+\DoxyCodeLine{109     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{110     \textcolor{keyword}{static} std::shared\_ptr<CISolver<MatsU,IntsT>>}
+\DoxyCodeLine{111     \mbox{\hyperlink{classChronusQ_1_1CISolver_a7d6f00fdf387fdb1fa3b2f3d16ec453d}{convert}}(\textcolor{keyword}{const} std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1CISolver}{CISolver<MatsT,IntsT>}}>\&);}
+\DoxyCodeLine{112     }
+\DoxyCodeLine{113     \textcolor{comment}{// switch Algrithm;}}
+\DoxyCodeLine{114     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CISolver_a020665f32a1d1f621797c383b5bb952f}{switchAlgorithm}}(\mbox{\hyperlink{namespaceChronusQ_a23b92b13363b305aea46ac88f40cc774}{CIDiagonalizationAlgorithm}} alg, }
+\DoxyCodeLine{115       \textcolor{keywordtype}{size\_t} maxIter = 128, \textcolor{keywordtype}{double} vectorConv = 1.0e-\/6, }
+\DoxyCodeLine{116       \textcolor{keywordtype}{size\_t} maxDSpace = 50, \textcolor{keywordtype}{size\_t} nDGuess = 3) \{}
+\DoxyCodeLine{117         \mbox{\hyperlink{classChronusQ_1_1CISolver_a824ee2d87ce6b219163d2ee5ffdc15f4}{alg\_}} = alg;}
+\DoxyCodeLine{118         \mbox{\hyperlink{classChronusQ_1_1CISolver_a9e3a082788a02ff2a4651d19273807d4}{maxIter\_}} = maxIter;}
+\DoxyCodeLine{119         \mbox{\hyperlink{classChronusQ_1_1CISolver_adb1234debee852abc0f41fb07d7b5fc3}{vectorConv\_}} = vectorConv;}
+\DoxyCodeLine{120         \mbox{\hyperlink{classChronusQ_1_1CISolver_af180f1e72dd2446933d65e45f3cdfb28}{maxDavidsonSpace\_}} = maxDSpace;}
+\DoxyCodeLine{121         \mbox{\hyperlink{classChronusQ_1_1CISolver_af0c514e1b46f7df57d5db4c03906502b}{nDavidsonGuess\_}} = nDGuess;}
+\DoxyCodeLine{122     \}}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124     \textcolor{comment}{// solve CI}}
+\DoxyCodeLine{125         \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CISolver_a63c983317ce7be09a718025036199f07}{solveCI}}(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsT,IntsT>}} \&);}
+\DoxyCodeLine{126   }
+\DoxyCodeLine{127   \}; \textcolor{comment}{// class CISolver}}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{130   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1MCSCF}{MCSCF}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction}}<MatsT,IntsT> \{}
+\DoxyCodeLine{131   }
+\DoxyCodeLine{132   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{133     \textcolor{comment}{// Useful Typedefs}}
+\DoxyCodeLine{134     \textcolor{keyword}{typedef} MatsT *                   \mbox{\hyperlink{classChronusQ_1_1MCSCF_a3843d97f44ee632a807954b2e31b6d83}{oper\_t}};}
+\DoxyCodeLine{135     \textcolor{keyword}{typedef} std::vector<oper\_t>       \mbox{\hyperlink{classChronusQ_1_1MCSCF_a4100208c14e3a36843b76a3655a55b9e}{oper\_t\_coll}};}
+\DoxyCodeLine{136     \textcolor{keyword}{typedef} std::vector<oper\_t\_coll>  \mbox{\hyperlink{classChronusQ_1_1MCSCF_abc5cbc373b4b85beafd1d9353c234b8f}{oper\_t\_coll2}};}
+\DoxyCodeLine{137   }
+\DoxyCodeLine{138   \textcolor{keyword}{public}:}
+\DoxyCodeLine{139     }
+\DoxyCodeLine{140     \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings}{MCSCFSettings}} \mbox{\hyperlink{classChronusQ_1_1MCSCF_aaecd9458445259d9be286cb840d72e47}{settings}};}
+\DoxyCodeLine{141     std::shared\_ptr<CISolver<MatsT,IntsT>>        \mbox{\hyperlink{classChronusQ_1_1MCSCF_aacee2a59bb094c4c32289deae9bfc3e2}{ciSolver}}  = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{142     std::shared\_ptr<OrbitalRotation<MatsT,IntsT>> \mbox{\hyperlink{classChronusQ_1_1MCSCF_abaf80865542fc8e0bba1cc4bcbe8c327}{moRotator}} = \textcolor{keyword}{nullptr};  }
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     \textcolor{comment}{// Reduced density Matrices (RDMs) only span over correlated space}}
+\DoxyCodeLine{145     \textcolor{comment}{// SOI: state of interest, for orbital rotation}}
+\DoxyCodeLine{146     \textcolor{comment}{// it's either state specific or state averaged RDM}}
+\DoxyCodeLine{147     std::shared\_ptr<SquareMatrix<MatsT>>    \mbox{\hyperlink{classChronusQ_1_1MCSCF_a1c22561fa0e9417716025a24e75a7d24}{oneRDMSOI}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{148     std::shared\_ptr<InCore4indexTPI<MatsT>> \mbox{\hyperlink{classChronusQ_1_1MCSCF_a6b747bde73d11acba7609a4a79770570}{twoRDMSOI}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{149     }
+\DoxyCodeLine{150     \textcolor{comment}{// Disable default, copy and move constructors}}
+\DoxyCodeLine{151     \mbox{\hyperlink{classChronusQ_1_1MCSCF_a8a59121756b230881e05c7f07f0400e6}{MCSCF}}()              = \textcolor{keyword}{delete};}
+\DoxyCodeLine{152     \mbox{\hyperlink{classChronusQ_1_1MCSCF_a404c6f1197d8151e69fff6d26bc926ed}{MCSCF}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1MCSCF}{MCSCF}} \&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{153     \mbox{\hyperlink{classChronusQ_1_1MCSCF_a215705d69d1e759bdee9b70efcae3dae}{MCSCF}}(\mbox{\hyperlink{classChronusQ_1_1MCSCF}{MCSCF}} \&\&)      = \textcolor{keyword}{delete};}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{156     }
+\DoxyCodeLine{164     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{165     \mbox{\hyperlink{classChronusQ_1_1MCSCF_a63b811dcc3f17045fafb0911bc25efbe}{MCSCF}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsU,IntsT>}} \& ref, \textcolor{keywordtype}{size\_t} NS) : }
+\DoxyCodeLine{166         \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction}}<MatsT,IntsT>(ref, NS) \{ \};  \textcolor{comment}{// MCSCF constructor}}
+\DoxyCodeLine{167   }
+\DoxyCodeLine{168     \mbox{\hyperlink{classChronusQ_1_1MCSCF_abbe52949b6eed10246d3949ade1760a9}{\string~MCSCF}}()\{ \mbox{\hyperlink{classChronusQ_1_1MCSCF_a7b124c8e84fb746c12cfd1a7c59b88c0}{dealloc}}(); \}}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170     \textcolor{comment}{// MCSCF procedural functions}}
+\DoxyCodeLine{171     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_ae2b5040ab5221af280964057bf5d9a18}{run}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&);       \textcolor{comment}{// From MCWaveFunctionBase}}
+\DoxyCodeLine{172     }
+\DoxyCodeLine{173     \textcolor{comment}{// compute all RDM (and state average) if no inputs }}
+\DoxyCodeLine{174     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_ad8685976f55a00c4e10ccc41fa2d65ba}{computeOneRDM}}();}
+\DoxyCodeLine{175     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_ad8685976f55a00c4e10ccc41fa2d65ba}{computeOneRDM}}(\textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{176     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_a30f3da5cf49a552c5b77e253cabb8575}{computeTwoRDM}}();}
+\DoxyCodeLine{177     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_a30f3da5cf49a552c5b77e253cabb8575}{computeTwoRDM}}(\textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_a04a5b3bc7924b6ef9fa5df9d94f86477}{saveCurrentStates}}();}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_af5fa3bbb79aa6beac9589317cba8c15e}{printStateEnergy}}();}
+\DoxyCodeLine{182     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_aeb6514cf1b0005b7685f4c245b4ce577}{printMCSCFHeader}}();}
+\DoxyCodeLine{183     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_af9c51eef00554a85cd9e8cf6c8180faa}{printMCSCFFooter}}();}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185     \textcolor{comment}{// Memory functions}}
+\DoxyCodeLine{186     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_afdc550978789f57f0345ef37047a6ddb}{alloc}}();}
+\DoxyCodeLine{187     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_a7b124c8e84fb746c12cfd1a7c59b88c0}{dealloc}}();}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189   \}; \textcolor{comment}{// class MCSCF}}
+\DoxyCodeLine{190   }
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195 }
+
+\end{DoxyCode}

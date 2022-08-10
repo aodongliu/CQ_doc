@@ -1,0 +1,98 @@
+\hypertarget{reference_8hpp_source}{}\doxysection{reference.\+hpp}
+\label{reference_8hpp_source}\index{include/basisset/reference.hpp@{include/basisset/reference.hpp}}
+\mbox{\hyperlink{reference_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{molecule_8hpp}{molecule.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <libint2/shell.h>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{41   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1ReferenceShell}{ReferenceShell}} \{}
+\DoxyCodeLine{42   }
+\DoxyCodeLine{43     std::vector<libint2::Shell> \mbox{\hyperlink{structChronusQ_1_1ReferenceShell_ad66ccd45f17809a98abb65a3f4a251bb}{shells}};          }
+\DoxyCodeLine{44     std::vector<std::vector<double>> \mbox{\hyperlink{structChronusQ_1_1ReferenceShell_abcb2d1976abc711ea6994be4cdac63b7}{unNormCont}}; }
+\DoxyCodeLine{45   }
+\DoxyCodeLine{46   \}; \textcolor{comment}{// ReferenceShell struct}}
+\DoxyCodeLine{47   }
+\DoxyCodeLine{54   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet}{ReferenceBasisSet}} \{}
+\DoxyCodeLine{55   }
+\DoxyCodeLine{56     std::string    \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a9d055fca7c1d4ca514571d17d8aef7a3}{basisPath\_}}; }
+\DoxyCodeLine{57     std::string    \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a6aa66185777ddc7041787275d165951a}{basisDef\_}};  }
+\DoxyCodeLine{58     std::ifstream  \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a391ad188d2d1cc09650f7aa7d4f7225e}{basisFile\_}}; }
+\DoxyCodeLine{59   }
+\DoxyCodeLine{60     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_abdc2ae6270a1c27e4f8f0be199ee38af}{forceCart\_}};  }
+\DoxyCodeLine{61     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a545de8edd520907f296689f0d0eafbdd}{nucBasis\_}};   }
+\DoxyCodeLine{62   }
+\DoxyCodeLine{63     \textcolor{comment}{// Functions to digest the basis set file}}
+\DoxyCodeLine{64     \textcolor{comment}{// See src/basisset/reference.cxx for documentation}}
+\DoxyCodeLine{65     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_ae337fbfea93ed19b322da481d6160979}{findBasisFile}}(\textcolor{keywordtype}{bool} doPrint = \textcolor{keyword}{true});}
+\DoxyCodeLine{66     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_abea8e7c9d94a5d1bc24f5f4888d4db36}{parseBasisFile}}(std::istream\& input);}
+\DoxyCodeLine{67     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_aca1140a82023bde02c8f4a6d32f122b5}{str2doub}}(std::string);}
+\DoxyCodeLine{68   }
+\DoxyCodeLine{69   \textcolor{keyword}{public}:}
+\DoxyCodeLine{70   }
+\DoxyCodeLine{71     std::unordered\_map<int,ReferenceShell> \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a40931292ebc0ff6fb882a6295f81643b}{refShells}}; }
+\DoxyCodeLine{73         }
+\DoxyCodeLine{74         }
+\DoxyCodeLine{75         }
+\DoxyCodeLine{76     \textcolor{comment}{// Disable default, copy and move constructors and assignment operators}}
+\DoxyCodeLine{77     \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a672657afbff971df33b8877b73fdb1df}{ReferenceBasisSet}}()                                     = \textcolor{keyword}{delete};}
+\DoxyCodeLine{78     \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a6a40c96e3da4d651d200506573d21b31}{ReferenceBasisSet}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet}{ReferenceBasisSet}} \&)            = \textcolor{keyword}{delete};}
+\DoxyCodeLine{79     \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a83d4399f7369e21ae36fc24efc858d2f}{ReferenceBasisSet}}(\mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet}{ReferenceBasisSet}} \&\&)                 = \textcolor{keyword}{delete};}
+\DoxyCodeLine{80     \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet}{ReferenceBasisSet}}\& \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a8e510f27e296861350724d9d9d896b62}{operator=}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet}{ReferenceBasisSet}} \&) = \textcolor{keyword}{delete}; }
+\DoxyCodeLine{81     \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet}{ReferenceBasisSet}}\& \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a90f0c7baa206af1fedf1c62503cc2874}{operator=}}(\mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet}{ReferenceBasisSet}} \&\&)      = \textcolor{keyword}{delete}; }
+\DoxyCodeLine{82   }
+\DoxyCodeLine{83     }
+\DoxyCodeLine{93     \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a35bb136413d03e88a03d85107bdb7cc8}{ReferenceBasisSet}}(\textcolor{keyword}{const} std::string \&path, \textcolor{keyword}{const} std::string \&def,}
+\DoxyCodeLine{94       \textcolor{keywordtype}{bool} doDef, \textcolor{keywordtype}{bool} forceCart = \textcolor{keyword}{false}, \textcolor{keywordtype}{bool} doPrint = \textcolor{keyword}{true}, \textcolor{keywordtype}{bool} nucBasis = \textcolor{keyword}{false}) :}
+\DoxyCodeLine{95       \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a9d055fca7c1d4ca514571d17d8aef7a3}{basisPath\_}}(path), \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a6aa66185777ddc7041787275d165951a}{basisDef\_}}(def), \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_abdc2ae6270a1c27e4f8f0be199ee38af}{forceCart\_}}(forceCart), \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a545de8edd520907f296689f0d0eafbdd}{nucBasis\_}}(nucBasis) \{}
+\DoxyCodeLine{96   }
+\DoxyCodeLine{97       \textcolor{keywordflow}{if} ( not doDef ) \{}
+\DoxyCodeLine{98         \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_ae337fbfea93ed19b322da481d6160979}{findBasisFile}}(doPrint);}
+\DoxyCodeLine{99         \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_abea8e7c9d94a5d1bc24f5f4888d4db36}{parseBasisFile}}(\mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a391ad188d2d1cc09650f7aa7d4f7225e}{basisFile\_}});}
+\DoxyCodeLine{100       \}}
+\DoxyCodeLine{101       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{102         std::istringstream input(\mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a6aa66185777ddc7041787275d165951a}{basisDef\_}});}
+\DoxyCodeLine{103         \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_abea8e7c9d94a5d1bc24f5f4888d4db36}{parseBasisFile}}(input);}
+\DoxyCodeLine{104       \}}
+\DoxyCodeLine{105     \}}
+\DoxyCodeLine{106   }
+\DoxyCodeLine{107     }
+\DoxyCodeLine{108     \textcolor{comment}{// Generates a shell list given a Molecule object. }}
+\DoxyCodeLine{109     \textcolor{comment}{// See src/basisset/reference.cxx for documentation}}
+\DoxyCodeLine{110     std::pair<std::vector<libint2::Shell>,std::vector<std::vector<double>>> }
+\DoxyCodeLine{111       \mbox{\hyperlink{classChronusQ_1_1ReferenceBasisSet_a5608ae2afc86f317a9d1ad312e6555ce}{generateShellSet}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}}\&);}
+\DoxyCodeLine{112   }
+\DoxyCodeLine{113   \}; \textcolor{comment}{// ReferenceBasisSet class}}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

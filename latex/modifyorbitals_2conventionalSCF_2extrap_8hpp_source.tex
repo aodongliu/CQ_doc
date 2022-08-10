@@ -1,0 +1,346 @@
+\hypertarget{modifyorbitals_2conventionalSCF_2extrap_8hpp_source}{}\doxysection{extrap.\+hpp}
+\label{modifyorbitals_2conventionalSCF_2extrap_8hpp_source}\index{include/modifyorbitals/conventionalSCF/extrap.hpp@{include/modifyorbitals/conventionalSCF/extrap.hpp}}
+\mbox{\hyperlink{modifyorbitals_2conventionalSCF_2extrap_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{extrapolate_8hpp}{extrapolate.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{interpolate_8hpp}{interpolate.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{35 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{36 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a62544a327c861c3a1c1e9b67463e2be1}{ConventionalSCF<MatsT>::modifyFock}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert) \{}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38   \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(this-\/>comm);}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40   \textcolor{comment}{// Static Damping}}
+\DoxyCodeLine{41   \textcolor{keywordflow}{if}( this-\/>doingDamp ) fockDamping();}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \textcolor{comment}{// DIIS extrapolation}}
+\DoxyCodeLine{44   \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.diisAlg == \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1a21b39feca0ff31393cbb148d973d5877}{NONE}} ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46   \textcolor{comment}{// Prepare for DIIS}}
+\DoxyCodeLine{47   \mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} fock = this-\/>modOrbOpt.getFock();}
+\DoxyCodeLine{48   \mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} den  = this-\/>modOrbOpt.getOnePDM();}
+\DoxyCodeLine{49   \textcolor{keywordtype}{size\_t} iDIIS                                           = this-\/>scfConv.nSCFIter \% this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nKeep;}
+\DoxyCodeLine{50   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i = 0; i < fock.size(); i++ ) \{}
+\DoxyCodeLine{51     diisFock[iDIIS][i]   = *fock[i];}
+\DoxyCodeLine{52     diisOnePDM[iDIIS][i] = *den[i];}
+\DoxyCodeLine{53     diisError[iDIIS][i]  = orbGrad[i];}
+\DoxyCodeLine{54   \}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56   \textcolor{keywordtype}{size\_t} nExtrap = std::min(this-\/>scfConv.nSCFIter + 1, this-\/>scfControls.nKeep);}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58   \textcolor{comment}{// Choose which algorithm}}
+\DoxyCodeLine{59   \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.diisAlg == \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1af6a9d2066f566205f25fed675e09b5eb}{CDIIS}} ) \{}
+\DoxyCodeLine{60     scfCDIIS(nExtrap, iDIIS);}
+\DoxyCodeLine{61   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.diisAlg == \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1a6137206dda2774d075f65718060b25e3}{EDIIS}} ) \{}
+\DoxyCodeLine{62     scfEDIIS(nExtrap, iDIIS, pert);}
+\DoxyCodeLine{63   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.diisAlg == \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1addd669d250447f4c8ee2479af495cc1c}{CEDIIS}} ) \{}
+\DoxyCodeLine{64     scfCEDIIS(nExtrap, iDIIS, pert);}
+\DoxyCodeLine{65   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{66     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Only CDIIS, EDIIS and CEDIIS is implemented so far"{}}, std::cout);}
+\DoxyCodeLine{67   \}}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69 \};   \textcolor{comment}{// SingleSlater<T>::modifyFock}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{77 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{78 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a2257f6458ceefd1e089e42ca3a7677cc}{ConventionalSCF<MatsT>::fockDamping}}() \{}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80   \textcolor{comment}{// Don't damp the first iteration.  We don't want}}
+\DoxyCodeLine{81   \textcolor{comment}{// to use the guess Fock and it's not saved anyway.}}
+\DoxyCodeLine{82   \textcolor{keywordflow}{if}( this-\/>scfConv.nSCFIter == 0 ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84   \mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} fock = this-\/>modOrbOpt.getFock();}
+\DoxyCodeLine{85   \mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} den  = this-\/>modOrbOpt.getOnePDM();}
+\DoxyCodeLine{86   \textcolor{keywordtype}{double} dp                                              = this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.dampParam;}
+\DoxyCodeLine{87   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i = 0; i < fock.size(); i++ ) \{}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \textcolor{comment}{// Damp the current orthonormal Fock matrix}}
+\DoxyCodeLine{90     *fock[i] = (1 -\/ dp) * *fock[i] + dp * prevFock[i];}
+\DoxyCodeLine{91     *den[i]  = (1 -\/ dp) * *den[i] + dp * prevOnePDM[i];}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \textcolor{comment}{// Save a copy for next time}}
+\DoxyCodeLine{94     prevFock[i]   = *fock[i];}
+\DoxyCodeLine{95     prevOnePDM[i] = *den[i];}
+\DoxyCodeLine{96   \}}
+\DoxyCodeLine{97   ao2orthoFock(fock);}
+\DoxyCodeLine{98   ao2orthoDen(den);}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100 \};   \textcolor{comment}{// ConventionalSCF<RefType,MatsT,IntsT,IntsT>::fockDamping}}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{109 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{110 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_aa7cb069220bda93cab0cb6b8e5d345eb}{ConventionalSCF<MatsT>::scfCDIIS}}(\textcolor{keywordtype}{size\_t} nExtrap, \textcolor{keywordtype}{size\_t} iDIIS) \{}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112   \textcolor{comment}{//  Just save the Fock, density, and commutator for the first iteration}}
+\DoxyCodeLine{113   \textcolor{keywordflow}{if}( this-\/>scfConv.nSCFIter == 0 ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115   \textcolor{comment}{// Build the B matrix and return the coefficients for the extrapolation}}
+\DoxyCodeLine{116   \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS<MatsT>}} extrap(nExtrap, diisError);}
+\DoxyCodeLine{117   \textcolor{keywordtype}{bool} conv = extrap.\mbox{\hyperlink{classChronusQ_1_1DIIS_a67e482424a7b9775e24ce1cc2ba09ab9}{extrapolate}}();}
+\DoxyCodeLine{118   \textcolor{keywordflow}{if}( conv ) \{}
+\DoxyCodeLine{119     diisCombineMat(extrap.\mbox{\hyperlink{classChronusQ_1_1DIIS_a912d1eca00e2f054965fb6f12b020b8f}{coeffs}}, nExtrap);}
+\DoxyCodeLine{120   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{121     std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n    *** WARNING: DIIS Inversion Failed -\/-\/ "{}}}
+\DoxyCodeLine{122               << \textcolor{stringliteral}{"{} Defaulting to Fixed-\/Point step ***\(\backslash\)n"{}}}
+\DoxyCodeLine{123               << std::endl;}
+\DoxyCodeLine{124   \}}
+\DoxyCodeLine{125 \};   \textcolor{comment}{// ConventionalSCF<RefType,MatsT,IntsT,IntsT>::scfDIIS}}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{133 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{134 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a3db7008d82f135fe89929d801c6f462d}{ConventionalSCF<MatsT>::scfEDIIS}}(\textcolor{keywordtype}{size\_t} nExtrap, \textcolor{keywordtype}{size\_t} iDIIS, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert) \{}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136   \textcolor{comment}{// Compute Energy with current density matrix}}
+\DoxyCodeLine{137   \textcolor{comment}{// The total energy from the last iteration was}}
+\DoxyCodeLine{138   \textcolor{comment}{// computed by contracting the new density with the}}
+\DoxyCodeLine{139   \textcolor{comment}{// old twoEH matrix. i.e. D\_i * G[D\_i-\/1]}}
+\DoxyCodeLine{140   this-\/>modOrbOpt.computeProperties(pert);}
+\DoxyCodeLine{141   diisEnergy[iDIIS] = this-\/>modOrbOpt.getTotalEnergy();}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143   \textcolor{comment}{//  Just save the Fock, density, and coupling for the first iteration}}
+\DoxyCodeLine{144   \textcolor{keywordflow}{if}( this-\/>scfConv.nSCFIter == 0 ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146   \textcolor{comment}{// Evaluate Error metric/Interpolation matrix}}
+\DoxyCodeLine{147   ediisErrorMetric(iDIIS, nExtrap);}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149   \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{ENERGYDIIS<double>}} interp(nExtrap, diisBMat-\/>pointer(), this-\/>scfControls.nKeep, diisEnergy, iDIIS, 0.1 * this-\/>scfControls.eneConvTol,}
+\DoxyCodeLine{150                             this-\/>memManager);}
+\DoxyCodeLine{151   \textcolor{keywordtype}{bool} conv = interp.\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a6a104c3fe82064a7ced89f8f9a916f58}{interpolate}}();}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153   \textcolor{keywordflow}{if}( conv ) \{}
+\DoxyCodeLine{154     \textcolor{comment}{// Convert double to MatsT and reorder indices with ediisMap}}
+\DoxyCodeLine{155     std::vector<MatsT> c(nExtrap, MatsT(0.));}
+\DoxyCodeLine{156     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i = 0; i < nExtrap; i++ )}
+\DoxyCodeLine{157       c[i] = MatsT(interp.\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ad346f9605a1bc908702246ff984ec55a}{coeffs}}[i]);}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159     diisCombineMat(c, nExtrap);}
+\DoxyCodeLine{160   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{161     std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n    *** WARNING: EDIIS Optimization Failed -\/-\/ "{}}}
+\DoxyCodeLine{162               << \textcolor{stringliteral}{"{} Defaulting to Fixed-\/Point step ***\(\backslash\)n"{}}}
+\DoxyCodeLine{163               << std::endl;}
+\DoxyCodeLine{164   \}}
+\DoxyCodeLine{165 \};   \textcolor{comment}{// ConventionalSCF<RefType,MatsT,IntsT,IntsT>::scfEDIIS}}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167 \textcolor{comment}{/*}}
+\DoxyCodeLine{168 \textcolor{comment}{ *   Brief: Compute the Fock/Density Matrices using the Commutator/Energy DIIS method}}
+\DoxyCodeLine{169 \textcolor{comment}{ *}}
+\DoxyCodeLine{170 \textcolor{comment}{ */}}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{173 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a7dd691cd81eb08c6dae714f719f42b94}{ConventionalSCF<MatsT>::scfCEDIIS}}(\textcolor{keywordtype}{size\_t} nExtrap, \textcolor{keywordtype}{size\_t} iDIIS, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert) \{}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175   this-\/>modOrbOpt.computeProperties(pert);}
+\DoxyCodeLine{176   diisEnergy[iDIIS] = this-\/>modOrbOpt.getTotalEnergy();}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178   \textcolor{comment}{//  Just save the Fock, density, and commutator for the first iteration}}
+\DoxyCodeLine{179   \textcolor{keywordflow}{if}( this-\/>scfConv.nSCFIter == 0 ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181   \textcolor{comment}{// Compute CDIIS coeffs}}
+\DoxyCodeLine{182   \mbox{\hyperlink{classChronusQ_1_1DIIS}{DIIS<MatsT>}} extrap(nExtrap, diisError);}
+\DoxyCodeLine{183   \textcolor{keywordtype}{bool} convCDIIS = extrap.\mbox{\hyperlink{classChronusQ_1_1DIIS_a67e482424a7b9775e24ce1cc2ba09ab9}{extrapolate}}();}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185   \textcolor{comment}{// Compute EDIIS}}
+\DoxyCodeLine{186   \textcolor{keywordtype}{double} diisSwitch = this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.cediisSwitch;}
+\DoxyCodeLine{187   ediisErrorMetric(iDIIS, nExtrap);}
+\DoxyCodeLine{188   \textcolor{keywordtype}{bool} convEDIIS  = \textcolor{keyword}{true};}
+\DoxyCodeLine{189   \textcolor{keywordtype}{double} errorMax = computeFDCConv();}
+\DoxyCodeLine{190   \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{ENERGYDIIS<double>}} interp(nExtrap, diisBMat-\/>pointer(), this-\/>scfControls.nKeep, diisEnergy, iDIIS, 0.1 * this-\/>scfControls.eneConvTol,}
+\DoxyCodeLine{191                             this-\/>memManager);}
+\DoxyCodeLine{192   \textcolor{keywordflow}{if}( errorMax > 1E-\/3 * diisSwitch ) \{ convEDIIS = interp.\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a6a104c3fe82064a7ced89f8f9a916f58}{interpolate}}(); \}}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194   \textcolor{comment}{// If failed default to fixed step}}
+\DoxyCodeLine{195   \textcolor{keywordflow}{if}( not convEDIIS ) \{ std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n    *** WARNING: EDIIS Optimization Failed -\/-\/ "{}} << std::endl; \}}
+\DoxyCodeLine{196   \textcolor{keywordflow}{if}( not convCDIIS ) \{}
+\DoxyCodeLine{197     std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n    *** WARNING: CDIIS Inversion Failed -\/-\/ "{}} << std::endl;}
+\DoxyCodeLine{198     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& c : extrap.\mbox{\hyperlink{classChronusQ_1_1DIIS_a912d1eca00e2f054965fb6f12b020b8f}{coeffs}} )}
+\DoxyCodeLine{199       c = MatsT(0.);}
+\DoxyCodeLine{200     extrap.\mbox{\hyperlink{classChronusQ_1_1DIIS_a912d1eca00e2f054965fb6f12b020b8f}{coeffs}}[iDIIS] = MatsT(1.);}
+\DoxyCodeLine{201   \}}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203   \textcolor{comment}{// Combine the CDIIS and EDIIS coeffs}}
+\DoxyCodeLine{204   \textcolor{keywordtype}{double} scaleEDIIS = 1.;}
+\DoxyCodeLine{205   \textcolor{keywordtype}{double} scaleCDIIS = 0.;}
+\DoxyCodeLine{206   \textcolor{keywordflow}{if}( errorMax < diisSwitch and errorMax > 1E-\/3 * diisSwitch ) \{}
+\DoxyCodeLine{207     \textcolor{comment}{// Smoothly transition from CDIIS to EDIIS}}
+\DoxyCodeLine{208     scaleEDIIS = errorMax / diisSwitch;}
+\DoxyCodeLine{209     scaleCDIIS = 1. -\/ scaleEDIIS;}
+\DoxyCodeLine{210   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( errorMax <= 1E-\/3 * diisSwitch ) \{}
+\DoxyCodeLine{211     scaleEDIIS = 0.;}
+\DoxyCodeLine{212     scaleCDIIS = 1.;}
+\DoxyCodeLine{213   \}}
+\DoxyCodeLine{214   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i = 0; i < nExtrap; i++ )}
+\DoxyCodeLine{215     extrap.\mbox{\hyperlink{classChronusQ_1_1DIIS_a912d1eca00e2f054965fb6f12b020b8f}{coeffs}}[i] *= MatsT(scaleCDIIS);}
+\DoxyCodeLine{216   \textcolor{keywordflow}{if}( scaleEDIIS > 0. ) \{}
+\DoxyCodeLine{217     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i = 0; i < nExtrap; i++ )}
+\DoxyCodeLine{218       extrap.\mbox{\hyperlink{classChronusQ_1_1DIIS_a912d1eca00e2f054965fb6f12b020b8f}{coeffs}}[i] += MatsT(scaleEDIIS * interp.\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ad346f9605a1bc908702246ff984ec55a}{coeffs}}[i]);}
+\DoxyCodeLine{219   \}}
+\DoxyCodeLine{220   diisCombineMat(extrap.\mbox{\hyperlink{classChronusQ_1_1DIIS_a912d1eca00e2f054965fb6f12b020b8f}{coeffs}}, nExtrap);}
+\DoxyCodeLine{221 \}   \textcolor{comment}{// ConventionalSCF<RefType,MatsT,IntsT,IntsT> :: scfCEDIIS}}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223 \textcolor{comment}{/*}}
+\DoxyCodeLine{224 \textcolor{comment}{ *   Brief: Compute the error metric for energy DIIS which is}}
+\DoxyCodeLine{225 \textcolor{comment}{ *          (Fi-\/Fj)\(\backslash\)cdot(Di-\/Dj)}}
+\DoxyCodeLine{226 \textcolor{comment}{ */}}
+\DoxyCodeLine{227 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{228 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_aea52eed4d12b45382fb6a022c38bb240}{ConventionalSCF<MatsT>::ediisErrorMetric}}(\textcolor{keywordtype}{size\_t} iDIIS, \textcolor{keywordtype}{size\_t} nExtrap) \{}
+\DoxyCodeLine{229   \textcolor{keywordtype}{size\_t} N    = this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nKeep;}
+\DoxyCodeLine{230   \textcolor{keywordtype}{size\_t} nMat = diisOnePDM[iDIIS].size();}
+\DoxyCodeLine{231 }
+\DoxyCodeLine{232   diisBMat-\/>clear();}
+\DoxyCodeLine{233   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} a = 0; a < nMat; a++ ) \{}
+\DoxyCodeLine{234     \textcolor{keywordtype}{size\_t} NB = diisOnePDM[iDIIS][a].dimension();}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} dF(this-\/>memManager, NB);}
+\DoxyCodeLine{237     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} dD(this-\/>memManager, NB);}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239     \textcolor{comment}{// Compute the coupling Matrix for EDIIS}}
+\DoxyCodeLine{240     \textcolor{comment}{// (F\_i -\/ F\_j)\(\backslash\)cdot(D\_i -\/ D\_j)}}
+\DoxyCodeLine{241     \textcolor{keywordtype}{size\_t} NB2 = NB * NB;}
+\DoxyCodeLine{242     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} j = 0; j < nExtrap; j++ ) \{}
+\DoxyCodeLine{243       dF.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae9ad6b2639dfd62c37d5ede32b6a4101}{clear}}();}
+\DoxyCodeLine{244       dD.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae9ad6b2639dfd62c37d5ede32b6a4101}{clear}}();}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{246       dD = diisOnePDM[iDIIS][a] -\/ diisOnePDM[j][a];}
+\DoxyCodeLine{247       dF = diisFock[iDIIS][a] -\/ diisFock[j][a];}
+\DoxyCodeLine{248 }
+\DoxyCodeLine{249       diisBMat-\/>\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}()[j + iDIIS * N] += 0.5 * std::real(\mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(NB2, dF.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), 1, dD.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), 1));}
+\DoxyCodeLine{250       diisBMat-\/>pointer()[iDIIS + j * N] += diisBMat-\/>pointer()[j + iDIIS * N];}
+\DoxyCodeLine{251     \}}
+\DoxyCodeLine{252   \}}
+\DoxyCodeLine{253 \}   \textcolor{comment}{// ConventionalSCF<RefType,MatsT,IntsT,IntsT> :: ediisErrorMetric}}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255 \textcolor{comment}{/*}}
+\DoxyCodeLine{256 \textcolor{comment}{ *   Brief: Take the coefficient vector from CDIIS, or CEDIIS and linearly combine}}
+\DoxyCodeLine{257 \textcolor{comment}{ *          DIIS fock and Density Matrices.}}
+\DoxyCodeLine{258 \textcolor{comment}{ *}}
+\DoxyCodeLine{259 \textcolor{comment}{ */}}
+\DoxyCodeLine{260 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{261 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a77cc120a9d9a8bcce2947c15036bcfc6}{ConventionalSCF<MatsT>::diisCombineMat}}(std::vector<MatsT> c, \textcolor{keywordtype}{size\_t} nExtrap) \{}
+\DoxyCodeLine{262   \textcolor{comment}{// Extrapolate Fock and density matrices using DIIS coefficients}}
+\DoxyCodeLine{263   \mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} fock = this-\/>modOrbOpt.getFock();}
+\DoxyCodeLine{264   \mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} den  = this-\/>modOrbOpt.getOnePDM();}
+\DoxyCodeLine{265 }
+\DoxyCodeLine{266   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} a = 0; a < fock.size(); a++ ) \{}
+\DoxyCodeLine{267     fock[a]-\/>clear();}
+\DoxyCodeLine{268     den[a]-\/>clear();}
+\DoxyCodeLine{269     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} j = 0; j < nExtrap; j++ ) \{}
+\DoxyCodeLine{270       *fock[a] += c[j] * diisFock[j][a];}
+\DoxyCodeLine{271       *den[a] += c[j] * diisOnePDM[j][a];}
+\DoxyCodeLine{272     \}}
+\DoxyCodeLine{273   \}}
+\DoxyCodeLine{274   ao2orthoFock(fock);}
+\DoxyCodeLine{275   ao2orthoDen(den);}
+\DoxyCodeLine{276 \}   \textcolor{comment}{// ConventionalSCF<RefType,MatsT,IntsT,IntsT> :: diisCombineMat}}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{282 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{283 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a9356ec9a5e1762be0488e093b8078906}{ConventionalSCF<MatsT>::allocExtrapStorage}}() \{}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285   \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(this-\/>comm);}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287   diisFock.clear();}
+\DoxyCodeLine{288   diisFock.reserve(this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nKeep);}
+\DoxyCodeLine{289   diisOnePDM.clear();}
+\DoxyCodeLine{290   diisOnePDM.reserve(this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nKeep);}
+\DoxyCodeLine{291   diisError.clear();}
+\DoxyCodeLine{292   diisError.reserve(this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nKeep);}
+\DoxyCodeLine{293   diisEnergy.clear();}
+\DoxyCodeLine{294   diisEnergy = std::vector<double>(this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nKeep, 0.);}
+\DoxyCodeLine{295   diisBMat   = std::make\_shared<SquareMatrix<double>>(this-\/>memManager, this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nKeep);}
+\DoxyCodeLine{296   diisBMat-\/>clear();}
+\DoxyCodeLine{297 }
+\DoxyCodeLine{298   \textcolor{comment}{// Allocate memory to store previous orthonormal Focks and densities for DIIS}}
+\DoxyCodeLine{299   \mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{VecShrdPtrMat<MatsT>}} fock = this-\/>modOrbOpt.getFock();}
+\DoxyCodeLine{300   \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.diisAlg != \mbox{\hyperlink{namespaceChronusQ_a271446fc21047d9ae81f40fb2bae18e1a21b39feca0ff31393cbb148d973d5877}{NONE}} ) \{}
+\DoxyCodeLine{301     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} i = 0; i < this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.nKeep; i++ ) \{}
+\DoxyCodeLine{302       std::vector<SquareMatrix<MatsT>> f;}
+\DoxyCodeLine{303       std::vector<SquareMatrix<MatsT>> d;}
+\DoxyCodeLine{304       std::vector<SquareMatrix<MatsT>> e;}
+\DoxyCodeLine{305       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} a = 0; a < fock.size(); a++ ) \{}
+\DoxyCodeLine{306         f.emplace\_back(this-\/>memManager, fock[a]-\/>dimension());}
+\DoxyCodeLine{307         d.emplace\_back(this-\/>memManager, fock[a]-\/>dimension());}
+\DoxyCodeLine{308         e.emplace\_back(this-\/>memManager, fock[a]-\/>dimension());}
+\DoxyCodeLine{309       \}}
+\DoxyCodeLine{310       diisFock.push\_back(f);}
+\DoxyCodeLine{311       diisOnePDM.push\_back(d);}
+\DoxyCodeLine{312       diisError.push\_back(e);}
+\DoxyCodeLine{313     \}}
+\DoxyCodeLine{314   \}}
+\DoxyCodeLine{315 }
+\DoxyCodeLine{316   \textcolor{comment}{// Allocate memory to store previous orthonormal Fock for damping}}
+\DoxyCodeLine{317   \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.doDamp ) \{}
+\DoxyCodeLine{318     prevFock.clear();}
+\DoxyCodeLine{319     prevOnePDM.clear();}
+\DoxyCodeLine{320     prevFock.reserve(fock.size());}
+\DoxyCodeLine{321     prevOnePDM.reserve(fock.size());}
+\DoxyCodeLine{322     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} a = 0; a < fock.size(); a++ ) \{}
+\DoxyCodeLine{323       prevFock.emplace\_back(this-\/>memManager, fock[a]-\/>dimension());}
+\DoxyCodeLine{324       prevOnePDM.emplace\_back(this-\/>memManager, fock[a]-\/>dimension());}
+\DoxyCodeLine{325     \}}
+\DoxyCodeLine{326   \}}
+\DoxyCodeLine{327 }
+\DoxyCodeLine{328 \};   \textcolor{comment}{// ConventionalSCF<RefType,MatsT,IntsT,IntsT>::allocExtrapStorage}}
+\DoxyCodeLine{329 }
+\DoxyCodeLine{330 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{331 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a56fa77cae387401c2c7c47cc54fa6080}{ConventionalSCF<MatsT>::computeOrbGradient}}(std::vector<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}>\& grad) \{}
+\DoxyCodeLine{332   \textcolor{keywordflow}{if}( this-\/>modOrbOpt.computeErrorVector ) \{}
+\DoxyCodeLine{333     this-\/>modOrbOpt.computeErrorVector(grad);}
+\DoxyCodeLine{334   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{335     FDCommutator(grad);}
+\DoxyCodeLine{336   \}}
+\DoxyCodeLine{337 \}}
+\DoxyCodeLine{338 }
+\DoxyCodeLine{348 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{349 \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a122d0114e75c76a9c5de8eabb43c3364}{ConventionalSCF<MatsT>::FDCommutator}}(std::vector<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}>\& FDC) \{}
+\DoxyCodeLine{350 }
+\DoxyCodeLine{351   ao2orthoDen();}
+\DoxyCodeLine{352   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} a = 0; a < fockMatrixOrtho.size(); a++ ) \{}
+\DoxyCodeLine{353     \textcolor{keywordtype}{size\_t} NB = fockMatrixOrtho[a].dimension();}
+\DoxyCodeLine{354     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} SCR(this-\/>memManager, NB);}
+\DoxyCodeLine{355     FDC[a].clear();}
+\DoxyCodeLine{356 }
+\DoxyCodeLine{357     \textcolor{comment}{// Compute F*D}}
+\DoxyCodeLine{358     blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans, NB, NB, NB, MatsT(1.), fockMatrixOrtho[a].pointer(), NB, onePDMOrtho[a].pointer(), NB, MatsT(0.), SCR.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), NB);}
+\DoxyCodeLine{359     \textcolor{comment}{// Compute FD -\/ DF}}
+\DoxyCodeLine{360     \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'N'}, \textcolor{charliteral}{'C'}, NB, NB, MatsT(1.), SCR.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), NB, MatsT(-\/1.), SCR.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(), NB, FDC[a].pointer(), NB);}
+\DoxyCodeLine{361   \}}
+\DoxyCodeLine{362 \};   \textcolor{comment}{// ConventionaSCF<MatsT>::FDCommutator}}
+\DoxyCodeLine{363 }
+\DoxyCodeLine{364 \textcolor{keyword}{template}<\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{365 \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a169da6e13b79a2764f67b65dfd19a4c5}{ConventionalSCF<MatsT>::computeFDCConv}}() \{}
+\DoxyCodeLine{366   \textcolor{comment}{// Compute the Max element}}
+\DoxyCodeLine{367   \textcolor{keywordtype}{double} maxGrad = 0.;}
+\DoxyCodeLine{368   \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} a = 0; a < orbGrad.size(); a++ ) \{}
+\DoxyCodeLine{369     \textcolor{keywordtype}{size\_t} NB = orbGrad[a].dimension();}
+\DoxyCodeLine{370     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i = 0; i < NB * NB; i++ )}
+\DoxyCodeLine{371       \textcolor{keywordflow}{if}( maxGrad < std::abs(orbGrad[a].pointer()[i]) ) maxGrad = std::abs(orbGrad[a].pointer()[i]);}
+\DoxyCodeLine{372   \}}
+\DoxyCodeLine{373   \textcolor{keywordflow}{return} maxGrad;}
+\DoxyCodeLine{374 \};   \textcolor{comment}{// ConventionalSCF<MatsT> :: computeFDCConv}}
+\DoxyCodeLine{375 }
+\DoxyCodeLine{376 \};   \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

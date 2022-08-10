@@ -1,0 +1,928 @@
+\hypertarget{fockbuilder_2neofock_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{fockbuilder_2neofock_2impl_8hpp_source}\index{include/fockbuilder/neofock/impl.hpp@{include/fockbuilder/neofock/impl.hpp}}
+\mbox{\hyperlink{fockbuilder_2neofock_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{neofock_8hpp}{fockbuilder/neofock.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incore4indextpi_8hpp}{particleintegrals/twopints/incore4indextpi.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gtodirecttpi_8hpp}{particleintegrals/twopints/gtodirecttpi.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gradints_2direct_8hpp}{particleintegrals/gradints/direct.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gradints_2incore_8hpp}{particleintegrals/gradints/incore.hpp}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{dft_8hpp}{dft.hpp}}>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{dft_2util_8hpp}{dft/util.hpp}}>}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{integrator_8hpp}{grid/integrator.hpp}}>}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{threads_8hpp}{util/threads.hpp}}>}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{41   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a0d35d66f383828bf0afdc0f476f4d228}{NEOFockBuilder<MatsT,IntsT>::formepJ}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\& ss,}
+\DoxyCodeLine{42     \textcolor{keywordtype}{bool} increment)}
+\DoxyCodeLine{43   \{}
+\DoxyCodeLine{44     \textcolor{comment}{// Validate internal pointers}}
+\DoxyCodeLine{45     \textcolor{keywordflow}{if}( this-\/>aux\_ss == \textcolor{keyword}{nullptr} )}
+\DoxyCodeLine{46       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}aux\_ss uninitialized in formepJ!"{}});}
+\DoxyCodeLine{47     \textcolor{keywordflow}{if}( this-\/>outMat == \textcolor{keyword}{nullptr} )}
+\DoxyCodeLine{48       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}outMat uninitialized in formepJ!"{}});}
+\DoxyCodeLine{49     \textcolor{keywordflow}{if}( contraction == \textcolor{keyword}{nullptr} )}
+\DoxyCodeLine{50       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}contraction uninitialized in formepJ!"{}});}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{comment}{// Decide onePDM to use}}
+\DoxyCodeLine{53     \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}\& contract1PDM}
+\DoxyCodeLine{54         = increment ? *this-\/>aux\_ss-\/>deltaOnePDM : *this-\/>aux\_ss-\/>onePDM;}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{keywordtype}{size\_t} NB = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5bb8768829c6a466209aae6e9e690ab3}{basisSet}}().\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     \textcolor{comment}{// Zero out J and K[i]}}
+\DoxyCodeLine{59     \textcolor{keywordflow}{if}(not increment)}
+\DoxyCodeLine{60       this-\/>outMat-\/>clear();}
+\DoxyCodeLine{61   }
+\DoxyCodeLine{62     std::vector<TwoBodyContraction<MatsT>> contract =}
+\DoxyCodeLine{63       \{ \{contract1PDM.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a56bd65283837c1fbdbc7d23ddde2f558}{S}}().pointer(), this-\/>outMat-\/>pointer(), \textcolor{keyword}{true}, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cba973881f532185390135a2845f80eb3ae}{COULOMB}}\} \};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} pert;}
+\DoxyCodeLine{66     contraction-\/>twoBodyContract(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}}, contract, pert);}
+\DoxyCodeLine{67   \}}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{70   std::vector<double> \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a83c708063db88664e5633661c662b03f}{NEOFockBuilder<MatsT,IntsT>::formepJGrad}}(}
+\DoxyCodeLine{71     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\& ss, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert, \textcolor{keywordtype}{double} xHFX) \{}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{keywordflow}{if}( this-\/>aux\_ss == \textcolor{keyword}{nullptr} )}
+\DoxyCodeLine{74       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}aux\_ss uninitialized in formepJGrad!"{}});}
+\DoxyCodeLine{75     \textcolor{keywordflow}{if}( gradTPI == \textcolor{keyword}{nullptr} )}
+\DoxyCodeLine{76       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}gradTPI uninitialized in formepJGrad!"{}});}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{keywordtype}{size\_t} NB = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5bb8768829c6a466209aae6e9e690ab3}{basisSet}}().\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{79     \textcolor{keywordtype}{size\_t} nGrad = 3*ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5f29f9a842c2d47c458e1388abb94874}{molecule}}().\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}};}
+\DoxyCodeLine{80     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& mem = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}};}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82     \textcolor{comment}{// Form contraction}}
+\DoxyCodeLine{83     std::unique\_ptr<GradContractions<MatsT,IntsT>> contract = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{84     \textcolor{keywordflow}{if} ( std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsT>}}>((*gradTPI)[0]) ) \{}
+\DoxyCodeLine{85       contract = std::make\_unique<InCore4indexGradContraction<MatsT,IntsT>>(*gradTPI);}
+\DoxyCodeLine{86     \}}
+\DoxyCodeLine{87     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1DirectTPI}{DirectTPI<IntsT>}}>((*gradTPI)[0]) ) \{}
+\DoxyCodeLine{88       contract = std::make\_unique<DirectGradContraction<MatsT,IntsT>>(*gradTPI);}
+\DoxyCodeLine{89     \}}
+\DoxyCodeLine{90     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{91       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Gradients of RI NYI!"{}});}
+\DoxyCodeLine{92     \textcolor{comment}{// Assume that the order of the TPI is the same between the regular and}}
+\DoxyCodeLine{93     \textcolor{comment}{//   gradient integrals}}
+\DoxyCodeLine{94     contract-\/>contractSecond = contraction-\/>contractSecond;}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     \textcolor{comment}{// Create contraction list}}
+\DoxyCodeLine{97     std::vector<std::vector<TwoBodyContraction<MatsT>>> cList;}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99     std::vector<SquareMatrix<MatsT>> JList;}
+\DoxyCodeLine{100     JList.reserve(nGrad);}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iGrad = 0; iGrad < nGrad; iGrad++ ) \{}
+\DoxyCodeLine{103       std::vector<TwoBodyContraction<MatsT>> tempCont;}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105       \textcolor{comment}{// Coulomb}}
+\DoxyCodeLine{106       JList.emplace\_back(mem, NB);}
+\DoxyCodeLine{107       JList.back().clear();}
+\DoxyCodeLine{108       tempCont.push\_back(}
+\DoxyCodeLine{109          \{this-\/>aux\_ss-\/>onePDM-\/>S().pointer(), JList.back().pointer(), \textcolor{keyword}{true}, \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cba973881f532185390135a2845f80eb3ae}{COULOMB}}\}}
+\DoxyCodeLine{110       );}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112       cList.push\_back(tempCont);}
+\DoxyCodeLine{113     \}}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115     \textcolor{comment}{// Contract to J/K}}
+\DoxyCodeLine{116     contract-\/>gradTwoBodyContract(\mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\_COMM\_WORLD}}, \textcolor{keyword}{true}, cList, pert);}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118     \textcolor{comment}{// Contract to gradient}}
+\DoxyCodeLine{119     std::vector<double> gradient;}
+\DoxyCodeLine{120     \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}} twoEGrad(mem, NB, \textcolor{keyword}{false}, \textcolor{keyword}{false});}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iGrad = 0; iGrad < nGrad; iGrad++ ) \{}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124       \textcolor{comment}{// G[S] = -\/2 * J}}
+\DoxyCodeLine{125       \textcolor{comment}{// TODO: The negative here is implicitly taking care of the}}
+\DoxyCodeLine{126       \textcolor{comment}{//   electron/proton charges.}}
+\DoxyCodeLine{127       twoEGrad.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a56bd65283837c1fbdbc7d23ddde2f558}{S}}() = -\/2. * JList[iGrad];}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129       \textcolor{keywordtype}{double} gradVal = ss.template computeOBProperty<SCALAR>(}
+\DoxyCodeLine{130         twoEGrad.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a56bd65283837c1fbdbc7d23ddde2f558}{S}}().pointer()}
+\DoxyCodeLine{131       );}
+\DoxyCodeLine{132       gradient.push\_back(0.25*gradVal);}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134     \}}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     \textcolor{keywordflow}{return} gradient; }
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138   \}}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{141   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_a41e9a3ae141c0dae34db32cac969760a}{NEOFockBuilder<MatsT,IntsT>::formFock}}(}
+\DoxyCodeLine{142     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\& ss, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& empert, \textcolor{keywordtype}{bool} increment,}
+\DoxyCodeLine{143     \textcolor{keywordtype}{double} xHFX)}
+\DoxyCodeLine{144   \{}
+\DoxyCodeLine{145     \textcolor{keywordflow}{if}( this-\/>upstream == \textcolor{keyword}{nullptr} )}
+\DoxyCodeLine{146       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Upstream FockBuilder uninitialized in formFock!"{}});}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148     \textcolor{comment}{// Call all upstream FockBuilders}}
+\DoxyCodeLine{149     this-\/>upstream-\/>formFock(ss, empert, increment, xHFX);}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151     formepJ(ss, increment);}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     *ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa5b6666e06adbd12fdd3cc534f2d297b}{twoeH}} -\/= 2. * *this-\/>outMat;}
+\DoxyCodeLine{154     *ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab82f1f8ad464a41f46f9ee508cf22b38}{fockMatrix}} -\/= 2. * *this-\/>outMat;}
+\DoxyCodeLine{155   \}}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{158   std::vector<double> \mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder_afdf4602a4a99fed692db96451b539af2}{NEOFockBuilder<MatsT,IntsT>::getGDGrad}}(}
+\DoxyCodeLine{159     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\& ss, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert, \textcolor{keywordtype}{double} xHFX) \{}
+\DoxyCodeLine{160     \textcolor{keywordflow}{if}( this-\/>upstream == \textcolor{keyword}{nullptr} )}
+\DoxyCodeLine{161       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Upstream FockBuilder uninitialized in getGDGrad!"{}});}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163     \textcolor{keywordtype}{size\_t} nGrad = 3*ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5f29f9a842c2d47c458e1388abb94874}{molecule}}().\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}};}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165     std::vector<double> gradient = this-\/>upstream-\/>getGDGrad(ss, pert, xHFX);}
+\DoxyCodeLine{166     std::vector<double> epjGrad = formepJGrad(ss, pert, xHFX);}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168     std::transform(gradient.begin(), gradient.end(), epjGrad.begin(),}
+\DoxyCodeLine{169                    gradient.begin(), std::plus<double>());}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171     \textcolor{keywordflow}{return} gradient;}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173   \};}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176   \textcolor{comment}{/*}}
+\DoxyCodeLine{177 \textcolor{comment}{   * NEO KS METHODS}}
+\DoxyCodeLine{178 \textcolor{comment}{   */}}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{182   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_a9ac6a8c25e7c70b0174d599e9b9d016b}{NEOKohnShamBuilder<MatsT,IntsT>::formVXC}}(\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\& ss) \{}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184     \mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham<MatsT,IntsT>}}* ks = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham<MatsT,IntsT>}}*\textcolor{keyword}{>}(\&ss);}
+\DoxyCodeLine{185     \textcolor{keywordtype}{bool} isKS(ks);}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187     \textcolor{comment}{// TODO: initialize integration parameter storage}}
+\DoxyCodeLine{188     assert( intParam.nRad \% intParam.nRadPerBatch == 0 );}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190     \textcolor{comment}{// Parallelism}}
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192     \textcolor{keywordtype}{size\_t} nthreads = \mbox{\hyperlink{namespaceChronusQ_a3320ee560c87921c8d84885db82e9917}{GetNumThreads}}();}
+\DoxyCodeLine{193     \textcolor{keywordtype}{size\_t} LAThreads = \mbox{\hyperlink{namespaceChronusQ_a3152808c4819d6cbf8a29aef92728866}{GetLAThreads}}();}
+\DoxyCodeLine{194     \textcolor{keywordtype}{size\_t} mpiRank   = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}});}
+\DoxyCodeLine{195     \textcolor{keywordtype}{size\_t} mpiSize   = \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}});}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197     \textcolor{comment}{// MPI Communicator for numerical integration}}
+\DoxyCodeLine{198     \textcolor{comment}{// *** Assumes that MPI will be done only across atoms in integration}}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200     \textcolor{keywordtype}{size\_t} nAtoms = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5f29f9a842c2d47c458e1388abb94874}{molecule}}().\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}};}
+\DoxyCodeLine{201     \textcolor{keywordtype}{int} color = ((mpiSize < nAtoms) or }
+\DoxyCodeLine{202                  (mpiRank < nAtoms)) ? 1 : \mbox{\hyperlink{mpi_8hpp_aff6b3ceb2c22396e5eab7f509b3da0dc}{MPI\_UNDEFINED}};}
+\DoxyCodeLine{203                                                             }
+\DoxyCodeLine{204                   }
+\DoxyCodeLine{205     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} intComm = \mbox{\hyperlink{namespaceChronusQ_a25b765abdb845e0ca3adb846155b3878}{MPICommSplit}}(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}},color,mpiRank);}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{208     \textcolor{keywordflow}{if}( intComm != \mbox{\hyperlink{namespaceChronusQ_a64b7658dac48bb68d8e0e82c988202fd}{MPI\_COMM\_NULL}} ) }
+\DoxyCodeLine{209 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{210     \{}
+\DoxyCodeLine{211   }
+\DoxyCodeLine{212       \textcolor{comment}{// Define several useful quantities for later on}}
+\DoxyCodeLine{213       \textcolor{keywordtype}{size\_t} NPtsMaxPerBatch = intParam.nRadPerBatch * intParam.nAng;}
+\DoxyCodeLine{214   }
+\DoxyCodeLine{215       \textcolor{keywordtype}{bool} isGGA = \textcolor{keyword}{false};}
+\DoxyCodeLine{216       \textcolor{keywordflow}{if}( isKS )}
+\DoxyCodeLine{217         isGGA = std::any\_of(ks-\/>\mbox{\hyperlink{classChronusQ_1_1KohnSham_abb0e9c381fb8cb4ea6504b8c43012e67}{functionals}}.begin(),ks-\/>\mbox{\hyperlink{classChronusQ_1_1KohnSham_abb0e9c381fb8cb4ea6504b8c43012e67}{functionals}}.end(),}
+\DoxyCodeLine{218                      [](std::shared\_ptr<DFTFunctional> \&x) \{}
+\DoxyCodeLine{219                        return x-\/>isGGA(); }
+\DoxyCodeLine{220                      \}); }
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222       \textcolor{keywordtype}{bool} epcisGGA = std::any\_of(epc\_functionals.begin(),epc\_functionals.end(),}
+\DoxyCodeLine{223                        [](std::shared\_ptr<DFTFunctional> \&x) \{}
+\DoxyCodeLine{224                        return x-\/>isGGA(); }
+\DoxyCodeLine{225                      \}); }
+\DoxyCodeLine{226   }
+\DoxyCodeLine{227       \textcolor{comment}{// Turn off LA threads}}
+\DoxyCodeLine{228       \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(1);}
+\DoxyCodeLine{229   }
+\DoxyCodeLine{230       \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&basis = ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5bb8768829c6a466209aae6e9e690ab3}{basisSet}}();}
+\DoxyCodeLine{231       \textcolor{keywordtype}{size\_t} NB     = basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{232       \textcolor{keywordtype}{size\_t} NB2    = NB*NB;}
+\DoxyCodeLine{233       \textcolor{keywordtype}{size\_t} NTNB2  = nthreads * NB2;}
+\DoxyCodeLine{234       \textcolor{keywordtype}{size\_t} NTNPPB = nthreads*NPtsMaxPerBatch;}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236       \textcolor{comment}{// Auxiliary basis set information for NEO-\/DFT}}
+\DoxyCodeLine{237       \mbox{\hyperlink{structChronusQ_1_1BasisSet}{BasisSet}} \&aux\_basis = this-\/>aux\_ss-\/>basisSet();}
+\DoxyCodeLine{238       \textcolor{keywordtype}{size\_t} aux\_NB    = aux\_basis.\mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{nBasis}};}
+\DoxyCodeLine{239       \textcolor{keywordtype}{size\_t} aux\_NB2   = aux\_NB*aux\_NB;}
+\DoxyCodeLine{240       \textcolor{keywordtype}{size\_t} aux\_NTNB2 = nthreads * aux\_NB2;}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242       \textcolor{comment}{// Make sure we've allocated VXC if we need to}}
+\DoxyCodeLine{243       \textcolor{keywordflow}{if}( !VXC ) \{}
+\DoxyCodeLine{244         \textcolor{keywordflow}{if}( ks ) \{}
+\DoxyCodeLine{245           VXC = ks-\/>\mbox{\hyperlink{classChronusQ_1_1KohnSham_acad811487139c4b801f6d6b2c9cba9d8}{VXC}};}
+\DoxyCodeLine{246         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{247           VXC = std::make\_shared<PauliSpinorSquareMatrices<double>>(}
+\DoxyCodeLine{248             ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}, NB, ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_af707376a6a83dce1fd3208a003b668f3}{nC}} > 1, !ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a2ab0038558f94e31fe128507b2dd1f45}{iCS}}}
+\DoxyCodeLine{249           );}
+\DoxyCodeLine{250         \}}
+\DoxyCodeLine{251       \}}
+\DoxyCodeLine{252 }
+\DoxyCodeLine{253       \textcolor{comment}{// Clean up all VXC components for a the evaluation for a new }}
+\DoxyCodeLine{254       \textcolor{comment}{// batch of points}}
+\DoxyCodeLine{255   }
+\DoxyCodeLine{256       std::vector<std::vector<double*>> integrateVXC;}
+\DoxyCodeLine{257       \textcolor{keywordtype}{double}* intVXC\_RAW = (nthreads == 1) ? \textcolor{keyword}{nullptr} :}
+\DoxyCodeLine{258         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(VXC-\/>nComponent() * NTNB2);}
+\DoxyCodeLine{259   }
+\DoxyCodeLine{260       std::vector<double*> VXC\_SZYX = VXC-\/>SZYXPointers(); }
+\DoxyCodeLine{261       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < VXC\_SZYX.size(); k++) \{}
+\DoxyCodeLine{262         integrateVXC.emplace\_back();}
+\DoxyCodeLine{263 }
+\DoxyCodeLine{264         \textcolor{keywordflow}{if}( nthreads != 1 ) }
+\DoxyCodeLine{265           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} ith = 0; ith < nthreads; ith++)}
+\DoxyCodeLine{266             integrateVXC.back().emplace\_back(}
+\DoxyCodeLine{267               intVXC\_RAW + (ith + k*nthreads) * NB2}
+\DoxyCodeLine{268             );}
+\DoxyCodeLine{269 }
+\DoxyCodeLine{270         \textcolor{keywordflow}{else} }
+\DoxyCodeLine{271           integrateVXC.back().emplace\_back(VXC\_SZYX[k]);}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273       \}}
+\DoxyCodeLine{274       }
+\DoxyCodeLine{275       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}} : integrateVXC) \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa57cec4137b614c87cb4e24a3d003a3e0}{Y}} : \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}) std::fill\_n(\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa57cec4137b614c87cb4e24a3d003a3e0}{Y}},NB2,0.);}
+\DoxyCodeLine{276 }
+\DoxyCodeLine{277       std::vector<double> integrateXCEnergy(nthreads,0.);}
+\DoxyCodeLine{278       std::vector<double> integrateEPCEnergy(nthreads,0.);}
+\DoxyCodeLine{279   }
+\DoxyCodeLine{280       \textcolor{comment}{// Allocating Memory}}
+\DoxyCodeLine{281       \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\///}}
+\DoxyCodeLine{282       \textcolor{keywordflow}{if}( ks ) ks-\/>\mbox{\hyperlink{classChronusQ_1_1KohnSham_ae3ab2e94608124d78ca6a0044bba165d}{XCEnergy}} = 0.;}
+\DoxyCodeLine{283       XCEnergy = 0.;}
+\DoxyCodeLine{284       \textcolor{keywordtype}{double} *SCRATCHNBNB = }
+\DoxyCodeLine{285         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNB2); }
+\DoxyCodeLine{286       \textcolor{keywordtype}{double} *SCRATCHNBNP = }
+\DoxyCodeLine{287         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB*NB); }
+\DoxyCodeLine{288 }
+\DoxyCodeLine{289       \textcolor{keywordtype}{double} *DenS, *DenZ, *DenX ;}
+\DoxyCodeLine{290       DenS = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{291 }
+\DoxyCodeLine{292       \textcolor{keywordflow}{if}( ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>hasZ() )}
+\DoxyCodeLine{293         DenZ = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{294 }
+\DoxyCodeLine{295       \textcolor{keywordflow}{if}( ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>hasXY() )}
+\DoxyCodeLine{296         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Relativistic NEO-\/Kohn-\/Sham NYI!"{}}, std::cout);}
+\DoxyCodeLine{297 }
+\DoxyCodeLine{298       \textcolor{keywordtype}{double} *epsEval = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{299       \textcolor{keywordtype}{double} *epcEval = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{300       std::fill\_n(epcEval, NTNPPB, 0.);}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302       \textcolor{comment}{// Density U-\/Variables}}
+\DoxyCodeLine{303       \textcolor{keywordtype}{double} *U\_n   = }
+\DoxyCodeLine{304         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(2*NTNPPB); }
+\DoxyCodeLine{305       \textcolor{keywordtype}{double} *dVU\_n = }
+\DoxyCodeLine{306         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(2*NTNPPB); }
+\DoxyCodeLine{307 }
+\DoxyCodeLine{308       \textcolor{keywordtype}{double} *ZrhoVar1, *ZgammaVar1, *ZgammaVar2;}
+\DoxyCodeLine{309 }
+\DoxyCodeLine{310       ZrhoVar1 = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{311       }
+\DoxyCodeLine{312       \textcolor{comment}{// These quantities are only used for GGA functionals}}
+\DoxyCodeLine{313       \textcolor{keywordtype}{double} *GDenS, *GDenZ, *U\_gamma, *dVU\_gamma;}
+\DoxyCodeLine{314       \textcolor{keywordflow}{if}( isGGA || epcisGGA ) \{}
+\DoxyCodeLine{315         GDenS = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(3*NTNPPB);}
+\DoxyCodeLine{316         ZgammaVar1 = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{317         ZgammaVar2 = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{318 }
+\DoxyCodeLine{319         \textcolor{keywordflow}{if}( ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>hasZ() )}
+\DoxyCodeLine{320           GDenZ = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(3*NTNPPB);}
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322         \textcolor{keywordflow}{if}( ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>hasXY() )}
+\DoxyCodeLine{323           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Relativistic NEO-\/Kohn-\/Sham NYI!"{}}, std::cout);}
+\DoxyCodeLine{324 }
+\DoxyCodeLine{325         \textcolor{comment}{// Gamma U-\/Variables}}
+\DoxyCodeLine{326         U\_gamma = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(3*NTNPPB); }
+\DoxyCodeLine{327         dVU\_gamma = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(3*NTNPPB); }
+\DoxyCodeLine{328       \}}
+\DoxyCodeLine{329 }
+\DoxyCodeLine{330       \textcolor{comment}{// These quantities are used when there are multiple xc functionals}}
+\DoxyCodeLine{331       \textcolor{keywordtype}{double} *epsSCR, *dVU\_n\_SCR, *dVU\_gamma\_SCR;}
+\DoxyCodeLine{332       \textcolor{keywordflow}{if}( ks \&\& ks-\/>\mbox{\hyperlink{classChronusQ_1_1KohnSham_abb0e9c381fb8cb4ea6504b8c43012e67}{functionals}}.size() > 1 ) \{}
+\DoxyCodeLine{333         epsSCR    = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{334         dVU\_n\_SCR    = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(2*NTNPPB);}
+\DoxyCodeLine{335         \textcolor{keywordflow}{if}(isGGA || epcisGGA) }
+\DoxyCodeLine{336           dVU\_gamma\_SCR = }
+\DoxyCodeLine{337             ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(3*NTNPPB);}
+\DoxyCodeLine{338       \}}
+\DoxyCodeLine{339 }
+\DoxyCodeLine{340       \textcolor{comment}{// ZMatrix}}
+\DoxyCodeLine{341       \textcolor{keywordtype}{double} *ZMAT = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB*NB);}
+\DoxyCodeLine{342  }
+\DoxyCodeLine{343       \textcolor{comment}{// Decide if we need to allocate space for real part of the }}
+\DoxyCodeLine{344       \textcolor{comment}{// densities and copy over the real parts}}
+\DoxyCodeLine{345       std::shared\_ptr<PauliSpinorSquareMatrices<double>> Re1PDM;}
+\DoxyCodeLine{346       \textcolor{keywordflow}{if} (std::is\_same<MatsT,double>::value)}
+\DoxyCodeLine{347         Re1PDM = std::dynamic\_pointer\_cast<PauliSpinorSquareMatrices<double>>(}
+\DoxyCodeLine{348             ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}});}
+\DoxyCodeLine{349       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{350         Re1PDM = std::make\_shared<PauliSpinorSquareMatrices<double>>(}
+\DoxyCodeLine{351            ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>real\_part());}
+\DoxyCodeLine{352 }
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354       \textcolor{comment}{// Scratch pointers for auxiliary systems }}
+\DoxyCodeLine{355       \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/NEO-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{356       \textcolor{keywordtype}{double} *AUX\_SCRATCHNBNB = }
+\DoxyCodeLine{357         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(aux\_NTNB2);}
+\DoxyCodeLine{358       \textcolor{keywordtype}{double} *AUX\_SCRATCHNBNP = }
+\DoxyCodeLine{359         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB*aux\_NB);        }
+\DoxyCodeLine{360 }
+\DoxyCodeLine{361       \textcolor{comment}{// Density pointers for auxiliary system}}
+\DoxyCodeLine{362       \textcolor{keywordtype}{double} *aux\_DenS, *aux\_DenZ;}
+\DoxyCodeLine{363       aux\_DenS = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{364 }
+\DoxyCodeLine{365         \textcolor{keywordflow}{if} ( this-\/>aux\_ss-\/>onePDM-\/>hasZ() )}
+\DoxyCodeLine{366           aux\_DenZ = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{367 }
+\DoxyCodeLine{368         \textcolor{keywordflow}{if} ( this-\/>aux\_ss-\/>onePDM-\/>hasXY() )}
+\DoxyCodeLine{369           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Relativistic NEO-\/Kohn-\/Sham NYI!"{}}, std::cout);}
+\DoxyCodeLine{370 }
+\DoxyCodeLine{371       \textcolor{comment}{// NEO auxiliary Density U-\/Variables}}
+\DoxyCodeLine{372       \textcolor{keywordtype}{double} *aux\_U\_n   = }
+\DoxyCodeLine{373         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(2*NTNPPB);}
+\DoxyCodeLine{374       \textcolor{keywordtype}{double} *aux\_dVU\_n  = }
+\DoxyCodeLine{375         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(2*NTNPPB);}
+\DoxyCodeLine{376 }
+\DoxyCodeLine{377       \textcolor{keywordtype}{double} *aux\_ZrhoVar1, *aux\_ZgammaVar1, *aux\_ZgammaVar2;}
+\DoxyCodeLine{378       \textcolor{comment}{// These quantities are only used for GGA functionals}}
+\DoxyCodeLine{379       \textcolor{keywordtype}{double} *aux\_GDenS, *aux\_GDenZ, *aux\_U\_gamma, *aux\_dVU\_gamma;}
+\DoxyCodeLine{380 }
+\DoxyCodeLine{381       aux\_ZrhoVar1 = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{382 }
+\DoxyCodeLine{383       \textcolor{keywordflow}{if}( epcisGGA ) \{}
+\DoxyCodeLine{384         aux\_GDenS = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(3*NTNPPB);}
+\DoxyCodeLine{385         aux\_ZgammaVar1 = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{386         aux\_ZgammaVar2 = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{387 }
+\DoxyCodeLine{388         \textcolor{keywordflow}{if}( this-\/>aux\_ss-\/>onePDM-\/>hasZ() )}
+\DoxyCodeLine{389           aux\_GDenZ = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(3*NTNPPB);}
+\DoxyCodeLine{390 }
+\DoxyCodeLine{391         \textcolor{keywordflow}{if}( this-\/>aux\_ss-\/>onePDM-\/>hasXY() )}
+\DoxyCodeLine{392           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Relativistic NEO-\/Kohn-\/Sham NYI!"{}}, std::cout);}
+\DoxyCodeLine{393 }
+\DoxyCodeLine{394         \textcolor{comment}{// Gamma U-\/Variables}}
+\DoxyCodeLine{395         aux\_U\_gamma = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(3*NTNPPB); }
+\DoxyCodeLine{396         aux\_dVU\_gamma = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(3*NTNPPB); }
+\DoxyCodeLine{397       \}}
+\DoxyCodeLine{398 }
+\DoxyCodeLine{399       \textcolor{keywordtype}{double} *aux\_epsSCR, *aux\_dVU\_n\_SCR, *aux\_dVU\_gamma\_SCR;}
+\DoxyCodeLine{400       \textcolor{keywordflow}{if}( epc\_functionals.size() > 1 ) \{}
+\DoxyCodeLine{401         aux\_epsSCR    = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{402         aux\_dVU\_n\_SCR    = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(2*NTNPPB);}
+\DoxyCodeLine{403         \textcolor{keywordflow}{if}(epcisGGA) }
+\DoxyCodeLine{404           aux\_dVU\_gamma\_SCR = }
+\DoxyCodeLine{405             ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(3*NTNPPB);}
+\DoxyCodeLine{406       \}}
+\DoxyCodeLine{407 }
+\DoxyCodeLine{408       std::shared\_ptr<PauliSpinorSquareMatrices<double>> aux\_Re1PDM;}
+\DoxyCodeLine{409       \textcolor{keywordflow}{if}( std::is\_same<MatsT,double>::value )}
+\DoxyCodeLine{410          aux\_Re1PDM = std::dynamic\_pointer\_cast<PauliSpinorSquareMatrices<double>>(}
+\DoxyCodeLine{411            this-\/>aux\_ss-\/>onePDM);}
+\DoxyCodeLine{412        \textcolor{keywordflow}{else}}
+\DoxyCodeLine{413          aux\_Re1PDM = std::make\_shared<PauliSpinorSquareMatrices<double>>(}
+\DoxyCodeLine{414            this-\/>aux\_ss-\/>onePDM-\/>real\_part());}
+\DoxyCodeLine{415 }
+\DoxyCodeLine{416 }
+\DoxyCodeLine{417       \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/end NEO-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{418 }
+\DoxyCodeLine{419       \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/Cross Memory-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{420       \textcolor{keywordtype}{double} *cross\_U\_gamma, *cross\_dVU\_gamma, *ZgammaVar3;}
+\DoxyCodeLine{421       \textcolor{keywordflow}{if} (epcisGGA) \{}
+\DoxyCodeLine{422         cross\_U\_gamma = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(4*NTNPPB); }
+\DoxyCodeLine{423         cross\_dVU\_gamma = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(4*NTNPPB);}
+\DoxyCodeLine{424         ZgammaVar3 = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NTNPPB);}
+\DoxyCodeLine{425       \}}
+\DoxyCodeLine{426       \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/end cross-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{427  }
+\DoxyCodeLine{428 }
+\DoxyCodeLine{429       \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\///}}
+\DoxyCodeLine{430       \textcolor{comment}{// End allocating Memory}}
+\DoxyCodeLine{431 }
+\DoxyCodeLine{432       \textcolor{keyword}{auto} vxcbuild = [\&](\textcolor{keywordtype}{size\_t} \&res, std::vector<cart\_t> \&batch, }
+\DoxyCodeLine{433         std::vector<double> \&\mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}, std::vector<size\_t> NBE\_vec, }
+\DoxyCodeLine{434         std::vector<double*> BasisEval\_vec, }
+\DoxyCodeLine{435         std::vector<std::vector<size\_t>> \& batchEvalShells\_vec, }
+\DoxyCodeLine{436         std::vector<std::vector<std::pair<size\_t,size\_t>>> \& subMatCut\_vec) \{}
+\DoxyCodeLine{437 }
+\DoxyCodeLine{438         \textcolor{comment}{// main system}}
+\DoxyCodeLine{439         \textcolor{keywordtype}{size\_t} NBE = NBE\_vec[0];}
+\DoxyCodeLine{440         \textcolor{keywordtype}{double} * BasisEval = BasisEval\_vec[0];}
+\DoxyCodeLine{441         std::vector<size\_t> \& batchEvalShells = batchEvalShells\_vec[0];}
+\DoxyCodeLine{442         std::vector<std::pair<size\_t,size\_t>> \& subMatCut = subMatCut\_vec[0];}
+\DoxyCodeLine{443 }
+\DoxyCodeLine{444         \textcolor{comment}{// auxiliary system}}
+\DoxyCodeLine{445         \textcolor{keywordtype}{size\_t} aux\_NBE = NBE\_vec[1];}
+\DoxyCodeLine{446         \textcolor{keywordtype}{double} * aux\_BasisEval = BasisEval\_vec[1];}
+\DoxyCodeLine{447         std::vector<size\_t> \& aux\_batchEvalShells = batchEvalShells\_vec[1];}
+\DoxyCodeLine{448         std::vector<std::pair<size\_t,size\_t>> \& aux\_subMatCut = subMatCut\_vec[1];}
+\DoxyCodeLine{449 }
+\DoxyCodeLine{450 }
+\DoxyCodeLine{451         \textcolor{comment}{// intParam.epsilon / ntotalpts (NANG * NRAD * NATOMS)}}
+\DoxyCodeLine{452         \textcolor{keywordtype}{double} epsScreen = intParam.epsilon / nAtoms /}
+\DoxyCodeLine{453           intParam.nAng / intParam.nRad;}
+\DoxyCodeLine{454 }
+\DoxyCodeLine{455         epsScreen = std::max(epsScreen,}
+\DoxyCodeLine{456                              std::numeric\_limits<double>::epsilon());}
+\DoxyCodeLine{457 }
+\DoxyCodeLine{458         \textcolor{keywordtype}{size\_t} NPts = batch.size();}
+\DoxyCodeLine{459         \textcolor{keywordtype}{size\_t} IOff = NBE*NPts;}
+\DoxyCodeLine{460 }
+\DoxyCodeLine{461         \textcolor{keywordtype}{size\_t} thread\_id = \mbox{\hyperlink{namespaceChronusQ_aa348a017ee78c3450480773ddc542e5c}{GetThreadID}}();}
+\DoxyCodeLine{462         \textcolor{keywordtype}{size\_t} TIDNPPB   = thread\_id * NPtsMaxPerBatch;}
+\DoxyCodeLine{463 }
+\DoxyCodeLine{464 \textcolor{preprocessor}{\#if VXC\_DEBUG\_LEVEL >= 1}}
+\DoxyCodeLine{465         \textcolor{comment}{// TIMING}}
+\DoxyCodeLine{466         \textcolor{keyword}{auto} topevalDen = std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{467 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{468 }
+\DoxyCodeLine{469         \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/Main System-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{470         \textcolor{comment}{// Setup local pointers}}
+\DoxyCodeLine{471         \textcolor{keywordtype}{double} * SCRATCHNBNB\_loc = SCRATCHNBNB + thread\_id * NB2;}
+\DoxyCodeLine{472         \textcolor{keywordtype}{double} * SCRATCHNBNP\_loc = SCRATCHNBNP + thread\_id * NB*NPtsMaxPerBatch;}
+\DoxyCodeLine{473 }
+\DoxyCodeLine{474         \textcolor{comment}{// local density pointers }}
+\DoxyCodeLine{475         \textcolor{keywordtype}{double} * DenS\_loc = DenS + TIDNPPB;}
+\DoxyCodeLine{476         \textcolor{keywordtype}{double} * DenZ\_loc = DenZ + TIDNPPB;}
+\DoxyCodeLine{477 }
+\DoxyCodeLine{478         \textcolor{comment}{// local density gradient pointers}}
+\DoxyCodeLine{479         \textcolor{keywordtype}{double} * GDenS\_loc = GDenS + 3*TIDNPPB;}
+\DoxyCodeLine{480         \textcolor{keywordtype}{double} * GDenZ\_loc = GDenZ + 3*TIDNPPB;}
+\DoxyCodeLine{481 }
+\DoxyCodeLine{482         \textcolor{comment}{// local vxc energy and U, V pointer}}
+\DoxyCodeLine{483         \textcolor{keywordtype}{double} * epsEval\_loc   = epsEval   +  TIDNPPB;}
+\DoxyCodeLine{484         \textcolor{keywordtype}{double} * epcEval\_loc   = epcEval   +  TIDNPPB;}
+\DoxyCodeLine{485         \textcolor{keywordtype}{double} * U\_n\_loc       = U\_n       + 2*TIDNPPB;}
+\DoxyCodeLine{486         \textcolor{keywordtype}{double} * dVU\_n\_loc     = dVU\_n     + 2*TIDNPPB;}
+\DoxyCodeLine{487         \textcolor{keywordtype}{double} * U\_gamma\_loc   = U\_gamma   + 3*TIDNPPB;}
+\DoxyCodeLine{488         \textcolor{keywordtype}{double} * dVU\_gamma\_loc = dVU\_gamma + 3*TIDNPPB;}
+\DoxyCodeLine{489 }
+\DoxyCodeLine{490         \textcolor{comment}{// local gradient pointer}}
+\DoxyCodeLine{491         \textcolor{keywordtype}{double} * ZrhoVar1\_loc   = ZrhoVar1   + TIDNPPB;}
+\DoxyCodeLine{492         \textcolor{keywordtype}{double} * ZgammaVar1\_loc = ZgammaVar1 + TIDNPPB;}
+\DoxyCodeLine{493         \textcolor{keywordtype}{double} * ZgammaVar2\_loc = ZgammaVar2 + TIDNPPB;}
+\DoxyCodeLine{494 }
+\DoxyCodeLine{495         \textcolor{comment}{// local multiple functional pointer}}
+\DoxyCodeLine{496         \textcolor{keywordtype}{double} * epsSCR\_loc        = epsSCR        +   TIDNPPB;}
+\DoxyCodeLine{497         \textcolor{keywordtype}{double} * dVU\_n\_SCR\_loc     = dVU\_n\_SCR     + 2*TIDNPPB;}
+\DoxyCodeLine{498         \textcolor{keywordtype}{double} * dVU\_gamma\_SCR\_loc = dVU\_gamma\_SCR + 3*TIDNPPB;}
+\DoxyCodeLine{499 }
+\DoxyCodeLine{500         \textcolor{comment}{// local Zmat}}
+\DoxyCodeLine{501         \textcolor{keywordtype}{double} *ZMAT\_loc = ZMAT + NB * TIDNPPB;}
+\DoxyCodeLine{502 }
+\DoxyCodeLine{503         \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/End Main System-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{504 }
+\DoxyCodeLine{505 }
+\DoxyCodeLine{506         \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/Auxiliary System-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{507         \textcolor{comment}{// aux local scratch pointers }}
+\DoxyCodeLine{508         \textcolor{keywordtype}{double} * AUX\_SCRATCHNBNB\_loc, * AUX\_SCRATCHNBNP\_loc;}
+\DoxyCodeLine{509         AUX\_SCRATCHNBNB\_loc = AUX\_SCRATCHNBNB + thread\_id * aux\_NB2;}
+\DoxyCodeLine{510         AUX\_SCRATCHNBNP\_loc = AUX\_SCRATCHNBNP + thread\_id * aux\_NB*NPtsMaxPerBatch;         }
+\DoxyCodeLine{511 }
+\DoxyCodeLine{512         \textcolor{comment}{// aux local density pointers}}
+\DoxyCodeLine{513         \textcolor{keywordtype}{double} * aux\_DenS\_loc, * aux\_DenZ\_loc;}
+\DoxyCodeLine{514         aux\_DenS\_loc = aux\_DenS + TIDNPPB;}
+\DoxyCodeLine{515         aux\_DenZ\_loc = aux\_DenZ + TIDNPPB;}
+\DoxyCodeLine{516 }
+\DoxyCodeLine{517         \textcolor{comment}{// aux local density gradient pointers}}
+\DoxyCodeLine{518         \textcolor{keywordtype}{double} *aux\_GDenS\_loc, *aux\_GDenZ\_loc;}
+\DoxyCodeLine{519         aux\_GDenS\_loc = aux\_GDenS + 3*TIDNPPB;}
+\DoxyCodeLine{520         aux\_GDenZ\_loc = aux\_GDenZ + 3*TIDNPPB;}
+\DoxyCodeLine{521 }
+\DoxyCodeLine{522         \textcolor{comment}{// aux local U and V pointers}}
+\DoxyCodeLine{523         \textcolor{keywordtype}{double} * aux\_U\_n\_loc, * aux\_dVU\_n\_loc, * aux\_U\_gamma\_loc, * aux\_dVU\_gamma\_loc;}
+\DoxyCodeLine{524         aux\_U\_n\_loc       = aux\_U\_n       + 2*TIDNPPB;}
+\DoxyCodeLine{525         aux\_dVU\_n\_loc     = aux\_dVU\_n     + 2*TIDNPPB;}
+\DoxyCodeLine{526         aux\_U\_gamma\_loc   = aux\_U\_gamma   + 3*TIDNPPB;}
+\DoxyCodeLine{527         aux\_dVU\_gamma\_loc = aux\_dVU\_gamma + 3*TIDNPPB;}
+\DoxyCodeLine{528 }
+\DoxyCodeLine{529         \textcolor{comment}{// aux local Z pointers}}
+\DoxyCodeLine{530         \textcolor{keywordtype}{double} * aux\_ZrhoVar1\_loc, * aux\_ZgammaVar1\_loc, * aux\_ZgammaVar2\_loc;        }
+\DoxyCodeLine{531         aux\_ZrhoVar1\_loc   = aux\_ZrhoVar1   + TIDNPPB;}
+\DoxyCodeLine{532         aux\_ZgammaVar1\_loc = aux\_ZgammaVar1 + TIDNPPB;}
+\DoxyCodeLine{533         aux\_ZgammaVar2\_loc = aux\_ZgammaVar2 + TIDNPPB;}
+\DoxyCodeLine{534 }
+\DoxyCodeLine{535         \textcolor{comment}{// aux local multiple functional pointers}}
+\DoxyCodeLine{536         \textcolor{keywordtype}{double} * aux\_epsSCR\_loc, * aux\_dVU\_n\_SCR\_loc, * aux\_dVU\_gamma\_SCR\_loc;}
+\DoxyCodeLine{537         aux\_epsSCR\_loc        = aux\_epsSCR        +   TIDNPPB;}
+\DoxyCodeLine{538         aux\_dVU\_n\_SCR\_loc     = aux\_dVU\_n\_SCR     + 2*TIDNPPB;}
+\DoxyCodeLine{539         aux\_dVU\_gamma\_SCR\_loc = aux\_dVU\_gamma\_SCR + 3*TIDNPPB;}
+\DoxyCodeLine{540 }
+\DoxyCodeLine{541         \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/End Auxiliary System-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{542 }
+\DoxyCodeLine{543         \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/Cross Between Main and Auxiliary system-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{544         \textcolor{keywordtype}{double} * cross\_U\_gamma\_loc, *cross\_dVU\_gamma\_loc, *ZgammaVar3\_loc;}
+\DoxyCodeLine{545         \textcolor{keywordflow}{if} (epcisGGA) \{}
+\DoxyCodeLine{546           cross\_U\_gamma\_loc = cross\_U\_gamma + 4*TIDNPPB;}
+\DoxyCodeLine{547           cross\_dVU\_gamma\_loc = cross\_dVU\_gamma + 4*TIDNPPB;}
+\DoxyCodeLine{548           ZgammaVar3\_loc = ZgammaVar3 + TIDNPPB;}
+\DoxyCodeLine{549         \}}
+\DoxyCodeLine{550         \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/End Cross-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{551         }
+\DoxyCodeLine{552         \textcolor{comment}{// This evaluates the V variables for all components of the main system}}
+\DoxyCodeLine{553         \textcolor{comment}{// (Scalar, MZ (UKS) and Mx, MY (2 Comp))}}
+\DoxyCodeLine{554         \mbox{\hyperlink{namespaceChronusQ_ae1353c367e2eae7c0d590cfeba186022}{evalDen}}((isGGA || epcisGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), NPts, NBE, NB, subMatCut, }
+\DoxyCodeLine{555             SCRATCHNBNB\_loc, SCRATCHNBNP\_loc, Re1PDM-\/>S().pointer(), DenS\_loc, }
+\DoxyCodeLine{556             GDenS\_loc, GDenS\_loc + NPts, GDenS\_loc + 2*NPts, BasisEval);}
+\DoxyCodeLine{557 }
+\DoxyCodeLine{558         \textcolor{comment}{// evaluate density for auxiliary components}}
+\DoxyCodeLine{559         \mbox{\hyperlink{namespaceChronusQ_ae1353c367e2eae7c0d590cfeba186022}{evalDen}}((epcisGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), NPts, aux\_NBE, }
+\DoxyCodeLine{560           aux\_NB, aux\_subMatCut, }
+\DoxyCodeLine{561           AUX\_SCRATCHNBNB\_loc, AUX\_SCRATCHNBNP\_loc, aux\_Re1PDM-\/>S().pointer(), aux\_DenS\_loc,}
+\DoxyCodeLine{562           aux\_GDenS\_loc, aux\_GDenS\_loc + NPts, aux\_GDenS\_loc + 2*NPts, aux\_BasisEval);}
+\DoxyCodeLine{563 }
+\DoxyCodeLine{564 }
+\DoxyCodeLine{565         \textcolor{keywordflow}{if} ( ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>hasZ() )}
+\DoxyCodeLine{566           \mbox{\hyperlink{namespaceChronusQ_ae1353c367e2eae7c0d590cfeba186022}{evalDen}}((isGGA || epcisGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), NPts, NBE, NB, subMatCut, }
+\DoxyCodeLine{567                 SCRATCHNBNB\_loc ,SCRATCHNBNP\_loc, Re1PDM-\/>Z().pointer(), DenZ\_loc, }
+\DoxyCodeLine{568                 GDenZ\_loc, GDenZ\_loc + NPts, GDenZ\_loc + 2*NPts, BasisEval);}
+\DoxyCodeLine{569 }
+\DoxyCodeLine{570         \textcolor{keywordflow}{if} ( this-\/>aux\_ss-\/>onePDM-\/>hasZ() )}
+\DoxyCodeLine{571           \mbox{\hyperlink{namespaceChronusQ_ae1353c367e2eae7c0d590cfeba186022}{evalDen}}((epcisGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), NPts, aux\_NBE, }
+\DoxyCodeLine{572             aux\_NB, aux\_subMatCut, }
+\DoxyCodeLine{573             AUX\_SCRATCHNBNB\_loc, AUX\_SCRATCHNBNP\_loc, aux\_Re1PDM-\/>Z().pointer(), }
+\DoxyCodeLine{574             aux\_DenZ\_loc,}
+\DoxyCodeLine{575             aux\_GDenZ\_loc, aux\_GDenZ\_loc + NPts, aux\_GDenZ\_loc + 2*NPts, aux\_BasisEval);}
+\DoxyCodeLine{576 }
+\DoxyCodeLine{577         \textcolor{keywordflow}{if} ( ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>hasXY() )}
+\DoxyCodeLine{578           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Relativistic NEO-\/Kohn-\/Sham NYI!"{}});}
+\DoxyCodeLine{579 }
+\DoxyCodeLine{580         \textcolor{keywordflow}{if} ( this-\/>aux\_ss-\/>onePDM-\/>hasXY() )}
+\DoxyCodeLine{581           \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Relativistic NEO-\/Kohn-\/Sham NYI!"{}});}
+\DoxyCodeLine{582 }
+\DoxyCodeLine{583         }
+\DoxyCodeLine{584         \textcolor{comment}{// V -\/> U variables for NEO-\/DFT kernal derivatives }}
+\DoxyCodeLine{585         \mbox{\hyperlink{namespaceChronusQ_a45b9888964ad8ea63285a94626e9a2ca}{mkAuxVar}}(this-\/>aux\_ss-\/>onePDM,}
+\DoxyCodeLine{586           epcisGGA,epsScreen,NPts,}
+\DoxyCodeLine{587           aux\_DenS\_loc,aux\_DenZ\_loc,\textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},}
+\DoxyCodeLine{588           aux\_GDenS\_loc,aux\_GDenS\_loc + NPts,aux\_GDenS\_loc + 2*NPts,}
+\DoxyCodeLine{589           aux\_GDenZ\_loc,aux\_GDenZ\_loc + NPts,aux\_GDenZ\_loc + 2*NPts,}
+\DoxyCodeLine{590           \textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},}
+\DoxyCodeLine{591           \textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},}
+\DoxyCodeLine{592           \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{593           \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{594           \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{595           \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, }
+\DoxyCodeLine{596           aux\_U\_n\_loc, aux\_U\_gamma\_loc}
+\DoxyCodeLine{597         );}
+\DoxyCodeLine{598 }
+\DoxyCodeLine{599 }
+\DoxyCodeLine{600         \textcolor{comment}{// V -\/> U variables for evaluating the kernel derivatives.}}
+\DoxyCodeLine{601         \mbox{\hyperlink{namespaceChronusQ_a45b9888964ad8ea63285a94626e9a2ca}{mkAuxVar}}(ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}},}
+\DoxyCodeLine{602           isGGA || epcisGGA,epsScreen,NPts,}
+\DoxyCodeLine{603           DenS\_loc,DenZ\_loc,\textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},}
+\DoxyCodeLine{604           GDenS\_loc,GDenS\_loc + NPts,GDenS\_loc + 2*NPts,}
+\DoxyCodeLine{605           GDenZ\_loc,GDenZ\_loc + NPts,GDenZ\_loc + 2*NPts,}
+\DoxyCodeLine{606           \textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},}
+\DoxyCodeLine{607           \textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},}
+\DoxyCodeLine{608           \textcolor{keyword}{nullptr}, }
+\DoxyCodeLine{609           \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{610           \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{611           \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, }
+\DoxyCodeLine{612           U\_n\_loc,U\_gamma\_loc}
+\DoxyCodeLine{613         );}
+\DoxyCodeLine{614 }
+\DoxyCodeLine{615 }
+\DoxyCodeLine{616         \textcolor{comment}{// Cross V -\/> U variables}}
+\DoxyCodeLine{617         \textcolor{keywordflow}{if} (epcisGGA)}
+\DoxyCodeLine{618           \mbox{\hyperlink{namespaceChronusQ_a8b6ce2b6b67536f010ea1326dec72bcb}{mkCrossAuxVar}}(\textcolor{keyword}{false},ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_adaad72707210363e1b5745bb2aa1de29}{particle}}.\mbox{\hyperlink{structChronusQ_1_1Particle_aac8b44e2392d5d5ccdee6b5963561683}{charge}} < 0,}
+\DoxyCodeLine{619             ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}, this-\/>aux\_ss-\/>onePDM, epsScreen,NPts,}
+\DoxyCodeLine{620             GDenS\_loc,GDenS\_loc + NPts,GDenS\_loc + 2*NPts,}
+\DoxyCodeLine{621             \textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},}
+\DoxyCodeLine{622             \textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},}
+\DoxyCodeLine{623             GDenZ\_loc,GDenZ\_loc + NPts,GDenZ\_loc + 2*NPts,}
+\DoxyCodeLine{624             aux\_GDenS\_loc,aux\_GDenS\_loc + NPts,aux\_GDenS\_loc + 2*NPts,}
+\DoxyCodeLine{625             \textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},}
+\DoxyCodeLine{626             \textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},\textcolor{keyword}{nullptr},}
+\DoxyCodeLine{627             aux\_GDenZ\_loc,aux\_GDenZ\_loc + NPts,aux\_GDenZ\_loc + 2*NPts,}
+\DoxyCodeLine{628             cross\_U\_gamma\_loc);}
+\DoxyCodeLine{629 }
+\DoxyCodeLine{630 }
+\DoxyCodeLine{631         \textcolor{comment}{// Get NEO-\/DFT Energy derivatives wrt U variables}}
+\DoxyCodeLine{632         \textcolor{keywordflow}{if}( ks )}
+\DoxyCodeLine{633           \mbox{\hyperlink{namespaceChronusQ_a654e71de0544fb13ed428e0b95197cb8}{loadVXCder}}(}
+\DoxyCodeLine{634             ks-\/>\mbox{\hyperlink{classChronusQ_1_1KohnSham_abb0e9c381fb8cb4ea6504b8c43012e67}{functionals}},}
+\DoxyCodeLine{635             NPts, U\_n\_loc, U\_gamma\_loc,}
+\DoxyCodeLine{636             epsEval\_loc, dVU\_n\_loc, dVU\_gamma\_loc,}
+\DoxyCodeLine{637             epsSCR\_loc, dVU\_n\_SCR\_loc, dVU\_gamma\_SCR\_loc);}
+\DoxyCodeLine{638         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{639           std::fill\_n(epsEval\_loc, NPts, 0.);}
+\DoxyCodeLine{640           std::fill\_n(dVU\_n\_loc, NPts, 0.);}
+\DoxyCodeLine{641           \textcolor{keywordflow}{if}( isGGA || epcisGGA ) std::fill\_n(dVU\_gamma\_loc, NPts, 0.);}
+\DoxyCodeLine{642           \textcolor{keywordflow}{if}( ks \&\& ks-\/>\mbox{\hyperlink{classChronusQ_1_1KohnSham_abb0e9c381fb8cb4ea6504b8c43012e67}{functionals}}.size() > 1 ) \{}
+\DoxyCodeLine{643             std::fill\_n(epsSCR\_loc, NPts, 0.);}
+\DoxyCodeLine{644             std::fill\_n(dVU\_n\_SCR\_loc, NPts, 0.);}
+\DoxyCodeLine{645             \textcolor{keywordflow}{if}( isGGA || epcisGGA ) std::fill\_n(dVU\_gamma\_SCR\_loc, NPts, 0.);}
+\DoxyCodeLine{646           \}}
+\DoxyCodeLine{647         \}}
+\DoxyCodeLine{648 }
+\DoxyCodeLine{649 }
+\DoxyCodeLine{650         \mbox{\hyperlink{namespaceChronusQ_a0ecad9fb6bbb86b9e15cb07efcc7b256}{loadEPCVXCder}}(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_adaad72707210363e1b5745bb2aa1de29}{particle}}.\mbox{\hyperlink{structChronusQ_1_1Particle_aac8b44e2392d5d5ccdee6b5963561683}{charge}} < 0, }
+\DoxyCodeLine{651           epc\_functionals,}
+\DoxyCodeLine{652           NPts, U\_n\_loc, U\_gamma\_loc, aux\_U\_n\_loc,}
+\DoxyCodeLine{653           aux\_U\_gamma\_loc, cross\_U\_gamma\_loc, epsEval\_loc, dVU\_n\_loc,}
+\DoxyCodeLine{654           dVU\_gamma\_loc, cross\_dVU\_gamma\_loc, epsSCR\_loc, dVU\_n\_SCR\_loc, }
+\DoxyCodeLine{655           dVU\_gamma\_SCR\_loc, cross\_dVU\_gamma\_loc, epcEval\_loc);}
+\DoxyCodeLine{656 }
+\DoxyCodeLine{657 }
+\DoxyCodeLine{658         \textcolor{comment}{// Compute for the current batch the XC energy and increment the }}
+\DoxyCodeLine{659         \textcolor{comment}{// total XC energy.}}
+\DoxyCodeLine{660         integrateXCEnergy[thread\_id] += }
+\DoxyCodeLine{661           \mbox{\hyperlink{namespaceChronusQ_a2ece142284dd9de77042942e5362b32a}{energy\_vxc}}(NPts, \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}, epsEval\_loc, DenS\_loc);}
+\DoxyCodeLine{662         \textcolor{comment}{//integrateEPCEnergy[thread\_id] += }}
+\DoxyCodeLine{663         \textcolor{comment}{//  energy\_vxc(NPts, weights, epcEval\_loc, DenS\_loc);}}
+\DoxyCodeLine{664 }
+\DoxyCodeLine{665 }
+\DoxyCodeLine{666         \textcolor{comment}{// Construct the required quantities for the formation of the Z }}
+\DoxyCodeLine{667         \textcolor{comment}{// vector (SCALAR) given the kernel derivatives wrt U variables. }}
+\DoxyCodeLine{668         \mbox{\hyperlink{namespaceChronusQ_a92d549d57d6b2a7b3422f3883701c4df}{constructZVars}}(ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}, \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}}, isGGA || epcisGGA, }
+\DoxyCodeLine{669           NPts,dVU\_n\_loc,dVU\_gamma\_loc, ZrhoVar1\_loc, ZgammaVar1\_loc,}
+\DoxyCodeLine{670           ZgammaVar2\_loc);}
+\DoxyCodeLine{671 }
+\DoxyCodeLine{672         \textcolor{comment}{// Construct the required quantities for the formation of the Z}}
+\DoxyCodeLine{673         \textcolor{comment}{// vector for EPC-\/19 functional}}
+\DoxyCodeLine{674         \textcolor{keywordflow}{if} (epcisGGA)}
+\DoxyCodeLine{675           \mbox{\hyperlink{namespaceChronusQ_a3b3b3494232d56f304a7838ecd110356}{constructEPCZVars}}(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_adaad72707210363e1b5745bb2aa1de29}{particle}}.\mbox{\hyperlink{structChronusQ_1_1Particle_aac8b44e2392d5d5ccdee6b5963561683}{charge}} < 0,}
+\DoxyCodeLine{676             \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}},NPts,cross\_dVU\_gamma\_loc, ZgammaVar3\_loc);}
+\DoxyCodeLine{677 }
+\DoxyCodeLine{678         \textcolor{comment}{// Creating ZMAT (SCALAR) according to }}
+\DoxyCodeLine{679         \textcolor{comment}{//   J. Chem. Theory Comput. 2011, 7, 3097–3104 Eq. 15 }}
+\DoxyCodeLine{680         \textcolor{keywordflow}{if} ( epcisGGA )}
+\DoxyCodeLine{681           \mbox{\hyperlink{namespaceChronusQ_ac1dce6121eb20d5236d321cc4403db85}{formZ\_vxc\_epc}}(ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}, this-\/>aux\_ss-\/>onePDM,}
+\DoxyCodeLine{682             \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}}, epcisGGA, NPts, NBE, IOff, epsScreen, \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}},}
+\DoxyCodeLine{683             ZrhoVar1\_loc, ZgammaVar1\_loc, ZgammaVar2\_loc, ZgammaVar3\_loc,}
+\DoxyCodeLine{684             DenS\_loc, DenZ\_loc, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, GDenS\_loc, GDenZ\_loc, \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{685             \textcolor{keyword}{nullptr}, aux\_DenS\_loc, aux\_DenZ\_loc, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{686             aux\_GDenS\_loc, aux\_GDenZ\_loc, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{687             BasisEval, ZMAT\_loc);}
+\DoxyCodeLine{688         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{689           \mbox{\hyperlink{namespaceChronusQ_a2d0ffb2bbc33ef26e77177521633af23}{formZ\_vxc}}(ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}, \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}},isGGA, NPts, NBE, IOff, epsScreen, \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}, }
+\DoxyCodeLine{690             ZrhoVar1\_loc, ZgammaVar1\_loc, ZgammaVar2\_loc, DenS\_loc, }
+\DoxyCodeLine{691             DenZ\_loc, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, GDenS\_loc, GDenZ\_loc, \textcolor{keyword}{nullptr}, }
+\DoxyCodeLine{692             \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{693             \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{694             \textcolor{keyword}{nullptr}, BasisEval, ZMAT\_loc);}
+\DoxyCodeLine{695 }
+\DoxyCodeLine{696         \textcolor{keywordtype}{bool} evalZ = \textcolor{keyword}{true};}
+\DoxyCodeLine{697 }
+\DoxyCodeLine{698         \textcolor{keywordflow}{if} (evalZ) \{}
+\DoxyCodeLine{699           \textcolor{comment}{// Creating according to }}
+\DoxyCodeLine{700           \textcolor{comment}{//   J. Chem. Theory Comput. 2011, 7, 3097–3104 Eq. 14 }}
+\DoxyCodeLine{701           \textcolor{comment}{//}}
+\DoxyCodeLine{702           \textcolor{comment}{// Z -\/> VXC (submat -\/ SCALAR)}}
+\DoxyCodeLine{703           blas::syr2k(blas::Layout::ColMajor,blas::Uplo::Lower,blas::Op::NoTrans,NBE,NPts,1.,BasisEval,NBE,ZMAT\_loc,NBE,0.,}
+\DoxyCodeLine{704             SCRATCHNBNB\_loc,NBE);}
+\DoxyCodeLine{705 }
+\DoxyCodeLine{706           \textcolor{comment}{// Locating the submatrix in the right position given the }}
+\DoxyCodeLine{707           \textcolor{comment}{// subset of shells for the given batch.}}
+\DoxyCodeLine{708           \mbox{\hyperlink{namespaceChronusQ_acda74ebbe19528e1829381715ccd4955}{IncBySubMat}}(NB,NB,NBE,NBE,integrateVXC[\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abbe8d936a36ca06a2f6a87a5f68957dc}{SCALAR}}][thread\_id],NB,}
+\DoxyCodeLine{709             SCRATCHNBNB\_loc,NBE,subMatCut);}
+\DoxyCodeLine{710         \}}
+\DoxyCodeLine{711 }
+\DoxyCodeLine{712 }
+\DoxyCodeLine{713         \textcolor{keywordflow}{if}( not ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>hasZ() ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{714 }
+\DoxyCodeLine{715         \textcolor{comment}{//}}
+\DoxyCodeLine{716         \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/   UKS or 2C -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ Mz -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{717         \textcolor{comment}{//    See J. Chem. Theory Comput. 2017, 13, 2591-\/2603  }}
+\DoxyCodeLine{718         \textcolor{comment}{//}}
+\DoxyCodeLine{719 }
+\DoxyCodeLine{720         \textcolor{comment}{// Construct the required quantities for the formation of }}
+\DoxyCodeLine{721         \textcolor{comment}{// the Z vector (Mz) given the kernel derivatives wrt U }}
+\DoxyCodeLine{722         \textcolor{comment}{// variables.}}
+\DoxyCodeLine{723         \mbox{\hyperlink{namespaceChronusQ_a92d549d57d6b2a7b3422f3883701c4df}{constructZVars}}(ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}, \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}},isGGA || epcisGGA,NPts,dVU\_n\_loc,dVU\_gamma\_loc,ZrhoVar1\_loc,}
+\DoxyCodeLine{724           ZgammaVar1\_loc, ZgammaVar2\_loc);}
+\DoxyCodeLine{725 }
+\DoxyCodeLine{726         \textcolor{comment}{// Construct the required quantities for the formation of the Z}}
+\DoxyCodeLine{727         \textcolor{comment}{// vector for EPC-\/19 functional}}
+\DoxyCodeLine{728         \textcolor{keywordflow}{if} (epcisGGA)}
+\DoxyCodeLine{729           \mbox{\hyperlink{namespaceChronusQ_a3b3b3494232d56f304a7838ecd110356}{constructEPCZVars}}(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_adaad72707210363e1b5745bb2aa1de29}{particle}}.\mbox{\hyperlink{structChronusQ_1_1Particle_aac8b44e2392d5d5ccdee6b5963561683}{charge}} < 0, }
+\DoxyCodeLine{730             \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}},NPts,cross\_dVU\_gamma\_loc, ZgammaVar3\_loc);}
+\DoxyCodeLine{731 }
+\DoxyCodeLine{732         \textcolor{comment}{// Creating ZMAT (Mz) according to }}
+\DoxyCodeLine{733         \textcolor{comment}{//   J. Chem. Theory Comput. 2011, 7, 3097–3104 Eq. 15 }}
+\DoxyCodeLine{734         \textcolor{keywordflow}{if} (epcisGGA)}
+\DoxyCodeLine{735           \mbox{\hyperlink{namespaceChronusQ_ac1dce6121eb20d5236d321cc4403db85}{formZ\_vxc\_epc}}(ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}, this-\/>aux\_ss-\/>onePDM,}
+\DoxyCodeLine{736             \mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}}, epcisGGA, NPts, NBE, IOff, epsScreen, \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}},}
+\DoxyCodeLine{737             ZrhoVar1\_loc, ZgammaVar1\_loc, ZgammaVar2\_loc, ZgammaVar3\_loc,}
+\DoxyCodeLine{738             DenS\_loc, DenZ\_loc, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, GDenS\_loc, GDenZ\_loc, \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{739             \textcolor{keyword}{nullptr}, aux\_DenS\_loc, aux\_DenZ\_loc, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{740             aux\_GDenS\_loc, aux\_GDenZ\_loc, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{741             BasisEval, ZMAT\_loc);}
+\DoxyCodeLine{742         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{743           \mbox{\hyperlink{namespaceChronusQ_a2d0ffb2bbc33ef26e77177521633af23}{formZ\_vxc}}(ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}},\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}},isGGA, NPts, NBE, IOff, epsScreen, \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}, }
+\DoxyCodeLine{744             ZrhoVar1\_loc, ZgammaVar1\_loc, ZgammaVar2\_loc, DenS\_loc, }
+\DoxyCodeLine{745             DenZ\_loc, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, GDenS\_loc, GDenZ\_loc, \textcolor{keyword}{nullptr}, }
+\DoxyCodeLine{746             \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, }
+\DoxyCodeLine{747             \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, \textcolor{keyword}{nullptr}, }
+\DoxyCodeLine{748             \textcolor{keyword}{nullptr}, BasisEval, ZMAT\_loc);}
+\DoxyCodeLine{749 }
+\DoxyCodeLine{750 }
+\DoxyCodeLine{751         \textcolor{comment}{// Coarse screen on ZMat}}
+\DoxyCodeLine{752         \textcolor{keywordflow}{if}(evalZ) \{}
+\DoxyCodeLine{753   }
+\DoxyCodeLine{754           \textcolor{comment}{// Creating according to }}
+\DoxyCodeLine{755           \textcolor{comment}{//   J. Chem. Theory Comput. 2011, 7, 3097–3104 Eq. 14 }}
+\DoxyCodeLine{756           \textcolor{comment}{//}}
+\DoxyCodeLine{757           \textcolor{comment}{// Z -\/> VXC (submat)}}
+\DoxyCodeLine{758           blas::syr2k(blas::Layout::ColMajor,blas::Uplo::Lower,blas::Op::NoTrans,NBE,NPts,1.,BasisEval,NBE,ZMAT\_loc,NBE,0.,}
+\DoxyCodeLine{759             SCRATCHNBNB\_loc,NBE);}
+\DoxyCodeLine{760     }
+\DoxyCodeLine{761     }
+\DoxyCodeLine{762           \textcolor{comment}{// Locating the submatrix in the right position given }}
+\DoxyCodeLine{763           \textcolor{comment}{// the subset of shells for the given batch.}}
+\DoxyCodeLine{764           \mbox{\hyperlink{namespaceChronusQ_acda74ebbe19528e1829381715ccd4955}{IncBySubMat}}(NB,NB,NBE,NBE,integrateVXC[\mbox{\hyperlink{namespaceChronusQ_aa44db2c8e0c6903e70bcbdf147dd4ef5abce59a1d23f21524e2328115f7cee158}{MZ}}][thread\_id],NB,}
+\DoxyCodeLine{765             SCRATCHNBNB\_loc,NBE,subMatCut);           }
+\DoxyCodeLine{766 }
+\DoxyCodeLine{767         \}}
+\DoxyCodeLine{768  }
+\DoxyCodeLine{769 }
+\DoxyCodeLine{770 }
+\DoxyCodeLine{771         \textcolor{keywordflow}{if}( not ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>hasXY() ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{772         }
+\DoxyCodeLine{773         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Relativistic NEO-\/Kohn-\/Sham NYI!"{}},std::cout);}
+\DoxyCodeLine{774 }
+\DoxyCodeLine{775       \}; \textcolor{comment}{// VXC integrate}}
+\DoxyCodeLine{776 }
+\DoxyCodeLine{777 }
+\DoxyCodeLine{778 }
+\DoxyCodeLine{779       \textcolor{comment}{// Create the BeckeIntegrator object}}
+\DoxyCodeLine{780       \textcolor{keywordflow}{if}( ks ) intParam = ks-\/>\mbox{\hyperlink{classChronusQ_1_1KohnSham_a8a13c0ebff93228ac5cd53fc15bca902}{intParam}};}
+\DoxyCodeLine{781       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( \textcolor{keyword}{auto} aux\_ks = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham<MatsT,IntsT>}}*\textcolor{keyword}{>}( this-\/>aux\_ss ) )}
+\DoxyCodeLine{782         intParam = aux\_ks-\/>intParam;}
+\DoxyCodeLine{783       \mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator}{BeckeIntegrator<EulerMac>}} }
+\DoxyCodeLine{784         integrator(intComm,ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}},ss.\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase_a5f29f9a842c2d47c458e1388abb94874}{molecule}}(),basis,aux\_basis,}
+\DoxyCodeLine{785         EulerMac(intParam.nRad), intParam.nAng, intParam.nRadPerBatch,}
+\DoxyCodeLine{786           (isGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), (epcisGGA ? \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7a2fe2daac9dbd584e1a0c13b2608cf764}{GRADIENT}} : \mbox{\hyperlink{namespaceChronusQ_ad1c66cb0ab337a50c82a90dcf2215cd7aec225fed40bf83bcc6f4136ec36357ac}{NOGRAD}}), }
+\DoxyCodeLine{787           intParam.epsilon);}
+\DoxyCodeLine{788 }
+\DoxyCodeLine{789       \textcolor{comment}{// Integrate the VXC}}
+\DoxyCodeLine{790       integrator.\mbox{\hyperlink{classChronusQ_1_1BeckeIntegrator_a1a8bb5e114b7d23d8998efc86146b1ca}{integrate}}<\textcolor{keywordtype}{size\_t}>(vxcbuild);}
+\DoxyCodeLine{791 }
+\DoxyCodeLine{792 }
+\DoxyCodeLine{793 }
+\DoxyCodeLine{794       \textcolor{comment}{// Finishing up the VXC}}
+\DoxyCodeLine{795       \textcolor{comment}{// factor in the 4 pi (Lebedev) and built the upper triagolar part}}
+\DoxyCodeLine{796       \textcolor{comment}{// since we create only the lower triangular. For all components}}
+\DoxyCodeLine{797       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < VXC\_SZYX.size(); k++) \{}
+\DoxyCodeLine{798         \textcolor{keywordflow}{if}( nthreads == 1 )}
+\DoxyCodeLine{799           blas::scal(NB2,4*M\_PI,VXC\_SZYX[k],1);}
+\DoxyCodeLine{800         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{801           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} ithread = 0; ithread < nthreads; ithread++)}
+\DoxyCodeLine{802             \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'N'},\textcolor{charliteral}{'N'},NB,NB,((ithread == 0) ? 0. : 1.),VXC\_SZYX[k],NB,}
+\DoxyCodeLine{803               4*M\_PI,integrateVXC[k][ithread],NB, VXC\_SZYX[k],NB);}
+\DoxyCodeLine{804         }
+\DoxyCodeLine{805         \mbox{\hyperlink{namespaceChronusQ_a8de87c3f9b6b79c38f5be581c31dade9}{HerMat}}(\textcolor{charliteral}{'L'},NB,VXC\_SZYX[k],NB);}
+\DoxyCodeLine{806       \}}
+\DoxyCodeLine{807 }
+\DoxyCodeLine{808       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}} : integrateXCEnergy) \{}
+\DoxyCodeLine{809         XCEnergy += 4*M\_PI*\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}};}
+\DoxyCodeLine{810       \}}
+\DoxyCodeLine{811 }
+\DoxyCodeLine{812       \textcolor{keywordflow}{if}( ks )}
+\DoxyCodeLine{813         ks-\/>\mbox{\hyperlink{classChronusQ_1_1KohnSham_ae3ab2e94608124d78ca6a0044bba165d}{XCEnergy}} = XCEnergy;}
+\DoxyCodeLine{814       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{815         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a4cbb1f36148d9b24504a8a73953438bf}{extraEnergy}} = XCEnergy;}
+\DoxyCodeLine{816 }
+\DoxyCodeLine{817 }
+\DoxyCodeLine{818 \textcolor{comment}{// Combine MPI results}}
+\DoxyCodeLine{819 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{820 }
+\DoxyCodeLine{821       \textcolor{keywordtype}{double}* mpiScr;}
+\DoxyCodeLine{822       \textcolor{keywordflow}{if}( mpiRank == 0 ) mpiScr = ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.template malloc<double>(NB*NB);}
+\DoxyCodeLine{823 }
+\DoxyCodeLine{824       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&V : VXC\_SZYX) \{}
+\DoxyCodeLine{825 }
+\DoxyCodeLine{826         mxx::reduce(V,NB*NB,mpiScr,0,std::plus<double>(),intComm);}
+\DoxyCodeLine{827 }
+\DoxyCodeLine{828         \textcolor{keywordflow}{if}( mpiRank == 0 ) std::copy\_n(mpiScr,NB*NB,V);}
+\DoxyCodeLine{829 }
+\DoxyCodeLine{830       \}}
+\DoxyCodeLine{831 }
+\DoxyCodeLine{832       \textcolor{keywordflow}{if}( mpiRank == 0 ) ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(mpiScr);}
+\DoxyCodeLine{833 }
+\DoxyCodeLine{834       \textcolor{keywordflow}{if}(ks) ks-\/>\mbox{\hyperlink{classChronusQ_1_1KohnSham_ae3ab2e94608124d78ca6a0044bba165d}{XCEnergy}} = mxx::reduce(ks-\/>\mbox{\hyperlink{classChronusQ_1_1KohnSham_ae3ab2e94608124d78ca6a0044bba165d}{XCEnergy}},0,std::plus<double>(),intComm);}
+\DoxyCodeLine{835 }
+\DoxyCodeLine{836 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{837 }
+\DoxyCodeLine{838 }
+\DoxyCodeLine{839       \textcolor{comment}{// Freeing the memory}}
+\DoxyCodeLine{840       \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/Main System-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ //}}
+\DoxyCodeLine{841       ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(SCRATCHNBNB,SCRATCHNBNP,DenS,epsEval,epcEval,U\_n,}
+\DoxyCodeLine{842         dVU\_n, ZrhoVar1,ZMAT);}
+\DoxyCodeLine{843       \textcolor{keywordflow}{if}( isGGA || epcisGGA )  }
+\DoxyCodeLine{844         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(ZgammaVar1,ZgammaVar2,GDenS,U\_gamma,}
+\DoxyCodeLine{845           dVU\_gamma);}
+\DoxyCodeLine{846 }
+\DoxyCodeLine{847       \textcolor{keywordflow}{if}( ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>hasZ() ) \{}
+\DoxyCodeLine{848         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(DenZ);}
+\DoxyCodeLine{849         \textcolor{keywordflow}{if}( isGGA || epcisGGA )  ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(GDenZ);}
+\DoxyCodeLine{850       \}}
+\DoxyCodeLine{851 }
+\DoxyCodeLine{852       \textcolor{keywordflow}{if}( ss.\mbox{\hyperlink{classChronusQ_1_1Quantum_a064098ae46638f2ffa3befac38e08a56}{onePDM}}-\/>hasXY() )}
+\DoxyCodeLine{853         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Relativistic NEO-\/Kohn-\/Sham NYI!"{}}, std::cout);}
+\DoxyCodeLine{854 }
+\DoxyCodeLine{855       \textcolor{keywordflow}{if}( ks \&\& ks-\/>\mbox{\hyperlink{classChronusQ_1_1KohnSham_abb0e9c381fb8cb4ea6504b8c43012e67}{functionals}}.size() > 1 ) \{}
+\DoxyCodeLine{856         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(epsSCR,dVU\_n\_SCR);}
+\DoxyCodeLine{857         \textcolor{keywordflow}{if}( isGGA || epcisGGA ) ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(dVU\_gamma\_SCR);}
+\DoxyCodeLine{858       \}}
+\DoxyCodeLine{859 }
+\DoxyCodeLine{860       \textcolor{keywordflow}{if}( nthreads != 1 ) ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(intVXC\_RAW);}
+\DoxyCodeLine{861 }
+\DoxyCodeLine{862       Re1PDM = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{863 }
+\DoxyCodeLine{864       \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/End Main System-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ //}}
+\DoxyCodeLine{865 }
+\DoxyCodeLine{866       \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/Auxiliary System-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ //}}
+\DoxyCodeLine{867       ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(AUX\_SCRATCHNBNB,AUX\_SCRATCHNBNP,aux\_DenS,aux\_U\_n,aux\_dVU\_n,aux\_ZrhoVar1);}
+\DoxyCodeLine{868       \textcolor{keywordflow}{if}(epcisGGA )  }
+\DoxyCodeLine{869         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(aux\_ZgammaVar1,aux\_ZgammaVar2,aux\_GDenS,aux\_U\_gamma,}
+\DoxyCodeLine{870           aux\_dVU\_gamma);}
+\DoxyCodeLine{871 }
+\DoxyCodeLine{872       \textcolor{keywordflow}{if}( this-\/>aux\_ss-\/>onePDM-\/>hasZ() ) \{}
+\DoxyCodeLine{873         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(aux\_DenZ);}
+\DoxyCodeLine{874         \textcolor{keywordflow}{if} ( epcisGGA ) ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(aux\_GDenZ);}
+\DoxyCodeLine{875       \}}
+\DoxyCodeLine{876 }
+\DoxyCodeLine{877       \textcolor{keywordflow}{if}( this-\/>aux\_ss-\/>onePDM-\/>hasXY() )}
+\DoxyCodeLine{878         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Relativistic NEO-\/Kohn-\/Sham NYI!"{}}, std::cout);}
+\DoxyCodeLine{879 }
+\DoxyCodeLine{880       \textcolor{keywordflow}{if}( epc\_functionals.size() > 1 ) \{}
+\DoxyCodeLine{881         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(aux\_epsSCR,aux\_dVU\_n\_SCR);}
+\DoxyCodeLine{882         \textcolor{keywordflow}{if}( epcisGGA ) ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(aux\_dVU\_gamma\_SCR);}
+\DoxyCodeLine{883       \}}
+\DoxyCodeLine{884 }
+\DoxyCodeLine{885       aux\_Re1PDM = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{886 }
+\DoxyCodeLine{887       \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/End Aux-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ //}}
+\DoxyCodeLine{888       \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/Cross-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ //}}
+\DoxyCodeLine{889       \textcolor{keywordflow}{if}(epcisGGA)}
+\DoxyCodeLine{890         ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a1db6b8a7a00250500f7afc2378fe5030}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(cross\_U\_gamma, cross\_dVU\_gamma, ZgammaVar3);}
+\DoxyCodeLine{891       \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/End Cross-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/ //}}
+\DoxyCodeLine{892       \textcolor{comment}{// End freeing the memory}}
+\DoxyCodeLine{893 }
+\DoxyCodeLine{894       \textcolor{comment}{// Turn back on LA threads}}
+\DoxyCodeLine{895       \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(LAThreads);}
+\DoxyCodeLine{896 }
+\DoxyCodeLine{897       \mbox{\hyperlink{namespaceChronusQ_ae9c2c6f04046395ca738d3adb27543d7}{MPICommFree}}(intComm); \textcolor{comment}{// Free communicator}}
+\DoxyCodeLine{898 }
+\DoxyCodeLine{899     \} \textcolor{comment}{// Valid intComm}}
+\DoxyCodeLine{900 }
+\DoxyCodeLine{901     \mbox{\hyperlink{namespaceChronusQ_a23c2e4eb26f9455d90831342328f3b91}{MPI\_Barrier}}(ss.\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a48a3011acc364699db7fa934f77aa9bd}{comm}}); \textcolor{comment}{// Syncronize the MPI processes}}
+\DoxyCodeLine{902 }
+\DoxyCodeLine{903   \}}
+\DoxyCodeLine{904 }
+\DoxyCodeLine{905 }
+\DoxyCodeLine{906   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{907   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOKohnShamBuilder_a2f93c85a6ba1e45e70d15974a7612652}{NEOKohnShamBuilder<MatsT,IntsT>::formFock}}(}
+\DoxyCodeLine{908     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}\& ss, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& empert, \textcolor{keywordtype}{bool} increment,}
+\DoxyCodeLine{909     \textcolor{keywordtype}{double} xHFX)}
+\DoxyCodeLine{910   \{}
+\DoxyCodeLine{911     \textcolor{keywordflow}{if}( this-\/>upstream == \textcolor{keyword}{nullptr} )}
+\DoxyCodeLine{912       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Upstream FockBuilder uninitialized in formFock!"{}});}
+\DoxyCodeLine{913 }
+\DoxyCodeLine{914     \textcolor{comment}{// Call all upstream FockBuilders}}
+\DoxyCodeLine{915     this-\/>upstream-\/>formFock(ss, empert, increment, xHFX);}
+\DoxyCodeLine{916 }
+\DoxyCodeLine{917     formVXC(ss);}
+\DoxyCodeLine{918 }
+\DoxyCodeLine{919     *ss.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_ab82f1f8ad464a41f46f9ee508cf22b38}{fockMatrix}} += *VXC;}
+\DoxyCodeLine{920   \}}
+\DoxyCodeLine{921 }
+\DoxyCodeLine{922 \}}
+
+\end{DoxyCode}

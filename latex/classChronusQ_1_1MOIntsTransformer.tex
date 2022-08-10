@@ -1,0 +1,630 @@
+\hypertarget{classChronusQ_1_1MOIntsTransformer}{}\doxysection{ChronusQ\+::MOInts\+Transformer\texorpdfstring{$<$}{<} MatsT, IntsT \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1MOIntsTransformer}\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+
+
+Templated class to handle AO to MO integral transformation for both one-\/body and two-\/body terms.  
+
+
+
+
+{\ttfamily \#include $<$mointstransformer.\+hpp$>$}
+
+
+
+Collaboration diagram for ChronusQ\+::MOInts\+Transformer\texorpdfstring{$<$}{<} MatsT, IntsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MOIntsTransformer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a87c476facbb2df55eadf6b350beacad6}{MOInts\+Transformer}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ac5750a13c80bf574dfbac96bb0820f04}{MOInts\+Transformer}} (const \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{MOInts\+Transformer}} \&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a14e7389b732d4ced10f885fed98157d2}{MOInts\+Transformer}} (\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{MOInts\+Transformer}} \&\&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_aaa8700ca46fdb190c6444ca9d5764fc5}{MOInts\+Transformer}} (\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem, \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ \&ss, \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6e}{TPI\+\_\+\+TRANSFORMATION\+\_\+\+ALG}} alg=\mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea8b867f203314c3678405cb4c1217c24c}{DIRECT\+\_\+\+N6}})
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a90815b3dc241efe426ce254461c9e6a9}{$\sim$\+MOInts\+Transformer}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ae25e40442169d457fab552830d651972}{clear\+All\+Cache}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a892df42539ac3983f7cadf75e7c7a47c}{reset\+MORanges}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a8a3923450bdb64d2e6d133e284a3178d}{add\+MORanges}} (const std\+::set$<$ char $>$ \&, const std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ \&)
+\begin{DoxyCompactList}\small\item\em set up MO ranges \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ac535ffe051f398de687f0709a03134ee}{set\+MORanges}} (size\+\_\+t n\+Frozen\+Core=0, size\+\_\+t n\+Frozen\+Virt=0)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a136cf2993f2b355a4d97f96ddd5bd49e}{set\+MORanges}} (const \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWave\+Function\+Base}} \&)
+\item 
+std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ae293bbbb891eb7cc881ebba92aa7b73a}{parse\+MOType}} (const char)
+\begin{DoxyCompactList}\small\item\em parsing the mo ints type to offsize \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a3fccd90849fbe78a4619a97b28c321ad}{parse\+MOType}} (const std\+::string \&)
+\begin{DoxyCompactList}\small\item\em parsing the mo ints types to offsizes \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_afd7354aefaffa69920e5652296b3054a}{get\+Unique\+Symbol}} (char type)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a7446f49cd3fe3c6340f3a580e8086038}{print\+Off\+Sizes}} (const std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&)
+\begin{DoxyCompactList}\small\item\em print offsizes \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a6e90d9bf4a5acfe8595b27ee0f4229d7}{print\+MORanges\+Summary}} ()
+\begin{DoxyCompactList}\small\item\em print offsizes \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a535d62f50cc37b4c1823af89d120201e}{transform\+HCore}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, MatsT $\ast$MOHCore, const std\+::string \&mo\+Type=\char`\"{}pq\char`\"{}, bool delta\+PQ=false, const char core\+Index=\textquotesingle{}\textbackslash{}0\textquotesingle{})
+\begin{DoxyCompactList}\small\item\em main interface to transform Core Hamiltonian\+: \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ad9708d1cbbac20bcbc08df8e826a9e49}{transform\+GD}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, const \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ \&, bool, MatsT $\ast$, const std\+::string \&mo\+Type=\char`\"{}pq\char`\"{}, bool delta\+PQ=false, bool cache\+AOGD=false, const std\+::string \&cache\+Id=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em main interface to transform G(\+D) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a98663dc98de396fbe1a194fc0baf641b}{transform\+GD}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, const char, MatsT $\ast$, const std\+::string \&mo\+Type=\char`\"{}pq\char`\"{}, bool delta\+PQ=false, bool cache\+AOGD=false, const std\+::string \&cache\+Id=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em main interface to transform G(\+Inact\+D) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a57e7b9313396d2fb9df538eabcd48a29}{transform\+TPI}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert, MatsT $\ast$MOTPI, const std\+::string \&mo\+Type=\char`\"{}pqrs\char`\"{}, bool cache\+Intermediates=true, bool with\+Exchange=false, \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\+\_\+\+TRANS\+\_\+\+DELTA\+\_\+\+TYPE}} delta=\mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\+\_\+\+KRONECKER\+\_\+\+DELTA}})
+\begin{DoxyCompactList}\small\item\em main interface to transform TPI \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a86ada10cceb410e317a786b3a761c77c}{form\+AOHCore}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, bool cache\+AOHCore=true, const char core\+Index=\textquotesingle{}\textbackslash{}0\textquotesingle{})
+\begin{DoxyCompactList}\small\item\em transform a subset of HCore \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a363d1ee66be87b3896f5c31c123507bc}{subset\+Transform\+HCore}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, const std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&, MatsT $\ast$, bool, const char core\+Index=\textquotesingle{}\textbackslash{}0\textquotesingle{})
+\begin{DoxyCompactList}\small\item\em transform a subset of HCore \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a56646c9c150b89242d2e3141d1acb9be}{subset\+Transform\+OPI}} (const std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&, const \mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ MatsT $>$ \&AOOPI, MatsT $\ast$, bool)
+\begin{DoxyCompactList}\small\item\em transform a subset of one-\/partical intgrals \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_afde71376ce7f36bd3c745261e1024134}{form\+AOGD}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, const \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ \&, bool, bool cache\+AOGD=false, const std\+::string \&cache\+Id=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em transform MO G(\+D) ~\newline
+ \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_af001e2e58c0decf0035289f79a136106}{form\+Inact\+Den}} (const char core\+Index)
+\begin{DoxyCompactList}\small\item\em form inactive core density \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_af3a936b38ca7efa1c05bbcca9f78493d}{subset\+Transform\+GD}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, const \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ \&, bool, MatsT $\ast$, const std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&, bool, bool cache\+AOGD=false, const std\+::string \&cache\+Id=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em transform a subset of GD \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a6c6b599b2d5bd89400c82bd799236a09}{subset\+Transform\+TPISSFock\+N6}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, const std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&, MatsT $\ast$, const std\+::string \&, bool, \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\+\_\+\+TRANS\+\_\+\+DELTA\+\_\+\+TYPE}} delta=\mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\+\_\+\+KRONECKER\+\_\+\+DELTA}})
+\begin{DoxyCompactList}\small\item\em transform AO TPI to form MO TPI thru \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}} formfock \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a625262d53171a0bf11da09547df8c022}{perform\+Subset\+Transform\+TPISSFock\+N6}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, const std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&, MatsT $\ast$, const std\+::string \&, bool, \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\+\_\+\+TRANS\+\_\+\+DELTA\+\_\+\+TYPE}} delta=\mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\+\_\+\+KRONECKER\+\_\+\+DELTA}})
+\begin{DoxyCompactList}\small\item\em transform AO TPI to form MO TPI thru \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}} formfock \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{In\+Core4index\+TPI}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a8503c1239011ed8f8abcd4b0a30cec87}{form\+AOTPIIn\+Core}} (bool)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a49bfdde3f720d206f76ed5e218575cee}{subset\+Transform\+TPIIn\+Core\+N5}} (const std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&, MatsT $\ast$, bool, \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\+\_\+\+TRANS\+\_\+\+DELTA\+\_\+\+TYPE}} delta=\mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\+\_\+\+KRONECKER\+\_\+\+DELTA}})
+\begin{DoxyCompactList}\small\item\em subset tranform TPI using incore ~\newline
+ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \& \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a3ac9048fc6ed1d1995094428623c987e}{mem\+Manager\+\_\+}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} to allocate matricies. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6e}{TPI\+\_\+\+TRANSFORMATION\+\_\+\+ALG}} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_aaa7ad431b415ab6fc89b767020b09f99}{TPITrans\+Alg\+\_\+}}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a38f5aa7f6ca8b79517bf8fc0510656ad}{ss\+\_\+}}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{Integrals\+Collection}} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a34c4bde20c6ca97324da7e64ceb7ca00}{ints\+\_\+cache\+\_\+}} = \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{Integrals\+Collection}}()
+\item 
+std\+::vector$<$ std\+::set$<$ char $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ad0a6c41f57f2cbfa60dc7fe43b56a2db}{symbol\+\_\+sets\+\_\+}}
+\item 
+std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_accf73c478efc3401136f94350b0fcd38}{mo\+\_\+ranges\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename MatsT, typename IntsT$>$\newline
+class Chronus\+Q\+::\+MOInts\+Transformer$<$ Mats\+T, Ints\+T $>$}
+Templated class to handle AO to MO integral transformation for both one-\/body and two-\/body terms. 
+
+WARNING\+: for 1C only alpha part of the MO (mo\mbox{[}0\mbox{]}) is used 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a87c476facbb2df55eadf6b350beacad6}\label{classChronusQ_1_1MOIntsTransformer_a87c476facbb2df55eadf6b350beacad6}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!MOIntsTransformer@{MOIntsTransformer}}
+\index{MOIntsTransformer@{MOIntsTransformer}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{MOIntsTransformer()}{MOIntsTransformer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::\+MOInts\+Transformer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_ac5750a13c80bf574dfbac96bb0820f04}\label{classChronusQ_1_1MOIntsTransformer_ac5750a13c80bf574dfbac96bb0820f04}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!MOIntsTransformer@{MOIntsTransformer}}
+\index{MOIntsTransformer@{MOIntsTransformer}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{MOIntsTransformer()}{MOIntsTransformer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::\+MOInts\+Transformer (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{MOInts\+Transformer}}$<$ MatsT, IntsT $>$ \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a14e7389b732d4ced10f885fed98157d2}\label{classChronusQ_1_1MOIntsTransformer_a14e7389b732d4ced10f885fed98157d2}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!MOIntsTransformer@{MOIntsTransformer}}
+\index{MOIntsTransformer@{MOIntsTransformer}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{MOIntsTransformer()}{MOIntsTransformer()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::\+MOInts\+Transformer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{MOInts\+Transformer}}$<$ MatsT, IntsT $>$ \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_aaa8700ca46fdb190c6444ca9d5764fc5}\label{classChronusQ_1_1MOIntsTransformer_aaa8700ca46fdb190c6444ca9d5764fc5}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!MOIntsTransformer@{MOIntsTransformer}}
+\index{MOIntsTransformer@{MOIntsTransformer}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{MOIntsTransformer()}{MOIntsTransformer()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::\+MOInts\+Transformer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem,  }\item[{\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$ MatsT, IntsT $>$ \&}]{ss,  }\item[{\mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6e}{TPI\+\_\+\+TRANSFORMATION\+\_\+\+ALG}}}]{alg = {\ttfamily \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea8b867f203314c3678405cb4c1217c24c}{DIRECT\+\_\+\+N6}}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{MOInts\+Transformer}} Constructor. Constructs a \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{MOInts\+Transformer}} object
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em mem} & ... CQ Memory Mamanger \\
+\hline
+\mbox{\texttt{ in}}  & {\em ss} & ... \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}} reference, which provides AO integrals for transformation into MO basis via Direc or In\+Core \\
+\hline
+\mbox{\texttt{ in}}  & {\em alg} & ... Algorithm for two particle integral transformation options see \mbox{\hyperlink{integrals_8hpp}{include/integrals.\+hpp}} \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MOIntsTransformer_aaa8700ca46fdb190c6444ca9d5764fc5_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a90815b3dc241efe426ce254461c9e6a9}\label{classChronusQ_1_1MOIntsTransformer_a90815b3dc241efe426ce254461c9e6a9}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!````~MOIntsTransformer@{$\sim$MOIntsTransformer}}
+\index{````~MOIntsTransformer@{$\sim$MOIntsTransformer}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$MOIntsTransformer()}{~MOIntsTransformer()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::$\sim$\mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{MOInts\+Transformer}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MOIntsTransformer_a90815b3dc241efe426ce254461c9e6a9_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a8a3923450bdb64d2e6d133e284a3178d}\label{classChronusQ_1_1MOIntsTransformer_a8a3923450bdb64d2e6d133e284a3178d}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!addMORanges@{addMORanges}}
+\index{addMORanges@{addMORanges}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{addMORanges()}{addMORanges()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::add\+MORanges (\begin{DoxyParamCaption}\item[{const std\+::set$<$ char $>$ \&}]{sym\+Set,  }\item[{const std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ \&}]{range }\end{DoxyParamCaption})}
+
+
+
+set up MO ranges 
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_ae25e40442169d457fab552830d651972}\label{classChronusQ_1_1MOIntsTransformer_ae25e40442169d457fab552830d651972}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!clearAllCache@{clearAllCache}}
+\index{clearAllCache@{clearAllCache}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{clearAllCache()}{clearAllCache()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::clear\+All\+Cache (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MOIntsTransformer_ae25e40442169d457fab552830d651972_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MOIntsTransformer_ae25e40442169d457fab552830d651972_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_afde71376ce7f36bd3c745261e1024134}\label{classChronusQ_1_1MOIntsTransformer_afde71376ce7f36bd3c745261e1024134}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!formAOGD@{formAOGD}}
+\index{formAOGD@{formAOGD}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{formAOGD()}{formAOGD()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::form\+AOGD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{const \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ \&}]{Den,  }\item[{bool}]{Her\+Den,  }\item[{bool}]{cache\+AOGD = {\ttfamily false},  }\item[{const std\+::string \&}]{cache\+Id = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})}
+
+
+
+transform MO G(\+D) ~\newline
+ 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MOIntsTransformer_afde71376ce7f36bd3c745261e1024134_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a86ada10cceb410e317a786b3a761c77c}\label{classChronusQ_1_1MOIntsTransformer_a86ada10cceb410e317a786b3a761c77c}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!formAOHCore@{formAOHCore}}
+\index{formAOHCore@{formAOHCore}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{formAOHCore()}{formAOHCore()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::form\+AOHCore (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{bool}]{cache\+AOHCore = {\ttfamily true},  }\item[{const char}]{core\+Index = {\ttfamily \textquotesingle{}\textbackslash{}0\textquotesingle{}} }\end{DoxyParamCaption})}
+
+
+
+transform a subset of HCore 
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a8503c1239011ed8f8abcd4b0a30cec87}\label{classChronusQ_1_1MOIntsTransformer_a8503c1239011ed8f8abcd4b0a30cec87}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!formAOTPIInCore@{formAOTPIInCore}}
+\index{formAOTPIInCore@{formAOTPIInCore}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{formAOTPIInCore()}{formAOTPIInCore()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{In\+Core4index\+TPI}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::form\+AOTPIIn\+Core (\begin{DoxyParamCaption}\item[{bool}]{cache\+AOTPI }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_af001e2e58c0decf0035289f79a136106}\label{classChronusQ_1_1MOIntsTransformer_af001e2e58c0decf0035289f79a136106}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!formInactDen@{formInactDen}}
+\index{formInactDen@{formInactDen}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{formInactDen()}{formInactDen()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::form\+Inact\+Den (\begin{DoxyParamCaption}\item[{const char}]{core\+Index }\end{DoxyParamCaption})}
+
+
+
+form inactive core density 
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_afd7354aefaffa69920e5652296b3054a}\label{classChronusQ_1_1MOIntsTransformer_afd7354aefaffa69920e5652296b3054a}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!getUniqueSymbol@{getUniqueSymbol}}
+\index{getUniqueSymbol@{getUniqueSymbol}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{getUniqueSymbol()}{getUniqueSymbol()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+char \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::get\+Unique\+Symbol (\begin{DoxyParamCaption}\item[{char}]{type }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MOIntsTransformer_afd7354aefaffa69920e5652296b3054a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_ae293bbbb891eb7cc881ebba92aa7b73a}\label{classChronusQ_1_1MOIntsTransformer_ae293bbbb891eb7cc881ebba92aa7b73a}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!parseMOType@{parseMOType}}
+\index{parseMOType@{parseMOType}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{parseMOType()}{parseMOType()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::parse\+MOType (\begin{DoxyParamCaption}\item[{const char}]{type }\end{DoxyParamCaption})}
+
+
+
+parsing the mo ints type to offsize 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MOIntsTransformer_ae293bbbb891eb7cc881ebba92aa7b73a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a3fccd90849fbe78a4619a97b28c321ad}\label{classChronusQ_1_1MOIntsTransformer_a3fccd90849fbe78a4619a97b28c321ad}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!parseMOType@{parseMOType}}
+\index{parseMOType@{parseMOType}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{parseMOType()}{parseMOType()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::parse\+MOType (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{mo\+Type }\end{DoxyParamCaption})}
+
+
+
+parsing the mo ints types to offsizes 
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a625262d53171a0bf11da09547df8c022}\label{classChronusQ_1_1MOIntsTransformer_a625262d53171a0bf11da09547df8c022}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!performSubsetTransformTPISSFockN6@{performSubsetTransformTPISSFockN6}}
+\index{performSubsetTransformTPISSFockN6@{performSubsetTransformTPISSFockN6}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{performSubsetTransformTPISSFockN6()}{performSubsetTransformTPISSFockN6()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::perform\+Subset\+Transform\+TPISSFock\+N6 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{const std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&}]{off\+\_\+sizes,  }\item[{MatsT $\ast$}]{MOTPI,  }\item[{const std\+::string \&}]{mo\+Type,  }\item[{bool}]{cache\+Intermediates,  }\item[{\mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\+\_\+\+TRANS\+\_\+\+DELTA\+\_\+\+TYPE}}}]{delta = {\ttfamily \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\+\_\+\+KRONECKER\+\_\+\+DELTA}}} }\end{DoxyParamCaption})}
+
+
+
+transform AO TPI to form MO TPI thru \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}} formfock 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MOIntsTransformer_a625262d53171a0bf11da09547df8c022_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a6e90d9bf4a5acfe8595b27ee0f4229d7}\label{classChronusQ_1_1MOIntsTransformer_a6e90d9bf4a5acfe8595b27ee0f4229d7}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!printMORangesSummary@{printMORangesSummary}}
+\index{printMORangesSummary@{printMORangesSummary}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{printMORangesSummary()}{printMORangesSummary()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::print\+MORanges\+Summary}
+
+
+
+print offsizes 
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a7446f49cd3fe3c6340f3a580e8086038}\label{classChronusQ_1_1MOIntsTransformer_a7446f49cd3fe3c6340f3a580e8086038}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!printOffSizes@{printOffSizes}}
+\index{printOffSizes@{printOffSizes}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{printOffSizes()}{printOffSizes()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::print\+Off\+Sizes (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&}]{off\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+print offsizes 
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a892df42539ac3983f7cadf75e7c7a47c}\label{classChronusQ_1_1MOIntsTransformer_a892df42539ac3983f7cadf75e7c7a47c}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!resetMORanges@{resetMORanges}}
+\index{resetMORanges@{resetMORanges}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{resetMORanges()}{resetMORanges()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::reset\+MORanges (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a136cf2993f2b355a4d97f96ddd5bd49e}\label{classChronusQ_1_1MOIntsTransformer_a136cf2993f2b355a4d97f96ddd5bd49e}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!setMORanges@{setMORanges}}
+\index{setMORanges@{setMORanges}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{setMORanges()}{setMORanges()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::set\+MORanges (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWave\+Function\+Base}} \&}]{mcwfn }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_ac535ffe051f398de687f0709a03134ee}\label{classChronusQ_1_1MOIntsTransformer_ac535ffe051f398de687f0709a03134ee}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!setMORanges@{setMORanges}}
+\index{setMORanges@{setMORanges}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{setMORanges()}{setMORanges()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::set\+MORanges (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{n\+Frozen\+Core = {\ttfamily 0},  }\item[{size\+\_\+t}]{n\+Frozen\+Virt = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MOIntsTransformer_ac535ffe051f398de687f0709a03134ee_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_af3a936b38ca7efa1c05bbcca9f78493d}\label{classChronusQ_1_1MOIntsTransformer_af3a936b38ca7efa1c05bbcca9f78493d}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!subsetTransformGD@{subsetTransformGD}}
+\index{subsetTransformGD@{subsetTransformGD}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{subsetTransformGD()}{subsetTransformGD()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::subset\+Transform\+GD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{const \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ \&}]{Den,  }\item[{bool}]{Her\+Den,  }\item[{MatsT $\ast$}]{MOGD,  }\item[{const std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&}]{off\+\_\+sizes,  }\item[{bool}]{delta\+PQ,  }\item[{bool}]{cache\+AOGD = {\ttfamily false},  }\item[{const std\+::string \&}]{cache\+Id = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})}
+
+
+
+transform a subset of GD 
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a363d1ee66be87b3896f5c31c123507bc}\label{classChronusQ_1_1MOIntsTransformer_a363d1ee66be87b3896f5c31c123507bc}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!subsetTransformHCore@{subsetTransformHCore}}
+\index{subsetTransformHCore@{subsetTransformHCore}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{subsetTransformHCore()}{subsetTransformHCore()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::subset\+Transform\+HCore (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{const std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&}]{off\+\_\+sizes,  }\item[{MatsT $\ast$}]{MOHCore,  }\item[{bool}]{delta\+PQ,  }\item[{const char}]{core\+Index = {\ttfamily \textquotesingle{}\textbackslash{}0\textquotesingle{}} }\end{DoxyParamCaption})}
+
+
+
+transform a subset of HCore 
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a56646c9c150b89242d2e3141d1acb9be}\label{classChronusQ_1_1MOIntsTransformer_a56646c9c150b89242d2e3141d1acb9be}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!subsetTransformOPI@{subsetTransformOPI}}
+\index{subsetTransformOPI@{subsetTransformOPI}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{subsetTransformOPI()}{subsetTransformOPI()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::subset\+Transform\+OPI (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&}]{off\+\_\+sizes,  }\item[{const \mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ MatsT $>$ \&}]{AOOPI,  }\item[{MatsT $\ast$}]{MOOPI,  }\item[{bool}]{delta\+PQ }\end{DoxyParamCaption})}
+
+
+
+transform a subset of one-\/partical intgrals 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MOIntsTransformer_a56646c9c150b89242d2e3141d1acb9be_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a49bfdde3f720d206f76ed5e218575cee}\label{classChronusQ_1_1MOIntsTransformer_a49bfdde3f720d206f76ed5e218575cee}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!subsetTransformTPIInCoreN5@{subsetTransformTPIInCoreN5}}
+\index{subsetTransformTPIInCoreN5@{subsetTransformTPIInCoreN5}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{subsetTransformTPIInCoreN5()}{subsetTransformTPIInCoreN5()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::subset\+Transform\+TPIIn\+Core\+N5 (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&}]{off\+\_\+sizes,  }\item[{MatsT $\ast$}]{MOTPI,  }\item[{bool}]{cache\+Intermediates,  }\item[{\mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\+\_\+\+TRANS\+\_\+\+DELTA\+\_\+\+TYPE}}}]{delta = {\ttfamily \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\+\_\+\+KRONECKER\+\_\+\+DELTA}}} }\end{DoxyParamCaption})}
+
+
+
+subset tranform TPI using incore ~\newline
+ 
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a6c6b599b2d5bd89400c82bd799236a09}\label{classChronusQ_1_1MOIntsTransformer_a6c6b599b2d5bd89400c82bd799236a09}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!subsetTransformTPISSFockN6@{subsetTransformTPISSFockN6}}
+\index{subsetTransformTPISSFockN6@{subsetTransformTPISSFockN6}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{subsetTransformTPISSFockN6()}{subsetTransformTPISSFockN6()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::subset\+Transform\+TPISSFock\+N6 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{const std\+::vector$<$ std\+::pair$<$ size\+\_\+t, size\+\_\+t $>$ $>$ \&}]{off\+\_\+sizes,  }\item[{MatsT $\ast$}]{MOTPI,  }\item[{const std\+::string \&}]{mo\+Type,  }\item[{bool}]{cache\+Intermediates,  }\item[{\mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\+\_\+\+TRANS\+\_\+\+DELTA\+\_\+\+TYPE}}}]{delta = {\ttfamily \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\+\_\+\+KRONECKER\+\_\+\+DELTA}}} }\end{DoxyParamCaption})}
+
+
+
+transform AO TPI to form MO TPI thru \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}} formfock 
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a98663dc98de396fbe1a194fc0baf641b}\label{classChronusQ_1_1MOIntsTransformer_a98663dc98de396fbe1a194fc0baf641b}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!transformGD@{transformGD}}
+\index{transformGD@{transformGD}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{transformGD()}{transformGD()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::transform\+GD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{const char}]{core\+Index,  }\item[{MatsT $\ast$}]{MOGD,  }\item[{const std\+::string \&}]{mo\+Type = {\ttfamily \char`\"{}pq\char`\"{}},  }\item[{bool}]{delta\+PQ = {\ttfamily false},  }\item[{bool}]{cache\+AOGD = {\ttfamily false},  }\item[{const std\+::string \&}]{cache\+Id = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})}
+
+
+
+main interface to transform G(\+Inact\+D) 
+
+G(\+D)(p, q) = gd\+FC $\ast$ \textbackslash{}sum\+\_\+\{mu,nu\} C(mu,p)$^\wedge$H $\ast$ C(nu,q) $\ast$ ~\newline
+ \textbackslash{}sum\+\_\+\{lm,sg,i\} C(lm,i)$^\wedge$H $\ast$ C(sg,i) $\ast$ \mbox{[}(mu nu $\vert$ lm sg) -\/ x\+FC $\ast$ (mu sg $\vert$ lm nu)\mbox{]}\}\mbox{]} ~\newline
+
+
+gd\+FC ... two body part contribution factor 1.\+0 for 2C/4C and 2.\+0 for 1C, x\+FC ... exchange contribution factor, 1.\+0 for 2C/4C and 0.\+5 for 1C
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pert} & ... external EM pertubations \\
+\hline
+\mbox{\texttt{ in}}  & {\em MOGD} & ... resulted G(\+D) in MO basis \\
+\hline
+\mbox{\texttt{ in}}  & {\em core\+Index} & ... core index for computing densities \\
+\hline
+\mbox{\texttt{ in}}  & {\em mo\+Type} & ... mo indices for p and q, respectively \\
+\hline
+\mbox{\texttt{ in}}  & {\em delta\+PQ} & ... if index p and q are identical \\
+\hline
+\mbox{\texttt{ in}}  & {\em cache\+AOGD} & ... controls whether to cache AOGD, default false \\
+\hline
+\mbox{\texttt{ in}}  & {\em cache\+Id} & ... used to identify caches, default none \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_ad9708d1cbbac20bcbc08df8e826a9e49}\label{classChronusQ_1_1MOIntsTransformer_ad9708d1cbbac20bcbc08df8e826a9e49}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!transformGD@{transformGD}}
+\index{transformGD@{transformGD}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{transformGD()}{transformGD()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::transform\+GD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{const \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ \&}]{Den,  }\item[{bool}]{Her\+Den,  }\item[{MatsT $\ast$}]{MOGD,  }\item[{const std\+::string \&}]{mo\+Type = {\ttfamily \char`\"{}pq\char`\"{}},  }\item[{bool}]{delta\+PQ = {\ttfamily false},  }\item[{bool}]{cache\+AOGD = {\ttfamily false},  }\item[{const std\+::string \&}]{cache\+Id = {\ttfamily \char`\"{}\char`\"{}} }\end{DoxyParamCaption})}
+
+
+
+main interface to transform G(\+D) 
+
+G(\+D)(p, q) = gd\+FC $\ast$ \textbackslash{}sum\+\_\+\{mu,nu\} C(mu,p)$^\wedge$H $\ast$ C(nu,q) $\ast$ ~\newline
+ \textbackslash{}sum\+\_\+\{lm,sg\} D(lm,sg) $\ast$ \mbox{[}(mu nu $\vert$ lm sg) -\/ x\+FC $\ast$ (mu sg $\vert$ lm nu)\mbox{]}\}\mbox{]} ~\newline
+
+
+gd\+FC ... two body part contribution factor 1.\+0 for 2C/4C and 2.\+0 for 1C, x\+FC ... exchange contribution factor, 1.\+0 for 2C/4C and 0.\+5 for 1C
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pert} & ... external EM pertubations \\
+\hline
+\mbox{\texttt{ in}}  & {\em MOGD} & ... resulted G(\+D) in MO basis \\
+\hline
+\mbox{\texttt{ in}}  & {\em mo\+Type} & ... mo indices for p and q, respectively \\
+\hline
+\mbox{\texttt{ in}}  & {\em delta\+PQ} & ... if index p and q are identical \\
+\hline
+\mbox{\texttt{ in}}  & {\em cache\+AOGD} & ... controls whether to cache AOGD, default false \\
+\hline
+\mbox{\texttt{ in}}  & {\em cache\+Id} & ... used to identify caches, default none \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a535d62f50cc37b4c1823af89d120201e}\label{classChronusQ_1_1MOIntsTransformer_a535d62f50cc37b4c1823af89d120201e}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!transformHCore@{transformHCore}}
+\index{transformHCore@{transformHCore}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{transformHCore()}{transformHCore()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::transform\+HCore (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{MatsT $\ast$}]{MOHCore,  }\item[{const std\+::string \&}]{mo\+Type = {\ttfamily \char`\"{}pq\char`\"{}},  }\item[{bool}]{delta\+PQ = {\ttfamily false},  }\item[{const char}]{core\+Index = {\ttfamily \textquotesingle{}\textbackslash{}0\textquotesingle{}} }\end{DoxyParamCaption})}
+
+
+
+main interface to transform Core Hamiltonian\+: 
+
+Major Intefaces to obtain different intgrals in MO basis See details in \mbox{\hyperlink{mointstransformer_2impl_8hpp}{include/mointstransformer/impl.\+hpp}}
+
+HCore(p,q) = \textbackslash{}sum\+\_\+\{mu,nu\} C(mu,p)$^\wedge$H $\ast$ C(nu,q) $\ast$ \mbox{[}h1e(mu,nu) optional\{ + gd\+FC $\ast$ \textbackslash{}sum\+\_\+\{lm,sg,i\} C(lm,i)$^\wedge$H $\ast$ C(sg,i) $\ast$ \mbox{[}(mu nu $\vert$ lm sg) -\/ x\+FC $\ast$ (mu sg $\vert$ lm nu)\mbox{]}\}\mbox{]} ~\newline
+
+
+gd\+FC ... two body part contribution factor 1.\+0 for 2C/4C and 2.\+0 for 1C, x\+FC ... exchange contribution factor, 1.\+0 for 2C/4C and 0.\+5 for 1C
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pert} & ... external EM pertubations \\
+\hline
+\mbox{\texttt{ in}}  & {\em MOHCore} & ... resulted HCore in MO basis \\
+\hline
+\mbox{\texttt{ in}}  & {\em mo\+Type} & ... mo indices for p and q, respectively \\
+\hline
+\mbox{\texttt{ in}}  & {\em delta\+PQ} & ... if index p and q are identical \\
+\hline
+\mbox{\texttt{ in}}  & {\em core\+Index} & ... include core contributions if specified with core index char otherwise MOHCore will just be H1e, default null char \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a57e7b9313396d2fb9df538eabcd48a29}\label{classChronusQ_1_1MOIntsTransformer_a57e7b9313396d2fb9df538eabcd48a29}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!transformTPI@{transformTPI}}
+\index{transformTPI@{transformTPI}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{transformTPI()}{transformTPI()}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::transform\+TPI (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{MatsT $\ast$}]{MOTPI,  }\item[{const std\+::string \&}]{mo\+Type = {\ttfamily \char`\"{}pqrs\char`\"{}},  }\item[{bool}]{cache\+Intermediates = {\ttfamily true},  }\item[{bool}]{with\+Exchange = {\ttfamily false},  }\item[{\mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\+\_\+\+TRANS\+\_\+\+DELTA\+\_\+\+TYPE}}}]{delta = {\ttfamily \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\+\_\+\+KRONECKER\+\_\+\+DELTA}}} }\end{DoxyParamCaption})}
+
+
+
+main interface to transform TPI 
+
+(p q $\vert$ r s) = \textbackslash{}sum\+\_\+\{mu,nu,lm,sg\} C(mu,p)$^\wedge$H $\ast$ C(lm,r)$^\wedge$H $\ast$ \mbox{[}(mu nu $\vert$ lm sg) -\/ x\+FC $\ast$ (mu sg $\vert$ lm nu) \mbox{]} $\ast$ C(nu,q) $\ast$ C(sg,s)
+
+x\+FC ... exchange contribution factor, 1.\+0 for 2C/4C and 0.\+5 for 1C
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pert} & ... external EM pertubations \\
+\hline
+\mbox{\texttt{ in}}  & {\em MOTPI} & ... resulted TPI in MO basis \\
+\hline
+\mbox{\texttt{ in}}  & {\em mo\+Type} & ... mo indices for p, q, r and s, respectively \\
+\hline
+\mbox{\texttt{ in}}  & {\em cache\+Intermediates} & ... controls whether to cache AO integrals for In\+Core N5 and cache half transformed integrals for In\+Core N6 and DIRECT N6 \\
+\hline
+\mbox{\texttt{ in}}  & {\em with\+Exchange} & ... whether compute Exchange part of the integrals \\
+\hline
+\mbox{\texttt{ in}}  & {\em delta} & ... whether two or more indice are indentical see options at \mbox{\hyperlink{mointstransformer_8hpp}{include/mointstransformer.\+hpp}} \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MOIntsTransformer_a57e7b9313396d2fb9df538eabcd48a29_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a34c4bde20c6ca97324da7e64ceb7ca00}\label{classChronusQ_1_1MOIntsTransformer_a34c4bde20c6ca97324da7e64ceb7ca00}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!ints\_cache\_@{ints\_cache\_}}
+\index{ints\_cache\_@{ints\_cache\_}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{ints\_cache\_}{ints\_cache\_}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{Integrals\+Collection}} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::ints\+\_\+cache\+\_\+ = \mbox{\hyperlink{structChronusQ_1_1IntegralsCollection}{Integrals\+Collection}}()\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a3ac9048fc6ed1d1995094428623c987e}\label{classChronusQ_1_1MOIntsTransformer_a3ac9048fc6ed1d1995094428623c987e}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!memManager\_@{memManager\_}}
+\index{memManager\_@{memManager\_}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{memManager\_}{memManager\_}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}}\& \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::mem\+Manager\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} to allocate matricies. 
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_accf73c478efc3401136f94350b0fcd38}\label{classChronusQ_1_1MOIntsTransformer_accf73c478efc3401136f94350b0fcd38}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!mo\_ranges\_@{mo\_ranges\_}}
+\index{mo\_ranges\_@{mo\_ranges\_}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{mo\_ranges\_}{mo\_ranges\_}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$std\+::pair$<$size\+\_\+t, size\+\_\+t$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::mo\+\_\+ranges\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_a38f5aa7f6ca8b79517bf8fc0510656ad}\label{classChronusQ_1_1MOIntsTransformer_a38f5aa7f6ca8b79517bf8fc0510656ad}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!ss\_@{ss\_}}
+\index{ss\_@{ss\_}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{ss\_}{ss\_}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{Single\+Slater}}$<$MatsT,IntsT$>$\& \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::ss\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_ad0a6c41f57f2cbfa60dc7fe43b56a2db}\label{classChronusQ_1_1MOIntsTransformer_ad0a6c41f57f2cbfa60dc7fe43b56a2db}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!symbol\_sets\_@{symbol\_sets\_}}
+\index{symbol\_sets\_@{symbol\_sets\_}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{symbol\_sets\_}{symbol\_sets\_}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+std\+::vector$<$std\+::set$<$char$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::symbol\+\_\+sets\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MOIntsTransformer_aaa7ad431b415ab6fc89b767020b09f99}\label{classChronusQ_1_1MOIntsTransformer_aaa7ad431b415ab6fc89b767020b09f99}} 
+\index{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}!TPITransAlg\_@{TPITransAlg\_}}
+\index{TPITransAlg\_@{TPITransAlg\_}!ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$@{ChronusQ::MOIntsTransformer$<$ MatsT, IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{TPITransAlg\_}{TPITransAlg\_}}
+{\footnotesize\ttfamily template$<$typename MatsT , typename IntsT $>$ \\
+\mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6e}{TPI\+\_\+\+TRANSFORMATION\+\_\+\+ALG}} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer}{Chronus\+Q\+::\+MOInts\+Transformer}}$<$ MatsT, IntsT $>$\+::\+TPITrans\+Alg\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{mointstransformer_8hpp}{mointstransformer.\+hpp}}\item 
+include/mointstransformer/\mbox{\hyperlink{hcore_8hpp}{hcore.\+hpp}}\item 
+include/mointstransformer/\mbox{\hyperlink{mointstransformer_2impl_8hpp}{impl.\+hpp}}\item 
+include/mointstransformer/\mbox{\hyperlink{moranges_8hpp}{moranges.\+hpp}}\item 
+include/mointstransformer/\mbox{\hyperlink{tpi__incore__n5_8hpp}{tpi\+\_\+incore\+\_\+n5.\+hpp}}\item 
+include/mointstransformer/\mbox{\hyperlink{tpi__ssfock_8hpp}{tpi\+\_\+ssfock.\+hpp}}\end{DoxyCompactItemize}

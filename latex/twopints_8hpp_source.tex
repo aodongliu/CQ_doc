@@ -1,0 +1,229 @@
+\hypertarget{twopints_8hpp_source}{}\doxysection{twopints.\+hpp}
+\label{twopints_8hpp_source}\index{include/particleintegrals/twopints.hpp@{include/particleintegrals/twopints.hpp}}
+\mbox{\hyperlink{twopints_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{particleintegrals_8hpp}{particleintegrals.hpp}}>}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrix_8hpp}{matrix.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mpi_8hpp}{util/mpi.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cb}{TWOBODY\_CONTRACTION\_TYPE}} \{}
+\DoxyCodeLine{32     \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cba973881f532185390135a2845f80eb3ae}{COULOMB}}, }
+\DoxyCodeLine{33     \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaa095106eab8e9a7a1e33352295d00093}{EXCHANGE}},}
+\DoxyCodeLine{34     \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cba0c218a6412fc3339a01e862ddccbb6c6}{PAIR}},    }
+\DoxyCodeLine{35     \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cba8578053891caf9c4af3c665d73fa43ac}{BARE\_COULOMB}},}
+\DoxyCodeLine{36     \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cba1d269d4b7d6c561fc04b81a2a178e2a5}{LLLL}},}
+\DoxyCodeLine{37     \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbad5017ac8c585ad30ff49af6467d2efc6}{LLSS}},}
+\DoxyCodeLine{38     \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cbaf5b0f392e82b90ea1452a00512088d53}{SSSS}},}
+\DoxyCodeLine{39     \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cba619fb0d8a58386d6c365eb7fa1bae867}{GAUNT}},}
+\DoxyCodeLine{40     \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cba01337b51d63cd7bba6d5daf63ff8d911}{GAUGE}}}
+\DoxyCodeLine{41   \}; }
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44   \textcolor{comment}{// ERI transpose type}}
+\DoxyCodeLine{45   \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903}{INTEGRAL\_TRANSPOSE}} \{}
+\DoxyCodeLine{46     \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903a9807d5059b4859be330e484f2fcd9775}{TRANS\_NONE}},}
+\DoxyCodeLine{47     \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903a5180f3386f923301dcddd2e3e69d35b9}{TRANS\_MN\_TRANS\_KL}},}
+\DoxyCodeLine{48     \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903a78e69a6d2bbe065a8b5d5809fbeb09b6}{TRANS\_MNKL}},}
+\DoxyCodeLine{49     \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903a7a18aa43bb072fdc1e16635c617bb655}{TRANS\_KL}},}
+\DoxyCodeLine{50     \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903ac722a2e7fee120ee9cb7831757093b36}{TRANS\_MN}}}
+\DoxyCodeLine{51   \};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 }
+\DoxyCodeLine{59   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{60   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction}} \{}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     T*  \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2c9305b77e393630002388add9519214}{X}};  }
+\DoxyCodeLine{64     T*  \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ad947ab11cb5b1d302bd05d254bd0d797}{AX}}; }
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a2bc6fb16f318b0e1919da14f76ea77e5}{HER}}; }
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cb}{TWOBODY\_CONTRACTION\_TYPE}} \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_a1c12e66237e297304c69df433198b112}{contType}};}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     \textcolor{keywordtype}{double}* \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_adbb5b526c2043efb4215209a5e8f309b}{ERI4}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903}{INTEGRAL\_TRANSPOSE}} \mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction_ac7785af46860afa407a5da091e7c8067}{intTrans}};}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75   \}; \textcolor{comment}{// struct TwoBodyContraction}}
+\DoxyCodeLine{76   }
+\DoxyCodeLine{82   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{83   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1TwoBodyRelContraction}{TwoBodyRelContraction}} \{}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     std::shared\_ptr<PauliSpinorSquareMatrices<T>>  \mbox{\hyperlink{structChronusQ_1_1TwoBodyRelContraction_abcf267088ab6f076ff33e8a48758e68d}{X}};  }
+\DoxyCodeLine{86     std::shared\_ptr<PauliSpinorSquareMatrices<T>>  \mbox{\hyperlink{structChronusQ_1_1TwoBodyRelContraction_a3d549056a629e1f6560f72be9de7d24c}{AX}}; }
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1TwoBodyRelContraction_a8c6478bb4a167cd14be6beabf17db2da}{HER}}; }
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90     \mbox{\hyperlink{namespaceChronusQ_a14bbb7fd8ce60d0c69d4985cd7d9c4cb}{TWOBODY\_CONTRACTION\_TYPE}} \mbox{\hyperlink{structChronusQ_1_1TwoBodyRelContraction_a21d76c4f1a5bde6787f599347ed9eb45}{contType}};}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92     \textcolor{keywordtype}{double}* \mbox{\hyperlink{structChronusQ_1_1TwoBodyRelContraction_a87ad461c622efb1a69a65a878cb0b6ed}{ERI4}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94     \mbox{\hyperlink{namespaceChronusQ_a8b6ed2944c53461cb27e27a68a5fd903}{INTEGRAL\_TRANSPOSE}} \mbox{\hyperlink{structChronusQ_1_1TwoBodyRelContraction_addd708a405ec2057cd518b4e3cac8266}{intTrans}};}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96   \}; \textcolor{comment}{// struct RelTwoBodyContraction}}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{107   \textcolor{keyword}{template} <\textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{108   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{ParticleIntegrals}} \{}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{111     }
+\DoxyCodeLine{112     \textcolor{comment}{// second basis numbers }}
+\DoxyCodeLine{113     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a0ba00e8e7cca60d05fe3ca5bab6a2652}{sNB}};}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115   \textcolor{keyword}{public}:}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a08ddb5aa972e5955bff32ab01eed45d6}{TwoPInts}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{120     \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a5342402ed2ae6b14a6c13dac1ff09429}{TwoPInts}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts}} \& ) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{121     \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a0962ac2708c37a8c55405d8bcbd5fa0e}{TwoPInts}}( \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts}} \&\& ) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123     \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a154738e42cb93132faa7cb34671993b5}{TwoPInts}}(\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, \textcolor{keywordtype}{size\_t} nb, \textcolor{keywordtype}{size\_t} snb = 0):}
+\DoxyCodeLine{124         \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals}{ParticleIntegrals}}(mem, nb), \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a0ba00e8e7cca60d05fe3ca5bab6a2652}{sNB}}(snb) \{}
+\DoxyCodeLine{125         }
+\DoxyCodeLine{126         \textcolor{comment}{// if the second basis does not exist, set it to be the same as the first one}}
+\DoxyCodeLine{127         \textcolor{keywordflow}{if} (snb == 0) }
+\DoxyCodeLine{128           \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a0ba00e8e7cca60d05fe3ca5bab6a2652}{sNB}} = nb; }
+\DoxyCodeLine{129      \}}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131     \textcolor{keyword}{template} <\textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{132     \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a59743df62e6727b6c2d1011dd3f53085}{TwoPInts}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts<IntsU>}} \&other, \textcolor{keywordtype}{int} = 0 ):}
+\DoxyCodeLine{133         \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts}}(other.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a4980f581ea843bd4ca6be7ac88064274}{memManager}}(), other.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}(), other.\mbox{\hyperlink{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}{snBasis}}()) \{}
+\DoxyCodeLine{134       \textcolor{keywordflow}{if} (std::is\_same<IntsU, dcomplex>::value}
+\DoxyCodeLine{135           and std::is\_same<IntsT, double>::value)}
+\DoxyCodeLine{136         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Cannot create a Real TwoPInts from a Complex one."{}});}
+\DoxyCodeLine{137     \}}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139     \textcolor{comment}{// return the basis numbers of the second particle}}
+\DoxyCodeLine{140     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}{snBasis}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a0ba00e8e7cca60d05fe3ca5bab6a2652}{sNB}}; \}}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142     \textcolor{comment}{// Single element interfaces}}
+\DoxyCodeLine{143     \textcolor{keyword}{virtual} IntsT \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a2f1a21977603cc067d18ed2f8a9cd8b3}{operator()}}(\textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{size\_t}) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{144     \textcolor{keyword}{virtual} IntsT \mbox{\hyperlink{classChronusQ_1_1TwoPInts_aa78aec2ec10346df29baab79e3f5422a}{operator()}}(\textcolor{keywordtype}{size\_t}, \textcolor{keywordtype}{size\_t}) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1TwoPInts_ac4afb19c13c9966736f5bb1b2553164f}{broadcast}}(\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm = \mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\_COMM\_WORLD}}, \textcolor{keywordtype}{int} root = 0)\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{147       \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_aa77620083422196b6797c968ffb79136}{ParticleIntegrals::broadcast}}(comm, root);}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{150       \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(comm) > 1 ) \{}
+\DoxyCodeLine{151         \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(\mbox{\hyperlink{classChronusQ_1_1TwoPInts_a0ba00e8e7cca60d05fe3ca5bab6a2652}{sNB}},root,comm);}
+\DoxyCodeLine{152       \}}
+\DoxyCodeLine{153 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{154     \}}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156     \textcolor{comment}{//virtual TensorContraction ERITensor();}}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a545883e5276c80ebb9fb3afe313bfa2c}{\string~TwoPInts}}() \{\}}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160   \}; \textcolor{comment}{// class ERInts}}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{172   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{173   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}} \{}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU, \textcolor{keyword}{typename} IntsU>}
+\DoxyCodeLine{176     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}};}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{179     \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts<IntsT>}} \&\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\_}};}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181   \textcolor{keyword}{public}:}
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185     \mbox{\hyperlink{classChronusQ_1_1TPIContractions_aa86ecdc4839a0d8af20c7dc416ed419b}{TPIContractions}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{186     \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a17ecf52aa16b85f17125cf0a76874dc1}{TPIContractions}}(\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts<IntsT>}} \&tpi): \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\_}}(tpi) \{\}}
+\DoxyCodeLine{187     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{188     \mbox{\hyperlink{classChronusQ_1_1TPIContractions_aa1d86dbe3221524e0123e852041a4ea7}{TPIContractions}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions<MatsU,IntsT>}} \&other, \textcolor{keywordtype}{int} dummy = 0 ):}
+\DoxyCodeLine{189       \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}(other.\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\_}}) \{}
+\DoxyCodeLine{190       \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}{contractSecond}} = other.\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}{contractSecond}};}
+\DoxyCodeLine{191     \}}
+\DoxyCodeLine{192     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{193     \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a171355ff401bd4356726e34f55ecbab1}{TPIContractions}}( \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions<MatsU,IntsT>}} \&\&other, \textcolor{keywordtype}{int} dummy = 0 ):}
+\DoxyCodeLine{194       \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}(other.\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\_}}) \{}
+\DoxyCodeLine{195       \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}{contractSecond}} = other.contractSecond;}
+\DoxyCodeLine{196     \}}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198     \mbox{\hyperlink{classChronusQ_1_1TPIContractions_afb93010774da56292c26a5e02684e1cc}{TPIContractions}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}} \&other ):}
+\DoxyCodeLine{199       \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}(other, 0) \{}
+\DoxyCodeLine{200       \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}{contractSecond}} = other.\mbox{\hyperlink{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}{contractSecond}};}
+\DoxyCodeLine{201     \}}
+\DoxyCodeLine{202     \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a5ca969180b5d1b1defdf7c1a794814e3}{TPIContractions}}( \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}} \&\&other ):}
+\DoxyCodeLine{203       \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions}}(std::move(other), 0) \{}
+\DoxyCodeLine{204       \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}{contractSecond}} = other.contractSecond;}
+\DoxyCodeLine{205     \}}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207     \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts<IntsT>}}\& \mbox{\hyperlink{classChronusQ_1_1TPIContractions_aae59759f8f3e438eacf211529aa7d5b6}{ints}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\_}}; \}}
+\DoxyCodeLine{208     \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts<IntsT>}}\& \mbox{\hyperlink{classChronusQ_1_1TPIContractions_ad2b8ae4e964c8bb8e756654e0df86b10}{ints}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a4508367a4372b0072d794500d67b6fac}{ints\_}}; \}}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210     \textcolor{comment}{// Computation interfaces}}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{220     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1TPIContractions_aa4ad81411e763c882bd21e0bb8552041}{twoBodyContract}}(}
+\DoxyCodeLine{221         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}},}
+\DoxyCodeLine{222         \textcolor{keyword}{const} \textcolor{keywordtype}{bool},}
+\DoxyCodeLine{223         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}>\&,}
+\DoxyCodeLine{224         \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&) \textcolor{keyword}{const} = 0;}
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a76d3c3a9b2d5608c610d758ee54c3d53}{twoBodyContract}}(}
+\DoxyCodeLine{227         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{228         \textcolor{keyword}{const} \textcolor{keywordtype}{bool} screen,}
+\DoxyCodeLine{229         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}> \&contList)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{230       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} pert;}
+\DoxyCodeLine{231       \mbox{\hyperlink{classChronusQ_1_1TPIContractions_aa4ad81411e763c882bd21e0bb8552041}{twoBodyContract}}(comm,screen,contList,pert);}
+\DoxyCodeLine{232     \}}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a72b811a893fd1a36b4f7efee6ca4eb8f}{twoBodyContract}}(}
+\DoxyCodeLine{235         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{236         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}> \&contList,}
+\DoxyCodeLine{237         \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&pert)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{238       \mbox{\hyperlink{classChronusQ_1_1TPIContractions_aa4ad81411e763c882bd21e0bb8552041}{twoBodyContract}}(comm,\textcolor{keyword}{true},contList,pert);}
+\DoxyCodeLine{239     \}}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{241     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a6283804202cfcc171935471676ca0586}{twoBodyContract}}(}
+\DoxyCodeLine{242         \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} comm,}
+\DoxyCodeLine{243         std::vector<\mbox{\hyperlink{structChronusQ_1_1TwoBodyContraction}{TwoBodyContraction<MatsT>}}> \&contList)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{244       \mbox{\hyperlink{classChronusQ_1_1TPIContractions_aa4ad81411e763c882bd21e0bb8552041}{twoBodyContract}}(comm,\textcolor{keyword}{true},contList);}
+\DoxyCodeLine{245     \}}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{247     \textcolor{comment}{// Destructor}}
+\DoxyCodeLine{248     \textcolor{keyword}{virtual} \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a87a8ea0b19a3e870655f0747ad0f8213}{\string~TPIContractions}}() \{\}}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250     \textcolor{comment}{// Pointer convertor}}
+\DoxyCodeLine{251     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{252     \textcolor{keyword}{static} std::shared\_ptr<TPIContractions<MatsU,IntsT>>}
+\DoxyCodeLine{253     \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a901d93fc30f036df77db190a7d101330}{convert}}(\textcolor{keyword}{const} std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions<MatsT,IntsT>}}>\&);}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255     \textcolor{comment}{// Whether the contraction is done in the first or second basis}}
+\DoxyCodeLine{256     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1TPIContractions_a8d93d8900dbdd07d047afeb77ecea42e}{contractSecond}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258   \}; \textcolor{comment}{// class TPIContractions}}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

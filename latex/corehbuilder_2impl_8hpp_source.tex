@@ -1,0 +1,85 @@
+\hypertarget{corehbuilder_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{corehbuilder_2impl_8hpp_source}\index{include/corehbuilder/impl.hpp@{include/corehbuilder/impl.hpp}}
+\mbox{\hyperlink{corehbuilder_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you ca redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{corehbuilder_8hpp}{corehbuilder.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{nonrel_8hpp}{corehbuilder/nonrel.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{corehbuilder_2nonrel_2impl_8hpp}{corehbuilder/nonrel/impl.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{fourcomp_8hpp}{corehbuilder/fourcomp.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{corehbuilder_2fourcomp_2impl_8hpp}{corehbuilder/fourcomp/impl.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrixcoreh_8hpp}{corehbuilder/matrixcoreh.hpp}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <typeinfo>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{40   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MatrixCoreH_ad89e74302c63c45e1aed70e174464c02}{MatrixCoreH<MatsT,IntsT>::computeCoreH}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&,}
+\DoxyCodeLine{41       std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<MatsT>}}> coreH) \{}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     *coreH = coreHMatrix;}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45   \}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 }
+\DoxyCodeLine{54   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{55   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{56   std::shared\_ptr<CoreHBuilder<MatsU,IntsT>>}
+\DoxyCodeLine{57   \mbox{\hyperlink{classChronusQ_1_1CoreHBuilder_a3b9a53d1dfe185623bfc328164cddac3}{CoreHBuilder<MatsT,IntsT>::convert}}(\textcolor{keyword}{const} std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1CoreHBuilder}{CoreHBuilder<MatsT,IntsT>}}>\& ch) \{}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{keywordflow}{if} (not ch) \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \textcolor{keyword}{const} std::type\_info \&tID(\textcolor{keyword}{typeid}(*ch));}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \textcolor{keywordflow}{if} (tID == \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1NRCoreH}{NRCoreH<MatsT,IntsT>}})) \{}
+\DoxyCodeLine{64       \textcolor{keywordflow}{return} std::make\_shared<NRCoreH<MatsU,IntsT>>(}
+\DoxyCodeLine{65                *std::dynamic\_pointer\_cast<NRCoreH<MatsT,IntsT>>(ch));}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tID == \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1FourComponent}{FourComponent<MatsT,IntsT>}})) \{}
+\DoxyCodeLine{68       \textcolor{keywordflow}{return} std::make\_shared<FourComponent<MatsU,IntsT>>(}
+\DoxyCodeLine{69                *std::dynamic\_pointer\_cast<FourComponent<MatsT,IntsT>>(ch));}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tID == \textcolor{keyword}{typeid}(\mbox{\hyperlink{classChronusQ_1_1MatrixCoreH}{MatrixCoreH<MatsT,IntsT>}})) \{}
+\DoxyCodeLine{72       \textcolor{keywordflow}{return} std::make\_shared<MatrixCoreH<MatsU,IntsT>>(}
+\DoxyCodeLine{73                *std::dynamic\_pointer\_cast<MatrixCoreH<MatsT,IntsT>>(ch));}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{76       std::stringstream errMsg;}
+\DoxyCodeLine{77       errMsg << \textcolor{stringliteral}{"{}CoreHBuilder implementation \(\backslash\)"{}"{}} << tID.name() << \textcolor{stringliteral}{"{}\(\backslash\)"{} not registered in convert."{}} << std::endl;}
+\DoxyCodeLine{78       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(errMsg.str(),std::cout);}
+\DoxyCodeLine{79     \}}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83   \}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85 \}}
+
+\end{DoxyCode}

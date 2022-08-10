@@ -1,0 +1,130 @@
+\hypertarget{coupledcluster_8hpp_source}{}\doxysection{coupledcluster.\+hpp}
+\label{coupledcluster_8hpp_source}\index{include/coupledcluster.hpp@{include/coupledcluster.hpp}}
+\mbox{\hyperlink{coupledcluster_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#ifdef CQ\_HAS\_TA}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{particleintegrals_8hpp}{particleintegrals.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{wavefunction_8hpp}{wavefunction.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2hartreefock_8hpp}{singleslater/hartreefock.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{files_8hpp}{util/files.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{math_8hpp}{util/math.hpp}}>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{integrals_8hpp}{integrals.hpp}}>}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cerr_8hpp}{cerr.hpp}}>}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#include <tiledarray.h>}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{DiskDIIS_8hpp}{./coupledcluster/DiskDIIS.hpp}}"{}}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42   \textcolor{keyword}{enum class} CC\_TYPE \{ CCSD\};}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44   \textcolor{keyword}{struct }CoupledClusterSettings \{}
+\DoxyCodeLine{45     CC\_TYPE cctype = CC\_TYPE::CCSD;}
+\DoxyCodeLine{46     \textcolor{keywordtype}{double} eConv = 1e-\/8;}
+\DoxyCodeLine{47     \textcolor{keywordtype}{double} tConv = 1e-\/6;}
+\DoxyCodeLine{48     \textcolor{keywordtype}{int} maxiter = 1000;}
+\DoxyCodeLine{49   \};}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51   \textcolor{keyword}{struct }CCBase}
+\DoxyCodeLine{52   \{}
+\DoxyCodeLine{53     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} getCorrEnergy() = 0;}
+\DoxyCodeLine{54     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} run() = 0;}
+\DoxyCodeLine{55     \textcolor{keywordtype}{bool} useDIIS = \textcolor{keyword}{true};}
+\DoxyCodeLine{56     \textcolor{keywordtype}{size\_t} nDIIS = 8;}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     CoupledClusterSettings ccSettings;}
+\DoxyCodeLine{59   \};}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{62   \textcolor{keyword}{class }CCSD : \textcolor{keyword}{public} CCBase}
+\DoxyCodeLine{63   \{}
+\DoxyCodeLine{64     \textcolor{keyword}{using }TArray = TA::TArray<MatsT>;}
+\DoxyCodeLine{65   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{66     TArray T1\_;}
+\DoxyCodeLine{67     TArray T2\_;}
+\DoxyCodeLine{68     SingleSlater<MatsT,IntsT>\& ref\_;}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70   \textcolor{keyword}{public}:    }
+\DoxyCodeLine{71     CCSD(SingleSlater<MatsT,IntsT>\& ref): ref\_(ref)\{\}}
+\DoxyCodeLine{72     }
+\DoxyCodeLine{73     \string~CCSD()\{\};}
+\DoxyCodeLine{74     }
+\DoxyCodeLine{75     std::map<std::string,TArray> antiSymMoints;}
+\DoxyCodeLine{76     std::map<std::string,TArray> fockMatrix\_ta;}
+\DoxyCodeLine{77     }
+\DoxyCodeLine{78     \textcolor{keywordtype}{double} CorrE = 0.0;}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{keywordtype}{void} getCorrEnergy() \textcolor{keyword}{override};}
+\DoxyCodeLine{81     \textcolor{keywordtype}{void} updateT1(\textcolor{keyword}{const} TArray T1\_old, \textcolor{keyword}{const} TArray T2\_old);}
+\DoxyCodeLine{82     \textcolor{keywordtype}{void} updateT2(\textcolor{keyword}{const} TArray T1\_old, TArray T2\_old);}
+\DoxyCodeLine{83     \textcolor{keywordtype}{void} transformInts();}
+\DoxyCodeLine{84     \textcolor{keywordtype}{void} run() \textcolor{keyword}{override} ;}
+\DoxyCodeLine{85     \textcolor{keywordtype}{void} runConventional();}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 \textcolor{comment}{//Auxiliary variables and functions to help initialization of TA tensors}}
+\DoxyCodeLine{88     TA::TiledRange1 orange;}
+\DoxyCodeLine{89     TA::TiledRange1 vrange;}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     std::size\_t blksize\{4\};}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \textcolor{keywordtype}{void} initRanges();}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95 \textcolor{comment}{//Singles intermediates and tensors}}
+\DoxyCodeLine{96     \textcolor{keywordtype}{void} formA\_1();}
+\DoxyCodeLine{97     \textcolor{keywordtype}{void} formA\_2();}
+\DoxyCodeLine{98     \textcolor{keywordtype}{void} formA\_3();}
+\DoxyCodeLine{99     \textcolor{keywordtype}{void} formA\_4();}
+\DoxyCodeLine{100     TArray A\_1;}
+\DoxyCodeLine{101     TArray A\_2; }
+\DoxyCodeLine{102     TArray A\_3;}
+\DoxyCodeLine{103     TArray A\_4;}
+\DoxyCodeLine{104 \textcolor{comment}{//Doubles intermediates and tensors}}
+\DoxyCodeLine{105     \textcolor{keywordtype}{void} formB\_1();}
+\DoxyCodeLine{106     \textcolor{keywordtype}{void} formB\_2();}
+\DoxyCodeLine{107     \textcolor{keywordtype}{void} formB\_3();}
+\DoxyCodeLine{108     \textcolor{keywordtype}{void} formB\_5();}
+\DoxyCodeLine{109     \textcolor{keywordtype}{void} formB\_6();   }
+\DoxyCodeLine{110     TArray B\_1;}
+\DoxyCodeLine{111     TArray B\_2;}
+\DoxyCodeLine{112     TArray B\_3;}
+\DoxyCodeLine{113     TArray B\_5;}
+\DoxyCodeLine{114     TArray B\_6;      }
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116     \textcolor{keywordtype}{void} initIntermediates();}
+\DoxyCodeLine{117     \textcolor{keywordtype}{void} initAmplitudes();}
+\DoxyCodeLine{118     \textcolor{keywordtype}{void} initFock();}
+\DoxyCodeLine{119     \textcolor{keywordtype}{void} doDIIS(\textcolor{keywordtype}{size\_t} t1offset, \textcolor{keywordtype}{size\_t} NT1blks, \textcolor{keywordtype}{size\_t} NT2blks, TArray T1\_old, TArray T2\_old, std::shared\_ptr<DiskDIIS<MatsT>> diis );}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121   \};\textcolor{comment}{// namespace CCSD}}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{124 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,339 @@
+\hypertarget{bfgs_8hpp_source}{}\doxysection{bfgs.\+hpp}
+\label{bfgs_8hpp_source}\index{include/nonlinearopt/bfgs.hpp@{include/nonlinearopt/bfgs.hpp}}
+\mbox{\hyperlink{bfgs_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{nonlinearopt_8hpp}{nonlinearopt/nonlinearopt.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{goldenSection_8hpp}{nonlinearopt/goldenSection.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas3_8hpp}{cqlinalg/blas3.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}}
+\DoxyCodeLine{33 \{}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keyword}{enum} \mbox{\hyperlink{namespaceChronusQ_a9d23460a989a2201e7ebd987e3ab5fa1}{LineSearchAlgorithm}}}
+\DoxyCodeLine{36     \{}
+\DoxyCodeLine{37         \mbox{\hyperlink{namespaceChronusQ_a9d23460a989a2201e7ebd987e3ab5fa1aead5ce6a35cd2ef6bed221816b54833c}{GoldenSection}},}
+\DoxyCodeLine{38         \mbox{\hyperlink{namespaceChronusQ_a9d23460a989a2201e7ebd987e3ab5fa1a8d3ec87ff489d30ff9a6849774cda4a8}{SteapestDescent}},}
+\DoxyCodeLine{39         \mbox{\hyperlink{namespaceChronusQ_a9d23460a989a2201e7ebd987e3ab5fa1ac2501cdedb28184a7724acf0c156f0b9}{ParticleSwarm}}}
+\DoxyCodeLine{40     \};}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{comment}{/*}}
+\DoxyCodeLine{43 \textcolor{comment}{    *   Brief: This class computes the BFGS quasi-\/Newton step from the positions,}}
+\DoxyCodeLine{44 \textcolor{comment}{    *           and gradients.  The inverse Hession is updated in place for each}}
+\DoxyCodeLine{45 \textcolor{comment}{    *           step.  At the end of the optimization, xBFGS will contain the new set of}}
+\DoxyCodeLine{46 \textcolor{comment}{    *           positions. }}
+\DoxyCodeLine{47 \textcolor{comment}{    * }}
+\DoxyCodeLine{48 \textcolor{comment}{    *   NOTE: The objFunc and gradFunc are called at each step and should be overloaded}}
+\DoxyCodeLine{49 \textcolor{comment}{    *         by the inheriting object}}
+\DoxyCodeLine{50 \textcolor{comment}{    * }}
+\DoxyCodeLine{51 \textcolor{comment}{    *   N       = number of positions/gradients i.e. dimension of the problem}}
+\DoxyCodeLine{52 \textcolor{comment}{    *   xBFGS   = pointer to the current set of positions (should be set with setXPointer)}}
+\DoxyCodeLine{53 \textcolor{comment}{    *   gBFGS   = pointer to the gradient at the current position (should be set with setGPointer)}}
+\DoxyCodeLine{54 \textcolor{comment}{    */}}
+\DoxyCodeLine{55     \textcolor{keyword}{template} <\textcolor{keyword}{typename} VT>}
+\DoxyCodeLine{56     \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch}{GoldenSectionSearch}}<VT>}
+\DoxyCodeLine{57     \{}
+\DoxyCodeLine{58     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{59         \textcolor{comment}{// Function to be Optimized declarations}}
+\DoxyCodeLine{60         \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1BFGS_ae079a5674618a8de8338377f01d43f56}{N}}; }
+\DoxyCodeLine{61         \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&\mbox{\hyperlink{classChronusQ_1_1BFGS_af56baf548b3d0fd1ceec065a1b80f0ff}{memManager}};}
+\DoxyCodeLine{62         VT *\mbox{\hyperlink{classChronusQ_1_1BFGS_a1c04f14fa8c125ec76b481b17e80505b}{xBFGS}}; }
+\DoxyCodeLine{63         VT *\mbox{\hyperlink{classChronusQ_1_1BFGS_a7eebd30dae06e962f9de2790c61419d6}{gBFGS}}; }
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{keyword}{public}:}
+\DoxyCodeLine{66         \textcolor{comment}{// Optimization parameters}}
+\DoxyCodeLine{67         \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1BFGS_ad1091738465e8a9a892a26b328fb2256}{convergence}} = 1E-\/12;                  }
+\DoxyCodeLine{68         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1BFGS_a61804f650d4ec4c166204be53cd0332b}{updateInvHess}} = \textcolor{keyword}{true};                   }
+\DoxyCodeLine{69         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1BFGS_afab75a7aa71eb093bcd616c6e8da4d97}{printSearchDirection}} = \textcolor{keyword}{false};           }
+\DoxyCodeLine{70         \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1BFGS_aefab5add601bb8f08c61bf0f4c6a55b8}{printPrecision}} = 10;                  }
+\DoxyCodeLine{71         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1BFGS_ac6a68f690dc179f4e07411ffe6892f04}{resetInvHess}} = \textcolor{keyword}{true};                    }
+\DoxyCodeLine{72         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1BFGS_aa060ec9bdb4cb03113f75d173fb10a74}{scaleInvHess}} = \textcolor{keyword}{true};                    }
+\DoxyCodeLine{73         \mbox{\hyperlink{namespaceChronusQ_a9d23460a989a2201e7ebd987e3ab5fa1}{LineSearchAlgorithm}} \mbox{\hyperlink{classChronusQ_1_1BFGS_a2d09bb4256d127d530a71217a8840f4a}{lineAlg}} = \mbox{\hyperlink{namespaceChronusQ_a9d23460a989a2201e7ebd987e3ab5fa1aead5ce6a35cd2ef6bed221816b54833c}{GoldenSection}}; }
+\DoxyCodeLine{76         \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1BFGS_ab14cec793ea056cdca3646a28131357d}{goldenSectionMaxDisp}} = 5.;            }
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78         \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1BFGS_ab8985a8d4e42904816a7c2c4921b56a6}{sdMaxDisp}} = 1.0;     }
+\DoxyCodeLine{79         \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1BFGS_a96a6fbd822f95e83b018647df7f79fe3}{scaleFailedSD}} = 0.1; }
+\DoxyCodeLine{80         \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1BFGS_aaaa9f3df569973c1a3fe1cfe38888218}{percentFailSD}} = 10.; }
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82         \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{83         \mbox{\hyperlink{classChronusQ_1_1BFGS_a86e806754b170350a86dfe4a94c1fb75}{BFGS}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{84         \mbox{\hyperlink{classChronusQ_1_1BFGS_a3bc5efdb60490474cf62fe630ef48e70}{BFGS}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1BFGS_ae079a5674618a8de8338377f01d43f56}{N}}, \textcolor{keywordtype}{double} conv, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mM) : \mbox{\hyperlink{classChronusQ_1_1BFGS_ae079a5674618a8de8338377f01d43f56}{N}}(\mbox{\hyperlink{classChronusQ_1_1BFGS_ae079a5674618a8de8338377f01d43f56}{N}}), \mbox{\hyperlink{classChronusQ_1_1BFGS_ad1091738465e8a9a892a26b328fb2256}{convergence}}(conv), \mbox{\hyperlink{classChronusQ_1_1BFGS_af56baf548b3d0fd1ceec065a1b80f0ff}{memManager}}(mM), \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch}{GoldenSectionSearch}}<VT>(\mbox{\hyperlink{classChronusQ_1_1BFGS_ae079a5674618a8de8338377f01d43f56}{N}}, 0.01 * conv, mM)\{}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86                                                                                                  \};}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88         \textcolor{comment}{// Remove copy/move constructors}}
+\DoxyCodeLine{89         \mbox{\hyperlink{classChronusQ_1_1BFGS_a76e05d19df7f0b939888153a08498f6d}{BFGS}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS<VT>}} \&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{90         \mbox{\hyperlink{classChronusQ_1_1BFGS_a4fbef3ae02067bd2e2b3da7f908c92ed}{BFGS}}(\mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS<VT>}} \&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92         \textcolor{comment}{// Destructor:}}
+\DoxyCodeLine{93         \mbox{\hyperlink{classChronusQ_1_1BFGS_abbc491e0c966318a1e21cc893502c05c}{\string~BFGS}}()\{\};}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95         \textcolor{comment}{// Getter and Setter Pointer Functions}}
+\DoxyCodeLine{96         \textcolor{keyword}{inline} VT *\mbox{\hyperlink{classChronusQ_1_1BFGS_a6a5ffbb4a9926d4a46ffffaccb78d1e7}{gPointer}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1BFGS_a7eebd30dae06e962f9de2790c61419d6}{gBFGS}}; \};}
+\DoxyCodeLine{97         \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1BFGS_a08045e44d0f723a0bf1b56f88e16677f}{setGPointer}}(VT *g) \{ \mbox{\hyperlink{classChronusQ_1_1BFGS_a7eebd30dae06e962f9de2790c61419d6}{gBFGS}} = g; \};}
+\DoxyCodeLine{98         \textcolor{keyword}{inline} VT *\mbox{\hyperlink{classChronusQ_1_1BFGS_aa13a67027db4f79239f4605f1d421a73}{xPointer}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1BFGS_a1c04f14fa8c125ec76b481b17e80505b}{xBFGS}}; \};}
+\DoxyCodeLine{99         \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1BFGS_aef481bef57f37def61fc10359cbcff74}{setXPointer}}(VT *xNew)}
+\DoxyCodeLine{100         \{}
+\DoxyCodeLine{101             \mbox{\hyperlink{classChronusQ_1_1BFGS_a1c04f14fa8c125ec76b481b17e80505b}{xBFGS}} = xNew;}
+\DoxyCodeLine{102             \textcolor{keywordflow}{if} (\mbox{\hyperlink{classChronusQ_1_1BFGS_a2d09bb4256d127d530a71217a8840f4a}{lineAlg}} == \mbox{\hyperlink{namespaceChronusQ_a9d23460a989a2201e7ebd987e3ab5fa1aead5ce6a35cd2ef6bed221816b54833c}{GoldenSection}})}
+\DoxyCodeLine{103                 \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_af0e6eb60fc12f91f46a945c14d1d422f}{GoldenSectionSearch<VT>::setXPointer}}(xNew);}
+\DoxyCodeLine{104         \};}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106         \textcolor{comment}{// Optimization functions}}
+\DoxyCodeLine{107         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1BFGS_a7c2a97670286c44be4eb4e3385cfa725}{optimize}}();                                            }
+\DoxyCodeLine{108         \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1BFGS_a65f89adea8c13e811753df3ccdce76a2}{lineSearch}}(VT *initX, VT *dx, \textcolor{keywordtype}{double} \&ymin, VT \&amin); }
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110         \textcolor{comment}{// These functions should be overloaded by inheriting object}}
+\DoxyCodeLine{111         \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1BFGS_a86f7d7a16b99bc35dbcb3ad4c362566d}{objFunc}}() \{ \textcolor{keywordflow}{return} 1.; \};}
+\DoxyCodeLine{112         \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1BFGS_ac04d6c125d177ec0433e8f992a64e06a}{gradFunc}}()\{\};}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114         \textcolor{comment}{// Functions used during optimization}}
+\DoxyCodeLine{115         \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1BFGS_a12861ba7622fd74981682fba1f724bc2}{makeUnit}}(VT *invHess)}
+\DoxyCodeLine{116         \{}
+\DoxyCodeLine{117             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < \mbox{\hyperlink{classChronusQ_1_1BFGS_ae079a5674618a8de8338377f01d43f56}{N}} * \mbox{\hyperlink{classChronusQ_1_1BFGS_ae079a5674618a8de8338377f01d43f56}{N}}; i++)}
+\DoxyCodeLine{118                 invHess[i] = VT(0.);}
+\DoxyCodeLine{119             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < \mbox{\hyperlink{classChronusQ_1_1BFGS_ae079a5674618a8de8338377f01d43f56}{N}}; i++)}
+\DoxyCodeLine{120                 invHess[i + i * \mbox{\hyperlink{classChronusQ_1_1BFGS_ae079a5674618a8de8338377f01d43f56}{N}}] = VT(1.);}
+\DoxyCodeLine{121         \};}
+\DoxyCodeLine{122     \};}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124     \textcolor{keyword}{template} <\textcolor{keyword}{typename} VT>}
+\DoxyCodeLine{125     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1BFGS_a7c2a97670286c44be4eb4e3385cfa725}{BFGS<VT>::optimize}}()}
+\DoxyCodeLine{126     \{}
+\DoxyCodeLine{127         VT *invHess = memManager.template malloc<VT>(N * N);}
+\DoxyCodeLine{128         VT *gPrev = memManager.template malloc<VT>(N);}
+\DoxyCodeLine{129         VT *dx = memManager.template malloc<VT>(N);}
+\DoxyCodeLine{130         VT *dg = memManager.template malloc<VT>(N);}
+\DoxyCodeLine{131         VT *SCR = memManager.template malloc<VT>(N * N);}
+\DoxyCodeLine{132         VT *U = memManager.template malloc<VT>(N * N);}
+\DoxyCodeLine{133         VT *hessUpdate = memManager.template malloc<VT>(N * N);}
+\DoxyCodeLine{134         VT alpha = VT(0.);}
+\DoxyCodeLine{135         VT yPrev = VT(0.);}
+\DoxyCodeLine{136         \textcolor{keywordtype}{double} ymin;}
+\DoxyCodeLine{137         VT amin;}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139         \textcolor{keywordtype}{bool} result = \textcolor{keyword}{false};}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141         \textcolor{comment}{// Compute initial/guess values before loop}}
+\DoxyCodeLine{142         this-\/>gradFunc();}
+\DoxyCodeLine{143         ymin = this-\/>objFunc();}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145         \textcolor{keywordflow}{if} (this-\/>printVariables)}
+\DoxyCodeLine{146         \{}
+\DoxyCodeLine{147             std::cout << \textcolor{stringliteral}{"{}BFGS: Initial Parameters:"{}} << std::endl;}
+\DoxyCodeLine{148             std::cout << std::fixed << std::setprecision(printPrecision);}
+\DoxyCodeLine{149             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{150                 std::cout << xBFGS[i] << std::endl;}
+\DoxyCodeLine{151             std::cout << std::endl;}
+\DoxyCodeLine{152         \}}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154         \textcolor{keywordflow}{if} (this-\/>printGrad)}
+\DoxyCodeLine{155         \{}
+\DoxyCodeLine{156             std::cout << \textcolor{stringliteral}{"{}BFGS: Initial Gradient:"{}} << std::endl;}
+\DoxyCodeLine{157             std::cout << std::fixed << std::setprecision(printPrecision);}
+\DoxyCodeLine{158             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{159                 std::cout << gBFGS[i] << std::endl;}
+\DoxyCodeLine{160             std::cout << std::endl;}
+\DoxyCodeLine{161         \}}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163         \textcolor{keywordflow}{if} (this-\/>printOptOutput)}
+\DoxyCodeLine{164         \{}
+\DoxyCodeLine{165             \textcolor{comment}{//std::cout << std::endl;}}
+\DoxyCodeLine{166             std::cout << std::scientific << std::setprecision(printPrecision) << \textcolor{stringliteral}{"{}BFGS: Step 0:  Function = "{}} << ymin << std::endl;}
+\DoxyCodeLine{167             \textcolor{comment}{//std::cout << std::endl;}}
+\DoxyCodeLine{168             yPrev = ymin;}
+\DoxyCodeLine{169         \}}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171         \textcolor{comment}{// BFGS optimization loop}}
+\DoxyCodeLine{172         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} iStep = 1; iStep <= this-\/>nStep; iStep++)}
+\DoxyCodeLine{173         \{}
+\DoxyCodeLine{174             \textcolor{comment}{// Compute inverse Hessian}}
+\DoxyCodeLine{175             \textcolor{keywordflow}{if} (iStep == 1 or ((iStep + 1) \% N == 0 and resetInvHess))}
+\DoxyCodeLine{176             \{}
+\DoxyCodeLine{177                 makeUnit(invHess);}
+\DoxyCodeLine{178             \}}
+\DoxyCodeLine{179             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (updateInvHess)}
+\DoxyCodeLine{180             \{}
+\DoxyCodeLine{181                 \textcolor{comment}{// Compute dx dg inner product}}
+\DoxyCodeLine{182                 VT dxdg = \mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{blas::dot}}(N, dx, 1, dg, 1);}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184                 \textcolor{comment}{// Using a scaling for invHessian. See following for details:}}
+\DoxyCodeLine{185                 \textcolor{comment}{// Luenberger, D. G.; Ye, Y. Linear and Nonlinear Programming; Hillier, F. S., Ed.; Springer Science+Business Media.}}
+\DoxyCodeLine{186                 VT scale = VT(1.);}
+\DoxyCodeLine{187                 \textcolor{keywordflow}{if} (scaleInvHess)}
+\DoxyCodeLine{188                 \{}
+\DoxyCodeLine{189                     VT dgHdg = VT(0.);}
+\DoxyCodeLine{190                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} j = 0; j < N; j++)}
+\DoxyCodeLine{191                         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{192                             dgHdg += dg[i] * invHess[i + j * N] * dg[j];}
+\DoxyCodeLine{193                     scale = dxdg / dgHdg;}
+\DoxyCodeLine{194                     \textcolor{keywordflow}{if} (std::isnan(scale))}
+\DoxyCodeLine{195                         scale = VT(1.);}
+\DoxyCodeLine{196                 \}}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198                 \textcolor{comment}{// Compute inverse Hessian transformation ( I-\/( dg*dx\string^T / dxdg) )}}
+\DoxyCodeLine{199                 makeUnit(U);}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} j = 0; j < N; j++)}
+\DoxyCodeLine{202                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{203                         U[i + j * N] -\/= dg[i] * dx[j] / dxdg;}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205                 \textcolor{comment}{// Transform invHess  =>  U\string^C * invHess * U}}
+\DoxyCodeLine{206                 blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans, blas::Op::NoTrans, N, N, N, VT(scale), U, N, invHess, N, VT(0.), SCR, N);}
+\DoxyCodeLine{207                 blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans, blas::Op::NoTrans, N, N, N, VT(1.), SCR, N, U, N, VT(0.), invHess, N);}
+\DoxyCodeLine{208 }
+\DoxyCodeLine{209                 \textcolor{comment}{// add (dx*dx\string^T/dotProd) to invHess}}
+\DoxyCodeLine{210                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} j = 0; j < N; j++)}
+\DoxyCodeLine{211                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{212                         invHess[i + j * N] += dx[i] * dx[j] / dxdg;}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214                 \textcolor{comment}{// Check invHess for nan}}
+\DoxyCodeLine{215                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N * N; i++)}
+\DoxyCodeLine{216                     \textcolor{keywordflow}{if} (std::isnan(invHess[i]))}
+\DoxyCodeLine{217                     \{}
+\DoxyCodeLine{218                         std::cout << \textcolor{stringliteral}{"{}WARNING: Found a NaN in BFGS inverse Hessian"{}} << std::endl;}
+\DoxyCodeLine{219                         makeUnit(invHess);}
+\DoxyCodeLine{220                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{221                     \}}
+\DoxyCodeLine{222             \}}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224             \textcolor{comment}{// Compute search direction}}
+\DoxyCodeLine{225             blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans, blas::Op::NoTrans, N, 1, N, VT(-\/1.), invHess, N, gBFGS, N, VT(0.), dx, N);}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227             \textcolor{keywordflow}{if} (printSearchDirection)}
+\DoxyCodeLine{228             \{}
+\DoxyCodeLine{229                 std::cout << \textcolor{stringliteral}{"{}DX:"{}} << std::endl;}
+\DoxyCodeLine{230                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{231                     std::cout << dx[i] << std::endl;}
+\DoxyCodeLine{232                 std::cout << std::endl;}
+\DoxyCodeLine{233             \}}
+\DoxyCodeLine{234 }
+\DoxyCodeLine{235             \textcolor{comment}{// Perform Line Search}}
+\DoxyCodeLine{236             std::copy\_n(xBFGS, N, SCR);}
+\DoxyCodeLine{237             \mbox{\hyperlink{classChronusQ_1_1BFGS_a65f89adea8c13e811753df3ccdce76a2}{BFGS<VT>::lineSearch}}(SCR, dx, ymin, amin);}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{240                 dx[i] = amin * dx[i];}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242             \textcolor{comment}{// Compute new Gradient and positions}}
+\DoxyCodeLine{243             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{244                 xBFGS[i] = SCR[i] + dx[i];}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{246             ymin = this-\/>objFunc();}
+\DoxyCodeLine{247             std::copy\_n(gBFGS, N, gPrev);}
+\DoxyCodeLine{248             this-\/>gradFunc(); \textcolor{comment}{// This overwrites gBFGS}}
+\DoxyCodeLine{249             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{250                 dg[i] = gBFGS[i] -\/ gPrev[i];}
+\DoxyCodeLine{251 }
+\DoxyCodeLine{252             \textcolor{comment}{// Print output}}
+\DoxyCodeLine{253             \textcolor{keywordflow}{if} (this-\/>printVariables)}
+\DoxyCodeLine{254             \{}
+\DoxyCodeLine{255                 std::cout << \textcolor{stringliteral}{"{}BFGS: Parameters:"{}} << std::endl;}
+\DoxyCodeLine{256                 std::cout << std::scientific << std::setprecision(printPrecision);}
+\DoxyCodeLine{257                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{258                     std::cout << xBFGS[i] << std::endl;}
+\DoxyCodeLine{259                 std::cout << std::endl;}
+\DoxyCodeLine{260             \}}
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262             \textcolor{keywordflow}{if} (this-\/>printGrad)}
+\DoxyCodeLine{263             \{}
+\DoxyCodeLine{264                 std::cout << \textcolor{stringliteral}{"{}BFGS: Gradient:"{}} << std::endl;}
+\DoxyCodeLine{265                 std::cout << std::scientific << std::setprecision(printPrecision);}
+\DoxyCodeLine{266                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{267                     std::cout << gBFGS[i] << std::endl;}
+\DoxyCodeLine{268                 std::cout << std::endl;}
+\DoxyCodeLine{269             \}}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271             \textcolor{keywordflow}{if} (this-\/>printOptOutput)}
+\DoxyCodeLine{272             \{}
+\DoxyCodeLine{273                 \textcolor{comment}{//std::cout << std::endl;}}
+\DoxyCodeLine{274                 std::cout << std::scientific << std::setprecision(printPrecision) << \textcolor{stringliteral}{"{}BFGS: Step "{}} << iStep << \textcolor{stringliteral}{"{}:  Function = "{}} << ymin << \textcolor{stringliteral}{"{}   Change = "{}} << ymin -\/ yPrev << std::endl;}
+\DoxyCodeLine{275                 \textcolor{comment}{//std::cout << std::endl;}}
+\DoxyCodeLine{276             \}}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278             \textcolor{comment}{// Evaluate Convergence}}
+\DoxyCodeLine{279             \textcolor{keywordflow}{if} (std::abs(yPrev -\/ ymin) < convergence)}
+\DoxyCodeLine{280             \{}
+\DoxyCodeLine{281                 result = \textcolor{keyword}{true};}
+\DoxyCodeLine{282                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{283             \}}
+\DoxyCodeLine{284             yPrev = ymin;}
+\DoxyCodeLine{285         \}}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287         memManager.free(invHess, gPrev, dx, dg, SCR, hessUpdate, U);}
+\DoxyCodeLine{288         \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{289     \};}
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291     \textcolor{keyword}{template} <\textcolor{keyword}{typename} VT>}
+\DoxyCodeLine{292     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1BFGS_a65f89adea8c13e811753df3ccdce76a2}{BFGS<VT>::lineSearch}}(VT *initX, VT *dx, \textcolor{keywordtype}{double} \&ymin, VT \&amin)}
+\DoxyCodeLine{293     \{}
+\DoxyCodeLine{294         \textcolor{keywordtype}{double} yPrev = ymin;}
+\DoxyCodeLine{295         \textcolor{keywordflow}{switch} (lineAlg)}
+\DoxyCodeLine{296         \{}
+\DoxyCodeLine{297         \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9d23460a989a2201e7ebd987e3ab5fa1aead5ce6a35cd2ef6bed221816b54833c}{GoldenSection}}:}
+\DoxyCodeLine{298         \{}
+\DoxyCodeLine{299             \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_ace11a76a2cb7c8a88d0b389af87053b7}{GoldenSectionSearch<VT>::optimize}}(initX, dx, VT(convergence), VT(goldenSectionMaxDisp), ymin, amin);}
+\DoxyCodeLine{300             \textcolor{comment}{// if step size is too large then decrease}}
+\DoxyCodeLine{301             \textcolor{comment}{// the step size. Here we are using percent}}
+\DoxyCodeLine{302             \textcolor{comment}{// difference to determine a large increase}}
+\DoxyCodeLine{303             \textcolor{keywordflow}{if} (100. * (ymin -\/ yPrev) / std::abs(yPrev) > percentFailSD)}
+\DoxyCodeLine{304             \{}
+\DoxyCodeLine{305                 \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_ace11a76a2cb7c8a88d0b389af87053b7}{GoldenSectionSearch<VT>::optimize}}(initX, dx, VT(convergence), VT(scaleFailedSD * goldenSectionMaxDisp), ymin, amin);}
+\DoxyCodeLine{306             \}}
+\DoxyCodeLine{307 }
+\DoxyCodeLine{308             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{309         \}}
+\DoxyCodeLine{310         \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9d23460a989a2201e7ebd987e3ab5fa1a8d3ec87ff489d30ff9a6849774cda4a8}{SteapestDescent}}:}
+\DoxyCodeLine{311         \{}
+\DoxyCodeLine{312             amin = sdMaxDisp;}
+\DoxyCodeLine{313             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{314                 xBFGS[i] = initX[i] + amin * dx[i];}
+\DoxyCodeLine{315             ymin = this-\/>objFunc();}
+\DoxyCodeLine{316 }
+\DoxyCodeLine{317             \textcolor{comment}{// if step size is too large then decrease}}
+\DoxyCodeLine{318             \textcolor{comment}{// the step size. Here we are using percent}}
+\DoxyCodeLine{319             \textcolor{comment}{// difference to determine a large increase}}
+\DoxyCodeLine{320             \textcolor{keywordflow}{if} (100. * (ymin -\/ yPrev) / std::abs(yPrev) > percentFailSD)}
+\DoxyCodeLine{321             \{}
+\DoxyCodeLine{322                 amin *= scaleFailedSD;}
+\DoxyCodeLine{323                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{324                     xBFGS[i] = initX[i] + amin * dx[i];}
+\DoxyCodeLine{325                 ymin = this-\/>objFunc();}
+\DoxyCodeLine{326             \}}
+\DoxyCodeLine{327             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{328         \}}
+\DoxyCodeLine{329         \textcolor{keywordflow}{case} \mbox{\hyperlink{namespaceChronusQ_a9d23460a989a2201e7ebd987e3ab5fa1ac2501cdedb28184a7724acf0c156f0b9}{ParticleSwarm}}:}
+\DoxyCodeLine{330         \{}
+\DoxyCodeLine{331             \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Particle Swarmm Line Search has not been implemented yet"{}});}
+\DoxyCodeLine{332         \}}
+\DoxyCodeLine{333         \}}
+\DoxyCodeLine{334     \};}
+\DoxyCodeLine{335 \};}
+
+\end{DoxyCode}

@@ -1,0 +1,750 @@
+\hypertarget{cibuilder_2casci_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{cibuilder_2casci_2impl_8hpp_source}\index{include/cibuilder/casci/impl.hpp@{include/cibuilder/casci/impl.hpp}}
+\mbox{\hyperlink{cibuilder_2casci_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcwavefunction_8hpp}{mcwavefunction.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incore4indextpi_8hpp}{particleintegrals/twopints/incore4indextpi.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{detstringmanager_8hpp}{detstringmanager.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{casci_8hpp}{cibuilder/casci.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas3_8hpp}{cqlinalg/blas3.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasutil_8hpp}{cqlinalg/blasutil.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matfunc_8hpp}{cqlinalg/matfunc.hpp}}>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{threads_8hpp}{util/threads.hpp}}>}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{comment}{// \#define \_DEBUG\_CISOLVER\_CASCI\_IMPL}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#define CASCI\_LOOP\_INIT() \(\backslash\)}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{  size\_t nC = mcwfn.reference().nC; \(\backslash\)}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{  size\_t NDet = mcwfn.NDet; \(\backslash\)}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{  std::shared\_ptr<const ExcitationList> exList\_a = \(\backslash\)}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{    std::dynamic\_pointer\_cast<CASStringManager>( \(\backslash\)}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{      mcwfn.detStr)-\/>excitationList(); \(\backslash\)}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{  std::shared\_ptr<const ExcitationList> exList\_b = \(\backslash\)}}
+\DoxyCodeLine{46 \textcolor{preprocessor}{    (nC == 1) ?  std::dynamic\_pointer\_cast<CASStringManager>( \(\backslash\)}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{      mcwfn.detStrBeta)-\/>excitationList() : nullptr; \(\backslash\)}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{  size\_t nStr\_a  = exList\_a-\/>nString(); \(\backslash\)}}
+\DoxyCodeLine{49 \textcolor{preprocessor}{  size\_t nStr\_b = (exList\_b) ? exList\_b-\/>nString(): 1; \(\backslash\)}}
+\DoxyCodeLine{50 \textcolor{preprocessor}{  size\_t nNZa = exList\_a-\/>nNonZero(); \(\backslash\)}}
+\DoxyCodeLine{51 \textcolor{preprocessor}{  size\_t nNZb = (exList\_b) ? exList\_b-\/>nNonZero(): 0; \(\backslash\)}}
+\DoxyCodeLine{52 \textcolor{preprocessor}{  CQMemManager \& mem = mcwfn.memManager;}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{56   \textcolor{comment}{/*  }}
+\DoxyCodeLine{57 \textcolor{comment}{   *  Build full CASCI Hamiltonian  as H(K, L)}}
+\DoxyCodeLine{58 \textcolor{comment}{   */} }
+\DoxyCodeLine{59   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{60   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CASCI_a76ad1b5073034866fbbc5a5f14f80585}{CASCI<MatsT,IntsT>::buildFullH}}(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsT, IntsT>}} \& mcwfn, MatsT * fullH) \{  }
+\DoxyCodeLine{61     }
+\DoxyCodeLine{62     \mbox{\hyperlink{cibuilder_2casci_2impl_8hpp_a53b7453de3d581f3598b7cd49f797d52}{CASCI\_LOOP\_INIT}}(); \textcolor{comment}{// check top for variable definitions}}
+\DoxyCodeLine{63     }
+\DoxyCodeLine{64     \textcolor{keyword}{auto} \& hCoreP = *(mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_ad4e1ab666e36453c019f1350d51ebc85}{moints}}.template getIntegral<OnePInts,MatsT>(\textcolor{stringliteral}{"{}hCoreP\_Correlated\_Space"{}}));}
+\DoxyCodeLine{65     \textcolor{keyword}{auto} \& moERI  = *(mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_ad4e1ab666e36453c019f1350d51ebc85}{moints}}.template getIntegral<InCore4indexTPI,MatsT>(\textcolor{stringliteral}{"{}ERI\_Correlated\_Space"{}}));}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \textcolor{comment}{// Allocate SCR}}
+\DoxyCodeLine{68     \textcolor{keywordtype}{size\_t} nSCR = std::max(nStr\_a, nStr\_b);}
+\DoxyCodeLine{69     \textcolor{keywordtype}{size\_t} nThreads = \mbox{\hyperlink{namespaceChronusQ_a3152808c4819d6cbf8a29aef92728866}{GetLAThreads}}();}
+\DoxyCodeLine{70     MatsT * SCR  = mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}.template malloc<MatsT>(nSCR * nThreads);}
+\DoxyCodeLine{71      }
+\DoxyCodeLine{72     \textcolor{comment}{// empty CI Hamiltonian}}
+\DoxyCodeLine{73     std::fill\_n(fullH, nStr\_a*nStr\_a, MatsT(0.));}
+\DoxyCodeLine{74     \textcolor{comment}{// Alpha Part for 1C or the whole build for 2C and 4C}}
+\DoxyCodeLine{75     \textcolor{comment}{// NOTE: ex\_list\_ are row-\/majored c++ objects }}
+\DoxyCodeLine{76     }
+\DoxyCodeLine{77     \textcolor{keywordtype}{int} i, j, k, l, La, Lb, Ka, Kb, Ja, Jb;}
+\DoxyCodeLine{78     \textcolor{keywordtype}{double} signij, signkl;}
+\DoxyCodeLine{79     \textcolor{keywordtype}{double} small\_number = std::numeric\_limits<double>::epsilon();}
+\DoxyCodeLine{80     }
+\DoxyCodeLine{81     \textcolor{keywordtype}{size\_t} nStr\_a\_nThread = nStr\_a * nThreads;}
+\DoxyCodeLine{82     }
+\DoxyCodeLine{83     MatsT *CIHCol = \textcolor{keyword}{nullptr}, *SCR\_ith = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{84     }
+\DoxyCodeLine{85     \textcolor{comment}{// alpha part}}
+\DoxyCodeLine{86     }
+\DoxyCodeLine{87     \textcolor{comment}{// fullH as (Ka, La), CIHCol as a column}}
+\DoxyCodeLine{88 \textcolor{preprocessor}{\#pragma omp parallel default(shared) private(CIHCol, SCR\_ith, La, k, l, Ka, signkl, i, j, Ja, signij)  }}
+\DoxyCodeLine{89     \{ }
+\DoxyCodeLine{90       \textcolor{keyword}{auto} iThread = \mbox{\hyperlink{namespaceChronusQ_aa348a017ee78c3450480773ddc542e5c}{GetThreadID}}();}
+\DoxyCodeLine{91       CIHCol  = fullH + nStr\_a * iThread;}
+\DoxyCodeLine{92       SCR\_ith = SCR   + nSCR * iThread;}
+\DoxyCodeLine{93       \textcolor{keywordflow}{for} (La = iThread; La < nStr\_a; La+=nThreads, CIHCol+=nStr\_a\_nThread) \{}
+\DoxyCodeLine{94         }
+\DoxyCodeLine{95         std::fill\_n(SCR\_ith, nStr\_a, MatsT(0.));}
+\DoxyCodeLine{96         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_La = exList\_a-\/>pointerAtDet(La);}
+\DoxyCodeLine{97         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Ekl = 0ul; Ekl < nNZa; Ekl++, exList\_La+=4) \{}
+\DoxyCodeLine{98           }
+\DoxyCodeLine{99           \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_La, k, l, Ka, signkl);}
+\DoxyCodeLine{100               SCR\_ith[Ka] += signkl * hCoreP(k, l);}
+\DoxyCodeLine{101          }
+\DoxyCodeLine{102           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Ka = exList\_a-\/>pointerAtDet(Ka);}
+\DoxyCodeLine{103               \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Eij = 0ul; Eij < nNZa; Eij++, exList\_Ka+=4) \{}
+\DoxyCodeLine{104              }
+\DoxyCodeLine{105             \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Ka, i, j, Ja, signij);}
+\DoxyCodeLine{106                 SCR\_ith[Ja] += 0.5 * signij * signkl * moERI(i, j, k, l); }
+\DoxyCodeLine{107               \}}
+\DoxyCodeLine{108         \}}
+\DoxyCodeLine{109         }
+\DoxyCodeLine{110         \textcolor{comment}{// passive screening and updating CHCol}}
+\DoxyCodeLine{111         \textcolor{keywordflow}{for} (Ka = 0 ; Ka < nStr\_a; Ka++) \{}
+\DoxyCodeLine{112           \textcolor{keywordflow}{if} (std::abs(SCR\_ith[Ka]) > small\_number) CIHCol[Ka] = SCR\_ith[Ka];}
+\DoxyCodeLine{113         \}}
+\DoxyCodeLine{114       }
+\DoxyCodeLine{115       \}  \textcolor{comment}{// La}}
+\DoxyCodeLine{116     \} }
+\DoxyCodeLine{117     }
+\DoxyCodeLine{118     \textcolor{keywordflow}{if} (nC != 1) \{}
+\DoxyCodeLine{119        }
+\DoxyCodeLine{120 \textcolor{preprocessor}{\#ifdef \_DEBUG\_CIBUILDER\_CASCI\_IMPL}}
+\DoxyCodeLine{121     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}HH full CASCI Hamiltonian"{}},fullH, NDet, NDet, NDet);}
+\DoxyCodeLine{122 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{123        mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(SCR);}
+\DoxyCodeLine{124        \textcolor{keywordflow}{return};}
+\DoxyCodeLine{125     \} }
+\DoxyCodeLine{126     }
+\DoxyCodeLine{127     \textcolor{comment}{// 1C Continued: Expand Alpha Part }}
+\DoxyCodeLine{128     \textcolor{comment}{//    (Ka, La) -\/> (Ka, Kb, La, Kb) }}
+\DoxyCodeLine{129     \textcolor{keywordtype}{size\_t} nStr\_a2 = nStr\_a * nStr\_a;}
+\DoxyCodeLine{130     \textcolor{keywordtype}{size\_t} nStr\_b2 = nStr\_b * nStr\_b;}
+\DoxyCodeLine{131     MatsT * tmpH  = mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}.template malloc<MatsT>(nSCR*nSCR);}
+\DoxyCodeLine{132     std::copy\_n(fullH, nStr\_a2, tmpH);}
+\DoxyCodeLine{133     std::fill\_n(fullH, NDet*NDet, MatsT(0.));}
+\DoxyCodeLine{134     }
+\DoxyCodeLine{135     \textcolor{comment}{// transpose tmpH as (La, Ka)}}
+\DoxyCodeLine{136     \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nStr\_a, nStr\_a, MatsT(1.), tmpH, nStr\_a, nStr\_a);  }
+\DoxyCodeLine{137      }
+\DoxyCodeLine{138     \textcolor{comment}{// update fullH as (La, Ka, Kb, Kb)}}
+\DoxyCodeLine{139     \textcolor{comment}{// then transpose back to (Ka, Kb, La, Kb) in each last Kb}}
+\DoxyCodeLine{140     \textcolor{keywordtype}{size\_t} lastDimOff = nStr\_a2*nStr\_b;}
+\DoxyCodeLine{141     CIHCol = fullH;}
+\DoxyCodeLine{142     \textcolor{keywordflow}{for} (Kb = 0; Kb < nStr\_b; Kb++, CIHCol+=lastDimOff) \{}
+\DoxyCodeLine{143       std::copy\_n(tmpH, nStr\_a2, CIHCol+Kb*nStr\_a2); }
+\DoxyCodeLine{144       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nStr\_a, NDet, MatsT(1.), CIHCol, nStr\_a, NDet);  }
+\DoxyCodeLine{145     \}}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147     }
+\DoxyCodeLine{148     \textcolor{comment}{// 1C Continued: build Beta part as (Kb, Lb)}}
+\DoxyCodeLine{149     std::fill\_n(tmpH, nStr\_b2, MatsT(0.));}
+\DoxyCodeLine{150     \textcolor{keywordtype}{size\_t} nStr\_b\_nThread = nStr\_b * nThreads;}
+\DoxyCodeLine{151 \textcolor{preprocessor}{\#pragma omp parallel default(shared) private(CIHCol, SCR\_ith, Lb, k, l, Kb, signkl, i, j, Jb, signij)  }}
+\DoxyCodeLine{152     \{}
+\DoxyCodeLine{153       \textcolor{keyword}{auto} iThread = \mbox{\hyperlink{namespaceChronusQ_aa348a017ee78c3450480773ddc542e5c}{GetThreadID}}();}
+\DoxyCodeLine{154       CIHCol  = tmpH + nStr\_b * iThread;}
+\DoxyCodeLine{155       SCR\_ith = SCR + nSCR * iThread;}
+\DoxyCodeLine{156       \textcolor{keywordflow}{for} (Lb = iThread; Lb < nStr\_b; Lb+=nThreads, CIHCol+=nStr\_b\_nThread) \{}
+\DoxyCodeLine{157         }
+\DoxyCodeLine{158         std::fill\_n(SCR\_ith, nStr\_b, MatsT(0.));}
+\DoxyCodeLine{159         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Lb = exList\_b-\/>pointerAtDet(Lb);}
+\DoxyCodeLine{160         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Ekl = 0ul; Ekl < nNZb; Ekl++, exList\_Lb+=4) \{}
+\DoxyCodeLine{161           }
+\DoxyCodeLine{162           \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Lb, k, l, Kb, signkl);}
+\DoxyCodeLine{163           SCR\_ith[Kb] += signkl * hCoreP(k, l);}
+\DoxyCodeLine{164          }
+\DoxyCodeLine{165           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Kb = exList\_b-\/>pointerAtDet(Kb);}
+\DoxyCodeLine{166               \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Eij = 0ul; Eij < nNZb; Eij++, exList\_Kb+=4) \{}
+\DoxyCodeLine{167                }
+\DoxyCodeLine{168             \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Kb, i, j, Jb, signij);}
+\DoxyCodeLine{169                 SCR\_ith[Jb] += 0.5 * signij * signkl * moERI(i, j, k, l); }
+\DoxyCodeLine{170           }
+\DoxyCodeLine{171           \}}
+\DoxyCodeLine{172         \}}
+\DoxyCodeLine{173        }
+\DoxyCodeLine{174         \textcolor{comment}{// passive screening and updating CHCol}}
+\DoxyCodeLine{175         \textcolor{keywordflow}{for} (Kb = 0 ; Kb < nStr\_b; Kb++) \{}
+\DoxyCodeLine{176           \textcolor{keywordflow}{if} (std::abs(SCR\_ith[Kb]) > small\_number) CIHCol[Kb] = SCR\_ith[Kb];}
+\DoxyCodeLine{177         \}}
+\DoxyCodeLine{178       \}  \textcolor{comment}{// Lb}}
+\DoxyCodeLine{179     \}}
+\DoxyCodeLine{180     \textcolor{comment}{// 1C Continued: Expand Beta Part }}
+\DoxyCodeLine{181     \textcolor{comment}{//    (Kb, Lb) -\/> (Ka, Kb, Ka, Lb) }}
+\DoxyCodeLine{182     }
+\DoxyCodeLine{183     \textcolor{comment}{// TODO: try to used non-\/transposed algorithm}}
+\DoxyCodeLine{184     \textcolor{comment}{// transpose fullH: (Ka, Kb, La, Lb) -\/> (Kb, La, Lb, Ka) }}
+\DoxyCodeLine{185     \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nStr\_a, nStr\_b*NDet, MatsT(1.), fullH, nStr\_a, nStr\_b*NDet);  }
+\DoxyCodeLine{186     }
+\DoxyCodeLine{187     \textcolor{comment}{// transpose tmpH as (Lb, Kb)}}
+\DoxyCodeLine{188     \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nStr\_b, nStr\_b, MatsT(1.), tmpH, nStr\_b, nStr\_b);  }
+\DoxyCodeLine{189    }
+\DoxyCodeLine{190     \textcolor{comment}{// update fullH as (Lb, Kb, Ka, Ka)}}
+\DoxyCodeLine{191     \textcolor{comment}{// then transpose back to (Kb, Ka, Lb, Ka) in each last Ka}}
+\DoxyCodeLine{192     lastDimOff = nStr\_b2*nStr\_a;}
+\DoxyCodeLine{193     CIHCol = fullH;}
+\DoxyCodeLine{194     \textcolor{keywordflow}{for} (Ka = 0; Ka < nStr\_a; Ka++, CIHCol+=lastDimOff) \{}
+\DoxyCodeLine{195       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, NDet, nStr\_b, MatsT(1.), CIHCol, NDet, nStr\_b);  }
+\DoxyCodeLine{196       \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'N'}, \textcolor{charliteral}{'N'}, nStr\_b, nStr\_b, MatsT(1.), CIHCol+Ka*nStr\_b2, nStr\_b,}
+\DoxyCodeLine{197         MatsT(1.), tmpH, nStr\_b, CIHCol+Ka*nStr\_b2, nStr\_b); }
+\DoxyCodeLine{198       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nStr\_b, NDet, MatsT(1.), CIHCol, nStr\_b, NDet);  }
+\DoxyCodeLine{199     \}}
+\DoxyCodeLine{200      }
+\DoxyCodeLine{201     \textcolor{comment}{// transpose fullH: ((Kb, La, Lb, Ka) -\/> (Ka, Kb, La, Lb) }}
+\DoxyCodeLine{202     \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nStr\_b*NDet, nStr\_a, MatsT(1.), fullH, nStr\_b*NDet, nStr\_a);  }
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204     mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(SCR, tmpH);}
+\DoxyCodeLine{205     }
+\DoxyCodeLine{206     \textcolor{comment}{// 1C Continued: Alpha-\/Beta and Beta-\/Aphla Part }}
+\DoxyCodeLine{207 \textcolor{preprocessor}{\#pragma omp parallel for schedule(static) default(shared) \(\backslash\)}}
+\DoxyCodeLine{208 \textcolor{preprocessor}{  private(CIHCol, Lb, k, l, Kb, signkl, La, i, j, Ka, signij)  }}
+\DoxyCodeLine{209     \textcolor{keywordflow}{for}(Lb = 0; Lb < nStr\_b; Lb++) \{}
+\DoxyCodeLine{210       }
+\DoxyCodeLine{211       CIHCol = fullH + NDet*(Lb*nStr\_a); \textcolor{comment}{// La = 0 }}
+\DoxyCodeLine{212       \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Lb\_head = exList\_b-\/>pointerAtDet(Lb);}
+\DoxyCodeLine{213       }
+\DoxyCodeLine{214       \textcolor{keywordflow}{for}(La = 0; La < nStr\_a; La++, CIHCol+=NDet) \{}
+\DoxyCodeLine{215          }
+\DoxyCodeLine{216         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_La\_head = exList\_a-\/>pointerAtDet(La);}
+\DoxyCodeLine{217         }
+\DoxyCodeLine{218         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Lb = exList\_Lb\_head;}
+\DoxyCodeLine{219         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} Ekl = 0ul; Ekl < nNZb; Ekl++, exList\_Lb+=4) \{}
+\DoxyCodeLine{220         }
+\DoxyCodeLine{221           \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Lb, k, l, Kb, signkl);}
+\DoxyCodeLine{222             }
+\DoxyCodeLine{223           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_La = exList\_La\_head;}
+\DoxyCodeLine{224           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Eij = 0ul; Eij < nNZa; Eij++, exList\_La+=4) \{}
+\DoxyCodeLine{225             }
+\DoxyCodeLine{226             \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_La, i, j, Ka, signij);}
+\DoxyCodeLine{227             CIHCol[Ka + Kb*nStr\_a] += signij * signkl * moERI(i, j, k, l); }
+\DoxyCodeLine{228           \}}
+\DoxyCodeLine{229         \}}
+\DoxyCodeLine{230       \}}
+\DoxyCodeLine{231     \}}
+\DoxyCodeLine{232     }
+\DoxyCodeLine{233 \textcolor{preprocessor}{\#ifdef \_DEBUG\_CIENGINE\_CASCI\_IMPL}}
+\DoxyCodeLine{234     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}HH full CASCI Hamiltonian"{}}, fullH, NDet, NDet, NDet);}
+\DoxyCodeLine{235 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{236   }
+\DoxyCodeLine{237   \}; \textcolor{comment}{// CASCI::buildFullH}}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239   \textcolor{comment}{/*  }}
+\DoxyCodeLine{240 \textcolor{comment}{   *  Build Diagonal CASCI Hamiltonian }}
+\DoxyCodeLine{241 \textcolor{comment}{   */} }
+\DoxyCodeLine{242   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{243   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CASCI_a5c1a0ff21b65b022dbea553a387f28a1}{CASCI<MatsT,IntsT>::buildDiagH}}(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsT, IntsT>}} \& mcwfn, MatsT * diagH) \{  }
+\DoxyCodeLine{244     }
+\DoxyCodeLine{245     \mbox{\hyperlink{cibuilder_2casci_2impl_8hpp_a53b7453de3d581f3598b7cd49f797d52}{CASCI\_LOOP\_INIT}}(); \textcolor{comment}{// check top for variable definitions}}
+\DoxyCodeLine{246     }
+\DoxyCodeLine{247     \textcolor{keyword}{auto} \& hCoreP = *(mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_ad4e1ab666e36453c019f1350d51ebc85}{moints}}.template getIntegral<OnePInts, MatsT>(\textcolor{stringliteral}{"{}hCoreP\_Correlated\_Space"{}}));}
+\DoxyCodeLine{248     \textcolor{keyword}{auto} \& moERI  = *(mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_ad4e1ab666e36453c019f1350d51ebc85}{moints}}.template getIntegral<InCore4indexTPI, MatsT>(\textcolor{stringliteral}{"{}ERI\_Correlated\_Space"{}}));}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250         \textcolor{comment}{// Allocate SCR}}
+\DoxyCodeLine{251     MatsT SCR;}
+\DoxyCodeLine{252 }
+\DoxyCodeLine{253     \textcolor{comment}{// empty CI Diagonal Hamiltonian}}
+\DoxyCodeLine{254     std::fill\_n(diagH, nStr\_a, MatsT(0.));}
+\DoxyCodeLine{255     \textcolor{comment}{// Alpha Part for 1C or the whole build for 2C and 4C}}
+\DoxyCodeLine{256     }
+\DoxyCodeLine{257     \textcolor{keywordtype}{int} i, j, k, l, La, Lb, Ka, Kb, Ja, Jb;}
+\DoxyCodeLine{258     \textcolor{keywordtype}{double} signij, signkl;}
+\DoxyCodeLine{259     \textcolor{keywordtype}{double} small\_number = std::numeric\_limits<double>::epsilon();}
+\DoxyCodeLine{260     }
+\DoxyCodeLine{261 \textcolor{preprocessor}{\#pragma omp parallel for schedule(static) default(shared) private(SCR, La, k, l, Ka, signkl, i, j, Ja, signij)  }}
+\DoxyCodeLine{262     \textcolor{keywordflow}{for} (La = 0; La < nStr\_a; La++) \{}
+\DoxyCodeLine{263       }
+\DoxyCodeLine{264       \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_La = exList\_a-\/>pointerAtDet(La);}
+\DoxyCodeLine{265       SCR = MatsT(0.); }
+\DoxyCodeLine{266       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Ekl = 0ul; Ekl < nNZa; Ekl++, exList\_La+=4) \{}
+\DoxyCodeLine{267         }
+\DoxyCodeLine{268         \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_La, k, l, Ka, signkl);}
+\DoxyCodeLine{269             \textcolor{keywordflow}{if}(Ka == La) SCR += signkl * hCoreP(k, l);}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Ka = exList\_a-\/>pointerAtDet(Ka);}
+\DoxyCodeLine{272             \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Eij = 0ul; Eij < nNZa; Eij++, exList\_Ka+=4) \{}
+\DoxyCodeLine{273             }
+\DoxyCodeLine{274           \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Ka, i, j, Ja, signij);}
+\DoxyCodeLine{275               \textcolor{keywordflow}{if}(Ja == La) SCR += 0.5 * signij * signkl * moERI(i, j, k, l); }
+\DoxyCodeLine{276             \}}
+\DoxyCodeLine{277        \}}
+\DoxyCodeLine{278       }
+\DoxyCodeLine{279       \textcolor{comment}{// update diagH}}
+\DoxyCodeLine{280       diagH[La] = SCR;}
+\DoxyCodeLine{281     }
+\DoxyCodeLine{282     \}  \textcolor{comment}{// La}}
+\DoxyCodeLine{283     }
+\DoxyCodeLine{284     \textcolor{keywordflow}{if} (nC != 1) \{ }
+\DoxyCodeLine{285 \textcolor{preprocessor}{\#ifdef \_DEBUG\_CIENGINE\_CASCI\_IMPL}}
+\DoxyCodeLine{286       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}HH full CASCI Hamiltonian"{}},diagH, NDet, 1, NDet);}
+\DoxyCodeLine{287 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{288       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{289     \}}
+\DoxyCodeLine{290     \textcolor{comment}{// 1C Continued: Expand Alpha Part }}
+\DoxyCodeLine{291     \textcolor{comment}{//    (Ka) -\/> (Ka, Kb)}}
+\DoxyCodeLine{292     MatsT * dH = diagH + nStr\_a;}
+\DoxyCodeLine{293     \textcolor{keywordflow}{for} (Kb = 1; Kb < nStr\_b; Kb++, dH+=nStr\_a) std::copy\_n(diagH, nStr\_a, dH);}
+\DoxyCodeLine{294      }
+\DoxyCodeLine{295     MatsT * tmpdH  = mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}.template malloc<MatsT>(nStr\_b);}
+\DoxyCodeLine{296 }
+\DoxyCodeLine{297     \textcolor{comment}{// 1C Continued: build Beta part}}
+\DoxyCodeLine{298     std::fill\_n(tmpdH, nStr\_b, MatsT(0.));}
+\DoxyCodeLine{299 \textcolor{preprocessor}{\#pragma omp parallel for schedule(static) default(shared) private(SCR, Lb, k, l, Kb, signkl, i, j, Jb, signij)  }}
+\DoxyCodeLine{300     \textcolor{keywordflow}{for} (Lb = 0; Lb < nStr\_b; Lb++) \{}
+\DoxyCodeLine{301       }
+\DoxyCodeLine{302       SCR = MatsT(0.); }
+\DoxyCodeLine{303       \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Lb = exList\_b-\/>pointerAtDet(Lb);}
+\DoxyCodeLine{304       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Ekl = 0ul; Ekl < nNZb; Ekl++, exList\_Lb+=4) \{}
+\DoxyCodeLine{305         }
+\DoxyCodeLine{306         \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Lb, k, l, Kb, signkl);}
+\DoxyCodeLine{307             \textcolor{keywordflow}{if}(Kb == Lb) SCR += signkl * hCoreP(k, l);}
+\DoxyCodeLine{308        }
+\DoxyCodeLine{309         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Kb = exList\_b-\/>pointerAtDet(Kb);}
+\DoxyCodeLine{310             \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Eij = 0ul; Eij < nNZb; Eij++, exList\_Kb+=4) \{}
+\DoxyCodeLine{311             }
+\DoxyCodeLine{312           \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Kb, i, j, Jb, signij);}
+\DoxyCodeLine{313               \textcolor{keywordflow}{if}(Jb == Lb) SCR += 0.5 * signij * signkl * moERI(i, j, k, l); }
+\DoxyCodeLine{314             \}}
+\DoxyCodeLine{315       \}}
+\DoxyCodeLine{316      }
+\DoxyCodeLine{317       \textcolor{comment}{// update diagH}}
+\DoxyCodeLine{318       tmpdH[Lb] = SCR;}
+\DoxyCodeLine{319     }
+\DoxyCodeLine{320     \}  \textcolor{comment}{// Lb}}
+\DoxyCodeLine{321     }
+\DoxyCodeLine{322     \textcolor{comment}{// 1C Continued: Expand Beta Part }}
+\DoxyCodeLine{323     \textcolor{comment}{// transpose diagH: (Ka, Kb) -\/> (Kb, Ka) }}
+\DoxyCodeLine{324     \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nStr\_a, nStr\_b, MatsT(1.), diagH, nStr\_a, nStr\_b);  }
+\DoxyCodeLine{325     }
+\DoxyCodeLine{326     \textcolor{comment}{// Expand}}
+\DoxyCodeLine{327     dH = diagH;}
+\DoxyCodeLine{328     \textcolor{keywordflow}{for} (Ka = 0; Ka < nStr\_a; Ka++)  }
+\DoxyCodeLine{329     \textcolor{keywordflow}{for} (Kb = 0; Kb < nStr\_b; Kb++, dH++)}
+\DoxyCodeLine{330       *dH += tmpdH[Kb];}
+\DoxyCodeLine{331     }
+\DoxyCodeLine{332     \textcolor{comment}{// transpose diagH: (Kb, Ka) -\/> (Ka, Kb) }}
+\DoxyCodeLine{333     \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nStr\_b, nStr\_a, MatsT(1.), diagH, nStr\_b, nStr\_a);  }
+\DoxyCodeLine{334     }
+\DoxyCodeLine{335     mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(tmpdH);}
+\DoxyCodeLine{336     }
+\DoxyCodeLine{337     \textcolor{comment}{// 1C Continued: Alpha-\/Beta and Beta-\/Aphla Part }}
+\DoxyCodeLine{338     \textcolor{keywordtype}{size\_t} nActEa = mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_abd087e0a18e7838113dcc8b4e8c805b1}{nCorrEA}};}
+\DoxyCodeLine{339     \textcolor{keywordtype}{size\_t} nActEb = mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a6d5281fa0ccd469cd23fafd7a53a741c}{MOPartition}}.\mbox{\hyperlink{structChronusQ_1_1MOSpacePartition_a1eaccf8d4cfc1db255ad236c8c865be2}{nCorrEB}};}
+\DoxyCodeLine{340 \textcolor{preprocessor}{\#pragma omp parallel for schedule(static) default(shared) \(\backslash\)}}
+\DoxyCodeLine{341 \textcolor{preprocessor}{  private(dH, Lb, k, l, Kb, signkl, La, i, j, Ka, signij)  }}
+\DoxyCodeLine{342     \textcolor{keywordflow}{for}(Lb = 0; Lb < nStr\_b; Lb++) \{}
+\DoxyCodeLine{343       }
+\DoxyCodeLine{344       dH = diagH + Lb*nStr\_a;}
+\DoxyCodeLine{345       \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Lb\_head = exList\_b-\/>pointerAtDet(Lb);}
+\DoxyCodeLine{346 }
+\DoxyCodeLine{347       \textcolor{keywordflow}{for}(La = 0; La < nStr\_a;  La++, dH++) \{}
+\DoxyCodeLine{348         }
+\DoxyCodeLine{349         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_La\_head = exList\_a-\/>pointerAtDet(La);}
+\DoxyCodeLine{350       }
+\DoxyCodeLine{351         \textcolor{keyword}{auto} exList\_Lb = exList\_Lb\_head; }
+\DoxyCodeLine{352         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} Ekl = 0ul; Ekl < nActEa; Ekl++, exList\_Lb+=4) \{}
+\DoxyCodeLine{353         }
+\DoxyCodeLine{354           \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Lb, k, l, Kb, signkl);}
+\DoxyCodeLine{355           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_La = exList\_La\_head; }
+\DoxyCodeLine{356         }
+\DoxyCodeLine{357               \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Eij = 0ul; Eij < nActEb; Eij++, exList\_La+=4) \{}
+\DoxyCodeLine{358             }
+\DoxyCodeLine{359             \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_La, i, j, Ka, signij);}
+\DoxyCodeLine{360             *dH += signij * signkl * moERI(i, j, k, l); }
+\DoxyCodeLine{361           \}}
+\DoxyCodeLine{362         \}}
+\DoxyCodeLine{363       \}}
+\DoxyCodeLine{364     \}}
+\DoxyCodeLine{365   \}; \textcolor{comment}{// CASCI::buildDiagH}}
+\DoxyCodeLine{366   }
+\DoxyCodeLine{367   \textcolor{comment}{/*}}
+\DoxyCodeLine{368 \textcolor{comment}{   *  Sigma, Matrix-\/vector product}}
+\DoxyCodeLine{369 \textcolor{comment}{   */}}
+\DoxyCodeLine{370 }
+\DoxyCodeLine{371   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{372   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CASCI_abbee9a41398101fa47e31e3c934f7673}{CASCI<MatsT,IntsT>::buildSigma}}(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsT, IntsT>}} \& mcwfn, }
+\DoxyCodeLine{373     \textcolor{keywordtype}{size\_t} nVec, MatsT * C, MatsT * Sigma) \{}
+\DoxyCodeLine{374     }
+\DoxyCodeLine{375     \mbox{\hyperlink{cibuilder_2casci_2impl_8hpp_a53b7453de3d581f3598b7cd49f797d52}{CASCI\_LOOP\_INIT}}(); \textcolor{comment}{// check top for variable definitions}}
+\DoxyCodeLine{376     }
+\DoxyCodeLine{377     \textcolor{keyword}{auto} \& hCoreP = *(mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_ad4e1ab666e36453c019f1350d51ebc85}{moints}}.template getIntegral<OnePInts,MatsT>(\textcolor{stringliteral}{"{}hCoreP\_Correlated\_Space"{}}));}
+\DoxyCodeLine{378     \textcolor{keyword}{auto} \& moERI  = *(mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_ad4e1ab666e36453c019f1350d51ebc85}{moints}}.template getIntegral<InCore4indexTPI,MatsT>(\textcolor{stringliteral}{"{}ERI\_Correlated\_Space"{}}));}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380 \textcolor{preprocessor}{\#ifdef DEBUG\_CI\_SIGMA}}
+\DoxyCodeLine{381     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}HH CASCI Sigma Build -\/-\/ C"{}}, C, NDet, nVec, NDet);}
+\DoxyCodeLine{382 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{383     }
+\DoxyCodeLine{384     \textcolor{comment}{// Allocate SCR}}
+\DoxyCodeLine{385     \textcolor{keywordtype}{size\_t} nSCR = std::max(nStr\_a, nStr\_b);}
+\DoxyCodeLine{386     \textcolor{keywordtype}{size\_t} nThreads = \mbox{\hyperlink{namespaceChronusQ_a3152808c4819d6cbf8a29aef92728866}{GetLAThreads}}();}
+\DoxyCodeLine{387     MatsT * SCR  = mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}.template malloc<MatsT>(nSCR * nThreads);}
+\DoxyCodeLine{388 }
+\DoxyCodeLine{389     \textcolor{comment}{// empty Sigma}}
+\DoxyCodeLine{390     std::fill\_n(Sigma, NDet*nVec, MatsT(0.));}
+\DoxyCodeLine{391     \textcolor{comment}{// Alpha Part for 1C or the whole build for 2C and 4C}}
+\DoxyCodeLine{392     \textcolor{comment}{// NOTE: exList\_ are row-\/majored c++ objects }}
+\DoxyCodeLine{393     }
+\DoxyCodeLine{394     \textcolor{keywordtype}{int} i, j, k, l, La, Lb, Ka, Kb, Ja, Jb;}
+\DoxyCodeLine{395     \textcolor{keywordtype}{double} signij, signkl;}
+\DoxyCodeLine{396     \textcolor{keywordtype}{double} small\_number = std::numeric\_limits<double>::epsilon();}
+\DoxyCodeLine{397     }
+\DoxyCodeLine{398     MatsT *HC, *Ci, *SCR\_ith;}
+\DoxyCodeLine{399     }
+\DoxyCodeLine{400     \textcolor{comment}{// SCR\_ith is a row of H instead of a column now}}
+\DoxyCodeLine{401 \textcolor{preprocessor}{\#pragma omp parallel default(shared) private(HC, Ci, SCR\_ith, La, k, l, Ka, signkl, \(\backslash\)}}
+\DoxyCodeLine{402 \textcolor{preprocessor}{  i, j, Ja, signij, Kb)}}
+\DoxyCodeLine{403     \{}
+\DoxyCodeLine{404       \textcolor{keyword}{auto} iThread = \mbox{\hyperlink{namespaceChronusQ_aa348a017ee78c3450480773ddc542e5c}{GetThreadID}}();}
+\DoxyCodeLine{405       SCR\_ith = SCR + nSCR * iThread;}
+\DoxyCodeLine{406       \textcolor{keywordflow}{for} (Ka = iThread; Ka < nStr\_a; Ka+=nThreads) \{}
+\DoxyCodeLine{407       }
+\DoxyCodeLine{408         std::fill\_n(SCR\_ith, nStr\_a, MatsT(0.));}
+\DoxyCodeLine{409         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Ka = exList\_a-\/>pointerAtDet(Ka);}
+\DoxyCodeLine{410         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Ekl = 0ul; Ekl < nNZa; Ekl++, exList\_Ka+=4) \{}
+\DoxyCodeLine{411         }
+\DoxyCodeLine{412           \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Ka, l, k, La, signkl);}
+\DoxyCodeLine{413               SCR\_ith[La] += signkl * hCoreP(k, l);}
+\DoxyCodeLine{414        }
+\DoxyCodeLine{415           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_La = exList\_a-\/>pointerAtDet(La);}
+\DoxyCodeLine{416               \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Eij = 0ul; Eij < nNZa; Eij++, exList\_La+=4) \{}
+\DoxyCodeLine{417             }
+\DoxyCodeLine{418             \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_La, j, i, Ja, signij);}
+\DoxyCodeLine{419                 SCR\_ith[Ja] += 0.5 * signij * signkl * moERI(i, j, k, l); }
+\DoxyCodeLine{420               \}}
+\DoxyCodeLine{421         \}}
+\DoxyCodeLine{422         }
+\DoxyCodeLine{423         \textcolor{comment}{// passive screening }}
+\DoxyCodeLine{424         std::vector<int> SCR\_nonZero\_ith;}
+\DoxyCodeLine{425         \textcolor{keywordflow}{for} (La = 0 ; La < nStr\_a;  La++) \{}
+\DoxyCodeLine{426           \textcolor{keywordflow}{if} (std::abs(SCR\_ith[La]) > small\_number) }
+\DoxyCodeLine{427                 SCR\_nonZero\_ith.push\_back(La);}
+\DoxyCodeLine{428         \}}
+\DoxyCodeLine{429         }
+\DoxyCodeLine{430         \textcolor{comment}{// update Sigma}}
+\DoxyCodeLine{431         HC = Sigma;}
+\DoxyCodeLine{432         Ci = C;}
+\DoxyCodeLine{433         \textcolor{keywordflow}{if}(nC != 1) \{  \textcolor{comment}{// for more than 1C}}
+\DoxyCodeLine{434           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iVec = 0ul; iVec < nVec; iVec++, HC+=NDet, Ci+=NDet) }
+\DoxyCodeLine{435           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iSCR = 0ul; iSCR < SCR\_nonZero\_ith.size(); iSCR++) \{}
+\DoxyCodeLine{436                 La = SCR\_nonZero\_ith[iSCR]; }
+\DoxyCodeLine{437                 HC[Ka] += SCR\_ith[La] * Ci[La]; }
+\DoxyCodeLine{438           \}     }
+\DoxyCodeLine{439         \} \textcolor{keywordflow}{else} \{ \textcolor{comment}{// 1C}}
+\DoxyCodeLine{440           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iVec = 0ul; iVec < nVec; iVec++) }
+\DoxyCodeLine{441           \textcolor{keywordflow}{for} (Kb = 0; Kb < nStr\_b; Kb++, HC+=nStr\_a, Ci+=nStr\_a)}
+\DoxyCodeLine{442               \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iSCR = 0ul; iSCR < SCR\_nonZero\_ith.size(); iSCR++) \{}
+\DoxyCodeLine{443                 La = SCR\_nonZero\_ith[iSCR]; }
+\DoxyCodeLine{444                 HC[Ka] += SCR\_ith[La] * Ci[La]; }
+\DoxyCodeLine{445           \}     }
+\DoxyCodeLine{446         \} }
+\DoxyCodeLine{447       \}  \textcolor{comment}{// La}}
+\DoxyCodeLine{448     \}}
+\DoxyCodeLine{449 }
+\DoxyCodeLine{450     \textcolor{keywordflow}{if} (nC != 1) \{}
+\DoxyCodeLine{451        }
+\DoxyCodeLine{452 \textcolor{preprocessor}{\#ifdef DEBUG\_CI\_SIGMA}}
+\DoxyCodeLine{453     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}HH CASCI Sigma Build -\/-\/ Sigma"{}}, Sigma, NDet, nVec, NDet);}
+\DoxyCodeLine{454 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{455        mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(SCR);}
+\DoxyCodeLine{456        \textcolor{keywordflow}{return};}
+\DoxyCodeLine{457     \} }
+\DoxyCodeLine{458     }
+\DoxyCodeLine{459     \textcolor{comment}{// 1C Continued: Build Beta part}}
+\DoxyCodeLine{460     }
+\DoxyCodeLine{461     \textcolor{comment}{// transpose sigma and C to make update continuous in inner loop}}
+\DoxyCodeLine{462     \textcolor{comment}{// (a, b) -\/> (b, a) }}
+\DoxyCodeLine{463     HC = Sigma;}
+\DoxyCodeLine{464     Ci = C;}
+\DoxyCodeLine{465     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iVec = 0ul; iVec < nVec; iVec++, HC+=NDet, Ci+=NDet) \{}
+\DoxyCodeLine{466       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nStr\_a, nStr\_b, MatsT(1.), HC, nStr\_a, nStr\_b);  }
+\DoxyCodeLine{467       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nStr\_a, nStr\_b, MatsT(1.), Ci, nStr\_a, nStr\_b);  }
+\DoxyCodeLine{468     \}}
+\DoxyCodeLine{469 }
+\DoxyCodeLine{470 \textcolor{preprocessor}{\#pragma omp parallel default(shared) private(HC, Ci, SCR\_ith, Lb, k, l, Kb, signkl, \(\backslash\)}}
+\DoxyCodeLine{471 \textcolor{preprocessor}{  i, j, Jb, signij, Ka)}}
+\DoxyCodeLine{472     \{}
+\DoxyCodeLine{473       \textcolor{keyword}{auto} iThread = \mbox{\hyperlink{namespaceChronusQ_aa348a017ee78c3450480773ddc542e5c}{GetThreadID}}();}
+\DoxyCodeLine{474       SCR\_ith = SCR + nSCR * iThread;}
+\DoxyCodeLine{475       \textcolor{keywordflow}{for} (Kb = iThread; Kb < nStr\_b; Kb+=nThreads) \{}
+\DoxyCodeLine{476         }
+\DoxyCodeLine{477         std::fill\_n(SCR\_ith, nStr\_b, MatsT(0.));}
+\DoxyCodeLine{478         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Kb = exList\_b-\/>pointerAtDet(Kb);}
+\DoxyCodeLine{479         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Ekl = 0ul; Ekl < nNZb; Ekl++, exList\_Kb+=4) \{}
+\DoxyCodeLine{480           }
+\DoxyCodeLine{481           \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Kb, l, k, Lb, signkl);}
+\DoxyCodeLine{482               SCR\_ith[Lb] += signkl * hCoreP(k,l);}
+\DoxyCodeLine{483          }
+\DoxyCodeLine{484           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Lb = exList\_b-\/>pointerAtDet(Lb);}
+\DoxyCodeLine{485               \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Eij = 0ul; Eij < nNZb; Eij++, exList\_Lb+=4) \{}
+\DoxyCodeLine{486               }
+\DoxyCodeLine{487             \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Lb, j, i, Jb, signij);}
+\DoxyCodeLine{488                 SCR\_ith[Jb] += 0.5 * signij * signkl * moERI(i, j, k, l); }
+\DoxyCodeLine{489               \}}
+\DoxyCodeLine{490         \}}
+\DoxyCodeLine{491        }
+\DoxyCodeLine{492         \textcolor{comment}{// passive screening }}
+\DoxyCodeLine{493         std::vector<int> SCR\_nonZero\_ith;}
+\DoxyCodeLine{494         \textcolor{keywordflow}{for} (Lb = 0 ; Lb < nStr\_b;  Lb++) \{}
+\DoxyCodeLine{495           \textcolor{keywordflow}{if} (std::abs(SCR\_ith[Lb]) > small\_number) }
+\DoxyCodeLine{496                 SCR\_nonZero\_ith.push\_back(Lb);}
+\DoxyCodeLine{497         \}}
+\DoxyCodeLine{498         }
+\DoxyCodeLine{499         \textcolor{comment}{// update Sigma}}
+\DoxyCodeLine{500         HC = Sigma;}
+\DoxyCodeLine{501         Ci = C;}
+\DoxyCodeLine{502         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iVec = 0ul; iVec < nVec; iVec++) }
+\DoxyCodeLine{503         \textcolor{keywordflow}{for} (Ka = 0; Ka < nStr\_a; Ka++, HC+=nStr\_b, Ci+=nStr\_b)}
+\DoxyCodeLine{504         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iSCR = 0ul; iSCR < SCR\_nonZero\_ith.size(); iSCR++) \{}
+\DoxyCodeLine{505           Lb = SCR\_nonZero\_ith[iSCR]; }
+\DoxyCodeLine{506           HC[Kb] += SCR\_ith[Lb] * Ci[Lb]; }
+\DoxyCodeLine{507         \}       }
+\DoxyCodeLine{508       \}  \textcolor{comment}{// Lb}}
+\DoxyCodeLine{509     \}}
+\DoxyCodeLine{510 }
+\DoxyCodeLine{511     \textcolor{comment}{// transpose sigma and C back}}
+\DoxyCodeLine{512     HC = Sigma;}
+\DoxyCodeLine{513     Ci = C;}
+\DoxyCodeLine{514     \textcolor{comment}{// (b, a) -\/> (a, b)}}
+\DoxyCodeLine{515     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iVec = 0ul; iVec < nVec; iVec++, HC+=NDet, Ci+=NDet) \{ }
+\DoxyCodeLine{516       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nStr\_b, nStr\_a, MatsT(1.), HC, nStr\_b, nStr\_a);  }
+\DoxyCodeLine{517       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'}, nStr\_b, nStr\_a, MatsT(1.), Ci, nStr\_b, nStr\_a);  }
+\DoxyCodeLine{518     \}}
+\DoxyCodeLine{519 }
+\DoxyCodeLine{520     mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(SCR);}
+\DoxyCodeLine{521 }
+\DoxyCodeLine{522     \textcolor{comment}{// 1C Continued: Alpha-\/Beta and Beta-\/Aphla Part }}
+\DoxyCodeLine{523     \textcolor{comment}{// TODO: try to vectorized the loop}}
+\DoxyCodeLine{524 \textcolor{preprocessor}{\#pragma omp parallel default(shared) private(HC, Ci, SCR\_ith, Lb, k, l, Kb, signkl, \(\backslash\)}}
+\DoxyCodeLine{525 \textcolor{preprocessor}{  i, j, La, signij, Ka)}}
+\DoxyCodeLine{526     \{  }
+\DoxyCodeLine{527       MatsT tmpH;}
+\DoxyCodeLine{528       \textcolor{keywordtype}{int} KAddr, LAddr;}
+\DoxyCodeLine{529       \textcolor{keyword}{auto} iThread = \mbox{\hyperlink{namespaceChronusQ_aa348a017ee78c3450480773ddc542e5c}{GetThreadID}}();}
+\DoxyCodeLine{530       \textcolor{keywordflow}{for}(Kb = iThread; Kb < nStr\_b; Kb+=nThreads) \{ }
+\DoxyCodeLine{531         }
+\DoxyCodeLine{532         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Kb\_head = exList\_b-\/>pointerAtDet(Kb);}
+\DoxyCodeLine{533        }
+\DoxyCodeLine{534         \textcolor{keywordflow}{for}(Ka = 0, KAddr = Kb * nStr\_a; Ka < nStr\_a; Ka++, KAddr++) \{}
+\DoxyCodeLine{535           }
+\DoxyCodeLine{536           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Ka\_head = exList\_a-\/>pointerAtDet(Ka);}
+\DoxyCodeLine{537           }
+\DoxyCodeLine{538           \textcolor{keyword}{auto} exList\_Kb = exList\_Kb\_head;}
+\DoxyCodeLine{539           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} Ekl = 0ul; Ekl < nNZb; Ekl++, exList\_Kb+=4) \{}
+\DoxyCodeLine{540          }
+\DoxyCodeLine{541             \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Kb, l, k, Lb, signkl);}
+\DoxyCodeLine{542             }
+\DoxyCodeLine{543             \textcolor{keyword}{auto} exList\_Ka = exList\_Ka\_head;}
+\DoxyCodeLine{544                 \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Eij = 0ul; Eij < nNZa; Eij++, exList\_Ka+=4) \{}
+\DoxyCodeLine{545 }
+\DoxyCodeLine{546               \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Ka, j, i, La, signij);}
+\DoxyCodeLine{547 }
+\DoxyCodeLine{548               tmpH  = signij * signkl * moERI(i, j, k, l);}
+\DoxyCodeLine{549           }
+\DoxyCodeLine{550               \textcolor{keywordflow}{if} (std::abs(tmpH) > small\_number) \{}
+\DoxyCodeLine{551                 HC    = Sigma;}
+\DoxyCodeLine{552                 Ci    = C;}
+\DoxyCodeLine{553                 LAddr = La + Lb*nStr\_a;}
+\DoxyCodeLine{554                 \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iVec = 0ul; iVec < nVec; iVec++, HC+=NDet, Ci+=NDet) }
+\DoxyCodeLine{555                   HC[KAddr] += tmpH*Ci[LAddr]; }
+\DoxyCodeLine{556               \}}
+\DoxyCodeLine{557             \}}
+\DoxyCodeLine{558           \}}
+\DoxyCodeLine{559         \}  }
+\DoxyCodeLine{560       \}}
+\DoxyCodeLine{561     \}}
+\DoxyCodeLine{562 }
+\DoxyCodeLine{563 \textcolor{preprocessor}{\#ifdef DEBUG\_CI\_SIGMA}}
+\DoxyCodeLine{564     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}HH Sigma Hamiltonian -\/-\/ Sigma"{}}, Sigma, NDet, nVec, NDet);}
+\DoxyCodeLine{565 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{566   }
+\DoxyCodeLine{567   \} \textcolor{comment}{// CASCI::buildSigma}}
+\DoxyCodeLine{568   }
+\DoxyCodeLine{569   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{570   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CASCI_a9fcbbe3964a5f600f132d37222e3f767}{CASCI<MatsT,IntsT>::computeOneRDM}}(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsT, IntsT>}} \& mcwfn, MatsT * C, }
+\DoxyCodeLine{571     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \& oneRDM) \{}
+\DoxyCodeLine{572   }
+\DoxyCodeLine{573     computeTDM(mcwfn, C, C, oneRDM);}
+\DoxyCodeLine{574   }
+\DoxyCodeLine{575   \} \textcolor{comment}{// CASCI::computeOneRDM }}
+\DoxyCodeLine{576 }
+\DoxyCodeLine{577   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{578   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CASCI_a8521c5851018596a231389612324d8f3}{CASCI<MatsT,IntsT>::computeTwoRDM}}(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsT, IntsT>}} \& mcwfn, }
+\DoxyCodeLine{579     MatsT * C, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<MatsT>}} \& twoRDM) \{}
+\DoxyCodeLine{580        }
+\DoxyCodeLine{581     \mbox{\hyperlink{cibuilder_2casci_2impl_8hpp_a53b7453de3d581f3598b7cd49f797d52}{CASCI\_LOOP\_INIT}}(); \textcolor{comment}{// check top for variable definitions}}
+\DoxyCodeLine{582     }
+\DoxyCodeLine{583     }
+\DoxyCodeLine{584     \textcolor{keywordtype}{size\_t} nThreads = \mbox{\hyperlink{namespaceChronusQ_a3152808c4819d6cbf8a29aef92728866}{GetLAThreads}}();}
+\DoxyCodeLine{585     std::vector<InCore4indexTPI<MatsT>> SCR;}
+\DoxyCodeLine{586     \textcolor{keyword}{auto} nDim  = twoRDM.\mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_adfa2fc01b859f9291e4e31e183963f8b}{nBasis}}();}
+\DoxyCodeLine{587     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nThreads; i++)}
+\DoxyCodeLine{588       SCR.emplace\_back(mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}, nDim);}
+\DoxyCodeLine{589 }
+\DoxyCodeLine{590     \textcolor{comment}{// alpha-\/alpha part}}
+\DoxyCodeLine{591     \textcolor{keywordtype}{int} i, j, k, l, La, Lb, Ka, Kb, Ja, Jb;}
+\DoxyCodeLine{592     \textcolor{keywordtype}{double} signij, signkl;}
+\DoxyCodeLine{593 \textcolor{preprocessor}{\#pragma omp parallel default(shared) private(i, j, k, l, La, Ka, Ja, Lb,\(\backslash\)}}
+\DoxyCodeLine{594 \textcolor{preprocessor}{  signij, signkl)}}
+\DoxyCodeLine{595     \{}
+\DoxyCodeLine{596       \textcolor{keyword}{auto} iThread = \mbox{\hyperlink{namespaceChronusQ_aa348a017ee78c3450480773ddc542e5c}{GetThreadID}}();}
+\DoxyCodeLine{597       \textcolor{keyword}{auto} \& tmpRDM = SCR[iThread];}
+\DoxyCodeLine{598       tmpRDM.clear();}
+\DoxyCodeLine{599       \textcolor{keywordflow}{for} (La = iThread; La < nStr\_a; La+=nThreads) \{}
+\DoxyCodeLine{600         }
+\DoxyCodeLine{601         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_La = exList\_a-\/>pointerAtDet(La);}
+\DoxyCodeLine{602         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Ekl = 0ul; Ekl < nNZa; Ekl++, exList\_La+=4) \{}
+\DoxyCodeLine{603           }
+\DoxyCodeLine{604           \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_La, k, l, Ka, signkl);}
+\DoxyCodeLine{605           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Ka = exList\_a-\/>pointerAtDet(Ka);}
+\DoxyCodeLine{606           }
+\DoxyCodeLine{607           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Eij = 0ul; Eij < nNZa; Eij++, exList\_Ka+=4) \{}
+\DoxyCodeLine{608               }
+\DoxyCodeLine{609             \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Ka, i, j, Ja, signij);}
+\DoxyCodeLine{610           }
+\DoxyCodeLine{611             \textcolor{keyword}{auto} tmp = MatsT(0.); }
+\DoxyCodeLine{612             \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Lb = 0; Lb < nStr\_b; Lb++) }
+\DoxyCodeLine{613               tmp += \mbox{\hyperlink{namespaceChronusQ_afe3e41cf782d225ede67d9450e48aa34}{SmartConj}}(C[Ja + Lb*nStr\_a]) * C[La + Lb*nStr\_a];}
+\DoxyCodeLine{614             }
+\DoxyCodeLine{615             tmpRDM(i, j, k, l) += tmp * signkl * signij; }
+\DoxyCodeLine{616               \}}
+\DoxyCodeLine{617         \}}
+\DoxyCodeLine{618       \}}
+\DoxyCodeLine{619     \}}
+\DoxyCodeLine{620 }
+\DoxyCodeLine{621 }
+\DoxyCodeLine{622     \textcolor{keywordflow}{if} (nC == 1) \{}
+\DoxyCodeLine{623     }
+\DoxyCodeLine{624 \textcolor{preprocessor}{\#pragma omp parallel default(shared) private(i, j, k, l, Lb, Kb, Jb, La, Ka, \(\backslash\)}}
+\DoxyCodeLine{625 \textcolor{preprocessor}{  signij, signkl)}}
+\DoxyCodeLine{626       \{}
+\DoxyCodeLine{627         \textcolor{keyword}{auto} iThread = \mbox{\hyperlink{namespaceChronusQ_aa348a017ee78c3450480773ddc542e5c}{GetThreadID}}();}
+\DoxyCodeLine{628         \textcolor{keyword}{auto} \& tmpRDM = SCR[iThread];}
+\DoxyCodeLine{629         \textcolor{keywordflow}{for} (Lb = iThread; Lb < nStr\_b; Lb+=nThreads) \{}
+\DoxyCodeLine{630           }
+\DoxyCodeLine{631           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Lb = exList\_b-\/>pointerAtDet(Lb);}
+\DoxyCodeLine{632           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Ekl = 0ul; Ekl < nNZb; Ekl++, exList\_Lb+=4) \{}
+\DoxyCodeLine{633             }
+\DoxyCodeLine{634             \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Lb, k, l, Kb, signkl);}
+\DoxyCodeLine{635             }
+\DoxyCodeLine{636             \textcolor{comment}{// beta-\/beta part}}
+\DoxyCodeLine{637             \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Kb = exList\_b-\/>pointerAtDet(Kb);}
+\DoxyCodeLine{638             \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Eij = 0ul; Eij < nNZb; Eij++, exList\_Kb+=4) \{}
+\DoxyCodeLine{639               }
+\DoxyCodeLine{640               \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Kb, i, j, Jb, signij);}
+\DoxyCodeLine{641               }
+\DoxyCodeLine{642               \textcolor{keyword}{auto} tmp = MatsT(0.);}
+\DoxyCodeLine{643               \textcolor{keywordflow}{for} (La = 0; La < nStr\_a; La++) }
+\DoxyCodeLine{644                 tmp += \mbox{\hyperlink{namespaceChronusQ_afe3e41cf782d225ede67d9450e48aa34}{SmartConj}}(C[La + Jb*nStr\_a]) * C[La + Lb*nStr\_a];}
+\DoxyCodeLine{645 }
+\DoxyCodeLine{646               tmpRDM(i, j, k, l) += tmp * signkl * signij; }
+\DoxyCodeLine{647             \}}
+\DoxyCodeLine{648           }
+\DoxyCodeLine{649             \textcolor{comment}{// alpha-\/beta and beta-\/alpha part}}
+\DoxyCodeLine{650             \textcolor{keywordflow}{for}(La = 0; La < nStr\_a; La++) \{}
+\DoxyCodeLine{651               \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_La = exList\_a-\/>pointerAtDet(La);}
+\DoxyCodeLine{652                   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Eij = 0ul; Eij < nNZa; Eij++, exList\_La+=4) \{}
+\DoxyCodeLine{653                 }
+\DoxyCodeLine{654                 \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_La, i, j, Ka, signij);}
+\DoxyCodeLine{655                 tmpRDM(i, j, k, l) += 2.0 * signkl * signij *  \mbox{\hyperlink{namespaceChronusQ_afe3e41cf782d225ede67d9450e48aa34}{SmartConj}}(C[Ka + Kb*nStr\_a]) * C[La + Lb*nStr\_a];}
+\DoxyCodeLine{656               \}}
+\DoxyCodeLine{657             \}}
+\DoxyCodeLine{658           }
+\DoxyCodeLine{659           \}}
+\DoxyCodeLine{660         \}}
+\DoxyCodeLine{661       \} }
+\DoxyCodeLine{662     \} }
+\DoxyCodeLine{663     }
+\DoxyCodeLine{664     twoRDM.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a6456bc2e33060e618820720bd03e1fd2}{clear}}();}
+\DoxyCodeLine{665     \textcolor{keyword}{auto} nDim2 = nDim * nDim;}
+\DoxyCodeLine{666     \textcolor{keyword}{auto} nDim4 = nDim2 * nDim2;}
+\DoxyCodeLine{667     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nThreads; i++) }
+\DoxyCodeLine{668       blas::axpy(nDim4, 1.0, SCR[i].pointer(), 1, twoRDM.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}(), 1);}
+\DoxyCodeLine{669     }
+\DoxyCodeLine{670     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{671   \} \textcolor{comment}{// CASCI::computeTwoRDM }}
+\DoxyCodeLine{672 }
+\DoxyCodeLine{673   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{674   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1CASCI_a5b4c4adb500f146041c65296b636f1e0}{CASCI<MatsT,IntsT>::computeTDM}}(\mbox{\hyperlink{classChronusQ_1_1MCWaveFunction}{MCWaveFunction<MatsT, IntsT>}} \& mcwfn, MatsT * Cm,}
+\DoxyCodeLine{675         MatsT * Cn, \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \& TDM) \{}
+\DoxyCodeLine{676 }
+\DoxyCodeLine{677     \mbox{\hyperlink{cibuilder_2casci_2impl_8hpp_a53b7453de3d581f3598b7cd49f797d52}{CASCI\_LOOP\_INIT}}(); \textcolor{comment}{// check top for variable definitions}}
+\DoxyCodeLine{678 }
+\DoxyCodeLine{679     \textcolor{keywordtype}{size\_t} nThreads = \mbox{\hyperlink{namespaceChronusQ_a3152808c4819d6cbf8a29aef92728866}{GetLAThreads}}();}
+\DoxyCodeLine{680     std::vector<SquareMatrix<MatsT>> SCR;}
+\DoxyCodeLine{681     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nThreads; i++)}
+\DoxyCodeLine{682       SCR.emplace\_back(mcwfn.\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase_a78f3453bf0a1698bdf087cfd245f6a62}{memManager}}, TDM.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ac97ef90f50aeccd6b6ff537e42023fed}{dimension}}());}
+\DoxyCodeLine{683 }
+\DoxyCodeLine{684     \textcolor{comment}{// alpha part }}
+\DoxyCodeLine{685     \textcolor{keywordtype}{int} k, l, La, Lb, Ka, Kb;}
+\DoxyCodeLine{686     \textcolor{keywordtype}{double} signkl;}
+\DoxyCodeLine{687 \textcolor{preprocessor}{\#pragma omp parallel default(shared) private(La, Lb, k, l, Ka, signkl)}}
+\DoxyCodeLine{688     \{}
+\DoxyCodeLine{689       \textcolor{keyword}{auto} iThread = \mbox{\hyperlink{namespaceChronusQ_aa348a017ee78c3450480773ddc542e5c}{GetThreadID}}();}
+\DoxyCodeLine{690       \textcolor{keyword}{auto} \& tmpRDM = SCR[iThread];}
+\DoxyCodeLine{691       tmpRDM.clear();}
+\DoxyCodeLine{692       \textcolor{keywordflow}{for} (La = iThread; La < nStr\_a; La+=nThreads) \{}
+\DoxyCodeLine{693 }
+\DoxyCodeLine{694         \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_La = exList\_a-\/>pointerAtDet(La);}
+\DoxyCodeLine{695 }
+\DoxyCodeLine{696         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Ekl = 0ul; Ekl < nNZa; Ekl++, exList\_La+=4) \{}
+\DoxyCodeLine{697 }
+\DoxyCodeLine{698           \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_La, k, l, Ka, signkl);}
+\DoxyCodeLine{699 }
+\DoxyCodeLine{700           \textcolor{keyword}{auto} tmp = MatsT(0.);}
+\DoxyCodeLine{701           \textcolor{keywordflow}{for} (Lb = 0; Lb < nStr\_b; Lb++)}
+\DoxyCodeLine{702             tmp += \mbox{\hyperlink{namespaceChronusQ_afe3e41cf782d225ede67d9450e48aa34}{SmartConj}}(Cm[Ka + Lb*nStr\_a]) * Cn[La + Lb*nStr\_a];}
+\DoxyCodeLine{703 }
+\DoxyCodeLine{704           tmpRDM(k, l) += tmp * signkl;}
+\DoxyCodeLine{705         \}}
+\DoxyCodeLine{706       \}}
+\DoxyCodeLine{707     \}}
+\DoxyCodeLine{708 }
+\DoxyCodeLine{709     \textcolor{keywordflow}{if} (nC == 1) \{}
+\DoxyCodeLine{710     \textcolor{comment}{// beta part}}
+\DoxyCodeLine{711 \textcolor{preprocessor}{\#pragma omp parallel default(shared) private(La, Lb, k, l, Kb, signkl)}}
+\DoxyCodeLine{712       \{}
+\DoxyCodeLine{713         \textcolor{keyword}{auto} iThread = \mbox{\hyperlink{namespaceChronusQ_aa348a017ee78c3450480773ddc542e5c}{GetThreadID}}();}
+\DoxyCodeLine{714         \textcolor{keyword}{auto} \& tmpRDM = SCR[iThread];}
+\DoxyCodeLine{715         \textcolor{keywordflow}{for} (Lb = iThread; Lb < nStr\_b; Lb+=nThreads) \{}
+\DoxyCodeLine{716 }
+\DoxyCodeLine{717           \textcolor{keyword}{const} \textcolor{keywordtype}{int} * exList\_Lb = exList\_b-\/>pointerAtDet(Lb);}
+\DoxyCodeLine{718           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} Ekl = 0ul; Ekl < nNZb; Ekl++, exList\_Lb+=4) \{}
+\DoxyCodeLine{719 }
+\DoxyCodeLine{720             \mbox{\hyperlink{excitationlist_8hpp_ae949e79cf969f468c3f2345660e81adb}{UNPACK\_EXCITATIONLIST\_4}}(exList\_Lb, k, l, Kb, signkl);}
+\DoxyCodeLine{721 }
+\DoxyCodeLine{722             \textcolor{keyword}{auto} tmp = MatsT(0.);}
+\DoxyCodeLine{723             \textcolor{keywordflow}{for} (La = 0; La < nStr\_a; La++)}
+\DoxyCodeLine{724               tmp += \mbox{\hyperlink{namespaceChronusQ_afe3e41cf782d225ede67d9450e48aa34}{SmartConj}}(Cm[La + Kb*nStr\_a]) * Cn[La + Lb*nStr\_a];}
+\DoxyCodeLine{725 }
+\DoxyCodeLine{726             tmpRDM(k, l) += tmp * signkl;}
+\DoxyCodeLine{727           \}}
+\DoxyCodeLine{728         \}}
+\DoxyCodeLine{729       \}}
+\DoxyCodeLine{730     \}}
+\DoxyCodeLine{731 }
+\DoxyCodeLine{732     TDM.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ae9ad6b2639dfd62c37d5ede32b6a4101}{clear}}();}
+\DoxyCodeLine{733     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nThreads; i++) TDM += SCR[i];}
+\DoxyCodeLine{734 }
+\DoxyCodeLine{735     \textcolor{comment}{//prettyPrintSmart(std::cout,"{}PT2 TDM"{}, TDM.pointer(), TDM.dimension(),}}
+\DoxyCodeLine{736     \textcolor{comment}{//            TDM.dimension(), TDM.dimension());}}
+\DoxyCodeLine{737 }
+\DoxyCodeLine{738     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{739 }
+\DoxyCodeLine{740   \} \textcolor{comment}{// CASCI::computeTDM}}
+\DoxyCodeLine{741 }
+\DoxyCodeLine{742 }
+\DoxyCodeLine{743 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{744 }
+
+\end{DoxyCode}

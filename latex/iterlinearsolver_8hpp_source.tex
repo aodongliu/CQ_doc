@@ -1,0 +1,272 @@
+\hypertarget{iterlinearsolver_8hpp_source}{}\doxysection{iterlinearsolver.\+hpp}
+\label{iterlinearsolver_8hpp_source}\index{include/itersolver/iterlinearsolver.hpp@{include/itersolver/iterlinearsolver.hpp}}
+\mbox{\hyperlink{iterlinearsolver_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{itersolver_8hpp}{itersolver.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{timer_8hpp}{util/timer.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{38   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T >}
+\DoxyCodeLine{39   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_ace4d488066bce1e7498963c25c851837}{IterLinearSolver<\_F>::setRHS}}(\textcolor{keywordtype}{size\_t} nRHS, T*RHS, \textcolor{keywordtype}{size\_t} LDRHS) \{}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{comment}{// Copy RHS}}
+\DoxyCodeLine{43     nRHS\_ = nRHS;}
+\DoxyCodeLine{44     RHS\_ = this-\/>vecGen\_(nRHS);}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{comment}{// NO MPI}}
+\DoxyCodeLine{48 \textcolor{comment}{//    ROOT\_ONLY(this-\/>comm\_);}}
+\DoxyCodeLine{49     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(this-\/>comm\_) == 0 )}
+\DoxyCodeLine{50       \textcolor{keywordflow}{if}( LDRHS == this-\/>N\_ )}
+\DoxyCodeLine{51         std::copy\_n(RHS, nRHS*this-\/>N\_, RHS\_-\/>getPtr());}
+\DoxyCodeLine{52       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{53         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iRHS = 0ul; iRHS < nRHS; iRHS++)}
+\DoxyCodeLine{54           std::copy\_n(RHS + iRHS*LDRHS, this-\/>N\_, RHS\_-\/>getPtr(iRHS));}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{comment}{// Compute norms of RHS}}
+\DoxyCodeLine{57     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iRHS = 0; iRHS < nRHS; iRHS++)}
+\DoxyCodeLine{58       rhsNorm\_.emplace\_back(}
+\DoxyCodeLine{59           RHS\_-\/>norm2F(iRHS, 1)}
+\DoxyCodeLine{60       );}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n  * IterLinearSolver has recieved "{}} << nRHS }
+\DoxyCodeLine{63               << \textcolor{stringliteral}{"{} Right Hand Sides with norms:\(\backslash\)n"{}};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iRHS = 0; iRHS < nRHS; iRHS++)}
+\DoxyCodeLine{66       std::cout << \textcolor{stringliteral}{"{}    | RHS("{}} << std::setw(3) << iRHS << \textcolor{stringliteral}{"{}) | = "{}}}
+\DoxyCodeLine{67                 << std::scientific << std::setprecision(8)}
+\DoxyCodeLine{68                 << rhsNorm\_[iRHS] << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70   \};}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{80   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T >}
+\DoxyCodeLine{81   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a52324cc8479558cf677d7f23b923f819}{IterLinearSolver<\_F>::setShifts}}(\textcolor{keywordtype}{size\_t} nShift, T* shifts) \{}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83     \textcolor{comment}{// NO MPI}}
+\DoxyCodeLine{84 \textcolor{comment}{//    ROOT\_ONLY(this-\/>comm\_);}}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n  * IterLinearSolver has recieved "{}} << nShift}
+\DoxyCodeLine{87               << \textcolor{stringliteral}{"{}  shifts:\(\backslash\)n"{}};}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     std::copy\_n(shifts, nShift, std::back\_inserter(shifts\_) );}
+\DoxyCodeLine{90     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iShift = 0; iShift < nShift; iShift++)}
+\DoxyCodeLine{91       std::cout << \textcolor{stringliteral}{"{}    Shift("{}} << std::setw(4) << iShift << \textcolor{stringliteral}{"{}) = "{}}}
+\DoxyCodeLine{92                 << std::scientific << std::setprecision(8)}
+\DoxyCodeLine{93                 << shifts\_[iShift] << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95   \};}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{109   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a4d91bbd0ba65ac02462af247efee00ef}{IterLinearSolver<\_F>::run}}() \{}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     \textcolor{keywordtype}{bool} isRoot = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(this-\/>comm\_) == 0;}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     \textcolor{keywordtype}{size\_t} nOmega = shifts\_.size();}
+\DoxyCodeLine{114     rhsBS   = std::min(nRHS\_ ,rhsBS);}
+\DoxyCodeLine{115     shiftBS = std::min(nOmega,shiftBS);}
+\DoxyCodeLine{116     this-\/>mSS\_ = std::min(this-\/>mSS\_,this-\/>N\_);}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118     alloc(); \textcolor{comment}{// Allocate Scratch space}}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     \textcolor{keywordflow}{if}( isRoot ) \{}
+\DoxyCodeLine{121       std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n  * IterLinearSolver will solve "{}} << nRHS\_*nOmega}
+\DoxyCodeLine{122                 << \textcolor{stringliteral}{"{} linear systems consisting of "{}} }
+\DoxyCodeLine{123                 << nOmega << \textcolor{stringliteral}{"{} linear shifts and "{}} << nRHS\_ << \textcolor{stringliteral}{"{} RHS\(\backslash\)n"{}};}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125       std::cout << std::left;}
+\DoxyCodeLine{126       std::cout << std::setw(30) << \textcolor{stringliteral}{"{}    * RHS Batch Size   = "{}} << rhsBS }
+\DoxyCodeLine{127         << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{128       std::cout << std::setw(30) << \textcolor{stringliteral}{"{}    * Shift Batch Size = "{}} << shiftBS }
+\DoxyCodeLine{129         << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{130       std::cout << std::setw(30) << \textcolor{stringliteral}{"{}    * Maximum Subspace = "{}} << this-\/>mSS\_ }
+\DoxyCodeLine{131         << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133       std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{134     \}}
+\DoxyCodeLine{135     }
+\DoxyCodeLine{136     \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a6ef99d456575a9727c4d7d4eb8149416}{MPISize}}(this-\/>comm\_) > 1 ) \{}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(nOmega,0,this-\/>comm\_);}
+\DoxyCodeLine{139       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(shiftBS,0,this-\/>comm\_);}
+\DoxyCodeLine{140       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(nRHS\_,0,this-\/>comm\_);}
+\DoxyCodeLine{141       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(rhsBS,0,this-\/>comm\_);}
+\DoxyCodeLine{142       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(this-\/>N\_,0,this-\/>comm\_);}
+\DoxyCodeLine{143       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(this-\/>mSS\_,0,this-\/>comm\_);}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145     \}}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147     \textcolor{comment}{// Shift batch loop}}
+\DoxyCodeLine{148     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iOmega = 0, iBatch = 0; iOmega < nOmega; iOmega += shiftBS) \{}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Omega"{}});}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152       \textcolor{comment}{// Shift batch size information }}
+\DoxyCodeLine{153       \textcolor{keywordtype}{size\_t} nOmegaDo = std::min(shiftBS, nOmega -\/ iOmega);}
+\DoxyCodeLine{154       std::vector<\_F> shiftBatch(nOmegaDo);}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156 \textcolor{comment}{//      if( isRoot )}}
+\DoxyCodeLine{157         std::copy\_n(\&shifts\_[iOmega], nOmegaDo, shiftBatch.begin());}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160     \textcolor{comment}{// RHS batch loop}}
+\DoxyCodeLine{161     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iRHS = 0; iRHS < nRHS\_; iRHS += rhsBS, iBatch++) \{}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163       \textcolor{comment}{// RHS batch size information}}
+\DoxyCodeLine{164       \textcolor{keywordtype}{size\_t} nRHSDo   = std::min(rhsBS, nRHS\_ -\/ iRHS);}
+\DoxyCodeLine{165       std::shared\_ptr<SolverVectors<\_F>> RHSBatch =}
+\DoxyCodeLine{166           RHS\_ == \textcolor{keyword}{nullptr} ? nullptr : std::make\_shared<SolverVectorsView<\_F>>(*RHS\_, iRHS);}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168       \textcolor{comment}{// Pointer to solution}}
+\DoxyCodeLine{169       std::shared\_ptr<SolverVectors<\_F>> SOLBatch =}
+\DoxyCodeLine{170           SOL\_ == \textcolor{keyword}{nullptr} ? nullptr : std::make\_shared<SolverVectorsView<\_F>>(*SOL\_, iRHS + iOmega * nRHS\_);}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173       \textcolor{keywordflow}{if}( isRoot ) \{}
+\DoxyCodeLine{174         std::cout << \textcolor{stringliteral}{"{}  * IterLinearSolver Starting Batch "{}} }
+\DoxyCodeLine{175           << std::setw(6) << std::right << iBatch << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{176         std::cout << \textcolor{stringliteral}{"{}    -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}} << \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}};}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178         std::cout << \textcolor{stringliteral}{"{}    * IShift = "{}};}
+\DoxyCodeLine{179         \textcolor{keywordflow}{if}(nOmegaDo > 1)}
+\DoxyCodeLine{180           std::cout << \textcolor{stringliteral}{"{}["{}} << iOmega << \textcolor{stringliteral}{"{}, "{}} << iOmega + nOmegaDo -\/ 1 << \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{181         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{182           std::cout << iOmega;}
+\DoxyCodeLine{183         std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185         std::cout << \textcolor{stringliteral}{"{}    * IRHS   = "{}};}
+\DoxyCodeLine{186         \textcolor{keywordflow}{if}(nRHSDo > 1)}
+\DoxyCodeLine{187           std::cout << \textcolor{stringliteral}{"{}["{}} << iRHS << \textcolor{stringliteral}{"{}, "{}} << iRHS + nRHSDo -\/ 1 << \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{188         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{189           std::cout << iRHS;}
+\DoxyCodeLine{190         std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192         std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{193       \}}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196       runBatch(nRHSDo,nOmegaDo,RHSBatch,\&shiftBatch[0],SOLBatch,}
+\DoxyCodeLine{197           \&rhsNorm\_[iRHS]);}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200       \textcolor{keywordflow}{if}( isRoot ) std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202     \} \textcolor{comment}{// end RHS batch loop}}
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Omega"{}});}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206     \} \textcolor{comment}{// end Shift batch loop}}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208   \};}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{215   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1IterLinearSolver_a65d7cbe1f39b8bfdc6ce5a6303a14daa}{IterLinearSolver<\_F>::runBatch}}(\textcolor{keywordtype}{size\_t} nRHS, \textcolor{keywordtype}{size\_t} nShift,}
+\DoxyCodeLine{216                                       std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}}> RHS, \_F *shifts,}
+\DoxyCodeLine{217                                       std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<\_F>}}> SOL, \textcolor{keywordtype}{double} *RHSNorm) \{}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219     \textcolor{comment}{// No MPI}}
+\DoxyCodeLine{220 \textcolor{comment}{//    ROOT\_ONLY(this-\/>comm\_);}}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222     \textcolor{comment}{// Zero out guess}}
+\DoxyCodeLine{223     V\_-\/>clear();}
+\DoxyCodeLine{224 }
+\DoxyCodeLine{225     \textcolor{comment}{// Initial residual is RHS for zero guess }}
+\DoxyCodeLine{226     \textcolor{comment}{// FIXME: not for general guess}}
+\DoxyCodeLine{227     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iOmega = 0; iOmega < nShift; iOmega++)}
+\DoxyCodeLine{228       RES\_-\/>set\_data(iOmega*nRHS, nRHS, *RHS, 0);}
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230     \textcolor{comment}{// Precondition the residuals}}
+\DoxyCodeLine{231     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iOmega = 0; iOmega < nShift; iOmega++) \{}
+\DoxyCodeLine{232       \mbox{\hyperlink{classChronusQ_1_1SolverVectorsView}{SolverVectorsView<\_F>}} RES\_view(*RES\_, iOmega * nRHS);}
+\DoxyCodeLine{233       this-\/>preCondWShift\_(nRHS,shifts[iOmega], RES\_view, RES\_view);}
+\DoxyCodeLine{234     \}}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236 }
+\DoxyCodeLine{237     \textcolor{comment}{// Clear out and compute the preconditioned residual norms}}
+\DoxyCodeLine{238     resNorm\_.clear();}
+\DoxyCodeLine{239     resNorm\_.emplace\_back(nShift * nRHS,0.);}
+\DoxyCodeLine{240     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iDo = 0; iDo < nShift * nRHS; iDo++)}
+\DoxyCodeLine{241       resNorm\_.back()[iDo] = RES\_-\/>norm2F(iDo, 1);}
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243     \textcolor{comment}{//prettyPrintSmart(std::cout,"{}R0"{},RES\_,this-\/>N\_,1,this-\/>N\_);}}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245     \textcolor{comment}{// Output the residual norms}}
+\DoxyCodeLine{246     std::cout << \textcolor{stringliteral}{"{}    * Initial Residual Norms:\(\backslash\)n"{}};}
+\DoxyCodeLine{247     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iDo = 0; iDo < nShift * nRHS; iDo++)}
+\DoxyCodeLine{248       std::cout << \textcolor{stringliteral}{"{}      | RES( "{}} << std::setw(4) << iDo << \textcolor{stringliteral}{"{}) | = "{}} }
+\DoxyCodeLine{249         << std::scientific << std::setprecision(8) }
+\DoxyCodeLine{250         << resNorm\_.back()[iDo] << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{251     std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{252     }
+\DoxyCodeLine{253   \}}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258 }
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260 }
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262 }
+\DoxyCodeLine{263 }
+\DoxyCodeLine{264 \};}
+\DoxyCodeLine{265 }
+\DoxyCodeLine{266 }
+
+\end{DoxyCode}

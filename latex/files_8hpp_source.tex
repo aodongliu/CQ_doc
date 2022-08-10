@@ -1,0 +1,306 @@
+\hypertarget{files_8hpp_source}{}\doxysection{files.\+hpp}
+\label{files_8hpp_source}\index{include/util/files.hpp@{include/util/files.hpp}}
+\mbox{\hyperlink{files_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{input_8hpp}{cxxapi/input.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cerr_8hpp}{cerr.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <H5Cpp.h>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{33 \textcolor{keyword}{inline} H5::CompType \mbox{\hyperlink{files_8hpp_ad665e8c92f5db7353268b2acff928096}{H5PredType}}() \{}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35   \textcolor{keywordflow}{if}( std::is\_same<double,T>::value )}
+\DoxyCodeLine{36     \textcolor{keywordflow}{return} H5::CompType(}
+\DoxyCodeLine{37       H5::DataType(H5::PredType::NATIVE\_DOUBLE).getId()}
+\DoxyCodeLine{38     );}
+\DoxyCodeLine{39   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( std::is\_same<uint64\_t,T>::value ) }
+\DoxyCodeLine{40     \textcolor{keywordflow}{return} H5::CompType(}
+\DoxyCodeLine{41       H5::DataType(H5::PredType::NATIVE\_UINT64).getId()}
+\DoxyCodeLine{42     );}
+\DoxyCodeLine{43   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( std::is\_same<unsigned long,T>::value )}
+\DoxyCodeLine{44     \textcolor{keywordflow}{return} H5::CompType(}
+\DoxyCodeLine{45       H5::DataType(H5::PredType::NATIVE\_ULONG).getId()}
+\DoxyCodeLine{46     );}
+\DoxyCodeLine{47   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( std::is\_same<int32\_t,T>::value ) }
+\DoxyCodeLine{48     \textcolor{keywordflow}{return} H5::CompType(}
+\DoxyCodeLine{49       H5::DataType(H5::PredType::NATIVE\_INT32).getId()}
+\DoxyCodeLine{50     );}
+\DoxyCodeLine{51   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( std::is\_same<char,T>::value )}
+\DoxyCodeLine{52     \textcolor{keywordflow}{return} H5::CompType(}
+\DoxyCodeLine{53       H5::DataType(H5::PredType::NATIVE\_CHAR).getId()}
+\DoxyCodeLine{54     );}
+\DoxyCodeLine{55   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( std::is\_same<dcomplex,T>::value ) \{}
+\DoxyCodeLine{56     \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{57       \textcolor{keywordtype}{double} re;}
+\DoxyCodeLine{58       \textcolor{keywordtype}{double} im;}
+\DoxyCodeLine{59     \} complex\_t;}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     H5::CompType complexType(\textcolor{keyword}{sizeof}(complex\_t));}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     complexType.insertMember(}
+\DoxyCodeLine{64       \textcolor{stringliteral}{"{}r"{}},HOFFSET(complex\_t,re),H5::PredType::NATIVE\_DOUBLE}
+\DoxyCodeLine{65     );}
+\DoxyCodeLine{66     complexType.insertMember(}
+\DoxyCodeLine{67       \textcolor{stringliteral}{"{}i"{}},HOFFSET(complex\_t,im),H5::PredType::NATIVE\_DOUBLE}
+\DoxyCodeLine{68     );}
+\DoxyCodeLine{69     \textcolor{keywordflow}{return} complexType;}
+\DoxyCodeLine{70   \}}
+\DoxyCodeLine{71   \textcolor{keywordflow}{else} \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{ChronusQ::CErr}}();}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 \};}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75 \textcolor{preprocessor}{\#define OpenH5File(file,type) \(\backslash\)}}
+\DoxyCodeLine{76 \textcolor{preprocessor}{  assert(not fName\_.empty()); \(\backslash\)}}
+\DoxyCodeLine{77 \textcolor{preprocessor}{  H5::H5File file(fName\_,type); \(\backslash\)}}
+\DoxyCodeLine{78 \textcolor{preprocessor}{  exists\_ = true;}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80 \textcolor{preprocessor}{\#define CreateH5File(file) \(\backslash\)}}
+\DoxyCodeLine{81 \textcolor{preprocessor}{  OpenH5File(file,H5F\_ACC\_TRUNC)}}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83 \textcolor{preprocessor}{\#define CreateDataSet(file,obj,data,type,nDims,dims) \(\backslash\)}}
+\DoxyCodeLine{84 \textcolor{preprocessor}{  OpenH5File(file,H5F\_ACC\_RDWR); \(\backslash\)}}
+\DoxyCodeLine{85 \textcolor{preprocessor}{  H5::DataSpace space(nDims,dims); \(\backslash\)}}
+\DoxyCodeLine{86 \textcolor{preprocessor}{  H5::DataSet obj = file.createDataSet(data,type,space);}}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88 \textcolor{preprocessor}{\#define OpenDataSet(file,obj,data) \(\backslash\)}}
+\DoxyCodeLine{89 \textcolor{preprocessor}{  OpenH5File(file,H5F\_ACC\_RDWR); \(\backslash\)}}
+\DoxyCodeLine{90 \textcolor{preprocessor}{  H5::DataSet obj = file.openDataSet(data);}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{96   \textcolor{keyword}{class }PauliSpinorSquareMatrices;}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1SafeFile}{SafeFile}} \{}
+\DoxyCodeLine{99   }
+\DoxyCodeLine{100     std::string \mbox{\hyperlink{classChronusQ_1_1SafeFile_abbc33de759c3a1519d9d0e693b11941f}{fName\_}};}
+\DoxyCodeLine{101     \textcolor{keywordtype}{bool}        \mbox{\hyperlink{classChronusQ_1_1SafeFile_af6f5e2df68bca331eec005719d6fb0c5}{exists\_}};}
+\DoxyCodeLine{102   }
+\DoxyCodeLine{103     \textcolor{keyword}{public}:}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105       \textcolor{comment}{// Defaulted ctors}}
+\DoxyCodeLine{106       \mbox{\hyperlink{classChronusQ_1_1SafeFile_a56856dcb7c377bf9f4c8503637da5ed0}{SafeFile}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SafeFile}{SafeFile}} \&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108       \textcolor{comment}{// String ctor}}
+\DoxyCodeLine{109       \mbox{\hyperlink{classChronusQ_1_1SafeFile_a01da0062ae32b980bae3dd217ce396e0}{SafeFile}}( \textcolor{keyword}{const} std::string \&\mbox{\hyperlink{classChronusQ_1_1SafeFile_adb5028407a90cde65935c7a279ce28f0}{fName}} = \textcolor{stringliteral}{"{}"{}}, }
+\DoxyCodeLine{110         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1SafeFile_a8a16dac697fe9592a8990557d12c4a63}{exists}} = \textcolor{keyword}{false} ) :}
+\DoxyCodeLine{111         \mbox{\hyperlink{classChronusQ_1_1SafeFile_abbc33de759c3a1519d9d0e693b11941f}{fName\_}}(\mbox{\hyperlink{classChronusQ_1_1SafeFile_adb5028407a90cde65935c7a279ce28f0}{fName}}), \mbox{\hyperlink{classChronusQ_1_1SafeFile_af6f5e2df68bca331eec005719d6fb0c5}{exists\_}}(\mbox{\hyperlink{classChronusQ_1_1SafeFile_a8a16dac697fe9592a8990557d12c4a63}{exists}}) \{ \}}
+\DoxyCodeLine{112   }
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114       \textcolor{comment}{// Member functions}}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116       \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1SafeFile_a8a16dac697fe9592a8990557d12c4a63}{exists}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SafeFile_af6f5e2df68bca331eec005719d6fb0c5}{exists\_}}; \}}
+\DoxyCodeLine{117       \textcolor{keyword}{inline} std::string \mbox{\hyperlink{classChronusQ_1_1SafeFile_adb5028407a90cde65935c7a279ce28f0}{fName}}()\textcolor{keyword}{ const}\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1SafeFile_abbc33de759c3a1519d9d0e693b11941f}{fName\_}}; \}}
+\DoxyCodeLine{118       \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SafeFile_a21a487ad428485109f3926cafd39c153}{setFile}}(\textcolor{keyword}{const} std::string \&name) \{ \mbox{\hyperlink{classChronusQ_1_1SafeFile_abbc33de759c3a1519d9d0e693b11941f}{fName\_}} = name; \}}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120       \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SafeFile_a1e299cde50ade5a7095d144030812928}{createFile}}() \{}
+\DoxyCodeLine{121         \mbox{\hyperlink{files_8hpp_ab4cb3009540f23f5f6c86bd48d77b52d}{CreateH5File}}(file);}
+\DoxyCodeLine{122       \}; }
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124       \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SafeFile_ac128f28f2398a65b421bf0c3886ba7b8}{createGroup}}(\textcolor{keyword}{const} std::string \&group) \{}
+\DoxyCodeLine{125         \mbox{\hyperlink{files_8hpp_aa6924558786bd741fac654a6a6eb869e}{OpenH5File}}(file,H5F\_ACC\_RDWR)}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127         \textcolor{comment}{// Create nested groups if need be}}
+\DoxyCodeLine{128         std::vector<std::string> tokens;}
+\DoxyCodeLine{129         \mbox{\hyperlink{namespaceChronusQ_a5a888ba5c67f0326b7a6f78e7726c925}{split}}(tokens,group,\textcolor{stringliteral}{"{}/"{}});}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131         \textcolor{comment}{// Remove empty tokens}}
+\DoxyCodeLine{132         std::remove\_if(tokens.begin(),tokens.end(),}
+\DoxyCodeLine{133           [](std::string \&x) -\/> \textcolor{keywordtype}{bool}\{ return x.empty(); \}}
+\DoxyCodeLine{134         );}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136         std::string tmpName;}
+\DoxyCodeLine{137         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&str : tokens) \{}
+\DoxyCodeLine{138           H5::Group tmpGroup = }
+\DoxyCodeLine{139             file.openGroup(tmpName.empty() ? \textcolor{stringliteral}{"{}/"{}} : tmpName);}
+\DoxyCodeLine{140           tmpName += \textcolor{stringliteral}{"{}/"{}} + str;}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142           \textcolor{keywordflow}{try} \{ tmpGroup.openGroup(str); \} }
+\DoxyCodeLine{143           \textcolor{keywordflow}{catch}(...) \{ tmpGroup.createGroup(str); \}}
+\DoxyCodeLine{144         \}}
+\DoxyCodeLine{145       \}}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147       \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{148       \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SafeFile_aa2cd7bd92e5c76cb3b5a583b323643e4}{createDataSet}}(\textcolor{keyword}{const} std::string \&data,}
+\DoxyCodeLine{149         \textcolor{keyword}{const} std::vector<hsize\_t> \&dims) \{}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151         \mbox{\hyperlink{files_8hpp_ae10437608754c2c587492ac77fec4338}{CreateDataSet}}(file,obj,data,H5PredType<T>(),}
+\DoxyCodeLine{152           dims.size(),\&dims[0]);}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154       \};}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157       \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{158       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SafeFile_a8b20f987a980e5b69eb2eb4ffd1c4be8}{readData}}(\textcolor{keyword}{const} std::string \&dataSet, T* data) \{}
+\DoxyCodeLine{159         \mbox{\hyperlink{files_8hpp_ad2095d1e78855d1b803daec96993fb01}{OpenDataSet}}(file,obj,dataSet);}
+\DoxyCodeLine{160         obj.read(data,H5PredType<T>());}
+\DoxyCodeLine{161       \};}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163       \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{164       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SafeFile_ae1366a2d83d6a64d693de436b9a6e46f}{readData}}(\textcolor{keyword}{const} std::string \&dataSet,}
+\DoxyCodeLine{165                     \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<T>}} \&data) \{}
+\DoxyCodeLine{166         \mbox{\hyperlink{classChronusQ_1_1SafeFile_a8b20f987a980e5b69eb2eb4ffd1c4be8}{readData}}(dataSet + \textcolor{stringliteral}{"{}\_SCALAR"{}}, data.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a56bd65283837c1fbdbc7d23ddde2f558}{S}}().pointer());}
+\DoxyCodeLine{167         \textcolor{keywordflow}{if} (data.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a3450d2f7af28a07c7f578f0458a7cbd1}{hasZ}}())}
+\DoxyCodeLine{168           \mbox{\hyperlink{classChronusQ_1_1SafeFile_a8b20f987a980e5b69eb2eb4ffd1c4be8}{readData}}(dataSet + \textcolor{stringliteral}{"{}\_MZ"{}}, data.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a3a28e0412cb54a27d8ffba809401f9ce}{Z}}().pointer());}
+\DoxyCodeLine{169         \textcolor{keywordflow}{if} (data.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_ac5d7c380c52ddb815cd6ec5dfb2ea7e1}{hasXY}}()) \{}
+\DoxyCodeLine{170           \mbox{\hyperlink{classChronusQ_1_1SafeFile_a8b20f987a980e5b69eb2eb4ffd1c4be8}{readData}}(dataSet + \textcolor{stringliteral}{"{}\_MY"{}}, data.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a14e85342ad97e0528459b6eed0760830}{Y}}().pointer());}
+\DoxyCodeLine{171           \mbox{\hyperlink{classChronusQ_1_1SafeFile_a8b20f987a980e5b69eb2eb4ffd1c4be8}{readData}}(dataSet + \textcolor{stringliteral}{"{}\_MX"{}}, data.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a8dfc4001aea70d05758fc95d33f5862e}{X}}().pointer());}
+\DoxyCodeLine{172         \}}
+\DoxyCodeLine{173       \};}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175       \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1SafeFile_a34e168d128797ed00d91f1cb2c6ed724}{sizeOfData}}(\textcolor{keyword}{const} std::string \&dataSet) \{}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177         \textcolor{keywordtype}{size\_t} datSize;}
+\DoxyCodeLine{178         \mbox{\hyperlink{files_8hpp_ad2095d1e78855d1b803daec96993fb01}{OpenDataSet}}(file,obj,dataSet);}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180         H5::DataSpace space = obj.getSpace();}
+\DoxyCodeLine{181         datSize = space.getSelectNpoints();}
+\DoxyCodeLine{182   }
+\DoxyCodeLine{183         \textcolor{keywordflow}{return} datSize;}
+\DoxyCodeLine{184         }
+\DoxyCodeLine{185       \}; \textcolor{comment}{//sizeOfData}}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187       \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{188       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SafeFile_ad01d622860899e68f88cb535b1e272cc}{writeData}}(\textcolor{keyword}{const} std::string \&dataSet, T* data) \{}
+\DoxyCodeLine{189         \mbox{\hyperlink{files_8hpp_ad2095d1e78855d1b803daec96993fb01}{OpenDataSet}}(file,obj,dataSet);}
+\DoxyCodeLine{190         obj.write(data,H5PredType<T>());}
+\DoxyCodeLine{191       \};}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193       \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{194       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SafeFile_a7c01689458f4033de8835b4274127edd}{partialWriteData}}(\textcolor{keyword}{const} std::string \&dataSet, T* data,}
+\DoxyCodeLine{195           \textcolor{keyword}{const} std::vector<hsize\_t> \&start, \textcolor{keyword}{const} std::vector<hsize\_t> \&dims,}
+\DoxyCodeLine{196           \textcolor{keyword}{const} std::vector<hsize\_t> \&memStart = \{\},}
+\DoxyCodeLine{197           \textcolor{keyword}{const} std::vector<hsize\_t> \&memDims = \{\} ) \{}
+\DoxyCodeLine{198         \mbox{\hyperlink{files_8hpp_ad2095d1e78855d1b803daec96993fb01}{OpenDataSet}}(file,obj,dataSet);}
+\DoxyCodeLine{199         H5::DataSpace space = obj.getSpace();}
+\DoxyCodeLine{200         space.selectHyperslab( H5S\_SELECT\_SET, \&dims[0], \&start[0] );}
+\DoxyCodeLine{201  }
+\DoxyCodeLine{202         \textcolor{keywordflow}{if} ( memStart.empty() )}
+\DoxyCodeLine{203           obj.write(data, H5PredType<T>(), space, space);}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{206           H5::DataSpace mspace(memDims.size(), \&memDims[0]);}
+\DoxyCodeLine{207           mspace.selectHyperslab( H5S\_SELECT\_SET, \&dims[0], \&memStart[0]);}
+\DoxyCodeLine{208           obj.write(data, H5PredType<T>(), mspace, space);}
+\DoxyCodeLine{209         \}}
+\DoxyCodeLine{210       \};}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213       \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{214       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SafeFile_adb6dce214e2bd2ac4188318b14c3417e}{safeWriteData}}(\textcolor{keyword}{const} std::string \&dataSet, T* data,}
+\DoxyCodeLine{215         \textcolor{keyword}{const} std::vector<hsize\_t> \&dims) \{}
+\DoxyCodeLine{216 }
+\DoxyCodeLine{217         \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{218           \mbox{\hyperlink{classChronusQ_1_1SafeFile_ad01d622860899e68f88cb535b1e272cc}{writeData}}(dataSet,data);}
+\DoxyCodeLine{219 }
+\DoxyCodeLine{220         \textcolor{comment}{// DataSet doesnt exist}}
+\DoxyCodeLine{221         \} \textcolor{keywordflow}{catch}(...) \{}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223           \textcolor{keywordflow}{try} \{ this-\/>\textcolor{keyword}{template} createDataSet<T>(dataSet,dims); \}}
+\DoxyCodeLine{224           \textcolor{keywordflow}{catch}(...) \{}
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226             \textcolor{comment}{// Separate Group from DataSet}}
+\DoxyCodeLine{227             \textcolor{keyword}{auto} sPos = dataSet.rfind(\textcolor{stringliteral}{"{}/"{}});}
+\DoxyCodeLine{228             \textcolor{keywordflow}{if}( sPos == std::string::npos ) \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{229             \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{230               \mbox{\hyperlink{classChronusQ_1_1SafeFile_ac128f28f2398a65b421bf0c3886ba7b8}{createGroup}}(dataSet.substr(0,sPos));}
+\DoxyCodeLine{231               this-\/>\textcolor{keyword}{template} createDataSet<T>(dataSet,dims);}
+\DoxyCodeLine{232             \}}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234           \}}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236           \mbox{\hyperlink{classChronusQ_1_1SafeFile_ad01d622860899e68f88cb535b1e272cc}{writeData}}(dataSet,data);}
+\DoxyCodeLine{237 }
+\DoxyCodeLine{238         \}}
+\DoxyCodeLine{239 }
+\DoxyCodeLine{240       \};}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242       \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{243       \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SafeFile_ab624abe4a4ccd201350e63fc641c3807}{safeWriteData}}(\textcolor{keyword}{const} std::string \&dataSet,}
+\DoxyCodeLine{244                          \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<T>}} \&data) \{}
+\DoxyCodeLine{245         \textcolor{keywordtype}{size\_t} N = data.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_ac97ef90f50aeccd6b6ff537e42023fed}{dimension}}();}
+\DoxyCodeLine{246         \mbox{\hyperlink{classChronusQ_1_1SafeFile_adb6dce214e2bd2ac4188318b14c3417e}{safeWriteData}}(dataSet + \textcolor{stringliteral}{"{}\_SCALAR"{}}, data.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a56bd65283837c1fbdbc7d23ddde2f558}{S}}().pointer(), \{N,N\});}
+\DoxyCodeLine{247         \textcolor{keywordflow}{if} (data.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a3450d2f7af28a07c7f578f0458a7cbd1}{hasZ}}())}
+\DoxyCodeLine{248           \mbox{\hyperlink{classChronusQ_1_1SafeFile_adb6dce214e2bd2ac4188318b14c3417e}{safeWriteData}}(dataSet + \textcolor{stringliteral}{"{}\_MZ"{}}, data.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a3a28e0412cb54a27d8ffba809401f9ce}{Z}}().pointer(), \{N,N\});}
+\DoxyCodeLine{249         \textcolor{keywordflow}{if} (data.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_ac5d7c380c52ddb815cd6ec5dfb2ea7e1}{hasXY}}()) \{}
+\DoxyCodeLine{250           \mbox{\hyperlink{classChronusQ_1_1SafeFile_adb6dce214e2bd2ac4188318b14c3417e}{safeWriteData}}(dataSet + \textcolor{stringliteral}{"{}\_MY"{}}, data.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a14e85342ad97e0528459b6eed0760830}{Y}}().pointer(), \{N,N\});}
+\DoxyCodeLine{251           \mbox{\hyperlink{classChronusQ_1_1SafeFile_adb6dce214e2bd2ac4188318b14c3417e}{safeWriteData}}(dataSet + \textcolor{stringliteral}{"{}\_MX"{}}, data.\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices_a8dfc4001aea70d05758fc95d33f5862e}{X}}().pointer(), \{N,N\});}
+\DoxyCodeLine{252         \}}
+\DoxyCodeLine{253       \};}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255       std::vector<hsize\_t> \mbox{\hyperlink{classChronusQ_1_1SafeFile_a8df80c13998de604f5bd7984de2edafa}{getDims}}(\textcolor{keyword}{const} std::string \&dataSet) \{}
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257         std::vector<hsize\_t> dims;}
+\DoxyCodeLine{258         \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{259           \mbox{\hyperlink{files_8hpp_ad2095d1e78855d1b803daec96993fb01}{OpenDataSet}}(file,obj,dataSet);}
+\DoxyCodeLine{260 }
+\DoxyCodeLine{261           H5::DataSpace space = obj.getSpace();}
+\DoxyCodeLine{262           \textcolor{keywordtype}{int} rank = space.getSimpleExtentNdims();}
+\DoxyCodeLine{263    }
+\DoxyCodeLine{264           dims.resize(rank);}
+\DoxyCodeLine{265 }
+\DoxyCodeLine{266           space.getSimpleExtentDims(\&dims[0],NULL);}
+\DoxyCodeLine{267         \} \textcolor{keywordflow}{catch}(...)\{ }
+\DoxyCodeLine{268           \textcolor{comment}{// Return empty vector }}
+\DoxyCodeLine{269         \}}
+\DoxyCodeLine{270   }
+\DoxyCodeLine{271         \textcolor{keywordflow}{return} dims;}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273       \}}
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275 }
+\DoxyCodeLine{276       H5T\_class\_t \mbox{\hyperlink{classChronusQ_1_1SafeFile_a481c7282a775995032ad22b783318d2b}{getTypeClass}}(\textcolor{keyword}{const} std::string \&dataSet) \{}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278         H5T\_class\_t type;}
+\DoxyCodeLine{279 }
+\DoxyCodeLine{280         \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{281 }
+\DoxyCodeLine{282           \mbox{\hyperlink{files_8hpp_ad2095d1e78855d1b803daec96993fb01}{OpenDataSet}}(file,obj,dataSet);}
+\DoxyCodeLine{283 }
+\DoxyCodeLine{284           type = obj.getTypeClass();}
+\DoxyCodeLine{285 }
+\DoxyCodeLine{286         \} \textcolor{keywordflow}{catch}(...)\{ }
+\DoxyCodeLine{287           \textcolor{comment}{// Return empty vector }}
+\DoxyCodeLine{288         \}}
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291         \textcolor{keywordflow}{return} type;}
+\DoxyCodeLine{292 }
+\DoxyCodeLine{293       \}}
+\DoxyCodeLine{294 }
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296 }
+\DoxyCodeLine{297   \}; \textcolor{comment}{// class SafeFile}}
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{300 }
+
+\end{DoxyCode}

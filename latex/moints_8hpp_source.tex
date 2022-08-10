@@ -1,0 +1,151 @@
+\hypertarget{moints_8hpp_source}{}\doxysection{moints.\+hpp}
+\label{moints_8hpp_source}\index{include/mcwavefunction/moints.hpp@{include/mcwavefunction/moints.hpp}}
+\mbox{\hyperlink{moints_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcwavefunction_8hpp}{mcwavefunction.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mointstransformer_2impl_8hpp}{mointstransformer/impl.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incore4indexreleri_8hpp}{particleintegrals/twopints/incore4indexreleri.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incore4indextpi_8hpp}{particleintegrals/twopints/incore4indextpi.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas3_8hpp}{cqlinalg/blas3.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasutil_8hpp}{cqlinalg/blasutil.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matfunc_8hpp}{cqlinalg/matfunc.hpp}}>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{output_8hpp}{cxxapi/output.hpp}}>}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{comment}{// \#define DEBUG\_MCWFN\_MOINTS}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{43   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a07e50dde8975711c0d2243bbf9f4e5bc}{MCWaveFunction<MatsT,IntsT>::setMORanges}}() \{}
+\DoxyCodeLine{44     mointsTF-\/>setMORanges(\textcolor{keyword}{dynamic\_cast<}\textcolor{keyword}{const }\mbox{\hyperlink{classChronusQ_1_1MCWaveFunctionBase}{MCWaveFunctionBase}} \&\textcolor{keyword}{>}(*\textcolor{keyword}{this}));}
+\DoxyCodeLine{45   \}; \textcolor{comment}{// MCWaveFunction::setMORanges}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{48   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCWaveFunction_a700a1089f64411ed3356f2afa16ca128}{MCWaveFunction<MatsT,IntsT>::transformInts}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert) \{}
+\DoxyCodeLine{49     }
+\DoxyCodeLine{50     \textcolor{comment}{// TODO: expand to RI}}
+\DoxyCodeLine{51     \textcolor{comment}{// build object and allocate memory}}
+\DoxyCodeLine{52     \textcolor{keywordtype}{size\_t} nTOrb  = this-\/>MOPartition.nMO;}
+\DoxyCodeLine{53     \textcolor{keywordtype}{size\_t} nCorrO = this-\/>MOPartition.nCorrO;}
+\DoxyCodeLine{54     \textcolor{keywordtype}{size\_t} nInact = this-\/>MOPartition.nInact;}
+\DoxyCodeLine{55     \textcolor{keywordtype}{size\_t} nInact2 = nInact * nInact;}
+\DoxyCodeLine{56     }
+\DoxyCodeLine{57     \textcolor{keyword}{auto} \& mem   = this-\/>memManager;}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{comment}{/*}}
+\DoxyCodeLine{60 \textcolor{comment}{     * compute inactive core energy}}
+\DoxyCodeLine{61 \textcolor{comment}{     */}}
+\DoxyCodeLine{62     MatsT * h1e\_ii  = mem.template malloc<MatsT>(nInact);}
+\DoxyCodeLine{63     MatsT * GDjj\_ii = mem.template malloc<MatsT>(nInact);}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{keywordtype}{double} fc1C = (this-\/>reference().nC == 1) ? 2.0 : 1.0;}
+\DoxyCodeLine{66     }
+\DoxyCodeLine{67     mointsTF-\/>transformHCore(pert, h1e\_ii, \textcolor{stringliteral}{"{}ii"{}}, \textcolor{keyword}{true});}
+\DoxyCodeLine{68     mointsTF-\/>transformGD(pert, \textcolor{charliteral}{'i'}, GDjj\_ii, \textcolor{stringliteral}{"{}jj"{}}, \textcolor{keyword}{true}, \textcolor{keyword}{true}, \textcolor{stringliteral}{"{}WithInactive-\/i"{}});  }
+\DoxyCodeLine{69     }
+\DoxyCodeLine{70     MatsT ECore = 0.;}
+\DoxyCodeLine{71     \textcolor{comment}{// compute core enenrgy}}
+\DoxyCodeLine{72     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nInact; i++) \{}
+\DoxyCodeLine{73       ECore += h1e\_ii[i] + 0.5 * GDjj\_ii[i];}
+\DoxyCodeLine{74     \}}
+\DoxyCodeLine{75     }
+\DoxyCodeLine{76     mem.free(h1e\_ii, GDjj\_ii);}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     this-\/>InactEnergy = std::real(ECore) * fc1C;}
+\DoxyCodeLine{79     }
+\DoxyCodeLine{80     \textcolor{comment}{/*}}
+\DoxyCodeLine{81 \textcolor{comment}{     * compute hCore and ERI in correlated space}}
+\DoxyCodeLine{82 \textcolor{comment}{     */} }
+\DoxyCodeLine{83     \mbox{\hyperlink{classChronusQ_1_1OnePInts}{OnePInts<MatsT>}} hCore\_tu(mem, nCorrO);}
+\DoxyCodeLine{84     \mbox{\hyperlink{classChronusQ_1_1OnePInts}{OnePInts<MatsT>}} hCoreP\_tu(mem, nCorrO);}
+\DoxyCodeLine{85     \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<MatsT>}} ERI\_tuvw(mem, nCorrO);}
+\DoxyCodeLine{86     }
+\DoxyCodeLine{87     mointsTF-\/>transformHCore(pert, hCore\_tu.\mbox{\hyperlink{classChronusQ_1_1OnePInts_aff740553fddd7ed72197c66aaf93585c}{pointer}}(), \textcolor{stringliteral}{"{}tu"{}}, \textcolor{keyword}{false}, \textcolor{charliteral}{'i'});}
+\DoxyCodeLine{88     mointsTF-\/>transformTPI(pert, ERI\_tuvw.\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a1296e06b6e13bb2ed91f27ac31292b7b}{pointer}}(), \textcolor{stringliteral}{"{}tuvw"{}}, this-\/>cacheHalfTransTPI\_);}
+\DoxyCodeLine{89     }
+\DoxyCodeLine{90     \textcolor{comment}{/*}}
+\DoxyCodeLine{91 \textcolor{comment}{     * compute hCoreP}}
+\DoxyCodeLine{92 \textcolor{comment}{     */}}
+\DoxyCodeLine{93     hCoreP\_tu.\mbox{\hyperlink{classChronusQ_1_1OnePInts_aec4d4e07f664ba6703d02bb6fe99c745}{clear}}();}
+\DoxyCodeLine{94     \textcolor{keywordflow}{if} (this-\/>MOPartition.scheme == \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855a0df50d487b9483d2a3f3cb45d81e2ae7}{RAS}}) \{ \textcolor{comment}{// form hCoreP for RAS case}}
+\DoxyCodeLine{95       std::cout<<\textcolor{stringliteral}{"{}RAS hcore prime forming starts:"{}}<<std::endl;}
+\DoxyCodeLine{96       std::vector<size\_t> nActO = this-\/>MOPartition.nActOs;}
+\DoxyCodeLine{97       std::vector<std::pair<size\_t, size\_t>> rasloop;}
+\DoxyCodeLine{98       rasloop.push\_back(std::make\_pair(0, nActO[0]));}
+\DoxyCodeLine{99       rasloop.push\_back(std::make\_pair(nActO[0], nActO[0]+nActO[1]));}
+\DoxyCodeLine{100       rasloop.push\_back(std::make\_pair(nActO[0]+nActO[1], nCorrO));}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0; i < nCorrO; i++)}
+\DoxyCodeLine{103       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j = 0; j < nCorrO; j++)}
+\DoxyCodeLine{104         hCoreP\_tu(i, j) = hCore\_tu(i, j);}
+\DoxyCodeLine{105       \textcolor{keywordtype}{double} symmFc;}
+\DoxyCodeLine{106       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} pblk = 0; pblk < 3; pblk++)}
+\DoxyCodeLine{107       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} sblk = 0; sblk < 3; sblk++)}
+\DoxyCodeLine{108       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} qrblk = 0; qrblk < 3; qrblk++) \{}
+\DoxyCodeLine{109         \textcolor{keywordflow}{if} ((pblk + 3*qrblk) < (qrblk + 3*sblk)) symmFc = 1.0;}
+\DoxyCodeLine{110         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((pblk + 3*qrblk) == (qrblk + 3*sblk)) symmFc = 0.5;}
+\DoxyCodeLine{111         \textcolor{keywordflow}{else} \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} p = rasloop[pblk].first; p < rasloop[pblk].second; p++)}
+\DoxyCodeLine{114         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} s = rasloop[sblk].first; s < rasloop[sblk].second; s++)}
+\DoxyCodeLine{115         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} qr = rasloop[qrblk].first; qr < rasloop[qrblk].second; qr++)}
+\DoxyCodeLine{116           \textcolor{keywordflow}{if} (pblk == qrblk or sblk == qrblk)}
+\DoxyCodeLine{117             hCoreP\_tu(p, s) -\/= symmFc * ERI\_tuvw(p, qr, qr, s);}
+\DoxyCodeLine{118           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (pblk < qrblk)}
+\DoxyCodeLine{119             hCoreP\_tu(p, s) = hCoreP\_tu(p, s) -\/ ERI\_tuvw(p, qr, qr, s) + ERI\_tuvw(qr, qr, p, s);}
+\DoxyCodeLine{120       \}}
+\DoxyCodeLine{121     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123 \textcolor{preprocessor}{\#pragma omp parallel for schedule(static) collapse(2) default(shared)       }}
+\DoxyCodeLine{124       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} u = 0ul; u < nCorrO; u++) }
+\DoxyCodeLine{125       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} t = 0ul; t < nCorrO; t++) \{}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127         MatsT tmp = 0.;}
+\DoxyCodeLine{128         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} v = 0ul; v < nCorrO; v++)}
+\DoxyCodeLine{129           tmp += 0.5 * ERI\_tuvw(t, v, v, u);}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131         hCoreP\_tu(t, u) = hCore\_tu(t, u) -\/ tmp;}
+\DoxyCodeLine{132       \}}
+\DoxyCodeLine{133     \}}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135     this-\/>moints.addIntegral(\textcolor{stringliteral}{"{}hCore\_Correlated\_Space"{}}, }
+\DoxyCodeLine{136       std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1OnePInts}{OnePInts<MatsT>}}>(hCore\_tu));}
+\DoxyCodeLine{137     this-\/>moints.addIntegral(\textcolor{stringliteral}{"{}hCoreP\_Correlated\_Space"{}}, }
+\DoxyCodeLine{138       std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1OnePInts}{OnePInts<MatsT>}}>(hCoreP\_tu));}
+\DoxyCodeLine{139     this-\/>moints.addIntegral(\textcolor{stringliteral}{"{}ERI\_Correlated\_Space"{}},  }
+\DoxyCodeLine{140       std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<MatsT>}}>(ERI\_tuvw));}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142   \}; \textcolor{comment}{// MCWaveFunction::transformInts}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

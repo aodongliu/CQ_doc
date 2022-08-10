@@ -1,0 +1,733 @@
+\hypertarget{CCSD_8hpp_source}{}\doxysection{CCSD.\+hpp}
+\label{CCSD_8hpp_source}\index{include/coupledcluster/CCSD.hpp@{include/coupledcluster/CCSD.hpp}}
+\mbox{\hyperlink{CCSD_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{particleintegrals_8hpp}{particleintegrals.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{wavefunction_8hpp}{wavefunction.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{twopints_8hpp}{particleintegrals/twopints.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incore4indextpi_8hpp}{particleintegrals/twopints/incore4indextpi.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incoreritpi_8hpp}{particleintegrals/twopints/incoreritpi.hpp}}>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{files_8hpp}{util/files.hpp}}>}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{math_8hpp}{util/math.hpp}}>}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{threads_8hpp}{util/threads.hpp}}>}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{integrals_8hpp}{integrals.hpp}}>}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cerr_8hpp}{cerr.hpp}}>}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{coupledcluster_8hpp}{coupledcluster.hpp}}>}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrix_8hpp}{matrix.hpp}}>}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg_8hpp}{cqlinalg.hpp}}>}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#include <typeinfo>} }
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{DiskDIIS_8hpp}{DiskDIIS.hpp}}"{}}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}\{}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50   \textcolor{comment}{// Safe always}}
+\DoxyCodeLine{51   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a9f44e17440d2e284cd379f5711e11c6f}{startTAThreads}}() \{}
+\DoxyCodeLine{52     madness::ThreadPool::begin(\mbox{\hyperlink{namespaceChronusQ_a3152808c4819d6cbf8a29aef92728866}{GetLAThreads}}() -\/ 1);}
+\DoxyCodeLine{53     \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(1);}
+\DoxyCodeLine{54   \};}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56   \textcolor{comment}{// Will throw if ThreadPool not initialized}}
+\DoxyCodeLine{57   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a7aa4856fd57601c6d2ad438378e9ec92}{endTAThreads}}() \{}
+\DoxyCodeLine{58     \mbox{\hyperlink{namespaceChronusQ_a7b13ac1d1109f4a015feaab04cb3eaee}{SetLAThreads}}(madness::ThreadPool::size() + 1);}
+\DoxyCodeLine{59     \textcolor{keywordflow}{if} ( madness::ThreadPool::size() != 0 )}
+\DoxyCodeLine{60       madness::ThreadPool::end();}
+\DoxyCodeLine{61   \};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{64   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::run() \{}
+\DoxyCodeLine{65     \textcolor{keywordflow}{if}(std::dynamic\_pointer\_cast<InCore4indexTPI<IntsT>>(this-\/>ref\_.aoints.TPI))\{}
+\DoxyCodeLine{66       runConventional();}
+\DoxyCodeLine{67     \}}
+\DoxyCodeLine{68     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{69       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Only GHF/X2C-\/CCSD is supported!"{}});}
+\DoxyCodeLine{70     \}}
+\DoxyCodeLine{71   \}}
+\DoxyCodeLine{72   }
+\DoxyCodeLine{73   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{74   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::initIntermediates() \{}
+\DoxyCodeLine{75       \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{76       \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV;  }
+\DoxyCodeLine{77     \textcolor{keywordflow}{if} (not this-\/>A\_1.is\_initialized())\{}
+\DoxyCodeLine{78     TArray tmp(TA::get\_default\_world(),TA::TiledRange\{orange,orange\});}
+\DoxyCodeLine{79     tmp.fill(0.0);}
+\DoxyCodeLine{80     this-\/>A\_1(\textcolor{stringliteral}{"{}p,q"{}}) = tmp(\textcolor{stringliteral}{"{}p,q"{}});}
+\DoxyCodeLine{81     \}}
+\DoxyCodeLine{82     \textcolor{keywordflow}{if} (not this-\/>A\_2.is\_initialized())\{}
+\DoxyCodeLine{83     TArray tmp(TA::get\_default\_world(),TA::TiledRange\{vrange,vrange\});}
+\DoxyCodeLine{84     tmp.fill(0.0);}
+\DoxyCodeLine{85     this-\/>A\_2(\textcolor{stringliteral}{"{}p,q"{}}) = tmp(\textcolor{stringliteral}{"{}p,q"{}});}
+\DoxyCodeLine{86     \}}
+\DoxyCodeLine{87     \textcolor{keywordflow}{if} (not this-\/>A\_3.is\_initialized())\{}
+\DoxyCodeLine{88     TArray tmp(TA::get\_default\_world(),TA::TiledRange\{orange,vrange\});}
+\DoxyCodeLine{89     tmp.fill(0.0);}
+\DoxyCodeLine{90     this-\/>A\_3(\textcolor{stringliteral}{"{}p,q"{}}) = tmp(\textcolor{stringliteral}{"{}p,q"{}});}
+\DoxyCodeLine{91     \}}
+\DoxyCodeLine{92     \textcolor{keywordflow}{if} (not this-\/>A\_4.is\_initialized())\{}
+\DoxyCodeLine{93     TArray tmp(TA::get\_default\_world(),TA::TiledRange\{orange,orange,vrange,orange\});}
+\DoxyCodeLine{94     tmp.fill(0.0);}
+\DoxyCodeLine{95     this-\/>A\_4(\textcolor{stringliteral}{"{}p,q,r,s"{}}) = tmp(\textcolor{stringliteral}{"{}p,q,r,s"{}});}
+\DoxyCodeLine{96     \}}
+\DoxyCodeLine{97   }
+\DoxyCodeLine{98     \textcolor{keywordflow}{if} (not this-\/>B\_1.is\_initialized())\{}
+\DoxyCodeLine{99     TArray tmp(TA::get\_default\_world(),TA::TiledRange\{orange,orange\});}
+\DoxyCodeLine{100     tmp.fill(0.0);}
+\DoxyCodeLine{101     this-\/>B\_1(\textcolor{stringliteral}{"{}p,q"{}}) = tmp(\textcolor{stringliteral}{"{}p,q"{}});}
+\DoxyCodeLine{102     \}}
+\DoxyCodeLine{103     \textcolor{keywordflow}{if} (not this-\/>B\_2.is\_initialized())\{}
+\DoxyCodeLine{104     TArray tmp(TA::get\_default\_world(),TA::TiledRange\{vrange,vrange\});}
+\DoxyCodeLine{105     tmp.fill(0.0);}
+\DoxyCodeLine{106     this-\/>B\_2(\textcolor{stringliteral}{"{}p,q"{}}) = tmp(\textcolor{stringliteral}{"{}p,q"{}});}
+\DoxyCodeLine{107     \}}
+\DoxyCodeLine{108     \textcolor{keywordflow}{if} (not this-\/>B\_3.is\_initialized())\{}
+\DoxyCodeLine{109     TArray tmp(TA::get\_default\_world(),TA::TiledRange\{orange,vrange,orange,orange\});}
+\DoxyCodeLine{110     tmp.fill(0.0);}
+\DoxyCodeLine{111     this-\/>B\_3(\textcolor{stringliteral}{"{}p,q,r,s"{}}) = tmp(\textcolor{stringliteral}{"{}p,q,r,s"{}});}
+\DoxyCodeLine{112     \}}
+\DoxyCodeLine{113     \textcolor{keywordflow}{if} (not this-\/>B\_5.is\_initialized())\{}
+\DoxyCodeLine{114     TArray tmp(TA::get\_default\_world(),TA::TiledRange\{orange,orange,orange,orange\});}
+\DoxyCodeLine{115     tmp.fill(0.0);}
+\DoxyCodeLine{116     this-\/>B\_5(\textcolor{stringliteral}{"{}p,q,r,s"{}}) = tmp(\textcolor{stringliteral}{"{}p,q,r,s"{}});}
+\DoxyCodeLine{117     \}}
+\DoxyCodeLine{118     \textcolor{keywordflow}{if} (not this-\/>B\_6.is\_initialized())\{}
+\DoxyCodeLine{119     TArray tmp(TA::get\_default\_world(),TA::TiledRange\{orange,vrange,vrange,orange\});}
+\DoxyCodeLine{120     tmp.fill(0.0);}
+\DoxyCodeLine{121     this-\/>B\_6(\textcolor{stringliteral}{"{}p,q,r,s"{}}) = tmp(\textcolor{stringliteral}{"{}p,q,r,s"{}});}
+\DoxyCodeLine{122     \}}
+\DoxyCodeLine{123   \}}
+\DoxyCodeLine{124   }
+\DoxyCodeLine{125   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{126   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::initAmplitudes() \{}
+\DoxyCodeLine{127       \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{128       \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV;  }
+\DoxyCodeLine{129       \textcolor{keywordflow}{if} (not this-\/>T1\_.is\_initialized())\{}
+\DoxyCodeLine{130         TArray tmp(TA::get\_default\_world(),TA::TiledRange\{vrange,orange\});}
+\DoxyCodeLine{131         tmp.fill(0.0);}
+\DoxyCodeLine{132         this-\/>T1\_(\textcolor{stringliteral}{"{}p,q"{}}) = tmp(\textcolor{stringliteral}{"{}p,q"{}});}
+\DoxyCodeLine{133       \}}
+\DoxyCodeLine{134       \textcolor{keywordflow}{if} (not this-\/>T2\_.is\_initialized())\{}
+\DoxyCodeLine{135         TArray tmp(TA::get\_default\_world(),TA::TiledRange\{vrange,vrange,orange,orange\});}
+\DoxyCodeLine{136         tmp.fill(0.0);}
+\DoxyCodeLine{137         this-\/>T2\_(\textcolor{stringliteral}{"{}p,q,r,s"{}}) = tmp(\textcolor{stringliteral}{"{}p,q,r,s"{}});}
+\DoxyCodeLine{138       \}    }
+\DoxyCodeLine{139   \}}
+\DoxyCodeLine{140   }
+\DoxyCodeLine{141   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{142   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::initFock() \{}
+\DoxyCodeLine{143       \textcolor{keywordtype}{size\_t} nO = this-\/>ref\_.nO;}
+\DoxyCodeLine{144       \textcolor{keywordtype}{size\_t} nV = this-\/>ref\_.nV;  }
+\DoxyCodeLine{145       std::vector<std::string> fockTypes\{\textcolor{stringliteral}{"{}oo"{}},\textcolor{stringliteral}{"{}vo"{}},\textcolor{stringliteral}{"{}vv"{}},\textcolor{stringliteral}{"{}ov"{}}\};}
+\DoxyCodeLine{146       \textcolor{keywordflow}{for}(\textcolor{keyword}{const} \textcolor{keyword}{auto}\& focktype:fockTypes)\{}
+\DoxyCodeLine{147   }
+\DoxyCodeLine{148         std::vector<int> trange;}
+\DoxyCodeLine{149         std::vector<int> offset;}
+\DoxyCodeLine{150   }
+\DoxyCodeLine{151         \textcolor{keywordflow}{for}(\textcolor{keyword}{const} \textcolor{keyword}{auto}\& ftype:focktype)\{}
+\DoxyCodeLine{152           \textcolor{keywordflow}{if}(ftype == \textcolor{charliteral}{'o'})\{}
+\DoxyCodeLine{153             trange.push\_back(nO);}
+\DoxyCodeLine{154             offset.push\_back(0);}
+\DoxyCodeLine{155           \}}
+\DoxyCodeLine{156           \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{157             trange.push\_back(nV);}
+\DoxyCodeLine{158             offset.push\_back(nO);}
+\DoxyCodeLine{159           \}}
+\DoxyCodeLine{160         \}}
+\DoxyCodeLine{161   }
+\DoxyCodeLine{162         TArray tmp(TA::get\_default\_world(),TA::TiledRange(\{\{0,trange[0]\},\{0,trange[1]\}\}));}
+\DoxyCodeLine{163   }
+\DoxyCodeLine{164         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} it = std::begin(tmp); it != std::end(tmp); ++it) \{}
+\DoxyCodeLine{165           \textcolor{comment}{// Construct a tile}}
+\DoxyCodeLine{166         \textcolor{keyword}{typename} TA::Array<MatsT,2>::value\_type tile(}
+\DoxyCodeLine{167         tmp.trange().make\_tile\_range(it.ordinal()));}
+\DoxyCodeLine{168         \textcolor{keyword}{const} \textcolor{keyword}{auto}\& lobound = tile.range().lobound();}
+\DoxyCodeLine{169         \textcolor{keyword}{const} \textcolor{keyword}{auto}\& upbound = tile.range().upbound();}
+\DoxyCodeLine{170         }
+\DoxyCodeLine{171         std::size\_t i[] = \{0,0\};  }
+\DoxyCodeLine{172         \textcolor{keywordflow}{for}(i[0] = lobound[0]; i[0] != upbound[0]; ++i[0])}
+\DoxyCodeLine{173           \textcolor{keywordflow}{for}(i[1] = lobound[1]; i[1] != upbound[1]; ++i[1])}
+\DoxyCodeLine{174             tile[i] = 0.0 ;}
+\DoxyCodeLine{175   \textcolor{comment}{//            tile[i] = ref\_.fockMO[0](i[0] + offset[0], i[1] + offset[1]);              }}
+\DoxyCodeLine{176         *it = tile;}
+\DoxyCodeLine{177         \}}
+\DoxyCodeLine{178   }
+\DoxyCodeLine{179         this-\/>fockMatrix\_ta.insert(std::make\_pair(focktype,tmp));}
+\DoxyCodeLine{180       \}}
+\DoxyCodeLine{181   \}}
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{184   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::transformInts()\{}
+\DoxyCodeLine{185     std::size\_t nMO;}
+\DoxyCodeLine{186     std::size\_t nO;}
+\DoxyCodeLine{187     std::size\_t nV;      }
+\DoxyCodeLine{188     \textcolor{keywordflow}{if} (this-\/>ref\_.nC == 2)\{      }
+\DoxyCodeLine{189       nMO = this-\/>ref\_.nOrbital();}
+\DoxyCodeLine{190       nO = this-\/>ref\_.nO;}
+\DoxyCodeLine{191       nV = this-\/>ref\_.nV;}
+\DoxyCodeLine{192     \}    }
+\DoxyCodeLine{193     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{194       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Only GHF/X2C-\/CCSD is supported!"{}});}
+\DoxyCodeLine{195     \}  }
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197     std::vector<std::string> fockTypes\{\textcolor{stringliteral}{"{}oo"{}},\textcolor{stringliteral}{"{}vo"{}},\textcolor{stringliteral}{"{}vv"{}},\textcolor{stringliteral}{"{}ov"{}}\};}
+\DoxyCodeLine{198     \textcolor{keywordflow}{for}(\textcolor{keyword}{const} \textcolor{keyword}{auto}\& focktype:fockTypes)\{}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200       std::vector<TA::TiledRange1> fockRangeTypes;}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202       \textcolor{keywordflow}{for}(\textcolor{keyword}{const} \textcolor{keyword}{auto}\& ftype:focktype)\{}
+\DoxyCodeLine{203         \textcolor{keywordflow}{if}(ftype == \textcolor{charliteral}{'o'})\{}
+\DoxyCodeLine{204           fockRangeTypes.push\_back(orange);}
+\DoxyCodeLine{205         \}}
+\DoxyCodeLine{206         \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{207           fockRangeTypes.push\_back(vrange);}
+\DoxyCodeLine{208         \}}
+\DoxyCodeLine{209       \}}
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211       TArray tmp(TA::get\_default\_world(),TA::TiledRange\{fockRangeTypes[0],fockRangeTypes[1]\});}
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} it = std::begin(tmp); it != std::end(tmp); ++it) \{}
+\DoxyCodeLine{214         \textcolor{comment}{// Construct a tile}}
+\DoxyCodeLine{215       \textcolor{keyword}{typename} TA::Array<MatsT,2>::value\_type tile(}
+\DoxyCodeLine{216       tmp.trange().make\_tile\_range(it.ordinal()));}
+\DoxyCodeLine{217       \textcolor{keyword}{const} \textcolor{keyword}{auto}\& lobound = tile.range().lobound();}
+\DoxyCodeLine{218       \textcolor{keyword}{const} \textcolor{keyword}{auto}\& upbound = tile.range().upbound();}
+\DoxyCodeLine{219       }
+\DoxyCodeLine{220       std::size\_t i[] = \{0,0\};  }
+\DoxyCodeLine{221       \textcolor{keywordflow}{for}(i[0] = lobound[0]; i[0] != upbound[0]; ++i[0])}
+\DoxyCodeLine{222         \textcolor{keywordflow}{for}(i[1] = lobound[1]; i[1] != upbound[1]; ++i[1])}
+\DoxyCodeLine{223           tile[i] = 0.0 ;}
+\DoxyCodeLine{224 \textcolor{comment}{//            tile[i] = ref\_.fockMO[0](i[0] + offset[0], i[1] + offset[1]);              }}
+\DoxyCodeLine{225       *it = tile;}
+\DoxyCodeLine{226       \}}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228       this-\/>fockMatrix\_ta.insert(std::make\_pair(focktype,tmp));}
+\DoxyCodeLine{229     \}}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231     \textcolor{comment}{// Start parallel without TA}}
+\DoxyCodeLine{232     \mbox{\hyperlink{namespaceChronusQ_a7aa4856fd57601c6d2ad438378e9ec92}{endTAThreads}}();}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234     \textcolor{keyword}{auto} aoeri = std::make\_shared<InCore4indexTPI<IntsT>>(}
+\DoxyCodeLine{235               std::dynamic\_pointer\_cast<InCore4indexTPI<IntsT>>(this-\/>ref\_.aoints.TPI)}
+\DoxyCodeLine{236                -\/>\textcolor{keyword}{template} spatialToSpinBlock<IntsT>());}
+\DoxyCodeLine{237     \textcolor{keyword}{auto} moeri = std::make\_shared<InCore4indexTPI<MatsT>>(}
+\DoxyCodeLine{238         aoeri-\/>transform(\textcolor{charliteral}{'N'}, this-\/>ref\_.mo[0].pointer(), nMO, nMO));}
+\DoxyCodeLine{239     Integrals<MatsT> moints;}
+\DoxyCodeLine{240     moints.TPI = moeri;    }
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242     \textcolor{comment}{// Go back to TA threads}}
+\DoxyCodeLine{243     \mbox{\hyperlink{namespaceChronusQ_a9f44e17440d2e284cd379f5711e11c6f}{startTAThreads}}();}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245     \textcolor{keywordflow}{if} (std::shared\_ptr<InCore4indexTPI<dcomplex>> eri = }
+\DoxyCodeLine{246       std::dynamic\_pointer\_cast<InCore4indexTPI<dcomplex>>(moints.TPI))\{}
+\DoxyCodeLine{247     std::vector<std::string> mointsTypes\{\textcolor{stringliteral}{"{}abij"{}},\textcolor{stringliteral}{"{}iabj"{}},\textcolor{stringliteral}{"{}aibj"{}},\textcolor{stringliteral}{"{}ijkl"{}},\textcolor{stringliteral}{"{}abcd"{}},\textcolor{stringliteral}{"{}abci"{}},\textcolor{stringliteral}{"{}aijk"{}}\};}
+\DoxyCodeLine{248     std::set<char> hole\{\textcolor{charliteral}{'i'},\textcolor{charliteral}{'j'},\textcolor{charliteral}{'k'},\textcolor{charliteral}{'l'}\};}
+\DoxyCodeLine{249     std::set<char> particle\{\textcolor{charliteral}{'a'},\textcolor{charliteral}{'b'},\textcolor{charliteral}{'c'},\textcolor{charliteral}{'d'}\};  }
+\DoxyCodeLine{250     \textcolor{keywordflow}{for}(\textcolor{keyword}{const} \textcolor{keyword}{auto}\& motype:mointsTypes)\{}
+\DoxyCodeLine{251 }
+\DoxyCodeLine{252       std::vector<TA::TiledRange1> MORangeTypes;}
+\DoxyCodeLine{253       std::vector<unsigned> offset;}
+\DoxyCodeLine{254       }
+\DoxyCodeLine{255       \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto}\& ch:motype)\{}
+\DoxyCodeLine{256        \textcolor{keywordflow}{if} (hole.count(ch))\{}
+\DoxyCodeLine{257            MORangeTypes.push\_back(orange);}
+\DoxyCodeLine{258            offset.push\_back(0);}
+\DoxyCodeLine{259        \}}
+\DoxyCodeLine{260        \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(particle.count(ch))\{}
+\DoxyCodeLine{261            MORangeTypes.push\_back(vrange);}
+\DoxyCodeLine{262            offset.push\_back(nO);}
+\DoxyCodeLine{263        \}}
+\DoxyCodeLine{264       \}}
+\DoxyCodeLine{265 }
+\DoxyCodeLine{266                }
+\DoxyCodeLine{267       TArray tmp(TA::get\_default\_world(),TA::TiledRange\{MORangeTypes[0],MORangeTypes[1],MORangeTypes[2],MORangeTypes[3]\});}
+\DoxyCodeLine{268 }
+\DoxyCodeLine{269       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} it = std::begin(tmp); it != std::end(tmp); ++it) \{}
+\DoxyCodeLine{270         \textcolor{comment}{// Construct a tile}}
+\DoxyCodeLine{271         \textcolor{keyword}{typename} TA::Array<MatsT,4>::value\_type tile(tmp.trange().make\_tile\_range(it.ordinal()));}
+\DoxyCodeLine{272       }
+\DoxyCodeLine{273         \textcolor{keyword}{const} \textcolor{keyword}{auto}\& lobound = tile.range().lobound();}
+\DoxyCodeLine{274         \textcolor{keyword}{const} \textcolor{keyword}{auto}\& upbound = tile.range().upbound();}
+\DoxyCodeLine{275       }
+\DoxyCodeLine{276         std::size\_t i[] = \{0,0,0,0\};  }
+\DoxyCodeLine{277         \textcolor{keywordflow}{for}(i[0] = lobound[0]; i[0] != upbound[0]; ++i[0])}
+\DoxyCodeLine{278           \textcolor{keywordflow}{for}(i[1] = lobound[1]; i[1] != upbound[1]; ++i[1])}
+\DoxyCodeLine{279             \textcolor{keywordflow}{for}(i[2] = lobound[2]; i[2] != upbound[2]; ++i[2])}
+\DoxyCodeLine{280               \textcolor{keywordflow}{for}(i[3] = lobound[3]; i[3] != upbound[3]; ++i[3])}
+\DoxyCodeLine{281                 tile[i] = (*eri)(i[0] + offset[0],i[2] + offset[2],i[1] + offset[1],i[3] + offset[3]) }
+\DoxyCodeLine{282                 -\/ (*eri)(i[0] + offset[0], i[3] + offset[3],i[1] + offset[1], i[2] + offset[2]);}
+\DoxyCodeLine{283       }
+\DoxyCodeLine{284         *it = tile;}
+\DoxyCodeLine{285       \}}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287       this-\/>antiSymMoints.insert(std::make\_pair(motype,tmp));}
+\DoxyCodeLine{288 }
+\DoxyCodeLine{289     \}}
+\DoxyCodeLine{290     \} \textcolor{keywordflow}{else} \{ \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Only GHF/X2C-\/CCSD is supported!"{}});\}}
+\DoxyCodeLine{291 }
+\DoxyCodeLine{292   \}  }
+\DoxyCodeLine{293 }
+\DoxyCodeLine{294   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{295   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::initRanges()\{}
+\DoxyCodeLine{296     \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{297     \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV; }
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299     \textcolor{keywordtype}{size\_t} NOblocks = NO \% blksize == 0 ? NO / blksize : NO / blksize + 1;}
+\DoxyCodeLine{300     \textcolor{keywordtype}{size\_t} NVblocks = NV \% blksize == 0 ? NV / blksize : NV / blksize + 1; }
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302     std::vector<std::size\_t> vblk, oblk; }
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0 ; i < NOblocks; i++)}
+\DoxyCodeLine{305       oblk.push\_back(blksize * i);}
+\DoxyCodeLine{306     oblk.push\_back(NO);    }
+\DoxyCodeLine{307     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0 ; i < NVblocks; i++)}
+\DoxyCodeLine{308       vblk.push\_back(blksize * i);}
+\DoxyCodeLine{309     vblk.push\_back(NV); }
+\DoxyCodeLine{310 }
+\DoxyCodeLine{311     TA::TiledRange1 orangetmp(oblk.begin(), oblk.end());}
+\DoxyCodeLine{312     TA::TiledRange1 vrangetmp(vblk.begin(), vblk.end());}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314     orange = orangetmp;}
+\DoxyCodeLine{315     vrange = vrangetmp;}
+\DoxyCodeLine{316   \}}
+\DoxyCodeLine{317   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{318   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::doDIIS(\textcolor{keywordtype}{size\_t} t1offset, \textcolor{keywordtype}{size\_t} NT1blks, \textcolor{keywordtype}{size\_t} NT2blks, TArray T1\_old, TArray T2\_old, std::shared\_ptr<DiskDIIS<MatsT>> diis )\{}
+\DoxyCodeLine{319       \textcolor{keywordtype}{size\_t} t2offset = 0;}
+\DoxyCodeLine{320       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < NT2blks; i++)\{}
+\DoxyCodeLine{321         diis-\/>setVector(this-\/>T2\_.find(i).get().data(),this-\/>T2\_.find(i).get().size(),t2offset);}
+\DoxyCodeLine{322         t2offset += this-\/>T2\_.find(i).get().size();}
+\DoxyCodeLine{323       \}      }
+\DoxyCodeLine{324       }
+\DoxyCodeLine{325       \textcolor{keywordtype}{size\_t} t1\_offset = t1offset;}
+\DoxyCodeLine{326       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < NT1blks; i++)\{}
+\DoxyCodeLine{327         diis-\/>setVector(this-\/>T1\_.find(i).get().data(),this-\/>T1\_.find(i).get().size(),t1\_offset);}
+\DoxyCodeLine{328         t1\_offset += this-\/>T1\_.find(i).get().size();}
+\DoxyCodeLine{329       \}}
+\DoxyCodeLine{330 }
+\DoxyCodeLine{331       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < NT2blks; i++)\{}
+\DoxyCodeLine{332         blas::axpy(this-\/>T2\_.find(i).get().size(),-\/1.0,this-\/>T2\_.find(i).get().data(),1,T2\_old.find(i).get().data(),1);}
+\DoxyCodeLine{333         blas::scal(this-\/>T2\_.find(i).get().size(),-\/1.0,T2\_old.find(i).get().data(),1); }
+\DoxyCodeLine{334       \}      }
+\DoxyCodeLine{335       }
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < NT1blks; i++)\{}
+\DoxyCodeLine{338         blas::axpy(this-\/>T1\_.find(i).get().size(),-\/1.0,this-\/>T1\_.find(i).get().data(),1,T1\_old.find(i).get().data(),1);}
+\DoxyCodeLine{339         blas::scal(this-\/>T1\_.find(i).get().size(),-\/1.0,T1\_old.find(i).get().data(),1);}
+\DoxyCodeLine{340       \}}
+\DoxyCodeLine{341 }
+\DoxyCodeLine{342       t2offset = 0;}
+\DoxyCodeLine{343       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < NT2blks; i++)\{}
+\DoxyCodeLine{344         diis-\/>setErrorVector(T2\_old.find(i).get().data(),T2\_old.find(i).get().size(),t2offset);}
+\DoxyCodeLine{345         t2offset += T2\_old.find(i).get().size();}
+\DoxyCodeLine{346       \}      }
+\DoxyCodeLine{347       }
+\DoxyCodeLine{348       t1\_offset = t1offset;}
+\DoxyCodeLine{349       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < NT1blks; i++)\{}
+\DoxyCodeLine{350         diis-\/>setErrorVector(T1\_old.find(i).get().data(),T1\_old.find(i).get().size(),t1\_offset);}
+\DoxyCodeLine{351         t1\_offset += T1\_old.find(i).get().size();}
+\DoxyCodeLine{352       \}}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354       diis-\/>extrapolate();}
+\DoxyCodeLine{355 }
+\DoxyCodeLine{356       t2offset = 0;}
+\DoxyCodeLine{357       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < NT2blks; i++)\{}
+\DoxyCodeLine{358         diis-\/>getVector(this-\/>T2\_.find(i).get().data(),this-\/>T2\_.find(i).get().size(),t2offset);}
+\DoxyCodeLine{359         t2offset += this-\/>T2\_.find(i).get().size();}
+\DoxyCodeLine{360       \}      }
+\DoxyCodeLine{361     }
+\DoxyCodeLine{362       t1\_offset = t1offset;}
+\DoxyCodeLine{363       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < NT1blks; i++)\{}
+\DoxyCodeLine{364         diis-\/>getVector(this-\/>T1\_.find(i).get().data(),this-\/>T1\_.find(i).get().size(),t1\_offset);}
+\DoxyCodeLine{365         t1\_offset += this-\/>T1\_.find(i).get().size();}
+\DoxyCodeLine{366       \}    }
+\DoxyCodeLine{367 }
+\DoxyCodeLine{368   \}}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{371   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::runConventional()\{}
+\DoxyCodeLine{372 }
+\DoxyCodeLine{373     \textcolor{comment}{// Has to be *before* TA::initialize}}
+\DoxyCodeLine{374     \mbox{\hyperlink{namespaceChronusQ_a9f44e17440d2e284cd379f5711e11c6f}{startTAThreads}}();}
+\DoxyCodeLine{375 }
+\DoxyCodeLine{376     \textcolor{keywordtype}{int} argc = 1;}
+\DoxyCodeLine{377     \textcolor{keywordtype}{char} **argv = NULL;}
+\DoxyCodeLine{378     TA::World \&world = \mbox{\hyperlink{namespaceChronusQ_a1c0a5b9f73b2fc4a574418d08745969d}{TA::initialize}}(argc,argv);}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380     \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{381     \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV; }
+\DoxyCodeLine{382     std::cout << \mbox{\hyperlink{namespaceChronusQ_aea3bdcfe8284fa0cf16ef6866b5a99a7}{BannerTop}} << \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{383     std::cout << \textcolor{stringliteral}{"{}Coupled Cluster (CC) Settings:\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{384 }
+\DoxyCodeLine{385     std::cout << std::setw(45) << std::left << \textcolor{stringliteral}{"{}  Type:"{}}}
+\DoxyCodeLine{386               << \textcolor{stringliteral}{"{}Singles and Doubles"{}} << \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{387 }
+\DoxyCodeLine{388     std::cout << std::setw(45) << std::left << \textcolor{stringliteral}{"{}  Occupied Orbitals:"{}}}
+\DoxyCodeLine{389               << this-\/>ref\_.nO << \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{390     std::cout << std::setw(45) << std::left << \textcolor{stringliteral}{"{}  Virtual Orbitals:"{}}}
+\DoxyCodeLine{391               << this-\/>ref\_.nV << \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{392 }
+\DoxyCodeLine{393     std::cout << std::setprecision(6) << std::scientific;}
+\DoxyCodeLine{394 }
+\DoxyCodeLine{395     std::cout << std::setw(45) << std::left << \textcolor{stringliteral}{"{}  Energy Convergence Tolerance:"{}}}
+\DoxyCodeLine{396               << this-\/>ccSettings.eConv << \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{397     std::cout << std::setw(45) << std::left << \textcolor{stringliteral}{"{}  Amplitude Convergence Tolerance:"{}}}
+\DoxyCodeLine{398               << this-\/>ccSettings.tConv << \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{399 }
+\DoxyCodeLine{400     std::cout << std::setw(45) << std::left << \textcolor{stringliteral}{"{}  Direct Inversion of Iterative Subspace:"{}};}
+\DoxyCodeLine{401 }
+\DoxyCodeLine{402     \textcolor{keywordflow}{if} ( this-\/>useDIIS ) \{}
+\DoxyCodeLine{403       std::cout << \textcolor{stringliteral}{"{}On\(\backslash\)n"{}};}
+\DoxyCodeLine{404       std::cout << std::left << \textcolor{stringliteral}{"{}    * DIIS will track up to "{}} << this-\/>nDIIS}
+\DoxyCodeLine{405                 << \textcolor{stringliteral}{"{} previous iterations\(\backslash\)n"{}};}
+\DoxyCodeLine{406     \}}
+\DoxyCodeLine{407     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{408       std::cout << \textcolor{stringliteral}{"{}Off\(\backslash\)n"{}};}
+\DoxyCodeLine{409 }
+\DoxyCodeLine{410     std::cout << std::endl;   }
+\DoxyCodeLine{411 }
+\DoxyCodeLine{412     \textcolor{comment}{//Calculate the estimated usage of memory}}
+\DoxyCodeLine{413     \textcolor{comment}{// amplitudes: OV + O\string^2V\string^2,OV + 2O\string^2V\string^2 if diis is used}}
+\DoxyCodeLine{414     \textcolor{comment}{// A intermediates: O\string^2 + V\string^2 + OV + O\string^3V}}
+\DoxyCodeLine{415     \textcolor{comment}{// B intermediates: O\string^2 + V\string^2 + O\string^3V + O\string^4 + O\string^2V\string^2}}
+\DoxyCodeLine{416     \textcolor{keywordtype}{double} mem = 3*NO*NV + 2*NO*NO + 2*NV*NV + 2*NO*NO*NV*NV + 2*NO*NO*NO*NV + NO*NO*NO*NO;}
+\DoxyCodeLine{417     \textcolor{keywordflow}{if} (this-\/>useDIIS)\{}
+\DoxyCodeLine{418       mem += NO*NO*NV*NV;}
+\DoxyCodeLine{419     \}}
+\DoxyCodeLine{420     mem = mem * \textcolor{keyword}{sizeof}(MatsT)/1e9;}
+\DoxyCodeLine{421     std::cout << \textcolor{stringliteral}{"{}  "{}} << std::fixed << mem << \textcolor{stringliteral}{"{} GB"{}}}
+\DoxyCodeLine{422               << \textcolor{stringliteral}{"{} will be used by the CC calculation"{}} << std::endl;}
+\DoxyCodeLine{423 }
+\DoxyCodeLine{424     std::cout << \mbox{\hyperlink{namespaceChronusQ_acd74097d6389b14818f836849afba8ff}{BannerMid}} << \textcolor{charliteral}{'\(\backslash\)n'} << std::endl;}
+\DoxyCodeLine{425 }
+\DoxyCodeLine{426 }
+\DoxyCodeLine{427     \textcolor{keywordtype}{int} diis\_dim = NO*NO*NV*NV + NO*NV;;}
+\DoxyCodeLine{428     std::shared\_ptr<DiskDIIS<MatsT> > diis (\textcolor{keyword}{new} DiskDIIS<MatsT> (diis\_dim, this-\/>nDIIS, this-\/>ref\_.savFile, this-\/>ref\_.memManager));}
+\DoxyCodeLine{429     }
+\DoxyCodeLine{430     \textcolor{keywordtype}{size\_t} NOblocks = NO \% blksize == 0 ? NO / blksize : NO / blksize + 1;}
+\DoxyCodeLine{431     \textcolor{keywordtype}{size\_t} NVblocks = NV \% blksize == 0 ? NV / blksize : NV / blksize + 1; }
+\DoxyCodeLine{432 }
+\DoxyCodeLine{433     \textcolor{keywordtype}{size\_t} NT1blks = NOblocks * NVblocks;}
+\DoxyCodeLine{434     \textcolor{keywordtype}{size\_t} NT2blks = NT1blks * NT1blks;}
+\DoxyCodeLine{435     \textcolor{keywordtype}{size\_t} t1offset = NO * NO * NV * NV;}
+\DoxyCodeLine{436 }
+\DoxyCodeLine{437     initRanges();}
+\DoxyCodeLine{438     transformInts();}
+\DoxyCodeLine{439     initIntermediates();}
+\DoxyCodeLine{440     initAmplitudes();}
+\DoxyCodeLine{441 }
+\DoxyCodeLine{442     TArray T1\_old(TA::get\_default\_world(),TA::TiledRange\{vrange,orange\});}
+\DoxyCodeLine{443     TArray T2\_old(TA::get\_default\_world(),TA::TiledRange\{vrange,vrange,orange,orange\});}
+\DoxyCodeLine{444     TArray T2\_old\_copy(TA::get\_default\_world(),TA::TiledRange\{vrange,vrange,orange,orange\});}
+\DoxyCodeLine{445     \textcolor{keywordtype}{double} tnorm = 0.0;}
+\DoxyCodeLine{446     \textcolor{keywordtype}{double} tnorm\_old = 0.0;}
+\DoxyCodeLine{447 }
+\DoxyCodeLine{448     std::cout << std::setw(18) << std::left <<  \textcolor{stringliteral}{"{}  CC Iterations"{}};}
+\DoxyCodeLine{449     std::cout << std::setw(22) << std::right << \textcolor{stringliteral}{"{}Corr. Energy (Eh)"{}};}
+\DoxyCodeLine{450     std::cout << std::setw(19) << std::right << \textcolor{stringliteral}{"{}\(\backslash\)u0394Ec (Eh)"{}};}
+\DoxyCodeLine{451     std::cout << std::setw(19) << std::right << \textcolor{stringliteral}{"{}|\(\backslash\)u0394T|"{}};}
+\DoxyCodeLine{452     std::cout << \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{453     std::cout << std::setw(18) << std::left <<  \textcolor{stringliteral}{"{}  -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{454     std::cout << std::setw(22) << std::right << \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{455     std::cout << std::setw(18) << std::right << \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{456     std::cout << std::setw(18) << std::right << \textcolor{stringliteral}{"{}-\/-\/-\/-\/"{}};}
+\DoxyCodeLine{457     std::cout << \textcolor{charliteral}{'\(\backslash\)n'} << std::endl;}
+\DoxyCodeLine{458 }
+\DoxyCodeLine{459 }
+\DoxyCodeLine{460 }
+\DoxyCodeLine{461     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} iter = 0; iter < this-\/>ccSettings.maxiter; iter++)\{}
+\DoxyCodeLine{462 }
+\DoxyCodeLine{463       T1\_old(\textcolor{stringliteral}{"{}p,q"{}}) = this-\/>T1\_(\textcolor{stringliteral}{"{}p,q"{}});}
+\DoxyCodeLine{464       \textcolor{keywordflow}{if}(this-\/>useDIIS)\{}
+\DoxyCodeLine{465         T2\_old(\textcolor{stringliteral}{"{}p,q,r,s"{}}) = this-\/>T2\_(\textcolor{stringliteral}{"{}p,q,r,s"{}});}
+\DoxyCodeLine{466       \}}
+\DoxyCodeLine{467       T2\_old\_copy(\textcolor{stringliteral}{"{}p,q,r,s"{}}) = this-\/>T2\_(\textcolor{stringliteral}{"{}p,q,r,s"{}});}
+\DoxyCodeLine{468 }
+\DoxyCodeLine{469       formA\_1();}
+\DoxyCodeLine{470       formA\_2();}
+\DoxyCodeLine{471       formA\_3();}
+\DoxyCodeLine{472       formA\_4();}
+\DoxyCodeLine{473 }
+\DoxyCodeLine{474       formB\_1();    }
+\DoxyCodeLine{475       formB\_2();}
+\DoxyCodeLine{476       formB\_3();}
+\DoxyCodeLine{477       formB\_5();}
+\DoxyCodeLine{478       formB\_6();     }
+\DoxyCodeLine{479             }
+\DoxyCodeLine{480       updateT1(T1\_old,T2\_old\_copy);}
+\DoxyCodeLine{481       \textcolor{comment}{//T2\_old\_copy will be modified in updateT2()!}}
+\DoxyCodeLine{482       updateT2(T1\_old,T2\_old\_copy);}
+\DoxyCodeLine{483       }
+\DoxyCodeLine{484       \textcolor{keywordflow}{if} (this-\/>useDIIS)\{}
+\DoxyCodeLine{485       \textcolor{comment}{// diis}}
+\DoxyCodeLine{486         doDIIS(t1offset, NT1blks, NT2blks, T1\_old, T2\_old, diis);}
+\DoxyCodeLine{487       \}}
+\DoxyCodeLine{488 }
+\DoxyCodeLine{489       \textcolor{keywordtype}{double} Eold = this-\/>CorrE;}
+\DoxyCodeLine{490 }
+\DoxyCodeLine{491       getCorrEnergy();     }
+\DoxyCodeLine{492       tnorm = sqrt(TA::norm2(this-\/>T1\_) + TA::norm2(this-\/>T2\_));}
+\DoxyCodeLine{493       \textcolor{keywordtype}{double} dE = this-\/>CorrE -\/ Eold;}
+\DoxyCodeLine{494       \textcolor{keywordtype}{double} dT = tnorm -\/ tnorm\_old;}
+\DoxyCodeLine{495 }
+\DoxyCodeLine{496       std::cout << std::setprecision(12) << std::fixed;}
+\DoxyCodeLine{497       std::cout << \textcolor{stringliteral}{"{}  Iteration "{}}  << std::setw(6) << std::left << iter;}
+\DoxyCodeLine{498       std::cout << std::setw(22) << std::right << std::fixed << this-\/>CorrE;}
+\DoxyCodeLine{499       std::cout << std::setw(18) << std::right << std::fixed << dE;}
+\DoxyCodeLine{500       std::cout << std::setw(18) << std::right << std::fixed << std::abs(dT);}
+\DoxyCodeLine{501       std::cout << std::endl;}
+\DoxyCodeLine{502 }
+\DoxyCodeLine{503       \textcolor{keywordflow}{if} (std::abs(dE) < this-\/>ccSettings.eConv and std::abs(dT) < this-\/>ccSettings.tConv) \{ }
+\DoxyCodeLine{504 }
+\DoxyCodeLine{505         std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n  CC Completed: CorrE is "{}} << std::setprecision(12) << this-\/>CorrE << \textcolor{stringliteral}{"{}Eh"{}} << std::endl;}
+\DoxyCodeLine{506         }
+\DoxyCodeLine{507         \textcolor{keywordflow}{if} (this-\/>ref\_.savFile.exists()) \{}
+\DoxyCodeLine{508         this-\/>ref\_.savFile.safeWriteData(\textcolor{stringliteral}{"{}/CC/CORRELATION\_ENERGY"{}},\&this-\/>CorrE, \{1\});}
+\DoxyCodeLine{509         this-\/>ref\_.savFile.safeWriteData(\textcolor{stringliteral}{"{}/CC/T\_NORM"{}},\&tnorm, \{1\});}
+\DoxyCodeLine{510         \}}
+\DoxyCodeLine{511         }
+\DoxyCodeLine{512         std::cout << \mbox{\hyperlink{namespaceChronusQ_acd74097d6389b14818f836849afba8ff}{BannerMid}} << std::endl;}
+\DoxyCodeLine{513         }
+\DoxyCodeLine{514         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{515         \}}
+\DoxyCodeLine{516       \textcolor{keywordflow}{else} \{ }
+\DoxyCodeLine{517         Eold = this-\/>CorrE;}
+\DoxyCodeLine{518         tnorm\_old = tnorm;}
+\DoxyCodeLine{519         \}}
+\DoxyCodeLine{520 }
+\DoxyCodeLine{521       \textcolor{keywordflow}{if}(iter == ccSettings.maxiter-\/1)\{}
+\DoxyCodeLine{522         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(std::string(\textcolor{stringliteral}{"{}CC iterations didn't converge in "{}}) + std::to\_string(ccSettings.maxiter) + \textcolor{stringliteral}{"{} steps."{}} );}
+\DoxyCodeLine{523       \}}
+\DoxyCodeLine{524     \}}
+\DoxyCodeLine{525 }
+\DoxyCodeLine{526     \mbox{\hyperlink{namespaceChronusQ_a7aa4856fd57601c6d2ad438378e9ec92}{endTAThreads}}();}
+\DoxyCodeLine{527     \mbox{\hyperlink{namespaceChronusQ_a43529f0dc38774a95d73532e0400739c}{TA::finalize}}();}
+\DoxyCodeLine{528 }
+\DoxyCodeLine{529   \}}
+\DoxyCodeLine{530   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{531   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::getCorrEnergy() \{}
+\DoxyCodeLine{532     \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{533     \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV;}
+\DoxyCodeLine{534     MatsT CorrEnergy = \mbox{\hyperlink{namespaceChronusQ_a208436762fbd254ff0fa550f917b96fe}{dot}}(conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}c,d,k,l"{}})),this-\/>T2\_(\textcolor{stringliteral}{"{}c,d,k,l"{}}));}
+\DoxyCodeLine{535     MatsT CorrE1 = conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}c,d,k,l"{}})).dot(this-\/>T1\_(\textcolor{stringliteral}{"{}c,k"{}}) * this-\/>T1\_(\textcolor{stringliteral}{"{}d,l"{}}));}
+\DoxyCodeLine{536     CorrE1 = CorrE1 * 2.0;}
+\DoxyCodeLine{537     this-\/>CorrE = 0.25 * std::real(CorrEnergy + CorrE1);}
+\DoxyCodeLine{538   \}}
+\DoxyCodeLine{539   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{540   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::updateT1(\textcolor{keyword}{const} TArray T1\_old, \textcolor{keyword}{const} TArray T2\_old) \{}
+\DoxyCodeLine{541     \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{542     \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV;}
+\DoxyCodeLine{543   }
+\DoxyCodeLine{544     this-\/>T1\_(\textcolor{stringliteral}{"{}a,i"{}}) =   fockMatrix\_ta[\textcolor{stringliteral}{"{}vo"{}}](\textcolor{stringliteral}{"{}a,i"{}});}
+\DoxyCodeLine{545     this-\/>T1\_(\textcolor{stringliteral}{"{}a,i"{}}) +=    this-\/>antiSymMoints[\textcolor{stringliteral}{"{}iabj"{}}](\textcolor{stringliteral}{"{}k,a,c,i"{}}) * T1\_old(\textcolor{stringliteral}{"{}c,k"{}});  }
+\DoxyCodeLine{546     this-\/>T1\_(\textcolor{stringliteral}{"{}a,i"{}}) +=  0.5  *   conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abci"{}}](\textcolor{stringliteral}{"{}d,c,a,k"{}})) * T2\_old(\textcolor{stringliteral}{"{}c,d,k,i"{}});  }
+\DoxyCodeLine{547     this-\/>T1\_(\textcolor{stringliteral}{"{}a,i"{}}) += A\_1(\textcolor{stringliteral}{"{}k,i"{}}) * T1\_old(\textcolor{stringliteral}{"{}a,k"{}});   }
+\DoxyCodeLine{548     this-\/>T1\_(\textcolor{stringliteral}{"{}a,i"{}}) += A\_2(\textcolor{stringliteral}{"{}a,c"{}}) * T1\_old(\textcolor{stringliteral}{"{}c,i"{}});}
+\DoxyCodeLine{549     this-\/>T1\_(\textcolor{stringliteral}{"{}a,i"{}}) += A\_3(\textcolor{stringliteral}{"{}k,c"{}}) * T2\_old(\textcolor{stringliteral}{"{}c,a,k,i"{}});}
+\DoxyCodeLine{550     this-\/>T1\_(\textcolor{stringliteral}{"{}a,i"{}}) += A\_4(\textcolor{stringliteral}{"{}k,l,c,i"{}}) * T2\_old(\textcolor{stringliteral}{"{}c,a,k,l"{}});}
+\DoxyCodeLine{551   }
+\DoxyCodeLine{552     TArray oneoverD\_ai(TA::get\_default\_world(),TA::TiledRange\{vrange,orange\});}
+\DoxyCodeLine{553     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} it = std::begin(oneoverD\_ai); it != std::end(oneoverD\_ai); ++it) \{}
+\DoxyCodeLine{554       \textcolor{comment}{// Construct a tile}}
+\DoxyCodeLine{555     \textcolor{keyword}{typename} TA::Array<MatsT,2>::value\_type tile(}
+\DoxyCodeLine{556     oneoverD\_ai.trange().make\_tile\_range(it.ordinal()));}
+\DoxyCodeLine{557     \textcolor{keyword}{const} \textcolor{keyword}{auto}\& lobound = tile.range().lobound();}
+\DoxyCodeLine{558     \textcolor{keyword}{const} \textcolor{keyword}{auto}\& upbound = tile.range().upbound();}
+\DoxyCodeLine{559     std::size\_t i[] = \{0,0\};  }
+\DoxyCodeLine{560     \textcolor{keywordflow}{for}(i[0] = lobound[0]; i[0] != upbound[0]; ++i[0])}
+\DoxyCodeLine{561       \textcolor{keywordflow}{for}(i[1] = lobound[1]; i[1] != upbound[1]; ++i[1])}
+\DoxyCodeLine{562         tile[i] = 1.0 / (this-\/>ref\_.eps1[i[1]] -\/ this-\/>ref\_.eps1[i[0]+NO]);}
+\DoxyCodeLine{563     *it = tile;}
+\DoxyCodeLine{564     \}}
+\DoxyCodeLine{565   }
+\DoxyCodeLine{566     this-\/>T1\_(\textcolor{stringliteral}{"{}a,i"{}}) = this-\/>T1\_(\textcolor{stringliteral}{"{}a,i"{}}) * oneoverD\_ai(\textcolor{stringliteral}{"{}a,i"{}});}
+\DoxyCodeLine{567   }
+\DoxyCodeLine{568   \}}
+\DoxyCodeLine{569   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{570   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::formA\_1() \{}
+\DoxyCodeLine{571     \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{572     \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV;}
+\DoxyCodeLine{573   }
+\DoxyCodeLine{574     A\_1(\textcolor{stringliteral}{"{}k,i"{}}) =   conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}aijk"{}}](\textcolor{stringliteral}{"{}c,i,k,l"{}})) * this-\/>T1\_(\textcolor{stringliteral}{"{}c,l"{}}); }
+\DoxyCodeLine{575     A\_1(\textcolor{stringliteral}{"{}k,i"{}}) +=  -\/ 0.5  *   conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}c,d,l,k"{}})) * this-\/>T2\_(\textcolor{stringliteral}{"{}c,d,l,i"{}}); }
+\DoxyCodeLine{576     A\_1(\textcolor{stringliteral}{"{}k,i"{}}) += -\/fockMatrix\_ta[\textcolor{stringliteral}{"{}oo"{}}](\textcolor{stringliteral}{"{}i,k"{}});}
+\DoxyCodeLine{577     TA::TArray<MatsT> A\_11(TA::get\_default\_world(),TA::TiledRange\{orange,vrange\});}
+\DoxyCodeLine{578     A\_11.fill(0.0);}
+\DoxyCodeLine{579     A\_11(\textcolor{stringliteral}{"{}k,c"{}}) = -\/ conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}c,d,k,l"{}})) * this-\/>T1\_(\textcolor{stringliteral}{"{}d,l"{}});}
+\DoxyCodeLine{580     A\_11(\textcolor{stringliteral}{"{}k,c"{}}) += -\/fockMatrix\_ta[\textcolor{stringliteral}{"{}ov"{}}](\textcolor{stringliteral}{"{}k,c"{}});}
+\DoxyCodeLine{581     A\_1(\textcolor{stringliteral}{"{}k,i"{}}) += A\_11(\textcolor{stringliteral}{"{}k,c"{}}) * this-\/>T1\_(\textcolor{stringliteral}{"{}c,i"{}}); }
+\DoxyCodeLine{582   \}}
+\DoxyCodeLine{583   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{584   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::formA\_2() \{}
+\DoxyCodeLine{585     \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{586     \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV;}
+\DoxyCodeLine{587     A\_2(\textcolor{stringliteral}{"{}a,c"{}}) = -\/ conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abci"{}}](\textcolor{stringliteral}{"{}d,c,a,k"{}})) * this-\/>T1\_(\textcolor{stringliteral}{"{}d,k"{}});}
+\DoxyCodeLine{588     A\_2(\textcolor{stringliteral}{"{}a,c"{}}) +=   fockMatrix\_ta[\textcolor{stringliteral}{"{}vv"{}}](\textcolor{stringliteral}{"{}a,c"{}});}
+\DoxyCodeLine{589   \}}
+\DoxyCodeLine{590   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{591   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::formA\_3() \{}
+\DoxyCodeLine{592     \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{593     \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV;}
+\DoxyCodeLine{594     A\_3(\textcolor{stringliteral}{"{}k,c"{}}) =    conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}c,d,k,l"{}})) * this-\/>T1\_(\textcolor{stringliteral}{"{}d,l"{}});}
+\DoxyCodeLine{595     A\_3(\textcolor{stringliteral}{"{}k,c"{}}) +=   fockMatrix\_ta[\textcolor{stringliteral}{"{}ov"{}}](\textcolor{stringliteral}{"{}k,c"{}});}
+\DoxyCodeLine{596   \}}
+\DoxyCodeLine{597   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{598   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::formA\_4() \{}
+\DoxyCodeLine{599     \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{600     \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV;}
+\DoxyCodeLine{601     A\_4(\textcolor{stringliteral}{"{}k,l,c,i"{}}) = -\/ 0.5  *   conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}c,d,k,l"{}})) * this-\/>T1\_(\textcolor{stringliteral}{"{}d,i"{}});}
+\DoxyCodeLine{602     A\_4(\textcolor{stringliteral}{"{}k,l,c,i"{}}) += -\/ 0.5  *   conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}aijk"{}}](\textcolor{stringliteral}{"{}c,i,k,l"{}}));}
+\DoxyCodeLine{603   \}}
+\DoxyCodeLine{604   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{605   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::updateT2(\textcolor{keyword}{const} TArray T1\_old, TArray T2\_old) \{}
+\DoxyCodeLine{606     \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{607     \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV; }
+\DoxyCodeLine{608     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) =    this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}a,b,i,j"{}});}
+\DoxyCodeLine{609     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) +=   B\_1(\textcolor{stringliteral}{"{}k,i"{}}) * T2\_old(\textcolor{stringliteral}{"{}a,b,k,j"{}});}
+\DoxyCodeLine{610     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) += -\/B\_1(\textcolor{stringliteral}{"{}k,j"{}}) * T2\_old(\textcolor{stringliteral}{"{}a,b,k,i"{}});}
+\DoxyCodeLine{611     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) +=   B\_2(\textcolor{stringliteral}{"{}b,c"{}}) * T2\_old(\textcolor{stringliteral}{"{}c,a,i,j"{}});}
+\DoxyCodeLine{612     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) += -\/B\_2(\textcolor{stringliteral}{"{}a,c"{}}) * T2\_old(\textcolor{stringliteral}{"{}c,b,i,j"{}});}
+\DoxyCodeLine{613     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) +=   B\_3(\textcolor{stringliteral}{"{}k,a,i,j"{}}) * T1\_old(\textcolor{stringliteral}{"{}b,k"{}});}
+\DoxyCodeLine{614     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) += -\/B\_3(\textcolor{stringliteral}{"{}k,b,i,j"{}}) * T1\_old(\textcolor{stringliteral}{"{}a,k"{}});}
+\DoxyCodeLine{615     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) += B\_5(\textcolor{stringliteral}{"{}k,l,i,j"{}}) * T2\_old(\textcolor{stringliteral}{"{}a,b,k,l"{}});}
+\DoxyCodeLine{616     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) +=   B\_6(\textcolor{stringliteral}{"{}k,a,c,j"{}}) * T2\_old(\textcolor{stringliteral}{"{}c,b,k,i"{}});}
+\DoxyCodeLine{617     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) += -\/B\_6(\textcolor{stringliteral}{"{}k,b,c,j"{}}) * T2\_old(\textcolor{stringliteral}{"{}c,a,k,i"{}});}
+\DoxyCodeLine{618     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) +=   B\_6(\textcolor{stringliteral}{"{}k,b,c,i"{}}) * T2\_old(\textcolor{stringliteral}{"{}c,a,k,j"{}});}
+\DoxyCodeLine{619     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) += -\/B\_6(\textcolor{stringliteral}{"{}k,a,c,i"{}}) * T2\_old(\textcolor{stringliteral}{"{}c,b,k,j"{}});}
+\DoxyCodeLine{620     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) +=  this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abci"{}}](\textcolor{stringliteral}{"{}a,b,c,j"{}}) * T1\_old(\textcolor{stringliteral}{"{}c,i"{}});}
+\DoxyCodeLine{621     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) += -\/this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abci"{}}](\textcolor{stringliteral}{"{}a,b,c,i"{}}) * T1\_old(\textcolor{stringliteral}{"{}c,j"{}});}
+\DoxyCodeLine{622     \textcolor{comment}{//reuse the T2\_old container}}
+\DoxyCodeLine{623     T2\_old(\textcolor{stringliteral}{"{}c,d,i,j"{}}) += T1\_old(\textcolor{stringliteral}{"{}c,i"{}}) * T1\_old(\textcolor{stringliteral}{"{}d,j"{}});}
+\DoxyCodeLine{624     T2\_old(\textcolor{stringliteral}{"{}c,d,i,j"{}}) += -\/ T1\_old(\textcolor{stringliteral}{"{}c,j"{}}) * T1\_old(\textcolor{stringliteral}{"{}d,i"{}});}
+\DoxyCodeLine{625     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) += 0.5 * this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abcd"{}}](\textcolor{stringliteral}{"{}a,b,c,d"{}}) * T2\_old(\textcolor{stringliteral}{"{}c,d,i,j"{}});}
+\DoxyCodeLine{626   }
+\DoxyCodeLine{627     TArray oneoverD\_abij(TA::get\_default\_world(),TA::TiledRange\{vrange,vrange,orange,orange\});}
+\DoxyCodeLine{628     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} it = std::begin(oneoverD\_abij); it != std::end(oneoverD\_abij); ++it) \{}
+\DoxyCodeLine{629       \textcolor{comment}{// Construct a tile}}
+\DoxyCodeLine{630     \textcolor{keyword}{typename} TA::Array<MatsT,4>::value\_type tile(}
+\DoxyCodeLine{631     oneoverD\_abij.trange().make\_tile\_range(it.ordinal()));}
+\DoxyCodeLine{632     \textcolor{keyword}{const} \textcolor{keyword}{auto}\& lobound = tile.range().lobound();}
+\DoxyCodeLine{633     \textcolor{keyword}{const} \textcolor{keyword}{auto}\& upbound = tile.range().upbound();}
+\DoxyCodeLine{634     std::size\_t i[] = \{0,0,0,0\};  }
+\DoxyCodeLine{635     \textcolor{keywordflow}{for}(i[0] = lobound[0]; i[0] != upbound[0]; ++i[0])}
+\DoxyCodeLine{636       \textcolor{keywordflow}{for}(i[1] = lobound[1]; i[1] != upbound[1]; ++i[1])}
+\DoxyCodeLine{637         \textcolor{keywordflow}{for}(i[2] = lobound[2]; i[2] != upbound[2]; ++i[2])}
+\DoxyCodeLine{638           \textcolor{keywordflow}{for}(i[3] = lobound[3]; i[3] != upbound[3]; ++i[3])}
+\DoxyCodeLine{639             tile[i] = 1.0/( this-\/>ref\_.eps1[i[2]] + this-\/>ref\_.eps1[i[3]] -\/ this-\/>ref\_.eps1[i[0]+NO] -\/ this-\/>ref\_.eps1[i[1]+NO]);}
+\DoxyCodeLine{640     *it = tile;}
+\DoxyCodeLine{641     \}  }
+\DoxyCodeLine{642   }
+\DoxyCodeLine{643     this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) = this-\/>T2\_(\textcolor{stringliteral}{"{}a,b,i,j"{}}) * oneoverD\_abij(\textcolor{stringliteral}{"{}a,b,i,j"{}});}
+\DoxyCodeLine{644   }
+\DoxyCodeLine{645   \}}
+\DoxyCodeLine{646   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{647   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::formB\_1() \{}
+\DoxyCodeLine{648     \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{649     \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV;}
+\DoxyCodeLine{650     B\_1(\textcolor{stringliteral}{"{}k,i"{}}) =    conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}aijk"{}}](\textcolor{stringliteral}{"{}c,i,k,l"{}})) * this-\/>T1\_(\textcolor{stringliteral}{"{}c,l"{}});}
+\DoxyCodeLine{651     B\_1(\textcolor{stringliteral}{"{}k,i"{}}) +=  0.5  *   conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}d,c,k,l"{}})) * this-\/>T2\_(\textcolor{stringliteral}{"{}d,c,l,i"{}});}
+\DoxyCodeLine{652     B\_1(\textcolor{stringliteral}{"{}k,i"{}}) += -\/fockMatrix\_ta[\textcolor{stringliteral}{"{}oo"{}}](\textcolor{stringliteral}{"{}k,i"{}});}
+\DoxyCodeLine{653     TA::TArray<MatsT> B\_11(TA::get\_default\_world(),TA::TiledRange\{orange,vrange\});}
+\DoxyCodeLine{654     B\_11.fill(0.0);}
+\DoxyCodeLine{655     B\_11(\textcolor{stringliteral}{"{}k,c"{}}) = conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}d,c,k,l"{}})) * this-\/>T1\_(\textcolor{stringliteral}{"{}d,l"{}}); }
+\DoxyCodeLine{656     B\_11(\textcolor{stringliteral}{"{}k,c"{}}) += -\/fockMatrix\_ta[\textcolor{stringliteral}{"{}ov"{}}](\textcolor{stringliteral}{"{}k,c"{}});}
+\DoxyCodeLine{657     B\_1(\textcolor{stringliteral}{"{}k,i"{}}) += B\_11(\textcolor{stringliteral}{"{}k,c"{}}) * this-\/>T1\_(\textcolor{stringliteral}{"{}c,i"{}});}
+\DoxyCodeLine{658   \}}
+\DoxyCodeLine{659   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{660   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::formB\_2() \{}
+\DoxyCodeLine{661     \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{662     \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV;}
+\DoxyCodeLine{663     B\_2(\textcolor{stringliteral}{"{}b,c"{}}) =    conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abci"{}}](\textcolor{stringliteral}{"{}d,c,b,k"{}})) * this-\/>T1\_(\textcolor{stringliteral}{"{}d,k"{}});}
+\DoxyCodeLine{664     B\_2(\textcolor{stringliteral}{"{}b,c"{}}) +=  -\/ 0.5  *   conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}c,d,l,k"{}})) * this-\/>T2\_(\textcolor{stringliteral}{"{}d,b,l,k"{}}); }
+\DoxyCodeLine{665     B\_2(\textcolor{stringliteral}{"{}b,c"{}}) += -\/fockMatrix\_ta[\textcolor{stringliteral}{"{}vv"{}}](\textcolor{stringliteral}{"{}b,c"{}});}
+\DoxyCodeLine{666   \}}
+\DoxyCodeLine{667   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{668   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::formB\_3() \{}
+\DoxyCodeLine{669     \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{670     \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV;}
+\DoxyCodeLine{671     B\_3(\textcolor{stringliteral}{"{}k,a,i,j"{}}) = 0.5  *   conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abci"{}}](\textcolor{stringliteral}{"{}c,d,a,k"{}})) * this-\/>T2\_(\textcolor{stringliteral}{"{}d,c,i,j"{}}); }
+\DoxyCodeLine{672     B\_3(\textcolor{stringliteral}{"{}k,a,i,j"{}}) +=    this-\/>antiSymMoints[\textcolor{stringliteral}{"{}aijk"{}}](\textcolor{stringliteral}{"{}a,k,j,i"{}});}
+\DoxyCodeLine{673     TA::TArray<MatsT> B\_31(TA::get\_default\_world(),TA::TiledRange\{orange,vrange\});}
+\DoxyCodeLine{674     B\_31.fill(0.0);}
+\DoxyCodeLine{675     TA::TArray<MatsT> B\_32(TA::get\_default\_world(),TA::TiledRange\{orange,orange,orange,orange\});}
+\DoxyCodeLine{676     B\_32.fill(0.0);}
+\DoxyCodeLine{677     TA::TArray<MatsT> B\_321(TA::get\_default\_world(),TA::TiledRange\{orange,orange,vrange,orange\});}
+\DoxyCodeLine{678     B\_321.fill(0.0);}
+\DoxyCodeLine{679     TA::TArray<MatsT> B\_33(TA::get\_default\_world(),TA::TiledRange\{orange,vrange,vrange,orange\});}
+\DoxyCodeLine{680     B\_33.fill(0.0);}
+\DoxyCodeLine{681     TA::TArray<MatsT> B\_34(TA::get\_default\_world(),TA::TiledRange\{orange,orange,vrange,orange\});}
+\DoxyCodeLine{682     B\_34.fill(0.0);}
+\DoxyCodeLine{683     B\_321(\textcolor{stringliteral}{"{}k,l,c,j"{}}) += -\/ 0.25   *  conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}c,d,k,l"{}})) * this-\/>T1\_(\textcolor{stringliteral}{"{}d,j"{}});}
+\DoxyCodeLine{684     B\_321(\textcolor{stringliteral}{"{}k,l,c,j"{}}) += -\/ 0.5  *   conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}aijk"{}}](\textcolor{stringliteral}{"{}c,j,k,l"{}}));}
+\DoxyCodeLine{685     B\_31(\textcolor{stringliteral}{"{}k,c"{}}) +=    conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}c,d,k,l"{}})) * this-\/>T1\_(\textcolor{stringliteral}{"{}d,l"{}});}
+\DoxyCodeLine{686     B\_31(\textcolor{stringliteral}{"{}k,c"{}}) +=   fockMatrix\_ta[\textcolor{stringliteral}{"{}ov"{}}](\textcolor{stringliteral}{"{}k,c"{}});}
+\DoxyCodeLine{687     B\_32(\textcolor{stringliteral}{"{}k,l,i,j"{}}) += -\/0.25   *  conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}c,d,k,l"{}})) * this-\/>T2\_(\textcolor{stringliteral}{"{}c,d,i,j"{}});}
+\DoxyCodeLine{688     B\_32(\textcolor{stringliteral}{"{}k,l,i,j"{}}) += -\/ 0.5  *   this-\/>antiSymMoints[\textcolor{stringliteral}{"{}ijkl"{}}](\textcolor{stringliteral}{"{}k,l,i,j"{}});}
+\DoxyCodeLine{689     B\_32(\textcolor{stringliteral}{"{}k,l,i,j"{}}) +=   B\_321(\textcolor{stringliteral}{"{}k,l,c,j"{}}) * this-\/>T1\_(\textcolor{stringliteral}{"{}c,i"{}});}
+\DoxyCodeLine{690     B\_32(\textcolor{stringliteral}{"{}k,l,i,j"{}}) += -\/B\_321(\textcolor{stringliteral}{"{}k,l,c,i"{}}) * this-\/>T1\_(\textcolor{stringliteral}{"{}c,j"{}});}
+\DoxyCodeLine{691     B\_33(\textcolor{stringliteral}{"{}k,a,c,j"{}}) +=  0.5  *   conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abci"{}}](\textcolor{stringliteral}{"{}d,c,a,k"{}})) * this-\/>T1\_(\textcolor{stringliteral}{"{}d,j"{}});}
+\DoxyCodeLine{692     B\_33(\textcolor{stringliteral}{"{}k,a,c,j"{}}) +=    this-\/>antiSymMoints[\textcolor{stringliteral}{"{}iabj"{}}](\textcolor{stringliteral}{"{}k,a,c,j"{}});}
+\DoxyCodeLine{693     B\_34(\textcolor{stringliteral}{"{}l,k,c,j"{}}) +=   -\/ conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}c,d,l,k"{}})) * this-\/>T1\_(\textcolor{stringliteral}{"{}d,j"{}}); }
+\DoxyCodeLine{694     B\_34(\textcolor{stringliteral}{"{}l,k,c,j"{}}) +=   -\/ conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}aijk"{}}](\textcolor{stringliteral}{"{}c,j,l,k"{}}));  }
+\DoxyCodeLine{695     B\_3(\textcolor{stringliteral}{"{}k,a,i,j"{}}) += B\_31(\textcolor{stringliteral}{"{}k,c"{}}) * this-\/>T2\_(\textcolor{stringliteral}{"{}c,a,i,j"{}});}
+\DoxyCodeLine{696     B\_3(\textcolor{stringliteral}{"{}k,a,i,j"{}}) += B\_32(\textcolor{stringliteral}{"{}k,l,i,j"{}}) * this-\/>T1\_(\textcolor{stringliteral}{"{}a,l"{}});}
+\DoxyCodeLine{697     B\_3(\textcolor{stringliteral}{"{}k,a,i,j"{}}) +=   B\_33(\textcolor{stringliteral}{"{}k,a,c,j"{}}) * this-\/>T1\_(\textcolor{stringliteral}{"{}c,i"{}});}
+\DoxyCodeLine{698     B\_3(\textcolor{stringliteral}{"{}k,a,i,j"{}}) += -\/B\_33(\textcolor{stringliteral}{"{}k,a,c,i"{}}) * this-\/>T1\_(\textcolor{stringliteral}{"{}c,j"{}});}
+\DoxyCodeLine{699     B\_3(\textcolor{stringliteral}{"{}k,a,i,j"{}}) +=   B\_34(\textcolor{stringliteral}{"{}l,k,c,j"{}}) * this-\/>T2\_(\textcolor{stringliteral}{"{}c,a,l,i"{}});}
+\DoxyCodeLine{700     B\_3(\textcolor{stringliteral}{"{}k,a,i,j"{}}) += -\/B\_34(\textcolor{stringliteral}{"{}l,k,c,i"{}}) * this-\/>T2\_(\textcolor{stringliteral}{"{}c,a,l,j"{}});}
+\DoxyCodeLine{701   \}}
+\DoxyCodeLine{702   }
+\DoxyCodeLine{703   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{704   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::formB\_5() \{}
+\DoxyCodeLine{705     \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{706     \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV;}
+\DoxyCodeLine{707     B\_5(\textcolor{stringliteral}{"{}k,l,i,j"{}}) = 0.25   *  conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}c,d,k,l"{}})) * this-\/>T2\_(\textcolor{stringliteral}{"{}c,d,i,j"{}});}
+\DoxyCodeLine{708     B\_5(\textcolor{stringliteral}{"{}k,l,i,j"{}}) +=  0.5  *   this-\/>antiSymMoints[\textcolor{stringliteral}{"{}ijkl"{}}](\textcolor{stringliteral}{"{}k,l,i,j"{}});}
+\DoxyCodeLine{709     TA::TArray<MatsT> B\_51(TA::get\_default\_world(),TA::TiledRange\{orange,orange,vrange,orange\});}
+\DoxyCodeLine{710     B\_51.fill(0.0);}
+\DoxyCodeLine{711     B\_51(\textcolor{stringliteral}{"{}k,l,c,i"{}}) += 0.25   *  conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}d,c,k,l"{}})) * this-\/>T1\_(\textcolor{stringliteral}{"{}d,i"{}}); }
+\DoxyCodeLine{712     B\_51(\textcolor{stringliteral}{"{}k,l,c,i"{}}) += -\/ 0.5  *   conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}aijk"{}}](\textcolor{stringliteral}{"{}c,i,k,l"{}}));}
+\DoxyCodeLine{713     B\_5(\textcolor{stringliteral}{"{}k,l,i,j"{}}) +=   B\_51(\textcolor{stringliteral}{"{}k,l,c,i"{}}) * this-\/>T1\_(\textcolor{stringliteral}{"{}c,j"{}});}
+\DoxyCodeLine{714     B\_5(\textcolor{stringliteral}{"{}k,l,i,j"{}}) += -\/B\_51(\textcolor{stringliteral}{"{}k,l,c,j"{}}) * this-\/>T1\_(\textcolor{stringliteral}{"{}c,i"{}});}
+\DoxyCodeLine{715   \}}
+\DoxyCodeLine{716   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{717   \textcolor{keywordtype}{void} CCSD<MatsT,IntsT>::formB\_6() \{}
+\DoxyCodeLine{718     \textcolor{keywordtype}{size\_t} NO = this-\/>ref\_.nO;}
+\DoxyCodeLine{719     \textcolor{keywordtype}{size\_t} NV = this-\/>ref\_.nV;}
+\DoxyCodeLine{720     B\_6(\textcolor{stringliteral}{"{}k,a,c,j"{}}) = -\/ conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abci"{}}](\textcolor{stringliteral}{"{}d,c,a,k"{}})) * this-\/>T1\_(\textcolor{stringliteral}{"{}d,j"{}});}
+\DoxyCodeLine{721     B\_6(\textcolor{stringliteral}{"{}k,a,c,j"{}}) += -\/ 0.5  *   conj(this-\/>antiSymMoints[\textcolor{stringliteral}{"{}abij"{}}](\textcolor{stringliteral}{"{}c,d,k,l"{}})) * this-\/>T2\_(\textcolor{stringliteral}{"{}d,a,l,j"{}});}
+\DoxyCodeLine{722     B\_6(\textcolor{stringliteral}{"{}k,a,c,j"{}}) += -\/ this-\/>antiSymMoints[\textcolor{stringliteral}{"{}iabj"{}}](\textcolor{stringliteral}{"{}k,a,c,j"{}});}
+\DoxyCodeLine{723   \}}
+\DoxyCodeLine{724   }
+\DoxyCodeLine{725 \};}
+\DoxyCodeLine{726 }
+\DoxyCodeLine{727 }
+
+\end{DoxyCode}

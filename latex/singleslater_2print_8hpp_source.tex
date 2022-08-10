@@ -1,0 +1,273 @@
+\hypertarget{singleslater_2print_8hpp_source}{}\doxysection{print.\+hpp}
+\label{singleslater_2print_8hpp_source}\index{include/singleslater/print.hpp@{include/singleslater/print.hpp}}
+\mbox{\hyperlink{singleslater_2print_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <singleslater.hpp>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{33   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a298071838cacfdf694198b365c5d7afe}{SingleSlater<MatsT,IntsT>::printFock}}(std::ostream \&out) \{}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keywordtype}{size\_t} NB = this-\/>basisSet().nBasis;}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}Fock (AO) Scalar"{}},fockMatrix-\/>S().pointer(),NB,NB,NB);}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keywordflow}{if}( fockMatrix-\/>hasZ() )}
+\DoxyCodeLine{40       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}Fock (AO) MZ"{}},fockMatrix-\/>Z().pointer(),NB,NB,NB);}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keywordflow}{if}( fockMatrix-\/>hasXY() ) \{}
+\DoxyCodeLine{43       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}Fock (AO) MY"{}},fockMatrix-\/>Y().pointer(),NB,NB,NB);}
+\DoxyCodeLine{44       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}Fock (AO) MX"{}},fockMatrix-\/>X().pointer(),NB,NB,NB);}
+\DoxyCodeLine{45     \}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48   \}; \textcolor{comment}{// SingleSlater<T>::printFock}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{51   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a25c5c4ed089f649aa187ae01fb9e0463}{SingleSlater<MatsT,IntsT>::print1PDMOrtho}}(std::ostream \&out) \{}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{keywordtype}{size\_t} NB = this-\/>basisSet().nBasis;}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}1PDM (Ortho) Scalar"{}},onePDMOrtho-\/>S().pointer(),NB,NB,NB);}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{keywordflow}{if}( onePDMOrtho-\/>hasZ() )}
+\DoxyCodeLine{58       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}1PDM (Ortho) MZ"{}},onePDMOrtho-\/>Z().pointer(),NB,NB,NB);}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     \textcolor{keywordflow}{if}( onePDMOrtho-\/>hasXY() ) \{}
+\DoxyCodeLine{61       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}1PDM (Ortho) MY"{}},onePDMOrtho-\/>Y().pointer(),NB,NB,NB);}
+\DoxyCodeLine{62       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}1PDM (Ortho) MX"{}},onePDMOrtho-\/>X().pointer(),NB,NB,NB);}
+\DoxyCodeLine{63     \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66   \}; \textcolor{comment}{// SingleSlater<T>::print1PDMOrtho}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{69   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a9e56533523726cd5caa32252da3472f9}{SingleSlater<MatsT,IntsT>::printGD}}(std::ostream \&out) \{}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{keywordtype}{size\_t} NB = this-\/>basisSet().nBasis;}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}GD (AO) Scalar"{}},twoeH-\/>S().pointer(),NB,NB,NB);}
+\DoxyCodeLine{74     \textcolor{keywordflow}{if} (twoeH-\/>hasZ())}
+\DoxyCodeLine{75       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}GD (AO) MZ"{}},twoeH-\/>Z().pointer(),NB,NB,NB);}
+\DoxyCodeLine{76     \textcolor{keywordflow}{if} (twoeH-\/>hasXY()) \{}
+\DoxyCodeLine{77       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}GD (AO) MY"{}},twoeH-\/>Y().pointer(),NB,NB,NB);}
+\DoxyCodeLine{78       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}GD (AO) MX"{}},twoeH-\/>X().pointer(),NB,NB,NB);}
+\DoxyCodeLine{79     \}}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81   \}; \textcolor{comment}{// SingleSlater<T>::printGD}}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{85   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a6b647f73776669c927db60d80c5be16d}{SingleSlater<MatsT,IntsT>::printJ}}(std::ostream \&out) \{}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87     \textcolor{keywordtype}{size\_t} NB = this-\/>basisSet().nBasis;}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}J (AO) Scalar"{}},coulombMatrix-\/>pointer(),NB,NB,NB);}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92   \}; \textcolor{comment}{// SingleSlater<T>::printJ}}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{96   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_aa87300760c9106340d51ea325a9cc51b}{SingleSlater<MatsT,IntsT>::printK}}(std::ostream \&out) \{}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     \textcolor{keywordtype}{size\_t} NB = this-\/>basisSet().nBasis;}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}K (AO) Scalar"{}},exchangeMatrix-\/>S().pointer(),NB,NB,NB);}
+\DoxyCodeLine{101     \textcolor{keywordflow}{if} (exchangeMatrix-\/>hasZ())}
+\DoxyCodeLine{102       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}K (AO) MZ"{}},exchangeMatrix-\/>Z().pointer(),NB,NB,NB);}
+\DoxyCodeLine{103     \textcolor{keywordflow}{if} (exchangeMatrix-\/>hasXY()) \{}
+\DoxyCodeLine{104       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}K (AO) MY"{}},exchangeMatrix-\/>Y().pointer(),NB,NB,NB);}
+\DoxyCodeLine{105       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}K (AO) MX"{}},exchangeMatrix-\/>X().pointer(),NB,NB,NB);}
+\DoxyCodeLine{106     \}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108   \}; \textcolor{comment}{// SingleSlater<T>::printK}}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{112   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a4a4fbbf854e5f10d44bd721c87d347e3}{SingleSlater<MatsT,IntsT>::printMiscProperties}}(std::ostream \&out) \{}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114     out << \textcolor{stringliteral}{"{}\(\backslash\)nCharge Analysis:\(\backslash\)n"{}} << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}} << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116     out << std::setw(20) << std::left << \textcolor{stringliteral}{"{}  Atom"{}};}
+\DoxyCodeLine{117     out << std::setw(20) << std::right << \textcolor{stringliteral}{"{}Mulliken Charges"{}};}
+\DoxyCodeLine{118     out << std::setw(20) << std::right << \textcolor{stringliteral}{"{}Lowdin Charges"{}} << std::endl;}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     out << std::right << \mbox{\hyperlink{namespaceChronusQ_a1d061c4d094fa6d85a00b0baee6240e0}{bannerMid}} << std::endl;}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122     \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \& mol = this-\/>molecule();}
+\DoxyCodeLine{123     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iAtm = 0; iAtm < mol.\mbox{\hyperlink{structChronusQ_1_1Molecule_abe50222c8aa9cb69f03dbab8623ff171}{nAtoms}}; iAtm++) \{}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125       \textcolor{comment}{// Get symbol}}
+\DoxyCodeLine{126       std::map<std::string,Atom>::const\_iterator it = }
+\DoxyCodeLine{127       std::find\_if(\mbox{\hyperlink{namespaceChronusQ_a75ec1b57ce29641740d7e737070defc9}{atomicReference}}.begin(),\mbox{\hyperlink{namespaceChronusQ_a75ec1b57ce29641740d7e737070defc9}{atomicReference}}.end(),}
+\DoxyCodeLine{128         [\&](\textcolor{keyword}{const} std::pair<std::string,Atom> \&st)\{ }
+\DoxyCodeLine{129           return (st.second.atomicNumber == mol.atoms[iAtm].atomicNumber) and}
+\DoxyCodeLine{130                  (st.second.massNumber == mol.atoms[iAtm].massNumber);\}}
+\DoxyCodeLine{131          );}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133       out << \textcolor{stringliteral}{"{}  "{}} << std::setw(18) << std::left <<}
+\DoxyCodeLine{134         (it == \mbox{\hyperlink{namespaceChronusQ_a75ec1b57ce29641740d7e737070defc9}{atomicReference}}.end() ? \textcolor{stringliteral}{"{}X"{}} : it-\/>first);}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136       out << std::setprecision(5) << std::right;}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138       out << std::setw(20) << mullikenCharges[iAtm];}
+\DoxyCodeLine{139       out << std::setw(20) << lowdinCharges[iAtm];}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141       out << std::endl;}
+\DoxyCodeLine{142     \}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     out << std::endl << \mbox{\hyperlink{namespaceChronusQ_a7ec03a45c0666f106c60a4ee2fa36f0c}{bannerEnd}} << std::endl;}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146   \}; \textcolor{comment}{// SingleSlater<T>::printMiscProperties}}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148 }
+\DoxyCodeLine{153   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{154   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a512a39adecb82e025db649e1de4c858f}{SingleSlater<MatsT,IntsT>::printEPS}}(std::ostream \&out) \{}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156     \textcolor{comment}{// List MO eigenenergies}}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158     out << std::scientific << std::setprecision(4);}
+\DoxyCodeLine{159     out << \textcolor{stringliteral}{"{}Orbital Eigenenergies "{}} << (this-\/>nC == 1 ? \textcolor{stringliteral}{"{}(Alpha) "{}} : \textcolor{stringliteral}{"{}"{}} )}
+\DoxyCodeLine{160         << \textcolor{stringliteral}{"{}/ Eh\(\backslash\)n"{}} << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162     \textcolor{comment}{// Set number of occupied orbitals}}
+\DoxyCodeLine{163     \textcolor{keywordtype}{size\_t} NO = (this-\/>nC == 1 ? this-\/>nOA : this-\/>nO);}
+\DoxyCodeLine{164     \textcolor{keywordflow}{if} ( this-\/>nC == 4 ) NO = this-\/>nO + this-\/>nC * this-\/>nAlphaOrbital()/2;}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166     \textcolor{comment}{//for(auto i = 0ul; i < this-\/>nC * this-\/>nAlphaOrbital(); i++) \{}}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168     \textcolor{comment}{//  if( i == 0 )}}
+\DoxyCodeLine{169     \textcolor{comment}{//    out << "{}Occupied:\(\backslash\)n"{};}}
+\DoxyCodeLine{170     \textcolor{comment}{//  else if( i == NO )}}
+\DoxyCodeLine{171     \textcolor{comment}{//    out << "{}\(\backslash\)n\(\backslash\)nVirtual:\(\backslash\)n"{};}}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173     \textcolor{comment}{//  out << std::setw(13) << this-\/>eps1[i];}}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175     \textcolor{comment}{//  if( i < NO and (i + 1) \% 5 == 0 )  out << "{}\(\backslash\)n"{};}}
+\DoxyCodeLine{176     \textcolor{comment}{//  else if( i >= NO and ((i -\/ NO) + 1) \% 5 == 0 ) out << "{}\(\backslash\)n"{};}}
+\DoxyCodeLine{177     \textcolor{comment}{//\}}}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179     \textcolor{keywordflow}{if}( nC != 4 ) \{}
+\DoxyCodeLine{180       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul; i < this-\/>nC * this-\/>nAlphaOrbital(); i++) \{}
+\DoxyCodeLine{181   }
+\DoxyCodeLine{182         \textcolor{keywordflow}{if}( i == 0 )}
+\DoxyCodeLine{183           out << \textcolor{stringliteral}{"{}Occupied:\(\backslash\)n"{}};}
+\DoxyCodeLine{184         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( i == NO )}
+\DoxyCodeLine{185           out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nVirtual:\(\backslash\)n"{}};}
+\DoxyCodeLine{186   }
+\DoxyCodeLine{187         out << std::setw(13) << this-\/>eps1[i];}
+\DoxyCodeLine{188   }
+\DoxyCodeLine{189         \textcolor{keywordflow}{if}( i < NO and (i + 1) \% 5 == 0 )  out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{190         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( i >= NO and ((i -\/ NO) + 1) \% 5 == 0 ) out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{191       \}}
+\DoxyCodeLine{192     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{193       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = this-\/>nC * this-\/>nAlphaOrbital()/2; i < this-\/>nC * this-\/>nAlphaOrbital(); i++) \{}
+\DoxyCodeLine{194   }
+\DoxyCodeLine{195         \textcolor{keywordflow}{if}( i == this-\/>nC * this-\/>nAlphaOrbital()/2 )}
+\DoxyCodeLine{196           out << \textcolor{stringliteral}{"{}Occupied:\(\backslash\)n"{}};}
+\DoxyCodeLine{197         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( i == NO )}
+\DoxyCodeLine{198           out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nVirtual:\(\backslash\)n"{}};}
+\DoxyCodeLine{199   }
+\DoxyCodeLine{200         out << std::setw(13) << this-\/>eps1[i];}
+\DoxyCodeLine{201   }
+\DoxyCodeLine{202         \textcolor{keywordflow}{if}( i < NO and (i + 1 -\/ this-\/>nC * this-\/>nAlphaOrbital()/2) \% 5 == 0 )  out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{203         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( i >= NO and ((i -\/ NO) + 1) \% 5 == 0 ) out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{204       \}}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206       \textcolor{comment}{// Negative Energy States}}
+\DoxyCodeLine{207       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul; i < this-\/>nC * this-\/>nAlphaOrbital()/2; i++) \{}
+\DoxyCodeLine{208   }
+\DoxyCodeLine{209         \textcolor{keywordflow}{if}( i == 0 )}
+\DoxyCodeLine{210             out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nNegative Energy States:\(\backslash\)n"{}};}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212         out << std::setw(13) << this-\/>eps1[i];}
+\DoxyCodeLine{213   }
+\DoxyCodeLine{214         \textcolor{keywordflow}{if}( i < NO and (i + 1) \% 5 == 0 )  out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{215         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( i >= NO and ((i -\/ NO) + 1) \% 5 == 0 ) out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{216       \}}
+\DoxyCodeLine{217     \}}
+\DoxyCodeLine{218      }
+\DoxyCodeLine{219     out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}} << \mbox{\hyperlink{namespaceChronusQ_a7ec03a45c0666f106c60a4ee2fa36f0c}{bannerEnd}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221     \textcolor{keywordflow}{if}( this-\/>nC == 1 and not this-\/>iCS ) \{}
+\DoxyCodeLine{222       out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nOrbital Eigenenergies (Beta) / Eh\(\backslash\)n"{}} << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0ul; i < this-\/>nBetaOrbital(); i++) \{}
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226         \textcolor{keywordflow}{if}( i == 0 )}
+\DoxyCodeLine{227           out << \textcolor{stringliteral}{"{}Occupied:\(\backslash\)n"{}};}
+\DoxyCodeLine{228         \textcolor{keywordflow}{if}( i == this-\/>nOB )}
+\DoxyCodeLine{229           out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nVirtual:\(\backslash\)n"{}};}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231         out << std::setw(13) << this-\/>eps2[i];}
+\DoxyCodeLine{232 }
+\DoxyCodeLine{233         \textcolor{keywordflow}{if}( i < this-\/>nOB and (i + 1) \% 5 == 0 )  out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{234         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( i >= this-\/>nOB and ((i -\/ this-\/>nOB) + 1) \% 5 == 0 ) out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{235       \}}
+\DoxyCodeLine{236 }
+\DoxyCodeLine{237       out << \textcolor{stringliteral}{"{}\(\backslash\)n"{}} << \mbox{\hyperlink{namespaceChronusQ_a7ec03a45c0666f106c60a4ee2fa36f0c}{bannerEnd}} << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{238     \}}
+\DoxyCodeLine{239 }
+\DoxyCodeLine{240   \} \textcolor{comment}{// SingleSlater::printEPS}}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242 }
+\DoxyCodeLine{246   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{247   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_ac8da56bf9032318b1eaa59260940a583}{SingleSlater<MatsT,IntsT>::printMOInfo}}(std::ostream \&out, \textcolor{keywordtype}{size\_t} printMOLevel) \{}
+\DoxyCodeLine{248 }
+\DoxyCodeLine{249     out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}} << \textcolor{stringliteral}{"{}SCF Results:\(\backslash\)n"{}} << \mbox{\hyperlink{namespaceChronusQ_aea3bdcfe8284fa0cf16ef6866b5a99a7}{BannerTop}} << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{250 }
+\DoxyCodeLine{251     \textcolor{comment}{// print MO eigenvalues}}
+\DoxyCodeLine{252     this-\/>printEPS(out);}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{254     \textcolor{keywordflow}{if} (not printMOLevel)}
+\DoxyCodeLine{255       printMOLevel = \mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.printMOCoeffs;}
+\DoxyCodeLine{256     \textcolor{comment}{// print MO coefficients}}
+\DoxyCodeLine{257     \mbox{\hyperlink{classChronusQ_1_1WaveFunction_a7ba29f2396149233f97d9b4ba0eff22e}{WaveFunction<MatsT,IntsT>::printMOInfo}}(out, printMOLevel);}
+\DoxyCodeLine{258 }
+\DoxyCodeLine{259   \}; \textcolor{comment}{// SingleSlater<T>::printMOInfo}}
+\DoxyCodeLine{260 }
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{263   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1SingleSlater_a427c91e18eabe10076f408a589242b47}{SingleSlater<MatsT, IntsT>::printFockTimings}}(std::ostream \&out) \{}
+\DoxyCodeLine{264 }
+\DoxyCodeLine{265     out << \textcolor{stringliteral}{"{}    Fock Timings:\(\backslash\)n"{}};}
+\DoxyCodeLine{266     out << \textcolor{stringliteral}{"{}      Wall time G[D] = "{}} << std::setw(8)}
+\DoxyCodeLine{267         << std::setprecision(5)  << std::scientific}
+\DoxyCodeLine{268         << GDDur << \textcolor{stringliteral}{"{} s\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{269 }
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271   \}; \textcolor{comment}{// SingleSlater<T>::printFockTimings}}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{274 }
+
+\end{DoxyCode}

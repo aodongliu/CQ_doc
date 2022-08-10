@@ -1,0 +1,336 @@
+\hypertarget{interpolate_8hpp_source}{}\doxysection{interpolate.\+hpp}
+\label{interpolate_8hpp_source}\index{include/interpolate.hpp@{include/interpolate.hpp}}
+\mbox{\hyperlink{interpolate_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{comment}{//\#define INTERPOLATE\_DEBUG}}
+\DoxyCodeLine{27 \textcolor{comment}{//\#define INTERPOLATE\_DEBUG\_GRADIENT}}
+\DoxyCodeLine{28 \textcolor{comment}{//\#define INTERPOLATE\_PRINT\_COEFFS}}
+\DoxyCodeLine{29 \textcolor{comment}{//\#define INTERPOLATE\_PRINT\_WARN}}
+\DoxyCodeLine{30 \textcolor{comment}{//\#define INTERPOLATE\_USE\_GAUSSIAN\_ALG}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{bfgs_8hpp}{nonlinearopt/bfgs.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{goldenSection_8hpp}{nonlinearopt/goldenSection.hpp}}>}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}}
+\DoxyCodeLine{36 \{}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{51     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{52     \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{ENERGYDIIS}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS}}<T>}
+\DoxyCodeLine{53     \{}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{56         \textcolor{comment}{// Useful typedefs}}
+\DoxyCodeLine{57         \textcolor{keyword}{typedef} T *\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a5419022fdac27c13b0c48551daeafd83}{oper\_t}};}
+\DoxyCodeLine{58         \textcolor{keyword}{typedef} std::vector<oper\_t> \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_aa53ca655167555cc53b17db56eeffb7e}{oper\_t\_coll}};}
+\DoxyCodeLine{59         \textcolor{keyword}{typedef} std::vector<oper\_t\_coll> \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a8ad47adff7dfc76f43da308f9c526e98}{oper\_t\_coll2}};}
+\DoxyCodeLine{60         \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_abdc914d37630706f273bfc29fa2c6d20}{memManager}};}
+\DoxyCodeLine{61         T *\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ae8e393ebe5a58e35eeb1b1474a824b06}{xOpt}}; }
+\DoxyCodeLine{62         T *\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a2b9ffb2efeb4012ea7d2269e0d26b4b9}{gOpt}}; }
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{keyword}{public}:}
+\DoxyCodeLine{65         \textcolor{comment}{// Input parameters}}
+\DoxyCodeLine{66         \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a9e646b4a77bb641f274848afc3e698a1}{nInter}};         }
+\DoxyCodeLine{67         std::vector<T> \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ac82cb84c8a7fb89985118886b117ef81}{energy}}; }
+\DoxyCodeLine{68         \textcolor{keywordtype}{double} *\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ae8fb676491a209781316a962748b1bef}{B}};             }
+\DoxyCodeLine{69         \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a88040a53f3ac04377e12db4ccc68d6e6}{nDimB}};          }
+\DoxyCodeLine{70         \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ab8f2ccc45eccfa1120fdb3e6ae7b3e8c}{target}};         }
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72         \textcolor{comment}{// Output parameters}}
+\DoxyCodeLine{73         std::vector<T> \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ad346f9605a1bc908702246ff984ec55a}{coeffs}}; }
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75         \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77         \textcolor{comment}{/*}}
+\DoxyCodeLine{78 \textcolor{comment}{        *  DIIS Constructor. Constructs a DIIS object}}
+\DoxyCodeLine{79 \textcolor{comment}{        */}}
+\DoxyCodeLine{80         \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a116aa1b351401c682e49266c2c4c79f9}{ENERGYDIIS}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a9e646b4a77bb641f274848afc3e698a1}{nInter}}, \textcolor{keywordtype}{double} *\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ae8fb676491a209781316a962748b1bef}{B}}, \textcolor{keywordtype}{size\_t} nD, std::vector<T> en, \textcolor{keywordtype}{size\_t} t, \textcolor{keywordtype}{double} conv, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem) : }
+\DoxyCodeLine{81             \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a9e646b4a77bb641f274848afc3e698a1}{nInter}}(\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a9e646b4a77bb641f274848afc3e698a1}{nInter}}), \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ae8fb676491a209781316a962748b1bef}{B}}(\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ae8fb676491a209781316a962748b1bef}{B}}), \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a88040a53f3ac04377e12db4ccc68d6e6}{nDimB}}(nD), \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ac82cb84c8a7fb89985118886b117ef81}{energy}}(en), \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ab8f2ccc45eccfa1120fdb3e6ae7b3e8c}{target}}(t),\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_abdc914d37630706f273bfc29fa2c6d20}{memManager}}(mem), \mbox{\hyperlink{classChronusQ_1_1BFGS}{BFGS}}<T>(\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a9e646b4a77bb641f274848afc3e698a1}{nInter}}, conv, mem)}
+\DoxyCodeLine{82         \{}
+\DoxyCodeLine{83             \textcolor{comment}{// Allocate data structures}}
+\DoxyCodeLine{84             \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ad346f9605a1bc908702246ff984ec55a}{coeffs}}.resize(\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a9e646b4a77bb641f274848afc3e698a1}{nInter}});}
+\DoxyCodeLine{85             \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=0; i<\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a9e646b4a77bb641f274848afc3e698a1}{nInter}}; i++ )}
+\DoxyCodeLine{86                 \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ad346f9605a1bc908702246ff984ec55a}{coeffs}}[i] = 0.;}
+\DoxyCodeLine{87             \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ae8e393ebe5a58e35eeb1b1474a824b06}{xOpt}} = \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_abdc914d37630706f273bfc29fa2c6d20}{memManager}}.template malloc<T>(\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a9e646b4a77bb641f274848afc3e698a1}{nInter}});}
+\DoxyCodeLine{88             \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a2b9ffb2efeb4012ea7d2269e0d26b4b9}{gOpt}} = \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_abdc914d37630706f273bfc29fa2c6d20}{memManager}}.template malloc<T>(\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a9e646b4a77bb641f274848afc3e698a1}{nInter}});}
+\DoxyCodeLine{89             \mbox{\hyperlink{classChronusQ_1_1BFGS_aef481bef57f37def61fc10359cbcff74}{BFGS<T> :: setXPointer}}( \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ae8e393ebe5a58e35eeb1b1474a824b06}{xOpt}} );}
+\DoxyCodeLine{90             \mbox{\hyperlink{classChronusQ_1_1BFGS_a08045e44d0f723a0bf1b56f88e16677f}{BFGS<T> :: setGPointer}}( \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a2b9ffb2efeb4012ea7d2269e0d26b4b9}{gOpt}} );}
+\DoxyCodeLine{91             \textcolor{keywordtype}{double} eMin = *min\_element(\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ac82cb84c8a7fb89985118886b117ef81}{energy}}.begin(),\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ac82cb84c8a7fb89985118886b117ef81}{energy}}.end());}
+\DoxyCodeLine{92             \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} \&e : \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ac82cb84c8a7fb89985118886b117ef81}{energy}})}
+\DoxyCodeLine{93                 e -\/= eMin;}
+\DoxyCodeLine{94         \};}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96         \textcolor{comment}{// Constructors for default, copy, and move}}
+\DoxyCodeLine{97         \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a4efd47188704e1f3aacb2338ddcbaad5}{ENERGYDIIS}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{98         \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a7355c345cc2504339f08abbb4addaa83}{ENERGYDIIS}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{ENERGYDIIS}} \&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{99         \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a0124eb00c6edce01ca2d20e94f121f0d}{ENERGYDIIS}}(\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS}{ENERGYDIIS}} \&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101         \textcolor{comment}{// Destructor}}
+\DoxyCodeLine{102         \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a185bcdf7bba39445fb77833d78e2aeef}{\string~ENERGYDIIS}}()}
+\DoxyCodeLine{103         \{}
+\DoxyCodeLine{104             \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_abdc914d37630706f273bfc29fa2c6d20}{memManager}}.\mbox{\hyperlink{classChronusQ_1_1CQMemManager_a77ab458bc47fd29d0adfd0deb3a8e6f5}{free}}(\mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ae8e393ebe5a58e35eeb1b1474a824b06}{xOpt}}, \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a2b9ffb2efeb4012ea7d2269e0d26b4b9}{gOpt}});}
+\DoxyCodeLine{105         \};}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107         \textcolor{comment}{// Getter functions for pointers}}
+\DoxyCodeLine{108         \textcolor{keyword}{inline} T* \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_adef956ec88a123d1befb357307f89f06}{xPointer}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_ae8e393ebe5a58e35eeb1b1474a824b06}{xOpt}}; \}}
+\DoxyCodeLine{109         \textcolor{keyword}{inline} T* \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a84ebdc4989842d32887cdc340f57eb5a}{gPointer}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a2b9ffb2efeb4012ea7d2269e0d26b4b9}{gOpt}}; \}}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111         \textcolor{comment}{// Public Member functions}}
+\DoxyCodeLine{112         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a6a104c3fe82064a7ced89f8f9a916f58}{interpolate}}();}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114         \textcolor{comment}{// Optimization functions}}
+\DoxyCodeLine{115         \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_af5f144dbf4d8ddc82066ef9d4c83340b}{computeCoeffs}}();}
+\DoxyCodeLine{116         \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a6915a8f58e82b4fdffc4957068f01490}{objFunc}}();}
+\DoxyCodeLine{117         \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a844d76d655ed5076f6eea95251ff1728}{gradFunc}}();}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \}; \textcolor{comment}{// class DIIS}}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122     \textcolor{comment}{/*}}
+\DoxyCodeLine{123 \textcolor{comment}{    *   Brief: The variables are optimized using a set of unconstrained}}
+\DoxyCodeLine{124 \textcolor{comment}{    *          variables. coeffs[i] = xOpt[i]*xOpt[i] / (\(\backslash\)sum\_k xOpt[k]*xOpt[k])}}
+\DoxyCodeLine{125 \textcolor{comment}{    */} }
+\DoxyCodeLine{126     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{127     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_af5f144dbf4d8ddc82066ef9d4c83340b}{ENERGYDIIS<T>::computeCoeffs}}()}
+\DoxyCodeLine{128     \{}
+\DoxyCodeLine{129         T sumC = T(0.);}
+\DoxyCodeLine{130         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nInter; i++)}
+\DoxyCodeLine{131         \{}
+\DoxyCodeLine{132             coeffs[i] = xOpt[i] * xOpt[i];}
+\DoxyCodeLine{133             sumC += coeffs[i];}
+\DoxyCodeLine{134         \}}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nInter; i++)}
+\DoxyCodeLine{137             coeffs[i] /= sumC;}
+\DoxyCodeLine{138     \}}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141     \textcolor{comment}{/*}}
+\DoxyCodeLine{142 \textcolor{comment}{    *   Brief: This function computes the equation we are optimizing}}
+\DoxyCodeLine{143 \textcolor{comment}{    *          val = E\string^T*coeffs -\/ 1/2 coeffs\string^T B coeffs}}
+\DoxyCodeLine{144 \textcolor{comment}{    */}}
+\DoxyCodeLine{145     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{146     \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a6915a8f58e82b4fdffc4957068f01490}{ENERGYDIIS<T>::objFunc}}()}
+\DoxyCodeLine{147     \{}
+\DoxyCodeLine{148         computeCoeffs();}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150         \textcolor{keywordtype}{double} val = T(0.);}
+\DoxyCodeLine{151         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nInter; i++)}
+\DoxyCodeLine{152         \{}
+\DoxyCodeLine{153             val += coeffs[i] * energy[i];}
+\DoxyCodeLine{154             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} j = 0; j < nInter; j++)}
+\DoxyCodeLine{155                 val -\/= T(0.5) * coeffs[i] * B[j + i * nDimB] * coeffs[j];}
+\DoxyCodeLine{156         \}}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158         \textcolor{keywordflow}{return} val;}
+\DoxyCodeLine{159     \}}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161     \textcolor{comment}{/*}}
+\DoxyCodeLine{162 \textcolor{comment}{    *   Brief: This is the gradient for the objective function with respect}}
+\DoxyCodeLine{163 \textcolor{comment}{    *          to the unconstrained optimization variables(xOpt).}}
+\DoxyCodeLine{164 \textcolor{comment}{    * }}
+\DoxyCodeLine{165 \textcolor{comment}{    */}}
+\DoxyCodeLine{166     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{167     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a844d76d655ed5076f6eea95251ff1728}{ENERGYDIIS<T>::gradFunc}}()}
+\DoxyCodeLine{168     \{}
+\DoxyCodeLine{169         computeCoeffs();}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171         \textcolor{comment}{// Renormalize parameters}}
+\DoxyCodeLine{172         \textcolor{comment}{// This helps keep the gradient consistent during the optimization}}
+\DoxyCodeLine{173         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nInter; i++)}
+\DoxyCodeLine{174             this-\/>xOpt[i] = std::sqrt(std::abs(coeffs[i]));}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176         T *lag = memManager.template malloc<T>(nInter);}
+\DoxyCodeLine{177         T sumC = T(0.);}
+\DoxyCodeLine{178         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nInter; i++)}
+\DoxyCodeLine{179         \{}
+\DoxyCodeLine{180             sumC += this-\/>xOpt[i] * this-\/>xOpt[i];}
+\DoxyCodeLine{181             lag[i] = energy[i];}
+\DoxyCodeLine{182             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} j = 0; j < nInter; j++)}
+\DoxyCodeLine{183                 lag[i] -\/= B[j + i * nDimB] * coeffs[j];}
+\DoxyCodeLine{184         \}}
+\DoxyCodeLine{185 }
+\DoxyCodeLine{186         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} k = 0; k < nInter; k++)}
+\DoxyCodeLine{187         \{}
+\DoxyCodeLine{188             T cpartial;}
+\DoxyCodeLine{189             this-\/>gOpt[k] = T(0.);}
+\DoxyCodeLine{190             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nInter; i++)}
+\DoxyCodeLine{191             \{}
+\DoxyCodeLine{192                 cpartial = T(0.);}
+\DoxyCodeLine{193                 \textcolor{keywordflow}{if} (i == k)}
+\DoxyCodeLine{194                 \{}
+\DoxyCodeLine{195                     cpartial = T(2.) * this-\/>xOpt[i] / sumC * (T(1.) -\/ coeffs[i]);}
+\DoxyCodeLine{196                 \}}
+\DoxyCodeLine{197                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{198                 \{}
+\DoxyCodeLine{199                     cpartial = T(-\/2.) * coeffs[i] * this-\/>xOpt[k] / sumC;}
+\DoxyCodeLine{200                 \}}
+\DoxyCodeLine{201                 this-\/>gOpt[k] += cpartial * lag[i];}
+\DoxyCodeLine{202             \}}
+\DoxyCodeLine{203         \}}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205 \textcolor{preprocessor}{\#ifdef INTERPOLATE\_DEBUG\_GRADIENT}}
+\DoxyCodeLine{206         this-\/>printGrad = \textcolor{keyword}{true};}
+\DoxyCodeLine{207         std::cout << \textcolor{stringliteral}{"{}Coeffs:"{}} << std::endl;}
+\DoxyCodeLine{208         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nInter; i++)}
+\DoxyCodeLine{209             std::cout << coeffs[i] << std::endl;}
+\DoxyCodeLine{210         std::cout << std::endl;}
+\DoxyCodeLine{211 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213         memManager.free(lag);}
+\DoxyCodeLine{214     \}}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216 }
+\DoxyCodeLine{217     \textcolor{comment}{/*}}
+\DoxyCodeLine{218 \textcolor{comment}{    *   Brief: This routine drives the optimization and returns the result}}
+\DoxyCodeLine{219 \textcolor{comment}{    */}}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{222     \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1ENERGYDIIS_a6a104c3fe82064a7ced89f8f9a916f58}{ENERGYDIIS<T>::interpolate}}()}
+\DoxyCodeLine{223     \{}
+\DoxyCodeLine{224 \textcolor{preprocessor}{\#ifdef INTERPOLATE\_DEBUG}}
+\DoxyCodeLine{225         std::cout << \textcolor{stringliteral}{"{}Energies:"{}} << std::endl;}
+\DoxyCodeLine{226         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nInter; i++)}
+\DoxyCodeLine{227             std::cout << energy[i] << std::endl;}
+\DoxyCodeLine{228         std::cout << std::endl;}
+\DoxyCodeLine{229         \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout, \textcolor{stringliteral}{"{}B Matrix"{}}, B, nInter, nInter, nDimB);}
+\DoxyCodeLine{230         std::cout << std::endl;}
+\DoxyCodeLine{231         this-\/>printOptOutput = \textcolor{keyword}{true};}
+\DoxyCodeLine{232         this-\/>printSearchDirection = \textcolor{keyword}{true};}
+\DoxyCodeLine{233         this-\/>printLineSearch = \textcolor{keyword}{true};}
+\DoxyCodeLine{234         \textcolor{comment}{//this-\/>lineAlg = SteapestDescent;  // This gives a good test of the gradient}}
+\DoxyCodeLine{235         \textcolor{comment}{//this-\/>sdMaxDisp = 0.05;}}
+\DoxyCodeLine{236         this-\/>updateInvHess = \textcolor{keyword}{true};}
+\DoxyCodeLine{237 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239         \textcolor{comment}{// Make the target guess twice as large as the rest unless nInter == 2}}
+\DoxyCodeLine{240         T targetGuess = nInter == 2 ? T(1./\textcolor{keywordtype}{double}(nInter)) : T( 2./\textcolor{keywordtype}{double}(nInter) );}
+\DoxyCodeLine{241         T restGuess = std::sqrt((1.-\/targetGuess) / T(nInter-\/1)); }
+\DoxyCodeLine{242         targetGuess = std::sqrt(targetGuess);}
+\DoxyCodeLine{243         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nInter; i++)}
+\DoxyCodeLine{244             this-\/>xOpt[i] = T(restGuess);}
+\DoxyCodeLine{245         this-\/>xOpt[target] = targetGuess;}
+\DoxyCodeLine{246         \textcolor{keywordtype}{double} guessE = this-\/>objFunc();}
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248 \textcolor{preprocessor}{\#ifdef INTERPOLATE\_PRINT\_COEFFS}}
+\DoxyCodeLine{249         std::cout << \textcolor{stringliteral}{"{}EDIIS Guess Coefficients:  "{}} <<  guessE << std::endl;}
+\DoxyCodeLine{250         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nInter; i++)}
+\DoxyCodeLine{251         \{}
+\DoxyCodeLine{252             std::cout << coeffs[i];}
+\DoxyCodeLine{253             \textcolor{keywordflow}{if} (i == target)}
+\DoxyCodeLine{254                 std::cout << \textcolor{stringliteral}{"{}***"{}};}
+\DoxyCodeLine{255             std::cout << std::endl;}
+\DoxyCodeLine{256         \}}
+\DoxyCodeLine{257         std::cout << std::endl;}
+\DoxyCodeLine{258 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260         \textcolor{keywordtype}{bool} conv = \mbox{\hyperlink{classChronusQ_1_1BFGS_a7c2a97670286c44be4eb4e3385cfa725}{BFGS<T> :: optimize}}();}
+\DoxyCodeLine{261         computeCoeffs();}
+\DoxyCodeLine{262 }
+\DoxyCodeLine{263 \textcolor{preprocessor}{\#ifdef INTERPOLATE\_PRINT\_COEFFS}}
+\DoxyCodeLine{264         std::cout << \textcolor{stringliteral}{"{}EDIIS Coefficients:"{}} << std::endl;}
+\DoxyCodeLine{265         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nInter; i++)}
+\DoxyCodeLine{266         \{}
+\DoxyCodeLine{267             std::cout << coeffs[i];}
+\DoxyCodeLine{268             \textcolor{keywordflow}{if} (i == target)}
+\DoxyCodeLine{269                 std::cout << \textcolor{stringliteral}{"{}***"{}};}
+\DoxyCodeLine{270             std::cout << std::endl;}
+\DoxyCodeLine{271         \}}
+\DoxyCodeLine{272         std::cout << std::endl;}
+\DoxyCodeLine{273 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275         \textcolor{comment}{// To force progress, make sure target coeff is greater than 1E-\/8}}
+\DoxyCodeLine{276         \textcolor{keywordflow}{if} (coeffs[target] < 1E-\/4)}
+\DoxyCodeLine{277         \{}
+\DoxyCodeLine{278 \textcolor{preprocessor}{\#ifdef INTERPOLATE\_PRINT\_WARN}}
+\DoxyCodeLine{279             std::cout << \textcolor{stringliteral}{"{}EDIIS Warning: found solution with latest coefficient zero."{}} << std::endl;}
+\DoxyCodeLine{280 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{281 }
+\DoxyCodeLine{282 \textcolor{preprocessor}{\#ifndef INTERPOLATE\_USE\_GAUSSIAN\_ALG}}
+\DoxyCodeLine{283             this-\/>xOpt[target] = std::sqrt(1E-\/4);}
+\DoxyCodeLine{284             this-\/>objFunc();}
+\DoxyCodeLine{285 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287             \textcolor{comment}{// NOTE: The following is an implementation of what Kudin et al. describe to do}}
+\DoxyCodeLine{288             \textcolor{comment}{//       when the target is zero. However, I found that making the target 1E-\/4 }}
+\DoxyCodeLine{289             \textcolor{comment}{//       does not change the coeffs a lot and they are still close to the optimal}}
+\DoxyCodeLine{290             \textcolor{comment}{//       ones. }}
+\DoxyCodeLine{291             \textcolor{comment}{//}}
+\DoxyCodeLine{292             \textcolor{comment}{// Mix the other degrees of freedom with the targe state to find local minimum}}
+\DoxyCodeLine{293             \textcolor{comment}{// This is Gaussian's method and provided in:}}
+\DoxyCodeLine{294             \textcolor{comment}{// Kudin, K. N.; Scuseria, G. E.; Cancès, E. A Black-\/Box Self-\/Consistent Field Convergence Algorithm: One Step Closer. J. Chem. Phys. 2002, 116 (19), 8255–8261.}}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296 \textcolor{preprocessor}{\#ifdef INTERPOLATE\_USE\_GAUSSIAN\_ALG}}
+\DoxyCodeLine{297             \textcolor{comment}{// Start with target as unity}}
+\DoxyCodeLine{298             std::fill\_n(this-\/>xOpt, nInter, T(0.));}
+\DoxyCodeLine{299             this-\/>xOpt[target] = 1.;}
+\DoxyCodeLine{300 }
+\DoxyCodeLine{301             std::vector<size\_t> vopt = \{target\};}
+\DoxyCodeLine{302             std::vector<size\_t> vmix;}
+\DoxyCodeLine{303             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nInter; i++)}
+\DoxyCodeLine{304                 \textcolor{keywordflow}{if} (i != target)}
+\DoxyCodeLine{305                     vmix.push\_back(i);}
+\DoxyCodeLine{306 }
+\DoxyCodeLine{307             T *dx = memManager.template malloc<T>(nInter);}
+\DoxyCodeLine{308             T *initX = memManager.template malloc<T>(nInter);}
+\DoxyCodeLine{309             \textcolor{keywordtype}{double} ymin;}
+\DoxyCodeLine{310             T amin;}
+\DoxyCodeLine{311             \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \&iMix : vmix)}
+\DoxyCodeLine{312             \{}
+\DoxyCodeLine{313                 \textcolor{comment}{// Compute dx}}
+\DoxyCodeLine{314                 std::fill\_n(dx, nInter, T(0.));}
+\DoxyCodeLine{315                 \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \&iOpt : vopt)}
+\DoxyCodeLine{316                     dx[iOpt] = T(-\/1.);}
+\DoxyCodeLine{317                 dx[iMix] = T(1.);}
+\DoxyCodeLine{318 }
+\DoxyCodeLine{319                 \textcolor{comment}{// Perform Line Search}}
+\DoxyCodeLine{320                 std::copy\_n(xOpt, nInter, initX);}
+\DoxyCodeLine{321                 \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_ace11a76a2cb7c8a88d0b389af87053b7}{GoldenSectionSearch<T>::optimize}}(initX, dx, T(1E-\/8), T(0.9), ymin, amin);}
+\DoxyCodeLine{322 }
+\DoxyCodeLine{323                 vopt.push\_back(iMix);}
+\DoxyCodeLine{324             \}}
+\DoxyCodeLine{325             memManager.free(dx, initX);}
+\DoxyCodeLine{326 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{327 }
+\DoxyCodeLine{328 \textcolor{preprocessor}{\#ifdef INTERPOLATE\_PRINT\_COEFFS}}
+\DoxyCodeLine{329             std::cout << \textcolor{stringliteral}{"{}EDIIS Coefficients:"{}} << std::endl;}
+\DoxyCodeLine{330             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < nInter; i++)}
+\DoxyCodeLine{331             \{}
+\DoxyCodeLine{332                 std::cout << coeffs[i];}
+\DoxyCodeLine{333                 \textcolor{keywordflow}{if} (i == target)}
+\DoxyCodeLine{334                     std::cout << \textcolor{stringliteral}{"{}***"{}};}
+\DoxyCodeLine{335                 std::cout << std::endl;}
+\DoxyCodeLine{336             \}}
+\DoxyCodeLine{337             std::cout << std::endl;}
+\DoxyCodeLine{338 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{339         \}}
+\DoxyCodeLine{340         \textcolor{keywordflow}{return} conv;}
+\DoxyCodeLine{341     \}}
+\DoxyCodeLine{342 }
+\DoxyCodeLine{343 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

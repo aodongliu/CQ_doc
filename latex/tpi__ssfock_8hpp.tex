@@ -1,0 +1,55 @@
+\hypertarget{tpi__ssfock_8hpp}{}\doxysection{include/mointstransformer/tpi\+\_\+ssfock.hpp File Reference}
+\label{tpi__ssfock_8hpp}\index{include/mointstransformer/tpi\_ssfock.hpp@{include/mointstransformer/tpi\_ssfock.hpp}}
+{\ttfamily \#include $<$mointstransformer.\+hpp$>$}\newline
+{\ttfamily \#include $<$util/timer.\+hpp$>$}\newline
+{\ttfamily \#include $<$fockbuilder/fourcompfock/batchgd.\+hpp$>$}\newline
+{\ttfamily \#include $<$cqlinalg.\+hpp$>$}\newline
+{\ttfamily \#include $<$matrix.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/incoreritpi.\+hpp$>$}\newline
+{\ttfamily \#include $<$cqlinalg/blas1.\+hpp$>$}\newline
+{\ttfamily \#include $<$cqlinalg/blasutil.\+hpp$>$}\newline
+Include dependency graph for tpi\+\_\+ssfock.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{tpi__ssfock_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{tpi__ssfock_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{tpi__ssfock_8hpp_a733f11e74d53241161256b22fcde1c80}{ALLOCATE\+\_\+\+AND\+\_\+\+CLEAR\+\_\+\+CACHE\+\_\+\+IF\+\_\+\+NECESSARY}}(ALLOCATION)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{tpi__ssfock_8hpp_a733f11e74d53241161256b22fcde1c80}\label{tpi__ssfock_8hpp_a733f11e74d53241161256b22fcde1c80}} 
+\index{tpi\_ssfock.hpp@{tpi\_ssfock.hpp}!ALLOCATE\_AND\_CLEAR\_CACHE\_IF\_NECESSARY@{ALLOCATE\_AND\_CLEAR\_CACHE\_IF\_NECESSARY}}
+\index{ALLOCATE\_AND\_CLEAR\_CACHE\_IF\_NECESSARY@{ALLOCATE\_AND\_CLEAR\_CACHE\_IF\_NECESSARY}!tpi\_ssfock.hpp@{tpi\_ssfock.hpp}}
+\doxysubsubsection{\texorpdfstring{ALLOCATE\_AND\_CLEAR\_CACHE\_IF\_NECESSARY}{ALLOCATE\_AND\_CLEAR\_CACHE\_IF\_NECESSARY}}
+{\footnotesize\ttfamily \#define ALLOCATE\+\_\+\+AND\+\_\+\+CLEAR\+\_\+\+CACHE\+\_\+\+IF\+\_\+\+NECESSARY(\begin{DoxyParamCaption}\item[{}]{ALLOCATION }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keywordflow}{try} \{ ALLOCATION; \} \(\backslash\)}
+\DoxyCodeLine{    catch (...) \{ \(\backslash\)}
+\DoxyCodeLine{      ints\_cache\_.clear(); \(\backslash\)}
+\DoxyCodeLine{      try \{ ALLOCATION; \} \(\backslash\)}
+\DoxyCodeLine{      catch (...) \{ \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Not Enough Memory in subsetTransformTPISSFockN6"{}});\} \(\backslash\)}
+\DoxyCodeLine{    \}}
+
+\end{DoxyCode}

@@ -1,0 +1,207 @@
+\hypertarget{classChronusQ_1_1TwoPInts}{}\doxysection{ChronusQ\+::Two\+PInts\texorpdfstring{$<$}{<} IntsT \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1TwoPInts}\index{ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}}
+
+
+Templated class to handle the evaluation and storage of electron-\/electron repulsion integral tensors in a finite basis set.  
+
+
+
+
+{\ttfamily \#include $<$twopints.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::Two\+PInts\texorpdfstring{$<$}{<} IntsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TwoPInts__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::Two\+PInts\texorpdfstring{$<$}{<} IntsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{classChronusQ_1_1TwoPInts__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TwoPInts_a08ddb5aa972e5955bff32ab01eed45d6}{Two\+PInts}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TwoPInts_a5342402ed2ae6b14a6c13dac1ff09429}{Two\+PInts}} (const \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}} \&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TwoPInts_a0962ac2708c37a8c55405d8bcbd5fa0e}{Two\+PInts}} (\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}} \&\&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1TwoPInts_a154738e42cb93132faa7cb34671993b5}{Two\+PInts}} (\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem, size\+\_\+t nb, size\+\_\+t snb=0)
+\item 
+{\footnotesize template$<$typename IntsU $>$ }\\\mbox{\hyperlink{classChronusQ_1_1TwoPInts_a59743df62e6727b6c2d1011dd3f53085}{Two\+PInts}} (const \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsU $>$ \&other, int=0)
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}{sn\+Basis}} () const
+\item 
+virtual IntsT \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a2f1a21977603cc067d18ed2f8a9cd8b3}{operator()}} (size\+\_\+t, size\+\_\+t, size\+\_\+t, size\+\_\+t) const =0
+\item 
+virtual IntsT \mbox{\hyperlink{classChronusQ_1_1TwoPInts_aa78aec2ec10346df29baab79e3f5422a}{operator()}} (size\+\_\+t, size\+\_\+t) const =0
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1TwoPInts_ac4afb19c13c9966736f5bb1b2553164f}{broadcast}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} comm=\mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\+\_\+\+COMM\+\_\+\+WORLD}}, int root=0) override
+\item 
+virtual \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a545883e5276c80ebb9fb3afe313bfa2c}{$\sim$\+Two\+PInts}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1TwoPInts_a0ba00e8e7cca60d05fe3ca5bab6a2652}{s\+NB}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename IntsT$>$\newline
+class Chronus\+Q\+::\+Two\+PInts$<$ Ints\+T $>$}
+Templated class to handle the evaluation and storage of electron-\/electron repulsion integral tensors in a finite basis set. 
+
+Templated over storage type (IntsT) to allow for a seamless interface to both real-\/ and complex-\/valued basis sets (e.\+g., GTO and GIAO) 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1TwoPInts_a08ddb5aa972e5955bff32ab01eed45d6}\label{classChronusQ_1_1TwoPInts_a08ddb5aa972e5955bff32ab01eed45d6}} 
+\index{ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}!TwoPInts@{TwoPInts}}
+\index{TwoPInts@{TwoPInts}!ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{TwoPInts()}{TwoPInts()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Chronus\+Q\+::\+Two\+PInts}}$<$ IntsT $>$\+::\+Two\+PInts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TwoPInts_a5342402ed2ae6b14a6c13dac1ff09429}\label{classChronusQ_1_1TwoPInts_a5342402ed2ae6b14a6c13dac1ff09429}} 
+\index{ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}!TwoPInts@{TwoPInts}}
+\index{TwoPInts@{TwoPInts}!ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{TwoPInts()}{TwoPInts()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Chronus\+Q\+::\+Two\+PInts}}$<$ IntsT $>$\+::\+Two\+PInts (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsT $>$ \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TwoPInts_a0962ac2708c37a8c55405d8bcbd5fa0e}\label{classChronusQ_1_1TwoPInts_a0962ac2708c37a8c55405d8bcbd5fa0e}} 
+\index{ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}!TwoPInts@{TwoPInts}}
+\index{TwoPInts@{TwoPInts}!ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{TwoPInts()}{TwoPInts()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Chronus\+Q\+::\+Two\+PInts}}$<$ IntsT $>$\+::\+Two\+PInts (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsT $>$ \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TwoPInts_a154738e42cb93132faa7cb34671993b5}\label{classChronusQ_1_1TwoPInts_a154738e42cb93132faa7cb34671993b5}} 
+\index{ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}!TwoPInts@{TwoPInts}}
+\index{TwoPInts@{TwoPInts}!ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{TwoPInts()}{TwoPInts()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Chronus\+Q\+::\+Two\+PInts}}$<$ IntsT $>$\+::\+Two\+PInts (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem,  }\item[{size\+\_\+t}]{nb,  }\item[{size\+\_\+t}]{snb = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1TwoPInts_a59743df62e6727b6c2d1011dd3f53085}\label{classChronusQ_1_1TwoPInts_a59743df62e6727b6c2d1011dd3f53085}} 
+\index{ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}!TwoPInts@{TwoPInts}}
+\index{TwoPInts@{TwoPInts}!ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{TwoPInts()}{TwoPInts()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+template$<$typename IntsU $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Chronus\+Q\+::\+Two\+PInts}}$<$ IntsT $>$\+::\+Two\+PInts (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}}$<$ IntsU $>$ \&}]{other,  }\item[{int}]{ = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TwoPInts_a59743df62e6727b6c2d1011dd3f53085_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1TwoPInts_a545883e5276c80ebb9fb3afe313bfa2c}\label{classChronusQ_1_1TwoPInts_a545883e5276c80ebb9fb3afe313bfa2c}} 
+\index{ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}!````~TwoPInts@{$\sim$TwoPInts}}
+\index{````~TwoPInts@{$\sim$TwoPInts}!ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$TwoPInts()}{~TwoPInts()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+virtual \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Chronus\+Q\+::\+Two\+PInts}}$<$ IntsT $>$\+::$\sim$\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Two\+PInts}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1TwoPInts_ac4afb19c13c9966736f5bb1b2553164f}\label{classChronusQ_1_1TwoPInts_ac4afb19c13c9966736f5bb1b2553164f}} 
+\index{ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}!broadcast@{broadcast}}
+\index{broadcast@{broadcast}!ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{broadcast()}{broadcast()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Chronus\+Q\+::\+Two\+PInts}}$<$ IntsT $>$\+::broadcast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{comm = {\ttfamily \mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\+\_\+\+COMM\+\_\+\+WORLD}}},  }\item[{int}]{root = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_aa77620083422196b6797c968ffb79136}{Chronus\+Q\+::\+Particle\+Integrals}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_aefedef91bcdbacee91f731285454f4a6}{Chronus\+Q\+::\+In\+Core4index\+TPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a8b09e39ce86971c63370638315a7c904}{Chronus\+Q\+::\+In\+Core\+RITPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1DirectTPI_a3151cf436c8d7ce0283b16849d9ad888}{Chronus\+Q\+::\+Direct\+TPI$<$ Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1InCore4indexRelERI_adf35b528ae542c2b6ceaba895b0a7e7f}{Chronus\+Q\+::\+In\+Core4index\+Rel\+ERI$<$ Ints\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TwoPInts_ac4afb19c13c9966736f5bb1b2553164f_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TwoPInts_ac4afb19c13c9966736f5bb1b2553164f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1TwoPInts_aa78aec2ec10346df29baab79e3f5422a}\label{classChronusQ_1_1TwoPInts_aa78aec2ec10346df29baab79e3f5422a}} 
+\index{ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+virtual IntsT \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Chronus\+Q\+::\+Two\+PInts}}$<$ IntsT $>$\+::operator() (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{,  }\item[{size\+\_\+t}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1DirectTPI_a6f46cb6f4ee13c8a46d6949b9070344f}{Chronus\+Q\+::\+Direct\+TPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_a4eba898ed4427df6c7a2139ab4e67502}{Chronus\+Q\+::\+In\+Core4index\+TPI$<$ Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a8e39161c980926200807ddc217b609f7}{Chronus\+Q\+::\+In\+Core\+RITPI$<$ Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1TwoPInts_a2f1a21977603cc067d18ed2f8a9cd8b3}\label{classChronusQ_1_1TwoPInts_a2f1a21977603cc067d18ed2f8a9cd8b3}} 
+\index{ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+virtual IntsT \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Chronus\+Q\+::\+Two\+PInts}}$<$ IntsT $>$\+::operator() (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{,  }\item[{size\+\_\+t}]{,  }\item[{size\+\_\+t}]{,  }\item[{size\+\_\+t}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{classChronusQ_1_1DirectTPI_ad664c2528632884dcc47250145e9fd90}{Chronus\+Q\+::\+Direct\+TPI$<$ Ints\+T $>$}}, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI_ae49b43e0fba3a07caacb67a2c10fdc19}{Chronus\+Q\+::\+In\+Core4index\+TPI$<$ Ints\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1InCoreRITPI_a523226c0978cb13335bd5ca7f938bc3b}{Chronus\+Q\+::\+In\+Core\+RITPI$<$ Ints\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}\label{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f}} 
+\index{ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}!snBasis@{snBasis}}
+\index{snBasis@{snBasis}!ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{snBasis()}{snBasis()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Chronus\+Q\+::\+Two\+PInts}}$<$ IntsT $>$\+::sn\+Basis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1TwoPInts_ae2fd592d33f7313e1cde298054ee3e6f_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1TwoPInts_a0ba00e8e7cca60d05fe3ca5bab6a2652}\label{classChronusQ_1_1TwoPInts_a0ba00e8e7cca60d05fe3ca5bab6a2652}} 
+\index{ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}!sNB@{sNB}}
+\index{sNB@{sNB}!ChronusQ::TwoPInts$<$ IntsT $>$@{ChronusQ::TwoPInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{sNB}{sNB}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1TwoPInts}{Chronus\+Q\+::\+Two\+PInts}}$<$ IntsT $>$\+::s\+NB\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/particleintegrals/\mbox{\hyperlink{twopints_8hpp}{twopints.\+hpp}}\end{DoxyCompactItemize}

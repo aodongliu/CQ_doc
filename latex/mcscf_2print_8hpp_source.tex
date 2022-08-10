@@ -1,0 +1,215 @@
+\hypertarget{mcscf_2print_8hpp_source}{}\doxysection{print.\+hpp}
+\label{mcscf_2print_8hpp_source}\index{include/mcscf/print.hpp@{include/mcscf/print.hpp}}
+\mbox{\hyperlink{mcscf_2print_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mcscf_8hpp}{mcscf.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{util_2print_8hpp}{util/print.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{output_8hpp}{cxxapi/output.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{moranges_8hpp}{mointstransformer/moranges.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34   \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a43660fc6a3d6ea34668b94d3161c5dee}{MCSCFSettings::print}}(\textcolor{keywordtype}{bool} fourComp) \{}
+\DoxyCodeLine{35     }
+\DoxyCodeLine{36     std::cout << std::endl;}
+\DoxyCodeLine{37     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}* Computation Parameters:"{}});}
+\DoxyCodeLine{38     \textcolor{keywordflow}{if}(\mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a22e3d51cd544cca7a7261f4953def751}{ciAlg}} == \mbox{\hyperlink{namespaceChronusQ_a23b92b13363b305aea46ac88f40cc774a0df9524a3d4e8b048631a60d8eb1ec74}{CIDiagonalizationAlgorithm::CI\_FULL\_MATRIX}}) \{}
+\DoxyCodeLine{39       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  CI Algorithm:"{}},  \textcolor{stringliteral}{"{}Full Matrix"{}});}
+\DoxyCodeLine{40     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a22e3d51cd544cca7a7261f4953def751}{ciAlg}} == \mbox{\hyperlink{namespaceChronusQ_a23b92b13363b305aea46ac88f40cc774a3b3e69cf5805043f1826e9cd81e2512d}{CIDiagonalizationAlgorithm::CI\_DAVIDSON}}) \{}
+\DoxyCodeLine{41       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  CI Algorithm:"{}},  \textcolor{stringliteral}{"{}Davidson"{}});}
+\DoxyCodeLine{42       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  CI Maxmium Number of Iteration:"{}},  \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a6105a10aa5ca4b4c08890af3c4731ec8}{maxCIIter}});}
+\DoxyCodeLine{43       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  CI Vector Convergence Threshold:"{}}, \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_ade4bd0d4ccfbba46947893067c88718a}{ciVectorConv}});}
+\DoxyCodeLine{44       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Max Len of Davidson Subspace (x NRoots):"{}}, \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a1d4640caaa84c30c8257f6139da5d695}{maxDavidsonSpace}});}
+\DoxyCodeLine{45       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Number of Davidson Guess(x NRoots):"{}}, \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a9d9488ac6776fd136d9af91f9a28ecc4}{nDavidsonGuess}});}
+\DoxyCodeLine{46     \} \textcolor{keywordflow}{else} \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}NYI CI Algorithm"{}});}
+\DoxyCodeLine{47     }
+\DoxyCodeLine{48     \textcolor{keywordflow}{if}(this-\/>\mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_af07d28a06d02e2237bf676fef61ff10a}{doSCF}}) \{}
+\DoxyCodeLine{49       std::cout << std::endl;}
+\DoxyCodeLine{50       \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_afa24b37bff2d3110b748c06dfadaea30}{ORSettings}}.\mbox{\hyperlink{structChronusQ_1_1OrbitalRotationSettings_a9e4dae2537e47f7d76d677c740646a8d}{print}}(fourComp);}
+\DoxyCodeLine{51       }
+\DoxyCodeLine{52       std::cout << std::endl;}
+\DoxyCodeLine{53       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  SCF Maxmium Number of Iteration:"{}},    \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a7efd7ee62f45482e320921e2678a625f}{maxSCFIter}});}
+\DoxyCodeLine{54       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  SCF Energy Convergence Threshold:"{}},   \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a57275858b0a37e68c90348ee04a5e036}{scfEnergyConv}});}
+\DoxyCodeLine{55       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  SCF Gradient Convergence Threshold:"{}}, \mbox{\hyperlink{structChronusQ_1_1MCSCFSettings_a1c83250a8ad98ae0195823109d01ea29}{scfGradientConv}});}
+\DoxyCodeLine{56     \}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58   \}; \textcolor{comment}{// MCSCFSettings::print}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{61   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_aeb6514cf1b0005b7685f4c245b4ce577}{MCSCF<MatsT,IntsT>::printMCSCFHeader}}() \{}
+\DoxyCodeLine{62     }
+\DoxyCodeLine{63     \textcolor{keyword}{auto} \& mopart = this-\/>MOPartition;}
+\DoxyCodeLine{64     \textcolor{keyword}{auto} \& ref = this-\/>reference();}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     std::cout << std::endl;}
+\DoxyCodeLine{67     std::cout << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}} << std::endl;}
+\DoxyCodeLine{68     std::cout << \textcolor{stringliteral}{"{}MCSCF Settings:"{}} << std::boolalpha << std::endl << std::endl;}
+\DoxyCodeLine{69      }
+\DoxyCodeLine{70     std::cout << std::left << std::setprecision(3) << std::scientific;}
+\DoxyCodeLine{71     }
+\DoxyCodeLine{72     std::string job\_title = \textcolor{stringliteral}{"{}* Job:  "{}} + std::to\_string(ref.nC) + \textcolor{stringliteral}{"{}C-\/"{}};}
+\DoxyCodeLine{73     }
+\DoxyCodeLine{74     \textcolor{keywordflow}{if} (mopart.scheme == \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855ae5cf53c1e4b7d40256d436ef0b515aac}{CAS}}) \{}
+\DoxyCodeLine{75       job\_title += \textcolor{stringliteral}{"{}CAS("{}} + std::to\_string(mopart.nCorrE) + \textcolor{stringliteral}{"{},"{}} + std::to\_string(mopart.nCorrO)}
+\DoxyCodeLine{76                   +\textcolor{stringliteral}{"{})-\/"{}};}
+\DoxyCodeLine{77     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (mopart.scheme == \mbox{\hyperlink{namespaceChronusQ_a980378b8861d6d50739cc41e182e0855a0df50d487b9483d2a3f3cb45d81e2ae7}{RAS}}) \{}
+\DoxyCodeLine{78       job\_title += \textcolor{stringliteral}{"{}RAS("{}} + std::to\_string(mopart.nCorrE) + \textcolor{stringliteral}{"{},"{}} + std::to\_string(mopart.nCorrO)+\textcolor{stringliteral}{"{})-\/"{}};}
+\DoxyCodeLine{79     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{80       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Other than CAS has not been implemented yet "{}}); }
+\DoxyCodeLine{81     \}}
+\DoxyCodeLine{82     \textcolor{keywordflow}{if} (this-\/>settings.doSCF) \{}
+\DoxyCodeLine{83       job\_title += \textcolor{stringliteral}{"{}SCF"{}};}
+\DoxyCodeLine{84     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{85       job\_title += \textcolor{stringliteral}{"{}CI"{}};}
+\DoxyCodeLine{86     \}}
+\DoxyCodeLine{87     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,job\_title);}
+\DoxyCodeLine{88     }
+\DoxyCodeLine{89     std::cout << std::endl;}
+\DoxyCodeLine{90     \textcolor{keywordflow}{if} (ref.nC == 4)  \{}
+\DoxyCodeLine{91       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}* No-\/pair Approxmiation:"{}}, this-\/>FourCompNoPair);}
+\DoxyCodeLine{92     \}}
+\DoxyCodeLine{93     }
+\DoxyCodeLine{94     std::cout << std::endl;}
+\DoxyCodeLine{95     this-\/>printMOSpacePatition();}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97     settings.print(ref.nC == 4);}
+\DoxyCodeLine{98  }
+\DoxyCodeLine{99     std::cout << std::endl;}
+\DoxyCodeLine{100     \textcolor{keywordflow}{if}(this-\/>settings.doSCF and this-\/>StateAverage) \{}
+\DoxyCodeLine{101       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  State Average is ON, with weights:"{}});}
+\DoxyCodeLine{102       \textcolor{keyword}{auto} \& \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}} = this-\/>SAWeight;}
+\DoxyCodeLine{103       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < this-\/>NStates; i ++)}
+\DoxyCodeLine{104         std::cout << \textcolor{stringliteral}{"{}        State "{}} << std::setw(5) << std::right << i << \textcolor{stringliteral}{"{}:"{}} }
+\DoxyCodeLine{105                   << std::setw(16) <<  \mbox{\hyperlink{lebedev__110_8cxx_a025e7807c1d898d829ddfc91a937fc78}{weights}}[i] << std::endl;}
+\DoxyCodeLine{106       }
+\DoxyCodeLine{107       std::cout << std::left << std::endl;}
+\DoxyCodeLine{108     \}}
+\DoxyCodeLine{109     }
+\DoxyCodeLine{110     std::cout << std::endl << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}} << std::endl << std::endl;}
+\DoxyCodeLine{111   }
+\DoxyCodeLine{112   \}; \textcolor{comment}{//MCSCF::printMCSCFHeader}}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{115   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_af5fa3bbb79aa6beac9589317cba8c15e}{MCSCF<MatsT,IntsT>::printStateEnergy}}() \{}
+\DoxyCodeLine{116     }
+\DoxyCodeLine{117     std::cout << std::left << std::endl;}
+\DoxyCodeLine{118     }
+\DoxyCodeLine{119     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout, \textcolor{stringliteral}{"{}Energy at this Cycle:"{}});}
+\DoxyCodeLine{120     std::cout << std::right << std::setprecision(10) << std::scientific;}
+\DoxyCodeLine{121     }
+\DoxyCodeLine{122     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < this-\/>NStates; i++)}
+\DoxyCodeLine{123       std::cout << \textcolor{stringliteral}{"{}      State "{}} << std::setw(5) << i + 1 << \textcolor{stringliteral}{"{}:"{}} }
+\DoxyCodeLine{124                 << std::setw(20) << this-\/>StateEnergy[i] << std::endl;;}
+\DoxyCodeLine{125   }
+\DoxyCodeLine{126     std::cout << std::left << std::endl;}
+\DoxyCodeLine{127   \} \textcolor{comment}{// printStateEnergy }}
+\DoxyCodeLine{128   }
+\DoxyCodeLine{129   }
+\DoxyCodeLine{130   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{131   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a76d600b55995046bdee125265e15ff3f}{printMCSCFState}}(std::ostream \&out, \textcolor{keywordtype}{size\_t} i, \textcolor{keywordtype}{double} energy, }
+\DoxyCodeLine{132     MatsT* C, std::vector<size\_t> \& sorted\_CAddr, }
+\DoxyCodeLine{133     \textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} n\_item\_per\_row = 5) \{}
+\DoxyCodeLine{134     }
+\DoxyCodeLine{135     out << std::fixed << std::right<< std::setprecision(10);}
+\DoxyCodeLine{136     out.fill(\textcolor{charliteral}{' '});}
+\DoxyCodeLine{137     }
+\DoxyCodeLine{138     out << std::endl <<  \textcolor{stringliteral}{"{}State:"{}} << std::setw(4) << i + 1 << \textcolor{stringliteral}{"{}  Energy (Hartree):"{}} }
+\DoxyCodeLine{139     << std::setw(16) << energy <<  std::endl;}
+\DoxyCodeLine{140     }
+\DoxyCodeLine{141     out << std::fixed << std::right<< std::setprecision(7);}
+\DoxyCodeLine{142     }
+\DoxyCodeLine{143     \textcolor{keywordtype}{size\_t} C\_length = 10;}
+\DoxyCodeLine{144     \textcolor{keywordtype}{size\_t} CAddr;}
+\DoxyCodeLine{145     }
+\DoxyCodeLine{146     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} j = 0ul; j < (N-\/1)/n\_item\_per\_row + 1; j++) \{}
+\DoxyCodeLine{147       \textcolor{keywordtype}{size\_t} l = j*n\_item\_per\_row;}
+\DoxyCodeLine{148       \textcolor{keywordtype}{size\_t} r = std::min((j+1)*n\_item\_per\_row, N);}
+\DoxyCodeLine{149       }
+\DoxyCodeLine{150       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} p = l; p < r; p++) \{}
+\DoxyCodeLine{151         CAddr = sorted\_CAddr[p]; }
+\DoxyCodeLine{152         out << \textcolor{stringliteral}{"{}("{}} << std::setw(5) << CAddr << \textcolor{stringliteral}{"{}) "{}} }
+\DoxyCodeLine{153             << std::setw(C\_length) << std::real(C[CAddr]); }
+\DoxyCodeLine{154         \textcolor{keywordflow}{if}(std::is\_same<MatsT, dcomplex>::value)  }
+\DoxyCodeLine{155           out << \textcolor{stringliteral}{"{} "{}} << std::setw(C\_length) << std::imag(C[CAddr]);}
+\DoxyCodeLine{156         out << \textcolor{stringliteral}{"{}  "{}};  }
+\DoxyCodeLine{157       \}}
+\DoxyCodeLine{158       out << std::endl;}
+\DoxyCodeLine{159     \}}
+\DoxyCodeLine{160   }
+\DoxyCodeLine{161   \}; \textcolor{comment}{// printMCSCFState}}
+\DoxyCodeLine{162   }
+\DoxyCodeLine{163   }
+\DoxyCodeLine{164   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{165   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MCSCF_af9c51eef00554a85cd9e8cf6c8180faa}{MCSCF<MatsT,IntsT>::printMCSCFFooter}}( ) \{}
+\DoxyCodeLine{166     }
+\DoxyCodeLine{167     std::cout << std::endl << \textcolor{stringliteral}{"{}MCSCF Results:"{}} << std::endl;}
+\DoxyCodeLine{168     std::cout << \mbox{\hyperlink{namespaceChronusQ_aea3bdcfe8284fa0cf16ef6866b5a99a7}{BannerTop}} << std::endl;}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170     this-\/>printMOInfo(std::cout);}
+\DoxyCodeLine{171     }
+\DoxyCodeLine{172     std::cout << \textcolor{stringliteral}{"{} *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*"{}} << std::endl;      }
+\DoxyCodeLine{173     std::cout << \textcolor{stringliteral}{"{} * Configuration Interaction (CI) Eigen States *"{}} << std::endl;      }
+\DoxyCodeLine{174     std::cout << \textcolor{stringliteral}{"{} *-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*"{}} << std::endl;      }
+\DoxyCodeLine{175     }
+\DoxyCodeLine{176     std::cout << std::endl << \mbox{\hyperlink{namespaceChronusQ_aea3bdcfe8284fa0cf16ef6866b5a99a7}{BannerTop}} << std::endl;}
+\DoxyCodeLine{177     }
+\DoxyCodeLine{178     \textcolor{keywordtype}{size\_t} NDet  = this-\/>NDet;}
+\DoxyCodeLine{179     \textcolor{keywordtype}{size\_t} nS    = this-\/>NStates;}
+\DoxyCodeLine{180     \textcolor{keywordtype}{size\_t} NPrintC = std::min(NDet, \textcolor{keywordtype}{size\_t}(25));   }
+\DoxyCodeLine{181     std::vector<size\_t> kLargestCAddr = std::vector<size\_t>(NPrintC, 0);}
+\DoxyCodeLine{182     std::vector<MatsT> kLargestC = std::vector<MatsT>(NPrintC, MatsT(0.));}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nS; i++) \{ }
+\DoxyCodeLine{185        }
+\DoxyCodeLine{186        \textcolor{comment}{// sort coeffients based on the norm }}
+\DoxyCodeLine{187        \textcolor{keyword}{auto} C = this-\/>CIVecs[i];}
+\DoxyCodeLine{188        std::vector<size\_t> Cindx(NDet);        }
+\DoxyCodeLine{189        std::iota(Cindx.begin(), Cindx.end(), 0);}
+\DoxyCodeLine{190        }
+\DoxyCodeLine{191        std::stable\_sort(Cindx.begin(), Cindx.end(), }
+\DoxyCodeLine{192          [\&] (\textcolor{keywordtype}{size\_t} i , \textcolor{keywordtype}{size\_t} j) \{}
+\DoxyCodeLine{193            return std::norm(C[i]) > std::norm(C[j]);}
+\DoxyCodeLine{194          \}}
+\DoxyCodeLine{195        );}
+\DoxyCodeLine{196        }
+\DoxyCodeLine{197        \textcolor{comment}{// only print k Largerst coefficient}}
+\DoxyCodeLine{198        \mbox{\hyperlink{namespaceChronusQ_a76d600b55995046bdee125265e15ff3f}{printMCSCFState}}(std::cout, i, this-\/>StateEnergy[i], C, Cindx, NPrintC);  }
+\DoxyCodeLine{199     \}}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201     this-\/>print1RDMs();}
+\DoxyCodeLine{202     }
+\DoxyCodeLine{203     std::cout << \mbox{\hyperlink{namespaceChronusQ_aea3bdcfe8284fa0cf16ef6866b5a99a7}{BannerTop}} << std::endl;}
+\DoxyCodeLine{204   }
+\DoxyCodeLine{205   \}; \textcolor{comment}{//MCSCF::printMCSCFFooter}}
+\DoxyCodeLine{206  }
+\DoxyCodeLine{207 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{208 }
+\DoxyCodeLine{209 }
+
+\end{DoxyCode}

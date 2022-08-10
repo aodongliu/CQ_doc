@@ -1,0 +1,658 @@
+\hypertarget{classChronusQ_1_1VectorInts}{}\doxysection{ChronusQ\+::Vector\+Ints\texorpdfstring{$<$}{<} IntsT \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1VectorInts}\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+
+
+Templated class to handle the evaluation and storage of dipole, quadrupole, and octupole integral matrices in a finite basis set.  
+
+
+
+
+{\ttfamily \#include $<$vectorints.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::Vector\+Ints\texorpdfstring{$<$}{<} IntsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{classChronusQ_1_1VectorInts__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::Vector\+Ints\texorpdfstring{$<$}{<} IntsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{classChronusQ_1_1VectorInts__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1VectorInts_a6666c39b96f437ecadff13d215770127}{Vector\+Ints}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1VectorInts_ab168af8988c9ac98358c664635d527f6}{Vector\+Ints}} (const \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}} \&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1VectorInts_a4977feee34e955d7b330af2a1170c4dd}{Vector\+Ints}} (\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}} \&\&)=default
+\item 
+\mbox{\hyperlink{classChronusQ_1_1VectorInts_ac533683164c1fa2abe893e7aaeb6d929}{Vector\+Ints}} (\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem, size\+\_\+t nb, size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts_ac13e85455a93c1e9291d00cc09173fba}{order}}, bool symm)
+\item 
+{\footnotesize template$<$typename IntsU $>$ }\\\mbox{\hyperlink{classChronusQ_1_1VectorInts_a937061c46d433b0d473f566a0999fd85}{Vector\+Ints}} (const \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}}$<$ IntsU $>$ \&other, int=0)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}} \& \mbox{\hyperlink{classChronusQ_1_1VectorInts_a62d32eb24022aa92d2df3f37c2b23aee}{operator=}} (const \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}} \&other)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}} \& \mbox{\hyperlink{classChronusQ_1_1VectorInts_a8b7055d171d07579af26c8d7a9483b00}{operator=}} (\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}} \&\&other)
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts_a6250a0b65c5dacf8cea94008bcad8ae9}{size}} () const
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1VectorInts_a2de073f3e44e6e2404b04bd52d2a309f}{symmetric}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts_ac13e85455a93c1e9291d00cc09173fba}{order}} () const
+\item 
+\mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1VectorInts_a056d4d5542d7c16f6e6bc7be17e9f600}{operator\mbox{[}$\,$\mbox{]}}} (size\+\_\+t i)
+\item 
+const \mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1VectorInts_aeb6082447c141fef838bedc0bcac7842}{operator\mbox{[}$\,$\mbox{]}}} (size\+\_\+t i) const
+\item 
+\mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1VectorInts_aaf9cc487a57e0504cbafff252eaf5095}{operator\mbox{[}$\,$\mbox{]}}} (std\+::string s)
+\item 
+const \mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1VectorInts_a6f35d3f4fc4c81a7325b7b6ff74f65b6}{operator\mbox{[}$\,$\mbox{]}}} (std\+::string s) const
+\item 
+std\+::vector$<$ IntsT $\ast$ $>$ \mbox{\hyperlink{classChronusQ_1_1VectorInts_a7c0e0080570666718cf6097944ff6f4e}{pointers}} ()
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1VectorInts_a8d84f5d4a02c64ee077a9f347903ef29}{compute\+AOInts}} (\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}, const \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{Hamiltonian\+Options}} \&)
+\begin{DoxyCompactList}\small\item\em Evaluate AO \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} according to a basis set. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1VectorInts_adb16b4c5102bee2d2db0ed49144f7cfe}{compute\+AOInts}} (\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&, \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}, const \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{Hamiltonian\+Options}} \&)
+\begin{DoxyCompactList}\small\item\em Evaluate AO \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} according to two basis sets. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1VectorInts_abe8a54c5867f06ab2ba410fa435cbadf}{clear}} ()
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1VectorInts_a22dc8cd7d18b2be0a90e77c6ca59f7b4}{output}} (std\+::ostream \&out, const std\+::string \&s=\char`\"{}\char`\"{}, bool print\+Full=false) const
+\item 
+virtual void \mbox{\hyperlink{classChronusQ_1_1VectorInts_adf7d51995d98b146840245ab95ad027a}{broadcast}} (\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} comm=\mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\+\_\+\+COMM\+\_\+\+WORLD}}, int root=0) override
+\item 
+{\footnotesize template$<$typename IntsU $>$ }\\\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}}$<$ IntsU $>$ \mbox{\hyperlink{classChronusQ_1_1VectorInts_a74a9317be688e8510b8fb9e1667d9489}{spatial\+To\+Spin\+Block}} () const
+\item 
+{\footnotesize template$<$typename TransT $>$ }\\\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}}$<$ typename std\+::conditional$<$(std\+::is\+\_\+same$<$ IntsT, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $>$\+::value or std\+::is\+\_\+same$<$ TransT, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $>$\+::value), \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, double $>$\+::type $>$ \mbox{\hyperlink{classChronusQ_1_1VectorInts_acf2be52163a7f58d222a9378995e5669}{transform}} (char TRANS, const TransT $\ast$T, int NT, int LDT) const
+\item 
+\mbox{\hyperlink{classChronusQ_1_1VectorInts_ac57d2c4cb67ceea553021d8f342f01ef}{$\sim$\+Vector\+Ints}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1VectorInts_a6fc126a19da3242a89620a15b6c2cfab}{compute\+AOInts}} (\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&basis, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}} op, const \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{Hamiltonian\+Options}} \&options)
+\begin{DoxyCompactList}\small\item\em Evaluate AO \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} according to a basis set. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1VectorInts_ad6d9507d58eb7dc5c4232751e4780255}{compute\+AOInts}} (\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&basis, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&em\+Pert, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}} op, const \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{Hamiltonian\+Options}} \&options)
+\begin{DoxyCompactList}\small\item\em Evaluate AO \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} according to a basis set. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts_a78bedaae3469560cd6af3257f767314e}{n\+Components\+On\+Order}} (size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts_ac13e85455a93c1e9291d00cc09173fba}{order}}, bool \mbox{\hyperlink{classChronusQ_1_1VectorInts_a2de073f3e44e6e2404b04bd52d2a309f}{symmetric}})
+\item 
+static std\+::string \mbox{\hyperlink{classChronusQ_1_1VectorInts_ae4cbca1492bd372099d90a8f7d11c35d}{index\+To\+Label}} (size\+\_\+t i, size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts_ac13e85455a93c1e9291d00cc09173fba}{order}}, bool \mbox{\hyperlink{classChronusQ_1_1VectorInts_a2de073f3e44e6e2404b04bd52d2a309f}{symmetric}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1VectorInts_aa9d18e5bc2a9a3786989546f55c8497b}{order\+Check}} (size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts_ac13e85455a93c1e9291d00cc09173fba}{order}}) const
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts_aa6b6f93a6501a38a3b3cae3c395ec14c}{n\+Components}} () const
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts_a0d1496d45f9a8b666c38aef9362fada2}{index}} (std\+::vector$<$ size\+\_\+t $>$ comps) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::vector$<$ size\+\_\+t $>$ \mbox{\hyperlink{classChronusQ_1_1VectorInts_a7d4e3cf6a44f94970d54867122b10f00}{indices}} (std\+::string s)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts_ad42dad44da152d6c589c660f4b6acae0}{order\+\_\+}} = 0
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1VectorInts_a30eb2592ccd86272f2ea5679b9d6e2fe}{symmetric\+\_\+}} = false
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ IntsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1VectorInts_aeecb9a7e7418b3451ef03f63b14da12d}{components\+\_\+}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename IntsU $>$ }\\class \mbox{\hyperlink{classChronusQ_1_1VectorInts_a9f832457f4500c4e4aebc50346bc1e32}{Vector\+Ints}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename IntsT$>$\newline
+class Chronus\+Q\+::\+Vector\+Ints$<$ Ints\+T $>$}
+Templated class to handle the evaluation and storage of dipole, quadrupole, and octupole integral matrices in a finite basis set. 
+
+Templated over storage type (IntsT) to allow for a seamless interface to both real-\/ and complex-\/valued basis sets (e.\+g., GTO and GIAO) 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a6666c39b96f437ecadff13d215770127}\label{classChronusQ_1_1VectorInts_a6666c39b96f437ecadff13d215770127}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!VectorInts@{VectorInts}}
+\index{VectorInts@{VectorInts}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{VectorInts()}{VectorInts()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::\+Vector\+Ints (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_ab168af8988c9ac98358c664635d527f6}\label{classChronusQ_1_1VectorInts_ab168af8988c9ac98358c664635d527f6}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!VectorInts@{VectorInts}}
+\index{VectorInts@{VectorInts}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{VectorInts()}{VectorInts()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::\+Vector\+Ints (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}}$<$ IntsT $>$ \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a4977feee34e955d7b330af2a1170c4dd}\label{classChronusQ_1_1VectorInts_a4977feee34e955d7b330af2a1170c4dd}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!VectorInts@{VectorInts}}
+\index{VectorInts@{VectorInts}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{VectorInts()}{VectorInts()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::\+Vector\+Ints (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}}$<$ IntsT $>$ \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_ac533683164c1fa2abe893e7aaeb6d929}\label{classChronusQ_1_1VectorInts_ac533683164c1fa2abe893e7aaeb6d929}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!VectorInts@{VectorInts}}
+\index{VectorInts@{VectorInts}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{VectorInts()}{VectorInts()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::\+Vector\+Ints (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem,  }\item[{size\+\_\+t}]{nb,  }\item[{size\+\_\+t}]{order,  }\item[{bool}]{symm }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_ac533683164c1fa2abe893e7aaeb6d929_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a937061c46d433b0d473f566a0999fd85}\label{classChronusQ_1_1VectorInts_a937061c46d433b0d473f566a0999fd85}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!VectorInts@{VectorInts}}
+\index{VectorInts@{VectorInts}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{VectorInts()}{VectorInts()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+template$<$typename IntsU $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::\+Vector\+Ints (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}}$<$ IntsU $>$ \&}]{other,  }\item[{int}]{ = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_a937061c46d433b0d473f566a0999fd85_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_ac57d2c4cb67ceea553021d8f342f01ef}\label{classChronusQ_1_1VectorInts_ac57d2c4cb67ceea553021d8f342f01ef}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!````~VectorInts@{$\sim$VectorInts}}
+\index{````~VectorInts@{$\sim$VectorInts}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$VectorInts()}{~VectorInts()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::$\sim$\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_adf7d51995d98b146840245ab95ad027a}\label{classChronusQ_1_1VectorInts_adf7d51995d98b146840245ab95ad027a}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!broadcast@{broadcast}}
+\index{broadcast@{broadcast}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{broadcast()}{broadcast()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::broadcast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{comm = {\ttfamily \mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\+\_\+\+COMM\+\_\+\+WORLD}}},  }\item[{int}]{root = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_aa77620083422196b6797c968ffb79136}{Chronus\+Q\+::\+Particle\+Integrals}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_adf7d51995d98b146840245ab95ad027a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_abe8a54c5867f06ab2ba410fa435cbadf}\label{classChronusQ_1_1VectorInts_abe8a54c5867f06ab2ba410fa435cbadf}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!clear@{clear}}
+\index{clear@{clear}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a33c46ba8b6ff57b5df6175995f860ddd}{Chronus\+Q\+::\+Particle\+Integrals}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_adb16b4c5102bee2d2db0ed49144f7cfe}\label{classChronusQ_1_1VectorInts_adb16b4c5102bee2d2db0ed49144f7cfe}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!computeAOInts@{computeAOInts}}
+\index{computeAOInts@{computeAOInts}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeAOInts()}{computeAOInts()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::compute\+AOInts (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{,  }\item[{\mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}}]{,  }\item[{const \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{Hamiltonian\+Options}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Evaluate AO \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} according to two basis sets. 
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a082807bac6a92b20c1e8e1ff65b397c4}{Chronus\+Q\+::\+Particle\+Integrals}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_adb16b4c5102bee2d2db0ed49144f7cfe_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a8d84f5d4a02c64ee077a9f347903ef29}\label{classChronusQ_1_1VectorInts_a8d84f5d4a02c64ee077a9f347903ef29}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!computeAOInts@{computeAOInts}}
+\index{computeAOInts@{computeAOInts}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeAOInts()}{computeAOInts()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::compute\+AOInts (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{,  }\item[{\mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}}]{,  }\item[{const \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{Hamiltonian\+Options}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Evaluate AO \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} according to a basis set. 
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_ab10e3e2c8b570a2ed6c85f0288c85644}{Chronus\+Q\+::\+Particle\+Integrals}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_ad6d9507d58eb7dc5c4232751e4780255}\label{classChronusQ_1_1VectorInts_ad6d9507d58eb7dc5c4232751e4780255}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!computeAOInts@{computeAOInts}}
+\index{computeAOInts@{computeAOInts}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeAOInts()}{computeAOInts()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $>$\+::compute\+AOInts (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{,  }\item[{\mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}}]{,  }\item[{const \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{Hamiltonian\+Options}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Evaluate AO \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} according to a basis set. 
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_ab10e3e2c8b570a2ed6c85f0288c85644}{Chronus\+Q\+::\+Particle\+Integrals}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_ad6d9507d58eb7dc5c4232751e4780255_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a6fc126a19da3242a89620a15b6c2cfab}\label{classChronusQ_1_1VectorInts_a6fc126a19da3242a89620a15b6c2cfab}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!computeAOInts@{computeAOInts}}
+\index{computeAOInts@{computeAOInts}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeAOInts()}{computeAOInts()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ double $>$\+::compute\+AOInts (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{,  }\item[{\mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554}{OPERATOR}}}]{,  }\item[{const \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{Hamiltonian\+Options}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Evaluate AO \mbox{\hyperlink{classChronusQ_1_1Integrals}{Integrals}} according to a basis set. 
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_ab10e3e2c8b570a2ed6c85f0288c85644}{Chronus\+Q\+::\+Particle\+Integrals}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_a6fc126a19da3242a89620a15b6c2cfab_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a0d1496d45f9a8b666c38aef9362fada2}\label{classChronusQ_1_1VectorInts_a0d1496d45f9a8b666c38aef9362fada2}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!index@{index}}
+\index{index@{index}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{index()}{index()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::index (\begin{DoxyParamCaption}\item[{std\+::vector$<$ size\+\_\+t $>$}]{comps }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_a0d1496d45f9a8b666c38aef9362fada2_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{classChronusQ_1_1VectorInts_a0d1496d45f9a8b666c38aef9362fada2_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_ae4cbca1492bd372099d90a8f7d11c35d}\label{classChronusQ_1_1VectorInts_ae4cbca1492bd372099d90a8f7d11c35d}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!indexToLabel@{indexToLabel}}
+\index{indexToLabel@{indexToLabel}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{indexToLabel()}{indexToLabel()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+static std\+::string \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::index\+To\+Label (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{i,  }\item[{size\+\_\+t}]{order,  }\item[{bool}]{symmetric }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{classChronusQ_1_1VectorInts_ae4cbca1492bd372099d90a8f7d11c35d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_ae4cbca1492bd372099d90a8f7d11c35d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a7d4e3cf6a44f94970d54867122b10f00}\label{classChronusQ_1_1VectorInts_a7d4e3cf6a44f94970d54867122b10f00}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!indices@{indices}}
+\index{indices@{indices}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{indices()}{indices()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+static std\+::vector$<$ size\+\_\+t $>$ \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::indices (\begin{DoxyParamCaption}\item[{std\+::string}]{s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [protected]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{classChronusQ_1_1VectorInts_a7d4e3cf6a44f94970d54867122b10f00_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_aa6b6f93a6501a38a3b3cae3c395ec14c}\label{classChronusQ_1_1VectorInts_aa6b6f93a6501a38a3b3cae3c395ec14c}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!nComponents@{nComponents}}
+\index{nComponents@{nComponents}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{nComponents()}{nComponents()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::n\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_aa6b6f93a6501a38a3b3cae3c395ec14c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{classChronusQ_1_1VectorInts_aa6b6f93a6501a38a3b3cae3c395ec14c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a78bedaae3469560cd6af3257f767314e}\label{classChronusQ_1_1VectorInts_a78bedaae3469560cd6af3257f767314e}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!nComponentsOnOrder@{nComponentsOnOrder}}
+\index{nComponentsOnOrder@{nComponentsOnOrder}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{nComponentsOnOrder()}{nComponentsOnOrder()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+static size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::n\+Components\+On\+Order (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{order,  }\item[{bool}]{symmetric }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classChronusQ_1_1VectorInts_a78bedaae3469560cd6af3257f767314e_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_a78bedaae3469560cd6af3257f767314e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a62d32eb24022aa92d2df3f37c2b23aee}\label{classChronusQ_1_1VectorInts_a62d32eb24022aa92d2df3f37c2b23aee}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}} \& \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}}$<$ IntsT $>$ \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a8b7055d171d07579af26c8d7a9483b00}\label{classChronusQ_1_1VectorInts_a8b7055d171d07579af26c8d7a9483b00}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}} \& \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}}$<$ IntsT $>$ \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a056d4d5542d7c16f6e6bc7be17e9f600}\label{classChronusQ_1_1VectorInts_a056d4d5542d7c16f6e6bc7be17e9f600}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{classChronusQ_1_1VectorInts_a056d4d5542d7c16f6e6bc7be17e9f600_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_aeb6082447c141fef838bedc0bcac7842}\label{classChronusQ_1_1VectorInts_aeb6082447c141fef838bedc0bcac7842}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+const \mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{i }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_aaf9cc487a57e0504cbafff252eaf5095}\label{classChronusQ_1_1VectorInts_aaf9cc487a57e0504cbafff252eaf5095}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{std\+::string}]{s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_aaf9cc487a57e0504cbafff252eaf5095_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a6f35d3f4fc4c81a7325b7b6ff74f65b6}\label{classChronusQ_1_1VectorInts_a6f35d3f4fc4c81a7325b7b6ff74f65b6}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+const \mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$ IntsT $>$ \& \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{std\+::string}]{s }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_a6f35d3f4fc4c81a7325b7b6ff74f65b6_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_ac13e85455a93c1e9291d00cc09173fba}\label{classChronusQ_1_1VectorInts_ac13e85455a93c1e9291d00cc09173fba}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!order@{order}}
+\index{order@{order}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{order()}{order()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::order (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_ac13e85455a93c1e9291d00cc09173fba_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_aa9d18e5bc2a9a3786989546f55c8497b}\label{classChronusQ_1_1VectorInts_aa9d18e5bc2a9a3786989546f55c8497b}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!orderCheck@{orderCheck}}
+\index{orderCheck@{orderCheck}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{orderCheck()}{orderCheck()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::order\+Check (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{order }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_aa9d18e5bc2a9a3786989546f55c8497b_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_aa9d18e5bc2a9a3786989546f55c8497b_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a22dc8cd7d18b2be0a90e77c6ca59f7b4}\label{classChronusQ_1_1VectorInts_a22dc8cd7d18b2be0a90e77c6ca59f7b4}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!output@{output}}
+\index{output@{output}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{output()}{output()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+virtual void \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::output (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{const std\+::string \&}]{s = {\ttfamily \char`\"{}\char`\"{}},  }\item[{bool}]{print\+Full = {\ttfamily false} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1ParticleIntegrals_a2b5fb01eb6c205300395e6eacc2314b1}{Chronus\+Q\+::\+Particle\+Integrals}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_a22dc8cd7d18b2be0a90e77c6ca59f7b4_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a7c0e0080570666718cf6097944ff6f4e}\label{classChronusQ_1_1VectorInts_a7c0e0080570666718cf6097944ff6f4e}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!pointers@{pointers}}
+\index{pointers@{pointers}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{pointers()}{pointers()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+std\+::vector$<$ IntsT $\ast$ $>$ \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::pointers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_a7c0e0080570666718cf6097944ff6f4e_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a6250a0b65c5dacf8cea94008bcad8ae9}\label{classChronusQ_1_1VectorInts_a6250a0b65c5dacf8cea94008bcad8ae9}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!size@{size}}
+\index{size@{size}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{classChronusQ_1_1VectorInts_a6250a0b65c5dacf8cea94008bcad8ae9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a74a9317be688e8510b8fb9e1667d9489}\label{classChronusQ_1_1VectorInts_a74a9317be688e8510b8fb9e1667d9489}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!spatialToSpinBlock@{spatialToSpinBlock}}
+\index{spatialToSpinBlock@{spatialToSpinBlock}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{spatialToSpinBlock()}{spatialToSpinBlock()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+template$<$typename IntsU $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}}$<$ IntsU $>$ \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::spatial\+To\+Spin\+Block (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_a74a9317be688e8510b8fb9e1667d9489_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a2de073f3e44e6e2404b04bd52d2a309f}\label{classChronusQ_1_1VectorInts_a2de073f3e44e6e2404b04bd52d2a309f}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!symmetric@{symmetric}}
+\index{symmetric@{symmetric}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{symmetric()}{symmetric()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::symmetric (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_a2de073f3e44e6e2404b04bd52d2a309f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_acf2be52163a7f58d222a9378995e5669}\label{classChronusQ_1_1VectorInts_acf2be52163a7f58d222a9378995e5669}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!transform@{transform}}
+\index{transform@{transform}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{transform()}{transform()}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+template$<$typename TransT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}}$<$ typename std\+::conditional$<$(std\+::is\+\_\+same$<$ IntsT, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $>$\+::value or std\+::is\+\_\+same$<$ TransT, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} $>$\+::value), \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}, double $>$\+::type $>$ \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::transform (\begin{DoxyParamCaption}\item[{char}]{TRANS,  }\item[{const TransT $\ast$}]{T,  }\item[{int}]{NT,  }\item[{int}]{LDT }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1VectorInts_acf2be52163a7f58d222a9378995e5669_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=192pt]{classChronusQ_1_1VectorInts_acf2be52163a7f58d222a9378995e5669_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a9f832457f4500c4e4aebc50346bc1e32}\label{classChronusQ_1_1VectorInts_a9f832457f4500c4e4aebc50346bc1e32}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!VectorInts@{VectorInts}}
+\index{VectorInts@{VectorInts}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{VectorInts}{VectorInts}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+template$<$typename IntsU $>$ \\
+friend class \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Vector\+Ints}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_aeecb9a7e7418b3451ef03f63b14da12d}\label{classChronusQ_1_1VectorInts_aeecb9a7e7418b3451ef03f63b14da12d}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!components\_@{components\_}}
+\index{components\_@{components\_}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{components\_}{components\_}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1OnePInts}{One\+PInts}}$<$IntsT$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::components\+\_\+\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_ad42dad44da152d6c589c660f4b6acae0}\label{classChronusQ_1_1VectorInts_ad42dad44da152d6c589c660f4b6acae0}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!order\_@{order\_}}
+\index{order\_@{order\_}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{order\_}{order\_}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+size\+\_\+t \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::order\+\_\+ = 0\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1VectorInts_a30eb2592ccd86272f2ea5679b9d6e2fe}\label{classChronusQ_1_1VectorInts_a30eb2592ccd86272f2ea5679b9d6e2fe}} 
+\index{ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}!symmetric\_@{symmetric\_}}
+\index{symmetric\_@{symmetric\_}!ChronusQ::VectorInts$<$ IntsT $>$@{ChronusQ::VectorInts$<$ IntsT $>$}}
+\doxysubsubsection{\texorpdfstring{symmetric\_}{symmetric\_}}
+{\footnotesize\ttfamily template$<$typename IntsT $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1VectorInts}{Chronus\+Q\+::\+Vector\+Ints}}$<$ IntsT $>$\+::symmetric\+\_\+ = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/particleintegrals/\mbox{\hyperlink{vectorints_8hpp}{vectorints.\+hpp}}\end{DoxyCompactItemize}

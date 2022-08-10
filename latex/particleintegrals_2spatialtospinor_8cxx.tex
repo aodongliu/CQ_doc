@@ -1,0 +1,140 @@
+\hypertarget{particleintegrals_2spatialtospinor_8cxx}{}\doxysection{src/particleintegrals/spatialtospinor.cxx File Reference}
+\label{particleintegrals_2spatialtospinor_8cxx}\index{src/particleintegrals/spatialtospinor.cxx@{src/particleintegrals/spatialtospinor.cxx}}
+{\ttfamily \#include $<$particleintegrals/twopints/incore4indexreleri.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/incore4indextpi.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/twopints/incoreritpi.\+hpp$>$}\newline
+{\ttfamily \#include $<$particleintegrals/onepints/relativisticints.\+hpp$>$}\newline
+{\ttfamily \#include $<$matrix.\+hpp$>$}\newline
+{\ttfamily \#include $<$cqlinalg.\+hpp$>$}\newline
+{\ttfamily \#include $<$physcon.\+hpp$>$}\newline
+Include dependency graph for spatialtospinor.\+cxx\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{particleintegrals_2spatialtospinor_8cxx__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{particleintegrals_2spatialtospinor_8cxx_a2b9ce4f49743f493e0b9ef996c12293e}{PAULITOSPINOR\+\_\+I}}(SPIN\+\_\+M,  SPIN\+\_\+N,  SCALE\+\_\+)
+\item 
+\#define \mbox{\hyperlink{particleintegrals_2spatialtospinor_8cxx_a0a74c3c1bf53694e993b80f37d626eb1}{PAULITOSPINOR\+\_\+X}}(SPIN\+\_\+M,  SPIN\+\_\+N,  SCALE\+\_\+)
+\item 
+\#define \mbox{\hyperlink{particleintegrals_2spatialtospinor_8cxx_a9084311f464f96fe4ac3eb99efbbd433}{PAULITOSPINOR\+\_\+Y}}(SPIN\+\_\+M,  SPIN\+\_\+N,  SCALE\+\_\+)
+\item 
+\#define \mbox{\hyperlink{particleintegrals_2spatialtospinor_8cxx_a890a4ef5fe55553dbd01ba83a7090b9f}{PAULITOSPINOR\+\_\+Z}}(SPIN\+\_\+M,  SPIN\+\_\+N,  SCALE\+\_\+)
+\item 
+\#define \mbox{\hyperlink{particleintegrals_2spatialtospinor_8cxx_a67f6afb6acd9ccc8dbd57d2d3fd786ec}{PAULITOSPINOR\+\_\+4\+INDEXTPI}}(OPR1,  OPR2)
+\item 
+\#define \mbox{\hyperlink{particleintegrals_2spatialtospinor_8cxx_ad7f25416db57a11d72214f1254dc1269}{TRY\+\_\+\+PAULITOSPINOR\+\_\+4\+INDEXTPI}}(OP1,  OP2)
+\item 
+\#define \mbox{\hyperlink{particleintegrals_2spatialtospinor_8cxx_a77c122168cd06ef8c6da345ba1b80824}{ADD\+\_\+\+COMPONENTS\+\_\+\+TO\+\_\+\+SPINOR\+\_\+\+RELERI}}(TRANS1,  TRANS2,  SCALE,  COMP,  SPINOR)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{particleintegrals_2spatialtospinor_8cxx_a77c122168cd06ef8c6da345ba1b80824}\label{particleintegrals_2spatialtospinor_8cxx_a77c122168cd06ef8c6da345ba1b80824}} 
+\index{spatialtospinor.cxx@{spatialtospinor.cxx}!ADD\_COMPONENTS\_TO\_SPINOR\_RELERI@{ADD\_COMPONENTS\_TO\_SPINOR\_RELERI}}
+\index{ADD\_COMPONENTS\_TO\_SPINOR\_RELERI@{ADD\_COMPONENTS\_TO\_SPINOR\_RELERI}!spatialtospinor.cxx@{spatialtospinor.cxx}}
+\doxysubsubsection{\texorpdfstring{ADD\_COMPONENTS\_TO\_SPINOR\_RELERI}{ADD\_COMPONENTS\_TO\_SPINOR\_RELERI}}
+{\footnotesize\ttfamily \#define ADD\+\_\+\+COMPONENTS\+\_\+\+TO\+\_\+\+SPINOR\+\_\+\+RELERI(\begin{DoxyParamCaption}\item[{}]{TRANS1,  }\item[{}]{TRANS2,  }\item[{}]{SCALE,  }\item[{}]{COMP,  }\item[{}]{SPINOR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \{ \textcolor{keyword}{auto} tmp = this-\/>components\_[COMP].template spatialToSpinBlock<IntsU>(TRANS1, TRANS2);\(\backslash\)}
+\DoxyCodeLine{      MatAdd(\textcolor{charliteral}{'N'}, \textcolor{charliteral}{'N'}, twoNB2, twoNB2, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(1.), SPINOR.pointer(), twoNB2, \(\backslash\)}
+\DoxyCodeLine{        SCALE, tmp.pointer(), twoNB2, SPINOR.pointer(), twoNB2); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{particleintegrals_2spatialtospinor_8cxx_a67f6afb6acd9ccc8dbd57d2d3fd786ec}\label{particleintegrals_2spatialtospinor_8cxx_a67f6afb6acd9ccc8dbd57d2d3fd786ec}} 
+\index{spatialtospinor.cxx@{spatialtospinor.cxx}!PAULITOSPINOR\_4INDEXTPI@{PAULITOSPINOR\_4INDEXTPI}}
+\index{PAULITOSPINOR\_4INDEXTPI@{PAULITOSPINOR\_4INDEXTPI}!spatialtospinor.cxx@{spatialtospinor.cxx}}
+\doxysubsubsection{\texorpdfstring{PAULITOSPINOR\_4INDEXTPI}{PAULITOSPINOR\_4INDEXTPI}}
+{\footnotesize\ttfamily \#define PAULITOSPINOR\+\_\+4\+INDEXTPI(\begin{DoxyParamCaption}\item[{}]{OPR1,  }\item[{}]{OPR2 }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} splm = 0ul; splm < 2; splm++) \(\backslash\)}
+\DoxyCodeLine{    \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} spmu = 0ul; spmu < 2; spmu++) \{ \(\backslash\)}
+\DoxyCodeLine{      PAULITOSPINOR\_ \#\# OPR1(spmu, spnu, scale1) \(\backslash\)}
+\DoxyCodeLine{      PAULITOSPINOR\_ \#\# OPR2(splm, spsg, scale2) \(\backslash\)}
+\DoxyCodeLine{      auto scale = scale1 * scale2; \(\backslash\)}
+\DoxyCodeLine{      for (\textcolor{keyword}{auto} sg = 0ul; sg < NB; sg++) \(\backslash\)}
+\DoxyCodeLine{      \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} lm = 0ul; lm < NB; lm++) \(\backslash\)}
+\DoxyCodeLine{      \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} nu = 0ul; nu < NB; nu++) \(\backslash\)}
+\DoxyCodeLine{      \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} mu = 0ul; mu < NB; mu++)  \(\backslash\)}
+\DoxyCodeLine{        spinor(spmu*NB+mu, spnu*NB+nu, splm*NB+lm, spsg*NB+sg) = scale * (*this)(mu, nu, lm, sg); \(\backslash\)}
+\DoxyCodeLine{    \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{particleintegrals_2spatialtospinor_8cxx_a2b9ce4f49743f493e0b9ef996c12293e}\label{particleintegrals_2spatialtospinor_8cxx_a2b9ce4f49743f493e0b9ef996c12293e}} 
+\index{spatialtospinor.cxx@{spatialtospinor.cxx}!PAULITOSPINOR\_I@{PAULITOSPINOR\_I}}
+\index{PAULITOSPINOR\_I@{PAULITOSPINOR\_I}!spatialtospinor.cxx@{spatialtospinor.cxx}}
+\doxysubsubsection{\texorpdfstring{PAULITOSPINOR\_I}{PAULITOSPINOR\_I}}
+{\footnotesize\ttfamily \#define PAULITOSPINOR\+\_\+I(\begin{DoxyParamCaption}\item[{}]{SPIN\+\_\+M,  }\item[{}]{SPIN\+\_\+N,  }\item[{}]{SCALE\+\_\+ }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keyword}{auto} SPIN\_N = SPIN\_M; \(\backslash\)}
+\DoxyCodeLine{    double SCALE\_ = 1.;}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{particleintegrals_2spatialtospinor_8cxx_a0a74c3c1bf53694e993b80f37d626eb1}\label{particleintegrals_2spatialtospinor_8cxx_a0a74c3c1bf53694e993b80f37d626eb1}} 
+\index{spatialtospinor.cxx@{spatialtospinor.cxx}!PAULITOSPINOR\_X@{PAULITOSPINOR\_X}}
+\index{PAULITOSPINOR\_X@{PAULITOSPINOR\_X}!spatialtospinor.cxx@{spatialtospinor.cxx}}
+\doxysubsubsection{\texorpdfstring{PAULITOSPINOR\_X}{PAULITOSPINOR\_X}}
+{\footnotesize\ttfamily \#define PAULITOSPINOR\+\_\+X(\begin{DoxyParamCaption}\item[{}]{SPIN\+\_\+M,  }\item[{}]{SPIN\+\_\+N,  }\item[{}]{SCALE\+\_\+ }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keyword}{auto} SPIN\_N = 1 -\/ SPIN\_M; \(\backslash\)}
+\DoxyCodeLine{    double SCALE\_ = 1.;}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{particleintegrals_2spatialtospinor_8cxx_a9084311f464f96fe4ac3eb99efbbd433}\label{particleintegrals_2spatialtospinor_8cxx_a9084311f464f96fe4ac3eb99efbbd433}} 
+\index{spatialtospinor.cxx@{spatialtospinor.cxx}!PAULITOSPINOR\_Y@{PAULITOSPINOR\_Y}}
+\index{PAULITOSPINOR\_Y@{PAULITOSPINOR\_Y}!spatialtospinor.cxx@{spatialtospinor.cxx}}
+\doxysubsubsection{\texorpdfstring{PAULITOSPINOR\_Y}{PAULITOSPINOR\_Y}}
+{\footnotesize\ttfamily \#define PAULITOSPINOR\+\_\+Y(\begin{DoxyParamCaption}\item[{}]{SPIN\+\_\+M,  }\item[{}]{SPIN\+\_\+N,  }\item[{}]{SCALE\+\_\+ }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keyword}{auto} SPIN\_N = 1 -\/ SPIN\_M; \(\backslash\)}
+\DoxyCodeLine{    dcomplex SCALE\_; \(\backslash\)}
+\DoxyCodeLine{    if (SPIN\_M == 0) SCALE\_ = \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.,-\/1.); \(\backslash\)}
+\DoxyCodeLine{    else SCALE\_ = \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.,1.);}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{particleintegrals_2spatialtospinor_8cxx_a890a4ef5fe55553dbd01ba83a7090b9f}\label{particleintegrals_2spatialtospinor_8cxx_a890a4ef5fe55553dbd01ba83a7090b9f}} 
+\index{spatialtospinor.cxx@{spatialtospinor.cxx}!PAULITOSPINOR\_Z@{PAULITOSPINOR\_Z}}
+\index{PAULITOSPINOR\_Z@{PAULITOSPINOR\_Z}!spatialtospinor.cxx@{spatialtospinor.cxx}}
+\doxysubsubsection{\texorpdfstring{PAULITOSPINOR\_Z}{PAULITOSPINOR\_Z}}
+{\footnotesize\ttfamily \#define PAULITOSPINOR\+\_\+Z(\begin{DoxyParamCaption}\item[{}]{SPIN\+\_\+M,  }\item[{}]{SPIN\+\_\+N,  }\item[{}]{SCALE\+\_\+ }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keyword}{auto} SPIN\_N = SPIN\_M; \(\backslash\)}
+\DoxyCodeLine{    double SCALE\_; \(\backslash\)}
+\DoxyCodeLine{    if (SPIN\_M == 0) SCALE\_ = 1.; \(\backslash\)}
+\DoxyCodeLine{    else SCALE\_ = -\/1.;}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{particleintegrals_2spatialtospinor_8cxx_ad7f25416db57a11d72214f1254dc1269}\label{particleintegrals_2spatialtospinor_8cxx_ad7f25416db57a11d72214f1254dc1269}} 
+\index{spatialtospinor.cxx@{spatialtospinor.cxx}!TRY\_PAULITOSPINOR\_4INDEXTPI@{TRY\_PAULITOSPINOR\_4INDEXTPI}}
+\index{TRY\_PAULITOSPINOR\_4INDEXTPI@{TRY\_PAULITOSPINOR\_4INDEXTPI}!spatialtospinor.cxx@{spatialtospinor.cxx}}
+\doxysubsubsection{\texorpdfstring{TRY\_PAULITOSPINOR\_4INDEXTPI}{TRY\_PAULITOSPINOR\_4INDEXTPI}}
+{\footnotesize\ttfamily \#define TRY\+\_\+\+PAULITOSPINOR\+\_\+4\+INDEXTPI(\begin{DoxyParamCaption}\item[{}]{OP1,  }\item[{}]{OP2 }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keywordflow}{if}( TRANS1 == \#OP1[0] and TRANS2 == \#OP2[0]) \(\backslash\)}
+\DoxyCodeLine{      PAULITOSPINOR\_4INDEXTPI(OP1,OP2)}
+
+\end{DoxyCode}

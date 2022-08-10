@@ -1,0 +1,274 @@
+\hypertarget{quantum_2print_8hpp_source}{}\doxysection{print.\+hpp}
+\label{quantum_2print_8hpp_source}\index{include/quantum/print.hpp@{include/quantum/print.hpp}}
+\mbox{\hyperlink{quantum_2print_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <quantum.hpp>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{physcon_8hpp}{physcon.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{34   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1Quantum_af2b9998f2a08124daa19709b75765489}{Quantum<MatsT>::print1PDM}}(std::ostream \&out) \{}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \textcolor{keywordtype}{size\_t} NB = onePDM-\/>dimension();}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}1PDM (AO) Scalar"{}},onePDM-\/>S().pointer(),NB,NB,NB);}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keywordflow}{if}( onePDM-\/>hasZ() )}
+\DoxyCodeLine{41       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}1PDM (AO) MZ"{}},onePDM-\/>Z().pointer(),NB,NB,NB);}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keywordflow}{if}( onePDM-\/>hasXY() ) \{}
+\DoxyCodeLine{44       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}1PDM (AO) MY"{}},onePDM-\/>Y().pointer(),NB,NB,NB);}
+\DoxyCodeLine{45       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(out,\textcolor{stringliteral}{"{}1PDM (AO) MX"{}},onePDM-\/>X().pointer(),NB,NB,NB);}
+\DoxyCodeLine{46     \}}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48   \}; \textcolor{comment}{// Quantum<T>::print1PDM}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_aedcce2518a1e9011d92ab8cf881de33e}{QuantumBase::printMultipoles}}(std::ostream \&out) \{}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     out << std::left << std::setprecision(10);}
+\DoxyCodeLine{53     \textcolor{keywordtype}{double} xSmall = 1e-\/10;}
+\DoxyCodeLine{54     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < 3; i++) \{}
+\DoxyCodeLine{55       \textcolor{keywordflow}{if}(std::abs(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elecDipole}}[i]) < xSmall)}
+\DoxyCodeLine{56         this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elecDipole}}[i] = std::abs(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elecDipole}}[i]);}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} j = 0; j < 3; j++) \{}
+\DoxyCodeLine{59       \textcolor{keywordflow}{if}(std::abs(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[i][j]) < xSmall)}
+\DoxyCodeLine{60         this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[i][j] = std::abs(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[i][j]);}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} k = 0; k < 3; k++)}
+\DoxyCodeLine{63       \textcolor{keywordflow}{if}(std::abs(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[i][j][k]) < xSmall)}
+\DoxyCodeLine{64         this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[i][j][k] = }
+\DoxyCodeLine{65           std::abs(this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[i][j][k]);}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \}}
+\DoxyCodeLine{68     \}}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     out << \textcolor{stringliteral}{"{}\(\backslash\)nMultipole Information:"{}} << std::endl;}
+\DoxyCodeLine{71     out << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}} << std::endl << std::endl;;}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \textcolor{comment}{// Dipoles}}
+\DoxyCodeLine{76     out << std::setw(50) << std::left <<\textcolor{stringliteral}{"{}Electric Dipole Moment"{}}}
+\DoxyCodeLine{77                           << \textcolor{stringliteral}{"{}(Debye)"{}} << std::endl;}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     out << std::fixed; }
+\DoxyCodeLine{80     out <<  std::setw(5) << std::left << \textcolor{stringliteral}{"{}X="{}} << std::setw(20) << std::right }
+\DoxyCodeLine{81            << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elecDipole}}[0] / \mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83     out <<  std::setw(5) << std::left << \textcolor{stringliteral}{"{} Y="{}} << std::setw(20) << std::right }
+\DoxyCodeLine{84            << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elecDipole}}[1] / \mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     out <<  std::setw(5) << std::left << \textcolor{stringliteral}{"{} Z="{}} << std::setw(20) << std::right }
+\DoxyCodeLine{87            << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a0eaf56ec008cd7594bd3728a6e74b910}{elecDipole}}[2] / \mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90     \textcolor{comment}{// Quadrupoles}}
+\DoxyCodeLine{91     out << std::endl << std::endl;}
+\DoxyCodeLine{92     out << std::setw(50) << std::left << \textcolor{stringliteral}{"{}Electric Quadrupole Moment"{}} }
+\DoxyCodeLine{93                          <<  \textcolor{stringliteral}{"{}(Debye-\/\(\backslash\)u212B)"{}} << std::endl;}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{}XX="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{96                      << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[0][0] * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} XY="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{99                      << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[0][1] * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} XZ="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{102                      << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[0][2] * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} }
+\DoxyCodeLine{103                      << std::endl;}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{}YX="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{106                      << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[1][0] * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} YY="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{109                      << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[1][1] * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} YZ="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{112                      << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[1][2] * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} }
+\DoxyCodeLine{113                      << std::endl;}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{}ZX="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{116                      << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[2][0] * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} ZY="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{119                      << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[2][1] * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} ZZ="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{122                      << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a38062918c2609b86592d338c79d0fadb}{elecQuadrupole}}[2][2] * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} }
+\DoxyCodeLine{123                      << std::endl;}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125     out << std::endl << std::endl;}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128     \textcolor{comment}{// Octupoles}}
+\DoxyCodeLine{129     out << std::endl << std::endl;}
+\DoxyCodeLine{130     out << std::setw(50) << std::left }
+\DoxyCodeLine{131                        << \textcolor{stringliteral}{"{}Electric Octupole Moment"{}} }
+\DoxyCodeLine{132                        << \textcolor{stringliteral}{"{}(Debye-\/\(\backslash\)u212B\(\backslash\)u00B2)"{}} << std::endl;}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{}XXX="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{135                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[0][0][0] * }
+\DoxyCodeLine{136                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} XXY="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{139                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[0][0][1] * }
+\DoxyCodeLine{140                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} XXZ="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{143                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[0][0][2] * }
+\DoxyCodeLine{144                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} << std::endl;}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{}XYX="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{147                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[0][1][0] * }
+\DoxyCodeLine{148                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} XYY="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{151                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[0][1][1] * }
+\DoxyCodeLine{152                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} XYZ="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{155                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[0][1][2] * }
+\DoxyCodeLine{156                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} << std::endl;}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{}XZX="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{159                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[0][2][0] * }
+\DoxyCodeLine{160                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} XZY="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{163                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[0][2][1] * }
+\DoxyCodeLine{164                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} XZZ="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{167                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[0][2][2] * }
+\DoxyCodeLine{168                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} << std::endl;}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{}YXX="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{171                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[1][0][0] * }
+\DoxyCodeLine{172                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} YXY="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{175                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[1][0][1] * }
+\DoxyCodeLine{176                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} YXZ="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{179                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[1][0][2] * }
+\DoxyCodeLine{180                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} << std::endl;}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{}YYX="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{183                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[1][1][0] * }
+\DoxyCodeLine{184                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{185 }
+\DoxyCodeLine{186     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} YYY="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{187                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[1][1][1] * }
+\DoxyCodeLine{188                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} YYZ="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{191                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[1][1][2] * }
+\DoxyCodeLine{192                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} << std::endl;}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{}YZX="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{195                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[1][2][0] * }
+\DoxyCodeLine{196                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} YZY="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{199                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[1][2][1] * }
+\DoxyCodeLine{200                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} YZZ="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{203                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[1][2][2] * }
+\DoxyCodeLine{204                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} << std::endl;}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{}ZXX="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{207                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[2][0][0] * }
+\DoxyCodeLine{208                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} ZXY="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{211                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[2][0][1] *}
+\DoxyCodeLine{212                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} ZXZ="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{215                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[2][0][2] * }
+\DoxyCodeLine{216                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} << std::endl;}
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{}ZYX="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{219                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[2][1][0] * }
+\DoxyCodeLine{220                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} ZYY="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{223                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[2][1][1] * }
+\DoxyCodeLine{224                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} ZYZ="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{227                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[2][1][2] * }
+\DoxyCodeLine{228                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} << std::endl;}
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{}ZZX="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{231                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[2][2][0] * }
+\DoxyCodeLine{232                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} ZZY="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{235                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[2][2][1] * }
+\DoxyCodeLine{236                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}};}
+\DoxyCodeLine{237 }
+\DoxyCodeLine{238     out << std::left << std::setw(5) <<\textcolor{stringliteral}{"{} ZZZ="{}} << std::right << std::setw(20) }
+\DoxyCodeLine{239                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_a29e61d70622f6b63be801da68a87f12b}{elecOctupole}}[2][2][2] * }
+\DoxyCodeLine{240                          \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}} * \mbox{\hyperlink{namespaceChronusQ_a2f1a202c8d2bda083714e6ff6993ed2b}{AngPerBohr}}/\mbox{\hyperlink{namespaceChronusQ_aa1b39dbfacfb18a1333e93ffd9f75bf5}{EBohrPerDebye}} << std::endl;}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243 }
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245     out << \mbox{\hyperlink{namespaceChronusQ_a7ec03a45c0666f106c60a4ee2fa36f0c}{bannerEnd}} << std::endl << std::endl;}
+\DoxyCodeLine{246     }
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248   \}; \textcolor{comment}{// QuantumBase::printMultipoles}}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250 }
+\DoxyCodeLine{251   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1QuantumBase_a406ba9024fcfa5e2b7ce6b176f397030}{QuantumBase::printSpin}}(std::ostream \&out) \{}
+\DoxyCodeLine{252     out << \textcolor{stringliteral}{"{}Spin Information:"{}} << std::endl;}
+\DoxyCodeLine{253     out << \mbox{\hyperlink{namespaceChronusQ_a9be70634b62f6e7122e00d4b7af56a08}{bannerTop}} << std::endl << std::endl;}
+\DoxyCodeLine{254     out << std::setprecision(5) << std::fixed;}
+\DoxyCodeLine{255     out << \textcolor{stringliteral}{"{}  <Sx> = "{}} << std::setw(10) << std::right }
+\DoxyCodeLine{256                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_ad3d7ed67a8de917566c3bd3747ad63f0}{SExpect}}[0] << std::endl;}
+\DoxyCodeLine{257     out << \textcolor{stringliteral}{"{}  <Sy> = "{}} << std::setw(10) << std::right }
+\DoxyCodeLine{258                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_ad3d7ed67a8de917566c3bd3747ad63f0}{SExpect}}[1] << std::endl;}
+\DoxyCodeLine{259     out << \textcolor{stringliteral}{"{}  <Sz> = "{}} << std::setw(10) << std::right }
+\DoxyCodeLine{260                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_ad3d7ed67a8de917566c3bd3747ad63f0}{SExpect}}[2] << std::endl;}
+\DoxyCodeLine{261     out << \textcolor{stringliteral}{"{}  <S\(\backslash\)u00B2> = "{}} << std::setw(10) << std::right }
+\DoxyCodeLine{262                        << this-\/>\mbox{\hyperlink{classChronusQ_1_1QuantumBase_aff3cce4ca98b229f27f305b4683b9249}{SSq}} << std::endl;}
+\DoxyCodeLine{263     out << std::endl << \mbox{\hyperlink{namespaceChronusQ_a7ec03a45c0666f106c60a4ee2fa36f0c}{bannerEnd}} << std::endl << std::endl;}
+\DoxyCodeLine{264 }
+\DoxyCodeLine{265   \}; \textcolor{comment}{// QuantumBase::printSpin}}
+\DoxyCodeLine{266 \};}
+\DoxyCodeLine{267 }
+\DoxyCodeLine{268 }
+
+\end{DoxyCode}

@@ -1,0 +1,151 @@
+\hypertarget{response_2polarization_2kohnsham_8hpp_source}{}\doxysection{kohnsham.\+hpp}
+\label{response_2polarization_2kohnsham_8hpp_source}\index{include/response/polarization/kohnsham.hpp@{include/response/polarization/kohnsham.hpp}}
+\mbox{\hyperlink{response_2polarization_2kohnsham_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{polarization_8hpp}{response/polarization.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{factorization_8hpp}{cqlinalg/factorization.hpp}}>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{threads_8hpp}{util/threads.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{timer_8hpp}{util/timer.hpp}}>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{38   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{39   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator<KohnSham<MatsT, IntsT>}}>::formLinearTrans\_direct\_impl(}
+\DoxyCodeLine{40     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator_3_01SingleSlater_3_01MatsT_00_01IntsT_01_4_01_4_ae8bff3e480adf43cea8d67bb47260c11}{RC\_coll<U>}} x, \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op, }
+\DoxyCodeLine{41     \textcolor{keywordtype}{bool} noTrans)\{ }
+\DoxyCodeLine{42   }
+\DoxyCodeLine{43     \textcolor{keywordflow}{if}( op != \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8a6b1d0d357e2ef704e56faecb9a404e77}{FULL}} ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Direct + non-\/Full NYI"{}});}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham<MatsT, IntsT>}} \&ks = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham<MatsT, IntsT>}}\&\textcolor{keyword}{>}(*this-\/>ref\_);}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} N        = this-\/>getNSingleDim(this-\/>genSettings.doTDA) * (this-\/>doReduced ? 2 : 1);  }
+\DoxyCodeLine{48     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} tdOffSet = N / 2;}
+\DoxyCodeLine{49     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} chunk    = 600;}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     std::shared\_ptr<TPIContractions<U,IntsT>> TPI =}
+\DoxyCodeLine{52         \mbox{\hyperlink{classChronusQ_1_1TPIContractions}{TPIContractions<MatsT,IntsT>::template}} convert<U>(ks.\mbox{\hyperlink{classChronusQ_1_1SingleSlater_a22300da3375f3b5d49b467c9b4ae143f}{TPI}});}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Direct Hessian Contract"{}});}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}} : x) \{}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58       \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} nVec = \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}.nVec;}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60       \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}.AX ) std::fill\_n(\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}.AX,N*nVec,0.);}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62       \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} k = 0; k < nVec; k += chunk) \{}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64         \mbox{\hyperlink{namespaceChronusQ_a23c2e4eb26f9455d90831342328f3b91}{MPI\_Barrier}}(c); \textcolor{comment}{// Sync MPI Processes at begining of each batch of }}
+\DoxyCodeLine{65                         \textcolor{comment}{// vectors}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67         \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} nDo = std::min( chunk, nVec -\/ k);}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69         \textcolor{keyword}{auto} *V\_c  = \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}.X  + k*N;}
+\DoxyCodeLine{70         \textcolor{keyword}{auto} *HV\_c = \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}.AX + k*N;}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73         \textcolor{keywordtype}{bool} scatter = not bool(\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}.X);}
+\DoxyCodeLine{74 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{75         scatter = mxx::any\_of(scatter,c);}
+\DoxyCodeLine{76 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79         \textcolor{comment}{// Transform ph vector MO -\/> AO}}
+\DoxyCodeLine{80         \textcolor{keyword}{auto} cList = }
+\DoxyCodeLine{81           this-\/>\textcolor{keyword}{template} phTransitionVecMO2AO<U>(c, scatter, nDo, N, ks, ks,}
+\DoxyCodeLine{82             \textcolor{keyword}{true}, V\_c, V\_c + tdOffSet);}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84         TPI-\/>twoBodyContract(c,cList); \textcolor{comment}{// form G[V]}}
+\DoxyCodeLine{85         ks.\mbox{\hyperlink{classChronusQ_1_1KohnSham_a930f6552411a1e511f07aa3ca6c4bdab}{formFXC}}(c,cList); \textcolor{comment}{// Fxc contraction}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88         \textcolor{comment}{// Only finish transformation on root process}}
+\DoxyCodeLine{89         \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(c) == 0 ) \{}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91           \textcolor{comment}{// Transform ph vector AO -\/> MO}}
+\DoxyCodeLine{92           this-\/>phTransitionVecAO2MO(nDo,N,cList,ks,\textcolor{keyword}{true},HV\_c,HV\_c + tdOffSet);}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94           \textcolor{comment}{// Scale by diagonals}}
+\DoxyCodeLine{95           this-\/>phEpsilonScale(\textcolor{keyword}{true},\textcolor{keyword}{false},nDo,N,ks,V\_c,HV\_c);}
+\DoxyCodeLine{96           this-\/>phEpsilonScale(\textcolor{keyword}{true},\textcolor{keyword}{false},nDo,N,ks,V\_c+tdOffSet,}
+\DoxyCodeLine{97             HV\_c+tdOffSet);}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99         \}}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101         \textcolor{comment}{// Free up transformation memory}}
+\DoxyCodeLine{102         this-\/>memManager\_.free(cList[0].\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}});}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104       \}}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107       \textcolor{keywordflow}{if}( \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}.AX and this-\/>incMet and not this-\/>doAPB\_AMB )}
+\DoxyCodeLine{108         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'}, N/2, nVec, U(-\/1.), \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}.AX + (N/2), N, \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}.AX + (N/2), N);}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110     \} \textcolor{comment}{// loop over groups of vectors}}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Direct Hessian Contract"{}});}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114   \};}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{117   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator<KohnSham<double,double>}}>::formLinearTrans\_direct(}
+\DoxyCodeLine{118     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, RC\_coll<double> x, \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op, }
+\DoxyCodeLine{119     \textcolor{keywordtype}{bool} noTrans)\{ }
+\DoxyCodeLine{120   }
+\DoxyCodeLine{121     formLinearTrans\_direct\_impl(c,x,op,noTrans);}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123   \};}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{126   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator<KohnSham<dcomplex,double>}}>::formLinearTrans\_direct(}
+\DoxyCodeLine{127     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, RC\_coll<double> x, \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op, }
+\DoxyCodeLine{128     \textcolor{keywordtype}{bool} noTrans)\{ }
+\DoxyCodeLine{129   }
+\DoxyCodeLine{130     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}SOMETHING HAS GONE HORRIBLY WRONG: formLinearTrans\_direct"{}});}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132   \};}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134   \textcolor{keyword}{template} <>}
+\DoxyCodeLine{135   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1PolarizationPropagator}{PolarizationPropagator<KohnSham<dcomplex,dcomplex>}}>::formLinearTrans\_direct(}
+\DoxyCodeLine{136     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, RC\_coll<double> x, \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8}{SINGLESLATER\_POLAR\_COPT}} op, }
+\DoxyCodeLine{137     \textcolor{keywordtype}{bool} noTrans)\{ }
+\DoxyCodeLine{138   }
+\DoxyCodeLine{139     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}SOMETHING HAS GONE HORRIBLY WRONG: formLinearTrans\_direct"{}});}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141   \};}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144 \} \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{145 }
+
+\end{DoxyCode}

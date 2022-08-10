@@ -1,0 +1,106 @@
+\hypertarget{respopts_8cxx}{}\doxysection{src/cxxapi/input/respopts.cxx File Reference}
+\label{respopts_8cxx}\index{src/cxxapi/input/respopts.cxx@{src/cxxapi/input/respopts.cxx}}
+{\ttfamily \#include $<$cxxapi/options.\+hpp$>$}\newline
+{\ttfamily \#include $<$morspec.\+hpp$>$}\newline
+{\ttfamily \#include $<$cerr.\+hpp$>$}\newline
+Include dependency graph for respopts.\+cxx\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{respopts_8cxx__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{respopts_8cxx_a39dc65b27b92724c3891c640aac4470a}{CONSTRUCT\+\_\+\+PH\+\_\+\+RESP}}(\+\_\+\+CLASS)
+\item 
+\#define \mbox{\hyperlink{respopts_8cxx_ada9692816510777c130ab99d3b706655}{CONSTRUCT\+\_\+\+PP\+\_\+\+RESP}}(\+\_\+\+CLASS)
+\item 
+\#define \mbox{\hyperlink{respopts_8cxx_af3e0d6b69cb387f68449866cff7f5c3c}{CONSTRUCT\+\_\+\+MOR}}(\+\_\+\+CLASS)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_ab68b016e84626b2fd6a6b37643960259}{Chronus\+Q\+::\+CQRESPONSE\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+void \mbox{\hyperlink{namespaceChronusQ_a0e2c584c794d8627e32494cdedc70573}{Chronus\+Q\+::\+CQMOR\+\_\+\+VALID}} (std\+::ostream \&, CQInput\+File \&)
+\item 
+std\+::shared\+\_\+ptr$<$ Response\+Base $>$ \mbox{\hyperlink{namespaceChronusQ_a0b8ed2228df752f38ce14baec9929bca}{Chronus\+Q\+::\+CQResponse\+Options}} (std\+::ostream \&out, CQInput\+File \&input, std\+::shared\+\_\+ptr$<$ Single\+Slater\+Base $>$ ss)
+\begin{DoxyCompactList}\small\item\em Construct a Response object using the input file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{respopts_8cxx_af3e0d6b69cb387f68449866cff7f5c3c}\label{respopts_8cxx_af3e0d6b69cb387f68449866cff7f5c3c}} 
+\index{respopts.cxx@{respopts.cxx}!CONSTRUCT\_MOR@{CONSTRUCT\_MOR}}
+\index{CONSTRUCT\_MOR@{CONSTRUCT\_MOR}!respopts.cxx@{respopts.cxx}}
+\doxysubsubsection{\texorpdfstring{CONSTRUCT\_MOR}{CONSTRUCT\_MOR}}
+{\footnotesize\ttfamily \#define CONSTRUCT\+\_\+\+MOR(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+CLASS }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{      \textcolor{keywordflow}{if}(not found) \textcolor{keywordflow}{try} \{ \(\backslash\)}
+\DoxyCodeLine{        auto \&tmp = \textcolor{keyword}{dynamic\_cast<}\_CLASS\&\textcolor{keyword}{>}(*ss);\(\backslash\)}
+\DoxyCodeLine{        mor = std::static\_pointer\_cast<MORSpecBase>(\(\backslash\)}
+\DoxyCodeLine{          std::make\_shared<MORSpec<\_CLASS>>(\(\backslash\)}
+\DoxyCodeLine{            \mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\_COMM\_WORLD}},\(\backslash\)}
+\DoxyCodeLine{            std::dynamic\_pointer\_cast<\_CLASS>(ss)\(\backslash\)}
+\DoxyCodeLine{          )\(\backslash\)}
+\DoxyCodeLine{        );\(\backslash\)}
+\DoxyCodeLine{        resp = std::dynamic\_pointer\_cast<ResponseBase>(\(\backslash\)}
+\DoxyCodeLine{          std::static\_pointer\_cast<MORSpec<\_CLASS>>(mor)\(\backslash\)}
+\DoxyCodeLine{        );\(\backslash\)}
+\DoxyCodeLine{        if( std::is\_base\_of<SingleSlaterPolarBase,PolarizationPropagator<\_CLASS>>::value )\(\backslash\)}
+\DoxyCodeLine{          factory = \& (std::static\_pointer\_cast<MORSpec<\_CLASS>>(mor)-\/>respFactory());\(\backslash\)}
+\DoxyCodeLine{        found = \textcolor{keyword}{true}; \(\backslash\)}
+\DoxyCodeLine{      \} \textcolor{keywordflow}{catch}(...) \{ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{respopts_8cxx_a39dc65b27b92724c3891c640aac4470a}\label{respopts_8cxx_a39dc65b27b92724c3891c640aac4470a}} 
+\index{respopts.cxx@{respopts.cxx}!CONSTRUCT\_PH\_RESP@{CONSTRUCT\_PH\_RESP}}
+\index{CONSTRUCT\_PH\_RESP@{CONSTRUCT\_PH\_RESP}!respopts.cxx@{respopts.cxx}}
+\doxysubsubsection{\texorpdfstring{CONSTRUCT\_PH\_RESP}{CONSTRUCT\_PH\_RESP}}
+{\footnotesize\ttfamily \#define CONSTRUCT\+\_\+\+PH\+\_\+\+RESP(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+CLASS }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{      \textcolor{keywordflow}{if}(not found) \textcolor{keywordflow}{try} \{ \(\backslash\)}
+\DoxyCodeLine{        auto \&tmp = \textcolor{keyword}{dynamic\_cast<}\_CLASS\&\textcolor{keyword}{>}(*ss);\(\backslash\)}
+\DoxyCodeLine{        resp = std::dynamic\_pointer\_cast<ResponseBase>(\(\backslash\)}
+\DoxyCodeLine{          std::make\_shared<PolarizationPropagator<\_CLASS>>(\mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\_COMM\_WORLD}},jobTyp,\(\backslash\)}
+\DoxyCodeLine{            std::dynamic\_pointer\_cast<\_CLASS>(ss)\(\backslash\)}
+\DoxyCodeLine{          )\(\backslash\)}
+\DoxyCodeLine{        );\(\backslash\)}
+\DoxyCodeLine{        if( std::is\_base\_of<SingleSlaterPolarBase,PolarizationPropagator<\_CLASS>>::value )\(\backslash\)}
+\DoxyCodeLine{          factory = \&\textcolor{keyword}{dynamic\_cast<}PolarizationPropagator<\_CLASS>\&\textcolor{keyword}{>}(*resp);\(\backslash\)}
+\DoxyCodeLine{        found = \textcolor{keyword}{true}; \(\backslash\)}
+\DoxyCodeLine{      \} \textcolor{keywordflow}{catch}(...) \{ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{respopts_8cxx_ada9692816510777c130ab99d3b706655}\label{respopts_8cxx_ada9692816510777c130ab99d3b706655}} 
+\index{respopts.cxx@{respopts.cxx}!CONSTRUCT\_PP\_RESP@{CONSTRUCT\_PP\_RESP}}
+\index{CONSTRUCT\_PP\_RESP@{CONSTRUCT\_PP\_RESP}!respopts.cxx@{respopts.cxx}}
+\doxysubsubsection{\texorpdfstring{CONSTRUCT\_PP\_RESP}{CONSTRUCT\_PP\_RESP}}
+{\footnotesize\ttfamily \#define CONSTRUCT\+\_\+\+PP\+\_\+\+RESP(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+CLASS }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{      \textcolor{keywordflow}{if}(not found) \textcolor{keywordflow}{try} \{ \(\backslash\)}
+\DoxyCodeLine{        auto \&tmp = \textcolor{keyword}{dynamic\_cast<}\_CLASS\&\textcolor{keyword}{>}(*ss);\(\backslash\)}
+\DoxyCodeLine{        resp = std::dynamic\_pointer\_cast<ResponseBase>(\(\backslash\)}
+\DoxyCodeLine{          std::make\_shared<ParticleParticlePropagator<\_CLASS>>(\mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\_COMM\_WORLD}},jobTyp,\(\backslash\)}
+\DoxyCodeLine{            std::dynamic\_pointer\_cast<\_CLASS>(ss)\(\backslash\)}
+\DoxyCodeLine{          )\(\backslash\)}
+\DoxyCodeLine{        );\(\backslash\)}
+\DoxyCodeLine{        if( std::is\_base\_of<SingleSlaterParticleParticleBase,ParticleParticlePropagator<\_CLASS>>::value )\(\backslash\)}
+\DoxyCodeLine{          factoryPP = \&\textcolor{keyword}{dynamic\_cast<}ParticleParticlePropagator<\_CLASS>\&\textcolor{keyword}{>}(*resp);\(\backslash\)}
+\DoxyCodeLine{        found = \textcolor{keyword}{true}; \(\backslash\)}
+\DoxyCodeLine{      \} \textcolor{keywordflow}{catch}(...) \{ \}}
+
+\end{DoxyCode}

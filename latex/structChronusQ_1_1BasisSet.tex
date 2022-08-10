@@ -1,0 +1,553 @@
+\hypertarget{structChronusQ_1_1BasisSet}{}\doxysection{ChronusQ\+::Basis\+Set Struct Reference}
+\label{structChronusQ_1_1BasisSet}\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+
+
+The \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} struct. Contains information pertinant for a gaussian type orbital (GTO) basis set.  
+
+
+
+
+{\ttfamily \#include $<$basisset\+\_\+def.\+hpp$>$}
+
+
+
+Collaboration diagram for ChronusQ\+::Basis\+Set\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=207pt]{structChronusQ_1_1BasisSet__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1BasisSet_abcb9394546687df1e0a042a2a91496f3}{Basis\+Set}} ()
+\item 
+\mbox{\hyperlink{structChronusQ_1_1BasisSet_adffa35b6fd040e6f63bd48d85260baa5}{Basis\+Set}} (std\+::string \+\_\+basis\+Name, std\+::string \+\_\+basis\+Def, bool string\+Def, const \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86}{BASIS\+\_\+\+FUNCTION\+\_\+\+TYPE}} \+\_\+basis\+Type, bool \+\_\+force\+Cart=false, bool do\+Print=true, bool \+\_\+nuc\+Basis=false)
+\item 
+\mbox{\hyperlink{structChronusQ_1_1BasisSet_ad916b3994ef1c0f9ee91f073f72fa623}{Basis\+Set}} (const \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&)=default
+\item 
+\mbox{\hyperlink{structChronusQ_1_1BasisSet_aa675a7efcfa38afd6c4ebe38ebd1e673}{Basis\+Set}} (\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&\&)=default
+\item 
+\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \& \mbox{\hyperlink{structChronusQ_1_1BasisSet_af4debe6b4ffda4535db6640c32bf59b7}{operator=}} (const \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&)=default
+\item 
+\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \& \mbox{\hyperlink{structChronusQ_1_1BasisSet_a575b1be50041399df3c494b56a435ce5}{operator=}} (\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&\&)=default
+\item 
+void \mbox{\hyperlink{structChronusQ_1_1BasisSet_a6d77dd5087c5d1847011d03fcb047ae9}{uncontract\+Shells}} ()
+\begin{DoxyCompactList}\small\item\em Return the uncontracted shell set of the current contracted shell set. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structChronusQ_1_1BasisSet_a64943b47f5c32e2ea3fdc18898cf9f79}{make\+Map\+Prim2\+Cont}} (const double $\ast$, double $\ast$, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&) const
+\item 
+\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \mbox{\hyperlink{structChronusQ_1_1BasisSet_ab10838a79132616000e539a485abe80a}{uncontract\+Basis}} () const
+\begin{DoxyCompactList}\small\item\em Return a new \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} object with only the primitives. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a04cfa73f279aae9d94a4ee99fd720fa1}{group\+General\+Contraction\+Basis}} () const
+\begin{DoxyCompactList}\small\item\em Generates a new \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} object, where basis functions sharing the same set of primitives are grouped together in one libint2\+::\+Shell. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{structChronusQ_1_1BasisSet_aa66974bc0717a4bdcb09cc61d469ebda}{get\+Libcint\+Env\+Length}} (const \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol) const
+\begin{DoxyCompactList}\small\item\em computes the necessary length of the env vector for libcint computation \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structChronusQ_1_1BasisSet_a0dea80bb1ae5e74a731372d40ebbe43e}{set\+Libcint\+Env}} (const \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol, int $\ast$atm, int $\ast$bas, double $\ast$env, bool finite\+Width\+Nuc=false) const
+\begin{DoxyCompactList}\small\item\em sets up the atm, bas, and env vectors for libcint computation \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structChronusQ_1_1BasisSet_a12f3abdc480aedbca3c00717159eb067}{update}} (bool compute\+Shell\+Pairs=true)
+\item 
+void \mbox{\hyperlink{structChronusQ_1_1BasisSet_a8ed27ff577f7ec934a95f697fde5a06f}{update\+Nuclear\+Coordinates}} (const \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&mol)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{structChronusQ_1_1BasisSet_a242e25218feff34671efc28d31ad8157}{basis\+Name}}
+\item 
+std\+::string \mbox{\hyperlink{structChronusQ_1_1BasisSet_ab327e5529c2b14a75fbf1522c252f70a}{basis\+Def}}
+\item 
+bool \mbox{\hyperlink{structChronusQ_1_1BasisSet_a5a0db2a0e93dae842e4aa9bba603e444}{input\+Def}}
+\item 
+bool \mbox{\hyperlink{structChronusQ_1_1BasisSet_a87bdf52af466b6675078a34788641774}{force\+Cart}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}{n\+Basis}} = 0
+\begin{DoxyCompactList}\small\item\em Number of CGTO basis functions. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{structChronusQ_1_1BasisSet_afd6c670bc1fdadd7ae58aec80ddc01c9}{n\+Primitive}}
+\begin{DoxyCompactList}\small\item\em Number of primitive GTO functions. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{structChronusQ_1_1BasisSet_a936871b121472a416ee6f947ccdea4b4}{n\+Shell}}
+\begin{DoxyCompactList}\small\item\em Number of CGTO basis shells. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{structChronusQ_1_1BasisSet_aee354d7cf0e3268aed3a136409c23662}{max\+Prim}}
+\begin{DoxyCompactList}\small\item\em Max primitive dimension of basis. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{structChronusQ_1_1BasisSet_a90bfe80774a23ae70d381783a1d275ac}{maxL}}
+\begin{DoxyCompactList}\small\item\em Max angular momentum of basis. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structChronusQ_1_1BasisSet_a105a64fa290e3d5833fb6793b27fdcf3}{nuc\+Basis}}
+\begin{DoxyCompactList}\small\item\em Whether this basis is for nuclear. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86}{BASIS\+\_\+\+FUNCTION\+\_\+\+TYPE}} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a6ff811a30a97707991cc33d2d93754a2}{basis\+Type}} = \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86a9ae4d9d27a920589d9d4e4f718799a83}{REAL\+\_\+\+GTO}}
+\begin{DoxyCompactList}\small\item\em Type of basis function. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespaceChronusQ_a47e04063afb6df9ddf563c17663e3230}{cartvec\+\_\+t}} \mbox{\hyperlink{structChronusQ_1_1BasisSet_aa66ab288268fcf398ac2634986cd09f0}{centers}}
+\begin{DoxyCompactList}\small\item\em A list of centers that comprise the \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}}. \end{DoxyCompactList}\item 
+std\+::vector$<$ libint2\+::\+Shell $>$ \mbox{\hyperlink{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}{shells}}
+\begin{DoxyCompactList}\small\item\em Basis shells. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structChronusQ_1_1ShellPairData}{Shell\+Pair\+Data}} \mbox{\hyperlink{structChronusQ_1_1BasisSet_a5256ca12a298fe9abdda8e3d574dab24}{shell\+Data}}
+\begin{DoxyCompactList}\small\item\em Shell pair data. \end{DoxyCompactList}\item 
+std\+::unordered\+\_\+map$<$ libint2\+::\+Shell, size\+\_\+t, \mbox{\hyperlink{structChronusQ_1_1PrimShellHash}{Prim\+Shell\+Hash}} $>$ \mbox{\hyperlink{structChronusQ_1_1BasisSet_a4f2b82970784a895b17f0ba1ce7b9eb0}{primitives}}
+\begin{DoxyCompactList}\small\item\em Primitive shells. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::vector$<$ double $>$ $>$ \mbox{\hyperlink{structChronusQ_1_1BasisSet_a13ea1d4cfdfd8206566571d3628e2507}{un\+Norm\+Cont}}
+\begin{DoxyCompactList}\small\item\em Unnormalized basis coefficients. \end{DoxyCompactList}\item 
+std\+::vector$<$ size\+\_\+t $>$ \mbox{\hyperlink{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}{map\+Sh2\+Bf}}
+\begin{DoxyCompactList}\small\item\em Map Shell \# -\/\texorpdfstring{$>$}{>} BF \#. \end{DoxyCompactList}\item 
+std\+::vector$<$ size\+\_\+t $>$ \mbox{\hyperlink{structChronusQ_1_1BasisSet_a2e39c31c653bccb44ec140148baa1ea0}{map\+Sh2\+Cen}}
+\begin{DoxyCompactList}\small\item\em Map Shell \# -\/\texorpdfstring{$>$}{>} Cen \#. \end{DoxyCompactList}\item 
+std\+::vector$<$ size\+\_\+t $>$ \mbox{\hyperlink{structChronusQ_1_1BasisSet_ad24883d35c67703cc3805197053c28f1}{map\+Cen2\+Bf\+St}}
+\begin{DoxyCompactList}\small\item\em Map Cen \# -\/\texorpdfstring{$>$}{>} Starting BF \#. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{structChronusQ_1_1BasisSet_a2a6cab3f5931df9b350b3dec8c08b6b2}{operator$<$$<$}} (std\+::ostream \&, const \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} struct. Contains information pertinant for a gaussian type orbital (GTO) basis set. 
+
+Precomputes useful intermediates relating to the basis set as well as stores useful constants (n\+Basis, n\+Primitive) and maps (maps shell \# -\/\texorpdfstring{$>$}{>} basis function \#, etc). Utilizes a storage format consistent with the Libint2 integral package (libint2\+::\+Shell) 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_abcb9394546687df1e0a042a2a91496f3}\label{structChronusQ_1_1BasisSet_abcb9394546687df1e0a042a2a91496f3}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!BasisSet@{BasisSet}}
+\index{BasisSet@{BasisSet}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{BasisSet()}{BasisSet()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Basis\+Set\+::\+Basis\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_adffa35b6fd040e6f63bd48d85260baa5}\label{structChronusQ_1_1BasisSet_adffa35b6fd040e6f63bd48d85260baa5}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!BasisSet@{BasisSet}}
+\index{BasisSet@{BasisSet}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{BasisSet()}{BasisSet()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Basis\+Set\+::\+Basis\+Set (\begin{DoxyParamCaption}\item[{std\+::string}]{\+\_\+basis\+Name,  }\item[{std\+::string}]{\+\_\+basis\+Def,  }\item[{bool}]{do\+Def,  }\item[{const \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{mol,  }\item[{\mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86}{BASIS\+\_\+\+FUNCTION\+\_\+\+TYPE}}}]{\+\_\+basis\+Type,  }\item[{bool}]{\+\_\+force\+Cart = {\ttfamily false},  }\item[{bool}]{do\+Print = {\ttfamily true},  }\item[{bool}]{\+\_\+nuc\+Basis = {\ttfamily false} }\end{DoxyParamCaption})}
+
+Path / \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} constructor
+
+Constructs a \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} object and populates member data given a basis set name and a \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} object
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em basis\+Name} & Either a basis file in G94 format or a known keyword which maps to a basis file \\
+\hline
+\mbox{\texttt{ in}}  & {\em mol} & \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} for which to construct the \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1BasisSet_adffa35b6fd040e6f63bd48d85260baa5_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_ad916b3994ef1c0f9ee91f073f72fa623}\label{structChronusQ_1_1BasisSet_ad916b3994ef1c0f9ee91f073f72fa623}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!BasisSet@{BasisSet}}
+\index{BasisSet@{BasisSet}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{BasisSet()}{BasisSet()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Basis\+Set\+::\+Basis\+Set (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+Copy constructor.
+
+Copies the contents of one \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} object to another \mbox{\Hypertarget{structChronusQ_1_1BasisSet_aa675a7efcfa38afd6c4ebe38ebd1e673}\label{structChronusQ_1_1BasisSet_aa675a7efcfa38afd6c4ebe38ebd1e673}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!BasisSet@{BasisSet}}
+\index{BasisSet@{BasisSet}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{BasisSet()}{BasisSet()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Basis\+Set\+::\+Basis\+Set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+Move constructor.
+
+Moves the contents of one \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} object to another 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_aa66974bc0717a4bdcb09cc61d469ebda}\label{structChronusQ_1_1BasisSet_aa66974bc0717a4bdcb09cc61d469ebda}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!getLibcintEnvLength@{getLibcintEnvLength}}
+\index{getLibcintEnvLength@{getLibcintEnvLength}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{getLibcintEnvLength()}{getLibcintEnvLength()}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Basis\+Set\+::get\+Libcint\+Env\+Length (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{mol }\end{DoxyParamCaption}) const}
+
+
+
+computes the necessary length of the env vector for libcint computation 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1BasisSet_aa66974bc0717a4bdcb09cc61d469ebda_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a04cfa73f279aae9d94a4ee99fd720fa1}\label{structChronusQ_1_1BasisSet_a04cfa73f279aae9d94a4ee99fd720fa1}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!groupGeneralContractionBasis@{groupGeneralContractionBasis}}
+\index{groupGeneralContractionBasis@{groupGeneralContractionBasis}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{groupGeneralContractionBasis()}{groupGeneralContractionBasis()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} Chronus\+Q\+::\+Basis\+Set\+::group\+General\+Contraction\+Basis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Generates a new \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} object, where basis functions sharing the same set of primitives are grouped together in one libint2\+::\+Shell. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1BasisSet_a04cfa73f279aae9d94a4ee99fd720fa1_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1BasisSet_a04cfa73f279aae9d94a4ee99fd720fa1_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a64943b47f5c32e2ea3fdc18898cf9f79}\label{structChronusQ_1_1BasisSet_a64943b47f5c32e2ea3fdc18898cf9f79}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!makeMapPrim2Cont@{makeMapPrim2Cont}}
+\index{makeMapPrim2Cont@{makeMapPrim2Cont}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{makeMapPrim2Cont()}{makeMapPrim2Cont()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Basis\+Set\+::make\+Map\+Prim2\+Cont (\begin{DoxyParamCaption}\item[{const double $\ast$}]{SUn,  }\item[{double $\ast$}]{MAP,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem }\end{DoxyParamCaption}) const}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1BasisSet_a64943b47f5c32e2ea3fdc18898cf9f79_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1BasisSet_a64943b47f5c32e2ea3fdc18898cf9f79_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a575b1be50041399df3c494b56a435ce5}\label{structChronusQ_1_1BasisSet_a575b1be50041399df3c494b56a435ce5}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!operator=@{operator=}}
+\index{operator=@{operator=}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \& Chronus\+Q\+::\+Basis\+Set\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&\&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+Move assignment operator
+
+Assigns one \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} object to another through a move (rvalue reference) \mbox{\Hypertarget{structChronusQ_1_1BasisSet_af4debe6b4ffda4535db6640c32bf59b7}\label{structChronusQ_1_1BasisSet_af4debe6b4ffda4535db6640c32bf59b7}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!operator=@{operator=}}
+\index{operator=@{operator=}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \& Chronus\+Q\+::\+Basis\+Set\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+Copy assignment operator
+
+Assigns one \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} object to another through a copy \mbox{\Hypertarget{structChronusQ_1_1BasisSet_a0dea80bb1ae5e74a731372d40ebbe43e}\label{structChronusQ_1_1BasisSet_a0dea80bb1ae5e74a731372d40ebbe43e}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!setLibcintEnv@{setLibcintEnv}}
+\index{setLibcintEnv@{setLibcintEnv}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{setLibcintEnv()}{setLibcintEnv()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Basis\+Set\+::set\+Libcint\+Env (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{mol,  }\item[{int $\ast$}]{atm,  }\item[{int $\ast$}]{bas,  }\item[{double $\ast$}]{env,  }\item[{bool}]{finite\+Width\+Nuc = {\ttfamily false} }\end{DoxyParamCaption}) const}
+
+
+
+sets up the atm, bas, and env vectors for libcint computation 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1BasisSet_a0dea80bb1ae5e74a731372d40ebbe43e_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1BasisSet_a0dea80bb1ae5e74a731372d40ebbe43e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_ab10838a79132616000e539a485abe80a}\label{structChronusQ_1_1BasisSet_ab10838a79132616000e539a485abe80a}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!uncontractBasis@{uncontractBasis}}
+\index{uncontractBasis@{uncontractBasis}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{uncontractBasis()}{uncontractBasis()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} Chronus\+Q\+::\+Basis\+Set\+::uncontract\+Basis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Return a new \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} object with only the primitives. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1BasisSet_ab10838a79132616000e539a485abe80a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1BasisSet_ab10838a79132616000e539a485abe80a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a6d77dd5087c5d1847011d03fcb047ae9}\label{structChronusQ_1_1BasisSet_a6d77dd5087c5d1847011d03fcb047ae9}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!uncontractShells@{uncontractShells}}
+\index{uncontractShells@{uncontractShells}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{uncontractShells()}{uncontractShells()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Basis\+Set\+::uncontract\+Shells (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Return the uncontracted shell set of the current contracted shell set. 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1BasisSet_a6d77dd5087c5d1847011d03fcb047ae9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a12f3abdc480aedbca3c00717159eb067}\label{structChronusQ_1_1BasisSet_a12f3abdc480aedbca3c00717159eb067}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!update@{update}}
+\index{update@{update}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Basis\+Set\+::update (\begin{DoxyParamCaption}\item[{bool}]{compute\+Shell\+Pairs = {\ttfamily true} }\end{DoxyParamCaption})}
+
+Updates the member data of a \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} object.
+
+Computes n\+Shell, n\+Basis and n\+Primitive. Determines maxL and max\+Prim. Constructs the shell mappings to basis function number and center number Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=330pt]{structChronusQ_1_1BasisSet_a12f3abdc480aedbca3c00717159eb067_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1BasisSet_a12f3abdc480aedbca3c00717159eb067_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a8ed27ff577f7ec934a95f697fde5a06f}\label{structChronusQ_1_1BasisSet_a8ed27ff577f7ec934a95f697fde5a06f}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!updateNuclearCoordinates@{updateNuclearCoordinates}}
+\index{updateNuclearCoordinates@{updateNuclearCoordinates}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{updateNuclearCoordinates()}{updateNuclearCoordinates()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Basis\+Set\+::update\+Nuclear\+Coordinates (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{mol }\end{DoxyParamCaption})}
+
+Updates the member data of a \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} object assuming one or more nuclei have been moved Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1BasisSet_a8ed27ff577f7ec934a95f697fde5a06f_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structChronusQ_1_1BasisSet_a8ed27ff577f7ec934a95f697fde5a06f_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a2a6cab3f5931df9b350b3dec8c08b6b2}\label{structChronusQ_1_1BasisSet_a2a6cab3f5931df9b350b3dec8c08b6b2}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{const \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} \&}]{basis }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Outputs relevant information for the \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} object to a specified output.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{[}in/out\mbox{]}} & out Ouput device \textbackslash{}paral \mbox{[}in\mbox{]} mol \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}} object to output. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_ab327e5529c2b14a75fbf1522c252f70a}\label{structChronusQ_1_1BasisSet_ab327e5529c2b14a75fbf1522c252f70a}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!basisDef@{basisDef}}
+\index{basisDef@{basisDef}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{basisDef}{basisDef}}
+{\footnotesize\ttfamily std\+::string Chronus\+Q\+::\+Basis\+Set\+::basis\+Def}
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a242e25218feff34671efc28d31ad8157}\label{structChronusQ_1_1BasisSet_a242e25218feff34671efc28d31ad8157}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!basisName@{basisName}}
+\index{basisName@{basisName}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{basisName}{basisName}}
+{\footnotesize\ttfamily std\+::string Chronus\+Q\+::\+Basis\+Set\+::basis\+Name}
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a6ff811a30a97707991cc33d2d93754a2}\label{structChronusQ_1_1BasisSet_a6ff811a30a97707991cc33d2d93754a2}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!basisType@{basisType}}
+\index{basisType@{basisType}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{basisType}{basisType}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86}{BASIS\+\_\+\+FUNCTION\+\_\+\+TYPE}} Chronus\+Q\+::\+Basis\+Set\+::basis\+Type = \mbox{\hyperlink{namespaceChronusQ_a02b2a6fa70af1afb107abf62d61cfb86a9ae4d9d27a920589d9d4e4f718799a83}{REAL\+\_\+\+GTO}}}
+
+
+
+Type of basis function. 
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_aa66ab288268fcf398ac2634986cd09f0}\label{structChronusQ_1_1BasisSet_aa66ab288268fcf398ac2634986cd09f0}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!centers@{centers}}
+\index{centers@{centers}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{centers}{centers}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceChronusQ_a47e04063afb6df9ddf563c17663e3230}{cartvec\+\_\+t}} Chronus\+Q\+::\+Basis\+Set\+::centers}
+
+
+
+A list of centers that comprise the \mbox{\hyperlink{structChronusQ_1_1BasisSet}{Basis\+Set}}. 
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a87bdf52af466b6675078a34788641774}\label{structChronusQ_1_1BasisSet_a87bdf52af466b6675078a34788641774}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!forceCart@{forceCart}}
+\index{forceCart@{forceCart}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{forceCart}{forceCart}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+Basis\+Set\+::force\+Cart}
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a5a0db2a0e93dae842e4aa9bba603e444}\label{structChronusQ_1_1BasisSet_a5a0db2a0e93dae842e4aa9bba603e444}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!inputDef@{inputDef}}
+\index{inputDef@{inputDef}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{inputDef}{inputDef}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+Basis\+Set\+::input\+Def}
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_ad24883d35c67703cc3805197053c28f1}\label{structChronusQ_1_1BasisSet_ad24883d35c67703cc3805197053c28f1}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!mapCen2BfSt@{mapCen2BfSt}}
+\index{mapCen2BfSt@{mapCen2BfSt}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{mapCen2BfSt}{mapCen2BfSt}}
+{\footnotesize\ttfamily std\+::vector$<$size\+\_\+t$>$ Chronus\+Q\+::\+Basis\+Set\+::map\+Cen2\+Bf\+St}
+
+
+
+Map Cen \# -\/\texorpdfstring{$>$}{>} Starting BF \#. 
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}\label{structChronusQ_1_1BasisSet_a85f991b14d3877ba9dd6d5f3568ce2cc}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!mapSh2Bf@{mapSh2Bf}}
+\index{mapSh2Bf@{mapSh2Bf}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{mapSh2Bf}{mapSh2Bf}}
+{\footnotesize\ttfamily std\+::vector$<$size\+\_\+t$>$ Chronus\+Q\+::\+Basis\+Set\+::map\+Sh2\+Bf}
+
+
+
+Map Shell \# -\/\texorpdfstring{$>$}{>} BF \#. 
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a2e39c31c653bccb44ec140148baa1ea0}\label{structChronusQ_1_1BasisSet_a2e39c31c653bccb44ec140148baa1ea0}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!mapSh2Cen@{mapSh2Cen}}
+\index{mapSh2Cen@{mapSh2Cen}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{mapSh2Cen}{mapSh2Cen}}
+{\footnotesize\ttfamily std\+::vector$<$size\+\_\+t$>$ Chronus\+Q\+::\+Basis\+Set\+::map\+Sh2\+Cen}
+
+
+
+Map Shell \# -\/\texorpdfstring{$>$}{>} Cen \#. 
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a90bfe80774a23ae70d381783a1d275ac}\label{structChronusQ_1_1BasisSet_a90bfe80774a23ae70d381783a1d275ac}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!maxL@{maxL}}
+\index{maxL@{maxL}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{maxL}{maxL}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Basis\+Set\+::maxL}
+
+
+
+Max angular momentum of basis. 
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_aee354d7cf0e3268aed3a136409c23662}\label{structChronusQ_1_1BasisSet_aee354d7cf0e3268aed3a136409c23662}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!maxPrim@{maxPrim}}
+\index{maxPrim@{maxPrim}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{maxPrim}{maxPrim}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Basis\+Set\+::max\+Prim}
+
+
+
+Max primitive dimension of basis. 
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}\label{structChronusQ_1_1BasisSet_a40ad4a89b440bf71e0ef6ba317d8123f}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!nBasis@{nBasis}}
+\index{nBasis@{nBasis}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{nBasis}{nBasis}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Basis\+Set\+::n\+Basis = 0}
+
+
+
+Number of CGTO basis functions. 
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_afd6c670bc1fdadd7ae58aec80ddc01c9}\label{structChronusQ_1_1BasisSet_afd6c670bc1fdadd7ae58aec80ddc01c9}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!nPrimitive@{nPrimitive}}
+\index{nPrimitive@{nPrimitive}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{nPrimitive}{nPrimitive}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Basis\+Set\+::n\+Primitive}
+
+
+
+Number of primitive GTO functions. 
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a936871b121472a416ee6f947ccdea4b4}\label{structChronusQ_1_1BasisSet_a936871b121472a416ee6f947ccdea4b4}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!nShell@{nShell}}
+\index{nShell@{nShell}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{nShell}{nShell}}
+{\footnotesize\ttfamily size\+\_\+t Chronus\+Q\+::\+Basis\+Set\+::n\+Shell}
+
+
+
+Number of CGTO basis shells. 
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a105a64fa290e3d5833fb6793b27fdcf3}\label{structChronusQ_1_1BasisSet_a105a64fa290e3d5833fb6793b27fdcf3}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!nucBasis@{nucBasis}}
+\index{nucBasis@{nucBasis}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{nucBasis}{nucBasis}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+Basis\+Set\+::nuc\+Basis}
+
+
+
+Whether this basis is for nuclear. 
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a4f2b82970784a895b17f0ba1ce7b9eb0}\label{structChronusQ_1_1BasisSet_a4f2b82970784a895b17f0ba1ce7b9eb0}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!primitives@{primitives}}
+\index{primitives@{primitives}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{primitives}{primitives}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$libint2\+::\+Shell, size\+\_\+t, \mbox{\hyperlink{structChronusQ_1_1PrimShellHash}{Prim\+Shell\+Hash}}$>$ Chronus\+Q\+::\+Basis\+Set\+::primitives}
+
+
+
+Primitive shells. 
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a5256ca12a298fe9abdda8e3d574dab24}\label{structChronusQ_1_1BasisSet_a5256ca12a298fe9abdda8e3d574dab24}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!shellData@{shellData}}
+\index{shellData@{shellData}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{shellData}{shellData}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1ShellPairData}{Shell\+Pair\+Data}} Chronus\+Q\+::\+Basis\+Set\+::shell\+Data}
+
+
+
+Shell pair data. 
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}\label{structChronusQ_1_1BasisSet_a9be2da981037c46350e698aa0c179330}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!shells@{shells}}
+\index{shells@{shells}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{shells}{shells}}
+{\footnotesize\ttfamily std\+::vector$<$libint2\+::\+Shell$>$ Chronus\+Q\+::\+Basis\+Set\+::shells}
+
+
+
+Basis shells. 
+
+\mbox{\Hypertarget{structChronusQ_1_1BasisSet_a13ea1d4cfdfd8206566571d3628e2507}\label{structChronusQ_1_1BasisSet_a13ea1d4cfdfd8206566571d3628e2507}} 
+\index{ChronusQ::BasisSet@{ChronusQ::BasisSet}!unNormCont@{unNormCont}}
+\index{unNormCont@{unNormCont}!ChronusQ::BasisSet@{ChronusQ::BasisSet}}
+\doxysubsubsection{\texorpdfstring{unNormCont}{unNormCont}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::vector$<$double$>$ $>$ Chronus\+Q\+::\+Basis\+Set\+::un\+Norm\+Cont}
+
+
+
+Unnormalized basis coefficients. 
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/basisset/\mbox{\hyperlink{basisset__def_8hpp}{basisset\+\_\+def.\+hpp}}\item 
+src/basisset/\mbox{\hyperlink{basisset_8cxx}{basisset.\+cxx}}\end{DoxyCompactItemize}

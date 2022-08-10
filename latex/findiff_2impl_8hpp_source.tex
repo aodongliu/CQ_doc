@@ -1,0 +1,206 @@
+\hypertarget{findiff_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{findiff_2impl_8hpp_source}\index{include/findiff/impl.hpp@{include/findiff/impl.hpp}}
+\mbox{\hyperlink{findiff_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{findiff_8hpp}{findiff.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <algorithm>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <cmath>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define COEFF\_DEBUG}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38   \textcolor{keyword}{template} <\textcolor{keyword}{typename} RetT, \textcolor{keyword}{typename} ChangeT>}
+\DoxyCodeLine{39   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a1eb2cc2350f60d58b1ff0a06f86c446b}{FiniteDifferencer<RetT,ChangeT>::makeTable}}() \{}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{comment}{// See Fornberg, B. (1988). Mathematics of computation, 51(184), 699-\/706.}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     std::vector<double> alphas\{0.\};}
+\DoxyCodeLine{44     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} ai = 1; ai < maxNodes\_/2 + 1; ai++) \{}
+\DoxyCodeLine{45       alphas.push\_back(\textcolor{keywordtype}{double}(ai));}
+\DoxyCodeLine{46       alphas.push\_back(-\/1*\textcolor{keywordtype}{double}(ai));}
+\DoxyCodeLine{47     \}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#ifdef COEFF\_DEBUG}}
+\DoxyCodeLine{50     std::cout << \textcolor{stringliteral}{"{}Alpha size: "{}} << alphas.size() << std::endl;}
+\DoxyCodeLine{51     \textcolor{keywordflow}{for} ( \textcolor{keywordtype}{size\_t} i = 0; i < alphas.size(); i++ )}
+\DoxyCodeLine{52       std::cout << \textcolor{stringliteral}{"{}Alpha\_"{}} << i << \textcolor{stringliteral}{"{}: "{}} << alphas[i] << std::endl;}
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{comment}{// Allocate coefficients}}
+\DoxyCodeLine{56     coeffs\_.clear();}
+\DoxyCodeLine{57     \textcolor{keywordflow}{for} ( \textcolor{keywordtype}{size\_t} mi = 0; mi <= order\_; mi++ ) \{}
+\DoxyCodeLine{58       coeffs\_.push\_back(\{\});}
+\DoxyCodeLine{59       \textcolor{keywordflow}{for} ( \textcolor{keywordtype}{size\_t} ni = 0; ni <= maxNodes\_; ni++ ) \{}
+\DoxyCodeLine{60         coeffs\_[mi].push\_back(std::vector<double>(ni+1, 0.));}
+\DoxyCodeLine{61       \}}
+\DoxyCodeLine{62     \}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     coeffs\_[0][0][0] = 1.;}
+\DoxyCodeLine{65     \textcolor{keywordtype}{double} c1 = 1.;}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \textcolor{keywordflow}{for} ( \textcolor{keywordtype}{size\_t} n = 1; n <= maxNodes\_; n++ ) \{}
+\DoxyCodeLine{68       }
+\DoxyCodeLine{69       \textcolor{keywordtype}{double} c2 = 1.;}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71       \textcolor{keywordflow}{for} ( \textcolor{keywordtype}{size\_t} v = 0; v < n; v++ ) \{}
+\DoxyCodeLine{72         }
+\DoxyCodeLine{73         \textcolor{keywordtype}{double} c3 = alphas[n] -\/ alphas[v];}
+\DoxyCodeLine{74         c2 *= c3;}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76         \textcolor{keywordflow}{for} ( \textcolor{keywordtype}{size\_t} m = 0; m <= std::min(n,order\_); m++ ) \{}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78           \textcolor{keywordtype}{double} tval = alphas[n] * coeffs\_[m][n-\/1][v];}
+\DoxyCodeLine{79           \textcolor{keywordflow}{if} ( m != 0 ) tval -\/= m * coeffs\_[m-\/1][n-\/1][v];}
+\DoxyCodeLine{80           }
+\DoxyCodeLine{81           coeffs\_[m][n][v] = tval / c3;}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83         \}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85       \}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87       \textcolor{keywordflow}{for} ( \textcolor{keywordtype}{size\_t} m = 0; m <= std::min(n,order\_); m++ ) \{}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89         \textcolor{keywordtype}{double} tval = -\/1 * alphas[n-\/1] * coeffs\_[m][n-\/1][n-\/1];}
+\DoxyCodeLine{90         \textcolor{keywordflow}{if} ( m != 0 ) tval += m * coeffs\_[m-\/1][n-\/1][n-\/1];}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92         coeffs\_[m][n][n] = c1 / c2 * tval;}
+\DoxyCodeLine{93       \}}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95       c1 = c2;}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97     \}}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99 \textcolor{preprocessor}{\#ifdef COEFF\_DEBUG}}
+\DoxyCodeLine{100     \textcolor{keywordflow}{for} ( \textcolor{keywordtype}{size\_t} m = 0; m < coeffs\_.size(); m++ )}
+\DoxyCodeLine{101     \textcolor{keywordflow}{for} ( \textcolor{keywordtype}{size\_t} n = 0; n < coeffs\_[m].size(); n++ )}
+\DoxyCodeLine{102     \textcolor{keywordflow}{for} ( \textcolor{keywordtype}{size\_t} v = 0; v < coeffs\_[m][n].size(); v++ ) \{}
+\DoxyCodeLine{103       std::cout << \textcolor{stringliteral}{"{}["{}} << m << \textcolor{stringliteral}{"{},"{}} << n << \textcolor{stringliteral}{"{},"{}} << v << \textcolor{stringliteral}{"{}] :  "{}};}
+\DoxyCodeLine{104       std::cout << coeffs\_[m][n][v] << std::endl;}
+\DoxyCodeLine{105     \}}
+\DoxyCodeLine{106 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108   \} \textcolor{comment}{// FiniteDifferencer::makeTable}}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110   }
+\DoxyCodeLine{111   \textcolor{keyword}{template} <\textcolor{keyword}{typename} RetT, \textcolor{keyword}{typename} ChangeT>}
+\DoxyCodeLine{112   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1FiniteDifferencer_a6cb398b26e3ef975492b158585ed3d6e}{FiniteDifferencer<RetT, ChangeT>::doDifference}}() \{}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114     std::cout << \textcolor{stringliteral}{"{} *** Calculating numerical derivative of order "{}} << order\_;}
+\DoxyCodeLine{115     std::cout << \textcolor{stringliteral}{"{} with accuracy of order "{}} << acc\_ << \textcolor{stringliteral}{"{} ***"{}} << std::endl;}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     \textcolor{comment}{// Accuracy is generally n -\/ m + 1, except for even orders on central diff}}
+\DoxyCodeLine{118     \textcolor{comment}{//   where you can get away with one n less.}}
+\DoxyCodeLine{119     maxNodes\_ = acc\_ + order\_ + (order\_ \% 2) -\/ 2;}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121     std::cout << \textcolor{stringliteral}{"{}   * Required nodes: "{}} << maxNodes\_ + 1 -\/ (order\_ \% 2);}
+\DoxyCodeLine{122     std::cout << std::endl;}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124     \textcolor{comment}{// Generate coefficients}}
+\DoxyCodeLine{125     makeTable();}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127     \textcolor{comment}{// Temporary result storage}}
+\DoxyCodeLine{128     std::vector<std::vector<RetT>> resVals;}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130     \textcolor{comment}{// Oth node only necessary for evens}}
+\DoxyCodeLine{131     \textcolor{keywordflow}{if} ( order\_ \% 2 == 0 ) \{}
+\DoxyCodeLine{132       \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} \&f: changeFuncs\_ ) \{}
+\DoxyCodeLine{133         f(0.*h\_);}
+\DoxyCodeLine{134         resVals.push\_back( valFunc\_() );}
+\DoxyCodeLine{135       \}}
+\DoxyCodeLine{136     \}}
+\DoxyCodeLine{137     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{138       \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} \&f: changeFuncs\_ )}
+\DoxyCodeLine{139         resVals.push\_back(\{\});}
+\DoxyCodeLine{140     \}}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142     \textcolor{comment}{// Loop over nodes, then over changeFuncs}}
+\DoxyCodeLine{143     \textcolor{keywordflow}{for} ( \textcolor{keywordtype}{size\_t} inode = 1; inode <= maxNodes\_; inode++ ) \{}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145       ChangeT change = (inode + 1)/2 * h\_;}
+\DoxyCodeLine{146       \textcolor{keywordflow}{if} ( inode \% 2 == 0 ) change *= -\/1;}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148       \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} \&f: changeFuncs\_ ) \{}
+\DoxyCodeLine{149         f(change);}
+\DoxyCodeLine{150         resVals.push\_back( valFunc\_() );}
+\DoxyCodeLine{151       \}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     \}}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156     \textcolor{comment}{// Nodes finished being computed, now combine}}
+\DoxyCodeLine{157     \textcolor{comment}{// This can be further generalized (e.g. for matrices) by letting the}}
+\DoxyCodeLine{158     \textcolor{comment}{//   user define this reduction function.}}
+\DoxyCodeLine{159     \textcolor{keyword}{auto}\& orderC = coeffs\_[order\_][maxNodes\_];}
+\DoxyCodeLine{160     \textcolor{keywordtype}{size\_t} nFuncs = changeFuncs\_.size();}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162     results\_ = std::vector<std::vector<RetT>>(nFuncs);}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164     \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} v = 0; v < orderC.size(); v++ ) \{}
+\DoxyCodeLine{165       \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto} ifunc = 0; ifunc < nFuncs; ifunc++ ) \{}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167         \textcolor{comment}{// Deal with unitialized results}}
+\DoxyCodeLine{168         \textcolor{keywordflow}{if} ( results\_[ifunc].empty() ) \{}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170           results\_[ifunc].resize(resVals[v*nFuncs+ifunc].size());}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172           std::transform(resVals[v*nFuncs+ifunc].begin(),}
+\DoxyCodeLine{173                          resVals[v*nFuncs+ifunc].end(),}
+\DoxyCodeLine{174                          results\_[ifunc].begin(),}
+\DoxyCodeLine{175                          [\&](RetT val)\{\textcolor{keywordflow}{return} orderC[v] * val;\});}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177         \}}
+\DoxyCodeLine{178         \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180           std::transform(resVals[v*nFuncs+ifunc].begin(),}
+\DoxyCodeLine{181                          resVals[v*nFuncs+ifunc].end(),}
+\DoxyCodeLine{182                          results\_[ifunc].begin(),}
+\DoxyCodeLine{183                          results\_[ifunc].begin(),}
+\DoxyCodeLine{184                          [\&](RetT val1, RetT val2) \{}
+\DoxyCodeLine{185                            \textcolor{keywordflow}{return} orderC[v] * val1 + val2;}
+\DoxyCodeLine{186                          \});}
+\DoxyCodeLine{187         \}}
+\DoxyCodeLine{188       \}}
+\DoxyCodeLine{189     \}}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192     \textcolor{comment}{// Finally, rescale to the real grid size}}
+\DoxyCodeLine{193     \textcolor{keywordflow}{for} ( \textcolor{keyword}{auto}\& funcRes: results\_ ) \{}
+\DoxyCodeLine{194       std::transform(funcRes.begin(), funcRes.end(), funcRes.begin(),}
+\DoxyCodeLine{195         [\&](RetT val)\{ return val / std::pow( h\_, order\_ ); \});}
+\DoxyCodeLine{196     \}}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198   \};}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,181 @@
+\hypertarget{orbitalrotation_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{orbitalrotation_2impl_8hpp_source}\index{include/orbitalrotation/impl.hpp@{include/orbitalrotation/impl.hpp}}
+\mbox{\hyperlink{orbitalrotation_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you ca redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{orbitalrotation_8hpp}{orbitalrotation.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{util_2print_8hpp}{util/print.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{incore4indexreleri_8hpp}{particleintegrals/twopints/incore4indexreleri.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas3_8hpp}{cqlinalg/blas3.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{ortho_8hpp}{cqlinalg/ortho.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matfunc_8hpp}{cqlinalg/matfunc.hpp}}>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{comment}{//\#define DEBUG\_ORBITALROTATION\_IMPL}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{37   }
+\DoxyCodeLine{38   \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1OrbitalRotationSettings_a9e4dae2537e47f7d76d677c740646a8d}{OrbitalRotationSettings::print}}(\textcolor{keywordtype}{bool} fourComp) \{}
+\DoxyCodeLine{39     \textcolor{keywordflow}{if} (\mbox{\hyperlink{structChronusQ_1_1OrbitalRotationSettings_a1388a69a665e7151eaaf96f78b61dd95}{alg}} == \mbox{\hyperlink{namespaceChronusQ_a363928d5820800185dd84fa5eedfb226a27d5b5beb6283cbf9babf44f21178cc3}{OrbitalRotationAlgorithm::ORB\_ROT\_APPROX\_QUASI\_2ND\_ORDER}}) \{}
+\DoxyCodeLine{40       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Oribital Rotation Algorithm:"{}},  \textcolor{stringliteral}{"{}Approximated Quasi-\/2nd Order"{}});}
+\DoxyCodeLine{41     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{structChronusQ_1_1OrbitalRotationSettings_a1388a69a665e7151eaaf96f78b61dd95}{alg}} == \mbox{\hyperlink{namespaceChronusQ_a363928d5820800185dd84fa5eedfb226a260e9882327e9ec0e66897db60657f9e}{OrbitalRotationAlgorithm::ORB\_ROT\_QUASI\_2ND\_ORDER}}) \{}
+\DoxyCodeLine{42       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Oribital Rotation Algorithm:"{}},  \textcolor{stringliteral}{"{}Quasi-\/2nd Order"{}});}
+\DoxyCodeLine{43     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{structChronusQ_1_1OrbitalRotationSettings_a1388a69a665e7151eaaf96f78b61dd95}{alg}} == \mbox{\hyperlink{namespaceChronusQ_a363928d5820800185dd84fa5eedfb226a7253ec027e5bbd5497da54a5bf97c2c8}{ORB\_ROT\_2ND\_ORDER}}) \{}
+\DoxyCodeLine{44       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout,\textcolor{stringliteral}{"{}  Oribital Rotation Algorithm:"{}},  \textcolor{stringliteral}{"{}Seconnd Order"{}});}
+\DoxyCodeLine{45     \} \textcolor{keywordflow}{else} \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}NYI Orbital Rotation Algorithm"{}});}
+\DoxyCodeLine{46    }
+\DoxyCodeLine{47     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout, \textcolor{stringliteral}{"{}  Rotation Blocks:"{}});}
+\DoxyCodeLine{48     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout, \textcolor{stringliteral}{"{}  -\/ Within Correlated:"{}},               \mbox{\hyperlink{structChronusQ_1_1OrbitalRotationSettings_a8cd793b25641c2455def97df70ff6ad5}{rotate\_within\_correlated}});}
+\DoxyCodeLine{49     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout, \textcolor{stringliteral}{"{}  -\/ Between Inactive and Correlated:"{}}, \mbox{\hyperlink{structChronusQ_1_1OrbitalRotationSettings_a08758c92668b8dd7a217c9e44da9e465}{rotate\_inact\_correlated}});}
+\DoxyCodeLine{50     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout, \textcolor{stringliteral}{"{}  -\/ Between Inactive and Virtual:"{}},    \mbox{\hyperlink{structChronusQ_1_1OrbitalRotationSettings_a88c0fe67e2e3bcf8f9a05a11f9e668bf}{rotate\_inact\_virtual}});}
+\DoxyCodeLine{51     \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout, \textcolor{stringliteral}{"{}  -\/ Between Correlated and Virtual:"{}},  \mbox{\hyperlink{structChronusQ_1_1OrbitalRotationSettings_a85358b89e929ab24c4a729d1b877dc4b}{rotate\_correlated\_virtual}});}
+\DoxyCodeLine{52     \textcolor{keywordflow}{if}(fourComp) }
+\DoxyCodeLine{53       \mbox{\hyperlink{namespaceChronusQ_a7e664556a6f98bedfadf1aecbe014384}{FormattedLine}}(std::cout, \textcolor{stringliteral}{"{}  -\/ Between Negative and Positive:"{}},  \mbox{\hyperlink{structChronusQ_1_1OrbitalRotationSettings_a61ed66fd688a9d5429f2f9a5076166dc}{rotate\_negative\_positive}});}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55   \} \textcolor{comment}{// OrbitalRotationSettings::print}}
+\DoxyCodeLine{56   }
+\DoxyCodeLine{57   \textcolor{comment}{/*}}
+\DoxyCodeLine{58 \textcolor{comment}{   * \(\backslash\)brief rotate MO for one step size using Newton-\/Raphson:}}
+\DoxyCodeLine{59 \textcolor{comment}{   * }}
+\DoxyCodeLine{60 \textcolor{comment}{   * steps:}}
+\DoxyCodeLine{61 \textcolor{comment}{   *   1. compute Gradient if not computed}}
+\DoxyCodeLine{62 \textcolor{comment}{   *   2. compute (approximated) Hessian and inverse it}}
+\DoxyCodeLine{63 \textcolor{comment}{   *   3. compute rotation paramemter X = -\/ g / H}}
+\DoxyCodeLine{64 \textcolor{comment}{   *   4. compute rotation matrix by matrix exponential U = exp(X)}}
+\DoxyCodeLine{65 \textcolor{comment}{   *   5. rotate MO for one step size as C' = C U}}
+\DoxyCodeLine{66 \textcolor{comment}{   */} }
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>  }
+\DoxyCodeLine{69   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1OrbitalRotation_a8cfd40c7cd30775f2128fee136927d83}{OrbitalRotation<MatsT, IntsT>::rotateMO}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert, }
+\DoxyCodeLine{70     \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \& oneRDM, \mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<MatsT>}} \& twoRDM) \{}
+\DoxyCodeLine{71     }
+\DoxyCodeLine{72     \textcolor{keyword}{auto} \& mopart = mcwfn\_.MOPartition;}
+\DoxyCodeLine{73     \textcolor{keyword}{auto} \& mem    = mcwfn\_.memManager;}
+\DoxyCodeLine{74     \textcolor{keyword}{auto} \& mo     = mcwfn\_.reference().mo[0];}
+\DoxyCodeLine{75     \textcolor{keywordtype}{size\_t} nTOrb  = mopart.nMO;}
+\DoxyCodeLine{76     \textcolor{keywordtype}{size\_t} nTOrb2 = nTOrb * nTOrb;}
+\DoxyCodeLine{77     \textcolor{keywordtype}{size\_t} nAO    = mo.dimension(); }
+\DoxyCodeLine{78     }
+\DoxyCodeLine{79     \textcolor{comment}{// offset it by inactive core index}}
+\DoxyCodeLine{80     \textcolor{keyword}{auto} mo\_pointer = mo.pointer(); }
+\DoxyCodeLine{81     }
+\DoxyCodeLine{82     \textcolor{comment}{// get gradient}}
+\DoxyCodeLine{83     \textcolor{keywordflow}{if} (not orbitalGradient\_) computeOrbGradient(pert, oneRDM, twoRDM); }
+\DoxyCodeLine{84     MatsT * G = orbitalGradient\_-\/>pointer();}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     \textcolor{comment}{// allocate memory    }}
+\DoxyCodeLine{87     MatsT * \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}} = mem.template malloc<MatsT>(nTOrb2);}
+\DoxyCodeLine{88     MatsT * U = mem.template malloc<MatsT>(nTOrb2);}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90     MatsT * H = \textcolor{keyword}{nullptr}; }
+\DoxyCodeLine{91     \textcolor{keywordflow}{if} (settings.alg == \mbox{\hyperlink{namespaceChronusQ_a363928d5820800185dd84fa5eedfb226a7253ec027e5bbd5497da54a5bf97c2c8}{ORB\_ROT\_2ND\_ORDER}}) \{}
+\DoxyCodeLine{92       H = mem.template malloc<MatsT>(nTOrb2*nTOrb2); }
+\DoxyCodeLine{93     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{94       H = mem.template malloc<MatsT>(nTOrb2); }
+\DoxyCodeLine{95     \}}
+\DoxyCodeLine{96     }
+\DoxyCodeLine{97     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Form Hessian"{}});}
+\DoxyCodeLine{98     \textcolor{comment}{// X = -\/ H \string^\{-\/1\} * G}}
+\DoxyCodeLine{99     \textcolor{keywordflow}{if} (settings.alg == \mbox{\hyperlink{namespaceChronusQ_a363928d5820800185dd84fa5eedfb226a7253ec027e5bbd5497da54a5bf97c2c8}{ORB\_ROT\_2ND\_ORDER}}) \{}
+\DoxyCodeLine{100       \textcolor{comment}{// this-\/>computeOrbOrbHessian(H);}}
+\DoxyCodeLine{101       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}2nd Order orbital rotation not implemented"{}});}
+\DoxyCodeLine{102     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{103       this-\/>computeOrbOrbHessianDiag(pert, oneRDM, twoRDM, H);}
+\DoxyCodeLine{104       \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i = 0ul; i < nTOrb2; i++) \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}[i] = -\/ G[i] / H[i];}
+\DoxyCodeLine{105     \}}
+\DoxyCodeLine{106     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Form Hessian"{}});}
+\DoxyCodeLine{107     }
+\DoxyCodeLine{108     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Rotate MO"{}});}
+\DoxyCodeLine{109     }
+\DoxyCodeLine{110     \textcolor{comment}{// Damp X to avoid Large Rotation}}
+\DoxyCodeLine{111     \textcolor{keyword}{auto} X\_max = std::max\_element(\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}, \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}+nTOrb2, }
+\DoxyCodeLine{112       [\&] (MatsT a, MatsT b) \{ \textcolor{keywordflow}{return} std::norm(a) < std::norm(b);\} );}
+\DoxyCodeLine{113     }
+\DoxyCodeLine{114     \textcolor{keywordflow}{if}(std::abs(*X\_max) > settings.XDampTol) \{}
+\DoxyCodeLine{115       \textcolor{keywordtype}{double} XDampFc = settings.XDampTol / std::abs(*X\_max);}
+\DoxyCodeLine{116       \textcolor{keyword}{auto} pos = std::distance(\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}, X\_max);}
+\DoxyCodeLine{117       \textcolor{keyword}{auto} j   = int(pos / nTOrb);}
+\DoxyCodeLine{118       \textcolor{keyword}{auto} i   = pos -\/ j*nTOrb;}
+\DoxyCodeLine{119       std::cout << \textcolor{stringliteral}{"{}    WARNING!: Large Rotation! XMax at X["{}} }
+\DoxyCodeLine{120                 << i << \textcolor{stringliteral}{"{}, "{}} << j << \textcolor{stringliteral}{"{}] = "{}} << *X\_max}
+\DoxyCodeLine{121                 << \textcolor{stringliteral}{"{}, step scaled by "{}} << XDampFc}
+\DoxyCodeLine{122                 << \textcolor{stringliteral}{"{}\(\backslash\)n"{}} << std::endl;}
+\DoxyCodeLine{123       }
+\DoxyCodeLine{124       blas::scal(nTOrb2, MatsT(XDampFc), \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}, 1);}
+\DoxyCodeLine{125     \}}
+\DoxyCodeLine{126     }
+\DoxyCodeLine{127     \textcolor{comment}{// U = exp(X)}}
+\DoxyCodeLine{128     \mbox{\hyperlink{namespaceChronusQ_ad5166b3a8d2e2a42bcf1b477f608eb34}{MatExp}}(nTOrb, \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}, nTOrb, U, nTOrb, mem);}
+\DoxyCodeLine{129     }
+\DoxyCodeLine{130 \textcolor{preprocessor}{\#ifdef DEBUG\_ORBITALROTATION\_IMPL}}
+\DoxyCodeLine{131     \textcolor{keywordtype}{double} HNorm = lapack::lange(lapack::Norm::Fro, nTOrb, nTOrb, H, nTOrb); }
+\DoxyCodeLine{132     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout, \textcolor{stringliteral}{"{} OR H "{}}, H, nTOrb, nTOrb, nTOrb);}
+\DoxyCodeLine{133     \textcolor{keywordtype}{double} XNorm = lapack::lange(lapack::Norm::Fro, nTOrb, nTOrb, \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}, nTOrb); }
+\DoxyCodeLine{134     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout, \textcolor{stringliteral}{"{} OR X "{}}, \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}, nTOrb, nTOrb, nTOrb);}
+\DoxyCodeLine{135     \textcolor{keywordtype}{double} UNorm = lapack::lange(lapack::Norm::Fro, nTOrb, nTOrb, U, nTOrb); }
+\DoxyCodeLine{136     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout, \textcolor{stringliteral}{"{} OR U "{}}, U, nTOrb, nTOrb, nTOrb);}
+\DoxyCodeLine{137     std::cout << \textcolor{stringliteral}{"{}OR H Norm = "{}} << HNorm << std::endl;}
+\DoxyCodeLine{138     std::cout << \textcolor{stringliteral}{"{}OR X Norm = "{}} << XNorm << std::endl;}
+\DoxyCodeLine{139     std::cout << \textcolor{stringliteral}{"{}OR U Norm = "{}} << UNorm << std::endl;}
+\DoxyCodeLine{140 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142     \textcolor{comment}{// Orthonormalized U and disable GramSchmidt printining}}
+\DoxyCodeLine{143     std::cout.setstate(std::ios\_base::failbit);}
+\DoxyCodeLine{144     \textcolor{keywordtype}{size\_t} NUOrtho = \mbox{\hyperlink{namespaceChronusQ_a297df8c15de632b2649710f25e104d51}{GramSchmidt}}(nTOrb, 0, nTOrb, U, nTOrb, mem);   }
+\DoxyCodeLine{145     std::cout.clear();}
+\DoxyCodeLine{146     }
+\DoxyCodeLine{147     \textcolor{keywordflow}{if}(NUOrtho != nTOrb) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Failed at Orthonormalizing Rotation U Matix."{}});}
+\DoxyCodeLine{148     }
+\DoxyCodeLine{149     \textcolor{comment}{// Rotate MO Coefficient C' = C * U}}
+\DoxyCodeLine{150     \textcolor{comment}{// use X as SCR}}
+\DoxyCodeLine{151     }
+\DoxyCodeLine{152     blas::gemm(blas::Layout::ColMajor, blas::Op::NoTrans, blas::Op::NoTrans, }
+\DoxyCodeLine{153       nAO, nTOrb, nTOrb, MatsT(1.), mo\_pointer, }
+\DoxyCodeLine{154       nAO, U, nTOrb, MatsT(0.), \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}, nAO);}
+\DoxyCodeLine{155     \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'}, nAO, nTOrb, MatsT(1.), \mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}, nAO, mo\_pointer, nAO);  }
+\DoxyCodeLine{156     }
+\DoxyCodeLine{157     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Rotate MO"{}});}
+\DoxyCodeLine{158     }
+\DoxyCodeLine{159     \textcolor{comment}{// free memory}}
+\DoxyCodeLine{160     \textcolor{keywordflow}{if}(orbitalGradient\_) orbitalGradient\_ = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{161     \textcolor{keywordflow}{if}(H) mem.free(H);}
+\DoxyCodeLine{162     \textcolor{keywordflow}{if}(\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}}) mem.free(\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa02129bb861061d1a052c592e2dc6b383}{X}});}
+\DoxyCodeLine{163     \textcolor{keywordflow}{if}(U) mem.free(U);}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165   \}; \textcolor{comment}{// OrbitalRotation::rotateOrbitals()}}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169 \textcolor{comment}{// Other headers}}
+\DoxyCodeLine{170 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{orbitalrotation_2fock_8hpp}{orbitalrotation/fock.hpp}}>}      \textcolor{comment}{// fock matrix implementation }}
+\DoxyCodeLine{171 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{gradient_8hpp}{orbitalrotation/gradient.hpp}}>}  \textcolor{comment}{// gradient implementation}}
+\DoxyCodeLine{172 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{hessian_8hpp}{orbitalrotation/hessian.hpp}}>}   \textcolor{comment}{// hessian implementation}}
+\DoxyCodeLine{173 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{ivo_8hpp}{orbitalrotation/ivo.hpp}}>}   \textcolor{comment}{// hessian implementation}}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175 }
+
+\end{DoxyCode}

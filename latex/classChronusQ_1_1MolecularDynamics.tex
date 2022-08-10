@@ -1,0 +1,313 @@
+\hypertarget{classChronusQ_1_1MolecularDynamics}{}\doxysection{ChronusQ\+::Molecular\+Dynamics Class Reference}
+\label{classChronusQ_1_1MolecularDynamics}\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+
+
+The \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics}{Molecular\+Dynamics}} class.  
+
+
+
+
+{\ttfamily \#include $<$moleculardynamics.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::Molecular\+Dynamics\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=233pt]{classChronusQ_1_1MolecularDynamics__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::Molecular\+Dynamics\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MolecularDynamics__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a7c50712bea32887567cfe12b209f5689}{Molecular\+Dynamics}} ()=delete
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_ae85ffe2c70409b34f3bdc5e6c1f7a130}{Molecular\+Dynamics}} (\mbox{\hyperlink{structChronusQ_1_1MolecularOptions}{Molecular\+Options}} molecular\+Options, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&molecule)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a7d144cb0726e994f75e21e08e810aaec}{Molecular\+Dynamics}} (const \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics}{Molecular\+Dynamics}} \&other)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a4327350d623175a4641fe396a7147e28}{Molecular\+Dynamics}} (\mbox{\hyperlink{classChronusQ_1_1MolecularDynamics}{Molecular\+Dynamics}} \&\&other)
+\item 
+virtual \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_aea224192420056f26124620b5f0f20c2}{$\sim$\+Molecular\+Dynamics}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a8f8fb281eeeb0eb36ae89e8c7b3bb0c1}{initialize\+MD}} (\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&molecule)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a6e38110b723f8a5576d877d9fd42975f}{update}} (bool print, \mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&molecule, bool first\+Step)
+\begin{DoxyCompactList}\small\item\em Updates the positions of the classical nuclei. Recompute all member data to fit with the new positions. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_ae40048b1c84055ded73b751249eae93d}{velocity\+VV}} (\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&molecule, std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a8e137fbca91ecd34d0316e0f08547ed2}{gradient\+Current}}, double time\+Step, bool first\+Step)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_afe9ac366e8e661f3a4c4b592fa913d69}{geometry\+VV}} (\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&molecule, std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a8e137fbca91ecd34d0316e0f08547ed2}{gradient\+Current}}, double time\+Step)
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a5dc89ff1c66d37eb13ae5ec8e90ab920}{compute\+Kinetic\+Energy}} (\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&molecule)
+\begin{DoxyCompactList}\small\item\em Compute the nuclear-\/nuclear repulsion energy for classical point nuclei using the Atoms contained in the atoms array. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_af5203da4eba474651b0f20af709518da}{has\+Next}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::function$<$ std\+::vector$<$ double $>$()$>$ \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a961df401a498c9cce04bff0000f2db96}{gradient\+Getter}}
+\item 
+std\+::function$<$ double(double)$>$ \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_abeb37f31a87ba3426c2743a838b9ee03}{final\+Midpoint\+Fock}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a8e137fbca91ecd34d0316e0f08547ed2}{gradient\+Current}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a2c21aac496d7eca48704c2dccffe51ed}{velocity\+Half\+Time}}
+\begin{DoxyCompactList}\small\item\em nuclear velocity at half time, (t-\/1/2) upon entry and (t+1/2) upon exist \end{DoxyCompactList}\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_af46534a28cb9968ff35c29321a6a311f}{velocity\+Current}}
+\begin{DoxyCompactList}\small\item\em nuclear velocity at the current time (t) \end{DoxyCompactList}\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a00cb50b5358e4e2ea6ae5b6214023310}{acceleration}}
+\begin{DoxyCompactList}\small\item\em acceleration at the current time (t) \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_abbc945b474258dea4ebee27e6b102d17}{nuclear\+Kinetic\+Energy}}
+\begin{DoxyCompactList}\small\item\em nuclear kinetic energy \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a0e164f53f5a1c454a3549ce506c7213f}{total\+Energy0}}
+\begin{DoxyCompactList}\small\item\em total energy at step 0 \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a0795c3d4dfada7767fd791333650df42}{previous\+Total\+Energy}}
+\begin{DoxyCompactList}\small\item\em total energy at the previous step \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1IntegrationProgress}{Integration\+Progress}} \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_a2c41d1ed4daf55267748ad954f441138}{cur\+State}}
+\item 
+double \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics_acd9d24a0defab9d49195343ba22a7367}{t\+Max}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics}{Molecular\+Dynamics}} class. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_a7c50712bea32887567cfe12b209f5689}\label{classChronusQ_1_1MolecularDynamics_a7c50712bea32887567cfe12b209f5689}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!MolecularDynamics@{MolecularDynamics}}
+\index{MolecularDynamics@{MolecularDynamics}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{MolecularDynamics()}{MolecularDynamics()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Molecular\+Dynamics\+::\+Molecular\+Dynamics (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_ae85ffe2c70409b34f3bdc5e6c1f7a130}\label{classChronusQ_1_1MolecularDynamics_ae85ffe2c70409b34f3bdc5e6c1f7a130}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!MolecularDynamics@{MolecularDynamics}}
+\index{MolecularDynamics@{MolecularDynamics}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{MolecularDynamics()}{MolecularDynamics()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Molecular\+Dynamics\+::\+Molecular\+Dynamics (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1MolecularOptions}{Molecular\+Options}}}]{molecular\+Options,  }\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{molecule }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_a7d144cb0726e994f75e21e08e810aaec}\label{classChronusQ_1_1MolecularDynamics_a7d144cb0726e994f75e21e08e810aaec}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!MolecularDynamics@{MolecularDynamics}}
+\index{MolecularDynamics@{MolecularDynamics}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{MolecularDynamics()}{MolecularDynamics()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Molecular\+Dynamics\+::\+Molecular\+Dynamics (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classChronusQ_1_1MolecularDynamics}{Molecular\+Dynamics}} \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_a4327350d623175a4641fe396a7147e28}\label{classChronusQ_1_1MolecularDynamics_a4327350d623175a4641fe396a7147e28}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!MolecularDynamics@{MolecularDynamics}}
+\index{MolecularDynamics@{MolecularDynamics}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{MolecularDynamics()}{MolecularDynamics()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily Chronus\+Q\+::\+Molecular\+Dynamics\+::\+Molecular\+Dynamics (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classChronusQ_1_1MolecularDynamics}{Molecular\+Dynamics}} \&\&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_aea224192420056f26124620b5f0f20c2}\label{classChronusQ_1_1MolecularDynamics_aea224192420056f26124620b5f0f20c2}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!````~MolecularDynamics@{$\sim$MolecularDynamics}}
+\index{````~MolecularDynamics@{$\sim$MolecularDynamics}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{$\sim$MolecularDynamics()}{~MolecularDynamics()}}
+{\footnotesize\ttfamily virtual Chronus\+Q\+::\+Molecular\+Dynamics\+::$\sim$\+Molecular\+Dynamics (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_a5dc89ff1c66d37eb13ae5ec8e90ab920}\label{classChronusQ_1_1MolecularDynamics_a5dc89ff1c66d37eb13ae5ec8e90ab920}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!computeKineticEnergy@{computeKineticEnergy}}
+\index{computeKineticEnergy@{computeKineticEnergy}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{computeKineticEnergy()}{computeKineticEnergy()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Molecular\+Dynamics\+::compute\+Kinetic\+Energy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{molecule }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Compute the nuclear-\/nuclear repulsion energy for classical point nuclei using the Atoms contained in the atoms array. 
+
+\[
+  V_{NN} = \sum_{A < B} \frac{Z_A Z_B}{R_{AB}}
+\] Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MolecularDynamics_a5dc89ff1c66d37eb13ae5ec8e90ab920_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_afe9ac366e8e661f3a4c4b592fa913d69}\label{classChronusQ_1_1MolecularDynamics_afe9ac366e8e661f3a4c4b592fa913d69}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!geometryVV@{geometryVV}}
+\index{geometryVV@{geometryVV}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{geometryVV()}{geometryVV()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Molecular\+Dynamics\+::geometry\+VV (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{molecule,  }\item[{std\+::vector$<$ double $>$}]{gradient\+Current,  }\item[{double}]{time\+Step }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MolecularDynamics_afe9ac366e8e661f3a4c4b592fa913d69_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_af5203da4eba474651b0f20af709518da}\label{classChronusQ_1_1MolecularDynamics_af5203da4eba474651b0f20af709518da}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!hasNext@{hasNext}}
+\index{hasNext@{hasNext}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{hasNext()}{hasNext()}}
+{\footnotesize\ttfamily bool Chronus\+Q\+::\+Molecular\+Dynamics\+::has\+Next (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1GeometryModifier_a592b813969b5f26f4cb252da20fd2779}{Chronus\+Q\+::\+Geometry\+Modifier}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_a8f8fb281eeeb0eb36ae89e8c7b3bb0c1}\label{classChronusQ_1_1MolecularDynamics_a8f8fb281eeeb0eb36ae89e8c7b3bb0c1}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!initializeMD@{initializeMD}}
+\index{initializeMD@{initializeMD}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{initializeMD()}{initializeMD()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Molecular\+Dynamics\+::initialize\+MD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{molecule }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_a6e38110b723f8a5576d877d9fd42975f}\label{classChronusQ_1_1MolecularDynamics_a6e38110b723f8a5576d877d9fd42975f}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!update@{update}}
+\index{update@{update}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Molecular\+Dynamics\+::update (\begin{DoxyParamCaption}\item[{bool}]{print,  }\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{molecule,  }\item[{bool}]{first\+Step }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Updates the positions of the classical nuclei. Recompute all member data to fit with the new positions. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pos} & An array holding the new positions \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1GeometryModifier_aae6d21656282450b0b3484c1197d49c8}{Chronus\+Q\+::\+Geometry\+Modifier}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MolecularDynamics_a6e38110b723f8a5576d877d9fd42975f_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_ae40048b1c84055ded73b751249eae93d}\label{classChronusQ_1_1MolecularDynamics_ae40048b1c84055ded73b751249eae93d}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!velocityVV@{velocityVV}}
+\index{velocityVV@{velocityVV}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{velocityVV()}{velocityVV()}}
+{\footnotesize\ttfamily void Chronus\+Q\+::\+Molecular\+Dynamics\+::velocity\+VV (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1Molecule}{Molecule}} \&}]{molecule,  }\item[{std\+::vector$<$ double $>$}]{gradient\+Current,  }\item[{double}]{time\+Step,  }\item[{bool}]{first\+Step }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1MolecularDynamics_ae40048b1c84055ded73b751249eae93d_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_a00cb50b5358e4e2ea6ae5b6214023310}\label{classChronusQ_1_1MolecularDynamics_a00cb50b5358e4e2ea6ae5b6214023310}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!acceleration@{acceleration}}
+\index{acceleration@{acceleration}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{acceleration}{acceleration}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ Chronus\+Q\+::\+Molecular\+Dynamics\+::acceleration}
+
+
+
+acceleration at the current time (t) 
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_a2c41d1ed4daf55267748ad954f441138}\label{classChronusQ_1_1MolecularDynamics_a2c41d1ed4daf55267748ad954f441138}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!curState@{curState}}
+\index{curState@{curState}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{curState}{curState}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structChronusQ_1_1IntegrationProgress}{Integration\+Progress}} Chronus\+Q\+::\+Molecular\+Dynamics\+::cur\+State\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_abeb37f31a87ba3426c2743a838b9ee03}\label{classChronusQ_1_1MolecularDynamics_abeb37f31a87ba3426c2743a838b9ee03}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!finalMidpointFock@{finalMidpointFock}}
+\index{finalMidpointFock@{finalMidpointFock}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{finalMidpointFock}{finalMidpointFock}}
+{\footnotesize\ttfamily std\+::function$<$double(double)$>$ Chronus\+Q\+::\+Molecular\+Dynamics\+::final\+Midpoint\+Fock}
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_a8e137fbca91ecd34d0316e0f08547ed2}\label{classChronusQ_1_1MolecularDynamics_a8e137fbca91ecd34d0316e0f08547ed2}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!gradientCurrent@{gradientCurrent}}
+\index{gradientCurrent@{gradientCurrent}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{gradientCurrent}{gradientCurrent}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ Chronus\+Q\+::\+Molecular\+Dynamics\+::gradient\+Current}
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_a961df401a498c9cce04bff0000f2db96}\label{classChronusQ_1_1MolecularDynamics_a961df401a498c9cce04bff0000f2db96}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!gradientGetter@{gradientGetter}}
+\index{gradientGetter@{gradientGetter}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{gradientGetter}{gradientGetter}}
+{\footnotesize\ttfamily std\+::function$<$std\+::vector$<$double$>$()$>$ Chronus\+Q\+::\+Molecular\+Dynamics\+::gradient\+Getter}
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_abbc945b474258dea4ebee27e6b102d17}\label{classChronusQ_1_1MolecularDynamics_abbc945b474258dea4ebee27e6b102d17}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!nuclearKineticEnergy@{nuclearKineticEnergy}}
+\index{nuclearKineticEnergy@{nuclearKineticEnergy}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{nuclearKineticEnergy}{nuclearKineticEnergy}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+Molecular\+Dynamics\+::nuclear\+Kinetic\+Energy}
+
+
+
+nuclear kinetic energy 
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_a0795c3d4dfada7767fd791333650df42}\label{classChronusQ_1_1MolecularDynamics_a0795c3d4dfada7767fd791333650df42}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!previousTotalEnergy@{previousTotalEnergy}}
+\index{previousTotalEnergy@{previousTotalEnergy}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{previousTotalEnergy}{previousTotalEnergy}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+Molecular\+Dynamics\+::previous\+Total\+Energy}
+
+
+
+total energy at the previous step 
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_acd9d24a0defab9d49195343ba22a7367}\label{classChronusQ_1_1MolecularDynamics_acd9d24a0defab9d49195343ba22a7367}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!tMax@{tMax}}
+\index{tMax@{tMax}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{tMax}{tMax}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+Molecular\+Dynamics\+::t\+Max\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_a0e164f53f5a1c454a3549ce506c7213f}\label{classChronusQ_1_1MolecularDynamics_a0e164f53f5a1c454a3549ce506c7213f}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!totalEnergy0@{totalEnergy0}}
+\index{totalEnergy0@{totalEnergy0}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{totalEnergy0}{totalEnergy0}}
+{\footnotesize\ttfamily double Chronus\+Q\+::\+Molecular\+Dynamics\+::total\+Energy0}
+
+
+
+total energy at step 0 
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_af46534a28cb9968ff35c29321a6a311f}\label{classChronusQ_1_1MolecularDynamics_af46534a28cb9968ff35c29321a6a311f}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!velocityCurrent@{velocityCurrent}}
+\index{velocityCurrent@{velocityCurrent}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{velocityCurrent}{velocityCurrent}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ Chronus\+Q\+::\+Molecular\+Dynamics\+::velocity\+Current}
+
+
+
+nuclear velocity at the current time (t) 
+
+\mbox{\Hypertarget{classChronusQ_1_1MolecularDynamics_a2c21aac496d7eca48704c2dccffe51ed}\label{classChronusQ_1_1MolecularDynamics_a2c21aac496d7eca48704c2dccffe51ed}} 
+\index{ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}!velocityHalfTime@{velocityHalfTime}}
+\index{velocityHalfTime@{velocityHalfTime}!ChronusQ::MolecularDynamics@{ChronusQ::MolecularDynamics}}
+\doxysubsubsection{\texorpdfstring{velocityHalfTime}{velocityHalfTime}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ Chronus\+Q\+::\+Molecular\+Dynamics\+::velocity\+Half\+Time}
+
+
+
+nuclear velocity at half time, (t-\/1/2) upon entry and (t+1/2) upon exist 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/geometrymodifier/\mbox{\hyperlink{moleculardynamics_8hpp}{moleculardynamics.\+hpp}}\end{DoxyCompactItemize}

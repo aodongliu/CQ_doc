@@ -1,0 +1,218 @@
+\hypertarget{realtime_8hpp_source}{}\doxysection{realtime.\+hpp}
+\label{realtime_8hpp_source}\index{include/realtime.hpp@{include/realtime.hpp}}
+\mbox{\hyperlink{realtime_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cerr_8hpp}{cerr.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{memmanager_8hpp}{memmanager.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_8hpp}{singleslater.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2neoss_8hpp}{singleslater/neoss.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{comment}{// RT Headers}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{realtime_2enums_8hpp}{realtime/enums.hpp}}>}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{realtime_2fields_8hpp}{realtime/fields.hpp}}>}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{45   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1IntegrationScheme}{IntegrationScheme}} \{}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \mbox{\hyperlink{namespaceChronusQ_a4ad72166feb5aa4eee186a7e0dc449bf}{IntegrationAlgorithm}} \mbox{\hyperlink{structChronusQ_1_1IntegrationScheme_ac87741e524913eb6e9ab7b0d5135432a}{intAlg}}  = \mbox{\hyperlink{namespaceChronusQ_a4ad72166feb5aa4eee186a7e0dc449bfa0c9425df983f00b72c2d87d7af2749a3}{MMUT}};         }
+\DoxyCodeLine{48     \mbox{\hyperlink{namespaceChronusQ_a7a47a9b6cfd485ee01deb10204bb013b}{PropagationStep}}      \mbox{\hyperlink{structChronusQ_1_1IntegrationScheme_a5bd594fba4544d03a119a44c60c8bb33}{rstStep}} = \mbox{\hyperlink{namespaceChronusQ_a7a47a9b6cfd485ee01deb10204bb013bae798dabe0dc07621a9edf0c24831edb6}{ExplicitMagnus2}}; }
+\DoxyCodeLine{49     \mbox{\hyperlink{namespaceChronusQ_ada67e48372e53575ba634a327bbb12d2}{PropagatorAlgorithm}}  \mbox{\hyperlink{structChronusQ_1_1IntegrationScheme_aa94eb92358e14c0b1574096f6d8c9f12}{prpAlg}}  = \mbox{\hyperlink{namespaceChronusQ_ada67e48372e53575ba634a327bbb12d2aec456990550fea3e114445fedffe44af}{Diagonalization}}; }
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1IntegrationScheme_a187c021ebdd705705d4055d1fdb04a23}{tMax}}    = 0.1;  }
+\DoxyCodeLine{52     \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1IntegrationScheme_a566d972b7a941ecd90bfb83a3369b9f4}{deltaT}}  = 0.01; }
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1IntegrationScheme_aa5aca607342088c7e9692b1dbaa94fd3}{iRstrt}}  = 50; }
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1IntegrationScheme_a0b9ceb0702c1d4454f274dffa05060a2}{iSave}}    = 50; }
+\DoxyCodeLine{57     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1IntegrationScheme_a0f53f24cfd51e244b00662fb9eced790}{restoreStep}} = 0;  }
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1IntegrationScheme_ae10a60e0730b219c91907506f0055125}{nSteps}} = 0; }
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \textcolor{keywordtype}{bool}   \mbox{\hyperlink{structChronusQ_1_1IntegrationScheme_a899e9046155992a2caefd28a0b677846}{includeSCFField}} = \textcolor{keyword}{true};  }
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63   \}; \textcolor{comment}{// struct IntegrationScheme}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{69   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1IntegrationProgress}{IntegrationProgress}} \{}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{keywordtype}{double}  \mbox{\hyperlink{structChronusQ_1_1IntegrationProgress_a3ebf38f24a1b4963af3562a39fed9fde}{xTime}} = 0.; }
+\DoxyCodeLine{72     \textcolor{keywordtype}{size\_t}  \mbox{\hyperlink{structChronusQ_1_1IntegrationProgress_a0a76e4568e69c2c01a3d1ed32dc20c34}{iStep}} = 0;  }
+\DoxyCodeLine{73     \textcolor{keywordtype}{double}  \mbox{\hyperlink{structChronusQ_1_1IntegrationProgress_a0a1ba583060b820327aa220a3ac9d6a6}{stepSize}};   }
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \mbox{\hyperlink{namespaceChronusQ_a7a47a9b6cfd485ee01deb10204bb013b}{PropagationStep}} \mbox{\hyperlink{structChronusQ_1_1IntegrationProgress_ac91563512f84eca12a9f41d1ecad6956}{curStep}};  }
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77   \};}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{83   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1IntegrationData}{IntegrationData}} \{}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     std::vector<double> \mbox{\hyperlink{structChronusQ_1_1IntegrationData_aef2b39c232734cb2fedbd65f63e96cec}{Time}};}
+\DoxyCodeLine{86     std::vector<double> \mbox{\hyperlink{structChronusQ_1_1IntegrationData_aff7fb1ab47a3721d61b8c770c81a2726}{Energy}};}
+\DoxyCodeLine{87     std::vector<std::array<double,3>> \mbox{\hyperlink{structChronusQ_1_1IntegrationData_a41d2b6a997eb948c04e6b3eca1b1cf7a}{ElecDipole}};}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \textcolor{comment}{// Field}}
+\DoxyCodeLine{90     std::vector<std::array<double,3>> \mbox{\hyperlink{structChronusQ_1_1IntegrationData_a1a81e8fcc75c35bd9398f1e573d85444}{ElecDipoleField}};}
+\DoxyCodeLine{91   \};}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1RealTimeBase}{RealTimeBase}} \{}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     \mbox{\hyperlink{classChronusQ_1_1SafeFile}{SafeFile}} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_ad17495c774692d51f30b42febc1e4b8c}{savFile}}; }
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100     \mbox{\hyperlink{structChronusQ_1_1IntegrationScheme}{IntegrationScheme}} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_af1b37a73f717884c3924b3bff64fd5f8}{intScheme}};   }
+\DoxyCodeLine{101     \mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation}{TDEMPerturbation}}  \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_ab0e9363e359650ea03bc13c939a71f2a}{pert}};        }
+\DoxyCodeLine{102     \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}    \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a0df68b5bbd42c18d47079ea6c5de8731}{scfPert}};     }
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104     \mbox{\hyperlink{structChronusQ_1_1IntegrationProgress}{IntegrationProgress}} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a7ba101d5f6482ff37601ca9b79568227}{curState}};  }
+\DoxyCodeLine{105     \mbox{\hyperlink{structChronusQ_1_1IntegrationData}{IntegrationData}}     \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_af9e80230e0e3e4b5c6b5ef4057567045}{data}};      }
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     \textcolor{keywordtype}{int} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a7e426d6be3a9b3389c30da721ff742f5}{printLevel}} = 1; }
+\DoxyCodeLine{108     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_abb8bd1dc09bd61c33bb726ed7d73332a}{orbitalPopFreq}} = 0; }
+\DoxyCodeLine{109     }
+\DoxyCodeLine{110     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a105fd661d9c1558a5733014bc3a5b00b}{restart}}   = \textcolor{keyword}{false}; }
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112     \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a3c895cd2d4520888d4cb1e921fa2a566}{RealTimeBase}}()                     = \textcolor{keyword}{delete};}
+\DoxyCodeLine{113     \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_af24803cbd01dce15e8e7f18f01e722bf}{RealTimeBase}}(\textcolor{keyword}{const} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase}{RealTimeBase}} \&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{114     \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a7612bab9932a7faa754234b6fa5ee4cb}{RealTimeBase}}(\mbox{\hyperlink{structChronusQ_1_1RealTimeBase}{RealTimeBase}} \&\&)      = \textcolor{keyword}{delete};}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_adb0ea7551675c874b154c7ec23fce93d}{RealTimeBase}}( \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&memManager): \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a0452975c020971c71d53d89c32fb8c2f}{memManager\_}}(memManager)\{ \}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     \textcolor{comment}{// RealTimeBase procedural functions}}
+\DoxyCodeLine{121     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a2cc7a3ef38020289da3e0a1244f6b515}{doPropagation}}()         = 0;}
+\DoxyCodeLine{122     \textcolor{keyword}{virtual} \textcolor{keywordtype}{double} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a7313192c22263fded1402b4b012f7865}{totalEnergy}}()         = 0;}
+\DoxyCodeLine{123     \textcolor{keyword}{virtual} std::vector<double> \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_ae00702e135416b44130078a9c871a6e3}{getGrad}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&) = 0;}
+\DoxyCodeLine{124     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_ae2af848f9b623e5490b420c229b6343b}{formCoreH}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&)              = 0;}
+\DoxyCodeLine{125     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_aaaad89f2aba4f726eb70caa093069e54}{updateAOProperties}}(\textcolor{keywordtype}{double}) = 0;}
+\DoxyCodeLine{126     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_ac60bd7e936753e98208174af3a2f79aa}{createRTDataSets}}(\textcolor{keywordtype}{size\_t} maxPoints) = 0;}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128     \textcolor{comment}{// Progress functions}}
+\DoxyCodeLine{129     \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a50af8a7a480369f841e0ef4eb205e8b8}{printRTHeader}}();}
+\DoxyCodeLine{130     \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a6824c3d89d29c45431b6fe750984ca3c}{printRTStep}}();}
+\DoxyCodeLine{131     \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a1af7ee64ddf656f171adf4deae84538e}{appendStepRecord}}();}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133 }
+\DoxyCodeLine{141     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{142     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_aaeab1355699a11d801edddf71e586cbd}{addField}}(Args... args)\{ \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_ab0e9363e359650ea03bc13c939a71f2a}{pert}}.\mbox{\hyperlink{structChronusQ_1_1TDEMPerturbation_a5598a70330bf423f7064103baec1178e}{addField}}(args...); \}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_ae89698eb7bd59d19387b24f598b8fb7a}{setSCFPerturbation}}( \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& scfp ) \{}
+\DoxyCodeLine{146       \mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a0df68b5bbd42c18d47079ea6c5de8731}{scfPert}} = scfp;}
+\DoxyCodeLine{147     \}}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}     \&\mbox{\hyperlink{structChronusQ_1_1RealTimeBase_a0452975c020971c71d53d89c32fb8c2f}{memManager\_}}; }
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153   \};}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }\_SSTyp, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{157   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1RealTime}{RealTime}} : \textcolor{keyword}{public} \mbox{\hyperlink{structChronusQ_1_1RealTimeBase}{RealTimeBase}} \{}
+\DoxyCodeLine{158    }
+\DoxyCodeLine{159     \textcolor{keyword}{typedef} \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}*                 \mbox{\hyperlink{classChronusQ_1_1RealTime_a62cd45d5868cb7c241ac7685bd1f29d5}{oper\_t}};}
+\DoxyCodeLine{160     \textcolor{keyword}{typedef} std::vector<oper\_t>       \mbox{\hyperlink{classChronusQ_1_1RealTime_ad9347e3f0e2441b08457c5ab1b4f2d02}{oper\_t\_coll}};}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162     \mbox{\hyperlink{classChronusQ_1_1SingleSlaterBase}{SingleSlaterBase}}         *\mbox{\hyperlink{classChronusQ_1_1RealTime_a33f605a5d844c6ed6cb393c548281298}{reference\_}} = \textcolor{keyword}{nullptr};  }
+\DoxyCodeLine{163     \_SSTyp<dcomplex,IntsT>    \mbox{\hyperlink{classChronusQ_1_1RealTime_a661d8b5ddcad672a0bfbc7908988cd32}{propagator\_}}; }
+\DoxyCodeLine{164     std::vector<SingleSlater<dcomplex, IntsT>*> \mbox{\hyperlink{classChronusQ_1_1RealTime_a00dfebf198c6a64120ccdb021fd5d923}{systems\_}}; }
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166     std::vector<std::shared\_ptr<PauliSpinorSquareMatrices<dcomplex>>> \mbox{\hyperlink{classChronusQ_1_1RealTime_a443cf0919f8d82df2d9e0596c368040d}{DOSav}};}
+\DoxyCodeLine{167     std::vector<std::shared\_ptr<PauliSpinorSquareMatrices<dcomplex>>> \mbox{\hyperlink{classChronusQ_1_1RealTime_af8809a560fbcb853b9bae01ea3ce915c}{UH}};}
+\DoxyCodeLine{168     }
+\DoxyCodeLine{169   \textcolor{keyword}{public}:}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172     \textcolor{comment}{// Constructors}}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174     \textcolor{comment}{// Disable default, copy and move constructors}}
+\DoxyCodeLine{175     \mbox{\hyperlink{classChronusQ_1_1RealTime_a703eba79ecc0f2f1badd31bea918e607}{RealTime}}()                 = \textcolor{keyword}{delete};}
+\DoxyCodeLine{176     \mbox{\hyperlink{classChronusQ_1_1RealTime_a89a4825327d9f32bf7c2a9c1a7e34201}{RealTime}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1RealTime}{RealTime}} \&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{177     \mbox{\hyperlink{classChronusQ_1_1RealTime_a441ebcd52b95f881eb76a3d41b84d3fe}{RealTime}}(\mbox{\hyperlink{classChronusQ_1_1RealTime}{RealTime}} \&\&)      = \textcolor{keyword}{delete};}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179 }
+\DoxyCodeLine{187     \textcolor{keyword}{template} <\textcolor{keyword}{typename} RefMatsT>}
+\DoxyCodeLine{188     \mbox{\hyperlink{classChronusQ_1_1RealTime_a9107ad970abca06edc21c484d6e737e5}{RealTime}}(\_SSTyp<RefMatsT,IntsT> \&reference) : }
+\DoxyCodeLine{189       \mbox{\hyperlink{structChronusQ_1_1RealTimeBase}{RealTimeBase}}(reference.memManager),}
+\DoxyCodeLine{190       \mbox{\hyperlink{classChronusQ_1_1RealTime_a33f605a5d844c6ed6cb393c548281298}{reference\_}}(\&reference), \mbox{\hyperlink{classChronusQ_1_1RealTime_a661d8b5ddcad672a0bfbc7908988cd32}{propagator\_}}(reference) \{ }
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192       alloc<RefMatsT>(); }
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194     \}; \textcolor{comment}{// RealTime constructor}}
+\DoxyCodeLine{195   }
+\DoxyCodeLine{196     \textcolor{keyword}{inline} \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1RealTime_adc1d5f292b66c38d20313f556c46e910}{totalEnergy}}()\{}
+\DoxyCodeLine{197       \textcolor{comment}{//propagator\_.computeEnergy();}}
+\DoxyCodeLine{198       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1RealTime_a661d8b5ddcad672a0bfbc7908988cd32}{propagator\_}}.totalEnergy;}
+\DoxyCodeLine{199     \}}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_afcea453011973c9640546de8e5c7380c}{formCoreH}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&emPert) \{}
+\DoxyCodeLine{202       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1RealTime_a661d8b5ddcad672a0bfbc7908988cd32}{propagator\_}}.formCoreH(emPert, \textcolor{keyword}{false});}
+\DoxyCodeLine{203     \}}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205     \textcolor{keyword}{inline} std::vector<double> \mbox{\hyperlink{classChronusQ_1_1RealTime_af0321a98973adf42d4dad38b884e9439}{getGrad}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&emPert) \{}
+\DoxyCodeLine{206       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1RealTime_a661d8b5ddcad672a0bfbc7908988cd32}{propagator\_}}.getGrad(emPert,\textcolor{keyword}{false},\textcolor{keyword}{false});}
+\DoxyCodeLine{207     \}}
+\DoxyCodeLine{208 }
+\DoxyCodeLine{209     \textcolor{comment}{// RealTime procedural functions}}
+\DoxyCodeLine{210     \textcolor{comment}{// RealTime procedural functions}}
+\DoxyCodeLine{211     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a6a62715806dc1f2e4408eb4c40350001}{doPropagation}}(); \textcolor{comment}{// From RealTimeBase}}
+\DoxyCodeLine{212     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a7fa1fa3fc5186bb57ee83d07a56304e7}{propagateStep}}();}
+\DoxyCodeLine{213     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_ad10c0785313d8b103314bebfbed865c1}{formPropagator}}(\textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{214     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a008742af2d83805f714a4f0a47aa8c8d}{formFock}}(\textcolor{keywordtype}{bool},\textcolor{keywordtype}{double},\textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{215     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_ac2df269edf9551c1da16b5f4265d33a8}{updateAOProperties}}(\textcolor{keywordtype}{double} t);}
+\DoxyCodeLine{216     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a9a3f8878b9182053cdd48d193b467906}{propagateWFN}}(\textcolor{keywordtype}{size\_t});}
+\DoxyCodeLine{217     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_ac16bbb3bf0d82d7099036dd83acb0bc7}{saveState}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&);}
+\DoxyCodeLine{218     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a63e2b67e15f0a5f4eac14bc52c8aef05}{restoreState}}(); }
+\DoxyCodeLine{219     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_aa351c67c6be25bb384c3c50ab1fb78f4}{createRTDataSets}}(\textcolor{keywordtype}{size\_t} maxPoints);}
+\DoxyCodeLine{220     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a990b22c2129921bca40413c3e530d810}{orbitalPop}}();}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222     \textcolor{comment}{// Progress functions}}
+\DoxyCodeLine{223     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a83e5a1e72062e4fae0d53b2c427bd230}{printRTHeader}}();}
+\DoxyCodeLine{224     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_ac65ab43374a8d9340e3d0ab4a637dd9c}{printRTStep}}();}
+\DoxyCodeLine{225     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a050427150e6b25469f9ab8adadf44233}{printStepSummary}}();}
+\DoxyCodeLine{226     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a200b26b67fc8b1be46983567304e699c}{printStepDetail}}();}
+\DoxyCodeLine{227     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_acfb4f3cb2c388b6fe55d21ea976f3d05}{appendStepRecord}}();}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230     \textcolor{comment}{// Memory functions}}
+\DoxyCodeLine{231     \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT>}
+\DoxyCodeLine{232     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_aef8688a2652c9a30d6838322935d1b6f}{alloc}}();}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234   \}; \textcolor{comment}{// class RealTime}}
+\DoxyCodeLine{235   }
+\DoxyCodeLine{236 }
+\DoxyCodeLine{237 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{238 }
+
+\end{DoxyCode}

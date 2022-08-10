@@ -1,0 +1,520 @@
+\hypertarget{response_2properties_8hpp_source}{}\doxysection{properties.\+hpp}
+\label{response_2properties_8hpp_source}\index{include/response/properties.hpp@{include/response/properties.hpp}}
+\mbox{\hyperlink{response_2properties_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{tbase_8hpp}{response/tbase.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas3_8hpp}{cqlinalg/blas3.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasext_8hpp}{cqlinalg/blasext.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasutil_8hpp}{cqlinalg/blasutil.hpp}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{physcon_8hpp}{physcon.hpp}}>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{40   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{41   std::map<ResponseOperator, U*> }
+\DoxyCodeLine{42     \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_af1c6be5c260d51dec21a217be7104adb}{ResponseTBase<T>::evalProperties}}(}
+\DoxyCodeLine{43       std::vector<ResponseOperator> ops, \textcolor{keywordtype}{size\_t} nVec, U* V) \{}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     std::map<ResponseOperator, U*> opMap; }
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keywordtype}{size\_t} N      = nSingleDim\_;}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     T* g; \textcolor{keywordtype}{size\_t} nProp;}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&op : ops) \{}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54       \textcolor{comment}{// Compute property gradient}}
+\DoxyCodeLine{55       std::tie(nProp,g) = formPropGrad(op);}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58       \textcolor{comment}{// Allocate space for the property}}
+\DoxyCodeLine{59       opMap[op] = memManager\_.template malloc<U>(nProp*nVec);}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61       \textcolor{comment}{// Evaluate the property (ensures proper behaviour for mixed type)}}
+\DoxyCodeLine{62       blas::gemm(blas::Layout::ColMajor,blas::Op::ConjTrans,blas::Op::NoTrans,nProp,nVec,N,U(1.),g,N,V,N,U(0.),opMap[op],nProp);}
+\DoxyCodeLine{63       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'C'},nProp,nVec,U(1.),opMap[op],nProp,nVec);}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66       \textcolor{comment}{// Free scratch space}}
+\DoxyCodeLine{67       memManager\_.free(g);}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69     \}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{keywordflow}{return} opMap;}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73   \}}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{78   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a59328a3fc21ee1a6a0cd0e625ee36633}{ResponseTBase<T>::residueTMoments}}() \{}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{keywordflow}{if}( genSettings.aOps.size() == 0 ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83     std::vector<ResponseOperator> herOps, antiHerOps;}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     std::copy\_if(genSettings.aOps.begin(),genSettings.aOps.end(),}
+\DoxyCodeLine{87         std::back\_inserter(herOps),\mbox{\hyperlink{namespaceChronusQ_a624457091389464be554a5f9642dfa02}{isHerOp}});}
+\DoxyCodeLine{88     std::copy\_if(genSettings.aOps.begin(),genSettings.aOps.end(),}
+\DoxyCodeLine{89         std::back\_inserter(antiHerOps),\mbox{\hyperlink{namespaceChronusQ_a5b6958722c64a84a08760c3874749383}{isAntiHerOp}});}
+\DoxyCodeLine{90       }
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92     T* VR = resResults.VR; }
+\DoxyCodeLine{93     T* VL = resSettings.needVL ? resResults.VL : VR;}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     \textcolor{keyword}{auto} herOpMap     = evalProperties(herOps,resSettings.nRoots,VR);}
+\DoxyCodeLine{96     \textcolor{keyword}{auto} antiHerOpMap = evalProperties(antiHerOps,resSettings.nRoots,VL);}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     \textcolor{keyword}{auto} opMap = herOpMap;}
+\DoxyCodeLine{99     opMap.insert(antiHerOpMap.begin(),antiHerOpMap.end());}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101     \textcolor{comment}{// Place the property evaluations}}
+\DoxyCodeLine{102       }
+\DoxyCodeLine{103     \textcolor{comment}{// Electric Dipole (Length)}}
+\DoxyCodeLine{104     \textcolor{keywordflow}{if}( opMap.find(\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa5e425f87d7cf99d79ca5c78dc8e15376}{LenElectricDipole}}) != opMap.end() ) \{}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106       resResults.tLenElecDipole\_ge = opMap[\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa5e425f87d7cf99d79ca5c78dc8e15376}{LenElectricDipole}}];}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'},resSettings.nRoots,3,T(1.),resResults.tLenElecDipole\_ge,}
+\DoxyCodeLine{109         resSettings.nRoots,3);}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{112         savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/RESIDUE/TRANSITION\_ELECTRIC\_DIPOLE\_LENGTH"{}},}
+\DoxyCodeLine{113           resResults.tLenElecDipole\_ge, \{resSettings.nRoots,3\});}
+\DoxyCodeLine{114     \}}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \textcolor{comment}{// Electric Quadrupole (Length)}}
+\DoxyCodeLine{120     \textcolor{keywordflow}{if}( opMap.find(\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa884168972a1cae944ddbb2a5b0ff427b}{LenElectricQuadrupole}}) != opMap.end() ) \{}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122       resResults.tLenElecQuadrupole\_ge = opMap[\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa884168972a1cae944ddbb2a5b0ff427b}{LenElectricQuadrupole}}];}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'},resSettings.nRoots,6,T(1.),resResults.tLenElecQuadrupole\_ge,}
+\DoxyCodeLine{125         resSettings.nRoots,6);}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{128         savFile.safeWriteData(}
+\DoxyCodeLine{129           \textcolor{stringliteral}{"{}/RESP/RESIDUE/TRANSITION\_ELECTRIC\_QUADRUPOLE\_LENGTH"{}},}
+\DoxyCodeLine{130           resResults.tLenElecQuadrupole\_ge, \{resSettings.nRoots, 6\});}
+\DoxyCodeLine{131     \}}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     \textcolor{comment}{// Electric Octupole (Length)}}
+\DoxyCodeLine{137     \textcolor{keywordflow}{if}( opMap.find(\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa95158d2ed50f1b4bd55ab059ba1890aa}{LenElectricOctupole}}) != opMap.end() ) \{}
+\DoxyCodeLine{138       resResults.tLenElecOctupole\_ge = opMap[\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa95158d2ed50f1b4bd55ab059ba1890aa}{LenElectricOctupole}}];}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'},resSettings.nRoots,10,T(1.),resResults.tLenElecOctupole\_ge,}
+\DoxyCodeLine{141         resSettings.nRoots,10);}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{144         savFile.safeWriteData(}
+\DoxyCodeLine{145           \textcolor{stringliteral}{"{}/RESP/RESIDUE/TRANSITION\_ELECTRIC\_OCTUPOLE\_LENGTH"{}},}
+\DoxyCodeLine{146           resResults.tLenElecOctupole\_ge, \{resSettings.nRoots, 10\});}
+\DoxyCodeLine{147     \}}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151     \textcolor{comment}{// Electric Dipole (Velocity)}}
+\DoxyCodeLine{152     \textcolor{keywordflow}{if}( opMap.find(\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa3f713f825a41d5a0bde42041b93a0e96}{VelElectricDipole}}) != opMap.end() ) \{}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154       resResults.tVelElecDipole\_ge = opMap[\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa3f713f825a41d5a0bde42041b93a0e96}{VelElectricDipole}}];}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'},resSettings.nRoots,3,T(1.),resResults.tVelElecDipole\_ge,}
+\DoxyCodeLine{157         resSettings.nRoots,3);}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{160         savFile.safeWriteData(}
+\DoxyCodeLine{161           \textcolor{stringliteral}{"{}/RESP/RESIDUE/TRANSITION\_ELECTRIC\_DIPOLE\_VELOCITY"{}},}
+\DoxyCodeLine{162           resResults.tVelElecDipole\_ge, \{resSettings.nRoots,3\});}
+\DoxyCodeLine{163     \}}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168     \textcolor{comment}{// Electric Quadrupole (Velocity)}}
+\DoxyCodeLine{169     \textcolor{keywordflow}{if}( opMap.find(\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaf6bb2399ffbddfaa5ea1802130eaf2b3}{VelElectricQuadrupole}}) != opMap.end() ) \{}
+\DoxyCodeLine{170       resResults.tVelElecQuadrupole\_ge = opMap[\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaf6bb2399ffbddfaa5ea1802130eaf2b3}{VelElectricQuadrupole}}];}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'},resSettings.nRoots,6,T(1.),resResults.tVelElecQuadrupole\_ge,}
+\DoxyCodeLine{173         resSettings.nRoots,6);}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{176         savFile.safeWriteData(}
+\DoxyCodeLine{177           \textcolor{stringliteral}{"{}/RESP/RESIDUE/TRANSITION\_ELECTRIC\_QUADRUPOLE\_VELOCITY"{}},}
+\DoxyCodeLine{178           resResults.tVelElecQuadrupole\_ge, \{resSettings.nRoots, 6\});}
+\DoxyCodeLine{179     \}}
+\DoxyCodeLine{180 }
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184     \textcolor{comment}{// Electric Octupole (Velocity)}}
+\DoxyCodeLine{185     \textcolor{keywordflow}{if}( opMap.find(\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaa8e1e07930f7477068113dafb26b5532}{VelElectricOctupole}}) != opMap.end() ) \{}
+\DoxyCodeLine{186       resResults.tVelElecOctupole\_ge = opMap[\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaa8e1e07930f7477068113dafb26b5532}{VelElectricOctupole}}];}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'},resSettings.nRoots,10,T(1.),resResults.tVelElecOctupole\_ge,}
+\DoxyCodeLine{189         resSettings.nRoots,10);}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{192         savFile.safeWriteData(}
+\DoxyCodeLine{193           \textcolor{stringliteral}{"{}/RESP/RESIDUE/TRANSITION\_ELECTRIC\_OCTUPOLE\_VELOCITY"{}},}
+\DoxyCodeLine{194           resResults.tVelElecOctupole\_ge, \{resSettings.nRoots, 10\});}
+\DoxyCodeLine{195     \}}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199     \textcolor{comment}{// Magnetic Dipole}}
+\DoxyCodeLine{200     \textcolor{keywordflow}{if}( opMap.find(\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaa394c19263f225db2048b9ce53c9cede}{MagneticDipole}}) != opMap.end() ) \{}
+\DoxyCodeLine{201       resResults.tMagDipole\_ge = opMap[\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaa394c19263f225db2048b9ce53c9cede}{MagneticDipole}}];}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'},resSettings.nRoots,3,T(1.),resResults.tMagDipole\_ge,}
+\DoxyCodeLine{204         resSettings.nRoots,3);}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{207         savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/RESIDUE/TRANSITION\_MAGNETIC\_DIPOLE"{}},}
+\DoxyCodeLine{208           resResults.tMagDipole\_ge, \{resSettings.nRoots,3\});}
+\DoxyCodeLine{209     \}}
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214     \textcolor{comment}{// Magnetic Quadrupole}}
+\DoxyCodeLine{215     \textcolor{keywordflow}{if}( opMap.find(\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaa008023209cd51745fb1fe1f3ab2bb9c}{MagneticQuadrupole}}) != opMap.end() ) \{}
+\DoxyCodeLine{216       resResults.tMagQuadrupole\_ge = opMap[\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaa008023209cd51745fb1fe1f3ab2bb9c}{MagneticQuadrupole}}];}
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218       \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'},resSettings.nRoots,6,T(1.),resResults.tMagQuadrupole\_ge,}
+\DoxyCodeLine{219         resSettings.nRoots,6);}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{222         savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/RESIDUE/TRANSITION\_MAGNETIC\_QUADRUPOLE"{}},}
+\DoxyCodeLine{223           resResults.tMagQuadrupole\_ge, \{resSettings.nRoots,6\});}
+\DoxyCodeLine{224     \}}
+\DoxyCodeLine{225       }
+\DoxyCodeLine{226   \}}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{229   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ad121046612e977ce8e95654a7ae415fd}{ResponseTBase<T>::residueObservables}}() \{}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231     \textcolor{keywordtype}{size\_t} nRoots = resSettings.nRoots;}
+\DoxyCodeLine{232     \textcolor{keywordtype}{double} * W = resResults.W;}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234     \textcolor{keywordflow}{if}( resResults.tLenElecDipole\_ge ) \{}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236       resObs.oscStrength = }
+\DoxyCodeLine{237         memManager\_.template malloc<double>(nRoots);}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iO = 0; iO < nRoots; iO++) \{}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{241         \textcolor{keywordtype}{double} omega = W[iO];}
+\DoxyCodeLine{242         T* tDipole = resResults.tLenElecDipole\_ge + 3*iO;}
+\DoxyCodeLine{243 }
+\DoxyCodeLine{244         \textcolor{keywordtype}{double} tDipoleX = std::abs(tDipole[0]);}
+\DoxyCodeLine{245         \textcolor{keywordtype}{double} tDipoleY = std::abs(tDipole[1]);}
+\DoxyCodeLine{246         \textcolor{keywordtype}{double} tDipoleZ = std::abs(tDipole[2]);}
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248 }
+\DoxyCodeLine{249         resObs.oscStrength[iO] = 2. * omega / 3. * }
+\DoxyCodeLine{250           (tDipoleX * tDipoleX + tDipoleY * tDipoleY + tDipoleZ * tDipoleZ);}
+\DoxyCodeLine{251 }
+\DoxyCodeLine{252       \}}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{254       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{255         savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/RESIDUE/OSC\_STRENGTH"{}},resObs.oscStrength,}
+\DoxyCodeLine{256           \{nRoots\});}
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258     \}}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260 }
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262 }
+\DoxyCodeLine{263 }
+\DoxyCodeLine{264 }
+\DoxyCodeLine{265     \textcolor{keywordflow}{if}( resResults.tLenElecDipole\_ge and resResults.tMagDipole\_ge ) \{}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267       resObs.rotatory\_len\_RM = }
+\DoxyCodeLine{268         memManager\_.template malloc<double>(nRoots);}
+\DoxyCodeLine{269 }
+\DoxyCodeLine{270       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iO = 0; iO < nRoots; iO++) \{}
+\DoxyCodeLine{271 }
+\DoxyCodeLine{272         \textcolor{keywordtype}{double} omega = W[iO];}
+\DoxyCodeLine{273 }
+\DoxyCodeLine{274         T* tElecDipole = resResults.tLenElecDipole\_ge + 3*iO;}
+\DoxyCodeLine{275         T* tMagDipole  = resResults.tMagDipole\_ge     + 3*iO;}
+\DoxyCodeLine{276 }
+\DoxyCodeLine{277         \textcolor{keywordtype}{double} rXX = std::real( tElecDipole[0] * tMagDipole[0] );}
+\DoxyCodeLine{278         \textcolor{keywordtype}{double} rYY = std::real( tElecDipole[1] * tMagDipole[1] );}
+\DoxyCodeLine{279         \textcolor{keywordtype}{double} rZZ = std::real( tElecDipole[2] * tMagDipole[2] );}
+\DoxyCodeLine{280 }
+\DoxyCodeLine{281         resObs.rotatory\_len\_RM[iO] = -\/0.5 * ( rXX + rYY + rZZ );}
+\DoxyCodeLine{282 }
+\DoxyCodeLine{283       \}}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{286         savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/RESIDUE/ROT\_STRENGTH\_LEN\_EDA"{}},}
+\DoxyCodeLine{287           resObs.rotatory\_len\_RM, \{nRoots\});}
+\DoxyCodeLine{288 }
+\DoxyCodeLine{289     \}}
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291 }
+\DoxyCodeLine{292 }
+\DoxyCodeLine{293 }
+\DoxyCodeLine{294 }
+\DoxyCodeLine{295   \};}
+\DoxyCodeLine{296 }
+\DoxyCodeLine{297 }
+\DoxyCodeLine{298   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{299   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{300   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{ResponseTBase<T>::fdrRF}}(\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponseResults<T,U>}} \&results) \{}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302     \textcolor{keywordflow}{if}( genSettings.aOps.size() == 0 ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304 }
+\DoxyCodeLine{305     std::vector<ResponseOperator> ops = genSettings.aOps;}
+\DoxyCodeLine{306       }
+\DoxyCodeLine{307 }
+\DoxyCodeLine{308     \textcolor{keywordtype}{size\_t} nOmega = fdrSettings.bFreq.size();}
+\DoxyCodeLine{309     \textcolor{keywordtype}{size\_t} nRHS   = fdrSettings.nRHS;}
+\DoxyCodeLine{310 }
+\DoxyCodeLine{311 }
+\DoxyCodeLine{312     \textcolor{keyword}{auto} opMap = evalProperties(ops,nOmega*nRHS,results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a6539c55c18e9a475fb7fb412e40c85ad}{SOL}});}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314 }
+\DoxyCodeLine{315 }
+\DoxyCodeLine{316     \textcolor{keyword}{auto} getOpOffset = [\&]( \mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67da}{ResponseOperator}} op ) -\/> \textcolor{keywordtype}{int} \{}
+\DoxyCodeLine{317 }
+\DoxyCodeLine{318       \textcolor{keyword}{auto} opPos =}
+\DoxyCodeLine{319         std::find(genSettings.bOps.begin(),genSettings.bOps.end(),op);}
+\DoxyCodeLine{320 }
+\DoxyCodeLine{321       \textcolor{keywordflow}{return} std::accumulate(genSettings.bOps.begin(),opPos,0,}
+\DoxyCodeLine{322                [](\textcolor{keywordtype}{int} prev, \mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67da}{ResponseOperator}} op2)\{ }
+\DoxyCodeLine{323                  return prev + OperatorSize[op2];}
+\DoxyCodeLine{324                \});}
+\DoxyCodeLine{325 }
+\DoxyCodeLine{326     \};}
+\DoxyCodeLine{327 }
+\DoxyCodeLine{328     \textcolor{keyword}{auto} hasOp = }
+\DoxyCodeLine{329       []( std::vector<ResponseOperator> \&tops, \mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67da}{ResponseOperator}} op ) -\/> \textcolor{keywordtype}{bool} \{}
+\DoxyCodeLine{330 }
+\DoxyCodeLine{331       \textcolor{keywordflow}{return} std::find(tops.begin(),tops.end(),op) != tops.end();}
+\DoxyCodeLine{332 }
+\DoxyCodeLine{333     \};}
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335 }
+\DoxyCodeLine{336     \textcolor{keywordtype}{int} edlOff = getOpOffset(\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa5e425f87d7cf99d79ca5c78dc8e15376}{LenElectricDipole}});}
+\DoxyCodeLine{337     \textcolor{keywordtype}{int} mdOff  = getOpOffset(\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaa394c19263f225db2048b9ce53c9cede}{MagneticDipole}});}
+\DoxyCodeLine{338 }
+\DoxyCodeLine{339 }
+\DoxyCodeLine{340     \textcolor{keywordtype}{bool} AHasEDL = hasOp(genSettings.aOps,\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa5e425f87d7cf99d79ca5c78dc8e15376}{LenElectricDipole}});}
+\DoxyCodeLine{341     \textcolor{keywordtype}{bool} AHasEQL = hasOp(genSettings.aOps,\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa884168972a1cae944ddbb2a5b0ff427b}{LenElectricQuadrupole}});}
+\DoxyCodeLine{342     \textcolor{keywordtype}{bool} AHasEOL = hasOp(genSettings.aOps,\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa95158d2ed50f1b4bd55ab059ba1890aa}{LenElectricOctupole}});}
+\DoxyCodeLine{343     \textcolor{keywordtype}{bool} AHasMD  = hasOp(genSettings.aOps,\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaa394c19263f225db2048b9ce53c9cede}{MagneticDipole}});}
+\DoxyCodeLine{344     \textcolor{keywordtype}{bool} AHasMQ  = hasOp(genSettings.aOps,\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaa008023209cd51745fb1fe1f3ab2bb9c}{MagneticQuadrupole}});}
+\DoxyCodeLine{345 }
+\DoxyCodeLine{346 }
+\DoxyCodeLine{347     \textcolor{keywordtype}{bool} BHasEDL = hasOp(genSettings.bOps,\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa5e425f87d7cf99d79ca5c78dc8e15376}{LenElectricDipole}});}
+\DoxyCodeLine{348     \textcolor{keywordtype}{bool} BHasEQL = hasOp(genSettings.bOps,\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa884168972a1cae944ddbb2a5b0ff427b}{LenElectricQuadrupole}});}
+\DoxyCodeLine{349     \textcolor{keywordtype}{bool} BHasEOL = hasOp(genSettings.bOps,\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa95158d2ed50f1b4bd55ab059ba1890aa}{LenElectricOctupole}});}
+\DoxyCodeLine{350     \textcolor{keywordtype}{bool} BHasMD  = hasOp(genSettings.bOps,\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaa394c19263f225db2048b9ce53c9cede}{MagneticDipole}});}
+\DoxyCodeLine{351     \textcolor{keywordtype}{bool} BHasMQ  = hasOp(genSettings.bOps,\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaa008023209cd51745fb1fe1f3ab2bb9c}{MagneticQuadrupole}});}
+\DoxyCodeLine{352 }
+\DoxyCodeLine{353     \textcolor{comment}{// Electric Dipole -\/ Electric Dipole Polarizability (Len)}}
+\DoxyCodeLine{354     \textcolor{keywordflow}{if}( AHasEDL and BHasEDL ) \{}
+\DoxyCodeLine{355 }
+\DoxyCodeLine{356 }
+\DoxyCodeLine{357       results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_ad2f13f0a346a72be9f5863f4b6ab49c1}{ed\_ed\_Polar}} = }
+\DoxyCodeLine{358         memManager\_.template malloc<U>(9*nOmega);}
+\DoxyCodeLine{359 }
+\DoxyCodeLine{360       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iOmega = 0; iOmega < nOmega; iOmega++) }
+\DoxyCodeLine{361 }
+\DoxyCodeLine{362         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},3,3,U(1.),opMap[\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa5e425f87d7cf99d79ca5c78dc8e15376}{LenElectricDipole}}] + edlOff + nRHS*iOmega,}
+\DoxyCodeLine{363           nRHS*nOmega, results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_ad2f13f0a346a72be9f5863f4b6ab49c1}{ed\_ed\_Polar}} + iOmega*9 ,3);}
+\DoxyCodeLine{364 }
+\DoxyCodeLine{365       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{366         savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/FDR/ED\_ED\_POLARIZABILITY\_LENGTH"{}},}
+\DoxyCodeLine{367           results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_ad2f13f0a346a72be9f5863f4b6ab49c1}{ed\_ed\_Polar}}, \{nOmega,3,3\});}
+\DoxyCodeLine{368 }
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370     \}}
+\DoxyCodeLine{371 }
+\DoxyCodeLine{372     \textcolor{comment}{// Electric Quadrupole -\/ Electric Dipole Polarizability (Len)}}
+\DoxyCodeLine{373     \textcolor{keywordflow}{if}( AHasEQL and BHasEDL ) \{}
+\DoxyCodeLine{374 }
+\DoxyCodeLine{375 }
+\DoxyCodeLine{376       results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_abd79b13c4eab0d9639a4507cb3746e65}{eq\_ed\_Polar}} = }
+\DoxyCodeLine{377         memManager\_.template malloc<U>(3*6*nOmega);}
+\DoxyCodeLine{378 }
+\DoxyCodeLine{379       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iOmega = 0; iOmega < nOmega; iOmega++) \{}
+\DoxyCodeLine{380 }
+\DoxyCodeLine{381         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},3,6,U(1.),opMap[\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daa884168972a1cae944ddbb2a5b0ff427b}{LenElectricQuadrupole}}] +edlOff+ nRHS*iOmega,}
+\DoxyCodeLine{382           nRHS*nOmega, results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_abd79b13c4eab0d9639a4507cb3746e65}{eq\_ed\_Polar}} + iOmega*3*6 ,3);}
+\DoxyCodeLine{383 }
+\DoxyCodeLine{384 }
+\DoxyCodeLine{385 }
+\DoxyCodeLine{386         \textcolor{comment}{// Make traceless}}
+\DoxyCodeLine{387         U* qdStart = results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_abd79b13c4eab0d9639a4507cb3746e65}{eq\_ed\_Polar}} + iOmega*3*6; }
+\DoxyCodeLine{388 }
+\DoxyCodeLine{389         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} i = 0; i < 3; i++) \{}
+\DoxyCodeLine{390   }
+\DoxyCodeLine{391           U qTrace = qdStart[i + 0*3] + }
+\DoxyCodeLine{392                      qdStart[i + 3*3] + }
+\DoxyCodeLine{393                      qdStart[i + 5*3];}
+\DoxyCodeLine{394 }
+\DoxyCodeLine{395           qdStart[i + 0*3] -\/= qTrace / 3.; }
+\DoxyCodeLine{396           qdStart[i + 3*3] -\/= qTrace / 3.; }
+\DoxyCodeLine{397           qdStart[i + 5*3] -\/= qTrace / 3.;}
+\DoxyCodeLine{398 }
+\DoxyCodeLine{399         \}}
+\DoxyCodeLine{400                    }
+\DoxyCodeLine{401         \textcolor{comment}{// Transpose in place}}
+\DoxyCodeLine{402         \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'},3,6,U(1.),qdStart,3,6);}
+\DoxyCodeLine{403 }
+\DoxyCodeLine{404       \}}
+\DoxyCodeLine{405 }
+\DoxyCodeLine{406       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{407         savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/FDR/EQ\_ED\_POLARIZABILITY\_LENGTH"{}},}
+\DoxyCodeLine{408           results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_abd79b13c4eab0d9639a4507cb3746e65}{eq\_ed\_Polar}}, \{nOmega,3,6\});}
+\DoxyCodeLine{409 }
+\DoxyCodeLine{410     \}}
+\DoxyCodeLine{411 }
+\DoxyCodeLine{412 }
+\DoxyCodeLine{413 }
+\DoxyCodeLine{414 }
+\DoxyCodeLine{415 }
+\DoxyCodeLine{416     \textcolor{comment}{// Magnetic Dipole -\/ Electric Dipole Polarizability (Len)}}
+\DoxyCodeLine{417     \textcolor{keywordflow}{if}( AHasMD and BHasEDL ) \{}
+\DoxyCodeLine{418 }
+\DoxyCodeLine{419 }
+\DoxyCodeLine{420       results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a92ee2a5de5aee2bf30aebec73bfec24b}{md\_ed\_Polar}} = }
+\DoxyCodeLine{421         memManager\_.template malloc<U>(9*nOmega);}
+\DoxyCodeLine{422 }
+\DoxyCodeLine{423       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iOmega = 0; iOmega < nOmega; iOmega++)\{ }
+\DoxyCodeLine{424 }
+\DoxyCodeLine{425         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},3,3,U(1.),opMap[\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaa394c19263f225db2048b9ce53c9cede}{MagneticDipole}}] + edlOff + nRHS*iOmega,}
+\DoxyCodeLine{426           nRHS*nOmega, results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a92ee2a5de5aee2bf30aebec73bfec24b}{md\_ed\_Polar}} + iOmega*9 ,3);}
+\DoxyCodeLine{427 }
+\DoxyCodeLine{428         \textcolor{comment}{// Transpose in place}}
+\DoxyCodeLine{429         \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'},3,3,U(1.),results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a92ee2a5de5aee2bf30aebec73bfec24b}{md\_ed\_Polar}} + iOmega*9,3,3);}
+\DoxyCodeLine{430 }
+\DoxyCodeLine{431       \}}
+\DoxyCodeLine{432 }
+\DoxyCodeLine{433       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{434         savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/FDR/MD\_ED\_POLARIZABILITY\_LENGTH"{}},}
+\DoxyCodeLine{435           results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a92ee2a5de5aee2bf30aebec73bfec24b}{md\_ed\_Polar}}, \{nOmega,3,3\});}
+\DoxyCodeLine{436 }
+\DoxyCodeLine{437     \}}
+\DoxyCodeLine{438 }
+\DoxyCodeLine{439 }
+\DoxyCodeLine{440     \textcolor{keywordflow}{if}( AHasMD and BHasMD ) \{}
+\DoxyCodeLine{441 }
+\DoxyCodeLine{442 }
+\DoxyCodeLine{443       results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_ae48aae0a62f967aa7ceac26feb77c789}{md\_md\_Polar}} = }
+\DoxyCodeLine{444         memManager\_.template malloc<U>(9*nOmega);}
+\DoxyCodeLine{445 }
+\DoxyCodeLine{446       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iOmega = 0; iOmega < nOmega; iOmega++)\{ }
+\DoxyCodeLine{447 }
+\DoxyCodeLine{448         \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{charliteral}{'N'},3,3,U(1.),opMap[\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67daaa394c19263f225db2048b9ce53c9cede}{MagneticDipole}}] + mdOff + nRHS*iOmega,}
+\DoxyCodeLine{449           nRHS*nOmega, results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_ae48aae0a62f967aa7ceac26feb77c789}{md\_md\_Polar}} + iOmega*9 ,3);}
+\DoxyCodeLine{450 }
+\DoxyCodeLine{451         \textcolor{comment}{// Transpose in place}}
+\DoxyCodeLine{452         \mbox{\hyperlink{namespaceChronusQ_abbee1773b3f12915d6c51842e34dc06d}{IMatCopy}}(\textcolor{charliteral}{'T'},3,3,U(1.),results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_ae48aae0a62f967aa7ceac26feb77c789}{md\_md\_Polar}} + iOmega*9,3,3);}
+\DoxyCodeLine{453 }
+\DoxyCodeLine{454       \}}
+\DoxyCodeLine{455 }
+\DoxyCodeLine{456       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{457         savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/FDR/MD\_MD\_POLARIZABILITY"{}},}
+\DoxyCodeLine{458           results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_ae48aae0a62f967aa7ceac26feb77c789}{md\_md\_Polar}}, \{nOmega,3,3\});}
+\DoxyCodeLine{459 }
+\DoxyCodeLine{460 }
+\DoxyCodeLine{461     \}}
+\DoxyCodeLine{462 }
+\DoxyCodeLine{463 }
+\DoxyCodeLine{464     \textcolor{comment}{// Free up the full memory}}
+\DoxyCodeLine{465     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&op : opMap) memManager\_.free(op.second);}
+\DoxyCodeLine{466 }
+\DoxyCodeLine{467     }
+\DoxyCodeLine{468   \};}
+\DoxyCodeLine{469 }
+\DoxyCodeLine{470 }
+\DoxyCodeLine{471 }
+\DoxyCodeLine{472   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{473   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{474   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{ResponseTBase<T>::fdrObservables}}(\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponseResults<T,U>}} \&results) \{}
+\DoxyCodeLine{475 }
+\DoxyCodeLine{476     }
+\DoxyCodeLine{477 }
+\DoxyCodeLine{478     \textcolor{keywordtype}{size\_t} nOmega = fdrSettings.bFreq.size();}
+\DoxyCodeLine{479 }
+\DoxyCodeLine{480     \textcolor{keywordflow}{if}( results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_ad2f13f0a346a72be9f5863f4b6ab49c1}{ed\_ed\_Polar}} ) \{}
+\DoxyCodeLine{481 }
+\DoxyCodeLine{482       fdObs.edStrength = }
+\DoxyCodeLine{483         memManager\_.template malloc<double>(nOmega);}
+\DoxyCodeLine{484 }
+\DoxyCodeLine{485       fdObs.opaCross\_eda = }
+\DoxyCodeLine{486         memManager\_.template malloc<double>(nOmega);}
+\DoxyCodeLine{487 }
+\DoxyCodeLine{488       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} iOmega = 0; iOmega < nOmega; iOmega++) \{}
+\DoxyCodeLine{489 }
+\DoxyCodeLine{490         \textcolor{keywordtype}{double} omega = fdrSettings.bFreq[iOmega];}
+\DoxyCodeLine{491         U*     eded  = results.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_ad2f13f0a346a72be9f5863f4b6ab49c1}{ed\_ed\_Polar}} + iOmega*9;}
+\DoxyCodeLine{492 }
+\DoxyCodeLine{493         U trace = eded[0] + eded[4] + eded[8];}
+\DoxyCodeLine{494 }
+\DoxyCodeLine{495         fdObs.edStrength[iOmega]   = std::imag( trace );}
+\DoxyCodeLine{496 }
+\DoxyCodeLine{497         fdObs.opaCross\_eda[iOmega] = 4. * M\_PI / \mbox{\hyperlink{namespaceChronusQ_a387c8ccd4e18ad322b87f75f51fd008d}{SpeedOfLight}} *}
+\DoxyCodeLine{498           omega * fdObs.edStrength[iOmega];}
+\DoxyCodeLine{499 }
+\DoxyCodeLine{500       \}}
+\DoxyCodeLine{501 }
+\DoxyCodeLine{502       \textcolor{keywordflow}{if}( savFile.exists() )}
+\DoxyCodeLine{503         savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/FDR/OPA\_CROSS\_SECTION\_EDA"{}},}
+\DoxyCodeLine{504           fdObs.opaCross\_eda,\{nOmega\});}
+\DoxyCodeLine{505 }
+\DoxyCodeLine{506     \}}
+\DoxyCodeLine{507 }
+\DoxyCodeLine{508   \}}
+\DoxyCodeLine{509 }
+\DoxyCodeLine{510   }
+\DoxyCodeLine{511 }
+\DoxyCodeLine{512 }
+\DoxyCodeLine{513 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{514 }
+
+\end{DoxyCode}

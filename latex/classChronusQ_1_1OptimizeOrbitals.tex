@@ -1,0 +1,291 @@
+\hypertarget{classChronusQ_1_1OptimizeOrbitals}{}\doxysection{ChronusQ\+::Optimize\+Orbitals\texorpdfstring{$<$}{<} MatsT \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classChronusQ_1_1OptimizeOrbitals}\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+
+
+{\ttfamily \#include $<$opt\+Orbitals.\+hpp$>$}
+
+
+
+Inheritance diagram for ChronusQ\+::Optimize\+Orbitals\texorpdfstring{$<$}{<} MatsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1OptimizeOrbitals__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for ChronusQ\+::Optimize\+Orbitals\texorpdfstring{$<$}{<} MatsT \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1OptimizeOrbitals__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_abc603a23de5ac94ef2af03f744907ca0}{Optimize\+Orbitals}} (\mbox{\hyperlink{structChronusQ_1_1SCFControls}{SCFControls}} sC, \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}} \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a4359453137e2d44a53b5af2d5d7e764a}{comm}}, \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Modify\+Orbitals\+Options}}$<$ MatsT $>$ mod\+Opt, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&mem)
+\item 
+\mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a327d4b45f0b7b434699914d5e1801d9a}{$\sim$\+Optimize\+Orbitals}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a32fae69494b34b86682693025b5d8cc5}{run\+Modify\+Orbitals}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&, \mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{Vec\+MORef}}$<$ MatsT $>$ \&, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{Vec\+EPtr}} \&)
+\begin{DoxyCompactList}\small\item\em Performs the self--consistant field procedure given a set of orbitals. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a01207a5315d12d6bb2f011de042570fa}{eval\+Progress}} (\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&)
+\begin{DoxyCompactList}\small\item\em Evaluate SCF convergence based on various criteria. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a08cd18f21b24690d1b40d5e898c9638e}{compute\+Density\+Conv}} ()
+\item 
+virtual double \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a12721b322a76a804f8198e54f04542ff}{compute\+FDCConv}} ()
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a682c902ef78a1e67340a4ccb76a6f6c3}{print\+Run\+Header}} (std\+::ostream \&out, \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&) const
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_aeff894193a561903d4db5c77560a4d26}{print\+Header\+Final}} (std\+::ostream \&out) const
+\item 
+void \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_aac8295c1fe0cd43df697fa80fec961d3}{print\+Iteration}} (std\+::ostream \&out=std\+::cout, bool print\+Diff=true) const
+\begin{DoxyCompactList}\small\item\em Print the current convergence information of the SCF procedure. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a68d405fd27d1f96fb4d995e10d084c2a}{compute\+Eigenvalues}} (\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{Vec\+MORef}}$<$ MatsT $>$ \&, \mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{Vec\+EPtr}} \&)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{structChronusQ_1_1SCFControls}{SCFControls}} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a1c2583249553f15ab9bfefa73efac407}{scf\+Controls}}
+\item 
+\mbox{\hyperlink{structChronusQ_1_1SCFConvergence}{SCFConvergence}} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a4469ba54598945a7ef9d8bd4f70531d6}{scf\+Conv}}
+\item 
+bool \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a9efd1db9dc7f5d0f3d69979739a31457}{doing\+Damp}}
+\begin{DoxyCompactList}\small\item\em Whether damping is currently on or off (only used for printing) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a39881d763fe50396aa032e73d56ea968}{prev\+One\+PDM}}
+\begin{DoxyCompactList}\small\item\em Previous density used to test convergence. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals_a725a7159aa57fa6ae1b3723d1790d0d0}{prev\+Energy}}
+\begin{DoxyCompactList}\small\item\em Previous Energy to test convergence. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_abc603a23de5ac94ef2af03f744907ca0}\label{classChronusQ_1_1OptimizeOrbitals_abc603a23de5ac94ef2af03f744907ca0}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!OptimizeOrbitals@{OptimizeOrbitals}}
+\index{OptimizeOrbitals@{OptimizeOrbitals}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{OptimizeOrbitals()}{OptimizeOrbitals()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::\+Optimize\+Orbitals (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1SCFControls}{SCFControls}}}]{sC,  }\item[{\mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\+\_\+\+Comm}}}]{comm,  }\item[{\mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Modify\+Orbitals\+Options}}$<$ MatsT $>$}]{mod\+Opt,  }\item[{\mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMem\+Manager}} \&}]{mem }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_a327d4b45f0b7b434699914d5e1801d9a}\label{classChronusQ_1_1OptimizeOrbitals_a327d4b45f0b7b434699914d5e1801d9a}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!````~OptimizeOrbitals@{$\sim$OptimizeOrbitals}}
+\index{````~OptimizeOrbitals@{$\sim$OptimizeOrbitals}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$OptimizeOrbitals()}{~OptimizeOrbitals()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+\mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::$\sim$\mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Optimize\+Orbitals}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_a08cd18f21b24690d1b40d5e898c9638e}\label{classChronusQ_1_1OptimizeOrbitals_a08cd18f21b24690d1b40d5e898c9638e}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!computeDensityConv@{computeDensityConv}}
+\index{computeDensityConv@{computeDensityConv}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeDensityConv()}{computeDensityConv()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::compute\+Density\+Conv}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1OptimizeOrbitals_a08cd18f21b24690d1b40d5e898c9638e_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_a68d405fd27d1f96fb4d995e10d084c2a}\label{classChronusQ_1_1OptimizeOrbitals_a68d405fd27d1f96fb4d995e10d084c2a}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!computeEigenvalues@{computeEigenvalues}}
+\index{computeEigenvalues@{computeEigenvalues}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeEigenvalues()}{computeEigenvalues()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::compute\+Eigenvalues (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{Vec\+MORef}}$<$ MatsT $>$ \&}]{mo,  }\item[{\mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{Vec\+EPtr}} \&}]{eps }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1OptimizeOrbitals_a68d405fd27d1f96fb4d995e10d084c2a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1OptimizeOrbitals_a68d405fd27d1f96fb4d995e10d084c2a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_a12721b322a76a804f8198e54f04542ff}\label{classChronusQ_1_1OptimizeOrbitals_a12721b322a76a804f8198e54f04542ff}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!computeFDCConv@{computeFDCConv}}
+\index{computeFDCConv@{computeFDCConv}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeFDCConv()}{computeFDCConv()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+virtual double \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::compute\+FDCConv (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF_a169da6e13b79a2764f67b65dfd19a4c5}{Chronus\+Q\+::\+Conventional\+SCF$<$ Mats\+T $>$}}, and \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF_a12db47837ba464940e4e5db18c846d63}{Chronus\+Q\+::\+Newton\+Raphson\+SCF$<$ Mats\+T $>$}}.
+
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_a01207a5315d12d6bb2f011de042570fa}\label{classChronusQ_1_1OptimizeOrbitals_a01207a5315d12d6bb2f011de042570fa}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!evalProgress@{evalProgress}}
+\index{evalProgress@{evalProgress}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{evalProgress()}{evalProgress()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::eval\+Progress (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert }\end{DoxyParamCaption})}
+
+
+
+Evaluate SCF convergence based on various criteria. 
+
+Checks the norm of \mbox{[}F,D\mbox{]}, if converged -\/\texorpdfstring{$>$}{>} SCF converged.
+
+Checks change in energy and density between SCF iterations, if {\itshape both} converged -\/\texorpdfstring{$>$}{>} SCF converged. Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1OptimizeOrbitals_a01207a5315d12d6bb2f011de042570fa_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_aeff894193a561903d4db5c77560a4d26}\label{classChronusQ_1_1OptimizeOrbitals_aeff894193a561903d4db5c77560a4d26}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!printHeaderFinal@{printHeaderFinal}}
+\index{printHeaderFinal@{printHeaderFinal}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{printHeaderFinal()}{printHeaderFinal()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::print\+Header\+Final (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_aac8295c1fe0cd43df697fa80fec961d3}\label{classChronusQ_1_1OptimizeOrbitals_aac8295c1fe0cd43df697fa80fec961d3}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!printIteration@{printIteration}}
+\index{printIteration@{printIteration}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{printIteration()}{printIteration()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::print\+Iteration (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out = {\ttfamily std\+:\+:cout},  }\item[{bool}]{print\+Diff = {\ttfamily true} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Print the current convergence information of the SCF procedure. 
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a48b5c9b86b90023cfb38315ab76fc2e6}{Chronus\+Q\+::\+Modify\+Orbitals$<$ Mats\+T $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1OptimizeOrbitals_aac8295c1fe0cd43df697fa80fec961d3_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_a682c902ef78a1e67340a4ccb76a6f6c3}\label{classChronusQ_1_1OptimizeOrbitals_a682c902ef78a1e67340a4ccb76a6f6c3}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!printRunHeader@{printRunHeader}}
+\index{printRunHeader@{printRunHeader}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{printRunHeader()}{printRunHeader()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::print\+Run\+Header (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_a04a078bad24116b35f46876a911e0a74}{Chronus\+Q\+::\+Modify\+Orbitals$<$ Mats\+T $>$}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1OptimizeOrbitals_a682c902ef78a1e67340a4ccb76a6f6c3_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_a32fae69494b34b86682693025b5d8cc5}\label{classChronusQ_1_1OptimizeOrbitals_a32fae69494b34b86682693025b5d8cc5}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!runModifyOrbitals@{runModifyOrbitals}}
+\index{runModifyOrbitals@{runModifyOrbitals}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{runModifyOrbitals()}{runModifyOrbitals()}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+void \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::run\+Modify\+Orbitals (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&}]{pert,  }\item[{\mbox{\hyperlink{namespaceChronusQ_a32dd4e864b3fd07b3a799dc7faf8aa9b}{Vec\+MORef}}$<$ MatsT $>$ \&}]{mo,  }\item[{\mbox{\hyperlink{namespaceChronusQ_aaa9660c9e257a334c13d30b0814c424c}{Vec\+EPtr}} \&}]{eps }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Performs the self--consistant field procedure given a set of orbitals. 
+
+\begin{DoxyWarning}{Warning}
+SCF procedure assumes that the 1PDM and orbital (mo1/2) storage has been populated in some way. 
+\end{DoxyWarning}
+
+
+Implements \mbox{\hyperlink{classChronusQ_1_1ModifyOrbitals_acdadde547e4c91530cf1ac2206995312}{Chronus\+Q\+::\+Modify\+Orbitals$<$ Mats\+T $>$}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classChronusQ_1_1SkipSCF_a13781a3de827057cf7a5eea1959bbf63}{Chronus\+Q\+::\+Skip\+SCF$<$ Mats\+T $>$}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classChronusQ_1_1OptimizeOrbitals_a32fae69494b34b86682693025b5d8cc5_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_a9efd1db9dc7f5d0f3d69979739a31457}\label{classChronusQ_1_1OptimizeOrbitals_a9efd1db9dc7f5d0f3d69979739a31457}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!doingDamp@{doingDamp}}
+\index{doingDamp@{doingDamp}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{doingDamp}{doingDamp}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+bool \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::doing\+Damp}
+
+
+
+Whether damping is currently on or off (only used for printing) 
+
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_a725a7159aa57fa6ae1b3723d1790d0d0}\label{classChronusQ_1_1OptimizeOrbitals_a725a7159aa57fa6ae1b3723d1790d0d0}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!prevEnergy@{prevEnergy}}
+\index{prevEnergy@{prevEnergy}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{prevEnergy}{prevEnergy}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+double \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::prev\+Energy\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Previous Energy to test convergence. 
+
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_a39881d763fe50396aa032e73d56ea968}\label{classChronusQ_1_1OptimizeOrbitals_a39881d763fe50396aa032e73d56ea968}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!prevOnePDM@{prevOnePDM}}
+\index{prevOnePDM@{prevOnePDM}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{prevOnePDM}{prevOnePDM}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$MatsT$>$ $>$ \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::prev\+One\+PDM\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Previous density used to test convergence. 
+
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_a1c2583249553f15ab9bfefa73efac407}\label{classChronusQ_1_1OptimizeOrbitals_a1c2583249553f15ab9bfefa73efac407}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!scfControls@{scfControls}}
+\index{scfControls@{scfControls}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{scfControls}{scfControls}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+const \mbox{\hyperlink{structChronusQ_1_1SCFControls}{SCFControls}} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::scf\+Controls}
+
+\mbox{\Hypertarget{classChronusQ_1_1OptimizeOrbitals_a4469ba54598945a7ef9d8bd4f70531d6}\label{classChronusQ_1_1OptimizeOrbitals_a4469ba54598945a7ef9d8bd4f70531d6}} 
+\index{ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}!scfConv@{scfConv}}
+\index{scfConv@{scfConv}!ChronusQ::OptimizeOrbitals$<$ MatsT $>$@{ChronusQ::OptimizeOrbitals$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{scfConv}{scfConv}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+\mbox{\hyperlink{structChronusQ_1_1SCFConvergence}{SCFConvergence}} \mbox{\hyperlink{classChronusQ_1_1OptimizeOrbitals}{Chronus\+Q\+::\+Optimize\+Orbitals}}$<$ MatsT $>$\+::scf\+Conv}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/modifyorbitals/\mbox{\hyperlink{optOrbitals_8hpp}{opt\+Orbitals.\+hpp}}\item 
+include/modifyorbitals/opt\+Orbitals/\mbox{\hyperlink{modifyorbitals_2optOrbitals_2impl_8hpp}{impl.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,151 @@
+\hypertarget{goldenSection_8hpp_source}{}\doxysection{golden\+Section.\+hpp}
+\label{goldenSection_8hpp_source}\index{include/nonlinearopt/goldenSection.hpp@{include/nonlinearopt/goldenSection.hpp}}
+\mbox{\hyperlink{goldenSection_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{nonlinearopt_8hpp}{nonlinearopt/nonlinearopt.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas3_8hpp}{cqlinalg/blas3.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}}}
+\DoxyCodeLine{31 \{}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{comment}{/*}}
+\DoxyCodeLine{34 \textcolor{comment}{    *   Brief: This object performs a line search using the Golden}}
+\DoxyCodeLine{35 \textcolor{comment}{    *          section search algorithm}}
+\DoxyCodeLine{36 \textcolor{comment}{    * }}
+\DoxyCodeLine{37 \textcolor{comment}{    *   Luenberger, D. G.; Ye, Y. Linear and Nonlinear Programming; Hillier, F. S., Ed.; Springer Science+Business Media.}}
+\DoxyCodeLine{38 \textcolor{comment}{    * }}
+\DoxyCodeLine{39 \textcolor{comment}{    *   N = number of positions i.e. dimension of the problem}}
+\DoxyCodeLine{40 \textcolor{comment}{    *   x = pointer to the current set of positions (should be set using setXPointer)}}
+\DoxyCodeLine{41 \textcolor{comment}{    */}}
+\DoxyCodeLine{42     \textcolor{keyword}{template} <\textcolor{keyword}{typename} VT>}
+\DoxyCodeLine{43     \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch}{GoldenSectionSearch}} : \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1NonLinearOpt}{NonLinearOpt}}}
+\DoxyCodeLine{44     \{}
+\DoxyCodeLine{45     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{46         \textcolor{comment}{// Function to be Optimized declarations}}
+\DoxyCodeLine{47         \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a5fb45442c1c33ceeba766d6f7582d843}{N}}; }
+\DoxyCodeLine{48         \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&\mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a69c87afe8c6aa9c57b78d0e03dae509a}{memManager}};}
+\DoxyCodeLine{49         VT *\mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a73807f24dd2eb418b6791bec18f10c88}{x}};                        }
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keyword}{public}:}
+\DoxyCodeLine{52         \textcolor{comment}{// Optimization parameters}}
+\DoxyCodeLine{53         \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a7b27f5c1bcdee26453a10f0ed6dc18ea}{convergence}} = 1E-\/12;   }
+\DoxyCodeLine{54         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a1456b81a424473ba394a4f5167b1506b}{printLineSearch}} = \textcolor{keyword}{false}; }
+\DoxyCodeLine{55         \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a560951c1003a207c1d7ee36e115afd6d}{printPrecision}} = 10;   }
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57         \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{58         \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a52df0f428da8e56f30026950ec7b3d0c}{GoldenSectionSearch}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{59         \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_afc08d9fce67abc5e2c68e3ad02a77fe2}{GoldenSectionSearch}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a5fb45442c1c33ceeba766d6f7582d843}{N}}, \textcolor{keywordtype}{double} conv, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mM) : \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a5fb45442c1c33ceeba766d6f7582d843}{N}}(\mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a5fb45442c1c33ceeba766d6f7582d843}{N}}), \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a7b27f5c1bcdee26453a10f0ed6dc18ea}{convergence}}(conv), \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a69c87afe8c6aa9c57b78d0e03dae509a}{memManager}}(mM)\{\};}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61         \textcolor{comment}{// Remove copy/move constructors}}
+\DoxyCodeLine{62         \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a7ded4f730b6276ec6b28656745de2ef9}{GoldenSectionSearch}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch}{GoldenSectionSearch<VT>}} \&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{63         \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a44aac9d7f09d51d6164367cc4dd4c305}{GoldenSectionSearch}}(\mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch}{GoldenSectionSearch<VT>}} \&\&) = \textcolor{keyword}{delete};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65         \textcolor{comment}{// Destructor:}}
+\DoxyCodeLine{66         \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_af0b80dc2e5c32c89f9972d71e7ee9c07}{\string~GoldenSectionSearch}}()\{\};}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68         \textcolor{comment}{// Getter and Setter Functions}}
+\DoxyCodeLine{69         \textcolor{keyword}{inline} VT* \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_abb783f0a4b2e81011bcfebeb26c41a50}{xPointer}}()\{\textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a73807f24dd2eb418b6791bec18f10c88}{x}};\};}
+\DoxyCodeLine{70         \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_af0e6eb60fc12f91f46a945c14d1d422f}{setXPointer}}( VT* xNew) \{ \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a73807f24dd2eb418b6791bec18f10c88}{x}} = xNew;\};}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72         \textcolor{comment}{// Optimization functions}}
+\DoxyCodeLine{73         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_ace11a76a2cb7c8a88d0b389af87053b7}{optimize}}() \{ \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \};                        }
+\DoxyCodeLine{74         \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a720c54075c221cc82a8c82ef2e346109}{optimize}}(VT *initX, VT *dx, VT searchMin, VT searchMax, \textcolor{keywordtype}{double} \&ymin, VT \&amin); }
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76         \textcolor{comment}{// These functions should be overloaded by inheriting object}}
+\DoxyCodeLine{77         \textcolor{keywordtype}{double} \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_a860d1809a325e1ebf40d4e9143bbea90}{objFunc}}() \{ \textcolor{keywordflow}{return} 1.; \};}
+\DoxyCodeLine{78         \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_ac27c841ff3de0a4a0c445639b20708b2}{gradFunc}}()\{\};}
+\DoxyCodeLine{79     \};}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82     \textcolor{comment}{/*}}
+\DoxyCodeLine{83 \textcolor{comment}{    *   Brief: This function performs a GoldenSection search along the search direction(dx) with the initial set of }}
+\DoxyCodeLine{84 \textcolor{comment}{    *          positions at initX.  SearchMin and searchMax determine the interval in which to search.  The results}}
+\DoxyCodeLine{85 \textcolor{comment}{    *          are the minimum of the objective function (ymin) and the displacement along the search direction (amin).}}
+\DoxyCodeLine{86 \textcolor{comment}{    */}}
+\DoxyCodeLine{87     \textcolor{keyword}{template} <\textcolor{keyword}{typename} VT>}
+\DoxyCodeLine{88     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1GoldenSectionSearch_ace11a76a2cb7c8a88d0b389af87053b7}{GoldenSectionSearch<VT>::optimize}}(VT *initX, VT *dx, VT searchMin, VT searchMax, \textcolor{keywordtype}{double} \&ymin, VT \&amin)}
+\DoxyCodeLine{89     \{}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91         ymin = VT(1.E10);}
+\DoxyCodeLine{92         amin = VT(0.);}
+\DoxyCodeLine{93         VT a = searchMin;}
+\DoxyCodeLine{94         VT b = searchMax;}
+\DoxyCodeLine{95         VT gr = VT((1. + std::sqrt(5.)) / 2.);}
+\DoxyCodeLine{96         VT c = b -\/ (b -\/ a) / gr;}
+\DoxyCodeLine{97         VT d = a + (b -\/ a) / gr;}
+\DoxyCodeLine{98         \textcolor{keywordtype}{size\_t} xSearch = 0;}
+\DoxyCodeLine{99         std::copy\_n(initX,N,x);}
+\DoxyCodeLine{100         \textcolor{keywordtype}{double} yPrev = this-\/>objFunc();}
+\DoxyCodeLine{101         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} iSearch = 0; iSearch < this-\/>nStep; iSearch++)}
+\DoxyCodeLine{102         \{}
+\DoxyCodeLine{103             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{104                 x[i] = initX[i] + c * dx[i];}
+\DoxyCodeLine{105             \textcolor{keywordtype}{double} yc = this-\/>objFunc();}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < N; i++)}
+\DoxyCodeLine{108                 x[i] = initX[i] + d * dx[i];}
+\DoxyCodeLine{109             \textcolor{keywordtype}{double} yd = this-\/>objFunc();}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111             \textcolor{keywordflow}{if}( printLineSearch )}
+\DoxyCodeLine{112                 std::cout << std::scientific << std::setprecision(printPrecision) << \textcolor{stringliteral}{"{}Golden Section Search Step "{}} << iSearch+1 << \textcolor{stringliteral}{"{}:  Function value = "{}} << (yc+yd)/VT(2.) << \textcolor{stringliteral}{"{}   Change = "{}} << std::abs(yc-\/yd) << std::endl;}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114             \textcolor{comment}{// Check convergence}}
+\DoxyCodeLine{115             \textcolor{keywordtype}{bool} converged = (std::abs(yc-\/yd)<convergence) and (std::abs(yc-\/yPrev)<convergence) and (std::abs(yd-\/yPrev)<convergence);}
+\DoxyCodeLine{116             \textcolor{keywordflow}{if} ( converged )}
+\DoxyCodeLine{117             \{}
+\DoxyCodeLine{118                 xSearch = iSearch;}
+\DoxyCodeLine{119                 amin = (a + b) / VT(2.);}
+\DoxyCodeLine{120                 ymin = (yc + yd) / 2.;}
+\DoxyCodeLine{121                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{122             \}}
+\DoxyCodeLine{123             yPrev = (yc + yd) / 2.;}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125             \textcolor{comment}{// update variables for next iteration}}
+\DoxyCodeLine{126             \textcolor{keywordflow}{if} (yc < yd)}
+\DoxyCodeLine{127             \{}
+\DoxyCodeLine{128                 b = d;}
+\DoxyCodeLine{129             \}}
+\DoxyCodeLine{130             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{131             \{}
+\DoxyCodeLine{132                 a = c;}
+\DoxyCodeLine{133             \}}
+\DoxyCodeLine{134             c = b -\/ (b -\/ a) / gr;}
+\DoxyCodeLine{135             d = a + (b -\/ a) / gr;}
+\DoxyCodeLine{136         \}}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138         \textcolor{keywordflow}{if} (printLineSearch)}
+\DoxyCodeLine{139         \{}
+\DoxyCodeLine{140             std::cout << std::endl;}
+\DoxyCodeLine{141             std::cout << \textcolor{stringliteral}{"{}Number Golden Section Search Steps = "{}} << xSearch << std::endl;}
+\DoxyCodeLine{142             std::cout << std::scientific << std::setprecision(printPrecision)  << \textcolor{stringliteral}{"{}Optimized Displacement  = "{}} << amin << \textcolor{stringliteral}{"{}    Function Minimum = "{}} << ymin << std::endl;}
+\DoxyCodeLine{143         \}}
+\DoxyCodeLine{144     \}}
+\DoxyCodeLine{145 \};}
+
+\end{DoxyCode}

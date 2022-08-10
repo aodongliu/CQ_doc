@@ -1,0 +1,665 @@
+\hypertarget{tbase_8hpp_source}{}\doxysection{tbase.\+hpp}
+\label{tbase_8hpp_source}\index{include/response/tbase.hpp@{include/response/tbase.hpp}}
+\mbox{\hyperlink{tbase_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{chronusq__sys_8hpp}{chronusq\_sys.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{response_2base_8hpp}{response/base.hpp}}>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cerr_8hpp}{cerr.hpp}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mpi_8hpp}{util/mpi.hpp}}>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{timer_8hpp}{util/timer.hpp}}>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{itersolver_8hpp}{itersolver.hpp}}>}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{41   \textcolor{keyword}{struct }\mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION}{RESPONSE\_CONTRACTION}} \{}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION_a6da915e15c56e47c1e05111deb46f502}{nVec}};}
+\DoxyCodeLine{44     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION_a1d66845bd6b1dd60ed8afe8f127b9d44}{N}};}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     T* \mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION_a82f95f6151529a39d7a3799a844799d2}{X}};}
+\DoxyCodeLine{47     T* \mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION_a235eedfdc3f58720752f0603830ccd24}{AX}};}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{50     CXXBLACS::ScaLAPACK\_Desc\_t DescX;}
+\DoxyCodeLine{51     CXXBLACS::ScaLAPACK\_Desc\_t DescAX;}
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54   \};}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 }
+\DoxyCodeLine{78   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{79   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{ResponseTBase}} : \textcolor{keyword}{public} \mbox{\hyperlink{structChronusQ_1_1ResponseBase}{ResponseBase}} \{}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{keyword}{template} <\textcolor{keyword}{class} U> \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{ResponseTBase}};}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}      \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}{comm\_}};}
+\DoxyCodeLine{86     \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}}      \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6ef0e81cb9f0c649c2fc8dbebacfbff4}{rcomm\_}};}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88     \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}}\& \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a4d34ddf73e3bd21431bbe7b614b114b3}{memManager\_}};}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     std::function< void(\textcolor{keywordtype}{size\_t},T,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<T>}}\&,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<T>}}\&) >       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ae52b9eec75f28b9214f223106fe36435}{PC\_}};}
+\DoxyCodeLine{92     std::function< void(\textcolor{keywordtype}{size\_t},\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}},\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<dcomplex>}}\&,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<dcomplex>}}\&) > \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ae7da72238f54c8e2a74947479fc4a918}{cmplxPC\_}};}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94     std::function< void(\textcolor{keywordtype}{size\_t},\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<T>}}\&,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<T>}}\&) >     \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a9216891438650042e69dbba65f7a0de2}{nSPC\_}};}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99     std::shared\_ptr<CXXBLACS::BlacsGrid> fullMatGrid\_;}
+\DoxyCodeLine{100     CXXBLACS::ScaLAPACK\_Desc\_t           descFullMat\_;}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105     \textcolor{keywordtype}{size\_t}        \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a279e338b468f034208ab64167d047e95}{nSingleDim\_}};}
+\DoxyCodeLine{106     T*            \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aea41156db938a6a05108509d1b1668da}{fullMatrix\_}};}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108     \textcolor{keywordtype}{bool}          \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a1c6ef6d0793fe011f472c911a946023c}{alreadyRan\_}}  = \textcolor{keyword}{false};}
+\DoxyCodeLine{109     \textcolor{keywordtype}{bool}          \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_acfb70bc8eaf99912a6ca3ad622ad3cff}{hasResGuess\_}} = \textcolor{keyword}{true};}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ab265a394382969cb698c09de26ebcc27}{writeMeta}}();}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U> \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ab4c730bb7b5dfb611367c1022f829d86}{iterLinearTrans}}(\textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&AV);}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119   \textcolor{keyword}{public}:}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121     \mbox{\hyperlink{structChronusQ_1_1ResidueResponseResults}{ResidueResponseResults<T>}}     \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a54bb56d4f7944b9ac36a921927a2f16d}{resResults}};}
+\DoxyCodeLine{122     \mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponseResults<T,T>}}        \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aa364fe25bc6d530c9105311c3c74302c}{fdrResults}};}
+\DoxyCodeLine{123     \mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponseResults<T,dcomplex>}} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6ac21d9902ff40789bee86e9ac19e40b}{dfdrResults}};}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125     \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a057b6cae4877af0abd48be96f9a2b0bc}{ResponseTBase}}( \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616}{ResponseType}} job, \mbox{\hyperlink{classChronusQ_1_1CQMemManager}{CQMemManager}} \&mem, }
+\DoxyCodeLine{126       T* \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ad6a038e936f9f4ef2678a67a0fb65f2c}{fullMatrix}} = \textcolor{keyword}{nullptr} ) : \mbox{\hyperlink{structChronusQ_1_1ResponseBase}{ResponseBase}}(job),}
+\DoxyCodeLine{127         \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}{comm\_}}(c), \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6ef0e81cb9f0c649c2fc8dbebacfbff4}{rcomm\_}}(\mbox{\hyperlink{namespaceChronusQ_aa7b3d8958bb1647c8cbaa87f062b2243}{CreateRootComm}}(c)),}
+\DoxyCodeLine{128         \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a4d34ddf73e3bd21431bbe7b614b114b3}{memManager\_}}(mem), \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a279e338b468f034208ab64167d047e95}{nSingleDim\_}}(0), }
+\DoxyCodeLine{129         \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aea41156db938a6a05108509d1b1668da}{fullMatrix\_}}(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ad6a038e936f9f4ef2678a67a0fb65f2c}{fullMatrix}}) \{}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131         \textcolor{keywordflow}{if}(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ad6a038e936f9f4ef2678a67a0fb65f2c}{fullMatrix}}) \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ab42fab3e8db02c70be9d79e2fd652f22}{doFull}} = \textcolor{keyword}{true}; }
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133     \}}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135     \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a4dee85a3919c38722f6cfe20c3782318}{\string~ResponseTBase}}() \{}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a0381f7e5402b5942e48577db767e81f4}{reset}}();}
+\DoxyCodeLine{138       \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6ef0e81cb9f0c649c2fc8dbebacfbff4}{rcomm\_}} != \mbox{\hyperlink{namespaceChronusQ_a64b7658dac48bb68d8e0e82c988202fd}{MPI\_COMM\_NULL}} and \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6ef0e81cb9f0c649c2fc8dbebacfbff4}{rcomm\_}} != \mbox{\hyperlink{namespaceChronusQ_ab270cf5db063f33b5e4281e3ebf6b2cf}{MPI\_COMM\_WORLD}} )}
+\DoxyCodeLine{139         \mbox{\hyperlink{namespaceChronusQ_ae9c2c6f04046395ca738d3adb27543d7}{MPICommFree}}(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6ef0e81cb9f0c649c2fc8dbebacfbff4}{rcomm\_}});}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141     \};}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143     \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ad24559d54cc858509a63f846b60bea34}{ResponseTBase}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{ResponseTBase}} \&other ) : }
+\DoxyCodeLine{144       \mbox{\hyperlink{structChronusQ_1_1ResponseBase}{ResponseBase}}(dynamic\_cast<const \mbox{\hyperlink{structChronusQ_1_1ResponseBase}{ResponseBase}}\&>(other)),}
+\DoxyCodeLine{145       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}{comm\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}{comm\_}}), \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6ef0e81cb9f0c649c2fc8dbebacfbff4}{rcomm\_}}(\mbox{\hyperlink{namespaceChronusQ_aa7b3d8958bb1647c8cbaa87f062b2243}{CreateRootComm}}(other.\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}{comm\_}})),}
+\DoxyCodeLine{146       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aea41156db938a6a05108509d1b1668da}{fullMatrix\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aea41156db938a6a05108509d1b1668da}{fullMatrix\_}}),}
+\DoxyCodeLine{147 \#ifdef CQ\_ENABLE\_MPI}
+\DoxyCodeLine{148       fullMatGrid\_(other.fullMatGrid\_),}
+\DoxyCodeLine{149       descFullMat\_(other.descFullMat\_),}
+\DoxyCodeLine{150 \#endif}
+\DoxyCodeLine{151       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_acfb70bc8eaf99912a6ca3ad622ad3cff}{hasResGuess\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_acfb70bc8eaf99912a6ca3ad622ad3cff}{hasResGuess\_}}),}
+\DoxyCodeLine{152       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ae52b9eec75f28b9214f223106fe36435}{PC\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ae52b9eec75f28b9214f223106fe36435}{PC\_}}),}
+\DoxyCodeLine{153       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ae7da72238f54c8e2a74947479fc4a918}{cmplxPC\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ae7da72238f54c8e2a74947479fc4a918}{cmplxPC\_}}),}
+\DoxyCodeLine{154       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a4d34ddf73e3bd21431bbe7b614b114b3}{memManager\_}}(other.\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a4d34ddf73e3bd21431bbe7b614b114b3}{memManager\_}})\{ \}}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a0381f7e5402b5942e48577db767e81f4}{reset}}() \{}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a54bb56d4f7944b9ac36a921927a2f16d}{resResults}}. dealloc(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a4d34ddf73e3bd21431bbe7b614b114b3}{memManager\_}});}
+\DoxyCodeLine{159       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aa364fe25bc6d530c9105311c3c74302c}{fdrResults}}. dealloc(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a4d34ddf73e3bd21431bbe7b614b114b3}{memManager\_}});}
+\DoxyCodeLine{160       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6ac21d9902ff40789bee86e9ac19e40b}{dfdrResults}}.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a8ff221d49b7bf83d5d1104556d4e6b3d}{dealloc}}(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a4d34ddf73e3bd21431bbe7b614b114b3}{memManager\_}});}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162       \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a19a944021c98481df7e1fa7882e70c9c}{fdObs}}. dealloc(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a4d34ddf73e3bd21431bbe7b614b114b3}{memManager\_}});}
+\DoxyCodeLine{163       \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a7385972979ac166e42fc768526e3237c}{resObs}}.\mbox{\hyperlink{structChronusQ_1_1ResObservables_afc6cdabcee3059386be0f604f30faba6}{dealloc}}(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a4d34ddf73e3bd21431bbe7b614b114b3}{memManager\_}});}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a1c6ef6d0793fe011f472c911a946023c}{alreadyRan\_}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167     \}}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170     \textcolor{comment}{// Incore Matrix / Vector formation (Method specific)}}
+\DoxyCodeLine{171     \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t}               \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a66eb888fe9dc31fd13119ad3a91e395a}{getNSingleDim}}(\textcolor{keyword}{const} \textcolor{keywordtype}{bool} doTDA)= 0;}
+\DoxyCodeLine{172     \textcolor{keyword}{virtual} T*                   \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a68ac9eba61f5cc1013732dc7568223ba}{formFullMatrix}}()               = 0;}
+\DoxyCodeLine{173     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}                 \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a66e39c49959b549111cfc51b430ac29c}{formRHS}}       ()               = 0;}
+\DoxyCodeLine{174     \textcolor{keyword}{virtual} std::pair<size\_t,T*> \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a60fe80fdb582118f716e3956909515b1}{formPropGrad}}(\mbox{\hyperlink{namespaceChronusQ_ae433eacbcf77cef30ad9f1eb7dfa67da}{ResponseOperator}}) = 0;}
+\DoxyCodeLine{175     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}                 \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a48eba3991958a27ca948284484b7980a}{configOptions}}()                = 0;}
+\DoxyCodeLine{176     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}                 \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a686e94185c19eda18d1329dc0aa2ba28}{eigVecNorm}}()                   = 0;}
+\DoxyCodeLine{177     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}                 \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_af183860b3906a18accfda43980326e3b}{resGuess}}(\textcolor{keywordtype}{size\_t}, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<T>}} \&, \textcolor{keywordtype}{size\_t})   = 0;}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a075dadeb0d6cf36d66e4e732f25c528d}{formLinearTrans}}( }
+\DoxyCodeLine{180       std::vector<\mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION}{RESPONSE\_CONTRACTION<double>}}>}
+\DoxyCodeLine{181     ) = 0;}
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ac8d2805806159edf0af8ed930b5862d7}{formLinearTrans}}( }
+\DoxyCodeLine{184       std::vector<\mbox{\hyperlink{structChronusQ_1_1RESPONSE__CONTRACTION}{RESPONSE\_CONTRACTION<dcomplex>}}>}
+\DoxyCodeLine{185     ) = 0;}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194     \textcolor{keyword}{virtual} T*  \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a219e4594a902e45b90f57fca72cd6ee7}{formFullFromMemory}}() \{ }
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196       \textcolor{comment}{// FIXME: This is ad hoc logic, assumes that if the cases when}}
+\DoxyCodeLine{197       \textcolor{comment}{// matrix is not distributed that only the root process will be}}
+\DoxyCodeLine{198       \textcolor{comment}{// calling this function}}
+\DoxyCodeLine{199       \textcolor{keywordtype}{bool} needFullMat = not bool(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aea41156db938a6a05108509d1b1668da}{fullMatrix\_}});}
+\DoxyCodeLine{200 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{201       \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_a52aad22ad0059c0c77072a6b2ca65906}{isDist}}() ) \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(\&needFullMat,1,0,\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}{comm\_}});}
+\DoxyCodeLine{202 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{203       \textcolor{keywordflow}{if}(needFullMat) \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a68ac9eba61f5cc1013732dc7568223ba}{formFullMatrix}}(); }
+\DoxyCodeLine{204       \textcolor{keywordflow}{return} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aea41156db938a6a05108509d1b1668da}{fullMatrix\_}};}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206     \};}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6682fab4deb936a5edb392573c00f214}{constructShifts}}() \{}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aa364fe25bc6d530c9105311c3c74302c}{fdrResults}}. shifts.clear();}
+\DoxyCodeLine{211       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6ac21d9902ff40789bee86e9ac19e40b}{dfdrResults}}.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a01095970ecb51ddf0298343b4dc95775}{shifts}}.clear();}
+\DoxyCodeLine{212 }
+\DoxyCodeLine{213       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} \&omega : \mbox{\hyperlink{structChronusQ_1_1ResponseBase_adc505a6986d8d434a7543091d097a131}{fdrSettings}}.\mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_ac8af009cdd88d32a598b50068fe8bd57}{bFreq}}) \{}
+\DoxyCodeLine{214         \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aa364fe25bc6d530c9105311c3c74302c}{fdrResults}}. shifts.emplace\_back(omega);}
+\DoxyCodeLine{215         \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6ac21d9902ff40789bee86e9ac19e40b}{dfdrResults}}.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a01095970ecb51ddf0298343b4dc95775}{shifts}}.emplace\_back(omega,\mbox{\hyperlink{structChronusQ_1_1ResponseBase_adc505a6986d8d434a7543091d097a131}{fdrSettings}}.\mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_a78434b28bcaae00cc816d22b6950f41b}{dampFactor}});}
+\DoxyCodeLine{216       \}}
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218     \};}
+\DoxyCodeLine{219 }
+\DoxyCodeLine{220     \textcolor{comment}{// Memory allocation}}
+\DoxyCodeLine{221     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ab0adf826c4a54c4cff0ca4c24857258f}{allocResidueResults}}(); \textcolor{comment}{// Residue memory allocation}}
+\DoxyCodeLine{222     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a8471d5879ac8bfa857765fa925356a46}{allocFDRResults}}();     \textcolor{comment}{// FDR memory allocation}}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224 }
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231 }
+\DoxyCodeLine{232 }
+\DoxyCodeLine{233     \textcolor{comment}{// Procedural functions}}
+\DoxyCodeLine{234 }
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236     \textcolor{keyword}{inline} \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a306895d18cf4363035e69fc035ca9050}{run}}() \{}
+\DoxyCodeLine{237 }
+\DoxyCodeLine{238       \textcolor{comment}{// Synchronize MPI processes}}
+\DoxyCodeLine{239       \mbox{\hyperlink{namespaceChronusQ_a23c2e4eb26f9455d90831342328f3b91}{MPI\_Barrier}}(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}{comm\_}});}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{241       \textcolor{keywordflow}{if}( \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a1c6ef6d0793fe011f472c911a946023c}{alreadyRan\_}} ) \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}RESPONSE module only designed to be run once!"{}});}
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Response Total"{}});}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245       \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ab0f46b41c16864a27751ab0d179bf098}{matIsHer}} = \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_a5055bf4d3e78cb2b79d43f7aae2c2b4d}{doTDA}}; \textcolor{comment}{// TDA always implies hermetian matrix}}
+\DoxyCodeLine{246       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a48eba3991958a27ca948284484b7980a}{configOptions}}();}
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248       \textcolor{keywordtype}{bool} rootHasFullMat = (\mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}{comm\_}}) == 0) and \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aea41156db938a6a05108509d1b1668da}{fullMatrix\_}};}
+\DoxyCodeLine{249 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{250       \mbox{\hyperlink{namespaceChronusQ_a32fff0e1bd45dafd5f0fe782f216da29}{MPIBCast}}(\&rootHasFullMat,1,0,\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}{comm\_}});}
+\DoxyCodeLine{251 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{252 }
+\DoxyCodeLine{253       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ab265a394382969cb698c09de26ebcc27}{writeMeta}}();}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255       \textcolor{keywordflow}{if}( (\mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ab42fab3e8db02c70be9d79e2fd652f22}{doFull}} or \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ad5796f9ec56ab1be7e1455fde3226e67}{formFullMat}}) and }
+\DoxyCodeLine{256           not rootHasFullMat ) \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a68ac9eba61f5cc1013732dc7568223ba}{formFullMatrix}}();}
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258 }
+\DoxyCodeLine{259       \mbox{\hyperlink{structChronusQ_1_1ResponseBase_afe13d105b9b4f91cb813ba17c266f18b}{allocResults}}();}
+\DoxyCodeLine{260 }
+\DoxyCodeLine{261       \textcolor{keywordtype}{bool} isRoot = \mbox{\hyperlink{namespaceChronusQ_ac9433164d43ee9f6f0c49e49698f680f}{MPIRank}}(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}{comm\_}}) == 0;}
+\DoxyCodeLine{262 }
+\DoxyCodeLine{263       \textcolor{keywordflow}{if}( isRoot and \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_aa43aa10bd7d2957ddded72d7071838d9}{printLevel}} >= 0 )}
+\DoxyCodeLine{264         std::cout << \textcolor{stringliteral}{"{}  ** STARTING RESPONSE CALCULATION\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{265 }
+\DoxyCodeLine{266       \textcolor{keyword}{auto} topResp = \mbox{\hyperlink{namespaceChronusQ_a715f671201f0f6e77216fcf1f72adbaf}{tick}}();}
+\DoxyCodeLine{267 }
+\DoxyCodeLine{268       \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ad69628e89f8f86c6b31579eca54d4e95}{jobType}} == \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616a63c476c3263a43d31f0b25a0a52471ae}{RESIDUE}} ) \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ad55a66945e04270f446681669cbc47b9}{runResidue}}();}
+\DoxyCodeLine{269       \textcolor{keywordflow}{else}                                 \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a64e85bff6f87b80274240025f85cb127}{runFDR}}();}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271       \textcolor{keywordtype}{double} botResp = \mbox{\hyperlink{namespaceChronusQ_a3b2153e93af4532ff5b1e75d8af453b0}{tock}}(topResp);}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273       \textcolor{keywordflow}{if}( isRoot and \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_aa43aa10bd7d2957ddded72d7071838d9}{printLevel}} >= 0 )}
+\DoxyCodeLine{274         std::cout << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n  ** RESPONSE CALCULATION FINISHED ("{}} }
+\DoxyCodeLine{275           << std::fixed << botResp << \textcolor{stringliteral}{"{} s)\(\backslash\)n"{}};}
+\DoxyCodeLine{276 }
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278       \textcolor{comment}{// Synchronize MPI processes}}
+\DoxyCodeLine{279       \mbox{\hyperlink{namespaceChronusQ_a23c2e4eb26f9455d90831342328f3b91}{MPI\_Barrier}}(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}{comm\_}});}
+\DoxyCodeLine{280       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a1c6ef6d0793fe011f472c911a946023c}{alreadyRan\_}} = \textcolor{keyword}{true};}
+\DoxyCodeLine{281 }
+\DoxyCodeLine{282       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Response Total"{}});}
+\DoxyCodeLine{283 }
+\DoxyCodeLine{284     \};}
+\DoxyCodeLine{285 }
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ad55a66945e04270f446681669cbc47b9}{runResidue}}() \{}
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290       \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ab42fab3e8db02c70be9d79e2fd652f22}{doFull}} ) \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a308285e40b80ff4a4734adb0a40a9960}{runFullResidue}}();}
+\DoxyCodeLine{291       \textcolor{keywordflow}{else}                     \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ada2d198e6e9f6ef81b8cceff96bfdc64}{runIterResidue}}();}
+\DoxyCodeLine{292 }
+\DoxyCodeLine{293       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a5b0401e77585cab2fe4a67d4f53ac8c5}{postDiagonalization}}();}
+\DoxyCodeLine{294 }
+\DoxyCodeLine{295       \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_af7b696268162a607afd1c2ac9f2980a9}{evalProp}} ) \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a2bf9054eb5c335c0dff9a947ee55660f}{residueProperties}}();}
+\DoxyCodeLine{296 }
+\DoxyCodeLine{297     \}}
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a308285e40b80ff4a4734adb0a40a9960}{runFullResidue}}();}
+\DoxyCodeLine{300     \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ada2d198e6e9f6ef81b8cceff96bfdc64}{runIterResidue}}();}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302 }
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a64e85bff6f87b80274240025f85cb127}{runFDR}}() \{ }
+\DoxyCodeLine{305 }
+\DoxyCodeLine{306       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a66e39c49959b549111cfc51b430ac29c}{formRHS}}();}
+\DoxyCodeLine{307       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a6682fab4deb936a5edb392573c00f214}{constructShifts}}();}
+\DoxyCodeLine{308 }
+\DoxyCodeLine{309       \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_ab42fab3e8db02c70be9d79e2fd652f22}{doFull}} ) \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a97e2d1988d56a4e87c2d8a40df0858f5}{runFullFDR}}();}
+\DoxyCodeLine{310       \textcolor{keywordflow}{else}                     \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ac4044409a3c46f38331d2d1322cb738c}{runIterFDR}}();}
+\DoxyCodeLine{311 }
+\DoxyCodeLine{312       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aa601ce793a2481d6d06a18298956e4d7}{postLinearSolve}}();}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314       \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a0d07bf2915724a5f0ecf6445d163d721}{genSettings}}.\mbox{\hyperlink{structChronusQ_1_1ResponseSettings_af7b696268162a607afd1c2ac9f2980a9}{evalProp}} ) \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ab7bac30d3a262ca058f0dd8dc973df93}{fdrProperties}}();}
+\DoxyCodeLine{315 }
+\DoxyCodeLine{316       \mbox{\hyperlink{namespaceChronusQ_a23c2e4eb26f9455d90831342328f3b91}{MPI\_Barrier}}(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}{comm\_}});}
+\DoxyCodeLine{317     \}}
+\DoxyCodeLine{318 }
+\DoxyCodeLine{319     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aa601ce793a2481d6d06a18298956e4d7}{postLinearSolve}}()\{}
+\DoxyCodeLine{320 }
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322       \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a7bbee88a9e83c0e4dd1ca371c4cc3b1a}{comm\_}});}
+\DoxyCodeLine{323 }
+\DoxyCodeLine{324       \textcolor{keywordtype}{bool} noDamp = (\mbox{\hyperlink{structChronusQ_1_1ResponseBase_adc505a6986d8d434a7543091d097a131}{fdrSettings}}.\mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_a78434b28bcaae00cc816d22b6950f41b}{dampFactor}} == 0.) and }
+\DoxyCodeLine{325                     not \mbox{\hyperlink{structChronusQ_1_1ResponseBase_adc505a6986d8d434a7543091d097a131}{fdrSettings}}.\mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_a2dc457b2d05dd0a7602183f0690c9f48}{forceDamp}};}
+\DoxyCodeLine{326 }
+\DoxyCodeLine{327       \textcolor{keywordtype}{size\_t} N = \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a279e338b468f034208ab64167d047e95}{nSingleDim\_}};}
+\DoxyCodeLine{328       \textcolor{keywordtype}{size\_t} nOmega = \mbox{\hyperlink{structChronusQ_1_1ResponseBase_adc505a6986d8d434a7543091d097a131}{fdrSettings}}.\mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_ac8af009cdd88d32a598b50068fe8bd57}{bFreq}}.size();}
+\DoxyCodeLine{329       \textcolor{keywordtype}{size\_t} nRHS   = \mbox{\hyperlink{structChronusQ_1_1ResponseBase_adc505a6986d8d434a7543091d097a131}{fdrSettings}}.\mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_a18787da6a0dcb690554a829c42689358}{nRHS}};}
+\DoxyCodeLine{330 }
+\DoxyCodeLine{331       \textcolor{comment}{// Write Solutions to disk}}
+\DoxyCodeLine{332       \textcolor{keywordflow}{if}( \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a57d6806d15dc73840716dce68940e935}{savFile}}.\mbox{\hyperlink{classChronusQ_1_1SafeFile_a8a16dac697fe9592a8990557d12c4a63}{exists}}() ) \{}
+\DoxyCodeLine{333 }
+\DoxyCodeLine{334         \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a57d6806d15dc73840716dce68940e935}{savFile}}.\mbox{\hyperlink{classChronusQ_1_1SafeFile_adb6dce214e2bd2ac4188318b14c3417e}{safeWriteData}}(\textcolor{stringliteral}{"{}/RESP/FDR/OMEGA"{}},\&\mbox{\hyperlink{structChronusQ_1_1ResponseBase_adc505a6986d8d434a7543091d097a131}{fdrSettings}}.\mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_ac8af009cdd88d32a598b50068fe8bd57}{bFreq}}[0],}
+\DoxyCodeLine{335           \{nOmega\});}
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337         }
+\DoxyCodeLine{338         \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a57d6806d15dc73840716dce68940e935}{savFile}}.\mbox{\hyperlink{classChronusQ_1_1SafeFile_adb6dce214e2bd2ac4188318b14c3417e}{safeWriteData}}(\textcolor{stringliteral}{"{}/RESP/FDR/DAMP"{}},\&\mbox{\hyperlink{structChronusQ_1_1ResponseBase_adc505a6986d8d434a7543091d097a131}{fdrSettings}}.\mbox{\hyperlink{structChronusQ_1_1FDResponseSettings_a78434b28bcaae00cc816d22b6950f41b}{dampFactor}},}
+\DoxyCodeLine{339           \{1\});}
+\DoxyCodeLine{340 }
+\DoxyCodeLine{341 }
+\DoxyCodeLine{342         \textcolor{keywordflow}{if}( noDamp ) \{}
+\DoxyCodeLine{343 }
+\DoxyCodeLine{344           \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a57d6806d15dc73840716dce68940e935}{savFile}}.\mbox{\hyperlink{classChronusQ_1_1SafeFile_adb6dce214e2bd2ac4188318b14c3417e}{safeWriteData}}(\textcolor{stringliteral}{"{}/RESP/FDR/RHS"{}},\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aa364fe25bc6d530c9105311c3c74302c}{fdrResults}}.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a5ff077f0815cad14070b942278e8dc4e}{RHS}}, \{nRHS,N\});}
+\DoxyCodeLine{345 }
+\DoxyCodeLine{346           \mbox{\hyperlink{structChronusQ_1_1ResponseBase_a57d6806d15dc73840716dce68940e935}{savFile}}.\mbox{\hyperlink{classChronusQ_1_1SafeFile_adb6dce214e2bd2ac4188318b14c3417e}{safeWriteData}}(\textcolor{stringliteral}{"{}/RESP/FDR/SOLUTION"{}},\mbox{\hyperlink{classChronusQ_1_1ResponseTBase_aa364fe25bc6d530c9105311c3c74302c}{fdrResults}}.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a6539c55c18e9a475fb7fb412e40c85ad}{SOL}},}
+\DoxyCodeLine{347             \{nRHS*nOmega,N\});}
+\DoxyCodeLine{348 }
+\DoxyCodeLine{349         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{350 }
+\DoxyCodeLine{351           savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/FDR/RHS"{}},dfdrResults.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a5ff077f0815cad14070b942278e8dc4e}{RHS}}, \{nRHS,N\});}
+\DoxyCodeLine{352 }
+\DoxyCodeLine{353           savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/FDR/SOLUTION"{}},dfdrResults.\mbox{\hyperlink{structChronusQ_1_1FDResponseResults_a6539c55c18e9a475fb7fb412e40c85ad}{SOL}},}
+\DoxyCodeLine{354             \{nRHS*nOmega,N\});}
+\DoxyCodeLine{355         \}}
+\DoxyCodeLine{356 }
+\DoxyCodeLine{357       \};}
+\DoxyCodeLine{358 }
+\DoxyCodeLine{359     \}}
+\DoxyCodeLine{360 }
+\DoxyCodeLine{361 }
+\DoxyCodeLine{362     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a5b0401e77585cab2fe4a67d4f53ac8c5}{postDiagonalization}}() \{}
+\DoxyCodeLine{363 }
+\DoxyCodeLine{364 }
+\DoxyCodeLine{365       \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{366 }
+\DoxyCodeLine{367       \textcolor{comment}{// Ensure proper orthogonality of eigenvectors}}
+\DoxyCodeLine{368       eigVecNorm();}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370 }
+\DoxyCodeLine{371       \textcolor{comment}{// Write the eigensystem to disk}}
+\DoxyCodeLine{372       \textcolor{keywordflow}{if}( savFile.exists() ) \{}
+\DoxyCodeLine{373 }
+\DoxyCodeLine{374         savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/RESIDUE/EIGENVALUES"{}},resResults.W,}
+\DoxyCodeLine{375           \{resSettings.nRoots\});}
+\DoxyCodeLine{376         }
+\DoxyCodeLine{377         \textcolor{keywordflow}{if}( resSettings.needVR )}
+\DoxyCodeLine{378         savFile.safeWriteData(\textcolor{stringliteral}{"{}/RESP/RESIDUE/EIGENVECTORS"{}},resResults.VR,}
+\DoxyCodeLine{379           \{resSettings.nRoots,nSingleDim\_\});}
+\DoxyCodeLine{380 }
+\DoxyCodeLine{381       \}}
+\DoxyCodeLine{382 }
+\DoxyCodeLine{383     \}}
+\DoxyCodeLine{384 }
+\DoxyCodeLine{385     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a97e2d1988d56a4e87c2d8a40df0858f5}{runFullFDR}}() \{}
+\DoxyCodeLine{386 }
+\DoxyCodeLine{387       \textcolor{keywordflow}{if}(not genSettings.isDist()) \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{388 }
+\DoxyCodeLine{389       \textcolor{keywordtype}{bool} noDamp = (fdrSettings.dampFactor == 0.) and }
+\DoxyCodeLine{390                     not fdrSettings.forceDamp;}
+\DoxyCodeLine{391 }
+\DoxyCodeLine{392       \textcolor{keywordflow}{if}( noDamp ) runFullFDR(fdrResults);}
+\DoxyCodeLine{393       \textcolor{keywordflow}{else}         runFullFDR(dfdrResults);}
+\DoxyCodeLine{394 }
+\DoxyCodeLine{395     \}}
+\DoxyCodeLine{396 }
+\DoxyCodeLine{397     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{398     \textcolor{keywordtype}{void} runFullFDR(\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponseResults<T,U>}} \&results);}
+\DoxyCodeLine{399 }
+\DoxyCodeLine{400 }
+\DoxyCodeLine{401 }
+\DoxyCodeLine{402     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ac4044409a3c46f38331d2d1322cb738c}{runIterFDR}}() \{}
+\DoxyCodeLine{403 }
+\DoxyCodeLine{404       \textcolor{keywordflow}{if}((not genSettings.isDist()) and genSettings.formFullMat) }
+\DoxyCodeLine{405         \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{406 }
+\DoxyCodeLine{407       \textcolor{keywordtype}{bool} noDamp = (fdrSettings.dampFactor == 0.) and }
+\DoxyCodeLine{408                     not fdrSettings.forceDamp;}
+\DoxyCodeLine{409 }
+\DoxyCodeLine{410       \textcolor{keywordflow}{if}( noDamp ) runIterFDR(fdrResults,  PC\_);}
+\DoxyCodeLine{411       \textcolor{keywordflow}{else}         runIterFDR(dfdrResults, cmplxPC\_);}
+\DoxyCodeLine{412 }
+\DoxyCodeLine{413     \}}
+\DoxyCodeLine{414 }
+\DoxyCodeLine{415     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{416     \textcolor{keywordtype}{void} runIterFDR(\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponseResults<T,U>}} \&results,}
+\DoxyCodeLine{417                     std::function< \textcolor{keywordtype}{void}(\textcolor{keywordtype}{size\_t},U,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}}\&,\mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}}\&) > \&preCond );}
+\DoxyCodeLine{418 }
+\DoxyCodeLine{419 }
+\DoxyCodeLine{420 }
+\DoxyCodeLine{421     \textcolor{comment}{// Property Evaluation}}
+\DoxyCodeLine{422 }
+\DoxyCodeLine{423     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{424     std::map<ResponseOperator, U*> }
+\DoxyCodeLine{425       evalProperties(std::vector<ResponseOperator> ops, \textcolor{keywordtype}{size\_t} nVec, U* V);}
+\DoxyCodeLine{426 }
+\DoxyCodeLine{427 }
+\DoxyCodeLine{428 }
+\DoxyCodeLine{429     \textcolor{comment}{// Residue properties}}
+\DoxyCodeLine{430     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a2bf9054eb5c335c0dff9a947ee55660f}{residueProperties}}() \{}
+\DoxyCodeLine{431 }
+\DoxyCodeLine{432       \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{433 }
+\DoxyCodeLine{434       \textcolor{comment}{// If we're doing a residue calculation, make sure we evaluate all}}
+\DoxyCodeLine{435       \textcolor{comment}{// of the properties}}
+\DoxyCodeLine{436       \textcolor{comment}{//genSettings.aOps = AllOps;}}
+\DoxyCodeLine{437 }
+\DoxyCodeLine{438       ProgramTimer::timeOp(\textcolor{stringliteral}{"{}Property Eval"{}}, [\&]()\{}
+\DoxyCodeLine{439         residueTMoments();}
+\DoxyCodeLine{440         residueObservables();}
+\DoxyCodeLine{441       \});}
+\DoxyCodeLine{442     \}}
+\DoxyCodeLine{443 }
+\DoxyCodeLine{444     \textcolor{keywordtype}{void} residueTMoments();}
+\DoxyCodeLine{445     \textcolor{keywordtype}{void} residueObservables();}
+\DoxyCodeLine{446 }
+\DoxyCodeLine{447 }
+\DoxyCodeLine{448     \textcolor{comment}{// FDR properties}}
+\DoxyCodeLine{449     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ab7bac30d3a262ca058f0dd8dc973df93}{fdrProperties}}() \{}
+\DoxyCodeLine{450 }
+\DoxyCodeLine{451 }
+\DoxyCodeLine{452       \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{453 }
+\DoxyCodeLine{454       \textcolor{keywordtype}{bool} noDamp = (fdrSettings.dampFactor == 0.) and }
+\DoxyCodeLine{455                     not fdrSettings.forceDamp;}
+\DoxyCodeLine{456 }
+\DoxyCodeLine{457       \textcolor{keywordflow}{if}( noDamp ) \{}
+\DoxyCodeLine{458         fdrRF(fdrResults);}
+\DoxyCodeLine{459         \textcolor{comment}{// fdrObservables(fdrResults); // Can we define for undamped?}}
+\DoxyCodeLine{460       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{461         fdrRF(dfdrResults);}
+\DoxyCodeLine{462         fdrObservables(dfdrResults);}
+\DoxyCodeLine{463       \}}
+\DoxyCodeLine{464 }
+\DoxyCodeLine{465     \}}
+\DoxyCodeLine{466 }
+\DoxyCodeLine{467     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{468     \textcolor{keywordtype}{void} fdrRF(\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponseResults<T,U>}} \&results);}
+\DoxyCodeLine{469 }
+\DoxyCodeLine{470     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{471     \textcolor{keywordtype}{void} fdrObservables(\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponseResults<T,U>}} \&results);}
+\DoxyCodeLine{472 }
+\DoxyCodeLine{473 }
+\DoxyCodeLine{474 }
+\DoxyCodeLine{475 }
+\DoxyCodeLine{476 }
+\DoxyCodeLine{477 }
+\DoxyCodeLine{478     \textcolor{comment}{// Print results / properties}}
+\DoxyCodeLine{479       }
+\DoxyCodeLine{480     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_abd7ade01dac95dff26e378be9e630d7d}{printResults}}(std::ostream \&out) \{}
+\DoxyCodeLine{481 }
+\DoxyCodeLine{482       \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{483 }
+\DoxyCodeLine{484       \textcolor{keywordflow}{if}( genSettings.jobType == \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616a63c476c3263a43d31f0b25a0a52471ae}{RESIDUE}} ) printResidueResults(out);}
+\DoxyCodeLine{485       \textcolor{keywordflow}{else}                                 printFDRResults(out);}
+\DoxyCodeLine{486 }
+\DoxyCodeLine{487     \};}
+\DoxyCodeLine{488 }
+\DoxyCodeLine{489 }
+\DoxyCodeLine{490     \textcolor{comment}{// Print Residue results}}
+\DoxyCodeLine{491           }
+\DoxyCodeLine{492     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a716878a9edfeb29cfd730c4684970d72}{printResidueResults}}(std::ostream \&out) \{}
+\DoxyCodeLine{493 }
+\DoxyCodeLine{494       \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{495       out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n\(\backslash\)nRESIDUE RESPONSE RESULTS"{}};}
+\DoxyCodeLine{496 }
+\DoxyCodeLine{497       printResMO(out);          \textcolor{comment}{// Print residual MO contributions}}
+\DoxyCodeLine{498       \textcolor{keywordflow}{if}( genSettings.evalProp ) \{}
+\DoxyCodeLine{499         printTMoments(out);       \textcolor{comment}{// Print transition moments at poles}}
+\DoxyCodeLine{500         printResObservables(out); \textcolor{comment}{// Print observables}}
+\DoxyCodeLine{501       \}}
+\DoxyCodeLine{502 }
+\DoxyCodeLine{503     \}}
+\DoxyCodeLine{504 }
+\DoxyCodeLine{505     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a3711a5c55e0c1995233e09d7ede066da}{printResMO}}(std::ostream \&out) = 0; \textcolor{comment}{// Method specific}}
+\DoxyCodeLine{506     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a67d93d0344c1ab5c65885866a099e1ba}{printResMO}}(std::ostream \&out, \textcolor{keywordtype}{size\_t} nRoots, \textcolor{keywordtype}{double} *W,}
+\DoxyCodeLine{507       std::vector<std::pair<std::string,double *>> data, \textcolor{keywordtype}{double}* VL, }
+\DoxyCodeLine{508       \textcolor{keywordtype}{double}* VR) = 0; \textcolor{comment}{// Method specific}}
+\DoxyCodeLine{509     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ae47f62ec3c5f9b68391613d3268fd80c}{printResMO}}(std::ostream \&out, \textcolor{keywordtype}{size\_t} nRoots, \textcolor{keywordtype}{double} *W,}
+\DoxyCodeLine{510       std::vector<std::pair<std::string,double *>> data, \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}* VL, }
+\DoxyCodeLine{511       \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}* VR) = 0; \textcolor{comment}{// Method specific}}
+\DoxyCodeLine{512 }
+\DoxyCodeLine{513     \textcolor{keywordtype}{void}         printTMoments(std::ostream \&out);}
+\DoxyCodeLine{514     \textcolor{keywordtype}{void}         printResObservables(std::ostream \&out);}
+\DoxyCodeLine{515 }
+\DoxyCodeLine{516 }
+\DoxyCodeLine{517     \textcolor{comment}{// Print FDR Results (NYI)}}
+\DoxyCodeLine{518       }
+\DoxyCodeLine{519     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_a2723a78773d9fa42a8741e24e70f0e28}{printFDRResults}}(std::ostream \&out) \{}
+\DoxyCodeLine{520 }
+\DoxyCodeLine{521       \textcolor{keywordflow}{if}(not genSettings.evalProp) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{522 }
+\DoxyCodeLine{523       \mbox{\hyperlink{mpi_8hpp_ae34ccefd1c24e9ccd3f84b892ad3627d}{ROOT\_ONLY}}(comm\_);}
+\DoxyCodeLine{524       \textcolor{keywordtype}{bool} noDamp = (fdrSettings.dampFactor == 0.) and }
+\DoxyCodeLine{525                     not fdrSettings.forceDamp;}
+\DoxyCodeLine{526 }
+\DoxyCodeLine{527       out << \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n\(\backslash\)nFREQUENCY DEPENDENT RESPONSE RESULTS"{}};}
+\DoxyCodeLine{528 }
+\DoxyCodeLine{529       \textcolor{keywordflow}{if}( noDamp ) printRF(fdrResults, out);}
+\DoxyCodeLine{530       \textcolor{keywordflow}{else} \{         }
+\DoxyCodeLine{531         printRF(dfdrResults,out);}
+\DoxyCodeLine{532         printFDObservables(out);}
+\DoxyCodeLine{533       \}}
+\DoxyCodeLine{534 }
+\DoxyCodeLine{535     \}}
+\DoxyCodeLine{536 }
+\DoxyCodeLine{537     \textcolor{keyword}{template} <\textcolor{keyword}{typename} U>}
+\DoxyCodeLine{538     \textcolor{keywordtype}{void} printRF(\mbox{\hyperlink{structChronusQ_1_1FDResponseResults}{FDResponseResults<T,U>}} \&results, std::ostream \&out);}
+\DoxyCodeLine{539 }
+\DoxyCodeLine{540     \textcolor{keywordtype}{void} printFDObservables(std::ostream \&out);}
+\DoxyCodeLine{541 }
+\DoxyCodeLine{542 }
+\DoxyCodeLine{543 }
+\DoxyCodeLine{544     \textcolor{comment}{// Getters}}
+\DoxyCodeLine{545     T*                    \mbox{\hyperlink{classChronusQ_1_1ResponseTBase_ad6a038e936f9f4ef2678a67a0fb65f2c}{fullMatrix}}()\textcolor{keyword}{  const }\{ \textcolor{keywordflow}{return} fullMatrix\_; \}}
+\DoxyCodeLine{546 }
+\DoxyCodeLine{547 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{548     CXXBLACS::BlacsGrid * fullMatGrid()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} fullMatGrid\_.get(); \}}
+\DoxyCodeLine{549 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{550 }
+\DoxyCodeLine{551 }
+\DoxyCodeLine{552   \};}
+\DoxyCodeLine{553 }
+\DoxyCodeLine{554 }
+\DoxyCodeLine{555   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{556   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{ResponseTBase<T>::writeMeta}}() \{}
+\DoxyCodeLine{557 }
+\DoxyCodeLine{558     \textcolor{comment}{// Write out the meta data to disk}}
+\DoxyCodeLine{559 }
+\DoxyCodeLine{560     \textcolor{keywordflow}{if}( not savFile.exists() ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{561 }
+\DoxyCodeLine{562     \textcolor{keywordtype}{int} isFull = int(genSettings.doFull);}
+\DoxyCodeLine{563     savFile.safeWriteData( \textcolor{stringliteral}{"{}/RESP/DOFULL"{}}, \&isFull, \{1\} );}
+\DoxyCodeLine{564 }
+\DoxyCodeLine{565     \textcolor{keywordflow}{if}( genSettings.jobType == \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616a63c476c3263a43d31f0b25a0a52471ae}{RESIDUE}} ) \{}
+\DoxyCodeLine{566 }
+\DoxyCodeLine{567       savFile.safeWriteData( \textcolor{stringliteral}{"{}/RESP/RESIDUE/DEMIN"{}},   }
+\DoxyCodeLine{568           \&resSettings.deMin, \{1\} );}
+\DoxyCodeLine{569       savFile.safeWriteData( \textcolor{stringliteral}{"{}/RESP/RESIDUE/GPLHR\_M"{}}, }
+\DoxyCodeLine{570           \&resSettings.gplhr\_m, \{1\});}
+\DoxyCodeLine{571       savFile.safeWriteData( \textcolor{stringliteral}{"{}/RESP/RESIDUE/GPLHR\_SIGMA"{}}, }
+\DoxyCodeLine{572           \&resSettings.gplhr\_sigma, \{1\});}
+\DoxyCodeLine{573 }
+\DoxyCodeLine{574     \}}
+\DoxyCodeLine{575   \}}
+\DoxyCodeLine{576 }
+\DoxyCodeLine{577 }
+\DoxyCodeLine{582   \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{583   \textcolor{keyword}{template} <\textcolor{keyword}{typename} U> }
+\DoxyCodeLine{584   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{ResponseTBase<T>::iterLinearTrans}}(\textcolor{keywordtype}{size\_t} nVec, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&V, \mbox{\hyperlink{classChronusQ_1_1SolverVectors}{SolverVectors<U>}} \&AV) \{}
+\DoxyCodeLine{585 }
+\DoxyCodeLine{586     std::vector<RESPONSE\_CONTRACTION<U>> cList(1);}
+\DoxyCodeLine{587     cList.back().nVec = nVec;}
+\DoxyCodeLine{588     cList.back().N    = nSingleDim\_;}
+\DoxyCodeLine{589     cList.back().X    = V.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a7b3f8467612fd8fb970a05f6711ea2a4}{getPtr}}();}
+\DoxyCodeLine{590     cList.back().AX   = AV.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a7b3f8467612fd8fb970a05f6711ea2a4}{getPtr}}();}
+\DoxyCodeLine{591 }
+\DoxyCodeLine{592 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{593     \mbox{\hyperlink{cqlinalg__config_8hpp_abae363febce294cbcbdd744dbeccf2e7}{CB\_INT}} MLoc, NLoc;}
+\DoxyCodeLine{594     \textcolor{keywordflow}{if}( genSettings.isDist() ) \{}
+\DoxyCodeLine{595       std::tie(MLoc,NLoc) = fullMatGrid\_-\/>getLocalDims(nSingleDim\_,nVec);}
+\DoxyCodeLine{596       \textcolor{keywordflow}{if}( MLoc and NLoc ) \{}
+\DoxyCodeLine{597 }
+\DoxyCodeLine{598         cList.back().X  = this-\/>memManager\_.template malloc<U>(MLoc*NLoc);}
+\DoxyCodeLine{599         cList.back().AX = this-\/>memManager\_.template malloc<U>(MLoc*NLoc);}
+\DoxyCodeLine{600 }
+\DoxyCodeLine{601       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{602 }
+\DoxyCodeLine{603         cList.back().X  = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{604         cList.back().AX = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{605 }
+\DoxyCodeLine{606       \}}
+\DoxyCodeLine{607 }
+\DoxyCodeLine{608       cList.back().DescX  = fullMatGrid\_-\/>descInit(nSingleDim\_,nVec,0,0,MLoc);}
+\DoxyCodeLine{609       cList.back().DescAX = cList.back().DescX;}
+\DoxyCodeLine{610 }
+\DoxyCodeLine{611       fullMatGrid\_-\/>Scatter(nSingleDim\_,nVec,V.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a7b3f8467612fd8fb970a05f6711ea2a4}{getPtr}}(),nSingleDim\_,cList.back().X,}
+\DoxyCodeLine{612         MLoc,0,0);}
+\DoxyCodeLine{613     \}}
+\DoxyCodeLine{614 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{615     }
+\DoxyCodeLine{616     this-\/>formLinearTrans( cList );}
+\DoxyCodeLine{617 }
+\DoxyCodeLine{618 \textcolor{preprocessor}{\#ifdef CQ\_ENABLE\_MPI}}
+\DoxyCodeLine{619     \textcolor{keywordflow}{if}( genSettings.isDist() ) \{}
+\DoxyCodeLine{620 }
+\DoxyCodeLine{621       fullMatGrid\_-\/>Gather(nSingleDim\_,nVec,AV.\mbox{\hyperlink{classChronusQ_1_1SolverVectors_a7b3f8467612fd8fb970a05f6711ea2a4}{getPtr}}(),nSingleDim\_,cList.back().AX,}
+\DoxyCodeLine{622         MLoc,0,0);}
+\DoxyCodeLine{623 }
+\DoxyCodeLine{624       \textcolor{keywordflow}{if}( cList.back().X  ) this-\/>memManager\_.free(cList.back().X );}
+\DoxyCodeLine{625       \textcolor{keywordflow}{if}( cList.back().AX ) this-\/>memManager\_.free(cList.back().AX);}
+\DoxyCodeLine{626 }
+\DoxyCodeLine{627     \}}
+\DoxyCodeLine{628 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{629 }
+\DoxyCodeLine{630   \}}
+\DoxyCodeLine{631 }
+\DoxyCodeLine{632 }
+\DoxyCodeLine{633 }
+\DoxyCodeLine{634 }
+\DoxyCodeLine{635 }
+\DoxyCodeLine{636 }
+\DoxyCodeLine{637 }
+\DoxyCodeLine{638 }
+\DoxyCodeLine{639 }
+\DoxyCodeLine{640 }
+\DoxyCodeLine{641 }
+\DoxyCodeLine{642 }
+\DoxyCodeLine{643 }
+\DoxyCodeLine{644 }
+\DoxyCodeLine{645 }
+\DoxyCodeLine{646 }
+\DoxyCodeLine{647 }
+\DoxyCodeLine{648 }
+\DoxyCodeLine{649 }
+\DoxyCodeLine{650 }
+\DoxyCodeLine{651 }
+\DoxyCodeLine{652 }
+\DoxyCodeLine{653 }
+\DoxyCodeLine{654 }
+\DoxyCodeLine{655 }
+\DoxyCodeLine{656 }
+\DoxyCodeLine{657 }
+\DoxyCodeLine{658   \textcolor{keyword}{template} <\textcolor{keyword}{class} Reference> }
+\DoxyCodeLine{659   \textcolor{keyword}{class }\mbox{\hyperlink{classChronusQ_1_1ResponseRefBase}{ResponseRefBase}} : }
+\DoxyCodeLine{660     \textcolor{keyword}{public} \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{ResponseTBase}}<typename Reference::value\_type> \{}
+\DoxyCodeLine{661 }
+\DoxyCodeLine{662   \textcolor{keyword}{protected}:}
+\DoxyCodeLine{663 }
+\DoxyCodeLine{664     \textcolor{keyword}{typedef} \textcolor{keyword}{typename} Reference::value\_type \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase_a45b2b29ead7179cef62c8998d32eeddb}{T}};}
+\DoxyCodeLine{665     std::shared\_ptr<Reference> \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase_a2eb2a84fe27d49089b43538588d4527e}{ref\_}};}
+\DoxyCodeLine{666 }
+\DoxyCodeLine{667   \textcolor{keyword}{public}:}
+\DoxyCodeLine{668 }
+\DoxyCodeLine{669     \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase_ae6174df6f2128c22acedae6ee7d5d1aa}{ResponseRefBase}}( \mbox{\hyperlink{structChronusQ_1_1MPI__Comm}{MPI\_Comm}} c, \mbox{\hyperlink{namespaceChronusQ_ae6171ad74ede109347b31675283de616}{ResponseType}} job, }
+\DoxyCodeLine{670       std::shared\_ptr<Reference> ref, \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase_a45b2b29ead7179cef62c8998d32eeddb}{T}}* fullMatrix = \textcolor{keyword}{nullptr} ) : }
+\DoxyCodeLine{671       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{ResponseTBase}}<\mbox{\hyperlink{classChronusQ_1_1ResponseRefBase_a45b2b29ead7179cef62c8998d32eeddb}{T}}>(c,job,ref-\/>memManager,fullMatrix), ref\_(ref)\{ \}}
+\DoxyCodeLine{672 }
+\DoxyCodeLine{673     \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase_abe8dfd94549ca66e40f2c6d61613dcfc}{ResponseRefBase}}( \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase}{ResponseRefBase}} \&other ) : }
+\DoxyCodeLine{674       \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{ResponseTBase}}<\mbox{\hyperlink{classChronusQ_1_1ResponseRefBase_a45b2b29ead7179cef62c8998d32eeddb}{T}}>(dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1ResponseTBase}{ResponseTBase}}<\mbox{\hyperlink{classChronusQ_1_1ResponseRefBase_a45b2b29ead7179cef62c8998d32eeddb}{T}}>\&>(other)),}
+\DoxyCodeLine{675       ref\_(other.ref\_)\{ \}}
+\DoxyCodeLine{676 }
+\DoxyCodeLine{677 }
+\DoxyCodeLine{678     std::shared\_ptr<Reference> \mbox{\hyperlink{classChronusQ_1_1ResponseRefBase_a00d2af375e749f0c798ea78a9c3ab21c}{ref}}() \{ \textcolor{keywordflow}{return} ref\_; \};}
+\DoxyCodeLine{679 }
+\DoxyCodeLine{680   \};}
+\DoxyCodeLine{681 }
+\DoxyCodeLine{682 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{683 }
+
+\end{DoxyCode}

@@ -1,0 +1,210 @@
+\hypertarget{blasutil_8hpp_source}{}\doxysection{blasutil.\+hpp}
+\label{blasutil_8hpp_source}\index{include/cqlinalg/blasutil.hpp@{include/cqlinalg/blasutil.hpp}}
+\mbox{\hyperlink{blasutil_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cqlinalg__config_8hpp}{cqlinalg/cqlinalg\_config.hpp}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{comment}{// Spin Scatter a matrix}}
+\DoxyCodeLine{33   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{34   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a2233869815534c990202698d4f5f39be}{SpinScatter}}(\textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{const} \_F1 *A, \textcolor{keywordtype}{size\_t} LDA, \_F2 *AS, \textcolor{keywordtype}{size\_t} LDAS,}
+\DoxyCodeLine{35       \_F2 *AZ, \textcolor{keywordtype}{size\_t} LDAZ, \_F2 *AY, \textcolor{keywordtype}{size\_t} LDAY, \_F2 *AX, \textcolor{keywordtype}{size\_t} LDAX,}
+\DoxyCodeLine{36       \textcolor{keywordtype}{bool} zeroABBA = \textcolor{keyword}{false}, \textcolor{keywordtype}{bool} BBeqAA = \textcolor{keyword}{false});}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38   \textcolor{comment}{// Spin Scatter a matrix}}
+\DoxyCodeLine{39   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{40   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a2233869815534c990202698d4f5f39be}{SpinScatter}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{const} \_F1 *A, \textcolor{keywordtype}{size\_t} LDA, \_F2 *AS, \textcolor{keywordtype}{size\_t} LDAS,}
+\DoxyCodeLine{41       \_F2 *AZ, \textcolor{keywordtype}{size\_t} LDAZ, \_F2 *AY, \textcolor{keywordtype}{size\_t} LDAY, \_F2 *AX, \textcolor{keywordtype}{size\_t} LDAX,}
+\DoxyCodeLine{42       \textcolor{keywordtype}{bool} zeroABBA = \textcolor{keyword}{false}, \textcolor{keywordtype}{bool} BBeqAA = \textcolor{keyword}{false});}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44   \textcolor{comment}{// Spin Scatter matrix blocks}}
+\DoxyCodeLine{45   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{46   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a2233869815534c990202698d4f5f39be}{SpinScatter}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{const} \_F1 *AA, \textcolor{keywordtype}{size\_t} LDAA, \textcolor{keyword}{const} \_F1 *AB, \textcolor{keywordtype}{size\_t} LDAB,}
+\DoxyCodeLine{47       \textcolor{keyword}{const} \_F1 *BA, \textcolor{keywordtype}{size\_t} LDBA, \textcolor{keyword}{const} \_F1 *BB, \textcolor{keywordtype}{size\_t} LDBB, \_F2 *AS, \textcolor{keywordtype}{size\_t} LDAS,}
+\DoxyCodeLine{48       \_F2 *AZ, \textcolor{keywordtype}{size\_t} LDAZ, \_F2 *AY, \textcolor{keywordtype}{size\_t} LDAY, \_F2 *AX, \textcolor{keywordtype}{size\_t} LDAX,}
+\DoxyCodeLine{49       \textcolor{keywordtype}{bool} zeroABBA = \textcolor{keyword}{false}, \textcolor{keywordtype}{bool} BBeqAA = \textcolor{keyword}{false});}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51   \textcolor{comment}{// Spin Gather a matrix}}
+\DoxyCodeLine{52   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{53   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a09a3359575792ce779b388c825ef8768}{SpinGather}}(\textcolor{keywordtype}{size\_t} N, \_F1 *A, \textcolor{keywordtype}{size\_t} LDA, \textcolor{keyword}{const} \_F2 *AS, \textcolor{keywordtype}{size\_t} LDAS,}
+\DoxyCodeLine{54       \textcolor{keyword}{const} \_F2 *AZ, \textcolor{keywordtype}{size\_t} LDAZ, \textcolor{keyword}{const} \_F2 *AY, \textcolor{keywordtype}{size\_t} LDAY, \textcolor{keyword}{const} \_F2 *AX, \textcolor{keywordtype}{size\_t} LDAX,}
+\DoxyCodeLine{55       \textcolor{keywordtype}{bool} zeroXY = \textcolor{keyword}{false}, \textcolor{keywordtype}{bool} zeroZ = \textcolor{keyword}{false});}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57   \textcolor{comment}{// Spin Gather a matrix}}
+\DoxyCodeLine{58   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{59   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a09a3359575792ce779b388c825ef8768}{SpinGather}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \_F1 *A, \textcolor{keywordtype}{size\_t} LDA, \textcolor{keyword}{const} \_F2 *AS, \textcolor{keywordtype}{size\_t} LDAS,}
+\DoxyCodeLine{60       \textcolor{keyword}{const} \_F2 *AZ, \textcolor{keywordtype}{size\_t} LDAZ, \textcolor{keyword}{const} \_F2 *AY, \textcolor{keywordtype}{size\_t} LDAY, \textcolor{keyword}{const} \_F2 *AX, \textcolor{keywordtype}{size\_t} LDAX,}
+\DoxyCodeLine{61       \textcolor{keywordtype}{bool} zeroXY = \textcolor{keyword}{false}, \textcolor{keywordtype}{bool} zeroZ = \textcolor{keyword}{false});}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63   \textcolor{comment}{// Spin Gather a matrix}}
+\DoxyCodeLine{64   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{65   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a09a3359575792ce779b388c825ef8768}{SpinGather}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \_F1 *AA, \textcolor{keywordtype}{size\_t} LDAA, \_F1 *AB, \textcolor{keywordtype}{size\_t} LDAB,}
+\DoxyCodeLine{66       \_F1 *BA, \textcolor{keywordtype}{size\_t} LDBA, \_F1 *BB, \textcolor{keywordtype}{size\_t} LDBB, \textcolor{keyword}{const} \_F2 *AS, \textcolor{keywordtype}{size\_t} LDAS,}
+\DoxyCodeLine{67       \textcolor{keyword}{const} \_F2 *AZ, \textcolor{keywordtype}{size\_t} LDAZ, \textcolor{keyword}{const} \_F2 *AY, \textcolor{keywordtype}{size\_t} LDAY, \textcolor{keyword}{const} \_F2 *AX, \textcolor{keywordtype}{size\_t} LDAX,}
+\DoxyCodeLine{68       \textcolor{keywordtype}{bool} zeroXY = \textcolor{keyword}{false}, \textcolor{keywordtype}{bool} zeroZ = \textcolor{keyword}{false});}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70   \textcolor{comment}{// Component Scatter a matrix }}
+\DoxyCodeLine{71   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{72   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a9eca43fd4133e41ff3a6cd4f2c52ef35}{ComponentScatter}}(\textcolor{keywordtype}{size\_t} NL, \textcolor{keywordtype}{size\_t} NS, \textcolor{keyword}{const} \_F1 *A, \textcolor{keywordtype}{size\_t} LDA, }
+\DoxyCodeLine{73       \_F2 ScaleLL, \_F2 *ALL, \textcolor{keywordtype}{size\_t} LDALL, \_F2 ScaleLS, \_F2 *ALS, \textcolor{keywordtype}{size\_t} LDALS, }
+\DoxyCodeLine{74       \_F2 ScaleSL, \_F2 *ASL, \textcolor{keywordtype}{size\_t} LDASL, \_F2 ScaleSS, \_F2 *ASS, \textcolor{keywordtype}{size\_t} LDASS, }
+\DoxyCodeLine{75       \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false});}
+\DoxyCodeLine{76   }
+\DoxyCodeLine{77   \textcolor{comment}{// Component Scatter a matrix }}
+\DoxyCodeLine{78   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{79   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a9eca43fd4133e41ff3a6cd4f2c52ef35}{ComponentScatter}}(\textcolor{keywordtype}{size\_t} NL, \textcolor{keywordtype}{size\_t} NS, \textcolor{keyword}{const} \_F1 *A, \textcolor{keywordtype}{size\_t} LDA, \_F2 *ALL, \textcolor{keywordtype}{size\_t} LDALL,}
+\DoxyCodeLine{80       \_F2 *ALS, \textcolor{keywordtype}{size\_t} LDALS, \_F2 *ASL, \textcolor{keywordtype}{size\_t} LDASL, \_F2 *ASS, \textcolor{keywordtype}{size\_t} LDASS, \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false});}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82   \textcolor{comment}{// Component Gatter a matrix }}
+\DoxyCodeLine{83   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{84   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a61ab971d88b50407c85a7f10202add42}{ComponentGather}}(\textcolor{keywordtype}{size\_t} NL, \textcolor{keywordtype}{size\_t} NS, \_F1 *A, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, }
+\DoxyCodeLine{85       \textcolor{keywordtype}{char} TransLL, \_F2 ScaleLL, \textcolor{keyword}{const} \_F2 *ALL, \textcolor{keywordtype}{size\_t} LDALL, \textcolor{keywordtype}{char} TransLS, \textcolor{keyword}{const} \_F2 ScaleLS, \_F2 *ALS, \textcolor{keywordtype}{size\_t} LDALS, }
+\DoxyCodeLine{86       \textcolor{keywordtype}{char} TransSL, \_F2 ScaleSL, \textcolor{keyword}{const} \_F2 *ASL, \textcolor{keywordtype}{size\_t} LDASL, \textcolor{keywordtype}{char} TransSS, \textcolor{keyword}{const} \_F2 ScaleSS, \_F2 *ASS, \textcolor{keywordtype}{size\_t} LDASS, }
+\DoxyCodeLine{87       \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false});}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89   \textcolor{comment}{// Component Gatter a matrix }}
+\DoxyCodeLine{90   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{91   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a61ab971d88b50407c85a7f10202add42}{ComponentGather}}(\textcolor{keywordtype}{size\_t} NL, \textcolor{keywordtype}{size\_t} NS, \_F1 *A, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, \textcolor{keyword}{const} \_F2 *ALL, \textcolor{keywordtype}{size\_t} LDALL,}
+\DoxyCodeLine{92       \textcolor{keyword}{const} \_F2 *ALS, \textcolor{keywordtype}{size\_t} LDALS, \textcolor{keyword}{const} \_F2 *ASL, \textcolor{keywordtype}{size\_t} LDASL, \textcolor{keyword}{const} \_F2 *ASS, \textcolor{keywordtype}{size\_t} LDASS, \textcolor{keywordtype}{bool} increment = \textcolor{keyword}{false});}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95   \textcolor{comment}{// B = ALPHA * OP(A)}}
+\DoxyCodeLine{96   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2, \textcolor{keyword}{typename} \_FScale>}
+\DoxyCodeLine{97   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{keywordtype}{char} TRANS, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \_FScale ALPHA, \textcolor{keyword}{const} \_F1 *A, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}},}
+\DoxyCodeLine{98     \textcolor{keywordtype}{size\_t} SA, \_F2 *B, \textcolor{keywordtype}{size\_t} LDB, \textcolor{keywordtype}{size\_t} SB);}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2, \textcolor{keyword}{typename} \_FScale>}
+\DoxyCodeLine{101   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(\textcolor{keywordtype}{char} TRANS, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \_FScale ALPHA, \textcolor{keyword}{const} \_F1 *A, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}},}
+\DoxyCodeLine{102     \_F2 *B, \textcolor{keywordtype}{size\_t} LDB) \{}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104     \mbox{\hyperlink{namespaceChronusQ_ae8f5db3509402cc0920cf103d5fb9952}{SetMat}}(TRANS,\mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}},N,ALPHA,A,\mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}},1,B,LDB,1);}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106   \}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109   \textcolor{comment}{// RE(B) = ALPHA * OP(A)}}
+\DoxyCodeLine{110   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{111   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_af2d29875e3dd6aadb367ce8c92e6535a}{SetMatRE}}(\textcolor{keywordtype}{char} TRANS, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{double} ALPHA, \textcolor{keyword}{const} \textcolor{keywordtype}{double} *A,}
+\DoxyCodeLine{112     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, \_F *B, \textcolor{keywordtype}{size\_t} LDB);}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114   \textcolor{comment}{// IM(B) = ALPHA * OP(A)}}
+\DoxyCodeLine{115   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{116   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a2d31c8ebf46a88dc115b6e8bc1ad07a7}{SetMatIM}}(\textcolor{keywordtype}{char} TRANS, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{double} ALPHA, \textcolor{keyword}{const} \textcolor{keywordtype}{double} *A,}
+\DoxyCodeLine{117     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, \_F *B, \textcolor{keywordtype}{size\_t} LDB);}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119   \textcolor{comment}{// B = ALPHA * OP(RE(A))}}
+\DoxyCodeLine{120   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{121   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a9fa9cb59eb0530b89ec335deaafad83b}{GetMatRE}}(\textcolor{keywordtype}{char} TRANS, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{double} ALPHA, \textcolor{keyword}{const} \_F *A,}
+\DoxyCodeLine{122     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, \textcolor{keywordtype}{double} *B, \textcolor{keywordtype}{size\_t} LDB);}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124   \textcolor{comment}{// B = ALPHA * OP(IM(A))}}
+\DoxyCodeLine{125   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F>}
+\DoxyCodeLine{126   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ad66491ad088347dba47e1bf863628099}{GetMatIM}}(\textcolor{keywordtype}{char} TRANS, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{double} ALPHA, \textcolor{keyword}{const} \_F *A,}
+\DoxyCodeLine{127     \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, \textcolor{keywordtype}{double} *B, \textcolor{keywordtype}{size\_t} LDB);}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129   \textcolor{comment}{// A2c = [ A  0 ]}}
+\DoxyCodeLine{130   \textcolor{comment}{//       [ 0  A ]}}
+\DoxyCodeLine{131   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{132   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a55f768ac37e603dfb06fae9e85b336fa}{SetMatDiag}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{const} \_F1 *A, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, \_F2 *A2c, \textcolor{keywordtype}{size\_t} LD2c);}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149   \textcolor{comment}{// Sub-\/matrix utilities for multiple, non-\/contiguous blocks}}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151 }
+\DoxyCodeLine{170   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{171   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_aefe5044c2c69a43dacf07101ba870cd2}{SubMatSet}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{size\_t} MSub, \textcolor{keywordtype}{size\_t} NSub, \_F1 *ABig, }
+\DoxyCodeLine{172     \textcolor{keywordtype}{size\_t} LDAB, \_F2 *ASmall, \textcolor{keywordtype}{size\_t} LDAS, }
+\DoxyCodeLine{173     std::vector<std::pair<size\_t,size\_t>> \&SubMatCut);}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177 }
+\DoxyCodeLine{196   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{197   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a23a6d9af8c2e522a64325d32e872889e}{SubMatGet}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{size\_t} MSub, \textcolor{keywordtype}{size\_t} NSub, \_F1 *ABig, }
+\DoxyCodeLine{198     \textcolor{keywordtype}{size\_t} LDAB, \_F2 *ASmall, \textcolor{keywordtype}{size\_t} LDAS, }
+\DoxyCodeLine{199     std::vector<std::pair<size\_t,size\_t>> \&SubMatCut);}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203 }
+\DoxyCodeLine{222   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{223   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_a98260d00c849bb837ed0a1ce66fbfa2e}{SubMatInc}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{size\_t} MSub, \textcolor{keywordtype}{size\_t} NSub, \_F1 *ABig, }
+\DoxyCodeLine{224     \textcolor{keywordtype}{size\_t} LDAB, \_F2 *ASmall, \textcolor{keywordtype}{size\_t} LDAS, }
+\DoxyCodeLine{225     std::vector<std::pair<size\_t,size\_t>> \&SubMatCut);}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229 }
+\DoxyCodeLine{248   \textcolor{keyword}{template} <\textcolor{keyword}{typename} \_F1, \textcolor{keyword}{typename} \_F2>}
+\DoxyCodeLine{249   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_acda74ebbe19528e1829381715ccd4955}{IncBySubMat}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{size\_t} MSub, \textcolor{keywordtype}{size\_t} NSub, \_F1 *ABig, }
+\DoxyCodeLine{250     \textcolor{keywordtype}{size\_t} LDAB, \_F2 *ASmall, \textcolor{keywordtype}{size\_t} LDAS, }
+\DoxyCodeLine{251     std::vector<std::pair<size\_t,size\_t>> \&SubMatCut);}
+\DoxyCodeLine{252 }
+\DoxyCodeLine{281    \textcolor{keyword}{template} <\textcolor{keyword}{typename} Apha, \textcolor{keyword}{typename} ATyp, \textcolor{keyword}{typename} BTyp, \textcolor{keyword}{typename} CTyp>}
+\DoxyCodeLine{282    \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_afa665ad4db7ac06aa858562ff505999f}{TransformLeft}}(\textcolor{keywordtype}{size\_t} \mbox{\hyperlink{namespaceChronusQ_a2efe102a88deb3435c047246603c2ce8ae078345cffbe72d39d173c49aa1cb141}{M}}, \textcolor{keywordtype}{size\_t} N, \textcolor{keywordtype}{size\_t} KA, \textcolor{keywordtype}{size\_t} KB, Apha alpha,}
+\DoxyCodeLine{283      ATyp* A, \textcolor{keywordtype}{size\_t} \mbox{\hyperlink{classChronusQ_1_1LDA}{LDA}}, std::vector<BTyp*> V, \textcolor{keywordtype}{size\_t} LDB, CTyp* SCR,}
+\DoxyCodeLine{284      std::vector<CTyp*> U, \textcolor{keywordtype}{size\_t} LDC);}
+\DoxyCodeLine{285 }
+\DoxyCodeLine{319   \textcolor{keyword}{template} <\textcolor{keyword}{typename} ATyp, \textcolor{keyword}{typename} TTyp, \textcolor{keyword}{typename} BTyp>}
+\DoxyCodeLine{320   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ac13a4f7f3ddfcc2ac4796dde2519027e}{PairTransformation}}(\textcolor{keywordtype}{char} TRANST, \textcolor{keyword}{const} TTyp * T1, \textcolor{keywordtype}{size\_t} LDT1, \textcolor{keywordtype}{size\_t} OffK, }
+\DoxyCodeLine{321     \textcolor{keyword}{const} TTyp * T2, \textcolor{keywordtype}{size\_t} LDT2, \textcolor{keywordtype}{size\_t} OffL,}
+\DoxyCodeLine{322     \textcolor{keywordtype}{char} TRANSA, \textcolor{keyword}{const} ATyp * A, \textcolor{keywordtype}{size\_t} NI, \textcolor{keywordtype}{size\_t} NJ, \textcolor{keywordtype}{size\_t} NM, }
+\DoxyCodeLine{323     \textcolor{keywordtype}{char} TRANSB, BTyp * B, \textcolor{keywordtype}{size\_t} NK, \textcolor{keywordtype}{size\_t} NL, ATyp * ASCR, BTyp * SCR, \textcolor{keywordtype}{bool} increment);}
+\DoxyCodeLine{324   }
+\DoxyCodeLine{325   \textcolor{keyword}{template} <\textcolor{keyword}{typename} ATyp, \textcolor{keyword}{typename} TTyp, \textcolor{keyword}{typename} BTyp>}
+\DoxyCodeLine{326   \textcolor{keywordtype}{void} \mbox{\hyperlink{namespaceChronusQ_ac13a4f7f3ddfcc2ac4796dde2519027e}{PairTransformation}}(\textcolor{keywordtype}{char} TRANST, \textcolor{keyword}{const} TTyp * T, \textcolor{keywordtype}{size\_t} LDT, \textcolor{keywordtype}{size\_t} OffK, \textcolor{keywordtype}{size\_t} OffL,}
+\DoxyCodeLine{327     \textcolor{keywordtype}{char} TRANSA, \textcolor{keyword}{const} ATyp * A, \textcolor{keywordtype}{size\_t} NI, \textcolor{keywordtype}{size\_t} NJ, \textcolor{keywordtype}{size\_t} NM, }
+\DoxyCodeLine{328     \textcolor{keywordtype}{char} TRANSB, BTyp * B, \textcolor{keywordtype}{size\_t} NK, \textcolor{keywordtype}{size\_t} NL, ATyp * ASCR, BTyp * SCR, \textcolor{keywordtype}{bool} increment) \{}
+\DoxyCodeLine{329       }
+\DoxyCodeLine{330     \mbox{\hyperlink{namespaceChronusQ_ac13a4f7f3ddfcc2ac4796dde2519027e}{PairTransformation}}(TRANST, T, LDT, OffK, T, LDT, OffL, TRANSA, }
+\DoxyCodeLine{331       A, NI, NJ, NM, TRANSB, B, NK, NL, ASCR, SCR, increment);}
+\DoxyCodeLine{332     }
+\DoxyCodeLine{333   \};}
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337 }
+
+\end{DoxyCode}

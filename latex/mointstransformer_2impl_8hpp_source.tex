@@ -1,0 +1,242 @@
+\hypertarget{mointstransformer_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{mointstransformer_2impl_8hpp_source}\index{include/mointstransformer/impl.hpp@{include/mointstransformer/impl.hpp}}
+\mbox{\hyperlink{mointstransformer_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{mointstransformer_8hpp}{mointstransformer.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{moranges_8hpp}{mointstransformer/moranges.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{hcore_8hpp}{mointstransformer/hcore.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{tpi__ssfock_8hpp}{mointstransformer/tpi\_ssfock.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{tpi__incore__n5_8hpp}{mointstransformer/tpi\_incore\_n5.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{timer_8hpp}{util/timer.hpp}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{55   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{56   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a535d62f50cc37b4c1823af89d120201e}{MOIntsTransformer<MatsT,IntsT>::transformHCore}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert,}
+\DoxyCodeLine{57     MatsT* MOHCore, \textcolor{keyword}{const} std::string \& moType, \textcolor{keywordtype}{bool} deltaPQ, \textcolor{keyword}{const} \textcolor{keywordtype}{char} coreIndex) \{}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{keyword}{auto} off\_sizes = parseMOType(moType);}
+\DoxyCodeLine{60     subsetTransformHCore(pert, off\_sizes, MOHCore, deltaPQ, coreIndex);}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62   \}; \textcolor{comment}{// MOIntsTransformer::transformHCore}}
+\DoxyCodeLine{63   }
+\DoxyCodeLine{83   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{84   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ad9708d1cbbac20bcbc08df8e826a9e49}{MOIntsTransformer<MatsT,IntsT>::transformGD}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert,}
+\DoxyCodeLine{85     \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}} \& Den, \textcolor{keywordtype}{bool} HerDen,}
+\DoxyCodeLine{86     MatsT* MOGD, \textcolor{keyword}{const} std::string \& moType, \textcolor{keywordtype}{bool} deltaPQ,}
+\DoxyCodeLine{87     \textcolor{keywordtype}{bool} cacheAOGD, \textcolor{keyword}{const} std::string \& cacheId) \{}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \textcolor{keyword}{auto} off\_sizes = parseMOType(moType);}
+\DoxyCodeLine{90     subsetTransformGD(pert, Den, HerDen, MOGD, off\_sizes, deltaPQ, }
+\DoxyCodeLine{91       cacheAOGD, cacheId);}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93   \}; \textcolor{comment}{// MOIntsTransformer::transformGD}}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{115   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{116   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_ad9708d1cbbac20bcbc08df8e826a9e49}{MOIntsTransformer<MatsT,IntsT>::transformGD}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert,}
+\DoxyCodeLine{117     \textcolor{keyword}{const} \textcolor{keywordtype}{char} coreIndex, MatsT* MOGD, \textcolor{keyword}{const} std::string \& moType,}
+\DoxyCodeLine{118     \textcolor{keywordtype}{bool} deltaPQ, \textcolor{keywordtype}{bool} cacheAOGD, \textcolor{keyword}{const} std::string \& cacheId) \{}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     \textcolor{keyword}{auto} Den  = formInactDen(coreIndex);}
+\DoxyCodeLine{121     transformGD(pert, *Den, \textcolor{keyword}{true}, MOGD, moType, deltaPQ, cacheAOGD, cacheId);}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123   \}; \textcolor{comment}{// MOIntsTransformer::transformHCore}}
+\DoxyCodeLine{124   }
+\DoxyCodeLine{144   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{145   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1MOIntsTransformer_a57e7b9313396d2fb9df538eabcd48a29}{MOIntsTransformer<MatsT,IntsT>::transformTPI}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \& pert, }
+\DoxyCodeLine{146     MatsT* MOTPI, \textcolor{keyword}{const} std::string \& moType, \textcolor{keywordtype}{bool} cacheIntermediates, }
+\DoxyCodeLine{147     \textcolor{keywordtype}{bool} withExchange, \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\_TRANS\_DELTA\_TYPE}} delta) \{}
+\DoxyCodeLine{148     }
+\DoxyCodeLine{149     \textcolor{comment}{// check delta}}
+\DoxyCodeLine{150     \textcolor{keywordflow}{if} (delta != \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\_KRONECKER\_DELTA}}) \{    }
+\DoxyCodeLine{151       \textcolor{keywordflow}{if} ((delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}} and getUniqueSymbol(moType[0]) != getUniqueSymbol(moType[1])) or}
+\DoxyCodeLine{152           (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a77e794165a2acc9091e1a10d69e64b5f}{KRONECKER\_DELTA\_RS}} and getUniqueSymbol(moType[2]) != getUniqueSymbol(moType[3])) or}
+\DoxyCodeLine{153           (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a374916baf8a940c1e97f4edb1a1266e2}{KRONECKER\_DELTA\_PS}} and getUniqueSymbol(moType[0]) != getUniqueSymbol(moType[3])) or}
+\DoxyCodeLine{154           (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3ab4168543d010a7d2fa10da5a1b96fdd7}{KRONECKER\_DELTA\_RQ}} and getUniqueSymbol(moType[1]) != getUniqueSymbol(moType[2])) or}
+\DoxyCodeLine{155           (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}} and (getUniqueSymbol(moType[0]) != getUniqueSymbol(moType[1]) }
+\DoxyCodeLine{156             or getUniqueSymbol(moType[2]) != getUniqueSymbol(moType[3]))) or}
+\DoxyCodeLine{157           (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a430294079b490936f721fce9c96540b4}{KRONECKER\_DELTA\_PS\_RQ}} and (getUniqueSymbol(moType[0]) != getUniqueSymbol(moType[3]) }
+\DoxyCodeLine{158             or getUniqueSymbol(moType[1]) != getUniqueSymbol(moType[2]))))}
+\DoxyCodeLine{159         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Specifiying KRONECKER\_DELTA on different dimensions"{}});}
+\DoxyCodeLine{160     \}}
+\DoxyCodeLine{161     }
+\DoxyCodeLine{162     std::string C\_moType = moType;}
+\DoxyCodeLine{163     std::string X\_moType = \textcolor{stringliteral}{"{}"{}}; }
+\DoxyCodeLine{164     \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\_TRANS\_DELTA\_TYPE}} C\_delta = delta;}
+\DoxyCodeLine{165     \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3}{TPI\_TRANS\_DELTA\_TYPE}} X\_delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\_KRONECKER\_DELTA}};}
+\DoxyCodeLine{166     \textcolor{keywordtype}{bool} swapCX = \textcolor{keyword}{false};}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168     \textcolor{keywordflow}{if} (withExchange) \{}
+\DoxyCodeLine{169       X\_moType += moType[0];}
+\DoxyCodeLine{170       X\_moType += moType[3];}
+\DoxyCodeLine{171       X\_moType += moType[2];}
+\DoxyCodeLine{172       X\_moType += moType[1];}
+\DoxyCodeLine{173       }
+\DoxyCodeLine{174       \textcolor{keywordflow}{if}      (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}})    X\_delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a374916baf8a940c1e97f4edb1a1266e2}{KRONECKER\_DELTA\_PS}};}
+\DoxyCodeLine{175       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a77e794165a2acc9091e1a10d69e64b5f}{KRONECKER\_DELTA\_RS}})    X\_delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3ab4168543d010a7d2fa10da5a1b96fdd7}{KRONECKER\_DELTA\_RQ}};}
+\DoxyCodeLine{176       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a374916baf8a940c1e97f4edb1a1266e2}{KRONECKER\_DELTA\_PS}})    X\_delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}};}
+\DoxyCodeLine{177       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3ab4168543d010a7d2fa10da5a1b96fdd7}{KRONECKER\_DELTA\_RQ}})    X\_delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a77e794165a2acc9091e1a10d69e64b5f}{KRONECKER\_DELTA\_RS}};}
+\DoxyCodeLine{178       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}}) X\_delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a430294079b490936f721fce9c96540b4}{KRONECKER\_DELTA\_PS\_RQ}};}
+\DoxyCodeLine{179       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a430294079b490936f721fce9c96540b4}{KRONECKER\_DELTA\_PS\_RQ}}) X\_delta = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}};}
+\DoxyCodeLine{180       }
+\DoxyCodeLine{181       \textcolor{comment}{// KRONECKER\_DELTA\_PS    -\/> KRONECKER\_DELTA\_PQ}}
+\DoxyCodeLine{182       \textcolor{comment}{// KRONECKER\_DELTA\_RQ    -\/> KRONECKER\_DELTA\_RS}}
+\DoxyCodeLine{183       \textcolor{comment}{// KRONECKER\_DELTA\_PS\_RQ -\/> KRONECKER\_DELTA\_PQ\_RS}}
+\DoxyCodeLine{184       \textcolor{keywordflow}{if} (delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a374916baf8a940c1e97f4edb1a1266e2}{KRONECKER\_DELTA\_PS}} or }
+\DoxyCodeLine{185           delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3ab4168543d010a7d2fa10da5a1b96fdd7}{KRONECKER\_DELTA\_RQ}} or}
+\DoxyCodeLine{186           delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a430294079b490936f721fce9c96540b4}{KRONECKER\_DELTA\_PS\_RQ}}) \{ }
+\DoxyCodeLine{187         std::swap(C\_moType, X\_moType);}
+\DoxyCodeLine{188         std::swap(C\_delta,  X\_delta);}
+\DoxyCodeLine{189         swapCX = \textcolor{keyword}{true};}
+\DoxyCodeLine{190       \}}
+\DoxyCodeLine{191       }
+\DoxyCodeLine{192       \textcolor{comment}{//std::cout << "{}C\_moType = "{} << C\_moType << "{}, C\_delta ="{} << C\_delta << std::endl;}}
+\DoxyCodeLine{193       \textcolor{comment}{//std::cout << "{}X\_moType = "{} << X\_moType << "{}, X\_delta ="{} << X\_delta << std::endl;}}
+\DoxyCodeLine{194    \} }
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196     \textcolor{keyword}{auto} off\_sizes = parseMOType(C\_moType);}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198     \textcolor{comment}{// get the Coulomb part}}
+\DoxyCodeLine{199     \textcolor{keywordflow}{if} (TPITransAlg\_ == \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea8b867f203314c3678405cb4c1217c24c}{DIRECT\_N6}} or TPITransAlg\_ == \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea23f85e1ce32b3156975f33061df36077}{INCORE\_N6}}) \{}
+\DoxyCodeLine{200       subsetTransformTPISSFockN6(pert, off\_sizes, MOTPI, C\_moType, cacheIntermediates, C\_delta);}
+\DoxyCodeLine{201     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (TPITransAlg\_ == \mbox{\hyperlink{namespaceChronusQ_aeedb33782585a1bae183442633564f6ea36b82d7f3d298fd8d0bb7c867d0b932a}{INCORE\_N5}}) \{}
+\DoxyCodeLine{202       subsetTransformTPIInCoreN5(off\_sizes, MOTPI, cacheIntermediates, C\_delta);}
+\DoxyCodeLine{203     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{204       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}DIRECT\_N5 NYI"{}});}
+\DoxyCodeLine{205     \}}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207     \textcolor{comment}{// get exchange part if needed}}
+\DoxyCodeLine{208     \textcolor{comment}{// for 2c/4c: it's antisymmetrized integrals (pq|rs) -\/ (ps|rq)}}
+\DoxyCodeLine{209     \textcolor{comment}{// for 1c: it's scaled for spins, so exchange part will be scaled with 0.5. }}
+\DoxyCodeLine{210     \textcolor{comment}{//         So (pq|rs) -\/ 0.5 * (ps|rq) will be computed}}
+\DoxyCodeLine{211     \textcolor{keywordflow}{if} (withExchange) \{}
+\DoxyCodeLine{212       }
+\DoxyCodeLine{213       \textcolor{keywordtype}{size\_t} np = off\_sizes[0].second;}
+\DoxyCodeLine{214       \textcolor{keywordtype}{size\_t} nq = off\_sizes[1].second;}
+\DoxyCodeLine{215       \textcolor{keywordtype}{size\_t} nr = off\_sizes[2].second;}
+\DoxyCodeLine{216       \textcolor{keywordtype}{size\_t} ns = off\_sizes[3].second;}
+\DoxyCodeLine{217       \textcolor{keywordtype}{size\_t} npq = np * nq;}
+\DoxyCodeLine{218       \textcolor{keywordtype}{size\_t} nps = np * ns;}
+\DoxyCodeLine{219       \textcolor{keywordtype}{size\_t} npr = np * nr;}
+\DoxyCodeLine{220       \textcolor{keywordtype}{size\_t} npqr = npq * nr;}
+\DoxyCodeLine{221       \textcolor{keywordtype}{size\_t} nprs = nps * nr;}
+\DoxyCodeLine{222       }
+\DoxyCodeLine{223       MatsT fc = ss\_.nC == 1 ? 0.5: 1.0;}
+\DoxyCodeLine{224       }
+\DoxyCodeLine{225       \textcolor{keywordtype}{size\_t} qoff = off\_sizes[1].first;}
+\DoxyCodeLine{226       \textcolor{keywordtype}{size\_t} soff = off\_sizes[3].first;}
+\DoxyCodeLine{227       \textcolor{keywordtype}{bool} qsSymm = nq == ns and qoff == soff; }
+\DoxyCodeLine{228       }
+\DoxyCodeLine{229       \textcolor{keywordflow}{if} (C\_delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\_KRONECKER\_DELTA}} and qsSymm) \{}
+\DoxyCodeLine{230 \textcolor{preprocessor}{        \#pragma omp parallel for schedule(static) collapse(2) default(shared)       }}
+\DoxyCodeLine{231         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} r = 0ul; r < nr; r++) }
+\DoxyCodeLine{232         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} p = 0ul; p < np; p++) \{}
+\DoxyCodeLine{233           MatsT tmp1, tmp2;}
+\DoxyCodeLine{234           \textcolor{keywordtype}{size\_t} pqrs, psrq;}
+\DoxyCodeLine{235           \textcolor{keywordtype}{size\_t} prnpq = p + r*npq;}
+\DoxyCodeLine{236           \textcolor{keywordtype}{size\_t} prnps = p + r*nps;}
+\DoxyCodeLine{237           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} s = 0ul; s < ns; s++)}
+\DoxyCodeLine{238           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} q = 0ul; q <= s; q++) \{}
+\DoxyCodeLine{239             pqrs = prnpq + q*np + s*npqr;}
+\DoxyCodeLine{240             psrq = prnps + s*np + q*nprs;}
+\DoxyCodeLine{241             tmp1 = MOTPI[pqrs];}
+\DoxyCodeLine{242             tmp2 = MOTPI[psrq];}
+\DoxyCodeLine{243             MOTPI[pqrs] = tmp1 -\/ fc * tmp2;}
+\DoxyCodeLine{244             MOTPI[psrq] = tmp2 -\/ fc * tmp1;}
+\DoxyCodeLine{245           \}}
+\DoxyCodeLine{246         \}}
+\DoxyCodeLine{247       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{248         }
+\DoxyCodeLine{249         \textcolor{keywordtype}{size\_t} SCRSize;}
+\DoxyCodeLine{250         \textcolor{keywordflow}{if}      (C\_delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\_KRONECKER\_DELTA}}) SCRSize = npqr*ns;}
+\DoxyCodeLine{251         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (C\_delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a77e794165a2acc9091e1a10d69e64b5f}{KRONECKER\_DELTA\_RS}}) SCRSize = npqr;}
+\DoxyCodeLine{252         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (C\_delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}}) SCRSize = nprs;}
+\DoxyCodeLine{253         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (C\_delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}}) SCRSize = npr;}
+\DoxyCodeLine{254         MatsT * SCR = memManager\_.malloc<MatsT>(SCRSize);}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256         transformTPI(pert, SCR, X\_moType, \textcolor{keyword}{true}, \textcolor{keyword}{false}, X\_delta); }
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258         \textcolor{keywordflow}{if} (C\_delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3abcfc0e2cb7af1ca9af3af90f033d3882}{NO\_KRONECKER\_DELTA}}) \{ }
+\DoxyCodeLine{259           \textcolor{comment}{// (p,q,r,s) -\/= (p,s,q,r)}}
+\DoxyCodeLine{260 \textcolor{preprocessor}{          \#pragma omp parallel for schedule(static) collapse(2) default(shared)       }}
+\DoxyCodeLine{261           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} s = 0ul; s < ns; s++)}
+\DoxyCodeLine{262           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} r = 0ul; r < nr; r++) }
+\DoxyCodeLine{263           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} q = 0ul; q < nq; q++) }
+\DoxyCodeLine{264           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} p = 0ul; p < np; p++) \{ }
+\DoxyCodeLine{265             MOTPI[p + q*np + r*npq + s*npqr] -\/= fc * SCR[p + s*np + r*nps + q*nprs]; }
+\DoxyCodeLine{266           \}}
+\DoxyCodeLine{267         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (C\_delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}} or C\_delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a77e794165a2acc9091e1a10d69e64b5f}{KRONECKER\_DELTA\_RS}}) \{}
+\DoxyCodeLine{268           }
+\DoxyCodeLine{269           \textcolor{comment}{// for KRONECKER\_DELTA\_PQ: (p,r,s) -\/= (p,s,r)}}
+\DoxyCodeLine{270           \textcolor{comment}{// for KRONECKER\_DELTA\_RS: (p,q,r) -\/= (p,r,q)}}
+\DoxyCodeLine{271           \textcolor{keywordtype}{size\_t} nt = \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a17758ce317c5af43080a652550a1d5f3}{KRONECKER\_DELTA\_PQ}} ? ns: nq;}
+\DoxyCodeLine{272           \textcolor{keywordtype}{size\_t} npt = np*nt;}
+\DoxyCodeLine{273           MatsT fc\_inv = swapCX ? 1./ fc: fc;}
+\DoxyCodeLine{274           }
+\DoxyCodeLine{275 \textcolor{preprocessor}{          \#pragma omp parallel for schedule(static) collapse(2) default(shared)       }}
+\DoxyCodeLine{276           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} t = 0ul; t < nt; t++) }
+\DoxyCodeLine{277           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} r = 0ul; r < nr; r++) }
+\DoxyCodeLine{278           \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} p = 0ul; p < np; p++) \{ }
+\DoxyCodeLine{279             MOTPI[p + r*np + t*npr] -\/= fc\_inv * SCR[p + t*np + r*npt];}
+\DoxyCodeLine{280           \}}
+\DoxyCodeLine{281           }
+\DoxyCodeLine{282           \textcolor{comment}{// (p,r,t) -\/-\/> -\/ (p,t,r) if swapCX }}
+\DoxyCodeLine{283           \textcolor{keywordflow}{if} (swapCX) \{}
+\DoxyCodeLine{284 \textcolor{preprocessor}{            \#pragma omp parallel for }}
+\DoxyCodeLine{285             \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} p = 0ul; p < np; p++) \{}
+\DoxyCodeLine{286               MatsT tmp;  }
+\DoxyCodeLine{287               \textcolor{keywordtype}{size\_t} prt, ptr; }
+\DoxyCodeLine{288               \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} t = 0ul; t < nt; t++) }
+\DoxyCodeLine{289               \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} r = 0ul; r <= t; r++) \{}
+\DoxyCodeLine{290                 prt = p + r*np + t*npr;}
+\DoxyCodeLine{291                 ptr = p + t*np + r*npt;}
+\DoxyCodeLine{292                 tmp = MOTPI[prt];}
+\DoxyCodeLine{293                 MOTPI[prt] = -\/ MOTPI[ptr] * fc;}
+\DoxyCodeLine{294                 MOTPI[ptr] = -\/ tmp * fc;}
+\DoxyCodeLine{295               \}}
+\DoxyCodeLine{296             \} }
+\DoxyCodeLine{297           \}}
+\DoxyCodeLine{298         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (C\_delta == \mbox{\hyperlink{namespaceChronusQ_af68bab38f4bd8b7821b33cbbb9e0ccf3a3bf3c5b4bfb69e5cbb47c5384501fcae}{KRONECKER\_DELTA\_PQ\_RS}}) \{}
+\DoxyCodeLine{299           \textcolor{comment}{// (p,p,r,r) -\/= (p,r,r,p)}}
+\DoxyCodeLine{300           MatsT * C\_term = MOTPI, *X\_term = SCR; }
+\DoxyCodeLine{301           \textcolor{keywordflow}{if} (swapCX) std::swap(X\_term, C\_term);}
+\DoxyCodeLine{302 }
+\DoxyCodeLine{303           \mbox{\hyperlink{namespaceChronusQ_ac389ba57a99d66c5b26de24a6a58aebb}{MatAdd}}(\textcolor{charliteral}{'N'}, \textcolor{charliteral}{'N'}, np, nr, MatsT(1.), C\_term, np, MatsT(-\/fc), X\_term, np, MOTPI, np);}
+\DoxyCodeLine{304         }
+\DoxyCodeLine{305         \}\textcolor{comment}{// delta}}
+\DoxyCodeLine{306       }
+\DoxyCodeLine{307         memManager\_.free(SCR);}
+\DoxyCodeLine{308       \} }
+\DoxyCodeLine{309     \} \textcolor{comment}{// with Exchange  }}
+\DoxyCodeLine{310   }
+\DoxyCodeLine{311   \}; \textcolor{comment}{// MOIntsTransformer::transformTPI }}
+\DoxyCodeLine{312 }
+\DoxyCodeLine{313 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

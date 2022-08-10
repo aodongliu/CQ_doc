@@ -1,0 +1,769 @@
+\hypertarget{propagation_8hpp_source}{}\doxysection{propagation.\+hpp}
+\label{propagation_8hpp_source}\index{include/realtime/propagation.hpp@{include/realtime/propagation.hpp}}
+\mbox{\hyperlink{propagation_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{realtime_8hpp}{realtime.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas1_8hpp}{cqlinalg/blas1.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blas3_8hpp}{cqlinalg/blas3.hpp}}>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{blasutil_8hpp}{cqlinalg/blasutil.hpp}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matfunc_8hpp}{cqlinalg/matfunc.hpp}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matrix_8hpp}{matrix.hpp}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{matout_8hpp}{util/matout.hpp}}>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{timer_8hpp}{util/timer.hpp}}>}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include <unsupported/Eigen/MatrixFunctions>}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{keyword}{template} <\textcolor{keywordtype}{size\_t} N, \textcolor{keyword}{typename} T>}
+\DoxyCodeLine{38 std::array<T,N> \mbox{\hyperlink{propagation_8hpp_ad89aa020881aea412d5e8776dc58b945}{valarray2array}}(\textcolor{keyword}{const} std::valarray<T> \&x) \{}
+\DoxyCodeLine{39   assert( x.size() == N );}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41   std::array<T,N> arr;}
+\DoxyCodeLine{42   std::copy\_n(\&x[0],N,arr.begin());}
+\DoxyCodeLine{43   \textcolor{keywordflow}{return} arr;}
+\DoxyCodeLine{44  }
+\DoxyCodeLine{45 \};}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }\_SSTyp, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{50   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a6a62715806dc1f2e4408eb4c40350001}{RealTime<\_SSTyp,IntsT>::doPropagation}}() \{}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Real Time Total"{}});}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     printRTHeader();}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{keywordflow}{if} ( savFile.exists() )}
+\DoxyCodeLine{57       \textcolor{keywordflow}{if} ( restart )}
+\DoxyCodeLine{58         restoreState();}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     \textcolor{comment}{// Upon entry to RT, assume only the orthonormal density is valid}}
+\DoxyCodeLine{61     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} idx = 0; idx < systems\_.size(); idx++) \{}
+\DoxyCodeLine{62       systems\_[idx]-\/>computeOrtho();}
+\DoxyCodeLine{63       systems\_[idx]-\/>ortho2aoDen();}
+\DoxyCodeLine{64       systems\_[idx]-\/>ortho2aoMOs();}
+\DoxyCodeLine{65     \}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \textcolor{keywordtype}{bool} Start(\textcolor{keyword}{false}); \textcolor{comment}{// Start the MMUT iterations}}
+\DoxyCodeLine{68     \textcolor{keywordtype}{bool} FinMM(\textcolor{keyword}{false}); \textcolor{comment}{// Wrap up the MMUT iterations}}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     \textcolor{keywordtype}{size\_t} maxStep = (size\_t)((intScheme.tMax + intScheme.deltaT/4)/intScheme.deltaT);}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     curState.xTime = intScheme.restoreStep * intScheme.deltaT;}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74     \textcolor{keywordflow}{for}( curState.iStep = intScheme.restoreStep; }
+\DoxyCodeLine{75          curState.iStep <= maxStep;}
+\DoxyCodeLine{76          curState.xTime += intScheme.deltaT, curState.iStep++) \{}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Real Time Iter"{}});}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80       \textcolor{comment}{// Perturbation for the current time}}
+\DoxyCodeLine{81       \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} pert\_t = pert.getPert(curState.xTime);}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 \textcolor{preprocessor}{\#if 1}}
+\DoxyCodeLine{88       \textcolor{comment}{// Determine the step type for the current integration step }}
+\DoxyCodeLine{89       \textcolor{keywordflow}{if}( intScheme.intAlg == \mbox{\hyperlink{namespaceChronusQ_a4ad72166feb5aa4eee186a7e0dc449bfa0c9425df983f00b72c2d87d7af2749a3}{MMUT}} ) \{}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91         \textcolor{comment}{// "{}Start"{} the MMUT if this is the first step or we just}}
+\DoxyCodeLine{92         \textcolor{comment}{// "{}Finished"{} the MMUT segment}}
+\DoxyCodeLine{93         Start = ( curState.iStep == intScheme.restoreStep ) or FinMM;}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95         \textcolor{comment}{// "{}Start"{} the MMUT if the current step index is a restart}}
+\DoxyCodeLine{96         \textcolor{comment}{// step}}
+\DoxyCodeLine{97         \textcolor{keywordflow}{if}( intScheme.iRstrt > 0 ) }
+\DoxyCodeLine{98           Start = Start or ( curState.iStep \% intScheme.iRstrt == 0 );}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100         \textcolor{comment}{// "{}Finish"{} the MMUT if this is the last step}}
+\DoxyCodeLine{101         \textcolor{comment}{// NOTE: To compare to Gaussian, do NOT do this restart for Ehrenfest}}
+\DoxyCodeLine{102         FinMM = ( curState.iStep == maxStep );}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104         \textcolor{comment}{// TODO: "{}Finish"{} the MMUT if the field turns on or off}}
+\DoxyCodeLine{105         FinMM = FinMM or pert.isFieldDiscontinuous(curState.xTime, intScheme.deltaT);}
+\DoxyCodeLine{106           }
+\DoxyCodeLine{107         \textcolor{comment}{// "{}Finish"{} the MMUT if the next step will be a restart step}}
+\DoxyCodeLine{108         \textcolor{keywordflow}{if}( intScheme.iRstrt > 0 ) }
+\DoxyCodeLine{109           FinMM = FinMM or ( (curState.iStep + 1) \% intScheme.iRstrt == 0 );}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111         \textcolor{comment}{// If "{}Starting"{} or "{}Finishing"{} the MMUT, the step type is}}
+\DoxyCodeLine{112         \textcolor{comment}{// the specified restart step type, else it is the MMUT step}}
+\DoxyCodeLine{113         \textcolor{keywordflow}{if}( Start or FinMM ) curState.curStep = intScheme.rstStep;}
+\DoxyCodeLine{114         \textcolor{keywordflow}{else}                 curState.curStep = \mbox{\hyperlink{namespaceChronusQ_a7a47a9b6cfd485ee01deb10204bb013ba9d5fa5e7c5db84bc91f63e8f0fd6b5f4}{ModifiedMidpoint}};}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116         \textcolor{keywordflow}{if}( (Start or FinMM) \&\& printLevel > 0 )}
+\DoxyCodeLine{117           std::cout << \textcolor{stringliteral}{"{}  *** Restarting MMUT ***\(\backslash\)n"{}};}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119       \textcolor{comment}{// For non leapfrog scheme, the step type is constant}}
+\DoxyCodeLine{120       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( intScheme.intAlg == \mbox{\hyperlink{namespaceChronusQ_a4ad72166feb5aa4eee186a7e0dc449bfa397e7a194d512a852eebf7d55f70613a}{ExpMagnus2}} )}
+\DoxyCodeLine{121         curState.curStep = \mbox{\hyperlink{namespaceChronusQ_a7a47a9b6cfd485ee01deb10204bb013bae798dabe0dc07621a9edf0c24831edb6}{ExplicitMagnus2}};}
+\DoxyCodeLine{122 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{123       curState.curStep = \mbox{\hyperlink{namespaceChronusQ_a7a47a9b6cfd485ee01deb10204bb013ba5079fd5cd1a87fb5d3f93954be5733be}{ForwardEuler}};}
+\DoxyCodeLine{124 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} idx = 0; idx < systems\_.size(); idx++) \{}
+\DoxyCodeLine{138         \textcolor{comment}{// Handle density copies / swaps for the current step}}
+\DoxyCodeLine{139         \textcolor{comment}{//  + Determine the step size}}
+\DoxyCodeLine{140           }
+\DoxyCodeLine{141         \textcolor{keywordflow}{if}( curState.curStep == \mbox{\hyperlink{namespaceChronusQ_a7a47a9b6cfd485ee01deb10204bb013ba9d5fa5e7c5db84bc91f63e8f0fd6b5f4}{ModifiedMidpoint}} ) \{}
+\DoxyCodeLine{142           \textcolor{comment}{// Swap the saved density with the SingleSlater density}}
+\DoxyCodeLine{143             }
+\DoxyCodeLine{144           \textcolor{comment}{// DOSav(k) = DO(k)}}
+\DoxyCodeLine{145           \textcolor{comment}{// DO(k)    = DO(k-\/1)}}
+\DoxyCodeLine{146           std::shared\_ptr<PauliSpinorSquareMatrices<dcomplex>> tmp = DOSav[idx];}
+\DoxyCodeLine{147           DOSav[idx] = systems\_[idx]-\/>onePDMOrtho;}
+\DoxyCodeLine{148           systems\_[idx]-\/>onePDMOrtho = tmp;}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151           curState.stepSize = 2. * intScheme.deltaT;}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{154           \textcolor{comment}{// Save a copy of the SingleSlater density in the saved density}}
+\DoxyCodeLine{155           \textcolor{comment}{// storage}}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157           \textcolor{comment}{// DOSav(k) = DO(k)}}
+\DoxyCodeLine{158           *DOSav[idx] = *systems\_[idx]-\/>onePDMOrtho;}
+\DoxyCodeLine{159      }
+\DoxyCodeLine{160           curState.stepSize = intScheme.deltaT;}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162         \}}
+\DoxyCodeLine{163       \}}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165       \textcolor{comment}{// Form the Fock matrix at the current time}}
+\DoxyCodeLine{166       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} idx = 0; idx < systems\_.size(); idx++) \{}
+\DoxyCodeLine{167         this-\/>formFock(\textcolor{keyword}{false},curState.xTime,idx);}
+\DoxyCodeLine{168       \}}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170       \textcolor{comment}{// Compute properties for D(k) }}
+\DoxyCodeLine{171       propagator\_.computeProperties(pert\_t);}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173       \textcolor{comment}{// Save data}}
+\DoxyCodeLine{174       \textcolor{comment}{// TODO: Fix this when we have a stable definition of MD + electronic steps}}
+\DoxyCodeLine{175       saveState(pert\_t);}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177       \textcolor{comment}{// Save D(k) if doing Magnus 2}}
+\DoxyCodeLine{178       std::vector<std::shared\_ptr<PauliSpinorSquareMatrices<dcomplex>>> den\_k;}
+\DoxyCodeLine{179       std::vector<std::shared\_ptr<PauliSpinorSquareMatrices<dcomplex>>> denOrtho\_k;}
+\DoxyCodeLine{180       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} idx = 0; idx < systems\_.size(); idx++) \{}
+\DoxyCodeLine{181         \textcolor{keywordflow}{if} ( curState.curStep == \mbox{\hyperlink{namespaceChronusQ_a7a47a9b6cfd485ee01deb10204bb013bae798dabe0dc07621a9edf0c24831edb6}{ExplicitMagnus2}} ) \{}
+\DoxyCodeLine{182           den\_k.push\_back(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<dcomplex>}}>(*systems\_[idx]-\/>onePDM));}
+\DoxyCodeLine{183           denOrtho\_k.push\_back(std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<dcomplex>}}>(*systems\_[idx]-\/>onePDMOrtho));}
+\DoxyCodeLine{184         \}}
+\DoxyCodeLine{185       \}}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188       \textcolor{comment}{// Print progress line in the output file}}
+\DoxyCodeLine{189       printRTStep();}
+\DoxyCodeLine{190       \textcolor{keywordflow}{if}( this-\/>orbitalPopFreq != 0 \&\&}
+\DoxyCodeLine{191           curState.iStep \% this-\/>orbitalPopFreq == 0) \{}
+\DoxyCodeLine{192         orbitalPop();}
+\DoxyCodeLine{193       \}}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} idx = 0; idx < systems\_.size(); idx++) \{}
+\DoxyCodeLine{199         \textcolor{comment}{// Orthonormalize the AO Fock matrix}}
+\DoxyCodeLine{200         \textcolor{comment}{// F(k) -\/> FO(k)}}
+\DoxyCodeLine{201         systems\_[idx]-\/>ao2orthoFock();}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204         \textcolor{comment}{// Form the propagator from the orthonormal Fock matrix}}
+\DoxyCodeLine{205         \textcolor{comment}{// FO(k) -\/> U**H(k) = exp(-\/ i * dt * FO(k) )}}
+\DoxyCodeLine{206         formPropagator(idx);}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208         \textcolor{comment}{// Propagator the orthonormal density matrix}}
+\DoxyCodeLine{209         \textcolor{comment}{// DO (in propagator\_) will now store DO(k+1)}}
+\DoxyCodeLine{210         \textcolor{comment}{//}}
+\DoxyCodeLine{211         \textcolor{comment}{// DO(k+1) = U**H(k) * DO * U(k)}}
+\DoxyCodeLine{212         \textcolor{comment}{// -\/ Where DO is what is currently stored in propagator\_}}
+\DoxyCodeLine{213         \textcolor{comment}{//}}
+\DoxyCodeLine{214         \textcolor{comment}{// ***}}
+\DoxyCodeLine{215         \textcolor{comment}{// This function also transforms DO(k+1) to the AO}}
+\DoxyCodeLine{216         \textcolor{comment}{// basis ( DO(k+1) -\/> D(k+1) in propagator\_ ) and}}
+\DoxyCodeLine{217         \textcolor{comment}{// computes the change in density from the previous }}
+\DoxyCodeLine{218         \textcolor{comment}{// AO density ( delD = D(k+1) -\/ D(k) ) }}
+\DoxyCodeLine{219         \textcolor{comment}{// ***}}
+\DoxyCodeLine{220         propagateWFN(idx);}
+\DoxyCodeLine{221       \}}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223       \textcolor{comment}{//}}
+\DoxyCodeLine{224       \textcolor{comment}{// Second order magnus}}
+\DoxyCodeLine{225       \textcolor{comment}{//}}
+\DoxyCodeLine{226       \textcolor{keywordflow}{if} ( curState.curStep == \mbox{\hyperlink{namespaceChronusQ_a7a47a9b6cfd485ee01deb10204bb013bae798dabe0dc07621a9edf0c24831edb6}{ExplicitMagnus2}} ) \{}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} idx = 0; idx < systems\_.size(); idx++) \{}
+\DoxyCodeLine{229           \textcolor{comment}{// F(k)}}
+\DoxyCodeLine{230           \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<dcomplex>}} fock\_k(*systems\_[idx]-\/>fockMatrix);}
+\DoxyCodeLine{231           }
+\DoxyCodeLine{232           \textcolor{comment}{// F(k + 1)}}
+\DoxyCodeLine{233           formFock(\textcolor{keyword}{false}, curState.xTime + intScheme.deltaT, idx);}
+\DoxyCodeLine{234 }
+\DoxyCodeLine{235           \textcolor{comment}{// Store 0.5 * ( F(k) + F(k+1) ) in propagator\_.fockMatrix}}
+\DoxyCodeLine{236           *systems\_[idx]-\/>fockMatrix = 0.5 * (fock\_k + *systems\_[idx]-\/>fockMatrix);}
+\DoxyCodeLine{237         \}}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239 }
+\DoxyCodeLine{240         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} idx = 0; idx < systems\_.size(); idx++) \{}
+\DoxyCodeLine{241           \textcolor{comment}{// Restore old densities}}
+\DoxyCodeLine{242           *systems\_[idx]-\/>onePDM = *den\_k[idx];}
+\DoxyCodeLine{243           *systems\_[idx]-\/>onePDMOrtho = *denOrtho\_k[idx];}
+\DoxyCodeLine{244         \}}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{246         \textcolor{comment}{// Repeat formation of propagator and propagation}}
+\DoxyCodeLine{247         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} idx = 0; idx < systems\_.size(); idx++) \{}
+\DoxyCodeLine{248           systems\_[idx]-\/>ao2orthoFock();}
+\DoxyCodeLine{249           formPropagator(idx);}
+\DoxyCodeLine{250           propagateWFN(idx);}
+\DoxyCodeLine{251         \}}
+\DoxyCodeLine{252 }
+\DoxyCodeLine{253       \}  \textcolor{comment}{// End 2nd order magnus}}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255       \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Real Time Iter"{}});}
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257     \} \textcolor{comment}{// Time loop}}
+\DoxyCodeLine{258 }
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Real Time Total"{}});}
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262   \textcolor{comment}{//mathematicaPrint(std::cerr,"{}Dipole-\/X"{},\&data.ElecDipole[0][0],}}
+\DoxyCodeLine{263   \textcolor{comment}{//  curState.iStep,1,curState.iStep,3);}}
+\DoxyCodeLine{264 }
+\DoxyCodeLine{265   \}; \textcolor{comment}{// RealTime::doPropagation}}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267 }
+\DoxyCodeLine{278   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }\_SSTyp, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{279   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_ad10c0785313d8b103314bebfbed865c1}{RealTime<\_SSTyp,IntsT>::formPropagator}}(\textcolor{keywordtype}{size\_t} idx) \{}
+\DoxyCodeLine{280 }
+\DoxyCodeLine{281     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Propagator Formation"{}});}
+\DoxyCodeLine{282 }
+\DoxyCodeLine{283     \textcolor{keywordtype}{size\_t} NB = systems\_[idx]-\/>nAlphaOrbital();}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285     \textcolor{comment}{// Form U}}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287     \textcolor{comment}{// Restricted}}
+\DoxyCodeLine{288     \textcolor{keywordflow}{if}( not UH[idx]-\/>hasZ() ) \{}
+\DoxyCodeLine{289       \textcolor{comment}{// See docs for factor of 2}}
+\DoxyCodeLine{290       \mbox{\hyperlink{namespaceChronusQ_ad5166b3a8d2e2a42bcf1b477f608eb34}{MatExp}}(\textcolor{charliteral}{'D'},NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.,-\/curState.stepSize/2.),}
+\DoxyCodeLine{291         systems\_[idx]-\/>fockMatrixOrtho-\/>S().pointer(),NB,UH[idx]-\/>S().pointer(),NB,memManager\_);}
+\DoxyCodeLine{292 }
+\DoxyCodeLine{293       blas::scal(NB*NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(2.),UH[idx]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}}().pointer(),1);}
+\DoxyCodeLine{294 }
+\DoxyCodeLine{295     \textcolor{comment}{// Unrestricted}}
+\DoxyCodeLine{296     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( not UH[idx]-\/>hasXY() ) \{}
+\DoxyCodeLine{297 }
+\DoxyCodeLine{298       \textcolor{comment}{// Transform SCALAR / MZ -\/> ALPHA / BETA}}
+\DoxyCodeLine{299       std::vector<SquareMatrix<dcomplex>> Fblocks =}
+\DoxyCodeLine{300           systems\_[idx]-\/>fockMatrixOrtho-\/>template spinGatherToBlocks<dcomplex>(\textcolor{keyword}{false});}
+\DoxyCodeLine{301       std::vector<SquareMatrix<dcomplex>> UHblocks;}
+\DoxyCodeLine{302       UHblocks.reserve(2);}
+\DoxyCodeLine{303       UHblocks.emplace\_back(memManager\_, NB);}
+\DoxyCodeLine{304       UHblocks.emplace\_back(memManager\_, NB);}
+\DoxyCodeLine{305 }
+\DoxyCodeLine{306       \mbox{\hyperlink{namespaceChronusQ_ad5166b3a8d2e2a42bcf1b477f608eb34}{MatExp}}(\textcolor{charliteral}{'D'},NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.,-\/curState.stepSize),}
+\DoxyCodeLine{307         Fblocks[0].pointer(),NB,UHblocks[0].pointer(),NB,memManager\_);}
+\DoxyCodeLine{308       \mbox{\hyperlink{namespaceChronusQ_ad5166b3a8d2e2a42bcf1b477f608eb34}{MatExp}}(\textcolor{charliteral}{'D'},NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.,-\/curState.stepSize),}
+\DoxyCodeLine{309         Fblocks[1].pointer(),NB,UHblocks[1].pointer(),NB,memManager\_);}
+\DoxyCodeLine{310 }
+\DoxyCodeLine{311       \textcolor{comment}{// Transform ALPHA / BETA -\/> SCALAR / MZ}}
+\DoxyCodeLine{312       *UH[idx] = \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{PauliSpinorSquareMatrices<dcomplex>::}}}
+\DoxyCodeLine{313 \mbox{\hyperlink{classChronusQ_1_1PauliSpinorSquareMatrices}{          spinBlockScatterBuild<dcomplex>}}(UHblocks[0],UHblocks[1]);}
+\DoxyCodeLine{314 }
+\DoxyCodeLine{315     \textcolor{comment}{// Generalized (2C)}}
+\DoxyCodeLine{316     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{317 }
+\DoxyCodeLine{318       \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<dcomplex>}} F2C(systems\_[idx]-\/>fockMatrixOrtho-\/>template spinGather<dcomplex>());}
+\DoxyCodeLine{319       \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<dcomplex>}} UH2C(memManager\_, 2*NB);}
+\DoxyCodeLine{320 }
+\DoxyCodeLine{321       \mbox{\hyperlink{namespaceChronusQ_ad5166b3a8d2e2a42bcf1b477f608eb34}{MatExp}}(\textcolor{charliteral}{'D'},2*NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.,-\/curState.stepSize),}
+\DoxyCodeLine{322              F2C.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),2*NB,UH2C.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),2*NB, memManager\_);}
+\DoxyCodeLine{323 }
+\DoxyCodeLine{324       *UH[idx] = UH2C.template spinScatter<dcomplex>();}
+\DoxyCodeLine{325 }
+\DoxyCodeLine{326     \}}
+\DoxyCodeLine{327 }
+\DoxyCodeLine{328     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Propagator Formation"{}});}
+\DoxyCodeLine{329 \textcolor{preprocessor}{\#if 0}}
+\DoxyCodeLine{330 }
+\DoxyCodeLine{331     \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}UH Scalar"{}},UH[idx]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}}().pointer(),NB,NB,NB);}
+\DoxyCodeLine{332     \textcolor{keywordflow}{if}( UH[idx]-\/>hasZ() )}
+\DoxyCodeLine{333       \mbox{\hyperlink{namespaceChronusQ_a43999d7848dab8e641410257f6bc0321}{prettyPrintSmart}}(std::cout,\textcolor{stringliteral}{"{}UH MZ"{}},UH[idx]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa21c2e59531c8710156d34a3c30ac81d5}{Z}}().pointer(),NB,NB,NB);}
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{336     }
+\DoxyCodeLine{337   \}; \textcolor{comment}{// RealTime::formPropagator}}
+\DoxyCodeLine{338 }
+\DoxyCodeLine{339 }
+\DoxyCodeLine{340 }
+\DoxyCodeLine{341   }
+\DoxyCodeLine{342   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }\_SSTyp, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{343   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a9a3f8878b9182053cdd48d193b467906}{RealTime<\_SSTyp,IntsT>::propagateWFN}}(\textcolor{keywordtype}{size\_t} idx) \{}
+\DoxyCodeLine{344 }
+\DoxyCodeLine{345     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a9a328014ee423173ec33b1afc29bda4a}{ProgramTimer::tick}}(\textcolor{stringliteral}{"{}Propagate WFN"{}});}
+\DoxyCodeLine{346 }
+\DoxyCodeLine{347     \textcolor{keywordtype}{size\_t} NB = systems\_[idx]-\/>nAlphaOrbital();}
+\DoxyCodeLine{348     \textcolor{keywordtype}{size\_t} NC = systems\_[idx]-\/>nC;}
+\DoxyCodeLine{349     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} *SCR  = memManager\_.template malloc<dcomplex>(NC*NC*NB*NB);}
+\DoxyCodeLine{350     \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}} *SCR1 = memManager\_.template malloc<dcomplex>(NC*NC*NB*NB);}
+\DoxyCodeLine{351 }
+\DoxyCodeLine{352     \textcolor{keywordflow}{if}( not UH[idx]-\/>hasXY() ) \{}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354       \textcolor{comment}{// Create X(S) = (U**H * DO)(S) in SCR }}
+\DoxyCodeLine{355 }
+\DoxyCodeLine{356       \textcolor{comment}{// SCR = 0.5 * U(S)**H * DO(S)}}
+\DoxyCodeLine{357       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,}
+\DoxyCodeLine{358           NB,NB,NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.5),UH[idx]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}}().pointer(),NB,}
+\DoxyCodeLine{359           systems\_[idx]-\/>onePDMOrtho-\/>S().pointer(),NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.),SCR,NB);}
+\DoxyCodeLine{360 }
+\DoxyCodeLine{361       \textcolor{comment}{// SCR += 0.5 * U(Z)**H * DO(Z)}}
+\DoxyCodeLine{362       \textcolor{keywordflow}{if}( UH[idx]-\/>hasZ() )}
+\DoxyCodeLine{363         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,}
+\DoxyCodeLine{364           NB,NB,NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.5),UH[idx]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa21c2e59531c8710156d34a3c30ac81d5}{Z}}().pointer(),NB,}
+\DoxyCodeLine{365           systems\_[idx]-\/>onePDMOrtho-\/>Z().pointer(),NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(1.),SCR,NB);}
+\DoxyCodeLine{366 }
+\DoxyCodeLine{367 }
+\DoxyCodeLine{368 }
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370 }
+\DoxyCodeLine{371       \textcolor{comment}{// Create X(Z) = (U**H * DO)(Z) in SCR1}}
+\DoxyCodeLine{372         }
+\DoxyCodeLine{373       \textcolor{keywordflow}{if}( systems\_[idx]-\/>onePDMOrtho-\/>hasZ() ) \{}
+\DoxyCodeLine{374 }
+\DoxyCodeLine{375         \textcolor{comment}{// SCR1 = 0.5 * U(S)**H * DO(Z)}}
+\DoxyCodeLine{376         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.5),UH[idx]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}}().pointer(),NB,}
+\DoxyCodeLine{377           systems\_[idx]-\/>onePDMOrtho-\/>Z().pointer(),NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.),SCR1,NB);}
+\DoxyCodeLine{378 }
+\DoxyCodeLine{379         \textcolor{comment}{// SCR1 += 0.5 * U(Z)**H * DO(S)}}
+\DoxyCodeLine{380         \textcolor{keywordflow}{if}( UH[idx]-\/>hasZ() )}
+\DoxyCodeLine{381           blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,NB,NB,NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.5),UH[idx]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa21c2e59531c8710156d34a3c30ac81d5}{Z}}().pointer(),NB,}
+\DoxyCodeLine{382             systems\_[idx]-\/>onePDMOrtho-\/>S().pointer(),NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(1.),SCR1,NB);}
+\DoxyCodeLine{383 }
+\DoxyCodeLine{384       \}}
+\DoxyCodeLine{385 }
+\DoxyCodeLine{386 }
+\DoxyCodeLine{387 }
+\DoxyCodeLine{388 }
+\DoxyCodeLine{389 }
+\DoxyCodeLine{390 }
+\DoxyCodeLine{391       \textcolor{comment}{// DO(S) = 0.5 * ( X(S) * U(S) + X(Z) * U(Z) )}}
+\DoxyCodeLine{392       \textcolor{comment}{//       = 0.5 * ( SCR  * U(S) + SCR1 * U(Z) )}}
+\DoxyCodeLine{393 }
+\DoxyCodeLine{394       \textcolor{comment}{// DO(S) = 0.5 * SCR * U(S)}}
+\DoxyCodeLine{395       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::ConjTrans,NB,NB,NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.5),SCR,NB,UH[idx]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}}().pointer(),NB,}
+\DoxyCodeLine{396            \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.),systems\_[idx]-\/>onePDMOrtho-\/>S().pointer(),NB);}
+\DoxyCodeLine{397  }
+\DoxyCodeLine{398       \textcolor{comment}{// DO(S) += 0.5 * SCR1 * U(Z)}}
+\DoxyCodeLine{399       \textcolor{keywordflow}{if}( UH[idx]-\/>hasZ() )}
+\DoxyCodeLine{400         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::ConjTrans,NB,NB,NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.5),SCR1,NB,UH[idx]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa21c2e59531c8710156d34a3c30ac81d5}{Z}}().pointer(),NB,}
+\DoxyCodeLine{401              \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(1.),systems\_[idx]-\/>onePDMOrtho-\/>S().pointer(),NB);}
+\DoxyCodeLine{402 }
+\DoxyCodeLine{403 }
+\DoxyCodeLine{404       \textcolor{keywordflow}{if}( UH[idx]-\/>hasZ() ) \{}
+\DoxyCodeLine{405 }
+\DoxyCodeLine{406         \textcolor{comment}{// DO(Z) = 0.5 * ( X(S) * U(Z) + X(Z) * U(S) )}}
+\DoxyCodeLine{407         \textcolor{comment}{//       = 0.5 * ( SCR  * U(Z) + SCR1 * U(S) )}}
+\DoxyCodeLine{408           }
+\DoxyCodeLine{409         \textcolor{comment}{// DO(Z) = 0.5 * SCR * U(Z)}}
+\DoxyCodeLine{410         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::ConjTrans,NB,NB,NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.5),SCR,NB,UH[idx]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa21c2e59531c8710156d34a3c30ac81d5}{Z}}().pointer(),NB,}
+\DoxyCodeLine{411              \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.),systems\_[idx]-\/>onePDMOrtho-\/>Z().pointer(),NB);}
+\DoxyCodeLine{412  }
+\DoxyCodeLine{413         \textcolor{comment}{// DO(Z) += 0.5 * SCR1 * U(S)}}
+\DoxyCodeLine{414         blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::ConjTrans,NB,NB,NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.5),SCR1,NB,UH[idx]-\/>\mbox{\hyperlink{namespaceChronusQ_a56ff0c04bad8a04cb96ea01fdec98e8fa5dbc98dcc983a70728bd082d1a47546e}{S}}().pointer(),NB,}
+\DoxyCodeLine{415              \mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(1.),systems\_[idx]-\/>onePDMOrtho-\/>Z().pointer(),NB);}
+\DoxyCodeLine{416 }
+\DoxyCodeLine{417       \}}
+\DoxyCodeLine{418 }
+\DoxyCodeLine{419     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{420 }
+\DoxyCodeLine{421       \textcolor{comment}{// Gather DO}}
+\DoxyCodeLine{422       \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<dcomplex>}} DO(systems\_[idx]-\/>onePDMOrtho-\/>template spinGather<dcomplex>());}
+\DoxyCodeLine{423 }
+\DoxyCodeLine{424       \textcolor{comment}{// Gather UH into SCR}}
+\DoxyCodeLine{425       \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<dcomplex>}} UHblockForm(UH[idx]-\/>\textcolor{keyword}{template} spinGather<dcomplex>());}
+\DoxyCodeLine{426 }
+\DoxyCodeLine{427       \textcolor{comment}{// SCR1 = U**H * DO}}
+\DoxyCodeLine{428       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::NoTrans,2*NB,2*NB,2*NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(1.),UHblockForm.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),2*NB,}
+\DoxyCodeLine{429            DO.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),2*NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.),SCR1,2*NB);}
+\DoxyCodeLine{430 }
+\DoxyCodeLine{431       \textcolor{comment}{// DO = SCR1 * U}}
+\DoxyCodeLine{432       blas::gemm(blas::Layout::ColMajor,blas::Op::NoTrans,blas::Op::ConjTrans,2*NB,2*NB,2*NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(1.),SCR1,2*NB,}
+\DoxyCodeLine{433            UHblockForm.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),2*NB,\mbox{\hyperlink{chronusq__sys_8hpp_aa7b4cfa83fe868296abd1ba4d67d9563}{dcomplex}}(0.),DO.\mbox{\hyperlink{classChronusQ_1_1SquareMatrix_af02378a893b1d3b08818e0102c07c99f}{pointer}}(),2*NB);}
+\DoxyCodeLine{434 }
+\DoxyCodeLine{435       \textcolor{comment}{// Scatter DO}}
+\DoxyCodeLine{436       *systems\_[idx]-\/>onePDMOrtho = DO.template spinScatter<dcomplex>();}
+\DoxyCodeLine{437 }
+\DoxyCodeLine{438     \}}
+\DoxyCodeLine{439 }
+\DoxyCodeLine{440 }
+\DoxyCodeLine{441     systems\_[idx]-\/>ortho2aoDen();}
+\DoxyCodeLine{442 }
+\DoxyCodeLine{443     memManager\_.free(SCR,SCR1);}
+\DoxyCodeLine{444 }
+\DoxyCodeLine{445     \mbox{\hyperlink{classChronusQ_1_1ProgramTimer_a596d67507317c2c8b2dfb92d99e48425}{ProgramTimer::tock}}(\textcolor{stringliteral}{"{}Propagate WFN"{}});}
+\DoxyCodeLine{446 }
+\DoxyCodeLine{447   \}; \textcolor{comment}{// RealTime::propagatorWFN}}
+\DoxyCodeLine{448 }
+\DoxyCodeLine{449 }
+\DoxyCodeLine{450   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }\_SSTyp, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{451   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_aa351c67c6be25bb384c3c50ab1fb78f4}{RealTime<\_SSTyp,IntsT>::createRTDataSets}}(\textcolor{keywordtype}{size\_t} maxPoints) \{}
+\DoxyCodeLine{452 }
+\DoxyCodeLine{453     \textcolor{keywordflow}{if}( restart ) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{454 }
+\DoxyCodeLine{455     \textcolor{keywordflow}{if}( maxPoints == 0 )}
+\DoxyCodeLine{456       maxPoints = intScheme.tMax / intScheme.deltaT + 1;}
+\DoxyCodeLine{457     }
+\DoxyCodeLine{458     savFile.createGroup(\textcolor{stringliteral}{"{}RT"{}});}
+\DoxyCodeLine{459 }
+\DoxyCodeLine{460     savFile.createDataSet<\textcolor{keywordtype}{double}>(\textcolor{stringliteral}{"{}RT/TIME"{}}, \{maxPoints\});}
+\DoxyCodeLine{461     savFile.createDataSet<\textcolor{keywordtype}{double}>(\textcolor{stringliteral}{"{}RT/ENERGY"{}}, \{maxPoints\});}
+\DoxyCodeLine{462     savFile.createDataSet<\textcolor{keywordtype}{double}>(\textcolor{stringliteral}{"{}RT/LEN\_ELEC\_DIPOLE"{}}, \{maxPoints,3\});}
+\DoxyCodeLine{463     savFile.createDataSet<\textcolor{keywordtype}{double}>(\textcolor{stringliteral}{"{}RT/LEN\_ELEC\_DIPOLE\_FIELD"{}}, \{maxPoints,3\});}
+\DoxyCodeLine{464 }
+\DoxyCodeLine{465     \textcolor{keywordflow}{if}( this-\/>orbitalPopFreq != 0 ) \{}
+\DoxyCodeLine{466       hsize\_t nPop = (maxPoints / this-\/>orbitalPopFreq);}
+\DoxyCodeLine{467       \textcolor{keywordflow}{if}( this-\/>orbitalPopFreq != 1 \&\&}
+\DoxyCodeLine{468           (maxPoints-\/1) \% this-\/>orbitalPopFreq == 0 )}
+\DoxyCodeLine{469         nPop += 1;}
+\DoxyCodeLine{470       \textcolor{keywordflow}{if}( maxPoints == 1 )}
+\DoxyCodeLine{471         nPop = 1;}
+\DoxyCodeLine{472       hsize\_t nOrbs = propagator\_.nOrbital();}
+\DoxyCodeLine{473       savFile.createDataSet<\textcolor{keywordtype}{double}>(\textcolor{stringliteral}{"{}RT/ORBITALPOPULATION"{}}, \{nPop, nOrbs\});}
+\DoxyCodeLine{474     \}}
+\DoxyCodeLine{475   \}; \textcolor{comment}{// RealTime::createRTDataSets}}
+\DoxyCodeLine{476 }
+\DoxyCodeLine{477 }
+\DoxyCodeLine{478   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }\_SSTyp, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{479   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_a63e2b67e15f0a5f4eac14bc52c8aef05}{RealTime<\_SSTyp,IntsT>::restoreState}}() \{}
+\DoxyCodeLine{480 }
+\DoxyCodeLine{481     hsize\_t maxPoints = intScheme.tMax / intScheme.deltaT + 1;}
+\DoxyCodeLine{482 }
+\DoxyCodeLine{483     \textcolor{keywordflow}{if} ( savFile.getDims(\textcolor{stringliteral}{"{}RT/TIME"{}})[0] != maxPoints )}
+\DoxyCodeLine{484       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Mismatched requested and saved propagation length!"{}});}
+\DoxyCodeLine{485 }
+\DoxyCodeLine{486     \textcolor{comment}{// Restore time dependent density}}
+\DoxyCodeLine{487     \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{488       savFile.readData(\textcolor{stringliteral}{"{}RT/TD\_1PDM"{}}, *propagator\_.onePDM);}
+\DoxyCodeLine{489       savFile.readData(\textcolor{stringliteral}{"{}RT/TD\_1PDM\_ORTHO"{}}, *propagator\_.onePDMOrtho);}
+\DoxyCodeLine{490     \} \textcolor{keywordflow}{catch}(...) \{ \}}
+\DoxyCodeLine{491 }
+\DoxyCodeLine{492     \textcolor{comment}{// Find last time step that was checkpointed}}
+\DoxyCodeLine{493     \textcolor{keywordtype}{double}* timeData = memManager\_.template malloc<double>(maxPoints);}
+\DoxyCodeLine{494     savFile.readData(\textcolor{stringliteral}{"{}RT/TIME"{}}, timeData);}
+\DoxyCodeLine{495     \textcolor{keywordtype}{int} offset = *timeData < 1e-\/10 ? -\/1 : 0;}
+\DoxyCodeLine{496     \textcolor{keywordtype}{size\_t} restoreStep = offset + std::distance( timeData, }
+\DoxyCodeLine{497       std::find\_if( timeData+1, timeData+maxPoints,}
+\DoxyCodeLine{498         [](\textcolor{keywordtype}{double} x)\{ \textcolor{keywordflow}{return} x < 1e-\/10; \}}
+\DoxyCodeLine{499       )}
+\DoxyCodeLine{500     );}
+\DoxyCodeLine{501     memManager\_.free(timeData);}
+\DoxyCodeLine{502 }
+\DoxyCodeLine{503     \textcolor{keywordflow}{if}( printLevel > 0 ) \{}
+\DoxyCodeLine{504       std::cout << \textcolor{stringliteral}{"{}  *** Restoring from step "{}} << restoreStep << \textcolor{stringliteral}{"{} ("{}};}
+\DoxyCodeLine{505       std::cout << std::setprecision(4) << restoreStep * intScheme.deltaT;}
+\DoxyCodeLine{506       std::cout << \textcolor{stringliteral}{"{} AU) ***"{}} << std::endl;}
+\DoxyCodeLine{507     \}}
+\DoxyCodeLine{508 }
+\DoxyCodeLine{509     intScheme.restoreStep = restoreStep;}
+\DoxyCodeLine{510 }
+\DoxyCodeLine{511   \}; \textcolor{comment}{// RealTime::restoreState}}
+\DoxyCodeLine{512 }
+\DoxyCodeLine{513 }
+\DoxyCodeLine{514   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }\_SSTyp, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{515   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime_ac16bbb3bf0d82d7099036dd83acb0bc7}{RealTime<\_SSTyp,IntsT>::saveState}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert\_t) \{}
+\DoxyCodeLine{516     }
+\DoxyCodeLine{517 }
+\DoxyCodeLine{518     data.Time.push\_back(curState.xTime);}
+\DoxyCodeLine{519     data.Energy.push\_back(propagator\_.totalEnergy);}
+\DoxyCodeLine{520     data.ElecDipole.push\_back(propagator\_.elecDipole);}
+\DoxyCodeLine{521     \textcolor{keywordflow}{if}( pert\_t.\mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a334b7e02e9a15019cff48f1dc70b1bfd}{fields}}.size() > 0 )}
+\DoxyCodeLine{522       data.ElecDipoleField.push\_back( pert\_t.\mbox{\hyperlink{structChronusQ_1_1EMPerturbation_a074c4e7a01eb60481943b4c96a9c9749}{getDipoleAmp}}(\mbox{\hyperlink{namespaceChronusQ_a835c683852c41dbda49a81d46ec94fd9affb099f0286d43119e7134902486543e}{Electric}}) );}
+\DoxyCodeLine{523 }
+\DoxyCodeLine{524     \textcolor{comment}{// Write to file}}
+\DoxyCodeLine{525     \textcolor{keywordflow}{if}( savFile.exists() ) \{}
+\DoxyCodeLine{526 }
+\DoxyCodeLine{527       hsize\_t nSteps = 0;}
+\DoxyCodeLine{528       \textcolor{keywordtype}{size\_t} maxStep = (size\_t)((intScheme.tMax + intScheme.deltaT/4)/intScheme.deltaT);}
+\DoxyCodeLine{529 }
+\DoxyCodeLine{530       \textcolor{keywordflow}{if} (curState.iStep \% intScheme.iSave == 0 }
+\DoxyCodeLine{531           and curState.iStep != intScheme.restoreStep)}
+\DoxyCodeLine{532         nSteps = intScheme.iSave;}
+\DoxyCodeLine{533       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( curState.iStep == maxStep )}
+\DoxyCodeLine{534         nSteps = (curState.iStep -\/ intScheme.restoreStep) \% intScheme.iSave + 1;}
+\DoxyCodeLine{535 }
+\DoxyCodeLine{536       hsize\_t lastPos = curState.iStep -\/ nSteps + 1;}
+\DoxyCodeLine{537       hsize\_t memLastPos = data.Time.size() -\/ nSteps;}
+\DoxyCodeLine{538 }
+\DoxyCodeLine{539       \textcolor{keywordflow}{if} (nSteps != 0) \{}
+\DoxyCodeLine{540         \textcolor{keywordflow}{if}( printLevel > 0 )}
+\DoxyCodeLine{541           std::cout << \textcolor{stringliteral}{"{}  *** Saving data to binary file ***"{}} << std::endl;}
+\DoxyCodeLine{542         savFile.partialWriteData(\textcolor{stringliteral}{"{}RT/TIME"{}}, \&data.Time[0], \{lastPos\},}
+\DoxyCodeLine{543             \{nSteps\}, \{memLastPos\}, \{data.Time.size()\});}
+\DoxyCodeLine{544         savFile.partialWriteData(\textcolor{stringliteral}{"{}RT/ENERGY"{}}, \&data.Energy[0], \{lastPos\},}
+\DoxyCodeLine{545             \{nSteps\}, \{memLastPos\}, \{data.Time.size()\});}
+\DoxyCodeLine{546         savFile.partialWriteData(\textcolor{stringliteral}{"{}RT/LEN\_ELEC\_DIPOLE"{}}, \&data.ElecDipole[0][0],}
+\DoxyCodeLine{547           \{lastPos, 0\}, \{nSteps, 3\}, \{memLastPos, 0\}, \{data.Time.size(), 3\});}
+\DoxyCodeLine{548 }
+\DoxyCodeLine{549         \textcolor{keywordflow}{if}( data.ElecDipoleField.size() > 0 )}
+\DoxyCodeLine{550           savFile.partialWriteData(\textcolor{stringliteral}{"{}RT/LEN\_ELEC\_DIPOLE\_FIELD"{}},}
+\DoxyCodeLine{551             \&data.ElecDipoleField[0][0], \{lastPos,0\}, \{nSteps,3\},}
+\DoxyCodeLine{552             \{memLastPos, 0\}, \{data.Time.size(), 3\});}
+\DoxyCodeLine{553 }
+\DoxyCodeLine{554         savFile.safeWriteData(\textcolor{stringliteral}{"{}RT/TD\_1PDM"{}}, *propagator\_.onePDM);}
+\DoxyCodeLine{555         \textcolor{keywordflow}{if} ( curState.curStep == \mbox{\hyperlink{namespaceChronusQ_a7a47a9b6cfd485ee01deb10204bb013ba9d5fa5e7c5db84bc91f63e8f0fd6b5f4}{ModifiedMidpoint}} )}
+\DoxyCodeLine{556           savFile.safeWriteData(\textcolor{stringliteral}{"{}RT/TD\_1PDM\_ORTHO"{}},*DOSav[0]);}
+\DoxyCodeLine{557         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{558           savFile.safeWriteData(\textcolor{stringliteral}{"{}RT/TD\_1PDM\_ORTHO"{}},*propagator\_.onePDMOrtho);}
+\DoxyCodeLine{559       \}}
+\DoxyCodeLine{560     \}}
+\DoxyCodeLine{561   \}; \textcolor{comment}{// RealTime::saveState}}
+\DoxyCodeLine{562 }
+\DoxyCodeLine{563   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }\_SSTyp, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{564   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime}{RealTime<\_SSTyp,IntsT>::orbitalPop}}() \{}
+\DoxyCodeLine{565 }
+\DoxyCodeLine{566     \textcolor{comment}{// Spin-\/Gather Ortho Density}}
+\DoxyCodeLine{567     std::vector<SquareMatrix<dcomplex>> orthoDen;}
+\DoxyCodeLine{568     \textcolor{keywordflow}{if}( propagator\_.nC == 1 )\{}
+\DoxyCodeLine{569        orthoDen = propagator\_.onePDMOrtho-\/>template spinGatherToBlocks<dcomplex>(\textcolor{keyword}{false});}
+\DoxyCodeLine{570     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{571        orthoDen.push\_back(propagator\_.onePDMOrtho-\/>template spinGather<dcomplex>());}
+\DoxyCodeLine{572     \}}
+\DoxyCodeLine{573 }
+\DoxyCodeLine{574     \textcolor{comment}{// Transform a copy of the MOs because}}
+\DoxyCodeLine{575     std::vector<SquareMatrix<dcomplex>> orthoMO = propagator\_.mo;}
+\DoxyCodeLine{576 }
+\DoxyCodeLine{577     propagator\_.orthoAB-\/>nonortho2orthoCoeffs(orthoMO);}
+\DoxyCodeLine{578 }
+\DoxyCodeLine{579     \textcolor{comment}{// Transform alpha Density and compute populations}}
+\DoxyCodeLine{580     \textcolor{keywordtype}{size\_t} NB = orthoMO[0].dimension();}
+\DoxyCodeLine{581     std::vector<double> population;}
+\DoxyCodeLine{582     std::vector<SquareMatrix<dcomplex>> moDen;}
+\DoxyCodeLine{583     moDen.push\_back( orthoDen[0].transform(\textcolor{charliteral}{'N'},orthoMO[0].pointer(),NB,NB) );}
+\DoxyCodeLine{584     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=0; i<NB; ++i)}
+\DoxyCodeLine{585         population.push\_back( std::real(moDen[0](i,i)) );}
+\DoxyCodeLine{586 }
+\DoxyCodeLine{587     \textcolor{comment}{// UHF Beta populations}}
+\DoxyCodeLine{588     \textcolor{keywordflow}{if}( propagator\_.nC == 1 and not propagator\_.iCS )\{}
+\DoxyCodeLine{589       moDen.push\_back( orthoDen[1].transform(\textcolor{charliteral}{'N'},orthoMO[1].pointer(),NB,NB) );}
+\DoxyCodeLine{590       \textcolor{keywordflow}{for}( \textcolor{keywordtype}{size\_t} i=0; i<NB; ++i)}
+\DoxyCodeLine{591           population.push\_back( std::real(moDen[1](i,i)) );}
+\DoxyCodeLine{592     \}}
+\DoxyCodeLine{593           }
+\DoxyCodeLine{594     \textcolor{keywordflow}{if}( savFile.exists() ) \{}
+\DoxyCodeLine{595       \textcolor{keywordtype}{size\_t} fullDim  = population.size();}
+\DoxyCodeLine{596       hsize\_t location = curState.iStep / this-\/>orbitalPopFreq;}
+\DoxyCodeLine{597       savFile.partialWriteData(\textcolor{stringliteral}{"{}RT/ORBITALPOPULATION"{}}, population.data(),}
+\DoxyCodeLine{598         \{location, 0\}, \{1, fullDim\}, \{0, 0\}, \{1, fullDim\});}
+\DoxyCodeLine{599     \}}
+\DoxyCodeLine{600 }
+\DoxyCodeLine{601     \textcolor{comment}{// Printing }}
+\DoxyCodeLine{602     \textcolor{keywordflow}{if}( this-\/>printLevel > 1 ) \{}
+\DoxyCodeLine{603 }
+\DoxyCodeLine{604       \textcolor{keywordtype}{size\_t} orbPerRow = 5;}
+\DoxyCodeLine{605       \textcolor{keyword}{auto} printBlock = [\&](std::string header, \textcolor{keywordtype}{size\_t}\& start, \textcolor{keywordtype}{size\_t} n)\{}
+\DoxyCodeLine{606         std::cout << header << std::endl;}
+\DoxyCodeLine{607         std::cout << std::fixed << std::setprecision(11);}
+\DoxyCodeLine{608         }
+\DoxyCodeLine{609         \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} idx = 0; idx < n; idx += orbPerRow) \{}
+\DoxyCodeLine{610 }
+\DoxyCodeLine{611           \textcolor{keywordtype}{size\_t} end = idx + orbPerRow < n ? orbPerRow : n -\/ idx;}
+\DoxyCodeLine{612           \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} idummy = idx; idummy < idx+end; idummy++) \{}
+\DoxyCodeLine{613             std::cout << std::setw(15) << population[start+idummy];}
+\DoxyCodeLine{614           \}}
+\DoxyCodeLine{615           std::cout << \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{616         \}}
+\DoxyCodeLine{617         start += n;}
+\DoxyCodeLine{618       \};}
+\DoxyCodeLine{619 }
+\DoxyCodeLine{620       \textcolor{keywordflow}{if}( this-\/>printLevel > 3 )\{}
+\DoxyCodeLine{621         moDen[0].output(std::cout, \textcolor{stringliteral}{"{}MO Density Matrix"{}}, \textcolor{keyword}{true});}
+\DoxyCodeLine{622         \textcolor{keywordflow}{if}( propagator\_.nC == 1 and not propagator\_.iCS ) }
+\DoxyCodeLine{623             moDen[1].output(std::cout, \textcolor{stringliteral}{"{}MO Beta Density Matrix"{}}, \textcolor{keyword}{true});}
+\DoxyCodeLine{624       \}}
+\DoxyCodeLine{625 }
+\DoxyCodeLine{626       \textcolor{keywordtype}{size\_t} start = 0;}
+\DoxyCodeLine{627       \textcolor{keywordflow}{if}( propagator\_.nC == 1 ) \{}
+\DoxyCodeLine{628         printBlock(\textcolor{stringliteral}{"{}Alpha occupied orbitals"{}}, start, propagator\_.nOA);}
+\DoxyCodeLine{629         printBlock(\textcolor{stringliteral}{"{}Alpha virtual orbitals"{}}, start, propagator\_.nVA);}
+\DoxyCodeLine{630         \textcolor{keywordflow}{if}( not propagator\_.iCS )\{}
+\DoxyCodeLine{631           printBlock(\textcolor{stringliteral}{"{}Beta occupied orbitals"{}}, start, propagator\_.nOB);}
+\DoxyCodeLine{632           printBlock(\textcolor{stringliteral}{"{}Beta virtual orbitals"{}}, start, propagator\_.nVB);}
+\DoxyCodeLine{633         \}}
+\DoxyCodeLine{634       \}}
+\DoxyCodeLine{635       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( propagator\_.nC == 2 )\{}
+\DoxyCodeLine{636         printBlock(\textcolor{stringliteral}{"{}Occupied orbitals"{}}, start, propagator\_.nO);}
+\DoxyCodeLine{637         printBlock(\textcolor{stringliteral}{"{}Virtual orbitals"{}}, start, propagator\_.nV);}
+\DoxyCodeLine{638       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( propagator\_.nC == 4 )\{}
+\DoxyCodeLine{639         start += NB/2;}
+\DoxyCodeLine{640         printBlock(\textcolor{stringliteral}{"{}Positive Energy Occupied orbitals"{}}, start, propagator\_.nO);}
+\DoxyCodeLine{641         printBlock(\textcolor{stringliteral}{"{}Positive Energy Virtual orbitals"{}}, start, propagator\_.nV);}
+\DoxyCodeLine{642       \}}
+\DoxyCodeLine{643       std::cout << std::flush;}
+\DoxyCodeLine{644     \}}
+\DoxyCodeLine{645 }
+\DoxyCodeLine{646   \}; \textcolor{comment}{// RealTime :: orbitalPop}}
+\DoxyCodeLine{647 }
+\DoxyCodeLine{648   \textcolor{comment}{/*}}
+\DoxyCodeLine{649 \textcolor{comment}{  template <template <typename, typename> class \_SSTyp, typename IntsT>}}
+\DoxyCodeLine{650 \textcolor{comment}{  void RealTime<\_SSTyp,IntsT>::orbitalPop() \{ }}
+\DoxyCodeLine{651 \textcolor{comment}{}}
+\DoxyCodeLine{652 \textcolor{comment}{    bool unrestricted = (propagator\_.mo.size() > 1);}}
+\DoxyCodeLine{653 \textcolor{comment}{    bool twocomp = (propagator\_.nC == 2);}}
+\DoxyCodeLine{654 \textcolor{comment}{}}
+\DoxyCodeLine{655 \textcolor{comment}{    // Gather the orthonormal density into the full spinor form}}
+\DoxyCodeLine{656 \textcolor{comment}{    auto fullDen = propagator\_.onePDMOrtho-\/>template spinGather<dcomplex>();}}
+\DoxyCodeLine{657 \textcolor{comment}{}}
+\DoxyCodeLine{658 \textcolor{comment}{    if( propagator\_.nC > 2 ) \{}}
+\DoxyCodeLine{659 \textcolor{comment}{      CErr("{}Real time orbital population not implemented for > 2c"{});}}
+\DoxyCodeLine{660 \textcolor{comment}{    \}}}
+\DoxyCodeLine{661 \textcolor{comment}{}}
+\DoxyCodeLine{662 \textcolor{comment}{    //}}
+\DoxyCodeLine{663 \textcolor{comment}{    // Form the ortho to MO transform in the full spinor form}}
+\DoxyCodeLine{664 \textcolor{comment}{    //}}
+\DoxyCodeLine{665 \textcolor{comment}{    }}
+\DoxyCodeLine{666 \textcolor{comment}{    // Allocation}}
+\DoxyCodeLine{667 \textcolor{comment}{    size\_t fullDim = fullDen.dimension();}}
+\DoxyCodeLine{668 \textcolor{comment}{    SquareMatrix<dcomplex> orthoTrans(memManager\_, fullDim); }}
+\DoxyCodeLine{669 \textcolor{comment}{    orthoTrans.clear();}}
+\DoxyCodeLine{670 \textcolor{comment}{    auto\& mos = propagator\_.mo;}}
+\DoxyCodeLine{671 \textcolor{comment}{}}
+\DoxyCodeLine{672 \textcolor{comment}{    size\_t moDim = mos[0].dimension();}}
+\DoxyCodeLine{673 \textcolor{comment}{    auto bbOffset = 2*moDim*moDim + moDim;}}
+\DoxyCodeLine{674 \textcolor{comment}{}}
+\DoxyCodeLine{675 \textcolor{comment}{    // Transform AO MO to ortho MO}}
+\DoxyCodeLine{676 \textcolor{comment}{    dcomplex* ortho = propagator\_.ortho[1].pointer();}}
+\DoxyCodeLine{677 \textcolor{comment}{    size\_t orthoDim = propagator\_.ortho[1].dimension();}}
+\DoxyCodeLine{678 \textcolor{comment}{    std::vector<dcomplex*> moPointers;}}
+\DoxyCodeLine{679 \textcolor{comment}{    std::vector<dcomplex*> outPointers;}}
+\DoxyCodeLine{680 \textcolor{comment}{    for(auto i = 0; i < mos.size(); i++) \{}}
+\DoxyCodeLine{681 \textcolor{comment}{      moPointers.push\_back(mos[i].pointer());}}
+\DoxyCodeLine{682 \textcolor{comment}{      outPointers.push\_back(orthoTrans.pointer() + i*bbOffset);}}
+\DoxyCodeLine{683 \textcolor{comment}{    \}}}
+\DoxyCodeLine{684 \textcolor{comment}{    if(propagator\_.iCS) \{}}
+\DoxyCodeLine{685 \textcolor{comment}{      moPointers.push\_back(mos[0].pointer());}}
+\DoxyCodeLine{686 \textcolor{comment}{      outPointers.push\_back(orthoTrans.pointer() + bbOffset);}}
+\DoxyCodeLine{687 \textcolor{comment}{    \}}}
+\DoxyCodeLine{688 \textcolor{comment}{}}
+\DoxyCodeLine{689 \textcolor{comment}{    TransformLeft(orthoDim, moDim, orthoDim, moDim, dcomplex(1.), ortho, orthoDim,}}
+\DoxyCodeLine{690 \textcolor{comment}{      moPointers, moDim, (dcomplex*)nullptr, outPointers, fullDim);}}
+\DoxyCodeLine{691 \textcolor{comment}{}}
+\DoxyCodeLine{692 \textcolor{comment}{    // Transform the orthonormal density into the MO basis}}
+\DoxyCodeLine{693 \textcolor{comment}{    SquareMatrix<dcomplex> moDen = fullDen.transform('N', orthoTrans.pointer(),}}
+\DoxyCodeLine{694 \textcolor{comment}{      fullDim, fullDim);}}
+\DoxyCodeLine{695 \textcolor{comment}{}}
+\DoxyCodeLine{696 \textcolor{comment}{    std::vector<double> population;}}
+\DoxyCodeLine{697 \textcolor{comment}{    for(auto i = 0; i < fullDim; i++) \{}}
+\DoxyCodeLine{698 \textcolor{comment}{      population.push\_back(std::real(moDen(i,i)));}}
+\DoxyCodeLine{699 \textcolor{comment}{    \}}}
+\DoxyCodeLine{700 \textcolor{comment}{}}
+\DoxyCodeLine{701 \textcolor{comment}{    if( savFile.exists() ) \{}}
+\DoxyCodeLine{702 \textcolor{comment}{      hsize\_t location = curState.iStep / this-\/>orbitalPopFreq;}}
+\DoxyCodeLine{703 \textcolor{comment}{      savFile.partialWriteData("{}RT/ORBITALPOPULATION"{}, population.data(),}}
+\DoxyCodeLine{704 \textcolor{comment}{        \{location, 0\}, \{1, fullDim\}, \{0, 0\}, \{1, fullDim\});}}
+\DoxyCodeLine{705 \textcolor{comment}{    \}}}
+\DoxyCodeLine{706 \textcolor{comment}{}}
+\DoxyCodeLine{707 \textcolor{comment}{    // Printing }}
+\DoxyCodeLine{708 \textcolor{comment}{    if( this-\/>printLevel > 1 ) \{}}
+\DoxyCodeLine{709 \textcolor{comment}{}}
+\DoxyCodeLine{710 \textcolor{comment}{      size\_t orbPerRow = 5;}}
+\DoxyCodeLine{711 \textcolor{comment}{      auto printBlock = [\&](std::string header, size\_t\& start, size\_t n)\{}}
+\DoxyCodeLine{712 \textcolor{comment}{        std::cout << header << std::endl;}}
+\DoxyCodeLine{713 \textcolor{comment}{        std::cout << std::fixed << std::setprecision(11);}}
+\DoxyCodeLine{714 \textcolor{comment}{        }}
+\DoxyCodeLine{715 \textcolor{comment}{        for(auto idx = 0; idx < n; idx += orbPerRow) \{}}
+\DoxyCodeLine{716 \textcolor{comment}{}}
+\DoxyCodeLine{717 \textcolor{comment}{          size\_t end = idx + orbPerRow < n ? orbPerRow : n -\/ idx;}}
+\DoxyCodeLine{718 \textcolor{comment}{          for(auto idummy = idx; idummy < idx+end; idummy++) \{}}
+\DoxyCodeLine{719 \textcolor{comment}{            std::cout << std::setw(15) << population[start+idummy];}}
+\DoxyCodeLine{720 \textcolor{comment}{          \}}}
+\DoxyCodeLine{721 \textcolor{comment}{          std::cout << '\(\backslash\)n';}}
+\DoxyCodeLine{722 \textcolor{comment}{        \}}}
+\DoxyCodeLine{723 \textcolor{comment}{        start += n;}}
+\DoxyCodeLine{724 \textcolor{comment}{      \};}}
+\DoxyCodeLine{725 \textcolor{comment}{}}
+\DoxyCodeLine{726 \textcolor{comment}{      if( this-\/>printLevel > 3 )}}
+\DoxyCodeLine{727 \textcolor{comment}{        moDen.output(std::cout, "{}MO Density Matrix"{}, true);}}
+\DoxyCodeLine{728 \textcolor{comment}{}}
+\DoxyCodeLine{729 \textcolor{comment}{      size\_t start = 0;}}
+\DoxyCodeLine{730 \textcolor{comment}{      if( not twocomp ) \{}}
+\DoxyCodeLine{731 \textcolor{comment}{        printBlock("{}Alpha occupied orbitals"{}, start, propagator\_.nOA);}}
+\DoxyCodeLine{732 \textcolor{comment}{        printBlock("{}Alpha virtual orbitals"{}, start, propagator\_.nVA);}}
+\DoxyCodeLine{733 \textcolor{comment}{        printBlock("{}Beta occupied orbitals"{}, start, propagator\_.nOB);}}
+\DoxyCodeLine{734 \textcolor{comment}{        printBlock("{}Beta virtual orbitals"{}, start, propagator\_.nVB);}}
+\DoxyCodeLine{735 \textcolor{comment}{      \}}}
+\DoxyCodeLine{736 \textcolor{comment}{      else \{}}
+\DoxyCodeLine{737 \textcolor{comment}{        printBlock("{}Occupied orbitals"{}, start, propagator\_.nO);}}
+\DoxyCodeLine{738 \textcolor{comment}{        printBlock("{}Virtual orbitals"{}, start, propagator\_.nV);}}
+\DoxyCodeLine{739 \textcolor{comment}{      \}}}
+\DoxyCodeLine{740 \textcolor{comment}{      std::cout << std::flush;}}
+\DoxyCodeLine{741 \textcolor{comment}{    \}}}
+\DoxyCodeLine{742 \textcolor{comment}{}}
+\DoxyCodeLine{743 \textcolor{comment}{  \};}}
+\DoxyCodeLine{744 \textcolor{comment}{*/}}
+\DoxyCodeLine{745 }
+\DoxyCodeLine{746 }
+\DoxyCodeLine{747   \textcolor{keyword}{template} <\textcolor{keyword}{template} <\textcolor{keyword}{typename}, \textcolor{keyword}{typename}> \textcolor{keyword}{class }\_SSTyp, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{748   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1RealTime}{RealTime<\_SSTyp,IntsT>::updateAOProperties}}(\textcolor{keywordtype}{double} currentTime) \{}
+\DoxyCodeLine{749     \textcolor{comment}{// Form AO density}}
+\DoxyCodeLine{750     \textcolor{comment}{//propagator\_.computeOrtho();}}
+\DoxyCodeLine{751     \textcolor{comment}{//propagator\_.ortho2aoDen();}}
+\DoxyCodeLine{752     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} idx = 0; idx < systems\_.size(); idx++) \{}
+\DoxyCodeLine{753       systems\_[idx]-\/>computeOrtho();}
+\DoxyCodeLine{754       systems\_[idx]-\/>ortho2aoDen();}
+\DoxyCodeLine{755       systems\_[idx]-\/>ortho2aoMOs();}
+\DoxyCodeLine{756     \}}
+\DoxyCodeLine{757 }
+\DoxyCodeLine{758 }
+\DoxyCodeLine{759     \textcolor{comment}{// Form fock matrix}}
+\DoxyCodeLine{760     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} idx = 0; idx < systems\_.size(); idx++) \{}
+\DoxyCodeLine{761       this-\/>formFock(\textcolor{keyword}{false},currentTime,idx);}
+\DoxyCodeLine{762     \}}
+\DoxyCodeLine{763     \textcolor{comment}{// Compute properties}}
+\DoxyCodeLine{764     \mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} pert\_t = pert.getPert(currentTime);}
+\DoxyCodeLine{765     propagator\_.computeProperties(pert\_t);}
+\DoxyCodeLine{766     \textcolor{comment}{// Print progress line in the output file}}
+\DoxyCodeLine{767     \textcolor{comment}{// printRTStep();}}
+\DoxyCodeLine{768 }
+\DoxyCodeLine{769 }
+\DoxyCodeLine{770   \}; \textcolor{comment}{// RealTime::updateAOProperties}}
+\DoxyCodeLine{771 }
+\DoxyCodeLine{772 \}; \textcolor{comment}{// namespace ChronusQ}}
+\DoxyCodeLine{773 }
+
+\end{DoxyCode}

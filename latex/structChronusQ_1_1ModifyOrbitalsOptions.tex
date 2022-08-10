@@ -1,0 +1,165 @@
+\hypertarget{structChronusQ_1_1ModifyOrbitalsOptions}{}\doxysection{ChronusQ\+::Modify\+Orbitals\+Options\texorpdfstring{$<$}{<} MatsT \texorpdfstring{$>$}{>} Struct Template Reference}
+\label{structChronusQ_1_1ModifyOrbitalsOptions}\index{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}}
+
+
+{\ttfamily \#include $<$modifyorbitals.\+hpp$>$}
+
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::function$<$ void()$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_ada392bdf25eda6d3512e67b6ecbcd018}{print\+Properties}}
+\begin{DoxyCompactList}\small\item\em Prints the properties after completion of SCF. \end{DoxyCompactList}\item 
+std\+::function$<$ void()$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a57a17d03f0b7f0e5c3fd2de8cf3d5a02}{save\+Current\+State}}
+\begin{DoxyCompactList}\small\item\em Saves the current State to Disk. \end{DoxyCompactList}\item 
+std\+::function$<$ void(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&)$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_ac301fd7011583db76139935398290a0f}{form\+Fock}}
+\begin{DoxyCompactList}\small\item\em Form the Fock Matrix. \end{DoxyCompactList}\item 
+std\+::function$<$ void(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}} \&)$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_abb20608f85f436a74c7da7ca347447e5}{compute\+Properties}}
+\begin{DoxyCompactList}\small\item\em Compute Implemented Properties. \end{DoxyCompactList}\item 
+std\+::function$<$ void()$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a3f10e90c5dc9e7d61191331df3982aa2}{form\+Density}}
+\begin{DoxyCompactList}\small\item\em Form the Density. \end{DoxyCompactList}\item 
+std\+::function$<$ double()$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a91bccfe42853cd14c08e29493d068d3c}{get\+Total\+Energy}}
+\begin{DoxyCompactList}\small\item\em Returns the energy for Convergence test. \end{DoxyCompactList}\item 
+std\+::function$<$ \mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{Vec\+Shrd\+Ptr\+Mat}}$<$ MatsT $>$()$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a8814e73a7408fc22e0708d1c2c14d3f5}{get\+Fock}}
+\begin{DoxyCompactList}\small\item\em Returns a vector of shared\+\_\+ptr to the fock Matrix(same basis as MOs) \end{DoxyCompactList}\item 
+std\+::function$<$ \mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{Vec\+Shrd\+Ptr\+Mat}}$<$ MatsT $>$()$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a65cade7a3ea16a0db76b413a60df68ee}{get\+One\+PDM}}
+\begin{DoxyCompactList}\small\item\em Returns a vector of shared\+\_\+ptr to density matrix(same basis as MOs) \end{DoxyCompactList}\item 
+std\+::function$<$ \mbox{\hyperlink{namespaceChronusQ_a71ad93b60c8da083001c53826c18cbdc}{Vec\+Shrd\+Ptr\+Ortho}}$<$ MatsT $>$()$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a6a960dc0c5219558ad1f0eb110f813ce}{get\+Ortho}}
+\begin{DoxyCompactList}\small\item\em Returns a vector to the orthogonalization object(same basis as MOs) \end{DoxyCompactList}\item 
+std\+::function$<$ void(MatsT $\ast$)$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a9d03f460479af8c27f93740658d92131}{compute\+Full\+NRStep}}
+\begin{DoxyCompactList}\small\item\em Function to compute the full Newton-\/\+Raphson step if Hessian isn\textquotesingle{}t implemented call CErr. \end{DoxyCompactList}\item 
+std\+::function$<$ void(MatsT $\ast$)$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_ad215ed88621a190e26d8e10b2f811ba2}{compute\+NROrb\+Grad}}
+\item 
+std\+::function$<$ void(std\+::vector$<$ \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$ MatsT $>$ $>$ \&)$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a995b112e8cc401b2c1903d9b276ba5fd}{compute\+Error\+Vector}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structChronusQ_1_1ModifyOrbitalsOptions_a995b112e8cc401b2c1903d9b276ba5fd}\label{structChronusQ_1_1ModifyOrbitalsOptions_a995b112e8cc401b2c1903d9b276ba5fd}} 
+\index{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}!computeErrorVector@{computeErrorVector}}
+\index{computeErrorVector@{computeErrorVector}!ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeErrorVector}{computeErrorVector}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::function$<$void(std\+::vector$<$\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{Square\+Matrix}}$<$MatsT$>$$>$\&)$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Chronus\+Q\+::\+Modify\+Orbitals\+Options}}$<$ MatsT $>$\+::compute\+Error\+Vector}
+
+Computes the Orbital Gradient in the AO Basis this replaces the F,D Commutator function in \mbox{\hyperlink{classChronusQ_1_1ConventionalSCF}{Conventional\+SCF}} \mbox{\Hypertarget{structChronusQ_1_1ModifyOrbitalsOptions_a9d03f460479af8c27f93740658d92131}\label{structChronusQ_1_1ModifyOrbitalsOptions_a9d03f460479af8c27f93740658d92131}} 
+\index{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}!computeFullNRStep@{computeFullNRStep}}
+\index{computeFullNRStep@{computeFullNRStep}!ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeFullNRStep}{computeFullNRStep}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::function$<$void(MatsT$\ast$)$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Chronus\+Q\+::\+Modify\+Orbitals\+Options}}$<$ MatsT $>$\+::compute\+Full\+NRStep}
+
+
+
+Function to compute the full Newton-\/\+Raphson step if Hessian isn\textquotesingle{}t implemented call CErr. 
+
+\mbox{\Hypertarget{structChronusQ_1_1ModifyOrbitalsOptions_ad215ed88621a190e26d8e10b2f811ba2}\label{structChronusQ_1_1ModifyOrbitalsOptions_ad215ed88621a190e26d8e10b2f811ba2}} 
+\index{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}!computeNROrbGrad@{computeNROrbGrad}}
+\index{computeNROrbGrad@{computeNROrbGrad}!ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeNROrbGrad}{computeNROrbGrad}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::function$<$void(MatsT$\ast$)$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Chronus\+Q\+::\+Modify\+Orbitals\+Options}}$<$ MatsT $>$\+::compute\+NROrb\+Grad}
+
+Computes and returns the Orbital Gradient in the Nonredundant Basis this replaces the gradient function in \mbox{\hyperlink{classChronusQ_1_1NewtonRaphsonSCF}{Newton\+Raphson\+SCF}} if an approximation is being used \mbox{\Hypertarget{structChronusQ_1_1ModifyOrbitalsOptions_abb20608f85f436a74c7da7ca347447e5}\label{structChronusQ_1_1ModifyOrbitalsOptions_abb20608f85f436a74c7da7ca347447e5}} 
+\index{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}!computeProperties@{computeProperties}}
+\index{computeProperties@{computeProperties}!ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{computeProperties}{computeProperties}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::function$<$void(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&)$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Chronus\+Q\+::\+Modify\+Orbitals\+Options}}$<$ MatsT $>$\+::compute\+Properties}
+
+
+
+Compute Implemented Properties. 
+
+\mbox{\Hypertarget{structChronusQ_1_1ModifyOrbitalsOptions_a3f10e90c5dc9e7d61191331df3982aa2}\label{structChronusQ_1_1ModifyOrbitalsOptions_a3f10e90c5dc9e7d61191331df3982aa2}} 
+\index{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}!formDensity@{formDensity}}
+\index{formDensity@{formDensity}!ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{formDensity}{formDensity}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::function$<$void()$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Chronus\+Q\+::\+Modify\+Orbitals\+Options}}$<$ MatsT $>$\+::form\+Density}
+
+
+
+Form the Density. 
+
+\mbox{\Hypertarget{structChronusQ_1_1ModifyOrbitalsOptions_ac301fd7011583db76139935398290a0f}\label{structChronusQ_1_1ModifyOrbitalsOptions_ac301fd7011583db76139935398290a0f}} 
+\index{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}!formFock@{formFock}}
+\index{formFock@{formFock}!ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{formFock}{formFock}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::function$<$void(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\&)$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Chronus\+Q\+::\+Modify\+Orbitals\+Options}}$<$ MatsT $>$\+::form\+Fock}
+
+
+
+Form the Fock Matrix. 
+
+\mbox{\Hypertarget{structChronusQ_1_1ModifyOrbitalsOptions_a8814e73a7408fc22e0708d1c2c14d3f5}\label{structChronusQ_1_1ModifyOrbitalsOptions_a8814e73a7408fc22e0708d1c2c14d3f5}} 
+\index{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}!getFock@{getFock}}
+\index{getFock@{getFock}!ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{getFock}{getFock}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::function$<$\mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{Vec\+Shrd\+Ptr\+Mat}}$<$MatsT$>$()$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Chronus\+Q\+::\+Modify\+Orbitals\+Options}}$<$ MatsT $>$\+::get\+Fock}
+
+
+
+Returns a vector of shared\+\_\+ptr to the fock Matrix(same basis as MOs) 
+
+\mbox{\Hypertarget{structChronusQ_1_1ModifyOrbitalsOptions_a65cade7a3ea16a0db76b413a60df68ee}\label{structChronusQ_1_1ModifyOrbitalsOptions_a65cade7a3ea16a0db76b413a60df68ee}} 
+\index{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}!getOnePDM@{getOnePDM}}
+\index{getOnePDM@{getOnePDM}!ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{getOnePDM}{getOnePDM}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::function$<$\mbox{\hyperlink{namespaceChronusQ_a1f950d2f32f624ec6a6418f3493941ff}{Vec\+Shrd\+Ptr\+Mat}}$<$MatsT$>$()$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Chronus\+Q\+::\+Modify\+Orbitals\+Options}}$<$ MatsT $>$\+::get\+One\+PDM}
+
+
+
+Returns a vector of shared\+\_\+ptr to density matrix(same basis as MOs) 
+
+\mbox{\Hypertarget{structChronusQ_1_1ModifyOrbitalsOptions_a6a960dc0c5219558ad1f0eb110f813ce}\label{structChronusQ_1_1ModifyOrbitalsOptions_a6a960dc0c5219558ad1f0eb110f813ce}} 
+\index{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}!getOrtho@{getOrtho}}
+\index{getOrtho@{getOrtho}!ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{getOrtho}{getOrtho}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::function$<$\mbox{\hyperlink{namespaceChronusQ_a71ad93b60c8da083001c53826c18cbdc}{Vec\+Shrd\+Ptr\+Ortho}}$<$MatsT$>$()$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Chronus\+Q\+::\+Modify\+Orbitals\+Options}}$<$ MatsT $>$\+::get\+Ortho}
+
+
+
+Returns a vector to the orthogonalization object(same basis as MOs) 
+
+\mbox{\Hypertarget{structChronusQ_1_1ModifyOrbitalsOptions_a91bccfe42853cd14c08e29493d068d3c}\label{structChronusQ_1_1ModifyOrbitalsOptions_a91bccfe42853cd14c08e29493d068d3c}} 
+\index{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}!getTotalEnergy@{getTotalEnergy}}
+\index{getTotalEnergy@{getTotalEnergy}!ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{getTotalEnergy}{getTotalEnergy}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::function$<$double()$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Chronus\+Q\+::\+Modify\+Orbitals\+Options}}$<$ MatsT $>$\+::get\+Total\+Energy}
+
+
+
+Returns the energy for Convergence test. 
+
+\mbox{\Hypertarget{structChronusQ_1_1ModifyOrbitalsOptions_ada392bdf25eda6d3512e67b6ecbcd018}\label{structChronusQ_1_1ModifyOrbitalsOptions_ada392bdf25eda6d3512e67b6ecbcd018}} 
+\index{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}!printProperties@{printProperties}}
+\index{printProperties@{printProperties}!ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{printProperties}{printProperties}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::function$<$void()$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Chronus\+Q\+::\+Modify\+Orbitals\+Options}}$<$ MatsT $>$\+::print\+Properties}
+
+
+
+Prints the properties after completion of SCF. 
+
+\mbox{\Hypertarget{structChronusQ_1_1ModifyOrbitalsOptions_a57a17d03f0b7f0e5c3fd2de8cf3d5a02}\label{structChronusQ_1_1ModifyOrbitalsOptions_a57a17d03f0b7f0e5c3fd2de8cf3d5a02}} 
+\index{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}!saveCurrentState@{saveCurrentState}}
+\index{saveCurrentState@{saveCurrentState}!ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$@{ChronusQ::ModifyOrbitalsOptions$<$ MatsT $>$}}
+\doxysubsubsection{\texorpdfstring{saveCurrentState}{saveCurrentState}}
+{\footnotesize\ttfamily template$<$typename MatsT $>$ \\
+std\+::function$<$void()$>$ \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{Chronus\+Q\+::\+Modify\+Orbitals\+Options}}$<$ MatsT $>$\+::save\+Current\+State}
+
+
+
+Saves the current State to Disk. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{modifyorbitals_8hpp}{modifyorbitals.\+hpp}}\end{DoxyCompactItemize}

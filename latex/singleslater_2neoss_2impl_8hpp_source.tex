@@ -1,0 +1,403 @@
+\hypertarget{singleslater_2neoss_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{singleslater_2neoss_2impl_8hpp_source}\index{include/singleslater/neoss/impl.hpp@{include/singleslater/neoss/impl.hpp}}
+\mbox{\hyperlink{singleslater_2neoss_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/* }}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *  }}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *  }}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you ca redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *  }}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *  }}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *  }}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *  }}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{singleslater_2neoss_8hpp}{singleslater/neoss.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{neoss_2scf_8hpp}{singleslater/neoss/scf.hpp}}>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{cerr_8hpp}{cerr.hpp}}>}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#define TRY\_REF(\_REF, input, output) \(\backslash\)}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{  if( output == nullptr ) \(\backslash\)}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{    if( auto casted = std::dynamic\_pointer\_cast<\_REF<MatsU,IntsT>>(input) ) \(\backslash\)}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{      output = std::dynamic\_pointer\_cast<SingleSlater<MatsT,IntsT>>( \(\backslash\)}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{        std::make\_shared< \_REF<MatsT,IntsT> >(*casted) \(\backslash\)}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{      );}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39   \textcolor{comment}{// Helper function to handle determining type of subsystem}}
+\DoxyCodeLine{40   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT, \textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{41   std::shared\_ptr<SingleSlater<MatsT,IntsT>> \mbox{\hyperlink{namespaceChronusQ_a7bee28544fd1876184b3be727e1a1624}{makeNewSS}}(\textcolor{keyword}{const} std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsU,IntsT>}}>\& old\_ss) \{}
+\DoxyCodeLine{42     std::shared\_ptr<SingleSlater<MatsT,IntsT>> new\_ss = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \mbox{\hyperlink{singleslater_2neoss_2impl_8hpp_a69e0ea27762a82b23ba0edfe5da54424}{TRY\_REF}}(\mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham}}, old\_ss, new\_ss);}
+\DoxyCodeLine{45     \mbox{\hyperlink{singleslater_2neoss_2impl_8hpp_a69e0ea27762a82b23ba0edfe5da54424}{TRY\_REF}}(\mbox{\hyperlink{classChronusQ_1_1HartreeFock}{HartreeFock}}, old\_ss, new\_ss);}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keywordflow}{if}( new\_ss == \textcolor{keyword}{nullptr} )}
+\DoxyCodeLine{48       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Unrecognized reference in constructing NEOSS!"{}});}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     \textcolor{keywordflow}{return} new\_ss;}
+\DoxyCodeLine{51   \};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{54   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{55   \mbox{\hyperlink{classChronusQ_1_1NEOSS_a4f388644056ac8d5db8c956b9a8d490d}{NEOSS<MatsT,IntsT>::NEOSS}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS<MatsU,IntsT>}}\& other, \textcolor{keywordtype}{int} dummy) :}
+\DoxyCodeLine{56     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>(dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsU,IntsT>\&>(other), dummy),}
+\DoxyCodeLine{57     \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{WaveFunctionBase}}(dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{WaveFunctionBase}}\&>(other)),}
+\DoxyCodeLine{58     \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}}(dynamic\_cast<const \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}}\&>(other)),}
+\DoxyCodeLine{59     order\_(other.order\_), functionals(other.functionals)}
+\DoxyCodeLine{60   \{}
+\DoxyCodeLine{61     \textcolor{comment}{// Loop over all old subsystems}}
+\DoxyCodeLine{62     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& x: other.\mbox{\hyperlink{classChronusQ_1_1NEOSS_a6276f55ec2a4da1dd717f613f7618209}{subsystems}} ) \{}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64       \textcolor{comment}{// Easier to read names}}
+\DoxyCodeLine{65       \textcolor{keyword}{auto}\& label = x.first;}
+\DoxyCodeLine{66       \textcolor{keyword}{auto}\& old\_sys = x.second;}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68       \textcolor{comment}{// Find a non-\/NEO fockbuilder}}
+\DoxyCodeLine{69       \textcolor{keyword}{auto} baseFock = old\_sys-\/>fockBuilder.get();}
+\DoxyCodeLine{70       \textcolor{keywordflow}{if}( \textcolor{keyword}{auto} p = \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{NEOFockBuilder<MatsU,IntsT>}}*\textcolor{keyword}{>}(baseFock) ) \{}
+\DoxyCodeLine{71         baseFock = p-\/>getNonNEOUpstream();}
+\DoxyCodeLine{72       \}}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74       \textcolor{comment}{// Assume just non-\/relativistic Fock here}}
+\DoxyCodeLine{75       \textcolor{comment}{// TODO: Make this general to all fockbuilders}}
+\DoxyCodeLine{76       \textcolor{keyword}{auto} newFock = std::make\_shared<FockBuilder<MatsT,IntsT>>(*baseFock);}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78       \textcolor{comment}{// Get new SingleSlater object}}
+\DoxyCodeLine{79       \mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}} new\_sys = makeNewSS<MatsT>(old\_sys);}
+\DoxyCodeLine{80       new\_sys-\/>fockBuilder = newFock;}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82       \textcolor{comment}{// If we have EPC functionals and this is a nuclear subsystem, add the}}
+\DoxyCodeLine{83       \textcolor{comment}{// functionals (only works for electron/proton systems)}}
+\DoxyCodeLine{84       \textcolor{keywordflow}{if}( old\_sys-\/>particle.charge > 0 ) \{}
+\DoxyCodeLine{85         \textcolor{keywordflow}{if}( \textcolor{keyword}{auto} ks = std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1KohnSham}{KohnSham<MatsU,IntsT>}}>(old\_sys) ) \{}
+\DoxyCodeLine{86           \textcolor{keyword}{auto} new\_ks = std::dynamic\_pointer\_cast<KohnSham<MatsT,IntsT>>(new\_sys);}
+\DoxyCodeLine{87           new\_ks-\/>functionals.insert(new\_ks-\/>functionals.end(), \mbox{\hyperlink{classChronusQ_1_1NEOSS_a2d0e5d4edaa8bf18bb1d7d0fc17b5964}{functionals}}.begin(), \mbox{\hyperlink{classChronusQ_1_1NEOSS_a2d0e5d4edaa8bf18bb1d7d0fc17b5964}{functionals}}.end());}
+\DoxyCodeLine{88         \}}
+\DoxyCodeLine{89       \}}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91       \textcolor{comment}{// Add the new subsystem to the current object}}
+\DoxyCodeLine{92       \mbox{\hyperlink{classChronusQ_1_1NEOSS_a15540fec7c2b614d75e7ac8627574f41}{addSubsystem}}(label, new\_sys, other.\mbox{\hyperlink{classChronusQ_1_1NEOSS_a914e9a2f1878fa8edb1d13e0276fe6ee}{interIntegrals}}.at(label));}
+\DoxyCodeLine{93     \}}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     \textcolor{comment}{// Copy gradient integrals}}
+\DoxyCodeLine{96     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& gradSys1: other.\mbox{\hyperlink{classChronusQ_1_1NEOSS_afc7f69477b7f9f2c276b50886801cb14}{gradInterInts}} ) \{}
+\DoxyCodeLine{97       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& gradSys2: gradSys1.second ) \{}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99         \textcolor{keyword}{auto} label1 = gradSys1.first;}
+\DoxyCodeLine{100         \textcolor{keyword}{auto} label2 = gradSys2.first;}
+\DoxyCodeLine{101         \textcolor{keyword}{auto} intPtr = gradSys2.second.second;}
+\DoxyCodeLine{102         \textcolor{keyword}{auto} contractSecond = gradSys2.second.first;}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104         \mbox{\hyperlink{classChronusQ_1_1NEOSS_a69cb9b0018f2a9cf181643b638a9279e}{addGradientIntegrals}}(label1, label2, intPtr, contractSecond);}
+\DoxyCodeLine{105       \}}
+\DoxyCodeLine{106     \}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108   \}; \textcolor{comment}{// Other type copy constructor}}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{111   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{112   \mbox{\hyperlink{classChronusQ_1_1NEOSS_a4f388644056ac8d5db8c956b9a8d490d}{NEOSS<MatsT,IntsT>::NEOSS}}(\mbox{\hyperlink{classChronusQ_1_1NEOSS}{NEOSS<MatsU,IntsT>}}\&\& other, \textcolor{keywordtype}{int} dummy) :}
+\DoxyCodeLine{113     \mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsT,IntsT>(dynamic\_cast<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater}}<MatsU,IntsT>\&\&>(other), dummy),}
+\DoxyCodeLine{114     \mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{WaveFunctionBase}}(dynamic\_cast<\mbox{\hyperlink{classChronusQ_1_1WaveFunctionBase}{WaveFunctionBase}}\&\&>(other)),}
+\DoxyCodeLine{115     \mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}}(dynamic\_cast<\mbox{\hyperlink{classChronusQ_1_1QuantumBase}{QuantumBase}}\&\&>(other)),}
+\DoxyCodeLine{116     order\_(std::move(other.order\_)), functionals(std::move(other.functionals))}
+\DoxyCodeLine{117   \{}
+\DoxyCodeLine{118     \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}NEOSS move constructor not fully implemented"{}});}
+\DoxyCodeLine{119   \}; \textcolor{comment}{// Other type move constructor}}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122   \textcolor{comment}{// Add a subsystem to the NEO object}}
+\DoxyCodeLine{123   \textcolor{comment}{//}}
+\DoxyCodeLine{124   \textcolor{comment}{// label  Unique name for this subsystem}}
+\DoxyCodeLine{125   \textcolor{comment}{// ss     SingleSlater object representing this subsystem}}
+\DoxyCodeLine{126   \textcolor{comment}{// ints   Two particle integrals for interacting with all other subsystems}}
+\DoxyCodeLine{127   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{128   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a15540fec7c2b614d75e7ac8627574f41}{NEOSS<MatsT,IntsT>::addSubsystem}}(}
+\DoxyCodeLine{129     std::string label,}
+\DoxyCodeLine{130     std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1SingleSlater}{SingleSlater<MatsT,IntsT>}}> ss,}
+\DoxyCodeLine{131     \textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a9c695ec810964bf3c82d8928e264b0fd}{LabeledMap}}<std::pair<\textcolor{keywordtype}{bool},std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1TwoPInts}{TwoPInts<IntsT>}}>>>\& ints)}
+\DoxyCodeLine{132   \{}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134     \textcolor{comment}{// Check that we have at least the same number of integrals as other systems}}
+\DoxyCodeLine{135     \textcolor{keywordflow}{if}(ints.size() < subsystems.size())}
+\DoxyCodeLine{136       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Subsystem and integral number mismatch in addSubsystem!"{}});}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138     \textcolor{keyword}{auto} NB = ss-\/>basisSet().nBasis;}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140     \textcolor{keywordtype}{bool} this\_nuclear = ss-\/>particle.charge > 0;}
+\DoxyCodeLine{141     \textcolor{keyword}{auto} ks = std::dynamic\_pointer\_cast<KohnSham<MatsT,IntsT>>(ss);}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143     \textcolor{comment}{// Add a FockBuilder and Coulomb matrix:}}
+\DoxyCodeLine{144     \textcolor{comment}{//   -\/ For the new system's interaction with each other system}}
+\DoxyCodeLine{145     \textcolor{comment}{//   -\/ For each other system's interaction with the new system}}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147     \textcolor{comment}{// Add the base fockBuilder to make sure it has a persistent lifetime}}
+\DoxyCodeLine{148     fockBuilders.insert(\{label, \{ss-\/>fockBuilder\}\});}
+\DoxyCodeLine{149     \textcolor{comment}{// New coulomb matrices to be added to the \_new\_ system}}
+\DoxyCodeLine{150     std::unordered\_map<std::string, SquareMatrix<MatsT>> newCoulombs;}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152     \textcolor{comment}{// Loop over other subsystems}}
+\DoxyCodeLine{153     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& x: subsystems ) \{}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155       \textcolor{comment}{// first = label;}}
+\DoxyCodeLine{156       \textcolor{comment}{// second = SingleSlater;}}
+\DoxyCodeLine{157       \textcolor{keyword}{auto} other\_NB = x.second-\/>basisSet().nBasis;}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159       \textcolor{comment}{// Add a new coulomb matrix to the new system}}
+\DoxyCodeLine{160       newCoulombs.insert(\{x.first, \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}(ss-\/>memManager, NB)\});}
+\DoxyCodeLine{161       \textcolor{comment}{// Add a new coulomb matrix to the other system}}
+\DoxyCodeLine{162       interCoulomb.at(x.first).insert(\{label, \mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix<MatsT>}}(ss-\/>memManager, other\_NB)\});}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164       \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} this\_options = ss-\/>aoints.options\_;}
+\DoxyCodeLine{165       \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} other\_options = x.second-\/>aoints.options\_;}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167       \textcolor{comment}{// New fock builders}}
+\DoxyCodeLine{168       \textcolor{keyword}{auto} this\_newFock = std::make\_shared<NEOFockBuilder<MatsT,IntsT>>(this\_options);}
+\DoxyCodeLine{169       \textcolor{keyword}{auto} other\_newFock = std::make\_shared<NEOFockBuilder<MatsT,IntsT>>(other\_options);}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171       this\_newFock-\/>setAux(x.second.get());}
+\DoxyCodeLine{172       this\_newFock-\/>setOutput(\&newCoulombs.at(x.first));}
+\DoxyCodeLine{173       this\_newFock-\/>setUpstream(fockBuilders[label].back().get());}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175       other\_newFock-\/>setAux(ss.get());}
+\DoxyCodeLine{176       other\_newFock-\/>setOutput(\&interCoulomb.at(x.first).at(label));}
+\DoxyCodeLine{177       other\_newFock-\/>setUpstream(fockBuilders[x.first].back().get());}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179       \textcolor{comment}{// Add integrals to other system (mostly for consistency)}}
+\DoxyCodeLine{180       \textcolor{keyword}{auto}\& contractSecond = ints.at(x.first).first;}
+\DoxyCodeLine{181       \textcolor{keyword}{auto}\& tpi = ints.at(x.first).second;}
+\DoxyCodeLine{182       interIntegrals[x.first].insert(\{label, \{not contractSecond, tpi\}\});}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184       \textcolor{comment}{// Contractions}}
+\DoxyCodeLine{185       std::shared\_ptr<TPIContractions<MatsT,IntsT>> this\_cont;}
+\DoxyCodeLine{186       std::shared\_ptr<TPIContractions<MatsT,IntsT>> other\_cont;}
+\DoxyCodeLine{187       \textcolor{keywordflow}{if}( \textcolor{keyword}{auto} tpi\_t = std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1DirectTPI}{DirectTPI<IntsT>}}>(tpi) ) \{}
+\DoxyCodeLine{188         this\_cont = std::make\_shared<GTODirectTPIContraction<MatsT,IntsT>>(*tpi\_t);}
+\DoxyCodeLine{189         other\_cont = std::make\_shared<GTODirectTPIContraction<MatsT,IntsT>>(*tpi\_t);}
+\DoxyCodeLine{190       \}}
+\DoxyCodeLine{191       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( \textcolor{keyword}{auto} tpi\_t = std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1InCore4indexTPI}{InCore4indexTPI<IntsT>}}>(tpi) ) \{}
+\DoxyCodeLine{192         this\_cont = std::make\_shared<InCore4indexTPIContraction<MatsT,IntsT>>(*tpi\_t);}
+\DoxyCodeLine{193         other\_cont = std::make\_shared<InCore4indexTPIContraction<MatsT,IntsT>>(*tpi\_t);}
+\DoxyCodeLine{194       \}}
+\DoxyCodeLine{195       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{196         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Invalid TwoPInts type for NEO!"{}});}
+\DoxyCodeLine{197       \}}
+\DoxyCodeLine{198       \textcolor{comment}{// Set contractSecond}}
+\DoxyCodeLine{199       this\_cont-\/>contractSecond = contractSecond;}
+\DoxyCodeLine{200       other\_cont-\/>contractSecond = not contractSecond;}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202       this\_newFock-\/>setContraction(this\_cont);}
+\DoxyCodeLine{203       other\_newFock-\/>setContraction(other\_cont);}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205       fockBuilders[label].push\_back(this\_newFock);}
+\DoxyCodeLine{206       fockBuilders[x.first].push\_back(other\_newFock);}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208       \textcolor{comment}{// KS specific fock builders}}
+\DoxyCodeLine{209       \textcolor{comment}{// XXX: This assumes that there is no correlation functional between}}
+\DoxyCodeLine{210       \textcolor{comment}{//      nuclear subsystems}}
+\DoxyCodeLine{211       \textcolor{keyword}{auto} other\_ks = std::dynamic\_pointer\_cast<KohnSham<MatsT,IntsT>>(x.second);}
+\DoxyCodeLine{212       \textcolor{keywordtype}{bool} other\_nuclear = x.second-\/>particle.charge > 0;}
+\DoxyCodeLine{213       std::shared\_ptr<NEOKohnShamBuilder<MatsT,IntsT>> this\_newKSBuilder = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{214       std::shared\_ptr<NEOKohnShamBuilder<MatsT,IntsT>> other\_newKSBuilder = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{215       \textcolor{keywordflow}{if}( other\_ks \&\& other\_nuclear \&\& !this\_nuclear ) \{}
+\DoxyCodeLine{216         this\_newKSBuilder = std::make\_shared<NEOKohnShamBuilder<MatsT,IntsT>>(this\_options);}
+\DoxyCodeLine{217         other\_newKSBuilder = std::make\_shared<NEOKohnShamBuilder<MatsT,IntsT>>(other\_options);}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219         this\_newKSBuilder-\/>setFunctionals(other\_ks-\/>functionals);}
+\DoxyCodeLine{220         other\_newKSBuilder-\/>setFunctionals(other\_ks-\/>functionals);}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222         \textcolor{comment}{// Get EPC out of the functional list of the nuclear subsystem}}
+\DoxyCodeLine{223         other\_ks-\/>functionals.clear();}
+\DoxyCodeLine{224       \}}
+\DoxyCodeLine{225       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( ks \&\& this\_nuclear \&\& !other\_nuclear ) \{}
+\DoxyCodeLine{226         this\_newKSBuilder = std::make\_shared<NEOKohnShamBuilder<MatsT,IntsT>>(this\_options);}
+\DoxyCodeLine{227         other\_newKSBuilder = std::make\_shared<NEOKohnShamBuilder<MatsT,IntsT>>(other\_options);}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229         this\_newKSBuilder-\/>setFunctionals(ks-\/>functionals);}
+\DoxyCodeLine{230         other\_newKSBuilder-\/>setFunctionals(ks-\/>functionals);}
+\DoxyCodeLine{231 }
+\DoxyCodeLine{232         \textcolor{comment}{// Get EPC out of the functional list of the nuclear subsystem}}
+\DoxyCodeLine{233         this-\/>functionals.insert(functionals.end(),}
+\DoxyCodeLine{234           ks-\/>functionals.begin(), ks-\/>functionals.end());}
+\DoxyCodeLine{235         ks-\/>functionals.clear();}
+\DoxyCodeLine{236       \}}
+\DoxyCodeLine{237 }
+\DoxyCodeLine{238       \textcolor{keywordflow}{if}( this\_newKSBuilder ) \{}
+\DoxyCodeLine{239         this\_newKSBuilder-\/>setAux(x.second.get());}
+\DoxyCodeLine{240         this\_newKSBuilder-\/>setUpstream(fockBuilders[label].back().get());}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242         other\_newKSBuilder-\/>setAux(ss.get());}
+\DoxyCodeLine{243         other\_newKSBuilder-\/>setUpstream(fockBuilders[x.first].back().get());}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245         fockBuilders[label].push\_back(this\_newKSBuilder);}
+\DoxyCodeLine{246         fockBuilders[x.first].push\_back(other\_newKSBuilder);}
+\DoxyCodeLine{247       \}}
+\DoxyCodeLine{248 }
+\DoxyCodeLine{249     \}}
+\DoxyCodeLine{250 }
+\DoxyCodeLine{251     \textcolor{comment}{// Add the other system's coulomb matrices to the coulomb matrix storage}}
+\DoxyCodeLine{252     interCoulomb.insert(\{label, std::move(newCoulombs)\});}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{254     \textcolor{comment}{// Add the single slater object to the list of systems}}
+\DoxyCodeLine{255     subsystems[label] = ss;}
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257     \textcolor{comment}{// Add the integrals to this system}}
+\DoxyCodeLine{258     interIntegrals.insert(\{label, ints\});}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260     \textcolor{comment}{// Update all FockBuilders used to the most recent version}}
+\DoxyCodeLine{261     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& x: subsystems ) \{}
+\DoxyCodeLine{262       x.second-\/>fockBuilder = fockBuilders.at(x.first).back();}
+\DoxyCodeLine{263     \}}
+\DoxyCodeLine{264 }
+\DoxyCodeLine{265   \};}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267 }
+\DoxyCodeLine{268   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{269   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_a69cb9b0018f2a9cf181643b638a9279e}{NEOSS<MatsT,IntsT>::addGradientIntegrals}}(}
+\DoxyCodeLine{270     std::string label1, std::string label2,}
+\DoxyCodeLine{271     std::shared\_ptr<\mbox{\hyperlink{classChronusQ_1_1GradInts}{GradInts<TwoPInts,IntsT>}}> ints, \textcolor{keywordtype}{bool} contractSecond) \{}
+\DoxyCodeLine{272 }
+\DoxyCodeLine{273     gradInterInts.insert(\{label1, \{\}\});}
+\DoxyCodeLine{274     gradInterInts.insert(\{label2, \{\}\});}
+\DoxyCodeLine{275 }
+\DoxyCodeLine{276     gradInterInts[label1].insert(\{label2, \{contractSecond, ints\}\});}
+\DoxyCodeLine{277     gradInterInts[label2].insert(\{label1, \{not contractSecond, ints\}\});}
+\DoxyCodeLine{278 }
+\DoxyCodeLine{279     \textcolor{comment}{// TODO: Make this work with nested systems. Right now there is no}}
+\DoxyCodeLine{280     \textcolor{comment}{//   guarantee that it will be placed on the right fockBuilder for more}}
+\DoxyCodeLine{281     \textcolor{comment}{//   than two systems. May require labeling of nested fockBuilders.}}
+\DoxyCodeLine{282     \textcolor{keyword}{auto} setGradInts = [\&](std::shared\_ptr<FockBuilder<MatsT,IntsT>>\& fock) \{}
+\DoxyCodeLine{283       \textcolor{keywordflow}{if}(\textcolor{keyword}{auto} neofock = std::dynamic\_pointer\_cast<\mbox{\hyperlink{classChronusQ_1_1NEOFockBuilder}{NEOFockBuilder<MatsT,IntsT>}}>(fock)) \{}
+\DoxyCodeLine{284         neofock-\/>setGradientIntegrals(ints.get());}
+\DoxyCodeLine{285       \}}
+\DoxyCodeLine{286       \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{287         \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Can't set gradient integrals on a non-\/NEOFockBuilder"{}});}
+\DoxyCodeLine{288       \}}
+\DoxyCodeLine{289     \};}
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291     setGradInts(fockBuilders[label1].back());}
+\DoxyCodeLine{292     setGradInts(fockBuilders[label2].back());}
+\DoxyCodeLine{293 }
+\DoxyCodeLine{294   \};}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296 }
+\DoxyCodeLine{297   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{298   std::vector<double> \mbox{\hyperlink{classChronusQ_1_1NEOSS_a6f1fe3f710358197b73e77a3fd997408}{NEOSS<MatsT,IntsT>::getGrad}}(\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert,}
+\DoxyCodeLine{299     \textcolor{keywordtype}{bool} equil, \textcolor{keywordtype}{bool} saveInts) \{}
+\DoxyCodeLine{300 }
+\DoxyCodeLine{301     \textcolor{comment}{// Constants and return value}}
+\DoxyCodeLine{302     \textcolor{keywordtype}{size\_t} nAtoms = this-\/>molecule().nAtoms;}
+\DoxyCodeLine{303     \textcolor{keywordtype}{size\_t} nGrad = 3*nAtoms;}
+\DoxyCodeLine{304     std::vector<double> gradient(nGrad);}
+\DoxyCodeLine{305 }
+\DoxyCodeLine{306     \textcolor{comment}{// Initialize with classical nuclear repulsion}}
+\DoxyCodeLine{307     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iGrad = 0; iGrad < nGrad; iGrad++ )}
+\DoxyCodeLine{308       gradient[iGrad] = this-\/>molecule().nucRepForce[iGrad/3][iGrad\%3];}
+\DoxyCodeLine{309 }
+\DoxyCodeLine{310     \textcolor{comment}{// Determine the names of the systems to loop over (so we can loop}}
+\DoxyCodeLine{311     \textcolor{comment}{//   over system1 < system2)}}
+\DoxyCodeLine{312     std::vector<std::string> systemList;}
+\DoxyCodeLine{313     \textcolor{keywordflow}{if}( order\_.size() == subsystems.size() ) \{}
+\DoxyCodeLine{314       systemList.insert(systemList.end(), order\_.begin(), order\_.end());}
+\DoxyCodeLine{315     \}}
+\DoxyCodeLine{316     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{317       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto}\& system: subsystems )}
+\DoxyCodeLine{318         systemList.push\_back(system.first);}
+\DoxyCodeLine{319     \}}
+\DoxyCodeLine{320 }
+\DoxyCodeLine{321     \textcolor{comment}{// Compute required integrals (intrasystem integrals are handled with}}
+\DoxyCodeLine{322     \textcolor{comment}{//   the subsystem's getGrad call)}}
+\DoxyCodeLine{323     \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iSys = 0; iSys < systemList.size(); iSys++ ) \{}
+\DoxyCodeLine{324       \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} jSys = 0; jSys < iSys; jSys++ ) \{}
+\DoxyCodeLine{325 }
+\DoxyCodeLine{326         \textcolor{keyword}{auto}\& sys1Label = systemList[iSys];}
+\DoxyCodeLine{327         \textcolor{keyword}{auto}\& sys2Label = systemList[jSys];}
+\DoxyCodeLine{328 }
+\DoxyCodeLine{329         \textcolor{keyword}{auto}\& sys1Basis = subsystems[sys1Label]-\/>basisSet();}
+\DoxyCodeLine{330         \textcolor{keyword}{auto}\& sys2Basis = subsystems[sys2Label]-\/>basisSet();}
+\DoxyCodeLine{331 }
+\DoxyCodeLine{332         \textcolor{keywordtype}{bool} sys1Left = not gradInterInts[sys1Label][sys2Label].first;}
+\DoxyCodeLine{333         \textcolor{keyword}{auto}\& gradInt12 = gradInterInts[sys1Label][sys2Label].second;}
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335         \mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions}{HamiltonianOptions}} options;}
+\DoxyCodeLine{336         options.\mbox{\hyperlink{structChronusQ_1_1HamiltonianOptions_a183319f87f1106e4cc6345b9c0015d04}{OneEScalarRelativity}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{337 }
+\DoxyCodeLine{338         \textcolor{keywordflow}{if}( sys1Left )}
+\DoxyCodeLine{339           gradInt12-\/>computeAOInts(sys1Basis, sys2Basis, this-\/>molecule(),}
+\DoxyCodeLine{340             pert, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a4e181fd5da079c77d15f3e2d63999caa}{EP\_ATTRACTION}}, options);}
+\DoxyCodeLine{341         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{342           gradInt12-\/>computeAOInts(sys2Basis, sys1Basis, this-\/>molecule(),}
+\DoxyCodeLine{343             pert, \mbox{\hyperlink{namespaceChronusQ_a9a4446af06a0135ec589b929b1aad554a4e181fd5da079c77d15f3e2d63999caa}{EP\_ATTRACTION}}, options);}
+\DoxyCodeLine{344       \}}
+\DoxyCodeLine{345     \}}
+\DoxyCodeLine{346 }
+\DoxyCodeLine{347 }
+\DoxyCodeLine{348     applyToEach([\&](\mbox{\hyperlink{classChronusQ_1_1NEOSS_a607d1264c33de5cb6428ff4a24e57aba}{SubSSPtr}}\& ss) \{}
+\DoxyCodeLine{349         \textcolor{keyword}{auto} localGrad = ss-\/>getGrad(pert, equil, saveInts);}
+\DoxyCodeLine{350         \textcolor{keywordflow}{for}( \textcolor{keyword}{auto} iGrad = 0; iGrad < nGrad; iGrad++ ) \{}
+\DoxyCodeLine{351           gradient[iGrad] += localGrad[iGrad] -\/ this-\/>molecule().nucRepForce[iGrad/3][iGrad\%3];}
+\DoxyCodeLine{352         \}}
+\DoxyCodeLine{353     \});}
+\DoxyCodeLine{354 }
+\DoxyCodeLine{355     \textcolor{keywordflow}{return} gradient;}
+\DoxyCodeLine{356 }
+\DoxyCodeLine{357   \};}
+\DoxyCodeLine{358 }
+\DoxyCodeLine{359   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{360   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1NEOSS_abe3125969a334a169e30430b6b3a7ad2}{NEOSS<MatsT,IntsT>::buildModifyOrbitals}}() \{}
+\DoxyCodeLine{361     \textcolor{comment}{// Modify SCFControls}}
+\DoxyCodeLine{362     this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.printLevel    = this-\/>printLevel;}
+\DoxyCodeLine{363     this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.refLongName\_  = this-\/>refLongName\_;}
+\DoxyCodeLine{364     this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.refShortName\_ = this-\/>refShortName\_;}
+\DoxyCodeLine{365 }
+\DoxyCodeLine{366     \textcolor{comment}{// Initialize ModifyOrbitalOptions}}
+\DoxyCodeLine{367     \mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions}{ModifyOrbitalsOptions<MatsT>}} modOrbOpt;}
+\DoxyCodeLine{368 }
+\DoxyCodeLine{369     \textcolor{comment}{// Register functions}}
+\DoxyCodeLine{370     modOrbOpt.\mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_ada392bdf25eda6d3512e67b6ecbcd018}{printProperties}}   = [\textcolor{keyword}{this}]() \{ this-\/>printProperties(); \};}
+\DoxyCodeLine{371     modOrbOpt.\mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a57a17d03f0b7f0e5c3fd2de8cf3d5a02}{saveCurrentState}}  = [\textcolor{keyword}{this}]() \{ this-\/>saveCurrentState(); \};}
+\DoxyCodeLine{372     modOrbOpt.\mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_ac301fd7011583db76139935398290a0f}{formFock}}          = [\textcolor{keyword}{this}](\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert) \{ this-\/>formFock(pert,\textcolor{keyword}{false},1.); \};}
+\DoxyCodeLine{373     modOrbOpt.\mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_abb20608f85f436a74c7da7ca347447e5}{computeProperties}} = [\textcolor{keyword}{this}](\mbox{\hyperlink{structChronusQ_1_1EMPerturbation}{EMPerturbation}}\& pert) \{ this-\/>computeProperties(pert); \};}
+\DoxyCodeLine{374     modOrbOpt.\mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a3f10e90c5dc9e7d61191331df3982aa2}{formDensity}}       = [\textcolor{keyword}{this}]() \{ this-\/>formDensity(); \};}
+\DoxyCodeLine{375     modOrbOpt.\mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a8814e73a7408fc22e0708d1c2c14d3f5}{getFock}}           = [\textcolor{keyword}{this}]() \{ \textcolor{keywordflow}{return} this-\/>getFock(); \};}
+\DoxyCodeLine{376     modOrbOpt.\mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a65cade7a3ea16a0db76b413a60df68ee}{getOnePDM}}         = [\textcolor{keyword}{this}]() \{ \textcolor{keywordflow}{return} this-\/>getOnePDM(); \};}
+\DoxyCodeLine{377     modOrbOpt.\mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a6a960dc0c5219558ad1f0eb110f813ce}{getOrtho}}          = [\textcolor{keyword}{this}]() \{ \textcolor{keywordflow}{return} this-\/>getOrtho(); \};}
+\DoxyCodeLine{378     modOrbOpt.\mbox{\hyperlink{structChronusQ_1_1ModifyOrbitalsOptions_a91bccfe42853cd14c08e29493d068d3c}{getTotalEnergy}}    = [\textcolor{keyword}{this}]() \{ \textcolor{keywordflow}{return} this-\/>getTotalEnergy(); \};}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380     \textcolor{comment}{// Make ModifyOrbitals based on scfControls}}
+\DoxyCodeLine{381     \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.scfAlg == \mbox{\hyperlink{namespaceChronusQ_a01fc09180142c9ef18c921fb1807c2d4a8ffcf4a789f0831f6b3cfa72fa81f216}{\_CONVENTIONAL\_SCF}} ) \{}
+\DoxyCodeLine{382       \textcolor{comment}{// Conventional SCF}}
+\DoxyCodeLine{383       this-\/>\mbox{\hyperlink{compositeSCF_8hpp_aa1b9cef53fedcd1b2b085bce117ae948}{modifyOrbitals}} = std::dynamic\_pointer\_cast<ModifyOrbitals<MatsT>>(}
+\DoxyCodeLine{384           std::make\_shared<ConventionalSCF<MatsT>>(this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}, this-\/>comm, modOrbOpt, this-\/>memManager));}
+\DoxyCodeLine{385     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.scfAlg == \mbox{\hyperlink{namespaceChronusQ_a01fc09180142c9ef18c921fb1807c2d4a171f2799f46769a19c361caf630aa65e}{\_NEWTON\_RAPHSON\_SCF}} ) \{}
+\DoxyCodeLine{386       \textcolor{comment}{// Newton-\/Raphson SCF}}
+\DoxyCodeLine{387       \mbox{\hyperlink{namespaceChronusQ_afbba655765a7a40e19e2bea928a687c7}{CErr}}(\textcolor{stringliteral}{"{}Newton-\/Raphson SCF NYI for NEO methods!"{}});}
+\DoxyCodeLine{388     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{389       \textcolor{comment}{// SKIP SCF}}
+\DoxyCodeLine{390       this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}.doExtrap = \textcolor{keyword}{false};}
+\DoxyCodeLine{391       this-\/>\mbox{\hyperlink{compositeSCF_8hpp_aa1b9cef53fedcd1b2b085bce117ae948}{modifyOrbitals}}       = std::dynamic\_pointer\_cast<ModifyOrbitals<MatsT>>(}
+\DoxyCodeLine{392           std::make\_shared<SkipSCF<MatsT>>(this-\/>\mbox{\hyperlink{compositeSCF_8hpp_ae16e6aa2ec332b2c51e7e9dd49b00584}{scfControls}}, this-\/>comm, modOrbOpt, this-\/>memManager));}
+\DoxyCodeLine{393     \}}
+\DoxyCodeLine{394 }
+\DoxyCodeLine{395   \}}
+\DoxyCodeLine{396 }
+\DoxyCodeLine{397 \} \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}

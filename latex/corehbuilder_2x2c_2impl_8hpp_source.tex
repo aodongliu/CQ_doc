@@ -1,0 +1,93 @@
+\hypertarget{corehbuilder_2x2c_2impl_8hpp_source}{}\doxysection{impl.\+hpp}
+\label{corehbuilder_2x2c_2impl_8hpp_source}\index{include/corehbuilder/x2c/impl.hpp@{include/corehbuilder/x2c/impl.hpp}}
+\mbox{\hyperlink{corehbuilder_2x2c_2impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ *  This file is part of the Chronus Quantum (ChronusQ) software package}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Copyright (C) 2014-\/2022 Li Research Group (University of Washington)}}
+\DoxyCodeLine{5 \textcolor{comment}{ *}}
+\DoxyCodeLine{6 \textcolor{comment}{ *  This program is free software; you can redistribute it and/or modify}}
+\DoxyCodeLine{7 \textcolor{comment}{ *  it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{8 \textcolor{comment}{ *  the Free Software Foundation; either version 2 of the License, or}}
+\DoxyCodeLine{9 \textcolor{comment}{ *  (at your option) any later version.}}
+\DoxyCodeLine{10 \textcolor{comment}{ *}}
+\DoxyCodeLine{11 \textcolor{comment}{ *  This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{12 \textcolor{comment}{ *  but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{13 \textcolor{comment}{ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{14 \textcolor{comment}{ *  GNU General Public License for more details.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ *  You should have received a copy of the GNU General Public License along}}
+\DoxyCodeLine{17 \textcolor{comment}{ *  with this program; if not, write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{18 \textcolor{comment}{ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-\/1301 USA.}}
+\DoxyCodeLine{19 \textcolor{comment}{ *}}
+\DoxyCodeLine{20 \textcolor{comment}{ *  Contact the Developers:}}
+\DoxyCodeLine{21 \textcolor{comment}{ *    E-\/Mail: xsli@uw.edu}}
+\DoxyCodeLine{22 \textcolor{comment}{ *}}
+\DoxyCodeLine{23 \textcolor{comment}{ */}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{x2c_8hpp}{corehbuilder/x2c.hpp}}>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{util_2preprocessor_8hpp}{util/preprocessor.hpp}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{comment}{// FIXME: For copy and move, this only populates the lists, not the}}
+\DoxyCodeLine{30 \textcolor{comment}{// explicit pointers}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#define X2C\_COLLECTIVE\_OP(OP\_OP,OP\_VEC\_OP) \(\backslash\)}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{  }\textcolor{comment}{/* Handle Operators */}\textcolor{preprocessor}{\(\backslash\)}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{  OP\_OP(IntsT,this,other,memManager\_,mapPrim2Cont);\(\backslash\)}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{  OP\_OP(IntsT,this,other,memManager\_,UK);\(\backslash\)}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{  OP\_OP(double,this,other,memManager\_,p);\(\backslash\)}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{  OP\_OP(MatsT,this,other,memManager\_,UL);\(\backslash\)}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{  OP\_OP(MatsT,this,other,memManager\_,US);}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceChronusQ}{ChronusQ}} \{}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{43   \mbox{\hyperlink{classChronusQ_1_1X2C_a2e66d39748a7a378acabb21aca85b5a9}{X2C<MatsT,IntsT>::X2C}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1X2C}{X2C<MatsT,IntsT>}} \&other) :}
+\DoxyCodeLine{44     \mbox{\hyperlink{classChronusQ_1_1X2C}{X2C}}(other,0) \{\}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{47   \mbox{\hyperlink{classChronusQ_1_1X2C_a2e66d39748a7a378acabb21aca85b5a9}{X2C<MatsT,IntsT>::X2C}}(\mbox{\hyperlink{classChronusQ_1_1X2C}{X2C<MatsT,IntsT>}} \&\&other) :}
+\DoxyCodeLine{48     \mbox{\hyperlink{classChronusQ_1_1X2C}{X2C}}(std::move(other),0) \{\}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{51   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{52   \mbox{\hyperlink{classChronusQ_1_1X2C_a2e66d39748a7a378acabb21aca85b5a9}{X2C<MatsT,IntsT>::X2C}}(\textcolor{keyword}{const} \mbox{\hyperlink{classChronusQ_1_1X2C}{X2C<MatsU,IntsT>}} \&other, \textcolor{keywordtype}{int} dummy) :}
+\DoxyCodeLine{53     aoints\_(other.aoints\_), ssOptions\_(other.ssOptions\_),}
+\DoxyCodeLine{54     memManager\_(other.memManager\_),}
+\DoxyCodeLine{55     molecule\_(other.molecule\_), basisSet\_(other.basisSet\_),}
+\DoxyCodeLine{56     uncontractedBasis\_(other.uncontractedBasis\_),}
+\DoxyCodeLine{57     uncontractedInts\_(other.uncontractedInts\_),}
+\DoxyCodeLine{58     nPrimUse\_(other.nPrimUse\_),}
+\DoxyCodeLine{59     W(other.W ? std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}<MatsT>>(*other.W) : nullptr) \{}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \mbox{\hyperlink{corehbuilder_2x2c_2impl_8hpp_a2c410cf2ad8200062619ca1d10892684}{X2C\_COLLECTIVE\_OP}}(\mbox{\hyperlink{util_2preprocessor_8hpp_a69e1609d55a307e9b56653cdd52cf9ce}{COPY\_OTHER\_MEMBER\_OP}}, \mbox{\hyperlink{util_2preprocessor_8hpp_a294145a45f5290d809e7bbec5cd4bf89}{COPY\_OTHER\_MEMBER\_VEC\_OP}})}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63   \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{66   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsU>}
+\DoxyCodeLine{67   \mbox{\hyperlink{classChronusQ_1_1X2C_a2e66d39748a7a378acabb21aca85b5a9}{X2C<MatsT,IntsT>::X2C}}(\mbox{\hyperlink{classChronusQ_1_1X2C}{X2C<MatsU,IntsT>}} \&\&other, \textcolor{keywordtype}{int} dummy) :}
+\DoxyCodeLine{68     aoints\_(other.aoints\_), ssOptions\_(other.ssOptions\_),}
+\DoxyCodeLine{69     memManager\_(other.memManager\_),}
+\DoxyCodeLine{70     molecule\_(other.molecule\_), basisSet\_(other.basisSet\_),}
+\DoxyCodeLine{71     uncontractedBasis\_(other.uncontractedBasis\_),}
+\DoxyCodeLine{72     uncontractedInts\_(other.uncontractedInts\_),}
+\DoxyCodeLine{73     nPrimUse\_(other.nPrimUse\_),}
+\DoxyCodeLine{74     W(other.W ? std::make\_shared<\mbox{\hyperlink{classChronusQ_1_1SquareMatrix}{SquareMatrix}}<MatsT>>(*other.W) : nullptr) \{}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \mbox{\hyperlink{corehbuilder_2x2c_2impl_8hpp_a2c410cf2ad8200062619ca1d10892684}{X2C\_COLLECTIVE\_OP}}(\mbox{\hyperlink{util_2preprocessor_8hpp_ac9a9182d42190ffb9aca133bb783e8e9}{MOVE\_OTHER\_MEMBER\_OP}}, \mbox{\hyperlink{util_2preprocessor_8hpp_ab24aca14512dc241f1d6802d72baef08}{MOVE\_OTHER\_MEMBER\_VEC\_OP}})}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78   \}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80   \textcolor{keyword}{template} <\textcolor{keyword}{typename} MatsT, \textcolor{keyword}{typename} IntsT>}
+\DoxyCodeLine{81   \textcolor{keywordtype}{void} \mbox{\hyperlink{classChronusQ_1_1X2C_aec7130a88e5a0f76c52581b213b6bdee}{X2C<MatsT,IntsT>::dealloc}}() \{}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83     \mbox{\hyperlink{corehbuilder_2x2c_2impl_8hpp_a2c410cf2ad8200062619ca1d10892684}{X2C\_COLLECTIVE\_OP}}(\mbox{\hyperlink{util_2preprocessor_8hpp_acf54d98998d38d6d08032d8fac98372e}{DEALLOC\_OP\_5}}, \mbox{\hyperlink{util_2preprocessor_8hpp_ac15adf6fab41311940cc863b96947b57}{DEALLOC\_VEC\_OP\_5}})}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85   \}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 \}; \textcolor{comment}{// namespace ChronusQ}}
+
+\end{DoxyCode}
